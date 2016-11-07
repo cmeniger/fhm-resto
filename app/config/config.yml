@@ -9,7 +9,6 @@ imports:
     - { resource: security.yml }
     - { resource: services.yml }
 
-
 # These are the configuration parameters that define the application's behavior
 # and which are independent from the underlying technical infrastructure
 # See http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
@@ -17,7 +16,6 @@ parameters:
     # This parameter defines the codes of the locales (languages) enabled in the application
     app_locales: en|fr|de|es|cs|nl|ru|uk|ro|pt_BR|pl|it|ja|id|ca|sl
     app.notifications.email_sender: anonymous@example.com
-    #fhm_logger.class: BabyBundle\Services\LogManager
 
 # Basic configuration for the Symfony framework features
 framework:
@@ -56,17 +54,6 @@ framework:
 twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
-    #start : from fhm_tools vs1
-    cache: false
-    globals:
-        project: %project%
-        mailer: %fhm_mailer%
-#    form:
-#        resources:
-#            - 'FhmFhmBundle:Form:fields.html.twig'
-#            - 'FhmMediaBundle:Form:fields.html.twig'
-#            - 'FhmMenuBundle:Form:fields.html.twig'
-    #end
     form_themes:
         - "bootstrap_3_layout.html.twig"
         - "form/fields.html.twig"
@@ -74,120 +61,31 @@ twig:
 # Doctrine Configuration (used to access databases and manipulate their information)
 doctrine:
     dbal:
-        # instead of configuring the database access options in this file, we pull
-        # them from the app/config/parameters.yml file. The reason is that config.yml
-        # stores options that change the application behavior and parameters.yml
-        # stores options that change from one server to another
-#        driver: "pdo_sqlite"
-        # temp workaround for https://github.com/doctrine/dbal/issues/1106: define DB path here
-#        path: "%kernel.root_dir%/data/blog.sqlite"
-        driver:   "%database_driver%"
-        host:     "%database_host%"
-        port:     "%database_port%"
-        dbname:   "%database_name%"
-        user:     "%database_user%"
-        password: "%database_password%"
-        charset:  UTF8
+        # if you don't want to use SQLite, comment the two following lines
+        driver: "pdo_sqlite"
+        path: "%kernel.root_dir%/data/blog.sqlite"
+        # uncomment the following lines to use a database different than SQLite
+        # driver:   pdo_mysql
+        # host:     "%database_host%"
+        # port:     "%database_port%"
+        # dbname:   "%database_name%"
+        # user:     "%database_user%"
+        # password: "%database_password%"
+        # charset:  UTF8
 
     orm:
         auto_generate_proxy_classes: "%kernel.debug%"
         auto_mapping: true
 
 # Swiftmailer Configuration (used to send emails)
-swiftmailer:
-    transport: "%mailer_transport%"
-    host:      "%mailer_host%"
-    username:  "%mailer_user%"
-    password:  "%mailer_password%"
-    spool:     { type: memory }
-
-#start from fhm_tools
-# FOSUser
-fos_user:
-    db_driver: mongodb
-    firewall_name: main
-    user_class: Fhm\UserBundle\Document\User
-    from_email:
-        address:     %fhm_mailer.noreply%
-        sender_name: noreply
-    service:
-        mailer: fhm_user.mailer.twig_swift
-    profile:
-        form:
-            type: FhmUpdate
-    change_password:
-        form:
-            type: FhmPassword
-    resetting:
-        form:
-            type: FhmResetting
-    registration:
-        form:
-            type: FhmCreate
-        confirmation:
-            enabled: true
-
-# Oauth
-hwi_oauth:
-    firewall_names:         [main]
-    resource_owners:
-        facebook:
-            type:          facebook
-            client_id:     %oauth.facebook.id%
-            client_secret: %oauth.facebook.secret%
-            scope:         "public_profile,email"
-            infos_url: "https://graph.facebook.com/me?fields=id,name,email,picture.type(square)"
-            options:
-                display:   popup
-            paths:
-                email:          email
-                profilepicture: picture.data.url
-        twitter:
-            type:          twitter
-            client_id:     %oauth.twitter.id%
-            client_secret: %oauth.twitter.secret%
-            scope:         ""
-        google:
-            type:          google
-            client_id:     %oauth.google.id%
-            client_secret: %oauth.google.secret%
-            scope:         "email profile"
-    http_client:
-        verify_peer:       false
-
-# MongoDB
-doctrine_mongodb:
-    connections:
-        default:
-            server: %mongodb_server%
-            options:
-                username: %mongodb_username%
-                password: %mongodb_password%
-                replicaSet: %mongodb_replicaSet%
-    default_database: %mongodb_database%
-    document_managers:
-        default:
-            auto_mapping: true
-
-# Google Map
-#ivory_google_map:
-#    map:
-#        width:     "100%"
-#        height:    "100%"
-#        language:  %locale%
-#        auto_zoom: false
-#        zoom:      3
-#    pan_control:
-#        control_position: left_bottom
-#    geocoder:
-#        provider:
-#            locale: %locale%
-
-# EWZ Recaptcha
-ewz_recaptcha:
-    public_key:  %recaptcha_public_key%
-    private_key: %recaptcha_private_key%
-    locale_key:  %locale%
-    enabled:     true
-
-#end
+# instead of configuring the mailer credentials in this file, we pull
+# them from the app/config/parameters.yml file. The reason is that config.yml
+# stores options that change the application behavior and parameters.yml
+# stores options that change from one server to another
+#
+# swiftmailer:
+#     transport: "%mailer_transport%"
+#     host:      "%mailer_host%"
+#     username:  "%mailer_user%"
+#     password:  "%mailer_password%"
+#     spool:     { type: memory }

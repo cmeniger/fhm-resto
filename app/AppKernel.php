@@ -18,16 +18,11 @@ class AppKernel extends Kernel
             new Symfony\Bundle\MonologBundle\MonologBundle(),
             new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
-            new Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle(),
-            new Symfony\Bundle\AsseticBundle\AsseticBundle(),
-            new Doctrine\Bundle\MongoDBBundle\DoctrineMongoDBBundle(),
-            new FOS\UserBundle\FOSUserBundle(),
-            new HWI\Bundle\OAuthBundle\HWIOAuthBundle(),
-            new Fhm\FhmBundle\FhmFhmBundle(),
-            new Fhm\UserBundle\FhmUserBundle(),
-//            new Ivory\GoogleMapBundle\IvoryGoogleMapBundle(),
-            new EWZ\Bundle\RecaptchaBundle\EWZRecaptchaBundle(),
-//            new Fhm\CodeExplorerBundle\CodeExplorerBundle()
+            new WhiteOctober\PagerfantaBundle\WhiteOctoberPagerfantaBundle(),
+            new CodeExplorerBundle\CodeExplorerBundle(),
+            new AppBundle\AppBundle(),
+            // uncomment the following line if your application sends emails
+            // new Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle(),
         ];
 
         // Some bundles are only used while developing the application or during

@@ -1,0 +1,9 @@
+services:
+#    baby.example:
+#        class: BabyBundle\Example
+#        arguments: ["@service_id", "plain_value", %parameter%]
+
+     app.ekeditor:
+          class: AppBundle\Form\Type\CkditorType
+          tags:
+              - {name: form.type, alias: ckeditor}

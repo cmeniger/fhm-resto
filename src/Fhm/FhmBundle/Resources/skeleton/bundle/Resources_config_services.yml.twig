@@ -1,6 +1,0 @@
-services:
-{% block services %}
-    {{ extension_alias }}:
-        class: {{ namespace }}\Services\{{ document }}
-        arguments: [@service_container]
-{% endblock services %}

@@ -20,10 +20,6 @@
                 <td><p>{{ post.authorEmail }}</p></td>
             </tr>
             <tr>
-                <th scope="row">{{ 'label.author'|trans }}</th>
-                <td><p>{{ post.author }}</p></td>
-            </tr>
-            <tr>
                 <th scope="row">{{ 'label.published_at'|trans }}</th>
                 {# it's not mandatory to set the timezone in localizeddate(). This is done to
                    avoid errors when the 'intl' PHP extension is not available and the application
