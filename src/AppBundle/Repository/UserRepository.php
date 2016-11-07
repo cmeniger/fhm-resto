@@ -11,7 +11,7 @@
 
 namespace AppBundle\Repository;
 
-use Doctrine\ORM\EntityRepository;
+use Doctrine\ODM\MongoDB\DocumentRepository;
 
 /**
  * This custom Doctrine repository is empty because so far we don't need any custom
@@ -22,6 +22,6 @@ use Doctrine\ORM\EntityRepository;
  * @author Ryan Weaver <weaverryan@gmail.com>
  * @author Javier Eguiluz <javier.eguiluz@gmail.com>
  */
-class UserRepository extends EntityRepository
+class UserRepository extends DocumentRepository
 {
 }

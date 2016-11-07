@@ -1,4 +1,25 @@
 services:
+
+    session.handler.mongo:
+        class: Symfony\Component\HttpFoundation\Session\Storage\Handler\MongoDbSessionHandler
+        arguments: ['@mongo', '%mongo.session.options%']
+
+    # Use doctrine_mongodb to allow doctrine mapping
+    fos_user.doctrine_registry:
+        alias: doctrine
+
+
+    mongo.connection:
+        class: MongoDoctrine\MongoDB\Connection
+        factory_service: doctrine.odm.mongodb.document_manager
+        factory_method: getConnection
+        calls:
+           - [initialize, []]
+    mongo:
+        class: Mongo
+        factory_service: mongo.connection
+        factory_method: getMongo
+
     # First we define some basic services to make these utilities available in
     # the entire application
     slugger:

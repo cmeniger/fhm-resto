@@ -19,10 +19,10 @@ class AppKernel extends Kernel
             new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new WhiteOctober\PagerfantaBundle\WhiteOctoberPagerfantaBundle(),
+            new Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle(),
+            new FOS\UserBundle\FOSUserBundle(),
             new CodeExplorerBundle\CodeExplorerBundle(),
             new AppBundle\AppBundle(),
-            // uncomment the following line if your application sends emails
-            // new Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle(),
         ];
 
         // Some bundles are only used while developing the application or during
