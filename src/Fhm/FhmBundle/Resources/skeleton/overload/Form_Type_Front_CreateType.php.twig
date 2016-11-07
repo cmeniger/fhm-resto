@@ -1,0 +1,13 @@
+<?php
+namespace {{ namespace }}\Form\Type\Front;
+
+use {{ parentNamespace }}\Form\Type\Front\CreateType as OverloadType;
+use Symfony\Component\Form\FormBuilderInterface;
+
+class CreateType extends OverloadType
+{
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        parent::buildForm($builder, $options);
+    }
+}

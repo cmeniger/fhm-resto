@@ -1,3 +1,6 @@
+parameters:
+    mongodb_server: 'mongodb://localhost:27017'
+
 imports:
     - { resource: config_dev.yml }
 
@@ -29,3 +32,5 @@ security:
     firewalls:
         secured_area:
             http_basic: ~
+swiftmailer:
+    disable_delivery: true

@@ -1,0 +1,188 @@
+<?php
+namespace {{ namespace }}\Controller;
+
+{% block use_statements %}
+use Fhm\FhmBundle\Controller\RefAdminController as FhmController;
+use {{ namespace }}\Document\{{ document }};
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\HttpException;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+{% endblock use_statements %}
+
+{% block class_definition %}
+/**
+ * @Route("/admin/{{ route[1] }}")
+ */
+class AdminController extends FhmController
+{% endblock class_definition %}
+{
+{% block class_body %}
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        parent::__construct('{{ src }}', '{{ document }}', '{{ route[1] }}');
+    }
+
+    /**
+     * @Route
+     * (
+     *      path="/",
+     *      name="{{ route[0] }}_admin_{{ route[1] }}"
+     * )
+     * @Template("::{{ basename }}/Admin/index.html.twig")
+     */
+    public function indexAction()
+    {
+        return parent::indexAction();
+    }
+
+    /**
+     * @Route
+     * (
+     *      path="/create",
+     *      name="{{ route[0] }}_admin_{{ route[1] }}_create"
+     * )
+     * @Template("::{{ basename }}/Admin/create.html.twig")
+     */
+    public function createAction(Request $request)
+    {
+        return parent::createAction($request);
+    }
+
+    /**
+     * @Route
+     * (
+     *      path="/duplicate/{id}",
+     *      name="{{ route[0] }}_admin_{{ route[1] }}_duplicate",
+     *      requirements={"id"="[a-z0-9]*"}
+     * )
+     * @Template("::{{ basename }}/Admin/create.html.twig")
+     */
+    public function duplicateAction(Request $request, $id)
+    {
+        return parent::duplicateAction($request, $id);
+    }
+
+    /**
+     * @Route
+     * (
+     *      path="/update/{id}",
+     *      name="{{ route[0] }}_admin_{{ route[1] }}_update",
+     *      requirements={"id"="[a-z0-9]*"}
+     * )
+     * @Template("::{{ basename }}/Admin/update.html.twig")
+     */
+    public function updateAction(Request $request, $id)
+    {
+        return parent::updateAction($request, $id);
+    }
+
+    /**
+     * @Route
+     * (
+     *      path="/detail/{id}",
+     *      name="{{ route[0] }}_admin_{{ route[1] }}_detail",
+     *      requirements={"id"="[a-z0-9]*"}
+     * )
+     * @Template("::{{ basename }}/Admin/detail.html.twig")
+     */
+    public function detailAction($id)
+    {
+        return parent::detailAction($id);
+    }
+
+    /**
+     * @Route
+     * (
+     *      path="/delete/{id}",
+     *      name="{{ route[0] }}_admin_{{ route[1] }}_delete",
+     *      requirements={"id"="[a-z0-9]*"}
+     * )
+     */
+    public function deleteAction($id)
+    {
+        return parent::deleteAction($id);
+    }
+
+    /**
+     * @Route
+     * (
+     *      path="/undelete/{id}",
+     *      name="{{ route[0] }}_admin_{{ route[1] }}_undelete",
+     *      requirements={"id"="[a-z0-9]*"}
+     * )
+     */
+    public function undeleteAction($id)
+    {
+        return parent::undeleteAction($id);
+    }
+
+    /**
+     * @Route
+     * (
+     *      path="/activate/{id}",
+     *      name="{{ route[0] }}_admin_{{ route[1] }}_activate",
+     *      requirements={"id"="[a-z0-9]*"}
+     * )
+     */
+    public function activateAction($id)
+    {
+        return parent::activateAction($id);
+    }
+
+    /**
+     * @Route
+     * (
+     *      path="/deactivate/{id}",
+     *      name="{{ route[0] }}_admin_{{ route[1] }}_deactivate",
+     *      requirements={"id"="[a-z0-9]*"}
+     * )
+     */
+    public function deactivateAction($id)
+    {
+        return parent::deactivateAction($id);
+    }
+
+    /**
+     * @Route
+     * (
+     *      path="/import",
+     *      name="{{ route[0] }}_admin_{{ route[1] }}_import"
+     * )
+     * @Template("::{{ basename }}/Admin/import.html.twig")
+     */
+    public function importAction(Request $request)
+    {
+        return parent::importAction($request);
+    }
+
+    /**
+     * @Route
+     * (
+     *      path="/export",
+     *      name="{{ route[0] }}_admin_{{ route[1] }}_export"
+     * )
+     * @Template("::{{ basename }}/Admin/export.html.twig")
+     */
+    public function exportAction(Request $request)
+    {
+        return parent::exportAction($request);
+    }
+
+    /**
+     * @Route
+     * (
+     *      path="/grouping",
+     *      name="{{ route[0] }}_admin_{{ route[1] }}_grouping"
+     * )
+     */
+    public function groupingAction(Request $request)
+    {
+        return parent::groupingAction($request);
+    }
+{% endblock class_body %}
+}
