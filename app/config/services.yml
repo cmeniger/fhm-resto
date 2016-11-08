@@ -6,7 +6,7 @@ services:
 
     # Use doctrine_mongodb to allow doctrine mapping
     fos_user.doctrine_registry:
-        alias: doctrine
+        alias: doctrine_mongodb
 
 
     mongo.connection:
@@ -65,4 +65,4 @@ services:
     # // same code using repository services
     # $posts = $this->get('app.post_repository')->findAll();
 
-    
+

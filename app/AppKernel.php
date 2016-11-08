@@ -22,6 +22,7 @@ class AppKernel extends Kernel
             new WhiteOctober\PagerfantaBundle\WhiteOctoberPagerfantaBundle(),
             new Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle(),
             new FOS\UserBundle\FOSUserBundle(),
+            new HWI\Bundle\OAuthBundle\HWIOAuthBundle(),
             new CodeExplorerBundle\CodeExplorerBundle(),
             new AppBundle\AppBundle(),
         ];
