@@ -73,6 +73,19 @@ doctrine:
         auto_generate_proxy_classes: "%kernel.debug%"
         auto_mapping: true
 
+doctrine_mongodb:
+    connections:
+        default:
+            server: "%mongodb_server%"
+            options:
+                username: "%mongodb_username%"
+                password: "%mongodb_password%"
+                replicaSet: "%mongodb_replicaSet%"
+    default_database: "%mongodb_database%"
+    document_managers:
+        default:
+            auto_mapping: true
+
 # Swiftmailer Configuration (used to send emails)
 # instead of configuring the mailer credentials in this file, we pull
 # them from the app/config/parameters.yml file. The reason is that config.yml
