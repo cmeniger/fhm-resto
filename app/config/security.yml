@@ -19,7 +19,10 @@ security:
             pattern:                        ^/
             form_login:
                 provider:                   fos_userbundle
-                csrf_token_generator: security.csrf.token_manager
+                csrf_token_generator:       security.csrf.token_manager
+                check_path:                 fos_user_security_check
+#                login_path:                 fos_user_security_login
+#                failure_path:               fos_user_security_login
             oauth:
                 resource_owners:
                     facebook:               fhm_user_check_facebook
@@ -30,7 +33,9 @@ security:
                 check_path:                 fos_user_security_check
                 oauth_user_provider:
                     service:                fhm_user.oauth.user_provider
-            logout:                         true
+            logout:
+                path:        fos_user_security_logout
+                target:      homepage
             anonymous:                      true
 
     access_control:
