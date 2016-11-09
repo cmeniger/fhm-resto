@@ -1,0 +1,26 @@
+{% set instance = instance|merge({'domain':'FhmUserBundle', 'translation':'user', 'route':'user', 'source':'fhm'}) %}
+{% set breadcrumbs = [{'link':path('project_home'), 'text':'project.home.breadcrumb'|trans({},'ProjectDefaultBundle')}, {'link':'', 'text':('user.front.resetting.checkemail.breadcrumb')|trans({},'FhmUserBundle'), 'current':true}] %}
+{% trans_default_domain instance.domain %}
+{% extends "::FhmFhm/Front/index.html.twig" %}
+
+{% block tagline_data %}
+    <i class="fa fa-user-plus"></i> {{ 'user.front.resetting.checkemail.title'|trans({'%username%':user.getUsername()|default('')}) }}
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        {# Mail #}
+        <div class="panel">
+            <h3>{{ 'user.front.resetting.checkemail.mail.title'|trans|raw }}</h3>
+            {{ 'user.front.resetting.checkemail.mail.text'|trans|raw }} <strong>{{ email }}</strong>
+        </div>
+        {# FAQ #}
+        <div class="panel">
+            <h3>{{ 'user.front.resetting.checkemail.faq.title'|trans|raw }}</h3>
+            <ul>
+                <li>{{ 'user.front.resetting.checkemail.faq.list1'|trans|raw }}</li>
+                <li>{{ 'user.front.resetting.checkemail.faq.list2'|trans|raw }}</li>
+            </ul>
+        </div>
+    </div>
+{% endblock %}
