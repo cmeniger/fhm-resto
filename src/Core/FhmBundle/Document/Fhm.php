@@ -32,15 +32,15 @@ class Fhm
      */
     protected $date_update;
 
-//    /**
-//     * @MongoDB\ReferenceOne(targetDocument="Fhm\UserBundle\Document\User", nullable=true, cascade={"persist"})
-//     */
-//    protected $user_create;
-//
-//    /**
-//     * @MongoDB\ReferenceOne(targetDocument="Fhm\UserBundle\Document\User", nullable=true, cascade={"persist"})
-//     */
-//    protected $user_update;
+    /**
+     * @MongoDB\ReferenceOne(targetDocument="Core\UserBundle\Document\User", nullable=true, cascade={"persist"})
+     */
+    protected $user_create;
+
+    /**
+     * @MongoDB\ReferenceOne(targetDocument="Core\UserBundle\Document\User", nullable=true, cascade={"persist"})
+     */
+    protected $user_update;
 
     /**
      * @MongoDB\Field(type="boolean")
@@ -194,53 +194,53 @@ class Fhm
         return $this->date_update;
     }
 
-//    /**
-//     * Set user create
-//     *
-//     * @param \Fhm\UserBundle\Document\User $user
-//     *
-//     * @return self
-//     */
-//    public function setUserCreate($user)
-//    {
-//        $this->user_create = $user;
-//
-//        return $this;
-//    }
-//
-//    /**
-//     * Get user create
-//     *
-//     * @return \Fhm\UserBundle\Document\User $user
-//     */
-//    public function getUserCreate()
-//    {
-//        return $this->user_create;
-//    }
-//
-//    /**
-//     * Set user update
-//     *
-//     * @param \Fhm\UserBundle\Document\User $user
-//     *
-//     * @return self
-//     */
-//    public function setUserUpdate($user)
-//    {
-//        $this->user_update = $user;
-//
-//        return $this;
-//    }
-//
-//    /**
-//     * Get user update
-//     *
-//     * @return \Fhm\UserBundle\Document\User $user
-//     */
-//    public function getUserUpdate()
-//    {
-//        return $this->user_update;
-//    }
+    /**
+     * Set user create
+     *
+     * @param \Core\UserBundle\Document\User $user
+     *
+     * @return self
+     */
+    public function setUserCreate($user)
+    {
+        $this->user_create = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user create
+     *
+     * @return \Core\UserBundle\Document\User $user
+     */
+    public function getUserCreate()
+    {
+        return $this->user_create;
+    }
+
+    /**
+     * Set user update
+     *
+     * @param \Core\UserBundle\Document\User $user
+     *
+     * @return self
+     */
+    public function setUserUpdate($user)
+    {
+        $this->user_update = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user update
+     *
+     * @return \Core\UserBundle\Document\User $user
+     */
+    public function getUserUpdate()
+    {
+        return $this->user_update;
+    }
 
     /**
      * Set delete
