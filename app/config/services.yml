@@ -23,16 +23,16 @@ services:
     # First we define some basic services to make these utilities available in
     # the entire application
     slugger:
-        class: Core\AppBundle\Utils\Slugger
+        class: Core\FhmBundle\Utils\Slugger
 
     markdown:
-        class: Core\AppBundle\Utils\Markdown
+        class: Core\FhmBundle\Utils\Markdown
 
     # These are the Twig extensions that create new filters and functions for
     # using them in the templates
     app.twig.app_extension:
         public:    false
-        class:     Core\AppBundle\Twig\AppExtension
+        class:     Core\FhmBundle\Twig\FhmExtension
         arguments: ['@markdown', '%app_locales%']
         tags:
             - { name: twig.extension }
@@ -44,13 +44,13 @@ services:
             - { name: twig.extension }
 
     app.redirect_to_preferred_locale_listener:
-        class: Core\AppBundle\EventListener\RedirectToPreferredLocaleListener
+        class: Core\FhmBundle\EventListener\RedirectToPreferredLocaleListener
         arguments: ['@router', '%app_locales%', '%locale%']
         tags:
             - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
 
     fhm_user.oauth.user_provider:
-        class: Core\AppBundle\OAuth\UserProvider
+        class: Core\FhmBundle\OAuth\UserProvider
         arguments: ["@fos_user.user_manager", {facebook: id_facebook, google: id_gplus, twitter: id_twitter}]
 
     # Uncomment the following lines to define a service for the Post Doctrine repository.

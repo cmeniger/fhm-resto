@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace AppBundle\Form\Type;
+namespace Core\FhmBundle\Form\Type;
 
-use AppBundle\Utils\MomentFormatConverter;
+use Core\FhmBundle\Utils\MomentFormatConverter;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\FormInterface;

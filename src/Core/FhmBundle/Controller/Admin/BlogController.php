@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Core\AppBundle\Controller\Admin;
+namespace Core\FhmBundle\Controller\Admin;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;

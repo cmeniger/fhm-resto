@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Core\AppBundle\Controller;
+namespace Core\FhmBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;

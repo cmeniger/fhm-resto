@@ -5,7 +5,7 @@
 # the routes in YAML, XML or PHP files.
 # See http://symfony.com/doc/current/book/routing.html
 app:
-    resource: '@AppBundle/Controller/'
+    resource: '@FhmBundle/Controller/'
     type:     annotation
     prefix:   /{_locale}
     requirements:

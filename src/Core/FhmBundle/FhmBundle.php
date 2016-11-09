@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Core\AppBundle;
+namespace Core\FhmBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
@@ -33,7 +33,7 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
  * @author Ryan Weaver <weaverryan@gmail.com>
  * @author Javier Eguiluz <javier.eguiluz@gmail.com>
  */
-class AppBundle extends Bundle
+class FhmBundle extends Bundle
 {
     // At first it's common to leave this class empty, but when the application grows,
     // you may need to add some initialization code in the boot() method.

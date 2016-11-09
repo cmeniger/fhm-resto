@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Core\AppBundle\Utils;
+namespace Core\FhmBundle\Utils;
 
 /**
  * This class is used to provide an example of integrating simple classes as

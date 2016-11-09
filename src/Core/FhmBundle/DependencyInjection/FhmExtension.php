@@ -1,6 +1,6 @@
 <?php
 
-namespace Core\AppBundle\DependencyInjection;
+namespace Core\FhmBundle\DependencyInjection;
 
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -14,7 +14,7 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
  * Time: 14:49
  */
 
-class AppExtension extends Extension
+class FhmExtension extends Extension
 {
     /**
      * @param array $configs

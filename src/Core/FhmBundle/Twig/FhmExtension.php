@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace Core\AppBundle\Twig;
+namespace Core\FhmBundle\Twig;
 
-use Core\AppBundle\Utils\Markdown;
+use Core\FhmBundle\Utils\Markdown;
 use Symfony\Component\Intl\Intl;
 
 /**
@@ -26,7 +26,7 @@ use Symfony\Component\Intl\Intl;
  * @author Javier Eguiluz <javier.eguiluz@gmail.com>
  * @author Julien ITARD <julienitard@gmail.com>
  */
-class AppExtension extends \Twig_Extension
+class FhmExtension extends \Twig_Extension
 {
     /**
      * @var Markdown

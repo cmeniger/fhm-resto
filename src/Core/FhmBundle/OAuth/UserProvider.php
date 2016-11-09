@@ -1,7 +1,7 @@
 <?php
-namespace Core\AppBundle\OAuth;
+namespace Core\FhmBundle\OAuth;
 
-use Fhm\UserBundle\Document\User;
+use Core\FhmBundle\Document\User;
 use FOS\UserBundle\Model\UserInterface as FOSUserInterface;
 use HWI\Bundle\OAuthBundle\OAuth\Response\UserResponseInterface;
 use HWI\Bundle\OAuthBundle\Security\Core\User\FOSUBUserProvider;

@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace AppBundle\Repository;
+namespace Core\FhmBundle\Repository;
 
 use Doctrine\ODM\MongoDB\DocumentRepository;
 
