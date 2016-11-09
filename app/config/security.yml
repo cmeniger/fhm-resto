@@ -1,6 +1,6 @@
 security:
     encoders:
-        Core\AppBundle\Document\User: bcrypt
+        Core\UserBundle\Document\User: bcrypt
 
     role_hierarchy:
         ROLE_MODERATOR:                     ROLE_USER
@@ -34,8 +34,8 @@ security:
                 oauth_user_provider:
                     service:                fhm_user.oauth.user_provider
             logout:
-                path:        fos_user_security_logout
-                target:      homepage
+                path:                       fos_user_security_logout
+                target:                     homepage
             anonymous:                      true
 
     access_control:
