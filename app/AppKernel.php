@@ -25,6 +25,7 @@ class AppKernel extends Kernel
             new HWI\Bundle\OAuthBundle\HWIOAuthBundle(),
             new Core\CodeExplorerBundle\CodeExplorerBundle(),
             new Core\AppBundle\AppBundle(),
+            new Core\UserBundle\CoreUserBundle(),
         ];
 
         // Some bundles are only used while developing the application or during

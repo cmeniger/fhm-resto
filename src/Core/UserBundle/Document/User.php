@@ -1,6 +1,6 @@
 <?php
 
-namespace Core\AppBundle\Document;
+namespace Core\UserBundle\Document;
 
 use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
