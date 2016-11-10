@@ -131,8 +131,8 @@ hwi_oauth:
     resource_owners:
         facebook:
             type:          facebook
-            client_id:     %oauth.facebook.id%
-            client_secret: %oauth.facebook.secret%
+            client_id:     "%oauth.facebook.id%"
+            client_secret: "%oauth.facebook.secret%"
             scope:         "public_profile,email"
             infos_url: "https://graph.facebook.com/me?fields=id,name,email,picture.type(square)"
             options:
@@ -142,13 +142,13 @@ hwi_oauth:
                 profilepicture: picture.data.url
         twitter:
             type:          twitter
-            client_id:     %oauth.twitter.id%
-            client_secret: %oauth.twitter.secret%
+            client_id:     "%oauth.twitter.id%"
+            client_secret: "%oauth.twitter.secret%"
             scope:         ""
         google:
             type:          google
-            client_id:     %oauth.google.id%
-            client_secret: %oauth.google.secret%
+            client_id:     "%oauth.google.id%"
+            client_secret: "%oauth.google.secret%"
             scope:         "email profile"
     http_client:
         verify_peer:       false
