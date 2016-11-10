@@ -42,8 +42,8 @@ class ArticleController extends Controller
      */
     public function indexAction()
     {
-        $entityManager = $this->getDoctrine()->getManager();
-        $articles = $entityManager->getRepository(Article::class)->findAll();
+        $dm = $this->get('doctrine_mongodb')->getManager();
+        $articles = $dm->getRepository(Article::class)->findAll();
         return $this->render('FhmArticleBundle:Admin:index.html.twig', ['posts' => $articles]);
     }
 
@@ -67,9 +67,9 @@ class ArticleController extends Controller
         
         if ($form->isSubmitted() && $form->isValid()) {
             //appel au service
-            $documentManager = $this->getDoctrine()->getManager();
-            $documentManager->persist($post);
-            $documentManager->flush();
+            $dm = $this->get('doctrine_mongodb')->getManager();
+            $dm->persist($post);
+            $dm->flush();
             
             $this->addFlash('success', 'article.created_successfully');
 
@@ -89,21 +89,24 @@ class ArticleController extends Controller
     /**
      * Finds and displays a Article document.
      *
-     * @Route("/{id}", requirements={"id": "\d+"}, name="admin_article_detail")
+     * @Route("/{id}", requirements={"id":"[a-z0-9]*"}, name="admin_article_detail")
      * @Method("GET")
      */
-    public function detailAction(Article $post)
+    public function detailAction($id)
     {
+        $dm = $this->get('doctrine_mongodb')->getManager();
+        $post = $dm->getRepository(Article::class)->find($id);
+
         // This security check can also be performed:
         //   1. Using an annotation: @Security("post.isAuthor(user)")
         //   2. Using a "voter" (see http://symfony.com/doc/current/cookbook/security/voters_data_permission.html)
-        if (null === $this->getUser() || !$post->isAuthor($this->getUser())) {
-            throw $this->createAccessDeniedException('Posts can only be shown to their authors.');
-        }
+//        if (null === $this->getUser() || !$post->isAuthor($this->getUser())) {
+//            throw $this->createAccessDeniedException('Posts can only be shown to their authors.');
+//        }
 
         $deleteForm = $this->createDeleteForm($post);
 
-        return $this->render('admin/blog/show.html.twig', [
+        return $this->render('FhmArticleBundle:Admin:detail.html.twig', [
             'post'        => $post,
             'delete_form' => $deleteForm->createView(),
         ]);
@@ -112,25 +115,24 @@ class ArticleController extends Controller
     /**
      * Displays a form to edit an existing Post entity.
      *
-     * @Route("/{id}/edit", requirements={"id": "\d+"}, name="admin_article_update")
+     * @Route("/{id}/update", requirements={"id":"[a-z0-9]*"}, name="admin_article_update")
      * @Method({"GET", "POST"})
      */
-    public function editAction(Article $post, Request $request)
+    public function updateAction($id, Request $request)
     {
-        if (null === $this->getUser() || !$post->isAuthor($this->getUser())) {
-            throw $this->createAccessDeniedException('Posts can only be edited by their authors.');
-        }
-        $entityManager = $this->getDoctrine()->getManager();
-        //var_dump($post->getTitle()); die;
-
+        $dm = $this->get('doctrine_mongodb')->getManager();
+        $post = $dm->getRepository(Article::class)->find($id);
+//        if (null === $this->getUser() || !$post->isAuthor($this->getUser())) {
+//            throw $this->createAccessDeniedException('Posts can only be edited by their authors.');
+//        }
         $editForm = $this->createForm(ArticleType::class, $post);
         $deleteForm = $this->createDeleteForm($post);
 
         $editForm->handleRequest($request);
         
         if ($editForm->isSubmitted() && $editForm->isValid()) {
-            $entityManager->flush();
-
+            $dm->persist($post);
+            $dm->flush();
             $this->addFlash('success', 'article.updated_successfully');
 
             return $this->redirectToRoute('admin_article_update', ['id' => $post->getId()]);
@@ -146,7 +148,7 @@ class ArticleController extends Controller
     /**
      * Deletes a Post entity.
      *
-     * @Route("/{id}", name="admin_post_delete")
+     * @Route("/{id}", name="admin_article_delete")
      * @Method("DELETE")
      * @Security("post.isAuthor(user)")
      *

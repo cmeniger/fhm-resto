@@ -1,5 +1,5 @@
 <?php
-namespace Fhm\ArtcileBundle\Repository;
+namespace Fhm\ArticleBundle\Repository;
 
 use Doctrine\ODM\MongoDB\DocumentRepository;
 use Doctrine\ODM\MongoDB\DocumentManager;

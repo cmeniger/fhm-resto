@@ -2,6 +2,10 @@ fhm_article:
     resource: "@FhmArticleBundle/Controller/"
     type:     annotation
     prefix:   /{_locale}
+    requirements:
+        _locale: '%app_locales%'
+    defaults:
+        _locale: '%locale%'
 
 
 # These first lines load the all routes defined as @Route() annotations in any
