@@ -2,15 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b714b78c-3e07-4b49-8ebd-abdf007b0292" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Resources/views/admin/layout.html.twig" afterPath="$PROJECT_DIR$/app/Resources/views/admin/layout.html.twig" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Resources/views/base.html.twig" afterPath="$PROJECT_DIR$/app/Resources/views/base.html.twig" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/config/config.yml" afterPath="$PROJECT_DIR$/app/config/config.yml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/config/routing.yml" afterPath="$PROJECT_DIR$/app/config/routing.yml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Fhm/ArticleBundle/Controller/Admin/ArticleController.php" afterPath="$PROJECT_DIR$/src/Fhm/ArticleBundle/Controller/Admin/ArticleController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Fhm/ArticleBundle/Repository/ArticleRepository.php" afterPath="$PROJECT_DIR$/src/Fhm/ArticleBundle/Repository/ArticleRepository.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Fhm/ArticleBundle/Resources/views/Admin/create.html.twig" afterPath="$PROJECT_DIR$/src/Fhm/ArticleBundle/Resources/views/Admin/create.html.twig" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Fhm/ArticleBundle/Resources/views/Admin/detail.html.twig" afterPath="$PROJECT_DIR$/src/Fhm/ArticleBundle/Resources/views/Admin/detail.html.twig" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Fhm/ArticleBundle/Resources/views/Admin/index.html.twig" afterPath="$PROJECT_DIR$/src/Fhm/ArticleBundle/Resources/views/Admin/index.html.twig" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Core/UserBundle/Controller/DefaultController.php" afterPath="$PROJECT_DIR$/src/Core/UserBundle/Controller/DefaultController.php" />
     </list>
     <ignored path="fhm-tools-v2.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -67,7 +62,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ArticleController.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="ArticleController.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Fhm/ArticleBundle/Controller/Admin/ArticleController.php">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="234">
@@ -84,6 +79,16 @@
                 <element signature="e#6548#6569#1#PHP" expanded="true" />
                 <element signature="e#7257#7279#0#PHP" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="routing.yml" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/config/routing.yml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-536">
+              <caret line="7" column="27" selection-start-line="7" selection-start-column="27" selection-end-line="7" selection-end-column="27" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -386,6 +391,24 @@
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="fhm-tools-v2" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="fhm-tools-v2" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="config" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
       <pane id="Scope" />
@@ -452,12 +475,12 @@
       <option name="presentableId" value="Default" />
       <updated>1478681927297</updated>
       <workItem from="1478681928937" duration="9837000" />
-      <workItem from="1478707935074" duration="24413000" />
+      <workItem from="1478707935074" duration="24551000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="34250000" />
+    <option name="totallyTimeSpent" value="34388000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1920" y="52" width="1910" height="998" extended-state="0" />
@@ -806,14 +829,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/config/routing.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="126">
-          <caret line="7" column="27" selection-start-line="7" selection-start-column="27" selection-end-line="7" selection-end-column="27" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/Resources/views/base.html.twig">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-559">
@@ -918,6 +933,14 @@
             <element signature="e#6548#6569#1#PHP" expanded="true" />
             <element signature="e#7257#7279#0#PHP" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/config/routing.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-536">
+          <caret line="7" column="27" selection-start-line="7" selection-start-column="27" selection-end-line="7" selection-end-column="27" />
+          <folding />
         </state>
       </provider>
     </entry>

@@ -41,6 +41,10 @@ fos_user:
     resource: "@FOSUserBundle/Resources/config/routing/all.xml"
     prefix:   /{_locale}
 
+fhm_user:
+    resource: "@CoreUserBundle/Controller/"
+    prefix:   /{_locale}
+
 hwi_oauth_login:
     resource: "@HWIOAuthBundle/Resources/config/routing/login.xml"
     prefix:   /{_locale}/connect
