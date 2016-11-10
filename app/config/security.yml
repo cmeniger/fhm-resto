@@ -1,11 +1,11 @@
 security:
     encoders:
-        Core\FhmBundle\Document\User: bcrypt
+        Core\UserBundle\Document\User: bcrypt
 
     role_hierarchy:
-        ROLE_MODERATOR:                     ROLE_USER
-        ROLE_ADMIN:                         ROLE_MODERATOR
-        ROLE_SUPER_ADMIN:                   ROLE_ADMIN
+            ROLE_MODERATOR:                     ROLE_USER
+            ROLE_ADMIN:                         ROLE_MODERATOR
+            ROLE_SUPER_ADMIN:                   ROLE_ADMIN
 
     providers:
         fos_userbundle:
@@ -14,7 +14,6 @@ security:
 #            id:                             fhm_user.security.user_provider
 
     firewalls:
-
         main:
             pattern:                        ^/
             form_login:
@@ -33,9 +32,11 @@ security:
                 check_path:                 fos_user_security_check
                 oauth_user_provider:
                     service:                fhm_user.oauth.user_provider
+            #Don't touch logout
             logout:
-                path:        fos_user_security_logout
-                target:      homepage
+                 path:                      fos_user_security_logout
+                 target:                    homepage
+            logout:                         true
             anonymous:                      true
 
     access_control:
