@@ -24,7 +24,7 @@ class AppKernel extends Kernel
             new FOS\UserBundle\FOSUserBundle(),
             new HWI\Bundle\OAuthBundle\HWIOAuthBundle(),
             new Core\CodeExplorerBundle\CodeExplorerBundle(),
-            new Core\AppBundle\AppBundle(),
+            new Core\FhmBundle\FhmBundle(),
             new Core\UserBundle\CoreUserBundle(),
         ];
 
