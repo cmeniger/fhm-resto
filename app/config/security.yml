@@ -1,6 +1,6 @@
 security:
     encoders:
-        Core\FhmBundle\Document\User: bcrypt
+        Core\AppBundle\Document\User: bcrypt
 
     role_hierarchy:
         ROLE_MODERATOR:                     ROLE_USER
