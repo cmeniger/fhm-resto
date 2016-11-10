@@ -26,6 +26,7 @@ class AppKernel extends Kernel
             new Core\CodeExplorerBundle\CodeExplorerBundle(),
             new Core\FhmBundle\FhmBundle(),
             new Core\UserBundle\CoreUserBundle(),
+            new Fhm\ArticleBundle\FhmArticleBundle(),
         ];
 
         // Some bundles are only used while developing the application or during
