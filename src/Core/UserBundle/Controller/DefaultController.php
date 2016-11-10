@@ -3,12 +3,10 @@
 namespace Core\UserBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
 /**
- * @Route
- * (
- *      path="/user",
- * )
+ * @Route("/user")
  */
 class DefaultController extends Controller
 {
