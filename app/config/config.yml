@@ -105,6 +105,22 @@ fos_user:
     db_driver: mongodb
     firewall_name: main
     user_class: Core\UserBundle\Document\User
+    from_email:
+        address:     "%fhm_mailer.noreply%"
+        sender_name: noreply
+    service:
+        mailer: fhm_user.mailer.twig_swift
+    resetting:
+        email:
+            from_email:
+                address:        "%fhm_mailer.noreply%"
+                sender_name:    noreply
+    registration:
+        confirmation:
+            enabled: true
+            from_email:
+                address:        "%fhm_mailer.noreply%"
+                sender_name:    Registration
 
 #    from_email:
 #        address:     %fhm_mailer.noreply%
