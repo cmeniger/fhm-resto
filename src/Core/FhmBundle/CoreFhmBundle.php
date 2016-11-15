@@ -33,7 +33,7 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
  * @author Ryan Weaver <weaverryan@gmail.com>
  * @author Javier Eguiluz <javier.eguiluz@gmail.com>
  */
-class FhmBundle extends Bundle
+class CoreFhmBundle extends Bundle
 {
     // At first it's common to leave this class empty, but when the application grows,
     // you may need to add some initialization code in the boot() method.

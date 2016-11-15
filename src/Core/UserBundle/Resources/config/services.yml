@@ -29,7 +29,7 @@ services:
 
     fhm_user_activity_listener:
         class: Core\UserBundle\EventListener\ActivityListener
-        arguments: ["@security.token_storage", "@service_container"]
+        arguments: ["@security.token_storage","@doctrine.odm.mongodb.document_manager"]
         tags:
           - { name: kernel.event_listener, event: kernel.controller, method: onCoreController }
 

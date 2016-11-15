@@ -2,10 +2,6 @@
 
 {% block body_id 'homepage' %}
 
-{#
-    the homepage is a special page which displays neither a header nor a footer.
-    this is done with the 'trick' of defining empty Twig blocks without any content
-#}
 {% block header %}{% endblock %}
 {% block footer %}{% endblock %}
 
@@ -21,7 +17,7 @@
                     {{ 'help.browse_app'|trans|raw }}
                 </p>
                 <p>
-                    <a class="btn btn-primary btn-lg" href="{{ path('blog_index') }}">
+                    <a class="btn btn-primary btn-lg" href="{{ path('home') }}">
                         <i class="fa fa-users" aria-hidden="true"></i> {{ 'action.browse_app'|trans }}
                     </a>
                 </p>

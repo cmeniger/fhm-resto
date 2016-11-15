@@ -3,8 +3,8 @@
     <file source-language="en" target-language="fr" datatype="plaintext" original="file.ext">
         <body>
             <trans-unit id="note">
-                <source>note</source>
-                <target>NOTE</target>
+                <source>memo</source>
+                <target>Memo</target>
             </trans-unit>
             <trans-unit id="tip">
                 <source>tip</source>
@@ -21,7 +21,7 @@
 
             <trans-unit id="title.homepage">
                 <source>title.homepage</source>
-                <target><![CDATA[Bienvenue sur l'application <strong>Symfony Demo</strong>]]></target>
+                <target><![CDATA[Bienvenue sur l'application <strong>FHM TOOLS V2</strong>]]></target>
             </trans-unit>
             <trans-unit id="title.source_code">
                 <source>title.source_code</source>
@@ -218,19 +218,25 @@
             </trans-unit>
             <trans-unit id="help.login_users">
                 <source>help.login_users</source>
-                <target>Essayez l'un des utilisateurs suivants</target>
+                <target>Info de démarrage</target>
             </trans-unit>
             <trans-unit id="help.role_user">
                 <source>help.role_user</source>
-                <target>utilisateur normal</target>
+                <target>Super admin</target>
             </trans-unit>
             <trans-unit id="help.role_admin">
                 <source>help.role_admin</source>
                 <target>administrateur</target>
             </trans-unit>
-            <trans-unit id="help.reload_fixtures">
-                <source>help.reload_fixtures</source>
-                <target>Si ces utilisateurs ne fonctionnent pas, rechargez les fixtures de l'application en exécutant cette commande depuis le terminal :</target>
+            <trans-unit id="help.pname">
+                <source>help.pname</source>
+                <target>Nom du projet</target>
+            </trans-unit>
+            <trans-unit id="help.memo">
+                <source>help.memo</source>
+                <target>
+                  Les commandes magiques pour bien démarrer son projet :
+                </target>
             </trans-unit>
             <trans-unit id="help.add_user">
                 <source>help.add_user</source>

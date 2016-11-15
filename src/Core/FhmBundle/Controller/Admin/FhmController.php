@@ -1,5 +1,4 @@
 <?php
-namespace Core\FhmBundle\Controller;
 
 /**
  * Created by PhpStorm.
@@ -7,6 +6,9 @@ namespace Core\FhmBundle\Controller;
  * Date: 15/11/16
  * Time: 10:16
  */
+
+namespace Core\FhmBundle\Controller\Admin;
+
 use Core\FhmBundle\Document\Fhm;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -16,21 +18,26 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * The default front Controller .
- * Description TODO
+ * The base Controller to handle the backend.
+ *
+ * @Route("/admin")
+ * @Security("has_role('ROLE_ADMIN')")
  *
  * @author Fhm Team
  */
-
 class FhmController extends Controller
 {
-
     /**
-     * @Route("/", defaults={"page": 1}, name="home")
+     * Index backend page .
+     *
+     * This controller description...TODO.
+     *
+     * @Route("/", name="admin_index")
      * @Method("GET")
      */
-    public function indexAction($page)
+    public function indexAction()
     {
-        return $this->render('core/index.html.twig');
+        return $this->render('admin/core/index.html.twig');
     }
+
 }
