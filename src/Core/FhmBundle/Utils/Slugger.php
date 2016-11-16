@@ -29,4 +29,33 @@ class Slugger
     {
         return preg_replace('/\s+/', '-', mb_strtolower(trim(strip_tags($string)), 'UTF-8'));
     }
+
+    public function getAlias($id, $name, $repository = null)
+    {
+        $alias   = "";
+        $unique  = false;
+        $code    = 0;
+        $replace = array(
+            'À' => 'a', 'Á' => 'a', 'Â' => 'a', 'Ä' => 'a', 'à' => 'a', 'á' => 'a', 'â' => 'a', 'ä' => 'a', '@' => 'a',
+            'È' => 'e', 'É' => 'e', 'Ê' => 'e', 'Ë' => 'e', 'è' => 'e', 'é' => 'e', 'ê' => 'e', 'ë' => 'e', '€' => 'e',
+            'Ì' => 'i', 'Í' => 'i', 'Î' => 'i', 'Ï' => 'i', 'ì' => 'i', 'í' => 'i', 'î' => 'i', 'ï' => 'i',
+            'Ò' => 'o', 'Ó' => 'o', 'Ô' => 'o', 'Ö' => 'o', 'ò' => 'o', 'ó' => 'o', 'ô' => 'o', 'ö' => 'o',
+            'Ù' => 'u', 'Ú' => 'u', 'Û' => 'u', 'Ü' => 'u', 'ù' => 'u', 'ú' => 'u', 'û' => 'u', 'ü' => 'u', 'µ' => 'u',
+            'Œ' => 'oe', 'œ' => 'oe',
+            '$' => 's'
+        );
+        while($alias == "" || !$unique)
+        {
+            $alias  = $name;
+            $alias  = strtr($alias, $replace);
+            $alias  = preg_replace('#[^A-Za-z0-9]+#', '-', $alias);
+            $alias  = trim($alias, '-');
+            $alias  = strtolower($alias);
+            $alias  = ($code > 0) ? $alias . '-' . $code : $alias;
+            $unique = $this->dmRepository($repository)->isUnique($id, $alias);
+            $code++;
+        }
+
+        return $alias;
+    }
 }

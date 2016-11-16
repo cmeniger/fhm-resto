@@ -67,6 +67,7 @@ class ArticleController extends Controller
         
         if ($form->isSubmitted() && $form->isValid()) {
             //appel au service
+            $post->setName($this->get('slugger')->slugify($post->getTitle()));
             $dm = $this->get('doctrine_mongodb')->getManager();
             $dm->persist($post);
             $dm->flush();
