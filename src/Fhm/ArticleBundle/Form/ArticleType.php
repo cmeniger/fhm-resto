@@ -36,14 +36,15 @@ class ArticleType extends AbstractType
                 'attr' => ['autofocus' => true],
                 'label' => 'label.title',
             ])
-            ->add('subtitle', null, [
+            ->add('author', null, [
                 'attr' => ['autofocus' => true],
                 'label' => 'label.author',
             ])
             ->add('resume', TextareaType::class, [
+                'attr' => ['rows' => 5],
                 'label' => 'label.summary',
             ])
-            ->add('content', null, [
+            ->add('content', TextareaType::class, [
                 'attr' => ['rows' => 20],
                 'label' => 'label.content',
             ])

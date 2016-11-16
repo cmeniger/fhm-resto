@@ -5,7 +5,6 @@
 
 {% block main %}
     <h1>{{ 'title.article_list'|trans }}</h1>
-
     <table class="table table-striped">
         <thead>
             <tr>
@@ -26,6 +25,9 @@
                             <a href="{{ path('admin_article_update', { id: post.id }) }}" class="btn btn-sm btn-primary">
                                 <i class="fa fa-edit" aria-hidden="true"></i> {{ 'action.edit'|trans }}
                             </a>
+                            <a href="{{ path('admin_article_delete', { id: post.id }) }}" class="btn btn-sm btn-primary">
+                                <i class="fa fa-edit" aria-hidden="true"></i> {{ 'action.delete'|trans }}
+                            </a>
                         </div>
                     </td>
                 </tr>
@@ -44,8 +46,5 @@
             <i class="fa fa-plus" aria-hidden="true"></i> {{ 'action.create_post'|trans }}
         </a>
     </div>
-
-    {{ parent() }}
-
     {{ show_source_code(_self) }}
 {% endblock %}

@@ -4,25 +4,17 @@
 
 {% block main %}
     <h1>{{ 'title.edit_post'|trans({'%id%': post.id}) }}</h1>
-
-    {{ include('admin/blog/_form.html.twig', {
-        form: edit_form,
-        button_label: 'action.save'|trans,
-        include_back_to_home_link: true,
-    }, with_context = false) }}
+    {{ form_start(form) }}
+    {{ form_row(form.title) }}
+    {{ form_row(form.author) }}
+    {{ form_row(form.resume) }}
+    {{ form_row(form.content) }}
+    <input type="submit" value="{{ button_label|default('label.update_post'|trans) }}"
+           class="{{ button_css|default("btn btn-primary") }}" />
+    <a href="{{ path('admin_article_index') }}" class="btn btn-link">{{ 'action.back_to_list'|trans }}</a>
+    {{ form_end(form) }}
 {% endblock %}
 
 {% block sidebar %}
-    <div class="section actions">
-        {{ include('admin/blog/_form.html.twig', {
-            form: delete_form,
-            button_label: 'action.delete_post'|trans,
-            button_css: 'btn btn-lg btn-block btn-danger',
-            show_confirmation: true,
-        }, with_context = false) }}
-    </div>
-
-    {{ parent() }}
-
     {{ show_source_code(_self) }}
 {% endblock %}

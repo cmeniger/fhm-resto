@@ -10,6 +10,11 @@ imports:
     - { resource: services.yml }
     - { resource: "@FhmArticleBundle/Resources/config/services.yml" }
 
+sensio_framework_extra:
+     request:
+         converters: true
+         auto_convert: false
+
 # These are the configuration parameters that define the application's behavior
 # and which are independent from the underlying technical infrastructure
 # See http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration

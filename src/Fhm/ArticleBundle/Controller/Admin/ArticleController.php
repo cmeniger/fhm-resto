@@ -10,6 +10,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 /**
  * Controller used to manage blog contents in the backend.
@@ -25,6 +26,14 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class ArticleController extends Controller
 {
+
+    /**
+     * @return mixed
+     */
+    protected function dm()
+    {
+        return $this->get('doctrine_mongodb')->getManager();
+    }
     /**
      * Lists all article documents.
      *
@@ -42,8 +51,7 @@ class ArticleController extends Controller
      */
     public function indexAction()
     {
-        $dm = $this->get('doctrine_mongodb')->getManager();
-        $articles = $dm->getRepository(Article::class)->findAll();
+        $articles = $this->dm()->getRepository(Article::class)->findAll();
         return $this->render('FhmArticleBundle:Admin:index.html.twig', ['posts' => $articles]);
     }
 
@@ -68,9 +76,8 @@ class ArticleController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             //appel au service
             $post->setName($this->get('slugger')->slugify($post->getTitle()));
-            $dm = $this->get('doctrine_mongodb')->getManager();
-            $dm->persist($post);
-            $dm->flush();
+            $this->dm()->persist($post);
+            $this->dm()->flush();
             
             $this->addFlash('success', 'article.created_successfully');
 
@@ -91,108 +98,72 @@ class ArticleController extends Controller
      * Finds and displays a Article document.
      *
      * @Route("/{id}", requirements={"id":"[a-z0-9]*"}, name="admin_article_detail")
+     * @ParamConverter("post", class="Fhm\ArticleBundle\Document\Article")
      * @Method("GET")
      */
-    public function detailAction($id)
+    public function detailAction(Article $post)
     {
-        $dm = $this->get('doctrine_mongodb')->getManager();
-        $post = $dm->getRepository(Article::class)->find($id);
-
+//        $post = $this->dm()->getRepository(Article::class)->find($id);
         // This security check can also be performed:
         //   1. Using an annotation: @Security("post.isAuthor(user)")
         //   2. Using a "voter" (see http://symfony.com/doc/current/cookbook/security/voters_data_permission.html)
 //        if (null === $this->getUser() || !$post->isAuthor($this->getUser())) {
 //            throw $this->createAccessDeniedException('Posts can only be shown to their authors.');
 //        }
-
-        $deleteForm = $this->createDeleteForm($post);
+//        $deleteForm = $this->createDeleteForm($post);
 
         return $this->render('FhmArticleBundle:Admin:detail.html.twig', [
             'post'        => $post,
-            'delete_form' => $deleteForm->createView(),
+//            'delete_form' => $deleteForm->createView(),
         ]);
     }
 
     /**
      * Displays a form to edit an existing Post entity.
      *
-     * @Route("/{id}/update", requirements={"id":"[a-z0-9]*"}, name="admin_article_update")
+     * @Route("/update/{id}", requirements={"id":"[a-z0-9]*"}, name="admin_article_update")
+     * @ParamConverter("post", class="Fhm\ArticleBundle\Document\Article")
      * @Method({"GET", "POST"})
      */
-    public function updateAction($id, Request $request)
+    public function updateAction(Article $post, Request $request)
     {
-        $dm = $this->get('doctrine_mongodb')->getManager();
-        $post = $dm->getRepository(Article::class)->find($id);
-//        if (null === $this->getUser() || !$post->isAuthor($this->getUser())) {
-//            throw $this->createAccessDeniedException('Posts can only be edited by their authors.');
-//        }
+        //$post = $this->dm()->getRepository(Article::class)->find($id);
         $editForm = $this->createForm(ArticleType::class, $post);
         $deleteForm = $this->createDeleteForm($post);
-
         $editForm->handleRequest($request);
-        
         if ($editForm->isSubmitted() && $editForm->isValid()) {
-            $dm->persist($post);
-            $dm->flush();
+            $this->dm()->persist($post);
+            $this->dm()->flush();
             $this->addFlash('success', 'article.updated_successfully');
-
             return $this->redirectToRoute('admin_article_update', ['id' => $post->getId()]);
         }
 
         return $this->render('FhmArticleBundle:Admin:update.html.twig', [
             'post'        => $post,
+            'form'        => $editForm->createView(),
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         ]);
     }
 
     /**
-     * Deletes a Post entity.
+     * Deletes a article document.
      *
-     * @Route("/{id}", name="admin_article_delete")
-     * @Method("DELETE")
-     * @Security("post.isAuthor(user)")
+     * @Route("/delete/{id}", requirements={"post_id":"[a-z0-9]*"}, name="admin_article_delete")
+     * @ParamConverter("post", class="Fhm\ArticleBundle\Document\Article")
      *
      * The Security annotation value is an expression (if it evaluates to false,
      * the authorization mechanism will prevent the user accessing this resource).
      * The isAuthor() method is defined in the AppBundle\Entity\Post entity.
      */
-    public function deleteAction(Request $request, Article $post)
+    public function deleteAction(Article $post)
     {
-        $form = $this->createDeleteForm($post);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-
-            $entityManager->remove($post);
-            $entityManager->flush();
-
+        if (is_object($post)) {
+            $this->dm()->remove($post);
+            $this->dm()->flush();
             $this->addFlash('success', 'article.deleted_successfully');
         }
-
         return $this->redirectToRoute('admin_article_index');
     }
 
-    /**
-     * Creates a form to delete a Post entity by id.
-     *
-     * This is necessary because browsers don't support HTTP methods different
-     * from GET and POST. Since the controller that removes the blog posts expects
-     * a DELETE method, the trick is to create a simple form that *fakes* the
-     * HTTP DELETE method.
-     * See http://symfony.com/doc/current/cookbook/routing/method_parameters.html.
-     *
-     * @param Post $post The post object
-     *
-     * @return \Symfony\Component\Form\Form The form
-     */
-    private function createDeleteForm(Article $post)
-    {
-        return $this->createFormBuilder()
-            ->setAction($this->generateUrl('admin_article_delete', ['id' => $post->getId()]))
-            ->setMethod('DELETE')
-            ->getForm()
-        ;
-    }
 }

@@ -6,9 +6,7 @@
     <h1>{{ post.title }}</h1>
     <table class="table">
         <tbody>
-
             <tr>
-                <th scope="row">{{ 'label.content'|trans }}</th>
                 <td>{{ post.content|md2html }}</td>
             </tr>
 
@@ -22,15 +20,5 @@
             <i class="fa fa-edit" aria-hidden="true"></i> {{ 'action.edit_contents'|trans }}
         </a>
     </div>
-
-    <div class="section">
-        {{ include('admin/blog/_form.html.twig', {
-            form: delete_form,
-            button_label: 'action.delete_post'|trans,
-            button_css: 'btn btn-lg btn-block btn-danger',
-            show_confirmation: true,
-        }, with_context = false) }}
-    </div>
-
     {{ show_source_code(_self) }}
 {% endblock %}
