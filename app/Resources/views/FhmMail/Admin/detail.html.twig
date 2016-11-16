@@ -1,0 +1,72 @@
+{% trans_default_domain instance.domain %}
+{% extends "::FhmFhm/Admin/detail.html.twig" %}
+
+{% block content_url %}{% endblock %}
+{% block content_admin %}{% endblock %}
+
+{% block content_link_data %}
+    <li>
+        <a href="{{ path('fhm_admin') }}" class="button small secondary"><i class="fa fa-angle-double-left"></i></a>
+    </li>
+    <li>
+        <a href="{{ path(instance.source ~ '_admin_' ~ instance.route ~ '_create') }}" class="button small success"><i class="fa fa-plus"></i> {{ (instance.translation ~ '.admin.create.link')|trans }}
+        </a>
+    </li>
+    <li>
+        <a href="{{ path(instance.source ~ '_admin_' ~ instance.route ~ '_model') }}" class="button small"><i class="fa fa-picture-o"></i> {{ (instance.translation ~ '.admin.model.link')|trans }}
+        </a>
+    </li>
+    <li>
+        <a href="{{ path(instance.source ~ '_admin_' ~ instance.route) }}" class="button small"><i class="fa fa-envelope"></i> {{ (instance.translation ~ '.admin.index.link')|trans }}
+        </a>
+    </li>
+{% endblock %}
+
+{% block content_data %}
+    <div class="row">
+        <h2 id="anchor-admin-data">{{ (instance.translation ~ '.admin.detail.data.title')|trans }}</h2>
+        <table class="fullwidth">
+            <tbody>
+                <tr>
+                    <td><strong>{{ (instance.translation ~ '.admin.detail.data.id')|trans }}</strong></td>
+                    <td>{{ document.getId() }}</td>
+                </tr>
+                <tr>
+                    <td><strong>{{ (instance.translation ~ '.admin.detail.data.create')|trans }}</strong></td>
+                    <td>{{ document.getUserCreate() ? document.getUserCreate().getUsername() ~ ' - ' : '' }}{{ document.getDateCreate() | localizeddate('full', 'short', app.request.locale) }}</td>
+                </tr>
+                <tr>
+                    <td><strong>{{ (instance.translation ~ '.admin.detail.data.model')|trans }}</strong></td>
+                    <td>{{ document.getModel() }}</td>
+                </tr>
+                <tr>
+                    <td><strong>{{ (instance.translation ~ '.admin.detail.data.type')|trans }}</strong></td>
+                    <td>
+                        <span class="radius label {{ (instance.translation ~ '.type.' ~ document.getType())|trans }}">{{ document.getType() }}</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>{{ (instance.translation ~ '.admin.detail.data.from')|trans }}</strong></td>
+                    <td>{{ document.getFrom() }}</td>
+                </tr>
+                <tr>
+                    <td><strong>{{ (instance.translation ~ '.admin.detail.data.to')|trans }}</strong></td>
+                    <td>{{ document.getTo() }}</td>
+                </tr>
+                <tr>
+                    <td><strong>{{ (instance.translation ~ '.admin.detail.data.subject')|trans }}</strong></td>
+                    <td>{{ document.getSubject() }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="row">
+        <table class="fullwidth">
+            <tbody>
+                <tr>
+                    <td>{{ document.getBody()|raw }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

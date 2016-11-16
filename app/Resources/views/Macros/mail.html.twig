@@ -1,0 +1,124 @@
+{# ---------------------------------------------------- #}
+{# HTML - <tr> #}
+{# ---------------------------------------------------- #}
+{% macro row(data) %}
+    <tr style="color:#000000; background:#ffffff;">
+        <td style="font-family:Tahoma, sans-serif; font-size:18px; padding:10px 20px;">
+            {{ data|raw }}
+        </td>
+    </tr>
+{% endmacro %}
+
+{# ---------------------------------------------------- #}
+{# HTML - <h1> #}
+{# ---------------------------------------------------- #}
+{% macro title1(data) %}
+
+    {% import _self as this %}
+    {{ this.row("<h1 style='color:#555555; text-transform:uppercase; font-size:18px; padding:30px 0;'>" ~ data|raw ~ "</h1>") }}
+
+{% endmacro %}
+
+{# ---------------------------------------------------- #}
+{# HTML - <h2> #}
+{# ---------------------------------------------------- #}
+{% macro title2(data) %}
+
+    {% import _self as this %}
+    {{ this.row("<h2 style='color:#555555; text-transform:uppercase; font-size:14px; padding:15px 0;'>" ~ data|raw ~ "</h2>") }}
+
+{% endmacro %}
+
+{# ---------------------------------------------------- #}
+{# HTML - <p> #}
+{# ---------------------------------------------------- #}
+{% macro paragraph(data) %}
+
+    {% import _self as this %}
+    {{ this.row("<p>" ~ data|raw ~ "</p>") }}
+
+{% endmacro %}
+
+{# ---------------------------------------------------- #}
+{# HTML - <ul> #}
+{# ---------------------------------------------------- #}
+{% macro list(datas) %}
+
+    {% import _self as this %}
+    {% set list = '' %}
+    {% for data in datas %}
+        {% set list = list ~ "<li>" ~ data|raw ~ "</li>" %}
+    {% endfor %}
+    {{ this.row("<ul>" ~ list ~ "</ul>") }}
+
+{% endmacro %}
+
+{# ---------------------------------------------------- #}
+{# Signature #}
+{# ---------------------------------------------------- #}
+{% macro signature(data) %}
+
+    {% import _self as this %}
+    {% if data %}
+        {{ this.row(data) }}
+    {% endif %}
+    {{ this.row("Cordialement,") }}
+    {{ this.row(mailer.sign) }}
+
+{% endmacro %}
+
+{# ---------------------------------------------------- #}
+{# Button #}
+{# ---------------------------------------------------- #}
+{% macro button(link, data) %}
+
+    {% import _self as this %}
+    {{ this.row
+        (
+            "<table style='width:100%; margin:0; padding:0; border:0;'><tr><td style='text-align:center;'>"
+            ~ "<a href='" ~ link ~ "' style='padding:10px 20px; background-color:#333333; color:#ffffff; text-decoration:none; font-size:20px;'>" ~ data|raw ~ "</a>"
+            ~ "</td></tr></table>"        
+        ) 
+    }}
+
+{% endmacro %}
+
+{# ---------------------------------------------------- #}
+{# Buttons #}
+{# ---------------------------------------------------- #}
+{% macro buttons(datas) %}
+
+    {% import _self as this %}
+    {% set list = '' %}
+    {% for data in datas %}
+        {% set list = list ~ "<td><a href='" ~ data[0] ~ "' style='padding:10px 20px; background-color:#000000; color:#ffffff; text-decoration:none; font-size:20px;'>" ~ data[1]|raw ~ "</a></td>" %}
+    {% endfor %}
+    {{ this.row
+        (
+            "<center>"
+            ~ "<table style='text-align:center;'><tr>"
+            ~ list        
+            ~ "</tr></table>"      
+            ~ "</center>"      
+        ) 
+    }}
+
+{% endmacro %}
+
+{# ---------------------------------------------------- #}
+{# Menu #}
+{# ---------------------------------------------------- #}
+{% macro menu(server) %}
+    
+    {% import _self as this %}
+    {{ this.row
+        (
+            "<center>"
+            ~ "<table style='text-align:center;'><tr>"
+            ~ "<td><a href='" ~ server ~ "' style='padding:5px 10px; background-color:#333333; color:#ffffff; text-decoration:none; font-size:16px;'>Accueil</a></td>"
+            ~ "</tr></table>"
+            ~ "</center>"
+        ) 
+    }}
+
+{% endmacro %}

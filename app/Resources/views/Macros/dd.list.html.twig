@@ -1,0 +1,178 @@
+{#
+    Admin
+    @var document : object : document en cours
+    @var list1    : array  : éléments à afficher dans la liste 1
+    @var list2    : array  : éléments à afficher dans la liste 2
+    @var current  : string : élément courant qui apparaît dans la page (peut être vide)
+    @var route    : string : route à appeler en ajax
+    @var title    : string : titre
+    @var label1   : string : label liste 1
+    @var label2   : string : label liste 2
+    @var grouping : int    : numéro du regroupement des listes
+    @var instance : object : données d'instance de la page courante
+    @var bundle   : string : route de base pour le mode objet
+#}
+{% macro admin(document, list1, list2, current, route, title, label1, label2, grouping, instance, bundle) %}
+    {% trans_default_domain instance.domain %}
+    {% import _self as this %}
+    {% if bundle %}
+        {{ this.objectHtml(document, list1, list2, current, route, title, label1, label2, grouping, instance, bundle) }}
+    {% else %}
+        {{ this.arrayHtml(document, list1, list2, current, route, title, label1, label2, grouping, instance) }}
+    {% endif %}
+{% endmacro %}
+
+{#
+    Mode Array : contenu HTML
+    @var document : object : document en cours
+    @var list1    : array  : éléments à afficher dans la liste 1
+    @var list2    : array  : éléments à afficher dans la liste 2
+    @var current  : string : élément courant qui apparaît dans la page (peut être vide)
+    @var route    : string : route à appeler en ajax
+    @var title    : string : titre
+    @var label1   : string : label liste 1
+    @var label2   : string : label liste 2
+    @var grouping : int    : numéro du regroupement des listes
+    @var instance : object : données d'instance de la page courante
+#}
+{% macro arrayHtml(document, list1, list2, current, route, title, label1, label2, grouping, instance) %}
+    {% trans_default_domain instance.domain %}
+    {% import _self as this %}
+    <fieldset>
+        <legend>{{ title }}</legend>
+        <div class="dd-list-module">
+            <label class="dd-list-label list1">{{ label1 }}</label>
+
+            <div class="dd-list list1" data-group="{{ grouping }}">
+                {% if list1|length == 0 %}
+                    <div class="dd-list-empty"></div>
+                {% else %}
+                    <ol class="dd-list-list">
+                        {% set empty = true %}
+                        {% for id, name in list1 %}
+                            {% if id not in list2|keys %}
+                                {{ this.arrayAdd(id, name, current, instance) }}
+                                {% set empty = false %}
+                            {% endif %}
+                        {% endfor %}
+                    </ol>
+                {% endif %}
+                {% if list1|length > 0 and empty %}
+                    <div class="dd-list-empty"></div>
+                {% endif %}
+            </div>
+        </div>
+        <div class="dd-list-module">
+            <label class="dd-list-label list2">{{ label2 }}</label>
+
+            <div class="dd-list list2" data-group="{{ grouping }}" data-id="{{ document.getId() }}" data-url="{{ path(route) }}">
+                {% if list2|length == 0 %}
+                    <div class="dd-list-empty"></div>
+                {% else %}
+                    <ol class="dd-list-list">
+                        {% for id, name in list2 %}
+                            {{ this.arrayAdd(id, name, current, instance) }}
+                        {% endfor %}
+                    </ol>
+                {% endif %}
+            </div>
+        </div>
+    </fieldset>
+{% endmacro %}
+
+{#
+    Mode Array : ajouter un élément
+    @var id       : string : id de l'élément
+    @var name     : string : nom de l'élément
+    @var current  : string : élément courant
+    @var instance : object : instance courante
+#}
+{% macro arrayAdd(id, name, current, instance) %}
+    {% trans_default_domain instance.domain %}
+    {% import _self as this %}
+    <li class="dd-list-item" data-id="{{ id }}">
+        <div class="dd-list-handle"><i class="fa fa-arrows"></i></div>
+        <div class="dd-list-content {{ id == current ? 'current' : '' }}">{{ name }}</div>
+    </li>
+{% endmacro %}
+
+{#
+    Mode Object : contenu HTML
+    @var document : object : document en cours
+    @var list1    : array  : éléments à afficher dans la liste 1 (objets)
+    @var list2    : array  : éléments à afficher dans la liste 2 (objets)
+    @var current  : string : élément courant qui apparaît dans la page (peut être vide)
+    @var route    : string : route à appeler en ajax
+    @var title    : string : titre
+    @var label1   : string : label liste 1
+    @var label2   : string : label liste 2
+    @var grouping : int    : numéro du regroupement des listes
+    @var instance : object : données d'instance de la page courante
+    @var bundle   : string : route de base pour le mode objet
+#}
+{% macro objectHtml(document, list1, list2, current, route, title, label1, label2, grouping, instance, bundle) %}
+    {% trans_default_domain instance.domain %}
+    {% import _self as this %}
+    <fieldset>
+        <legend>{{ title }}</legend>
+        <div class="dd-list-module">
+            <label class="dd-list-label list1">{{ label1 }}</label>
+
+            <div class="dd-list list1" data-group="{{ grouping }}">
+                {% if list1|length == 0 %}
+                    <div class="dd-list-empty"></div>
+                {% else %}
+                    <ol class="dd-list-list">
+                        {% set empty = true %}
+                        {% for id, document in list1 %}
+                            {% if id not in list2|keys %}
+                                {{ this.objectAdd(document, current, instance, bundle) }}
+                                {% set empty = false %}
+                            {% endif %}
+                        {% endfor %}
+                    </ol>
+                {% endif %}
+                {% if list1|length > 0 and empty %}
+                    <div class="dd-list-empty"></div>
+                {% endif %}
+            </div>
+        </div>
+        <div class="dd-list-module">
+            <label class="dd-list-label list2">{{ label2 }}</label>
+
+            <div class="dd-list list2" data-group="{{ grouping }}" data-id="{{ document.getId() }}" data-url="{{ path(route) }}">
+                {% if list2|length == 0 %}
+                    <div class="dd-list-empty"></div>
+                {% else %}
+                    <ol class="dd-list-list">
+                        {% for id, document in list2 %}
+                            {{ this.objectAdd(document, current, instance, bundle) }}
+                        {% endfor %}
+                    </ol>
+                {% endif %}
+            </div>
+        </div>
+    </fieldset>
+{% endmacro %}
+
+{#
+    Mode Object : ajouter un élément
+    @var document : object : objet à afficher
+    @var current  : string : élément courant
+    @var instance : object : instance courante
+    @var bundle   : string : route de base pour le mode objet
+#}
+{% macro objectAdd(document, current, instance, bundle) %}
+    {% trans_default_domain instance.domain %}
+    {% import _self as this %}
+    <li class="dd-list-item" data-id="{{ document.getId() }}">
+        <div class="dd-list-handle"><i class="fa fa-arrows"></i></div>
+        <div class="dd-list-content {{ document.getId() == current ? 'current' : '' }}">
+            {{ document.getName() }}
+            <span class="action"><a href="{{ path(bundle ~ '_detail', {'id':document.getId()}) }}"><i class="fa fa-gear"></i></a></span>
+            {% if document.getShare() and not document.hasGrouping(instance.grouping.used) %}
+                <span class="status regular radius label">{{ ('fhm.status.share')|trans({}, 'FhmFhmBundle') }}</span>
+            {% endif %}
+        </div>
+    </li>
+{% endmacro %}
