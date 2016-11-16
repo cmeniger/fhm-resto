@@ -58,10 +58,16 @@ parameters:
         project: FHMTools
         sign: 'L''équipe FHM-Tools'
         footer: 'FHMTools 2015 - 2016, tous droits réservés.'
-        host: 'http://fhm-tools.local'
+        host: 'http://fhm-tools-v2.local'
         admin: admin@fhm-tools.com
         noreply: noreply@fhm-tools.com
         contact: contact@fhm-tools.com
+        transport: "%mailer_transport%"
+        fhm_host: "%mailer_host%"
+        fhm_port: "%mailer_port%"
+        fhm_user: "%mailer_user%"
+        fhm_password: "%mailer_password%"
+        fhm_encryption: "%mailer_encryption%"
     fhm_mailer.noreply: noreply@fhm-tools.com
     fhm_fhm:
         pagination:
