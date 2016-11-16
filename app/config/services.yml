@@ -8,17 +8,15 @@ services:
     fos_user.doctrine_registry:
         alias: doctrine_mongodb
 
-
     mongo.connection:
-        class: MongoDoctrine\MongoDB\Connection
-        factory_service: doctrine.odm.mongodb.document_manager
-        factory_method: getConnection
+        class: Doctrine\MongoDB\Connection
+        factory: ["@doctrine.odm.mongodb.document_manager", getConnection]
         calls:
-           - [initialize, []]
+            - [initialize, []]
+
     mongo:
         class: Mongo
-        factory_service: mongo.connection
-        factory_method: getMongo
+        factory: ["@mongo.connection", getMongo]
 
     # First we define some basic services to make these utilities available in
     # the entire application

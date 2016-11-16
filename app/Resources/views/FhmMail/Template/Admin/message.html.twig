@@ -1,0 +1,6 @@
+{% extends "::FhmMail/Template/" ~ version ~ ".html.twig" %}
+{% import "::Macros/mail.html.twig" as macroMail %}
+
+{% block body %}
+    {{ macroMail.row(body) }}
+{% endblock %}

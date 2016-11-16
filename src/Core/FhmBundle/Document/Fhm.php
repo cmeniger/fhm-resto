@@ -946,6 +946,16 @@ class Fhm
     }
 
     /**
+     * Sort update
+     *
+     * @return $this
+     */
+    public function sortUpdate()
+    {
+        return $this;
+    }
+
+    /**
      * @MongoDB\PreRemove()
      */
     public function preRemove()

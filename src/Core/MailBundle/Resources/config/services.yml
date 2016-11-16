@@ -1,7 +1,8 @@
 services:
     fhm_mail:
         class: Core\MailBundle\Services\Mailer
-        arguments: ["@mailer", "@templating"]
+        arguments: ["@mailer", "@templating", "@doctrine.odm.mongodb.document_manager", "@session", "@translator", "%fhm_mailer%"]
+
     listener.mail.user.mail:
         class: Core\MailBundle\Listener\MailListener
         arguments: ["@service_container"]
