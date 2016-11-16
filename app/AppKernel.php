@@ -24,9 +24,10 @@ class AppKernel extends Kernel
             new FOS\UserBundle\FOSUserBundle(),
             new HWI\Bundle\OAuthBundle\HWIOAuthBundle(),
             new Core\CodeExplorerBundle\CodeExplorerBundle(),
-            new Core\FhmBundle\FhmBundle(),
+            new Core\FhmBundle\CoreFhmBundle(),
             new Core\UserBundle\CoreUserBundle(),
             new Fhm\ArticleBundle\FhmArticleBundle(),
+            new Core\MailBundle\FhmMailBundle(),
         ];
 
         // Some bundles are only used while developing the application or during

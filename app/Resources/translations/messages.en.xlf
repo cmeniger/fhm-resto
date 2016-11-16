@@ -2,9 +2,9 @@
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
     <file source-language="en" target-language="en" datatype="plaintext" original="file.ext">
         <body>
-            <trans-unit id="note">
-                <source>note</source>
-                <target>NOTE</target>
+            <trans-unit id="memo">
+                <source>memo</source>
+                <target>Memo</target>
             </trans-unit>
             <trans-unit id="tip">
                 <source>tip</source>
@@ -308,6 +308,10 @@
             <trans-unit id="help.reload_fixtures">
                 <source>help.reload_fixtures</source>
                 <target>If these users don't work, reload application fixtures by running this command from the terminal:</target>
+            </trans-unit>
+            <trans-unit id="help.pname">
+                <source>help.pname</source>
+                <target>Project name </target>
             </trans-unit>
             <trans-unit id="help.add_user">
                 <source>help.add_user</source>
