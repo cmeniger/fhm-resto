@@ -6,9 +6,17 @@
                 <source>memo</source>
                 <target>Memo</target>
             </trans-unit>
-            <trans-unit id="tip">
-                <source>tip</source>
-                <target>TIP</target>
+            <trans-unit id="menu.notification">
+                <source>menu.notification</source>
+                <target>Notifications</target>
+            </trans-unit>
+            <trans-unit id="admin.title">
+                <source>admin.title</source>
+                <target>Administration</target>
+            </trans-unit>
+            <trans-unit id="menu.choose_language">
+                <source>menu.choose_language</source>
+                <target>Choose language</target>
             </trans-unit>
             <trans-unit id="not_available">
                 <source>not_available</source>
@@ -219,10 +227,6 @@
                 <source>menu.toggle_nav</source>
                 <target>Toggle navigation</target>
             </trans-unit>
-            <trans-unit id="menu.choose_language">
-                <source>menu.choose_language</source>
-                <target>Choose language</target>
-            </trans-unit>
             <trans-unit id="menu.post_list">
                 <source>menu.post_list</source>
                 <target>Post list</target>
@@ -316,6 +320,12 @@
             <trans-unit id="help.add_user">
                 <source>help.add_user</source>
                 <target>If you want to create new users, run this other command:</target>
+            </trans-unit>
+            <trans-unit id="help.memo">
+                <source>help.memo</source>
+                <target>
+                  Best commands to start project in the right way:
+                </target>
             </trans-unit>
             <trans-unit id="help.more_information">
                 <source>help.more_information</source>
