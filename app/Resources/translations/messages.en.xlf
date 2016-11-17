@@ -6,13 +6,141 @@
                 <source>memo</source>
                 <target>Memo</target>
             </trans-unit>
-            <trans-unit id="tip">
-                <source>tip</source>
-                <target>TIP</target>
+            <trans-unit id="menu.notification">
+                <source>menu.notification</source>
+                <target>Notifications</target>
+            </trans-unit>
+            <trans-unit id="admin.title">
+                <source>admin.title</source>
+                <target>Administration</target>
+            </trans-unit>
+            <trans-unit id="menu.choose_language">
+                <source>menu.choose_language</source>
+                <target>Choose language</target>
             </trans-unit>
             <trans-unit id="not_available">
                 <source>not_available</source>
                 <target>Not available</target>
+            </trans-unit>
+            <trans-unit id="fhm.admin.console">
+                <source>fhm.admin.console</source>
+                <target>Administration Terminal</target>
+            </trans-unit>
+            <trans-unit id="fhm.admin.link">
+                <source>fhm.admin.link</source>
+                <target>Terminal</target>
+            </trans-unit>
+            <trans-unit id="user.admin.index.title">
+                <source>user.admin.index.title</source>
+                <target>Users management</target>
+            </trans-unit>
+            <trans-unit id="user.admin.index.link">
+                <source>user.admin.index.link</source>
+                <target>Users</target>
+            </trans-unit>
+            <trans-unit id="user.admin.create.link">
+                <source>user.admin.create.link</source>
+                <target>Create</target>
+            </trans-unit>
+            <trans-unit id="user.admin.update.link">
+                <source>user.admin.update.link</source>
+                <target>Update</target>
+            </trans-unit>
+            <trans-unit id="user.admin.import.link">
+                <source>user.admin.import.link</source>
+                <target>Import</target>
+            </trans-unit>
+            <trans-unit id="user.admin.export.link">
+                <source>user.admin.export.link</source>
+                <target>Export</target>
+            </trans-unit>
+            <trans-unit id="mail.admin.index.title">
+                <source>mail.admin.index.title</source>
+                <target>Email management</target>
+            </trans-unit>
+            <trans-unit id="mail.admin.index.link">
+                <source>mail.admin.index.link</source>
+                <target>Emails</target>
+            </trans-unit>
+            <trans-unit id="mail.admin.create.link">
+                <source>mail.admin.create.link</source>
+                <target>Create</target>
+            </trans-unit>
+            <trans-unit id="mail.admin.import.link">
+                <source>mail.admin.import.link</source>
+                <target>Import</target>
+            </trans-unit>
+            <trans-unit id="mail.admin.export.link">
+                <source>mail.admin.export.link</source>
+                <target>Export</target>
+            </trans-unit>
+            <trans-unit id="mail.admin.model.link">
+                <source>mail.admin.model.link</source>
+                <target>Model</target>
+            </trans-unit>
+            <trans-unit id="notification.admin.index.title">
+                <source>notification.admin.index.title</source>
+                <target>Notifications management</target>
+            </trans-unit>
+            <trans-unit id="notification.admin.index.link">
+                <source>notification.admin.index.link</source>
+                <target>Notifications</target>
+            </trans-unit>
+            <trans-unit id="notification.admin.create.link">
+                <source>notification.admin.create.link</source>
+                <target>Create</target>
+            </trans-unit>
+            <trans-unit id="notification.admin.import.link">
+                <source>notification.admin.import.link</source>
+                <target>Import</target>
+            </trans-unit>
+            <trans-unit id="notification.admin.export.link">
+                <source>notification.admin.export.link</source>
+                <target>Export</target>
+            </trans-unit>
+            <trans-unit id="menu.admin.index.title">
+                <source>menu.admin.index.title</source>
+                <target>Menus management</target>
+            </trans-unit>
+            <trans-unit id="menu.admin.index.link">
+                <source>menu.admin.index.link</source>
+                <target>Menus</target>
+            </trans-unit>
+            <trans-unit id="menu.admin.create.link">
+                <source>menu.admin.create.link</source>
+                <target>Create</target>
+            </trans-unit>
+            <trans-unit id="menu.admin.import.link">
+                <source>menu.admin.import.link</source>
+                <target>Import</target>
+            </trans-unit>
+            <trans-unit id="menu.admin.export.link">
+                <source>menu.admin.export.link</source>
+                <target>Export</target>
+            </trans-unit>
+            <trans-unit id="article.admin.index.title">
+                <source>article.admin.index.title</source>
+                <target>Articles management</target>
+            </trans-unit>
+            <trans-unit id="article.admin.index.link">
+                <source>article.admin.index.link</source>
+                <target>Articles</target>
+            </trans-unit>
+            <trans-unit id="article.admin.create.link">
+                <source>article.admin.create.link</source>
+                <target>Create</target>
+            </trans-unit>
+            <trans-unit id="article.admin.import.link">
+                <source>article.admin.import.link</source>
+                <target>Import</target>
+            </trans-unit>
+            <trans-unit id="article.admin.export.link">
+                <source>article.admin.export.link</source>
+                <target>Export</target>
+            </trans-unit>
+            <trans-unit id="fhm.menu.action.cache">
+                <source>fhm.menu.action.cache</source>
+                <target>Caches clear</target>
             </trans-unit>
             <trans-unit id="mit_license">
                 <source>mit_license</source>
@@ -219,10 +347,6 @@
                 <source>menu.toggle_nav</source>
                 <target>Toggle navigation</target>
             </trans-unit>
-            <trans-unit id="menu.choose_language">
-                <source>menu.choose_language</source>
-                <target>Choose language</target>
-            </trans-unit>
             <trans-unit id="menu.post_list">
                 <source>menu.post_list</source>
                 <target>Post list</target>
@@ -316,6 +440,12 @@
             <trans-unit id="help.add_user">
                 <source>help.add_user</source>
                 <target>If you want to create new users, run this other command:</target>
+            </trans-unit>
+            <trans-unit id="help.memo">
+                <source>help.memo</source>
+                <target>
+                  Best commands to start project in the right way:
+                </target>
             </trans-unit>
             <trans-unit id="help.more_information">
                 <source>help.more_information</source>

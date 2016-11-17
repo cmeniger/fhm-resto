@@ -22,10 +22,7 @@
                 <div class="navbar navbar-default navbar-static-top" role="navigation">
                     <div class="container">
                         <div class="navbar-header">
-                            <a class="navbar-brand" href="{{ path('homepage') }}">
-                                FhmTools-v2
-                            </a>
-
+                            <a class="navbar-brand" href="{{ path('homepage') }}"> FhmTools-v2 </a>
                             <button type="button" class="navbar-toggle"
                                     data-toggle="collapse"
                                     data-target=".navbar-collapse">
@@ -37,14 +34,7 @@
                         </div>
                         <div class="navbar-collapse collapse">
                             <ul class="nav navbar-nav navbar-right">
-
                                 {% block header_navigation_links %}
-                                    {#<li>#}
-                                        {#<a href="{{ path('article_index') }}">#}
-                                            {#<i class="fa fa-home" aria-hidden="true"></i> {{ 'menu.homepage'|trans }}#}
-                                        {#</a>#}
-                                    {#</li>#}
-
                                     {% if is_granted('ROLE_ADMIN') %}
                                         <li>
                                             <a href="#">
@@ -84,15 +74,7 @@
         <div class="container body-container">
             {% block body %}
                 <div class="row">
-                    <div id="main" class="col-sm-12">
-                        {{ include('default/_flash_messages.html.twig') }}
-
-                        {% block main %}{% endblock %}
-                    </div>
-                    <div id="sidebar" class="col-sm-3">
-                        {% block sidebar %}
-                        {% endblock %}
-                    </div>
+                    {% block main %}{% endblock %}
                 </div>
             {% endblock %}
         </div>
