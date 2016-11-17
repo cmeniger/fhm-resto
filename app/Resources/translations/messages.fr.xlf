@@ -14,9 +14,125 @@
                 <source>menu.choose_language</source>
                 <target>Choix de langues</target>
             </trans-unit>
-            <trans-unit id="tip">
-                <source>tip</source>
-                <target>ASTUCE</target>
+            <trans-unit id="fhm.admin.console">
+                <source>fhm.admin.console</source>
+                <target>Console d'administration</target>
+            </trans-unit>
+            <trans-unit id="fhm.admin.link">
+                <source>fhm.admin.link</source>
+                <target>Terminal</target>
+            </trans-unit>
+            <trans-unit id="user.admin.index.title">
+                <source>user.admin.index.title</source>
+                <target>Gestion des utilisateurs</target>
+            </trans-unit>
+            <trans-unit id="user.admin.index.link">
+                <source>user.admin.index.link</source>
+                <target>Les utilisateurs</target>
+            </trans-unit>
+            <trans-unit id="user.admin.create.link">
+                <source>user.admin.create.link</source>
+                <target>Créer</target>
+            </trans-unit>
+            <trans-unit id="user.admin.update.link">
+                <source>user.admin.update.link</source>
+                <target>Modifier</target>
+            </trans-unit>
+            <trans-unit id="user.admin.import.link">
+                <source>user.admin.import.link</source>
+                <target>Importer</target>
+            </trans-unit>
+            <trans-unit id="user.admin.export.link">
+                <source>user.admin.export.link</source>
+                <target>Exporter</target>
+            </trans-unit>
+            <trans-unit id="mail.admin.index.title">
+                <source>mail.admin.index.title</source>
+                <target>Gestion des mails</target>
+            </trans-unit>
+            <trans-unit id="mail.admin.index.link">
+                <source>mail.admin.index.link</source>
+                <target>Les emails</target>
+            </trans-unit>
+            <trans-unit id="mail.admin.create.link">
+                <source>mail.admin.create.link</source>
+                <target>Créer</target>
+            </trans-unit>
+            <trans-unit id="mail.admin.import.link">
+                <source>mail.admin.import.link</source>
+                <target>Importer</target>
+            </trans-unit>
+            <trans-unit id="mail.admin.export.link">
+                <source>mail.admin.export.link</source>
+                <target>Exporter</target>
+            </trans-unit>
+            <trans-unit id="mail.admin.model.link">
+                <source>mail.admin.model.link</source>
+                <target>Modèles</target>
+            </trans-unit>
+            <trans-unit id="notification.admin.index.title">
+                <source>notification.admin.index.title</source>
+                <target>Gestion des notifications</target>
+            </trans-unit>
+            <trans-unit id="notification.admin.index.link">
+                <source>notification.admin.index.link</source>
+                <target>Les notifications</target>
+            </trans-unit>
+            <trans-unit id="notification.admin.create.link">
+                <source>notification.admin.create.link</source>
+                <target>Créer</target>
+            </trans-unit>
+            <trans-unit id="notification.admin.import.link">
+                <source>notification.admin.import.link</source>
+                <target>Importer</target>
+            </trans-unit>
+            <trans-unit id="notification.admin.export.link">
+                <source>notification.admin.export.link</source>
+                <target>Exporter</target>
+            </trans-unit>
+            <trans-unit id="menu.admin.index.title">
+                <source>menu.admin.index.title</source>
+                <target>Gestion des menus</target>
+            </trans-unit>
+            <trans-unit id="menu.admin.index.link">
+                <source>menu.admin.index.link</source>
+                <target>Les menus</target>
+            </trans-unit>
+            <trans-unit id="menu.admin.create.link">
+                <source>menu.admin.create.link</source>
+                <target>Créer</target>
+            </trans-unit>
+            <trans-unit id="menu.admin.import.link">
+                <source>menu.admin.import.link</source>
+                <target>Importer</target>
+            </trans-unit>
+            <trans-unit id="menu.admin.export.link">
+                <source>menu.admin.export.link</source>
+                <target>Exporter</target>
+            </trans-unit>
+            <trans-unit id="article.admin.index.title">
+                <source>article.admin.index.title</source>
+                <target>Gestion des articles</target>
+            </trans-unit>
+            <trans-unit id="article.admin.index.link">
+                <source>article.admin.index.link</source>
+                <target>Les articles</target>
+            </trans-unit>
+            <trans-unit id="article.admin.create.link">
+                <source>article.admin.create.link</source>
+                <target>Créer</target>
+            </trans-unit>
+            <trans-unit id="article.admin.import.link">
+                <source>article.admin.import.link</source>
+                <target>Importer</target>
+            </trans-unit>
+            <trans-unit id="article.admin.export.link">
+                <source>article.admin.export.link</source>
+                <target>Exporter</target>
+            </trans-unit>
+            <trans-unit id="fhm.menu.action.cache">
+                <source>fhm.menu.action.cache</source>
+                <target>Vider les caches</target>
             </trans-unit>
             <trans-unit id="not_available">
                 <source>not_available</source>

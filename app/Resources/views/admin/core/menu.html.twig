@@ -1,0 +1,84 @@
+{% block menu_content %}
+    {% block menu_bloc1 %}
+        {% block menu_bloc1_separator %}{% endblock %}
+        {# console #}
+        <div class="link">
+            <a href="#" title="{{ 'fhm.admin.console'|trans }}">
+                <i class="fa fa-fw fa-tachometer menu"></i>{{ 'fhm.admin.link'|trans }}
+            </a>
+        </div>
+        <hr>
+        {# user #}
+        <div class="link">
+            <a href="#" title="{{ 'user.admin.index.title'|trans }}"><i class="fa fa-fw fa-user menu"></i>{{ 'user.admin.index.link'|trans }}
+            </a>
+            <span>
+                <a href="#" title="{{ 'user.admin.create.link'|trans }}"><i class="fa fa-fw fa-plus"></i></a>
+                <a href="#" title="{{ 'user.admin.import.link'|trans }}"><i class="fa fa-fw fa-download"></i></a>
+                <a href="#" title="{{ 'user.admin.export.link'|trans }}"><i class="fa fa-fw fa-upload"></i></a>
+            </span>
+        </div>
+        <hr>
+        {# mail #}
+        <div class="link">
+            <a href="#" title="{{ 'mail.admin.index.title'|trans }}"><i class="fa fa-fw fa-envelope menu"></i>{{ 'mail.admin.index.link'|trans }}
+            </a>
+            <span>
+                <a href="#" title="{{ 'mail.admin.model.link'|trans }}"><i class="fa fa-fw fa-picture-o"></i></a>
+            </span>
+        </div>
+        <hr>
+        {# notification #}
+        <div class="link">
+            <a href="#" title="{{ 'notification.admin.index.title'|trans }}"><i class="fa fa-fw fa-bell menu"></i>{{ 'notification.admin.index.link'|trans }}
+            </a>
+            <span>
+                <a href="#" title="{{ 'notification.admin.import.link'|trans }}"><i class="fa fa-fw fa-download"></i></a>
+                <a href="#" title="{{ 'notification.admin.export.link'|trans }}"><i class="fa fa-fw fa-upload"></i></a>
+            </span>
+        </div>
+    {% endblock %}
+    {% block menu_bloc2 %}
+        {% block menu_bloc2_separator %}
+            <hr>
+        {% endblock %}
+        {# menu #}
+        <div class="link">
+            <a href="#" title="{{ 'menu.admin.index.title'|trans }}"><i class="fa fa-fw fa-bars menu"></i>{{ 'menu.admin.index.link'|trans }}
+            </a>
+            <span>
+                <a href="#" title="{{ 'menu.admin.create.link'|trans }}"><i class="fa fa-fw fa-plus"></i></a>
+                <a href="#" title="{{ 'menu.admin.import.link'|trans }}"><i class="fa fa-fw fa-download"></i></a>
+                <a href="#" title="{{ 'menu.admin.export.link'|trans }}"><i class="fa fa-fw fa-upload"></i></a>
+            </span>
+        </div>
+    {% endblock %}
+    {% block menu_bloc3 %}
+        {% block menu_bloc3_separator %}
+            <hr>
+        {% endblock %}
+        {# article #}
+        <div class="link">
+            <a href="#" title="{{ 'article.admin.index.title'|trans }}"><i class="fa fa-fw fa-file-text-o menu"></i>{{ 'article.admin.index.link'|trans }}
+            </a>
+            <span>
+                <a href="#" title="{{ 'article.admin.create.link'|trans }}"><i class="fa fa-fw fa-plus"></i></a>
+                <a href="#" title="{{ 'article.admin.import.link'|trans }}"><i class="fa fa-fw fa-download"></i></a>
+                <a href="#" title="{{ 'article.admin.export.link'|trans }}"><i class="fa fa-fw fa-upload"></i></a>
+            </span>
+        </div>
+    {% endblock %}
+    {% block menu_project %}{% endblock %}
+    {% block menu_action %}
+        {% block menu_action_separator %}
+            <hr>
+        {% endblock %}
+        <a href="#" title="{{ 'fhm.menu.action.cache'|trans }}"  class="btn btn-link" >
+            {{ 'fhm.menu.action.cache'|trans }}
+        </a>
+    {% endblock %}
+{% endblock %}
+
+{% block menu_script %}
+
+{% endblock %}

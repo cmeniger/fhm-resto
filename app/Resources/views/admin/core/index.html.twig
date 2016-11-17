@@ -3,10 +3,11 @@
 {% block sidebar %}
 
    {{ parent() }}
-   Menu 1
+   {% include 'admin/core/menu.html.twig' %}
 {% endblock %}
 
 {% block main_admin %}
    <h1>{{ 'admin.title'|trans }}...</h1>
+
 {% endblock %}
 
