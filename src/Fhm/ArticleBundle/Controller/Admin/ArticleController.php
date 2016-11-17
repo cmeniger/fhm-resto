@@ -26,7 +26,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
  */
 class ArticleController extends Controller
 {
-
     /**
      * @return mixed
      */
@@ -103,18 +102,8 @@ class ArticleController extends Controller
      */
     public function detailAction(Article $post)
     {
-//        $post = $this->dm()->getRepository(Article::class)->find($id);
-        // This security check can also be performed:
-        //   1. Using an annotation: @Security("post.isAuthor(user)")
-        //   2. Using a "voter" (see http://symfony.com/doc/current/cookbook/security/voters_data_permission.html)
-//        if (null === $this->getUser() || !$post->isAuthor($this->getUser())) {
-//            throw $this->createAccessDeniedException('Posts can only be shown to their authors.');
-//        }
-//        $deleteForm = $this->createDeleteForm($post);
-
         return $this->render('FhmArticleBundle:Admin:detail.html.twig', [
             'post'        => $post,
-//            'delete_form' => $deleteForm->createView(),
         ]);
     }
 
@@ -127,7 +116,6 @@ class ArticleController extends Controller
      */
     public function updateAction(Article $post, Request $request)
     {
-        //$post = $this->dm()->getRepository(Article::class)->find($id);
         $editForm = $this->createForm(ArticleType::class, $post);
         $deleteForm = $this->createDeleteForm($post);
         $editForm->handleRequest($request);
@@ -156,14 +144,38 @@ class ArticleController extends Controller
      * the authorization mechanism will prevent the user accessing this resource).
      * The isAuthor() method is defined in the AppBundle\Entity\Post entity.
      */
-    public function deleteAction(Article $post)
+    public function deleteAction(Request $request, Article $post)
     {
+        $form = $this->createDeleteForm($post);
+        $form->handleRequest($request);
         if (is_object($post)) {
             $this->dm()->remove($post);
             $this->dm()->flush();
             $this->addFlash('success', 'article.deleted_successfully');
         }
         return $this->redirectToRoute('admin_article_index');
+    }
+
+    /**
+     * Creates a form to delete a Post entity by id.
+     *
+     * This is necessary because browsers don't support HTTP methods different
+     * from GET and POST. Since the controller that removes the blog posts expects
+     * a DELETE method, the trick is to create a simple form that *fakes* the
+     * HTTP DELETE method.
+     * See http://symfony.com/doc/current/cookbook/routing/method_parameters.html.
+     *
+     * @param Article $post The post object
+     *
+     * @return \Symfony\Component\Form\Form The form
+     */
+    private function createDeleteForm(Article $post)
+    {
+        return $this->createFormBuilder()
+            ->setAction($this->generateUrl('admin_article_delete', ['id' => $post->getId()]))
+            ->setMethod('DELETE')
+            ->getForm()
+            ;
     }
 
 }
