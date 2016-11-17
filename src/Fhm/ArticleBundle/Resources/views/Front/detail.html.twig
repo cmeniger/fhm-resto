@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block body_id 'blog_post_show' %}
+
+{% block main %}
+    <h1>{{ post.title }}</h1>
+
+    {{ post.content|md2html }}
+
+{% endblock %}
+
+{% block sidebar %}
+    {% if app.user %}
+        <div class="section">
+            <a class="btn btn-lg btn-block btn-success" href="{{ path('admin_article_update', { id: post.id }) }}">
+                <i class="fa fa-edit" aria-hidden="true"></i> {{ 'action.edit_post'|trans }}
+            </a>
+        </div>
+    {% endif %}
+    {{ parent() }}
+    {{ show_source_code(_self) }}
+{% endblock %}

@@ -26,6 +26,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class ArticleType extends AbstractType
 {
+
     /**
      * {@inheritdoc}
      */
@@ -48,10 +49,9 @@ class ArticleType extends AbstractType
                 'attr' => ['rows' => 20],
                 'label' => 'label.content',
             ])
-
-
         ;
     }
+
     /**
      * {@inheritdoc}
      */
