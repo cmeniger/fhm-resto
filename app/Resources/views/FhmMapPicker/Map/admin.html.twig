@@ -1,0 +1,11 @@
+{% trans_default_domain instance.domain %}
+{% extends "::FhmMapPicker/Map/template.html.twig" %}
+
+{% block map_class %}
+    admin
+{% endblock %}
+
+{% block map_region_click %}
+    $('#revealAddZone').click();
+    $('#FhmAdd_code').val(code);
+{% endblock %}

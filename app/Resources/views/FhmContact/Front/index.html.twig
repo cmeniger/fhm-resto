@@ -1,0 +1,68 @@
+{% trans_default_domain instance.domain %}
+{% extends "::FhmFhm/Front/index.html.twig" %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="http://maps.google.com/maps/api/js?libraries=places&sensor=false"></script>
+{% endblock %}
+
+{% block content %}
+    <div id="content_data" class="row contact">
+        {% if documents %}
+            {% set order = null %}
+            {% set profile = null %}
+            {% for document in documents %}
+                {% if loop.index == 1 %}
+                    {% set order = document.getOrder() %}
+                {% endif %}
+                {% if document.getProfile() %}
+                    {% if profile == null %}
+                        <div class="row contact-profile-header">
+                            <div class="column small-10 medium-6 small-centered text-center">
+                                <h2>{{ (instance.translation ~ '.front.index.team')|trans }}</h2>
+                            </div>
+                        </div>
+                        <div class="row"><div class="column contact-profile-row">
+                        {% set profile = true %}
+                    {% endif %}
+                    {% if profile != null and order != document.getOrder() %}
+                        </div></div>
+                        <div class="row"><div class="column contact-profile-row">
+                    {% endif %}
+                    {% include ['::FhmContact/Template/bloc.profile.' ~ document.getProfileTemplate() ~ '.html.twig', '::FhmContact/Template/bloc.profile.html.twig'] %}
+                {% else %}
+                    {% if profile != null %}
+                        </div></div>
+                        {% set profile = null %}
+                    {% endif %}
+                    {% include('::FhmContact/Template/bloc.form.html.twig') %}
+                {% endif %}
+                {% set order = document.getOrder() %}
+            {% endfor %}
+            {% if profile != null %}
+                </div></div>
+            {% endif %}
+        {% else %}
+            <div class="panel nodata">
+                {{ (instance.translation ~ '.front.index.nodata')|trans }}
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}
+
+{% block body_javascripts %}
+    {{ parent() }}
+    <script>
+        {% for document in documents %}
+        {% if not document.getProfile() and document.getLatitude() %}
+        $(document).addresspicker({
+            view: {
+                map: 'map-{{ document.getId() }}',
+                lat: {{ document.getLatitude() }},
+                lng: {{ document.getLongitude() }}
+            }
+        });
+        {% endif %}
+        {% endfor %}
+    </script>
+{% endblock %}

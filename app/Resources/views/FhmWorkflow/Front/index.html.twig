@@ -1,0 +1,81 @@
+{% trans_default_domain instance.domain %}
+{% extends "::FhmFhm/Front/index.html.twig" %}
+
+{% block content_data %}
+    <div id="content_data" class="row workflow">
+        <div class="row">
+            <div class="column">
+                {% render(path('fhm_api_workflow_status')) %}
+            </div>
+        </div>
+        {% if documents %}
+            {% for document in documents %}
+                <div class="column small-12 medium-6 large-4 end">
+                    <div class="item">
+                        <div class="title">
+                            {{ document.getName() }}
+                            <div class="icons">
+                                <a href="#"
+                                   title="{{ ('workflow.action.buttons.expand')|trans }}"
+                                   data-id="{{ document.getId() }}"
+                                   data-url="{{ path('fhm_api_workflow_modal',{id:document.getId()}) }}"
+                                   data-modal><i class="fa fa-expand"></i></a>
+                            </div>
+                        </div>
+                        <div class="content">
+                            <div class="status">
+                                <div class="column">
+                                    {% if document.getStatus() == 3 %}
+                                        <span class="label alert radius"><i class="fa fa-ban"></i> {{ (instance.translation ~ '.status.cancel')|trans }}</span>
+                                    {% elseif document.getStatus() == 2 %}
+                                        <span class="label success radius"><i class="fa fa-check-circle-o"></i> {{ (instance.translation ~ '.status.finish')|trans }}</span>
+                                    {% elseif document.getStatus() == 1 %}
+                                        <span class="label warning radius"><i class="fa fa-play-circle-o"></i> {{ (instance.translation ~ '.status.run')|trans }}</span>
+                                    {% else %}
+                                        <span class="label secondary radius"><i class="fa fa-circle-o"></i> {{ (instance.translation ~ '.status.wait')|trans }}</span>
+                                    {% endif %}
+                                    <span class="right">
+                                        <a href="{{ path(instance.source ~ '_' ~ instance.route ~ '_lite', {'id': document.getAlias()}) }}" title="{{ ('workflow.action.buttons.workflow')|trans }}"><i class="fa fa-sitemap"></i></a>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="step">
+                                {{ document.getStep() ? document.getStep().getOrder() ~ ' - ' ~ document.getStep().getName() : '-' }}
+                            </div>
+                            <div class="stats">
+                                <div class="column small-3">
+                                    <div class="bloc bloc-task">
+                                        <span title="{{ (instance.translation ~ '.stats.task')|trans }}">{{ document.getSortTask() }}</span>
+                                    </div>
+                                </div>
+                                <div class="column small-3">
+                                    <div class="bloc bloc-comment">
+                                        <span title="{{ (instance.translation ~ '.stats.comment')|trans }}">{{ document.getSortComment() }}</span>
+                                    </div>
+                                </div>
+                                <div class="column small-3">
+                                    <div class="bloc bloc-media">
+                                        <span title="{{ (instance.translation ~ '.stats.media')|trans }}">{{ document.getSortMedia() }}</span>
+                                    </div>
+                                </div>
+                                <div class="column small-3">
+                                    <div class="bloc bloc-log">
+                                        <span title="{{ (instance.translation ~ '.stats.log')|trans }}">{{ document.getSortLog() }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <div class="panel nodata">
+                <p>{{ (instance.translation ~ '.front.index.nodata')|trans }}</p>
+            </div>
+        {% endif %}
+    </div>
+    <div id="wfModal" class="reveal-modal" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
+        <div id="wfModalContent"></div>
+        <a class="close-reveal-modal" aria-label="Close">&#215;</a>
+    </div>
+{% endblock %}

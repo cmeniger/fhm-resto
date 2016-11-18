@@ -1,0 +1,11 @@
+{% trans_default_domain instance.domain %}
+
+<div class='data image' media-id='{{ document.getId() }}' media-name='{{ document.getName() }}' media-extension='{{ document.getExtension() }}' media-type='image' title='{{ title }}' style="background:url('{{ document|media('s') }}') no-repeat center center;">
+    <div class="name">
+        {{ title }}
+    </div>
+    <div class="actions view">
+        <a href="{{ url }}" title="{{ ('media.bloc.download')|trans({},'FhmMediaBundle') }}" download="{{ document.getAlias() ~ '.' ~ document.getExtension() }}"><i class="fa fa-download"></i></a>
+        <a href="#" title="{{ ('media.bloc.detail')|trans({},'FhmMediaBundle') }}" data-reveal-id="modal-media-zoom" media-id="{{ document.getId() }}" media-zoom><i class="fa fa-search-plus"></i></a>
+    </div>
+</div>

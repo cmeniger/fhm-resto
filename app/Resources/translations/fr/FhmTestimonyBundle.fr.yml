@@ -1,0 +1,231 @@
+testimony:
+    admin:
+        index:
+            title:                              Gestion des témoignages
+            link:                               Témoignages
+            breadcrumb:                         Témoignages
+            nodata:                             Aucune donnée
+            form:
+                search:                         Rechercher
+            table:
+                header:
+                    name:                       Nom
+                    action:                     Actions
+                    status:                     Status
+                action:
+                    activate:                   Activer
+                    deactivate:                 Désactiver
+                    delete:                     Supprimer
+                    detail:                     Paramétrer
+                    duplicate:                  Dupliquer
+                    undelete:                   Débloquer
+                    update:                     Modifier
+                confirm:
+                    activate:                   Confirmer l'activation du témoignage ?
+                    deactivate:                 Confirmer la désactivation du témoignage ?
+                    delete:                     Confirmer la suppression du témoignage ?
+                    undelete:                   Confirmer le déblocage du témoignage ?
+
+        create:
+            title:                              Ajouter
+            link:                               Ajouter
+            breadcrumb:                         Ajouter un témoignage
+            flash:
+                ok:                             Le témoignage a bien été créé.
+                ko:                             Le témoignage n'a pas été créé.
+            form:
+                name:                           Nom
+                description:                    Commentaire
+                image:                          Photo
+                active:                         Activer
+                share:                          Partager
+                global:                         Globale
+                submit:
+                    save:                       Sauvegarder
+                    new:                        Sauvegarder et ajouter
+                    duplicate:                  Sauvegarder et dupliquer
+                    quit:                       Sauvegarder et quitter
+                    config:                     Sauvegarder et paramétrer
+                    cancel:                     Annuler
+                    import:                     Importer
+                    export:                     Exporter
+                fieldset:
+                    data:                       Données
+                    options:                    Options
+
+        update:
+            title:                              Modifier
+            link:                               Modifier
+            breadcrumb:                         Modifier
+            flash:
+                ok:                             Le témoignage a bien été modifié.
+                ko:                             Le témoignage n'a pas été modifié.
+            form:
+                name:                           Nom
+                description:                    Commentaire
+                image:                          Photo
+                active:                         Activer
+                share:                          Partager
+                global:                         Globale
+                submit:
+                    save:                       Sauvegarder
+                    new:                        Sauvegarder et ajouter
+                    duplicate:                  Sauvegarder et dupliquer
+                    quit:                       Sauvegarder et quitter
+                    config:                     Sauvegarder et paramétrer
+                    cancel:                     Annuler
+                    import:                     Importer
+                    export:                     Exporter
+                    delete:                     Supprimer
+                fieldset:
+                    data:                       Données
+                    options:                    Options
+
+        detail:
+            title:                              %name%
+            link:                               Détail
+            breadcrumb:                         %name%
+            data:
+                title:                          Informations
+                id:                             ID
+                create:                         Création
+                update:                         Modification
+                name:                           Nom
+                alias:                          Alias
+                description:                    Commentaire
+                befphoto:                       Image Avant
+                aftphoto:                       Image Après
+                status:                         Status
+            url:
+                title:                          Routes disponibles
+                admin:
+                    edit:                       Modifier
+                    detail:                     Paramétrer
+                front:
+                    id:                         Afficher via l'ID
+                    name:                       Afficher via le nom
+                    alias:                      Afficher via l'alias
+                    lite:                       Afficher via l'url simplifiée
+            admin:
+                title:                          Outils d'administration
+
+        export:
+            breadcrumb:                         Exporter
+            form:
+                submit:                         Exporter
+            link:                               Exporter
+            title:                              Exporter des témoignages
+
+        import:
+            breadcrumb:                         Importer
+            flash:
+                ok:                             Les témoignages ont bien été importés (%countAdd% ajout(s), %countUpdate% modification(s), %countError% erreur(s)).
+                ko:                             Les témoignages n'ont pas été importés.
+            form:
+                file:                           Fichier CSV
+                submit:                         Importer
+            link:                               Importer
+            title:                              Importer des témoignages
+
+        deactivate:
+            flash:
+                ok:                             Le témoignage a bien été désactivé.
+
+        delete:
+            flash:
+                ok:                             Le témoignage a bien été supprimé.
+
+        activate:
+            flash:
+                ok:                             Le témoignage a bien été activé.
+
+        undelete:
+            flash:
+                ok:                             Le témoignage a bien été restauré.
+
+    front:
+        index:
+            title:                              Témoignage
+            link:                               Témoignage
+            breadcrumb:                         Témoignage
+            nodata:                             Aucune donnée
+            form:
+                search:                         Rechercher
+            table:
+                header:
+                    name:                       Nom
+                    action:                     Actions
+                action:
+                    detail:                     Détail
+                    delete:                     Supprimer
+                confirm:
+                    delete:                     Confirmer la suppression du témoignage ?
+
+        create:
+            title:                              Ajouter
+            link:                               Ajouter
+            breadcrumb:                         Ajouter un témoignage
+            flash:
+                ok:                             Le témoignage a bien été créé.
+                ko:                             Le témoignage n'a pas été créé.
+            form:
+                name:                           Nom
+                description:                    Commentaire
+                befphoto:                       Image Avant
+                aftphoto:                       Image Après
+                submit:
+                    save:                       Sauvegarder
+                    new:                        Sauvegarder et ajouter
+                    duplicate:                  Sauvegarder et dupliquer
+                    quit:                       Sauvegarder et quitter
+                    cancel:                     Annuler
+                alert:
+                    title:                      Information
+                    text:                       L'ajout d'un témoignage nécessite la validation d'un modérateur.
+
+        update:
+            title:                              Modifier
+            link:                               Modifier
+            breadcrumb:                         Modifier
+            flash:
+                ok:                             Le témoignage a bien été modifié.
+                ko:                             Le témoignage n'a pas été modifié.
+            form:
+                name:                           Nom
+                description:                    Commentaire
+                befphoto:                       Image Avant
+                aftphoto:                       Image Après
+                submit:
+                    save:                       Sauvegarder
+                    new:                        Sauvegarder et ajouter
+                    duplicate:                  Sauvegarder et dupliquer
+                    quit:                       Sauvegarder et quitter
+                    cancel:                     Annuler
+                alert:
+                    title:                      Information
+                    text:                       La modification d'un témoignage nécessite la validation d'un modérateur.
+
+        detail:
+            title:                              %name%
+            link:                               Détail
+            breadcrumb:                         %name%
+            data:
+                title:                          Informations
+                create:                         Création
+                update:                         Modification
+                name:                           Nom
+                alias:                          Alias
+                description:                    Commentaire
+                befphoto:                       Image Avant
+                aftphoto:                       Image Après
+
+        delete:
+            flash:
+                ok:                             Le témoignage a bien été supprimé.
+
+    api:
+        index:
+            title:                              Témoignage
+
+    pagination:
+        counter:                                Nombre de témoignages: %count% / %all%

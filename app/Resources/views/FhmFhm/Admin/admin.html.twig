@@ -1,0 +1,14 @@
+{% trans_default_domain instance.domain %}
+{% extends "::layout.admin.html.twig" %}
+
+{% block tagline %}
+    <div class="row">
+        <h1>{{ (instance.translation ~ '.admin.title')|trans }}</h1>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        {{ (instance.translation ~ '.admin.nodata')|trans }}
+    </div>
+{% endblock %}

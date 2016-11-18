@@ -1,0 +1,10 @@
+{% trans_default_domain instance.domain %}
+
+<div class='data file {{ document.getExtension() }}' media-id='{{ document.getId() }}' media-name='{{ document.getName() }}' media-extension='{{ document.getExtension() }}' media-type='file' title='{{ title }}'>
+    <div class="name">
+        {{ document.getName() }}
+    </div>
+    <div class="actions view">
+        <a href="{{ document|media }}" target="_blank" title="{{ ('media.bloc.download')|trans({},'FhmMediaBundle') }}"><i class="fa fa-download"></i></a>
+    </div>
+</div>

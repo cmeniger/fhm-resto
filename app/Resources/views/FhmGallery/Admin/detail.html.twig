@@ -1,0 +1,61 @@
+{% trans_default_domain instance.domain %}
+{% extends "::FhmFhm/Admin/detail.html.twig" %}
+{% import "::Macros/dd.list.html.twig" as macroList %}
+
+{% block content_data %}
+    {{ parent() }}
+    <div class="row">
+        {{
+        macroList.admin
+        (
+        document,
+        album1,
+        album2,
+        '',
+        'fhm_admin_gallery_list_album',
+        (instance.translation ~ '.admin.detail.album.title')|trans,
+        (instance.translation ~ '.admin.detail.album.list1')|trans,
+        (instance.translation ~ '.admin.detail.album.list2')|trans,
+        2,
+        instance,
+        'fhm_admin_gallery_album'
+        )
+        }}
+    </div>
+    <div class="row">
+        {{
+        macroList.admin
+        (
+        document,
+        item1,
+        item2,
+        '',
+        'fhm_admin_gallery_list_item',
+        (instance.translation ~ '.admin.detail.item.title')|trans,
+        (instance.translation ~ '.admin.detail.item.list1')|trans,
+        (instance.translation ~ '.admin.detail.item.list2')|trans,
+        3,
+        instance,
+        'fhm_admin_gallery_item'
+        )
+        }}
+    </div>
+    <div class="row">
+        {{
+        macroList.admin
+        (
+        document,
+        video1,
+        video2,
+        '',
+        'fhm_admin_gallery_list_video',
+        (instance.translation ~ '.admin.detail.video.title')|trans,
+        (instance.translation ~ '.admin.detail.video.list1')|trans,
+        (instance.translation ~ '.admin.detail.video.list2')|trans,
+        4,
+        instance,
+        'fhm_admin_gallery_video'
+        )
+        }}
+    </div>
+{% endblock %}

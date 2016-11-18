@@ -1,0 +1,88 @@
+{% extends "::layout.admin.html.twig" %}
+{% trans_default_domain instance.domain %}
+
+{% block tagline %}
+    <div class="row">
+        <h1>
+            {% block tagline_data %}
+                {% block tagline_data_title %}
+                    {{ (instance.translation ~ '.admin.index.title')|trans }}
+                {% endblock %}
+                <br/>
+                <small>
+                    {% block tagline_data_subtitle %}
+                        {{ (instance.translation ~ '.admin.export.title')|trans }}
+                    {% endblock %}
+                </small>
+            {% endblock %}
+        </h1>
+    </div>
+{% endblock %}
+
+{% block content %}
+
+    {% block content_link %}
+        <div class="row">
+            <ul class="button-group round">
+                {% block content_link_data %}
+                    <li>
+                        <a href="{{ path(instance.source ~ '_admin_' ~ instance.route) }}" class="button small secondary"><i class="fa fa-angle-double-left"></i></a>
+                    </li>
+                    <li>
+                        <a href="{{ path(instance.source ~ '_admin_' ~ instance.route ~ '_create') }}" class="button small success"><i class="fa fa-plus"></i> {{ (instance.translation ~ '.admin.create.link')|trans }}
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ path(instance.source ~ '_admin_' ~ instance.route ~ '_import') }}" class="button small"><i class="fa fa-download"></i> {{ (instance.translation ~ '.admin.import.link')|trans }}
+                        </a>
+                    </li>
+                {% endblock %}
+            </ul>
+        </div>
+    {% endblock %}
+
+    {% block content_data %}
+        <div class="form form-export">
+            {% block content_data_form %}
+            <form action="{{ path((instance.source ~ '_admin_' ~ instance.route ~ '_export')) }}" method="POST" {{ form_enctype(form) }} >
+                {% endblock %}
+                {% block content_data_errors %}
+                    {% if form.vars.errors|length > 0 %}
+                        <div class="form-bloc form-error">
+                            {% block content_data_errors_data %}
+                                <div class="row">
+                                    {{ form_errors(form) }}
+                                </div>
+                            {% endblock %}
+                        </div>
+                    {% endif %}
+                {% endblock %}
+                {% block content_data_fields %}
+                    <div class="form-bloc form-fields">
+                        {% block content_data_fields_data %}
+                        {% endblock %}
+                    </div>
+                {% endblock %}
+                {% block content_data_submit %}
+                    <div class="form-bloc form-submit">
+                        {% block content_data_submit_data %}
+                            <div class="row">
+                                {{ form_widget(form.submit) }}
+                            </div>
+                        {% endblock %}
+                    </div>
+                {% endblock %}
+                {% block content_data_rest %}
+                    <div class="form-bloc form-rest">
+                        {% block content_data_rest_data %}
+                            <div class="row">
+                                {{ form_rest(form) }}
+                            </div>
+                        {% endblock %}
+                    </div>
+                {% endblock %}
+            </form>
+        </div>
+    {% endblock %}
+
+{% endblock %}

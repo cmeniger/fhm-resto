@@ -1,0 +1,13 @@
+services:
+    fhm_note:
+        class: Fhm\NoteBundle\Services\Note
+        arguments: [@service_container]
+
+    twig.extension.note:
+        class: Fhm\NoteBundle\Twig\NoteExtension
+        arguments: [@service_container]
+        tags:
+            - { name: twig.extension }
+
+
+

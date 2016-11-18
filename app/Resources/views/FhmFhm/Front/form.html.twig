@@ -1,0 +1,34 @@
+{% extends layout_extend is defined ? layout_extend : "::layout.html.twig" %}
+{% trans_default_domain instance.domain %}
+
+{% block content %}
+
+    {# Title #}
+    {% block content_title %}
+        <h1>{{ (instance.title)|trans }}</h1>
+    {% endblock %}
+
+    {# Form #}
+    {% block content_data %}
+        {% block content_data_form %}
+            <form action="{{ path(instance.route) }}" method="POST" {{ form_enctype(form) }} >
+        {% endblock %}
+        {% block content_data_fields_data %}{% endblock %}
+        {% block content_data_rest %}
+            <div class="row">
+                <div class="large-12 columns">
+                    {{ form_rest(form) }}
+                </div>
+            </div>
+        {% endblock %}
+        {% block content_data_submit %}
+            <div class="row">
+                <div class="large-12 columns">
+                    {{ form_widget(form.submit) }}
+                </div>
+            </div>
+        {% endblock %}
+        </form>
+    {% endblock %}
+
+{% endblock %}

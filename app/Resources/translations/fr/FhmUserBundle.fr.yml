@@ -1,0 +1,424 @@
+user:
+    admin:
+        index:
+            title:                              Gestion des utilisateurs
+            link:                               Utilisateurs
+            breadcrumb:                         Utilisateurs
+            nodata:                             Aucune donnée
+            form:
+                search:                         Rechercher
+            table:
+                header:
+                    username:                   Identifiant
+                    password:                   Mot de passe
+                    email:                      Email
+                    firstname:                  Prénom
+                    lastname:                   Nom
+                    create:                     Création
+                    action:                     Actions
+                    status:                     Statut
+                action:
+                    activate:                   Activer
+                    deactivate:                 Désactiver
+                    delete:                     Supprimer
+                    detail:                     Paramétrer
+                    duplicate:                  Dupliquer
+                    undelete:                   Restaurer
+                    update:                     Modifier
+                confirm:
+                    activate:                   Confirmer l'activation de l\'utilisateur ?
+                    deactivate:                 Confirmer la désactivation de l\'utilisateur ?
+                    delete:                     Confirmer la suppression de l\'utilisateur ?
+                    undelete:                   Confirmer le déblocage de l\'utilisateur ?
+        create:
+            title:                              Ajouter un utilisateur
+            link:                               Ajouter
+            breadcrumb:                         Ajouter
+            flash:
+                ok:                             L'utilisateur a bien été créé.
+                ko:                             L'utilisateur n'a pas été créé.
+            form:
+                username:                       Identifiant
+                email:                          Email
+                password:                       Mot de passe
+                password_confirmation:          Confirmation du mot de passe
+                first_name:                     Prénom
+                last_name:                      Nom
+                birth_date:                     Date de naissance
+                tel1:                           Téléphone fixe
+                tel2:                           Téléphone portable
+                address_search:                 Rechercher une adresse
+                address_main:                   Adresse
+                address_additional:             Complément d'adresse
+                city:                           Ville
+                zip_code:                       Code Postal
+                country:                        Pays
+                latitude:                       Latitude
+                longitude:                      Longitude
+                sign:                           Signature
+                avatar:                         Avatar
+                enabled:                        Activer
+                locked:                         Bloquer
+                social:
+                    facebook:                   Facebook
+                    facebookId:                 ID Facebook
+                    twitter:                    Twitter
+                    twitterId:                  ID Twitter
+                    google:                     Google
+                    googleId:                   ID Google
+                    instagram:                  Instagram
+                    youtube:                    Youtube
+                    flux:                       Flux RSS
+                    site:                       Site internet
+                submit:
+                    save:                       Sauvegarder
+                    new:                        Sauvegarder et ajouter
+                    duplicate:                  Sauvegarder et dupliquer
+                    quit:                       Sauvegarder et quitter
+                    config:                     Sauvegarder et paramétrer
+                    cancel:                     Annuler
+                    import:                     Importer
+                    export:                     Exporter
+                fieldset:
+                    social:                     Réseaux sociaux
+                    connection:                 Informations de connexion
+                    informations:               Informations supplémentaires
+                    map:                        Adresse
+                    options:                    Options
+
+        update:
+            title:                              %name%
+            link:                               Modifier
+            breadcrumb:                         Modifier
+            flash:
+                ok:                             L'utilisateur a bien été modifié.
+                ko:                             L'utilisateur n'a pas été modifié.
+            form:
+                username:                       Identifiant
+                email:                          Email
+                password:                       Mot de passe
+                password_confirmation:          Confirmation du mot de passe
+                first_name:                     Prénom
+                last_name:                      Nom
+                birth_date:                     Date de naissance
+                tel1:                           Téléphone fixe
+                tel2:                           Téléphone portable
+                address_search:                 Rechercher une adresse
+                address_main:                   Adresse
+                address_additional:             Complément d'adresse
+                city:                           Ville
+                zip_code:                       Code Postal
+                country:                        Pays
+                latitude:                       Latitude
+                longitude:                      Longitude
+                sign:                           Signature
+                avatar:                         Avatar
+                enabled:                        Activer
+                locked:                         Bloquer
+                social:
+                    facebook:                   Facebook
+                    facebookId:                 ID Facebook
+                    twitter:                    Twitter
+                    twitterId:                  ID Twitter
+                    google:                     Google
+                    googleId:                   ID Google
+                    instagram:                  Instagram
+                    youtube:                    Youtube
+                    flux:                       Flux RSS
+                    site:                       Site internet
+                submit:
+                    save:                       Sauvegarder
+                    new:                        Sauvegarder et ajouter
+                    duplicate:                  Sauvegarder et dupliquer
+                    quit:                       Sauvegarder et quitter
+                    config:                     Sauvegarder et paramétrer
+                    cancel:                     Annuler
+                    import:                     Importer
+                    export:                     Exporter
+                    delete:                     Supprimer
+                fieldset:
+                    social:                     Réseaux sociaux
+                    connection:                 Informations de connexion
+                    informations:               Informations supplémentaires
+                    map:                        Adresse
+                    options:                    Options
+
+        detail:
+            title:                              %name%
+            link:                               Détail
+            breadcrumb:                         %name%
+            data:
+                title:                          Informations
+                id:                             ID
+                create:                         Création
+                update:                         Modification
+                activity:                       Dernière activité
+                username:                       Identifiant
+                email:                          Email
+                firstname:                      Prénom
+                lastname:                       Nom
+                birthdate:                      Date de naissance
+                address:                        Adresse
+                tel1:                           Téléphone fixe
+                tel2:                           Téléphone portable
+                alias:                          Alias
+                status:                         Statut
+                sign:                           Signature
+                avatar:                         Avatar
+            url:
+                title:                          Routes disponibles
+                admin:
+                    edit:                       Modifier
+                    detail:                     Paramétrer
+                front:
+                    id:                         Afficher via l'ID
+                    name:                       Afficher via le nom
+                    alias:                      Afficher via l'alias
+                    lite:                       Afficher via l'url simplifiée
+            roles:
+                title:                          Gestion des rôles
+                list1:                          Disponibles
+                list2:                          Sélectionnés
+            password:
+                title:                          Modifier le mot de passe
+                password:                       Mot de passe
+                password_confirmation:          Confirmation du mot de passe
+                submit:                         Valider
+                flash:
+                    ok:                         Le mot de passe a bien été modifié.
+            admin:
+                title:                          Outils d'administration
+
+        export:
+            title:                              Exporter des utilisateurs
+            link:                               Exporter
+            breadcrumb:                         Exporter
+            form:
+                submit:                         Exporter
+
+        import:
+            title:                              Importer des utilisateurs
+            link:                               Importer
+            breadcrumb:                         Importer
+            form:
+                file:                           Fichier CSV
+                submit:                         Importer
+            flash:
+                ok:                             Les utilisateurs ont bien été importés (%countAdd% ajout(s), %countUpdate% modification(s), %countError% erreur(s)).
+                ko:                             Les utilisateurs n'ont pas été importés.
+
+        deactivate:
+            flash:
+                ok:                             L'utilisateur a bien été désactivé.
+
+        delete:
+            flash:
+                ok:                             L'utilisateur a bien été supprimé.
+
+        activate:
+            flash:
+                ok:                             L'utilisateur a bien été activé.
+
+        undelete:
+            flash:
+                ok:                             L'utilisateur a bien été restauré.
+
+    front:
+        create:
+            title:                              Créer un compte
+            link:                               Créer un compte
+            breadcrumb:                         Créer un compte
+            form:
+                username:                       Nom d'utilisateur
+                password:                       Mot de passe
+                password_confirmation:          Confirmer votre mot de passe
+                email:                          Adresse e-mail
+                email_confirmation:             Confirmer votre adresse e-mail
+                submit:
+                    save:                       S'inscrire
+                    cancel:                     Annuler
+            checkemail:
+                title:                          Félicitations %username%
+                mail:
+                    title:                      Votre inscription est bien enregistrée.
+                    text:                       Un e-mail automatique de confirmation vient d'être envoyé à l'adresse suivante:
+                faq:
+                    title:                      Vous ne trouvez pas votre e-mail de confirmation ?
+                    list1:                      Merci de vérifier dans les "<strong>courriers indésirables</strong>" ou "<strong>spam</strong>".
+                    list2:                      Pour être sûr de bien recevoir nos e-mails, nous vous invitons à ajouter <strong>noreply@fhmtools.com</strong> à votre liste de contacts.
+            confirmed:
+                title:                          Félicitations %username%
+                message:
+                    title:                      Votre compte est activé.
+                    text:                       Vous pouvez vous connecter dès à présent.
+                start:
+                    title:                      Bien commencer
+                    text:                       Nous vous conseillons de:
+                    list1:                      Compléter votre <a href="%route%"><strong>profil</strong></a>.
+
+        update:
+            title:                              Modifier mon profil
+            link:                               Modifier mon profil
+            breadcrumb:                         Modifier mon profil
+            form:
+                username:                       Identifiant
+                email:                          Email
+                first_name:                     Prénom
+                last_name:                      Nom
+                birth_date:                     Date de naissance
+                tel1:                           Téléphone fixe
+                tel2:                           Téléphone portable
+                address_search:                 Rechercher une adresse
+                address_main:                   Adresse
+                address_additional:             Complément d'adresse
+                city:                           Ville
+                zip_code:                       Code Postal
+                country:                        Pays
+                latitude:                       Latitude
+                longitude:                      Longitude
+                sign:                           Signature
+                avatar:                         Avatar
+                password:                       Mot de passe actuel
+                social:
+                    facebook:                   Facebook
+                    facebookId:                 ID Facebook
+                    twitter:                    Twitter
+                    twitterId:                  ID Twitter
+                    google:                     Google
+                    googleId:                   ID Google
+                    instagram:                  Instagram
+                    youtube:                    Youtube
+                    flux:                       Flux RSS
+                    site:                       Site internet
+                submit:
+                    save:                       Sauvegarder
+                    cancel:                     Annuler
+                fieldset:
+                    connection:                 Informations de connexion
+                    informations:               Informations supplémentaires
+                    map:                        Adresse
+                    social:                     Réseaux sociaux
+                    security:                   Sécurité
+
+        password:
+            title:                              Modifier mon mot de passe
+            link:                               Modifier mon mot de passe
+            breadcrumb:                         Modifier mon mot de passe
+            form:
+                password:                       Mot de passe actuel
+                password_new:                   Nouveau mot de passe
+                password_confirmation:          Confirmation du mot de passe
+                submit:
+                    save:                       Sauvegarder
+                    cancel:                     Annuler
+
+        detail:
+            title:                              Mon profil
+            link:                               Mon profil
+            breadcrumb:                         Mon profil
+            data:
+                title:                          Informations
+                create:                         Création
+                update:                         Modification
+                activity:                       Dernière activité
+                username:                       Identifiant
+                email:                          Email
+                firstname:                      Prénom
+                lastname:                       Nom
+                birthdate:                      Date de naissance
+                address:                        Adresse
+                tel1:                           Téléphone fixe
+                tel2:                           Téléphone portable
+                avatar:                         Avatar
+                sign:                           Signature
+
+        login:
+            title:                              Connexion
+            link:                               Connexion
+            breadcrumb:                         Connexion
+            alternate:                          Ou
+            form:
+                forget:                         Mot de passe oublié
+                password:                       Mot de passe
+                remember:                       Se souvenir de moi
+                submit:                         Connexion
+                username:                       Identifiant ou Email
+            social:
+                facebook:                       se connecter avec Facebook
+                twitter:                        se connecter avec Twitter
+                google:                         se connecter avec Google
+
+        logout:
+            title:                              Se déconnecter
+            link:                               Se déconnecter
+
+        resetting:
+            request:
+                title:                          Mot de passe oublié
+                link:                           Mot de passe oublié
+                breadcrumb:                     Mot de passe oublié
+                form:
+                    error:                      Identifiant inconnu.
+                    submit:                     Valider
+                    username:                   Identifiant ou Email
+            checkemail:
+                title:                          Mot de passe oublié
+                link:                           Mot de passe oublié
+                breadcrumb:                     Mot de passe oublié
+                mail:
+                    title:                      Votre demande est bien enregistrée.
+                    text:                       Un e-mail automatique de confirmation vient d'être envoyé à l'adresse suivante:
+                faq:
+                    title:                      Vous ne trouvez pas votre e-mail de confirmation ?
+                    list1:                      Merci de vérifier dans les "<strong>courriers indésirables</strong>" ou "<strong>spam</strong>".
+                    list2:                      Pour être sûr de bien recevoir nos e-mails, nous vous invitons à ajouter <strong>noreply@fhmtools.com</strong> à votre liste de contacts.
+            error:
+                title:                          Mot de passe oublié
+                link:                           Mot de passe oublié
+                breadcrumb:                     Mot de passe oublié
+                mail:
+                    title:                      Votre demande n'a pas pu être enregistrée.
+                    text:                       Un e-mail de confirmation à déjà été envoyé ces dernières 24 heures.
+                faq:
+                    title:                      Vous ne trouvez pas votre e-mail de confirmation ?
+                    list1:                      Merci de vérifier dans les "<strong>courriers indésirables</strong>" ou "<strong>spam</strong>".
+                    list2:                      Pour être sûr de bien recevoir nos e-mails, nous vous invitons à ajouter <strong>noreply@fhmtools.com</strong> à votre liste de contacts.
+            reset:
+                title:                          Réinitialiser son mot de passe
+                link:                           Réinitialiser son mot de passe
+                breadcrumb:                     Réinitialiser son mot de passe
+                form:
+                    password_new:               Mot de passe
+                    password_confirmation:      Confirmation du mot de passe
+                    submit:                     Réinitialiser
+
+    api:
+        index:
+            breadcrumb:                         Utilisateur - Api
+            link:                               Utilisateur - Api
+            title:                              Utilisateur - Api
+
+    pagination:
+        counter:                                Nombre d'utilisateurs: %count% / %all%
+
+    error:
+        unknown:                                L'utilisateur n'existe pas.
+        delete:                                 L'utilisateur n'existe pas.
+        forbidden:                              Droits insuffisants.
+
+    status:
+        locked:                                 Bloqué
+        expired:                                Expiré
+
+    email:
+        register:
+            object:                             Bienvenue sur ChichaMaps
+            body:                               Hello %firstname%,<br><br>Votre compte a bien été créé.<br>Pour l'activer, vous devez cliquer sur le bouton suivant :
+            button:                             Activer mon compte
+
+        reset:
+            object:                             ChichaMaps - Réinitialiser son mot de passe
+            body:                               Hello %firstname%,<br><br>Pour réinitialiser votre mot de passe, vous devez cliquer sur le bouton suivant :
+            button:                             Réinitialiser
+
+"Bad credentials":                              Identifiant et/ou mot de passe incorrect

@@ -1,0 +1,72 @@
+{% trans_default_domain instance.domain %}
+{% extends "::FhmFhm/Admin/update.html.twig" %}
+
+{% block content_data_fields_data %}
+    <div class="large-6 medium-6 small-12 columns">
+        <fieldset>
+            <legend>{{ (instance.translation ~ '.admin.update.form.fieldset.data')|trans }}</legend>
+            <div class="row">
+                {{ form_label(form.title) }}
+                {{ form_errors(form.title) }}
+                {{ form_widget(form.title) }}
+            </div>
+            <div class="row">
+                {{ form_label(form.subtitle) }}
+                {{ form_errors(form.subtitle) }}
+                {{ form_widget(form.subtitle) }}
+            </div>
+            <div class="row">
+                {{ form_label(form.content) }}
+                {{ form_errors(form.content) }}
+                {{ form_widget(form.content) }}
+            </div>
+            <div class="row">
+                {{ form_label(form.link) }}
+                {{ form_errors(form.link) }}
+                {{ form_widget(form.link) }}
+            </div>
+        </fieldset>
+    </div>
+    <div class="large-6 medium-6 small-12 columns">
+        <fieldset>
+            <legend>{{ (instance.translation ~ '.admin.update.form.fieldset.media')|trans }}</legend>
+            <div class="row">
+                {{ form_label(form.video) }}
+                {{ form_errors(form.video) }}
+                {{ form_widget(form.video, {'attr': {'placeholder': 'http://'}}) }}
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend>{{ (instance.translation ~ '.admin.update.form.fieldset.galleries')|trans }}</legend>
+            <div class="row">
+                {{ form_label(form.galleries) }}
+                {{ form_errors(form.galleries) }}
+                {{ form_widget(form.galleries) }}
+            </div>
+            <div class="row">
+                {{ form_label(form.order) }}
+                {{ form_errors(form.order) }}
+                {{ form_widget(form.order) }}
+            </div>
+        </fieldset>
+    </div>
+{% endblock %}
+
+{% block content_data_submit_list_data %}
+    {{ parent() }}
+    <li>
+        <hr/>
+    </li>
+    <li>
+        <a href="{{ path('fhm_admin_gallery_album') }}" class="button small button-icon button-cubes">{{ ('gallery.album.admin.index.link')|trans }}</a>
+    </li>
+    <li>
+        <a href="{{ path('fhm_admin_gallery') }}" class="button small button-icon button-th">{{ ('gallery.admin.index.link')|trans }}</a>
+    </li>
+    <li>
+        <a href="{{ path('fhm_admin_gallery_item') }}" class="button small button-icon button-image">{{ ('gallery.item.admin.index.link')|trans }}</a>
+    </li>
+    <li>
+        <a href="{{ path('fhm_admin_gallery_video') }}" class="button small button-icon button-video">{{ ('gallery.video.admin.index.link')|trans }}</a>
+    </li>
+{% endblock %}

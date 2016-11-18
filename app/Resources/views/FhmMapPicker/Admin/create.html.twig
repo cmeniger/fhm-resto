@@ -1,0 +1,30 @@
+{% trans_default_domain instance.domain %}
+{% extends "::FhmFhm/Admin/create.html.twig" %}
+
+{% block content_data_fields_data %}
+    <div class="large-6 medium-6 small-12 columns">
+        <fieldset>
+            <legend>{{ (instance.translation ~ '.admin.create.form.fieldset.data')|trans }}</legend>
+            <div class="row">
+                {{ form_label(form.name) }}
+                {{ form_errors(form.name) }}
+                {{ form_widget(form.name) }}
+            </div>
+            <div class="row">
+                {{ form_label(form.description) }}
+                {{ form_errors(form.description) }}
+                {{ form_widget(form.description) }}
+            </div>
+            <div class="row">
+                {{ form_label(form.map) }}
+                {{ form_errors(form.map) }}
+                {{ form_widget(form.map) }}
+            </div>
+            <div class="row">
+                {{ form_label(form.order) }}
+                {{ form_errors(form.order) }}
+                {{ form_widget(form.order) }}
+            </div>
+        </fieldset>
+    </div>
+{% endblock %}

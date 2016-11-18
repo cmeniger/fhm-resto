@@ -1,0 +1,10 @@
+services:
+    fhm_card:
+        class: Fhm\CardBundle\Services\Card
+        arguments: [@service_container]
+
+    fhm.twig.card_extension:
+        class: Fhm\CardBundle\Twig\CardExtension
+        arguments: [@service_container]
+        tags:
+            - { name: twig.extension }

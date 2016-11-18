@@ -1,0 +1,45 @@
+{% trans_default_domain instance.domain %}
+{% extends "::FhmFhm/Admin/index.html.twig" %}
+
+{% block content_link_data %}
+    <li>
+        <a href="{{ path(instance.source ~ '_admin_' ~ instance.route ~ '_create') }}" class="button small success"><i class="fa fa-plus"></i> {{ (instance.translation ~ '.admin.create.link')|trans }}
+        </a>
+    </li>
+    <li>
+        <a href="{{ path(instance.source ~ '_admin_' ~ instance.route ~ '_multiple') }}" class="button small success"><i class="fa fa-cubes"></i> {{ (instance.translation ~ '.admin.multiple.link')|trans }}
+        </a>
+    </li>
+    <li>
+        <a href="{{ path(instance.source ~ '_admin_' ~ instance.route ~ '_import') }}" class="button small"><i class="fa fa-download"></i> {{ (instance.translation ~ '.admin.import.link')|trans }}
+        </a>
+    </li>
+    <li>
+        <a href="{{ path(instance.source ~ '_admin_' ~ instance.route ~ '_export') }}" class="button small"><i class="fa fa-upload"></i> {{ (instance.translation ~ '.admin.export.link')|trans }}
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('fhm_admin_gallery_album') }}" class="button small"><i class="fa fa-book"></i> {{ ('gallery.album.admin.index.link')|trans }}
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('fhm_admin_gallery') }}" class="button small"><i class="fa fa-th"></i> {{ ('gallery.admin.index.link')|trans }}
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('fhm_admin_gallery_video') }}" class="button small"><i class="fa fa-video-camera"></i> {{ ('gallery.video.admin.index.link')|trans }}
+        </a>
+    </li>
+{% endblock %}
+
+{% block content_data_header %}
+    <th>{{ (instance.translation ~ '.admin.index.table.header.image')|trans }}</th>
+    {{ parent() }}
+    <th>{{ (instance.translation ~ '.admin.index.table.header.galleries')|trans }}{{ macroSort.print('sort_gallery', sort) }}</th>
+{% endblock %}
+
+ {% block content_data_body %}
+     <td>{{ document.getImage()|image('xs', 50)|raw }}</td>
+     {{ parent() }}
+     <td>{{ document.getGalleries()|length }}</td>
+ {% endblock %}

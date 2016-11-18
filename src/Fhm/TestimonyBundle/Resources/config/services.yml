@@ -1,0 +1,4 @@
+services:
+    #    fhm_testimony.example:
+    #        class: Fhm\TestimonyBundle\Example
+    #        arguments: [@service_id, "plain_value", %parameter%]

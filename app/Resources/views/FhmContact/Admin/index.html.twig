@@ -1,0 +1,56 @@
+{% trans_default_domain instance.domain %}
+{% extends "::FhmFhm/Admin/index.html.twig" %}
+
+{% block content_link_data %}
+    {{ parent() }}
+    <li>
+        <a href="{{ path('fhm_admin_contact_message') }}" class="button small"><i class="fa fa-comments"></i> {{ ('contact.message.admin.index.link')|trans }}
+        </a>
+    </li>
+{% endblock %}
+
+{% block content_data_action_share_links %}
+    {{ parent() }}
+    <li>
+        <a href="{{ path(instance.source ~ '_admin_' ~ instance.route ~ '_preview', {'id': document.getId()}) }}" title="{{ (instance.translation ~ '.admin.index.table.action.preview')|trans }}" target="_blank"><i class="fa fa-fw fa-search"></i> {{ (instance.translation ~ '.admin.index.table.action.preview')|trans }}
+        </a>
+    </li>
+{% endblock %}
+
+{% block content_data_action_delete_links %}
+    {{ parent() }}
+    <li>
+        <a href="{{ path(instance.source ~ '_admin_' ~ instance.route ~ '_preview', {'id': document.getId()}) }}" title="{{ (instance.translation ~ '.admin.index.table.action.preview')|trans }}" target="_blank"><i class="fa fa-fw fa-search"></i> {{ (instance.translation ~ '.admin.index.table.action.preview')|trans }}
+        </a>
+    </li>
+{% endblock %}
+
+{% block content_data_action_links %}
+    {{ parent() }}
+    <li>
+        <a href="{{ path(instance.source ~ '_admin_' ~ instance.route ~ '_preview', {'id': document.getId()}) }}" title="{{ (instance.translation ~ '.admin.index.table.action.preview')|trans }}" target="_blank"><i class="fa fa-fw fa-search"></i> {{ (instance.translation ~ '.admin.index.table.action.preview')|trans }}
+        </a>
+    </li>
+{% endblock %}
+
+{% block content_data_header %}
+    <th>{{ (instance.translation ~ '.admin.index.table.header.name')|trans }}{{ macroSort.print('alias', sort) }}</th>
+    <th>{{ (instance.translation ~ '.admin.index.table.header.email')|trans }}{{ macroSort.print('email', sort) }}</th>
+    <th>{{ (instance.translation ~ '.admin.index.table.header.address')|trans }}{{ macroSort.print('sort_address', sort) }}</th>
+    <th>{{ (instance.translation ~ '.admin.index.table.header.message')|trans }}{{ macroSort.print('sort_message', sort) }}</th>
+    <th>{{ (instance.translation ~ '.admin.index.table.header.type.title')|trans }}{{ macroSort.print('profile', sort) }}</th>
+{% endblock %}
+
+{% block content_data_body %}
+    <td>{{ document.getName() }}</td>
+    <td>{{ document.getEmail() }}</td>
+    <td>{{ document|addressHtml|raw }}</td>
+    <td>{{ document.getMessages().count() }}</td>
+    <td>
+        {% if document.getProfile() %}
+            <span class="status warning radius label">{{ (instance.translation ~ '.admin.index.table.header.type.profile')|trans }}</span>
+        {% else %}
+            <span class="status success radius label">{{ (instance.translation ~ '.admin.index.table.header.type.form')|trans }}</span>
+        {% endif %}
+    </td>
+{% endblock %}

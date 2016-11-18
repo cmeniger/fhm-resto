@@ -1,0 +1,14 @@
+{% trans_default_domain instance.domain %}
+{% extends "::FhmFhm/Admin/detail.html.twig" %}
+{% import "::Macros/dd.sort.html.twig" as macroSort %}
+
+{% block content_data %}
+    {{ parent() }}
+
+    <div class="row">
+        {{ macroSort.admin(document, sons, modules, instance.translation ~ '.admin.detail.page', instance) }}
+    </div>
+
+{% endblock %}
+
+{% block content_admin %}{% endblock %}

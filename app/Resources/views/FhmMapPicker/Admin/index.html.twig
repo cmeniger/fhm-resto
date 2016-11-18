@@ -1,0 +1,14 @@
+{% trans_default_domain instance.domain %}
+{% extends "::FhmFhm/Admin/index.html.twig" %}
+
+{% block content_data_header %}
+    <th>{{ (instance.translation ~ '.admin.index.table.header.name')|trans }}{{ macroSort.print('alias', sort) }}</th>
+    <th>{{ (instance.translation ~ '.admin.index.table.header.map')|trans }}{{ macroSort.print('map', sort) }}</th>
+    <th>{{ (instance.translation ~ '.admin.index.table.header.order')|trans }}{{ macroSort.print('order', sort) }}</th>
+{% endblock %}
+
+{% block content_data_body %}
+    <td>{{ document.getName() }}</td>
+    <td>{{ (instance.translation ~ '.' ~ document.getMap() ~ '.choice')|trans }}</td>
+    <td>{{ document.getOrder() }}</td>
+{% endblock %}

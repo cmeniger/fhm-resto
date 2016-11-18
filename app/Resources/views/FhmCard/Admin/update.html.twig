@@ -1,0 +1,46 @@
+{% trans_default_domain instance.domain %}
+{% extends "::FhmFhm/Admin/update.html.twig" %}
+
+{% block content_data_fields_data %}
+    {{ parent() }}
+    <div class="large-6 medium-6 small-12 columns">
+        <fieldset>
+            <legend>{{ (instance.translation ~ '.admin.update.form.fieldset.media')|trans }}</legend>
+            <div class="row">
+                {{ form_label(form.image) }}
+                {{ form_errors(form.image) }}
+                {{ form_widget(form.image) }}
+            </div>
+        </fieldset>
+    </div>
+    <div class="large-4 medium-4 small-12 columns">
+        <fieldset>
+            <legend>{{ (instance.translation ~ '.admin.update.form.fieldset.categories')|trans }}</legend>
+            <div class="row">
+                {{ form_label(form.categories) }}
+                {{ form_errors(form.categories) }}
+                {{ form_widget(form.categories) }}
+            </div>
+        </fieldset>
+    </div>
+    <div class="large-4 medium-4 small-12 columns">
+        <fieldset>
+            <legend>{{ (instance.translation ~ '.admin.update.form.fieldset.products')|trans }}</legend>
+            <div class="row">
+                {{ form_label(form.products) }}
+                {{ form_errors(form.products) }}
+                {{ form_widget(form.products) }}
+            </div>
+        </fieldset>
+    </div>
+    <div class="large-4 medium-4 small-12 columns">
+        <fieldset>
+            <legend>{{ (instance.translation ~ '.admin.update.form.fieldset.ingredients')|trans }}</legend>
+            <div class="row">
+                {{ form_label(form.ingredients) }}
+                {{ form_errors(form.ingredients) }}
+                {{ form_widget(form.ingredients) }}
+            </div>
+        </fieldset>
+    </div>
+{% endblock %}

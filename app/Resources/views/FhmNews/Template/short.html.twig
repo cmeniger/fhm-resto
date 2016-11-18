@@ -1,0 +1,33 @@
+{% trans_default_domain instance.domain %}
+{% import "::Macros/pagination.html.twig" as macroPagination %}
+
+<div id="content_data" class="news">
+    {% if documents %}
+        {% for news in documents %}
+            <div class="row news-short">
+                <div class="column large-3 medium-4 small-12">
+                    <div class="news-image" style="background: url('{{ asset(news.getImage()|media("m","/images/common/news-cover-default.jpg")) }}') center center no-repeat;"></div>
+                </div>
+                <div class="column large-9 medium-8 small-12">
+                    <div class="news-text">
+                        <h2 class="news-title">
+                            <a href="{{ path('fhm_news_lite', {id: news.getAlias()}) }}">{{ news.getTitle() }}</a>
+                        </h2>
+                        <h3 class="news-subtitle">{{ news.getSubTitle() }}<br/>
+                            <small>{{ news.getDateStart() ? news.getDateStart()|localizeddate('full', 'none', app.request.locale) : news.getDateCreate()|localizeddate('full', 'none', app.request.locale) }}</small>
+                        </h3>
+                        <p>{{ news.getResume()|raw }}</p>
+                        <small>{{ news.getUserCreate().getUsername() }}{{ news.getDateUpdate ? ' | ' ~ ('news.front.index.form.update')|trans({'%date%':news.getDateUpdate()|localizeddate('full', 'none', app.request.locale)},'FhmNewsBundle') : '' }}</small>
+                        <a class="more button tiny right" href="{{ path('fhm_news_lite', {id: news.getAlias()}) }}">{{ ('news.front.index.form.more')|trans({},'FhmNewsBundle') }}</a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    {% else %}
+        <div class="panel nodata row">
+            <p>{{ (instance.translation ~ '.front.index.nodata')|trans }}</p>
+        </div>
+    {% endif %}
+</div>
+{# Pagination #}
+{{ macroPagination.print(pagination) }}

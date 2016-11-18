@@ -1,0 +1,28 @@
+{% trans_default_domain instance.domain %}
+
+{% if items|length > 0 %}
+    <div class="gallery-items">
+        <h2>{{ (instance.translation ~ '.front.detail.item.title')|trans }}</h2>
+        <ul class="clearing-thumbs small-block-grid-2 medium-block-grid-5" data-clearing>
+            {% for item in items %}
+                <li>
+                    <a href="{{ item.getImage()|media }}"  style="background: url('{{ item.getImage()|media('s') }}')">
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endif %}
+
+{% if videos|length > 0 %}
+    <div class="gallery-videos">
+        <h2>{{ (instance.translation ~ '.front.detail.video.title')|trans }}</h2>
+        <ul class="clearing-thumbs small-block-grid-1 medium-block-grid-4">
+            {% for video in videos %}
+                <li>
+                    {{ video.getVideo()|video(250,200)|raw }}
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endif %}

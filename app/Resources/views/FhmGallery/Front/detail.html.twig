@@ -1,0 +1,8 @@
+{% trans_default_domain instance.domain %}
+{% extends "::FhmFhm/Front/detail.html.twig" %}
+
+{% block content_data %}
+    <div class="row">
+        {% render(path('fhm_api_gallery_detail', {id:document.getId()})) %}
+    </div>
+{% endblock %}

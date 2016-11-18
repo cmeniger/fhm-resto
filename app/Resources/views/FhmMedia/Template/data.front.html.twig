@@ -1,0 +1,48 @@
+{% trans_default_domain instance.domain %}
+{% import "::Macros/pagination.html.twig" as macroPagination %}
+<div class="row media" data-path="{{ path('fhm_api_media_data_front') }}">
+    <div class="large-2 columns media-tags">
+        {% if tagMains %}
+            <ul class="side-nav">
+                <li><a href="#" media-tag="">{{ (instance.translation ~ '.admin.index.tags.all')|trans }}</a></li>
+                <li>
+                    <hr/>
+                </li>
+                {% for tagMain in tagMains %}
+                    <li><a href="#" media-tag="{{ tagMain.getId() }}">{{ tagMain|tagLabel|raw }}</a></li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </div>
+    <div class="large-10 columns media-datas">
+        {{ tag ? tag|tagBreadcrumbs|raw : '' }}
+        {% if tagSons %}
+            <div class="row bloc tags">
+                {% for tagSon in tagSons %}
+                    <div class="large-3 medium-4 small-6 columns end">
+                        {{ tagSon|tagBlocFront(instance)|raw }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+        {% if documents %}
+            <div class="row bloc medias">
+                {% for document in documents %}
+                    <div class="large-3 medium-4 small-6 columns end">
+                        {{ document|blocFront(instance)|raw }}
+                    </div>
+                {% endfor %}
+            </div>
+            {{ macroPagination.print(pagination, true) }}
+        {% else %}
+            <div class="panel nodata bloc">
+                <p>{{ (instance.translation ~ '.admin.index.nodata')|trans }}</p>
+            </div>
+        {% endif %}
+    </div>
+</div>
+<div id="modal-media-zoom" class="reveal-modal" data-reveal>
+    <div class="media-zoom"></div>
+    <a class="close-reveal-modal" aria-label="Close">&#215;</a>
+</div>
+

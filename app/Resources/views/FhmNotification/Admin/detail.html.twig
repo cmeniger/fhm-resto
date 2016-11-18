@@ -1,0 +1,46 @@
+{% trans_default_domain instance.domain %}
+{% extends "::FhmFhm/Admin/detail.html.twig" %}
+
+{% block content_url %}{% endblock %}
+{% block content_admin %}{% endblock %}
+
+{% block content_data %}
+    <div class="row">
+        <h2 id="anchor-admin-data">{{ (instance.translation ~ '.admin.detail.data.title')|trans }}</h2>
+        <table class="fullwidth">
+            <tbody>
+                <tr>
+                    <td><strong>{{ (instance.translation ~ '.admin.detail.data.id')|trans }}</strong></td>
+                    <td>{{ document.getId() }}</td>
+                </tr>
+                <tr>
+                    <td><strong>{{ (instance.translation ~ '.admin.detail.data.create')|trans }}</strong></td>
+                    <td>{{ document.getUserCreate() ? document.getUserCreate().getUsername() ~ ' - ' : '' }}{{ document.getDateCreate() | localizeddate('full', 'short', app.request.locale) }}</td>
+                </tr>
+                <tr>
+                    <td><strong>{{ (instance.translation ~ '.admin.detail.data.template')|trans }}</strong></td>
+                    <td>{{ document.getTemplate() }}</td>
+                </tr>
+                <tr>
+                    <td><strong>{{ (instance.translation ~ '.admin.detail.data.user')|trans }}</strong></td>
+                    <td>{{ document.getUser().getUsernameCanonical() }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="row">
+        <table class="fullwidth">
+            <tbody>
+                <tr>
+                    <td>
+                        <div class="notification board">
+                            <div class="item">
+                                {% render(path('fhm_api_notification_detail',{id:document.getId()})) %}
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

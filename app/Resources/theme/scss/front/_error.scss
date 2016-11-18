@@ -1,0 +1,20 @@
+.fhm-error{
+    position:   relative;
+    text-align: center;
+    padding:    3em 0;
+    .content{
+        h1{
+            text-transform: uppercase;
+        }
+        p{
+            font-size: 0.8em;
+        }
+    }
+}
+
+.error{
+    padding:    1em;
+    margin:     1em 0;
+    color:      #fff !important;
+    background: $alert-color;
+}

@@ -1,0 +1,62 @@
+{% trans_default_domain instance.domain %}
+{% extends "::FhmFhm/Admin/update.html.twig" %}
+
+{% block content_data_fields_data %}
+    <div class="large-6 medium-6 small-12 columns">
+        <fieldset>
+            <legend>{{ (instance.translation ~ '.admin.update.form.fieldset.data')|trans }}</legend>
+            <div class="row">
+                {{ form_label(form.title) }}
+                {{ form_errors(form.title) }}
+                {{ form_widget(form.title) }}
+            </div>
+            <div class="row">
+                {{ form_label(form.subtitle) }}
+                {{ form_errors(form.subtitle) }}
+                {{ form_widget(form.subtitle) }}
+            </div>
+            <div class="row">
+                {{ form_label(form.resume) }}
+                {{ form_errors(form.resume) }}
+                {{ form_widget(form.resume) }}
+            </div>
+            <div class="row">
+                {{ form_label(form.content) }}
+                {{ form_errors(form.content) }}
+                {{ form_widget(form.content) }}
+            </div>
+        </fieldset>
+    </div>
+    <div class="large-6 medium-6 small-12 columns">
+        <fieldset>
+            <legend>{{ (instance.translation ~ '.admin.update.form.fieldset.media')|trans }}</legend>
+            <div class="row">
+                {{ form_label(form.image) }}
+                {{ form_errors(form.image) }}
+                {{ form_widget(form.image) }}
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend>{{ (instance.translation ~ '.admin.update.form.fieldset.items')|trans }}</legend>
+            <div class="row">
+                {{ form_label(form.items) }}
+                {{ form_errors(form.items) }}
+                {{ form_widget(form.items) }}
+            </div>
+            <div class="row">
+                {{ form_label(form.sort) }}
+                {{ form_errors(form.sort) }}
+                {{ form_widget(form.sort) }}
+            </div>
+            <div class="row">
+                {{ form_errors(form.add_global) }}
+                {{ form_label(form.add_global) }}
+                <div class="switch">
+                    {{ form_widget(form.add_global) }}
+                    <label for="{{ form.add_global.vars.id }}"></label>
+                </div>
+            </div>
+        </fieldset>
+    </div>
+{% endblock %}
+

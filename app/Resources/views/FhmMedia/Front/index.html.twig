@@ -1,0 +1,21 @@
+{% trans_default_domain instance.domain %}
+{% extends "::FhmFhm/Front/index.html.twig" %}
+
+{% block content_search %}
+    <form action="#" method="POST" {{ form_enctype(form) }} id="formSearch">
+        <div class="row collapse">
+            <div class="small-6 columns">
+                {{ form_widget(form.search, {'attr':{'data-type':'search', 'class':'FhmSearch_search'}}) }}
+            </div>
+            <div class="small-1 columns end">
+                <button class="button postfix" type="submit"><i class="fa fa-search"></i></button>
+            </div>
+        </div>
+    </form>
+{% endblock %}
+
+{% block content_data %}
+    {% render(path('fhm_api_media_data_front')) %}
+{% endblock %}
+
+{% block content_pagination %}{% endblock %}

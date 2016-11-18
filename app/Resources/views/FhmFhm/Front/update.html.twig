@@ -1,0 +1,114 @@
+{% extends layout_extend is defined ? layout_extend : "::layout.front.html.twig" %}
+{% trans_default_domain instance.domain %}
+
+{% block tagline %}
+    <div class="row text-center">
+        <h1>{% block tagline_data %}{{ (instance.translation ~ '.front.update.title')|trans({'%name%': document.getName()}) }}{% endblock %}</h1>
+    </div>
+{% endblock %}
+
+{% block content %}
+    {% block content_data %}
+        <div class="form form-update">
+            {% block content_data_form %}
+            <form action="{% block content_data_form_action %}{{ path(instance.source ~ '_' ~ instance.route ~ '_update', {'id':document.getId()}) }}{% endblock %}" {% block content_data_form_attribut %}{% endblock %} method="POST" {{ form_enctype(form) }} >
+                {% endblock %}
+                {% block content_data_alert %}
+                    <div class="row panel callout radius form-alert">
+                        <div class="large-2 columns form-alert-icon">
+                            <i class="fa fa-exclamation-circle"></i>
+                        </div>
+                        <div class="large-10 columns form-alert-text">
+                            <h5>{{ (instance.translation ~ '.front.update.form.alert.title')|trans }}</h5>
+
+                            <p>{{ (instance.translation ~ '.front.update.form.alert.text')|trans }}</p>
+                        </div>
+                    </div>
+                {% endblock %}
+                {% block content_data_errors %}
+                    {% if form.vars.errors|length > 0 %}
+                        <div class="form-bloc form-error">
+                            {% block content_data_errors_data %}
+                                <div class="row">
+                                    {{ form_errors(form) }}
+                                </div>
+                            {% endblock %}
+                        </div>
+                    {% endif %}
+                {% endblock %}
+                {% block content_data_fields %}
+                    <div class="form-bloc form-fields">
+                        {% block content_data_fields_data %}
+                            <div class="row">
+                                <div class="large-6 columns">
+                                    {{ form_label(form.name) }}
+                                    {{ form_errors(form.name) }}
+                                    {{ form_widget(form.name) }}
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="large-6 columns">
+                                    {{ form_label(form.description) }}
+                                    {{ form_errors(form.description) }}
+                                    {{ form_widget(form.description) }}
+                                </div>
+                            </div>
+                        {% endblock %}
+                    </div>
+                {% endblock %}
+                {% block content_data_submit %}
+                    <div class="form-bloc form-submit">
+                        {% block content_data_submit_data %}
+                            <div class="row">
+                                <ul class="button-group">
+                                    {% block content_data_submit_cancel %}
+                                        <li>
+                                            <a href="{{ path((instance.source ~ '_' ~ instance.route)) }}" class="button small secondary button-icon button-cancel">{{ (instance.translation ~ '.front.update.form.submit.cancel')|trans }}</a>
+                                        </li>
+                                    {% endblock %}
+                                    {% block content_data_submit_save %}
+                                        <li>
+                                            {{ form_widget(form.submitSave, {'attr':{'class':'small button-icon button-save'}}) }}
+                                        </li>
+                                    {% endblock %}
+                                    {% block content_data_submit_list %}
+                                        <li>
+                                            <span class="button small" data-dropdown="dropSubmit"><i class="fa fa-bars"></i></span>
+                                        </li>
+                                    {% endblock %}
+                                </ul>
+                                {% block content_data_submit_list_content %}
+                                    <ul id="dropSubmit" class="small f-dropdown" data-dropdown-content>
+                                        {% block content_data_submit_list_data %}
+                                            {% if form.submitNew is defined %}
+                                                <li>{{ form_widget(form.submitNew, {'attr':{'class':'small button-icon button-new' }}) }}</li>
+                                            {% endif %}
+                                            {% if form.submitDuplicate is defined %}
+                                                <li>{{ form_widget(form.submitDuplicate, {'attr':{'class':'small button-icon button-duplicate'}}) }}</li>
+                                            {% endif %}
+                                            {% if form.submitQuit is defined %}
+                                                <li>{{ form_widget(form.submitQuit, {'attr':{'class':'small button-icon button-quit'}}) }}</li>
+                                            {% endif %}
+                                            {% if form.submitConfig is defined %}
+                                                <li>{{ form_widget(form.submitConfig, {'attr':{'class':'small button-icon button-gear'}}) }}</li>
+                                            {% endif %}
+                                        {% endblock %}
+                                    </ul>
+                                {% endblock %}
+                            </div>
+                        {% endblock %}
+                    </div>
+                {% endblock %}
+                {% block content_data_rest %}
+                    <div class="form-bloc form-rest">
+                        {% block content_data_rest_data %}
+                            <div class="row">
+                                {{ form_rest(form) }}
+                            </div>
+                        {% endblock %}
+                    </div>
+                {% endblock %}
+            </form>
+        </div>
+    {% endblock %}
+{% endblock %}

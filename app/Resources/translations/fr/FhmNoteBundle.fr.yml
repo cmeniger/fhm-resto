@@ -1,0 +1,276 @@
+note:
+    admin:
+        index:
+            title:                              Gestion des notes
+            link:                               Notes
+            breadcrumb:                         Notes
+            nodata:                             Aucune donnée
+            form:
+                search:                         Rechercher
+            table:
+                header:
+                    parent:                     Etablissement
+                    user:                       Utilisateur
+                    date:                       Date
+                    note:                       Note
+                    action:                     Actions
+                    status:                     Statut
+                action:
+                    activate:                   Activer
+                    deactivate:                 Désactiver
+                    delete:                     Supprimer
+                    detail:                     Détail
+                    duplicate:                  Dupliquer
+                    undelete:                   Restaurer
+                    update:                     Modifier
+                confirm:
+                    activate:                   Confirmer l'activation de la note ?
+                    deactivate:                 Confirmer la désactivation de la note ?
+                    delete:                     Confirmer la suppression de la note ?
+                    undelete:                   Confirmer le déblocage de la note ?
+
+        create:
+            title:                              Ajouter
+            link:                               Ajouter
+            breadcrumb:                         Ajouter une note
+            flash:
+                ok:                             La note a bien été créée.
+                ko:                             La note n'a pas été créée.
+            form:
+                name:                           Nom
+                description:                    Description
+                active:                         Activer
+                share:                          Partager
+                global:                         Globale
+                submit:
+                    save:                       Sauvegarder
+                    new:                        Sauvegarder et ajouter
+                    duplicate:                  Sauvegarder et dupliquer
+                    quit:                       Sauvegarder et quitter
+                    config:                     Sauvegarder et paramétrer
+                    cancel:                     Annuler
+                    import:                     Importer
+                    export:                     Exporter
+                fieldset:
+                    data:                       Données
+                    options:                    Options
+
+        update:
+            title:                              Modifier
+            link:                               Modifier
+            breadcrumb:                         Modifier
+            flash:
+                ok:                             La note a bien été modifiée.
+                ko:                             La note n'a pas été modifiée.
+            form:
+                name:                           Nom
+                description:                    Description
+                active:                         Activer
+                share:                          Partager
+                global:                         Globale
+                submit:
+                    save:                       Sauvegarder
+                    new:                        Sauvegarder et ajouter
+                    duplicate:                  Sauvegarder et dupliquer
+                    quit:                       Sauvegarder et quitter
+                    config:                     Sauvegarder et paramétrer
+                    cancel:                     Annuler
+                    import:                     Importer
+                    export:                     Exporter
+                    delete:                     Supprimer
+                fieldset:
+                    data:                       Données
+                    options:                    Options
+
+        detail:
+            title:                              %name%
+            link:                               Détail
+            breadcrumb:                         %name%
+            data:
+                title:                          Informations
+                id:                             ID
+                parent:                         Etablissement
+                user:                           Utilisateur
+                date:                           Date
+                note:                           Note
+                content:                        Message
+            parent:
+                title:                          Etablissement
+                id:                             ID
+                name:                           Nom
+                alias:                          Alias
+                address:                        Adresse
+            user:
+                title:                          Utilisateur
+                id:                             ID
+                username:                       Identifiant
+                firstname:                      Prénom
+                lastname:                       Nom
+                email:                          E-mail
+            url:
+                title:                          Routes disponibles
+                admin:
+                    edit:                       Modifier
+                    detail:                     Paramétrer
+                front:
+                    id:                         Afficher via l'ID
+                    name:                       Afficher via le nom
+                    alias:                      Afficher via l'alias
+                    lite:                       Afficher via l'url simplifiée
+            admin:
+                title:                          Outils d'administration
+
+        export:
+            breadcrumb:                         Exporter
+            form:
+                submit:                         Exporter
+            link:                               Exporter
+            title:                              Exporter des notes
+
+        import:
+            breadcrumb:                         Importer
+            flash:
+                ok:                             Les notes ont bien été importées (%countAdd% ajout(s), %countUpdate% modification(s), %countError% erreur(s)).
+                ko:                             Les notes n'ont pas été importées.
+            form:
+                file:                           Fichier CSV
+                submit:                         Importer
+            link:                               Importer
+            title:                              Importer des notes
+
+        deactivate:
+            flash:
+                ok:                             La note a bien été désactivée.
+
+        delete:
+            flash:
+                ok:                             La note a bien été supprimée.
+
+        activate:
+            flash:
+                ok:                             La note a bien été activée.
+
+        undelete:
+            flash:
+                ok:                             La note a bien été restaurée.
+
+    front:
+        index:
+            title:                              Notes
+            link:                               Notes
+            breadcrumb:                         Notes
+            nodata:                             Aucune donnée
+            form:
+                search:                         Rechercher
+            table:
+                header:
+                    name:                       Nom
+                    action:                     Actions
+                action:
+                    detail:                     Détail
+                    delete:                     Supprimer
+                confirm:
+                    delete:                     Confirmer la suppression de la note ?
+
+        create:
+            title:                              Ajouter
+            link:                               Ajouter
+            breadcrumb:                         Ajouter une note
+            flash:
+                ok:                             La note a bien été créée.
+                ko:                             La note n'a pas été créée.
+            form:
+                name:                           Nom
+                description:                    Description
+                submit:
+                    save:                       Sauvegarder
+                    new:                        Sauvegarder et ajouter
+                    duplicate:                  Sauvegarder et dupliquer
+                    quit:                       Sauvegarder et quitter
+                    cancel:                     Annuler
+                alert:
+                    title:                      Information
+                    text:                       L'ajout d'une note nécessite la validation d'un modérateur.
+
+        update:
+            title:                              Modifier
+            link:                               Modifier
+            breadcrumb:                         Modifier
+            flash:
+                ok:                             La note a bien été modifiée.
+                ko:                             La note n'a pas été modifiée.
+            form:
+                name:                           Nom
+                description:                    Description
+                submit:
+                    save:                       Sauvegarder
+                    new:                        Sauvegarder et ajouter
+                    duplicate:                  Sauvegarder et dupliquer
+                    quit:                       Sauvegarder et quitter
+                    cancel:                     Annuler
+                alert:
+                    title:                      Information
+                    text:                       La modification d'une note nécessite la validation d'un modérateur.
+
+        detail:
+            title:                              %name%
+            link:                               Détail
+            breadcrumb:                         %name%
+            data:
+                title:                          Informations
+                create:                         Création
+                update:                         Modification
+                name:                           Nom
+                alias:                          Alias
+                description:                    Description
+
+        delete:
+            flash:
+                ok:                             La note a bien été supprimée.
+
+    api:
+        index:
+            title:                              Notes
+
+        embed:
+            add:
+                title:                          Notez cet établissement
+                button:                         Noter
+                comment:                        Donnez votre avis.
+                submit:                         Valider
+                value:
+                    1:                          Mauvais
+                    2:                          Moyen
+                    3:                          Bon
+                    4:                          Très bon
+                    5:                          Excellent
+            edit:
+                title:                          Modifiez votre note
+                button:                         Noter
+                comment:                        Donnez votre avis.
+                submit:                         Modifier
+                delete:                         Supprimer
+                confirm:
+                    delete:                     Confirmer la suppression de la note ?
+                value:
+                    1:                          Mauvais
+                    2:                          Moyen
+                    3:                          Bon
+                    4:                          Très bon
+                    5:                          Excellent
+            comment:
+                resume:                         Notes
+                comment:                        Commentaires
+                nodata:                         Aucun commentaire
+
+
+    pagination:
+        counter:                                Nombre de notes: %count% / %all%
+
+    autocomplete:
+        nodata:                                 Aucun résultat
+
+    error:
+        unknown:                                La note n'existe pas.
+        delete:                                 La note n'existe pas.
+        forbidden:                              Droits insuffisants.

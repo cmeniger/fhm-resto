@@ -1,0 +1,53 @@
+{% trans_default_domain instance.domain %}
+
+{% if products %}
+    <ul>
+        {% for product in products %}
+            <li>
+                <div class="pull-left">{{ product.getName() }}</div>
+                <div class="pull-right">
+                    <div class="editor-search-status">
+                        {% if product.getForward() is defined and product.getForward() %}
+                            <span class="status regular radius label" title="{{ ('card.api.status.forward')|trans({}, 'FhmCardBundle') }}">F</span>
+                        {% endif %}
+                        {% if product.getShare() and not product.hasGrouping(instance.grouping.used) %}
+                            <span class="status regular radius label" title="{{ ('fhm.status.share')|trans({}, 'FhmFhmBundle') }}">S</span>
+                        {% endif %}
+                        {% if product.getGlobal() %}
+                            <span class="status regular radius label" title="{{ ('fhm.status.global')|trans({}, 'FhmFhmBundle') }}">G</span>
+                        {% endif %}
+                        {% if product.getDelete() %}
+                            <span class="status alert radius label" title="{{ ('fhm.status.delete')|trans({}, 'FhmFhmBundle') }}"></span>
+                        {% elseif not product.getActive() %}
+                            <span class="status warning radius label" title="{{ ('fhm.status.disable')|trans({}, 'FhmFhmBundle') }}"></span>
+                        {% else %}
+                            <span class="status success radius label" title="{{ ('fhm.status.enable')|trans({}, 'FhmFhmBundle') }}"></span>
+                        {% endif %}
+                    </div>
+                    <div class="editor-search-actions">
+                        <a href="#" data-reveal-id="modal-editor" data-modal="product" data-url="{{ path('fhm_api_card_product_update',{idCard:card.getId(),idProduct:product.getId()}) }}" title="{{ ('card.api.action.update')|trans }}"><i class="fa fa-pencil"></i></a>
+                        {% if product.getDelete() %}
+                            {% if instance.user.admin %}
+                                <a href="{{ path('fhm_api_card_product_undelete', {idCard:card.getId(),idProduct:product.getId()}) }}" title="{{ ('card.api.action.undelete')|trans }}" data-confirm="{{ ('card.api.confirm.undelete')|trans }}" data-ajax><i class="fa fa-undo"></i></a>
+                                <a href="{{ path('fhm_api_card_product_delete', {idCard:card.getId(),idProduct:product.getId()}) }}" title="{{ ('card.api.action.delete')|trans }}" data-confirm="{{ ('card.api.confirm.delete')|trans }}" data-ajax><i class="fa fa-trash"></i></a>
+                            {% endif %}
+                        {% else %}
+                            {% if product.getActive() %}
+                                <a href="{{ path('fhm_api_card_product_deactivate', {idCard:card.getId(),idProduct:product.getId()}) }}" title="{{ ('card.api.action.deactivate')|trans }}" data-confirm="{{ ('card.api.confirm.deactivate')|trans }}" data-ajax><i class="fa fa-eye-slash"></i></a>
+                            {% else %}
+                                <a href="{{ path('fhm_api_card_product_activate', {idCard:card.getId(),idProduct:product.getId()}) }}" title="{{ ('card.api.action.activate')|trans }}" data-confirm="{{ ('card.api.confirm.activate')|trans }}" data-ajax><i class="fa fa-eye"></i></a>
+                            {% endif %}
+                            <a href="{{ path('fhm_api_card_product_delete', {idCard:card.getId(),idProduct:product.getId()}) }}" title="{{ ('card.api.action.delete')|trans }}" data-confirm="{{ ('card.api.confirm.delete')|trans }}" data-ajax><i class="fa fa-trash-o"></i></a>
+                        {% endif %}
+                    </div>
+                </div>
+            </li>
+        {% endfor %}
+    <div class="counter">
+        {{ ('card.api.form.counter')|trans({'%count%': products|length}) }}
+    </div>
+{% else %}
+    <div class="nodata">
+        <p>{{ ('card.api.form.nodata')|trans }}</p>
+    </div>
+{% endif %}

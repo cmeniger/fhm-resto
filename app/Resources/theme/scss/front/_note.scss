@@ -1,0 +1,135 @@
+.note{
+    &.embed{
+        clear: both;
+        .bloc{
+            float:        left;
+            margin-right: 10px;
+            &.star{
+                color: $warning-color;
+            }
+            &.average{
+            }
+            &.comment{
+            }
+            &.add{
+            }
+        }
+    }
+    &.modal{
+        width: 100%;
+        h2{
+            color:      $primary-color;
+            text-align: center;
+        }
+        .title{
+            position:   relative;
+            padding:    1.5rem 0;
+            text-align: center;
+            span{
+                position:       relative;
+                display:        table;
+                text-transform: uppercase;
+                text-align:     center;
+                padding:        0 1em;
+                margin:         auto;
+                background:     $white;
+                color:          $secondary-color;
+            }
+            &:before{
+                position:      absolute;
+                top:           50%;
+                left:          0;
+                width:         100%;
+                content:       "";
+                border-bottom: 1px solid $secondary-color;
+            }
+        }
+        .resume{
+            position: relative;
+            overflow: auto;
+            .star{
+                color: $warning-color;
+            }
+            .count{
+                padding: 0 1em;
+                color:   $black;
+            }
+            .average{
+                position:   absolute;
+                top:        0;
+                right:      0;
+                padding:    0 1em;
+                font-size:  3em;
+                text-align: center;
+                color:      $warning-color;
+                small{
+                    display:   block;
+                    font-size: 40%;
+                    color:     $black;
+                }
+            }
+        }
+        .comment{
+            max-height: 200px;
+            overflow:   auto;
+            .data{
+                height:        auto;
+                margin-bottom: 1rem;
+                .star{
+                    float:        left;
+                    margin-right: 10px;
+                    color:        $warning-color;
+                }
+                .user{
+                    display:      inline-block;
+                    margin-right: 10px;
+                    font-size:    0.8em;
+                    color:        $secondary-color;
+                }
+                .icon{
+                    display:   inline-block;
+                    font-size: 0.8em;
+                }
+                .content{
+                    text-align: justify;
+                }
+            }
+        }
+        .note-user{
+            .star{
+                width:      100%;
+                text-align: center;
+                i{
+                    font-size: 1.8em;
+                    color:     $warning-color;
+                    cursor:    pointer;
+                    @media #{$medium} {
+                        font-size: 2.5em;
+                    }
+                    @media #{$large} {
+                        font-size: 3em;
+                    }
+                }
+            }
+        }
+        .note-legend{
+            height:      2em;
+            line-height: 2em;
+            text-align:  center;
+        }
+        .note-delete{
+            color:     $secondary-color;
+            font-size: 0.7em;
+        }
+        textarea{
+            height:     100px;
+            margin-top: 1rem;
+        }
+        @media #{$medium} {
+            width: 50%;
+        }
+        @media #{$large} {
+            width: 30%;
+        }
+    }
+}

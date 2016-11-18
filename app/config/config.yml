@@ -1,9 +1,40 @@
+# This is the main configuration file of your application. It stores all the
+# common options for every execution environment ('prod', 'dev', 'test').
+
+# To avoid creating configuration files that are too long, we first import some
+# files that define the values for important parts of the Symfony application,
+# such as the security component and the dependency injection services
 imports:
     - { resource: parameters.yml }
     - { resource: security.yml }
     - { resource: services.yml }
+    - { resource: "@FhmArticleBundle/Resources/config/services.yml" }
 
+sensio_framework_extra:
+     request:
+         converters: true
+         auto_convert: false
+
+# These are the configuration parameters that define the application's behavior
+# and which are independent from the underlying technical infrastructure
+# See http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
+parameters:
+    # This parameter defines the codes of the locales (languages) enabled in the application
+    app_locales: en|fr|de|es|cs|nl|ru|uk|ro|pt_BR|pl|it|ja|id|ca|sl
+    app.notifications.email_sender: anonymous@example.com
+
+# Basic configuration for the Symfony framework features
 framework:
+    # Uncomment the 'ide' option to turn all of the file paths in an exception
+    # page into clickable links that open the given file using your favorite IDE.
+    # Supported values are 'textmate', 'macvim', 'emacs' and 'sublime' shortcuts
+    # and any custom configuration string, such as: "phpstorm://open?file=%%f&line=%%l"
+    # See http://symfony.com/doc/current/reference/configuration/framework.html#ide
+    ide: sublime
+
+    # When using the HTTP Cache, ESI allows to render page fragments separately
+    # and with different cache configurations for each fragment
+    # http://symfony.com/doc/current/book/http_cache.html#edge-side-includes
     esi:             { enabled: true }
     translator:      { fallback: "%locale%" }
     secret:          "%secret%"
@@ -15,44 +46,29 @@ framework:
     validation:      { enable_annotations: true }
     templating:
         engines: ['twig']
-        #assets_version: SomeVersionScheme
     default_locale:  "%locale%"
     trusted_hosts:   ~
     trusted_proxies: ~
     session:
-        # handler_id set to null will use default session handler from php.ini
-        handler_id:  session.handler.mongo
+        handler_id:  session.handler.native_file
+        save_path:   "%kernel.root_dir%/../var/sessions/%kernel.environment%"
     fragments:       ~
     http_method_override: true
+    assets: ~
 
-# Twig Configuration
+# Twig Configuration (used for rendering application templates)
 twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
     cache: false
     globals:
-        project: %project%
-        mailer: %fhm_mailer%
-    form:
-        resources:
-            - 'FhmFhmBundle:Form:fields.html.twig'
-            - 'FhmMediaBundle:Form:fields.html.twig'
-            - 'FhmMenuBundle:Form:fields.html.twig'
+        project: "%project%"
+        mailer: "%fhm_mailer%"
+    form_themes:
+        - "bootstrap_3_layout.html.twig"
+        - "form/fields.html.twig"
 
-# Assetic Configuration
-assetic:
-    debug:          "%kernel.debug%"
-    use_controller: false
-    bundles:        [ ]
-    #java: /usr/bin/java
-    filters:
-        cssrewrite: ~
-        #closure:
-        #    jar: "%kernel.root_dir%/Resources/java/compiler.jar"
-        #yui_css:
-        #    jar: "%kernel.root_dir%/Resources/java/yuicompressor-2.4.7.jar"
-
-# Doctrine Configuration
+# Doctrine Configuration (used to access databases and manipulate their information)
 doctrine:
     dbal:
         driver:   "%database_driver%"
@@ -62,15 +78,30 @@ doctrine:
         user:     "%database_user%"
         password: "%database_password%"
         charset:  UTF8
-        # if using pdo_sqlite as your database driver, add the path in parameters.yml
-        # e.g. database_path: "%kernel.root_dir%/data/data.db3"
-        # path:     "%database_path%"
 
     orm:
         auto_generate_proxy_classes: "%kernel.debug%"
         auto_mapping: true
 
-# Swiftmailer Configuration
+doctrine_mongodb:
+    connections:
+        default:
+            server: "%mongodb_server%"
+            options:
+                username: "%mongodb_username%"
+                password: "%mongodb_password%"
+                replicaSet: "%mongodb_replicaSet%"
+    default_database: "%mongodb_database%"
+    document_managers:
+        default:
+            auto_mapping: true
+
+# Swiftmailer Configuration (used to send emails)
+# instead of configuring the mailer credentials in this file, we pull
+# them from the app/config/parameters.yml file. The reason is that config.yml
+# stores options that change the application behavior and parameters.yml
+# stores options that change from one server to another
+#
 swiftmailer:
     transport: "%mailer_transport%"
     host:      "%mailer_host%"
@@ -82,35 +113,51 @@ swiftmailer:
 fos_user:
     db_driver: mongodb
     firewall_name: main
-    user_class: Fhm\UserBundle\Document\User
+    user_class: Core\UserBundle\Document\User
     from_email:
-        address:     %fhm_mailer.noreply%
+        address:     "%fhm_mailer.noreply%"
         sender_name: noreply
     service:
         mailer: fhm_user.mailer.twig_swift
-    profile:
-        form:
-            type: FhmUpdate
-    change_password:
-        form:
-            type: FhmPassword
     resetting:
-        form:
-            type: FhmResetting
+        email:
+            from_email:
+                address:        "%fhm_mailer.noreply%"
+                sender_name:    noreply
     registration:
-        form:
-            type: FhmCreate
         confirmation:
             enabled: true
+            from_email:
+                address:        "%fhm_mailer.noreply%"
+                sender_name:    Registration
 
+#    from_email:
+#        address:     %fhm_mailer.noreply%
+#        sender_name: noreply
+#    service:
+#        mailer: fhm_user.mailer.twig_swift
+#    profile:
+#        form:
+#            type: FhmUpdate
+#    change_password:
+#        form:
+#            type: FhmPassword
+#    resetting:
+#        form:
+#            type: FhmResetting
+#    registration:
+#        form:
+#            type: FhmCreate
+#        confirmation:
+#            enabled: true
 # Oauth
 hwi_oauth:
-    firewall_name:         main
+    firewall_names:        [main]
     resource_owners:
         facebook:
             type:          facebook
-            client_id:     %oauth.facebook.id%
-            client_secret: %oauth.facebook.secret%
+            client_id:     "%oauth.facebook.id%"
+            client_secret: "%oauth.facebook.secret%"
             scope:         "public_profile,email"
             infos_url: "https://graph.facebook.com/me?fields=id,name,email,picture.type(square)"
             options:
@@ -120,48 +167,29 @@ hwi_oauth:
                 profilepicture: picture.data.url
         twitter:
             type:          twitter
-            client_id:     %oauth.twitter.id%
-            client_secret: %oauth.twitter.secret%
+            client_id:     "%oauth.twitter.id%"
+            client_secret: "%oauth.twitter.secret%"
             scope:         ""
         google:
             type:          google
-            client_id:     %oauth.google.id%
-            client_secret: %oauth.google.secret%
+            client_id:     "%oauth.google.id%"
+            client_secret: "%oauth.google.secret%"
             scope:         "email profile"
     http_client:
         verify_peer:       false
 
-# MongoDB
-doctrine_mongodb:
-    connections:
-        default:
-            server: %mongodb_server%
-            options:
-                username: %mongodb_username%
-                password: %mongodb_password%
-                replicaSet: %mongodb_replicaSet%
-    default_database: %mongodb_database%
-    document_managers:
-        default:
-            auto_mapping: true
-
 # Google Map
 ivory_google_map:
-    map:
-        width:     "100%"
-        height:    "100%"
-        language:  %locale%
-        auto_zoom: false
-        zoom:      3
-    pan_control:
-        control_position: left_bottom
     geocoder:
-        provider:
-            locale: %locale%
+        format: json
+        client: httplug.client.default
+        message_factory: httplug.message_factory.default
+    api_key: ~
+    language: "%locale%"
 
 # EWZ Recaptcha
 ewz_recaptcha:
-    public_key:  %recaptcha_public_key%
-    private_key: %recaptcha_private_key%
-    locale_key:  %locale%
+    public_key:  "%recaptcha_public_key%"
+    private_key: "%recaptcha_private_key%"
+    locale_key:  "%locale%"
     enabled:     true

@@ -1,0 +1,20 @@
+{% trans_default_domain instance.domain %}
+
+<div class="notification board">
+    <h2><i class="fa fa-bell"></i> {{ 'notification.modal.title.all'|trans }}</h2>
+    <div class="action">
+        <a href="#" data-url="{{ path('fhm_api_notification_modal_new') }}" data-modal>
+            <i class="fa fa-bell-o"></i>
+            {{ 'notification.modal.new'|trans }}
+        </a>
+    </div>
+    {% if documents %}
+        {% for document in documents %}
+            <div class="item {{ document.getNew() ? 'new' : '' }}">
+                {% render(path('fhm_api_notification_detail', {id:document.getId()})) %}
+            </div>
+        {% endfor %}
+    {% else %}
+        <div class="nodata">{{ 'notification.modal.nodata'|trans }}</div>
+    {% endif %}
+</div>

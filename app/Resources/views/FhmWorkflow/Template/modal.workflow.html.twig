@@ -1,0 +1,50 @@
+{% trans_default_domain instance.domain %}
+<div class="workflow">
+    <div class="modal">
+        <a href="#anchor-top" class="top"><i class="fa fa-chevron-up"></i></a>
+
+        <div class="title">{{ document.getName() }}</div>
+        <div class="menu">
+            <a href="#media">{{ 'workflow.modal.medias'|trans }}</a> -
+            <a href="#comment">{{ 'workflow.modal.comments'|trans }}</a> -
+            <a href="#log">{{ 'workflow.modal.logs'|trans }}</a>
+        </div>
+        <div class="description">{{ document.getDescription() }}</div>
+        <div class="separator" id="media"><span>{{ 'workflow.modal.medias'|trans }}</span></div>
+        {% if document.getSortMedia() > 0 > 0 %}
+            <div class="row media gutter-margin-top gutter-margin-bottom">
+                <div class="columns media-datas">
+                    <div class="row bloc medias">
+                        {% for media in document.getAllMedias(app.user) %}
+                            <div class="large-3 medium-4 small-6 columns end">
+                                {{ media|blocFront(instance)|raw }}
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        {% else %}
+            <div class="nodata">{{ 'workflow.modal.nodata'|trans }}</div>
+        {% endif %}
+        <div class="separator" id="comment"><span>{{ 'workflow.modal.comments'|trans }}</span></div>
+        {% if document.getSortComment() > 0 %}
+            {% render(path('fhm_api_workflow_comment_workflow',{id:document.getId()})) %}
+        {% else %}
+            <div class="nodata">{{ 'workflow.modal.nodata'|trans }}</div>
+        {% endif %}
+        <div class="separator" id="log"><span>{{ 'workflow.modal.logs'|trans }}</span></div>
+        {% if document.getSortLog() > 0 %}
+            {% render(path('fhm_api_workflow_log_workflow',{id:document.getId()})) %}
+        {% else %}
+            <div class="nodata">{{ 'workflow.modal.nodata'|trans }}</div>
+        {% endif %}
+    </div>
+</div>
+<div id="modal-media-zoom" class="reveal-modal" data-reveal>
+    <a href="#" data-reveal-id="wfModal" class="button secondary tiny"><i class="fa fa-reply"></i> {{ 'project.home.return'|trans({},'ProjectDefaultBundle') }}</a>
+    <div class="media-zoom"></div>
+    <a class="close-reveal-modal" aria-label="Close">&#215;</a>
+</div>
+<script>
+    $(document).media();
+</script>

@@ -1,0 +1,26 @@
+{% trans_default_domain instance.domain %}
+
+<div class="task" data-id="{{ document.getId() }}">
+    <div class="task-anchor" {{ document|wfTaskAnchor|raw }}></div>
+    <div class="task-title">
+        {{ document.getName() }}
+        <div class="task-icons">
+            <a href="#"
+               title="{{ ('workflow.action.buttons.link')|trans }}"
+               data-id="{{ document.getId() }}"
+               data-anchor><i class="fa fa-link"></i></a>
+            <a href="#"
+               title="{{ ('workflow.action.buttons.expand')|trans }}"
+               data-id="{{ document.getId() }}"
+               data-url="{{ path('fhm_api_workflow_task_modal_expand',{tid:document.getId(), wid:workflow.getId()}) }}"
+               data-modal><i class="fa fa-expand"></i></a>
+        </div>
+    </div>
+    <div class="task-user">
+        {{ document.getUserUpdate() ? document.getUserUpdate().getUsername() ~ ' - ' : '' }}{{ document.getDateUpdate() | localizeddate('short', 'short', app.request.locale) }}
+    </div>
+    <div class="task-description">
+        {{ document.getDescription() }}
+    </div>
+    {{ document|wfTaskAction(workflow, instance)|raw }}
+</div>

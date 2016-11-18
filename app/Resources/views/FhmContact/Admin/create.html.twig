@@ -1,0 +1,201 @@
+{% trans_default_domain instance.domain %}
+{% set parent_extends = "::FhmFhm/Admin/create.html.twig" %}
+{% extends "::FhmGeolocation/Form/map.html.twig" %}
+
+{% block content_data_fields_data %}
+    <div class="large-6 medium-6 small-12 columns">
+        <fieldset>
+            <legend>{{ (instance.translation ~ '.admin.create.form.fieldset.informations')|trans }}</legend>
+            <div class="row">
+                {{ form_label(form.name) }}
+                {{ form_errors(form.name) }}
+                {{ form_widget(form.name) }}
+            </div>
+            <div class="row">
+                {{ form_label(form.description) }}
+                {{ form_errors(form.description) }}
+                {{ form_widget(form.description) }}
+            </div>
+            <div class="row">
+                {{ form_label(form.phone) }}
+                {{ form_errors(form.phone) }}
+                {{ form_widget(form.phone) }}
+            </div>
+            <div class="row">
+                {{ form_label(form.fax) }}
+                {{ form_errors(form.fax) }}
+                {{ form_widget(form.fax) }}
+            </div>
+            <div class="row">
+                {{ form_label(form.email) }}
+                {{ form_errors(form.email) }}
+                {{ form_widget(form.email) }}
+            </div>
+            <div class="row">
+                {{ form_label(form.order) }}
+                {{ form_errors(form.order) }}
+                {{ form_widget(form.order) }}
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend>{{ (instance.translation ~ '.admin.create.form.fieldset.social')|trans }}</legend>
+            <div class="form-social">
+                <div class="row collapse">
+                    <div class="small-3 large-2 columns">
+                        <span class="prefix site social-icons"><i class="fa fa-globe"></i></span>
+                    </div>
+                    <div class="small-9 large-10 columns">
+                        {{ form_errors(form.social_site) }}
+                        {{ form_widget(form.social_site, {'attr': {'placeholder': 'http://'}}) }}
+                    </div>
+                </div>
+                <div class="row collapse">
+                    <div class="small-3 large-2 columns">
+                        <span class="prefix facebook social-icons"><i class="fa fa-facebook"></i></span>
+                    </div>
+                    <div class="small-9 large-10 columns">
+                        {{ form_errors(form.social_facebook) }}
+                        {{ form_widget(form.social_facebook, {'attr': {'placeholder': 'http://'}}) }}
+                    </div>
+                </div>
+                <div class="row collapse">
+                    <div class="small-3 large-2 columns">
+                        <span class="prefix twitter social-icons"><i class="fa fa-twitter"></i></span>
+                    </div>
+                    <div class="small-9 large-10 columns">
+                        {{ form_errors(form.social_twitter) }}
+                        {{ form_widget(form.social_twitter, {'attr': {'placeholder': 'http://'}}) }}
+                    </div>
+                </div>
+                <div class="row collapse">
+                    <div class="small-3 large-2 columns">
+                        <span class="prefix google social-icons"><i class="fa fa-google"></i></span>
+                    </div>
+                    <div class="small-9 large-10 columns">
+                        {{ form_errors(form.social_google) }}
+                        {{ form_widget(form.social_google, {'attr': {'placeholder': 'http://'}}) }}
+                    </div>
+                </div>
+                <div class="row collapse">
+                    <div class="small-3 large-2 columns">
+                        <span class="prefix instagram social-icons"><i class="fa fa-instagram"></i></span>
+                    </div>
+                    <div class="small-9 large-10 columns">
+                        {{ form_errors(form.social_instagram) }}
+                        {{ form_widget(form.social_instagram, {'attr': {'placeholder': 'http://'}}) }}
+                    </div>
+                </div>
+                <div class="row collapse">
+                    <div class="small-3 large-2 columns">
+                        <span class="prefix youtube social-icons"><i class="fa fa-youtube-play"></i></span>
+                    </div>
+                    <div class="small-9 large-10 columns">
+                        {{ form_errors(form.social_youtube) }}
+                        {{ form_widget(form.social_youtube, {'attr': {'placeholder': 'http://'}}) }}
+                    </div>
+                </div>
+                <div class="row collapse">
+                    <div class="small-3 large-2 columns">
+                        <span class="prefix flux social-icons"><i class="fa fa-rss"></i></span>
+                    </div>
+                    <div class="small-9 large-10 columns">
+                        {{ form_errors(form.social_flux) }}
+                        {{ form_widget(form.social_flux, {'attr': {'placeholder': 'http://'}}) }}
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+    </div>
+    <div class="large-6 medium-6 small-12 columns">
+        <fieldset>
+            <legend>{{ (instance.translation ~ '.admin.create.form.fieldset.form')|trans }}</legend>
+            <div class="row">
+                {{ form_label(form.form_template) }}
+                {{ form_errors(form.form_template) }}
+                {{ form_widget(form.form_template) }}
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend>{{ (instance.translation ~ '.admin.create.form.fieldset.profile')|trans }}</legend>
+            <div class="row">
+                {{ form_label(form.profile_template) }}
+                {{ form_errors(form.profile_template) }}
+                {{ form_widget(form.profile_template) }}
+            </div>
+            <div class="row">
+                {{ form_label(form.profile_image) }}
+                {{ form_errors(form.profile_image) }}
+                {{ form_widget(form.profile_image) }}
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend>{{ (instance.translation ~ '.admin.create.form.fieldset.map')|trans }}</legend>
+            <div class="row">
+                <div class="column medium-6 map-form">
+                    <div class="">
+                        {{ form_label(form.address_search) }}
+                        {{ form_errors(form.address_search) }}
+                        {{ form_widget(form.address_search) }}
+                    </div>
+                    <div id="map" class="map"></div>
+                </div>
+                <div class="column medium-6">
+                    <div>
+                        {{ form_label(form.address_main) }}
+                        {{ form_errors(form.address_main) }}
+                        {{ form_widget(form.address_main) }}
+                    </div>
+                    <div>
+                        {{ form_label(form.address_additional) }}
+                        {{ form_errors(form.address_additional) }}
+                        {{ form_widget(form.address_additional) }}
+                    </div>
+                    <div>
+                        {{ form_label(form.zip_code) }}
+                        {{ form_errors(form.zip_code) }}
+                        {{ form_widget(form.zip_code) }}
+                    </div>
+                    <div>
+                        {{ form_label(form.city) }}
+                        {{ form_errors(form.city) }}
+                        {{ form_widget(form.city) }}
+                    </div>
+                    <div>
+                        {{ form_label(form.country) }}
+                        {{ form_errors(form.country) }}
+                        {{ form_widget(form.country) }}
+                    </div>
+                    <div class="row">
+                        <div class="column small-6">
+                            {{ form_label(form.latitude) }}
+                            {{ form_widget(form.latitude) }}
+                        </div>
+                        <div class="column small-6">
+                            {{ form_label(form.longitude) }}
+                            {{ form_widget(form.longitude) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+    </div>
+{% endblock %}
+
+{% block content_data_options_data_add %}
+    <div class="large-2 columns end">
+        {{ form_errors(form.form) }}
+        {{ form_label(form.form) }}
+        <div class="switch">
+            {{ form_widget(form.form) }}
+            <label for="{{ form.form.vars.id }}"></label>
+        </div>
+    </div>
+    <div class="large-2 columns end">
+        {{ form_errors(form.profile) }}
+        {{ form_label(form.profile) }}
+        <div class="switch">
+            {{ form_widget(form.profile) }}
+            <label for="{{ form.profile.vars.id }}"></label>
+        </div>
+    </div>
+{% endblock %}

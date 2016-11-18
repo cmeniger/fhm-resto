@@ -1,0 +1,24 @@
+.timer-container{
+    display:  inline-block;
+    overflow: hidden;
+    margin:   0 auto;
+    .section{
+        float: left;
+        width: 70px;
+        span{
+            display:     block;
+            line-height: 1;
+            height:      auto;
+            &.label{
+                font-size:      0.55em;
+                text-transform: uppercase;
+                background:     none;
+                color:          $primary-color;
+                padding:        0;
+            }
+            &.data{
+                font-size: 3em;
+            }
+        }
+    }
+}

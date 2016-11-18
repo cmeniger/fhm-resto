@@ -1,0 +1,25 @@
+{% trans_default_domain instance.domain %}
+{% extends "::FhmFhm/Admin/detail.html.twig" %}
+{% import "::Macros/dd.list.html.twig" as macroList %}
+
+{% block content_data %}
+    {{ parent() }}
+    <div class="row">
+        {{
+        macroList.admin
+        (
+            document,
+            newsgroups1,
+            newsgroups2,
+            '',
+            'fhm_admin_news_newsgroup',
+            (instance.translation ~ '.admin.detail.newsgroup.title')|trans,
+            (instance.translation ~ '.admin.detail.newsgroup.list1')|trans,
+            (instance.translation ~ '.admin.detail.newsgroup.list2')|trans,
+            2,
+            instance,
+            'fhm_admin_news_group'
+        )
+        }}
+    </div>
+{% endblock %}

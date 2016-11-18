@@ -1,0 +1,21 @@
+{% trans_default_domain instance.domain %}
+<div class="contact-profile">
+    <div class="top-content">
+        <div class="image-box">
+            <a href="{{ document.getSocialSite() }}" style="background: url('{{ asset(document.getProfileImage()|media('s')) }}');"></a>
+        </div>
+    </div>
+    <div class="bottom-content">
+        <div class="name">{{ document.getName() ? document.getName() : (instance.translation ~ '.front.index.nodata')|trans }}</div>
+        <ul class="inline-list">
+            {{ document.getSocialFacebook() ? ("<li><a href='" ~ document.getSocialFacebook() ~ "' target='_blank'><i class='fa fa-facebook-square'></i></a></li>")|raw : "" }}
+            {{ document.getSocialTwitter() ? ("<li><a href='" ~ document.getSocialTwitter() ~ "' target='_blank'><i class='fa fa-twitter-square'></i></a></li>")|raw : "" }}
+            {{ document.getSocialGoogle() ? ("<li><a href='" ~ document.getSocialGoogle() ~ "' target='_blank'><i class='fa fa-google-plus-square'></i></a></li>")|raw : "" }}
+            {{ document.getSocialInstagram() ? ("<li><a href='" ~ document.getSocialInstagram() ~ "' target='_blank'><i class='fa fa-instagram social'></i></a></li>")|raw : "" }}
+            {{ document.getSocialFlux() ? ("<li><a href='" ~ document.getSocialFlux() ~ "' target='_blank'><i class='fa fa-rss social'></i></a></li>")|raw : "" }}
+            <li>
+                <a href="{{ path('fhm_contact') }}"><i class="fa fa-envelope"></i></a>
+            </li>
+        </ul>
+    </div>
+</div>

@@ -1,0 +1,27 @@
+{% trans_default_domain instance.domain %}
+<div class="slider">
+    {% for item in items %}
+        <div>
+            <img src="{{ asset(item.getImage()|media('m')) }}" alt="{{ item.getTitle() }}"/>
+
+            <div class="caption">
+                <h2>{{ item.getTitle() }}
+                    <small>{{ item.getSubtitle() }}</small>
+                </h2>
+                <p>{{ item.getContent()|raw }}</p>
+                {% if item.getLink() %}
+                    <a href="{{ item.getLink() }}" target="_blank">{{ (instance.translation ~ '.api.more')|trans }}</a>
+                {% endif %}
+            </div>
+        </div>
+    {% endfor %}
+</div>
+<script>
+    $(document).ready(function ()
+    {
+        $('.slider').slick({
+            autoplay:      true,
+            autoplaySpeed: 10000
+        });
+    });
+</script>

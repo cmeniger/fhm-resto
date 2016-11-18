@@ -1,0 +1,50 @@
+{% trans_default_domain instance.domain %}
+{% extends "::FhmFhm/Admin/create.html.twig" %}
+
+{% block content_data_fields_data %}
+    <div class="large-6 medium-6 small-12 columns">
+        <fieldset>
+            <legend>{{ (instance.translation ~ '.admin.create.form.fieldset.data')|trans }}</legend>
+            <div class="row">
+                {{ form_label(form.name) }}
+                {{ form_errors(form.name) }}
+                {{ form_widget(form.name) }}
+            </div>
+            <div class="row">
+                {{ form_label(form.description) }}
+                {{ form_errors(form.description) }}
+                {{ form_widget(form.description) }}
+            </div>
+            <div class="row">
+                {{ form_label(form.sort) }}
+                {{ form_errors(form.sort) }}
+                {{ form_widget(form.sort) }}
+            </div>
+            <div class="row">
+                {{ form_errors(form.add_global) }}
+                {{ form_label(form.add_global) }}
+                <div class="switch">
+                    {{ form_widget(form.add_global) }}
+                    <label for="{{ form.add_global.vars.id }}"></label>
+                </div>
+            </div>
+        </fieldset>
+    </div>
+    <div class="large-6 medium-6 small-12 columns">
+        <fieldset>
+            <legend>{{ (instance.translation ~ '.admin.create.form.fieldset.news')|trans }}</legend>
+            <div class="row">
+                {{ form_label(form.news) }}
+                {{ form_errors(form.news) }}
+                {{ form_widget(form.news) }}
+            </div>
+        </fieldset>
+    </div>
+{% endblock %}
+
+{% block content_data_submit_list_data %}
+    {{ parent() }}
+    <li>
+        <a href="{{ path('fhm_admin_news') }}" class="button small button-icon button-cube">{{ ('news.admin.index.link')|trans }}</a>
+    </li>
+{% endblock %}

@@ -1,0 +1,15 @@
+{% trans_default_domain instance.domain %}
+
+<div class="note embed">
+    <div class="bloc star">
+        {% for i in 1..param_maximum %}
+            {% if note >= i %}
+                <i class="fa fa-star"></i>
+            {% elseif note >= (i - 0.5) %}
+                <i class="fa fa-star-half-o"></i>
+            {% else %}
+                <i class="fa fa-star-o"></i>
+            {% endif %}
+        {% endfor %}
+    </div>
+</div>

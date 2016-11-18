@@ -1,0 +1,15 @@
+{% trans_default_domain instance.domain %}
+
+<div class="content inline {{ loop.index0 == 0 ? 'active' : '' }}" id="tab{{ category.getId() }}">
+    {% if category.getDescription() %}
+        <div class="description">
+            {{ category.getDescription() }}
+        </div>
+    {% endif %}
+    {% if category.getProducts().count() > 0 %}
+        {% render(path('fhm_api_card_product_embed', {idCard:document.getId(), idCategory:category.getId(), template:'inline'})) %}
+    {% endif %}
+    {% if category.getSons().count() > 0 %}
+        {% render(path('fhm_api_card_category_embed', {idCard:document.getId(), idCategory:category.getId(), template:'index'})) %}
+    {% endif %}
+</div>

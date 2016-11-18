@@ -1,0 +1,27 @@
+{% trans_default_domain instance.domain %}
+{% import "::Macros/pagination.html.twig" as macroPagination %}
+
+{% block data %}
+    <div class="data">
+        {% block data_content %}
+            {% if documents %}
+                {% for document in documents %}
+                    <a href="#" class="element" data-field="{{ field }}" data-text="{{ text }}" data-id="{{ document.getId() }}" data-name="{{ document.getName() }}">
+                        {% block data_content_text %}
+                            {{ document.getName() }}
+                        {% endblock %}
+                    </a>
+                {% endfor %}
+                {% block data_pagination %}
+                    {{ macroPagination.autocomplete(pagination, field, text) }}
+                {% endblock %}
+            {% else %}
+                {% block data_nodata %}
+                    <div class="nodata">
+                        {{ ('fhm.autocomplete.nodata')|trans({}, 'FhmFhmBundle') }}
+                    </div>
+                {% endblock %}
+            {% endif %}
+        {% endblock %}
+    </div>
+{% endblock %}

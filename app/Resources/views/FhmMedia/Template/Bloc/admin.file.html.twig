@@ -1,0 +1,61 @@
+{% trans_default_domain instance.domain %}
+
+<div class='data file {{ document.getExtension() }}' media-id='{{ document.getId() }}' title='{{ document.getName() }}'>
+    <div class="name">
+        {{ document.getName() }}
+    </div>
+    <div class="extension">
+        <span class="radius label secondary">{{ document.getExtension() }}</span>
+    </div>
+    <div class="indicator">
+        {% if document.getDelete() %}
+            <span class="status alert label" title="{{ ('fhm.status.delete')|trans({}, 'FhmFhmBundle') }}"></span>
+        {% elseif not document.getActive() %}
+            <span class="status warning label" title="{{ ('fhm.status.disable')|trans({}, 'FhmFhmBundle') }}"></span>
+        {% else %}
+            <span class="status success label" title="{{ ('fhm.status.enable')|trans({}, 'FhmFhmBundle') }}"></span>
+        {% endif %}
+        {% if document.getGlobal() %}
+            <span class="status info label" title="{{ ('fhm.status.global')|trans({}, 'FhmFhmBundle') }}"></span>
+        {% endif %}
+        {% if document.getShare() and not document.hasGrouping(instance.grouping.used) %}
+            <span class="status regular label" title="{{ ('fhm.status.share')|trans({}, 'FhmFhmBundle') }}"></span>
+        {% endif %}
+        {% if document.getPrivate() %}
+            <span class="status icon right" title="{{ ('fhm.status.private')|trans({}, 'FhmFhmBundle') }}"><i class="fa fa-lock"></i></span>
+        {% endif %}
+    </div>
+    <div class="actions">
+        <div>
+            <a href="{{ document|media }}" target="_blank" title="{{ ('media.bloc.download')|trans({},'FhmMediaBundle') }}" download="{{ document.getAlias() ~ '.' ~ document.getExtension() }}"><i class="fa fa-download"></i></a>
+            <a href="{{ document|media }}" target="_blank" title="{{ ('media.bloc.detail')|trans({},'FhmMediaBundle') }}"><i class="fa fa-search-plus"></i></a>
+            {% if document.getShare() and not document.hasGrouping(instance.grouping.used) and not instance.user.admin %}
+                <a href="{{ path('fhm_admin_' ~ instance.route ~ '_detail', {'id': document.getId()}) }}" title="{{ (instance.translation ~ '.admin.index.table.action.detail')|trans }}"><i class="fa fa-gear"></i></a>
+                <a href="{{ path('fhm_admin_' ~ instance.route ~ '_duplicate', {'id': document.getId()}) }}" title="{{ (instance.translation ~ '.admin.index.table.action.duplicate')|trans }}"><i class="fa fa-files-o"></i></a>
+            {% elseif document.getDelete() %}
+                <a href="{{ path('fhm_admin_' ~ instance.route ~ '_detail', {'id': document.getId()}) }}" title="{{ (instance.translation ~ '.admin.index.table.action.detail')|trans }}"><i class="fa fa-gear"></i></a>
+                <a href="{{ path('fhm_admin_' ~ instance.route ~ '_update', {'id': document.getId()}) }}" title="{{ (instance.translation ~ '.admin.index.table.action.update')|trans }}"><i class="fa fa-pencil"></i></a>
+                <a href="{{ path('fhm_admin_' ~ instance.route ~ '_duplicate', {'id': document.getId()}) }}" title="{{ (instance.translation ~ '.admin.index.table.action.duplicate')|trans }}"><i class="fa fa-files-o"></i></a>
+                <a href="{{ path('fhm_admin_' ~ instance.route ~ '_undelete', {'id': document.getId()}) }}" title="{{ (instance.translation ~ '.admin.index.table.action.undelete')|trans }}" onclick="return confirm('{{ (instance.translation ~ '.admin.index.table.confirm.undelete')|trans }}')"><i class="fa fa-undo"></i></a>
+                <a href="{{ path('fhm_admin_' ~ instance.route ~ '_delete', {'id': document.getId()}) }}" title="{{ (instance.translation ~ '.admin.index.table.action.delete')|trans }}" onclick="return confirm('{{ (instance.translation ~ '.admin.index.table.confirm.delete')|trans }}')"><i class="fa fa-trash"></i></a>
+            {% else %}
+                <a href="{{ path('fhm_admin_' ~ instance.route ~ '_detail', {'id': document.getId()}) }}" title="{{ (instance.translation ~ '.admin.index.table.action.detail')|trans }}"><i class="fa fa-gear"></i></a>
+                <a href="{{ path('fhm_admin_' ~ instance.route ~ '_update', {'id': document.getId()}) }}" title="{{ (instance.translation ~ '.admin.index.table.action.update')|trans }}"><i class="fa fa-pencil"></i></a>
+                <a href="{{ path('fhm_admin_' ~ instance.route ~ '_duplicate', {'id': document.getId()}) }}" title="{{ (instance.translation ~ '.admin.index.table.action.duplicate')|trans }}"><i class="fa fa-files-o"></i></a>
+                {% if document.getActive() %}
+                    <a href="{{ path('fhm_admin_' ~ instance.route ~ '_deactivate', {'id': document.getId()}) }}" title="{{ (instance.translation ~ '.admin.index.table.action.deactivate')|trans }}" onclick="return confirm('{{ (instance.translation ~ '.admin.index.table.confirm.deactivate')|trans }}')"><i class="fa fa-eye-slash"></i></a>
+                {% else %}
+                    <a href="{{ path('fhm_admin_' ~ instance.route ~ '_activate', {'id': document.getId()}) }}" title="{{ (instance.translation ~ '.admin.index.table.action.activate')|trans }}" onclick="return confirm('{{ (instance.translation ~ '.admin.index.table.confirm.activate')|trans }}')"><i class="fa fa-eye"></i></a>
+                {% endif %}
+                <a href="{{ path('fhm_admin_' ~ instance.route ~ '_delete', {'id': document.getId()}) }}" title="{{ (instance.translation ~ '.admin.index.table.action.delete')|trans }}" onclick="return confirm('{{ (instance.translation ~ '.admin.index.table.confirm.delete')|trans }}')"><i class="fa fa-trash-o"></i></a>
+            {% endif %}
+        </div>
+        <div>
+            {% if instance.grouping.visible %}
+                {% for data in document.getGrouping() %}
+                    <span class="status {{ data == instance.grouping.current ? 'success' : 'warning' }} radius label">{{ data }}</span>
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+</div>

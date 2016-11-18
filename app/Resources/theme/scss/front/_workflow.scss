@@ -1,0 +1,629 @@
+.workflow{
+    .item{
+        height:        180px;
+        margin:        1rem 0;
+        border:        5px solid $steel;
+        border-radius: 10px;
+        background:    $white;
+        box-shadow:    0 0 2px 2px rgba(0, 0, 0, .2);
+        .title{
+            position:       relative;
+            padding:        0.3em 0;
+            font-size:      1.1em;
+            text-transform: uppercase;
+            text-align:     center;
+            background:     $steel;
+            color:          $white;
+            .icons{
+                position: absolute;
+                top:      5px;
+                right:    5px;
+                a{
+                    display: inline-block;
+                    color:   $white;
+                }
+            }
+        }
+        .content{
+            padding: 5px;
+            .step{
+                text-align: center;
+                padding:    15px 0;
+            }
+            .stats{
+                .column{
+                    padding-left:  0;
+                    padding-right: 0;
+                }
+                .bloc{
+                    position:      relative;
+                    width:         50px;
+                    height:        50px;
+                    line-height:   50px;
+                    background:    $steel;
+                    margin:        auto;
+                    text-align:    center;
+                    border-radius: 50%;
+                    &:before{
+                        position:    absolute;
+                        top:         0;
+                        left:        0;
+                        width:       100%;
+                        color:       $monsoon;
+                        font-family: 'FontAwesome';
+                        font-size:   30px;
+                    }
+                    &.bloc-task:before{
+                        content: $fa-var-tasks;
+                    }
+                    &.bloc-comment:before{
+                        content: $fa-var-comment;
+                    }
+                    &.bloc-media:before{
+                        content: $fa-var-file;
+                    }
+                    &.bloc-log:before{
+                        content: $fa-var-history;
+                    }
+                    span{
+                        display:     block;
+                        position:    relative;
+                        font-weight: bold;
+                        font-size:   1.4em;
+                        color:       $white;
+                    }
+                }
+            }
+        }
+    }
+    .canvas{
+        display: table;
+        margin:  50px 0;
+        width:   100%;
+        .line{
+            padding: 20px 0;
+            .tasks{
+                display:     table;
+                white-space: nowrap;
+                margin:      auto;
+            }
+        }
+    }
+    .task{
+        display:       inline-block;
+        position:      relative;
+        width:         300px;
+        height:        200px;
+        margin:        0 10px;
+        border:        5px solid $steel;
+        border-radius: 10px;
+        background:    $white;
+        box-shadow:    0 0 2px 2px rgba(0, 0, 0, .2);
+        .task-anchor{
+            display:       none;
+            position:      absolute;
+            top:           50%;
+            left:          50%;
+            width:         20px;
+            height:        20px;
+            margin-top:    -10px;
+            margin-left:   -10px;
+            z-index:       1;
+            border-radius: 50%;
+            background:    $secondary-color;
+            &.parent{
+                background: $alert_color;
+            }
+            &.son{
+                background: $success_color;
+            }
+        }
+        .task-title{
+            padding:        0.3em 0;
+            font-size:      1.3em;
+            text-transform: uppercase;
+            text-align:     center;
+            background:     $steel;
+            color:          $white;
+            .task-icons{
+                position: absolute;
+                top:      5px;
+                right:    5px;
+                a{
+                    display: inline-block;
+                    color:   $white;
+                    &.active{
+                        color: $secondary-color;
+                    }
+                }
+            }
+        }
+        .task-user{
+            padding:    2px 5px;
+            font-size:  0.8em;
+            text-align: right;
+            color:      $base;
+        }
+        .task-description{
+            padding:     2px 5px;
+            text-align:  justify;
+            white-space: normal;
+            height:      85px;
+            font-size:   0.8em;
+            overflow:    hidden;
+            &:after{
+                height:           50px;
+                background-color: transparent;
+                background-image: -webkit-gradient(linear, left top, left bottom, from(transparent), to($grey-FE));
+                background-image: -webkit-linear-gradient(top, transparent, $grey-FE);
+                background-image: -moz-linear-gradient(top, transparent, $grey-FE);
+                background-image: -ms-linear-gradient(top, transparent, $grey-FE);
+                background-image: -o-linear-gradient(top, transparent, $grey-FE);
+                background-image: linear-gradient(top, transparent, $grey-FE);
+                filter:           progid:DXImageTransform.Microsoft.gradient(startColorStr='transparent', endColorStr='$grey-FE');
+                content:          "";
+                position:         absolute;
+                bottom:           34px;
+                left:             0;
+                right:            0;
+            }
+        }
+        .task-action{
+            position:   absolute;
+            bottom:     0;
+            width:      100%;
+            padding:    5px;
+            background: $steel;
+            a{
+                i{
+                    color: $white;
+                    &.fa-ban{
+                        color: $alert-color;
+                    }
+                }
+            }
+            i{
+                color: $aluminum;
+                &.fa-ban{
+                    color: $alert-color;
+                }
+                &.fa-check-circle-o{
+                    color: $success-color;
+                }
+            }
+        }
+    }
+    .modal{
+        position: relative;
+        .top{
+            display:                 block;
+            position:                fixed;
+            z-index:                 2;
+            bottom:                  -5px;
+            left:                    50%;
+            margin-left:             -25px;
+            width:                   70px;
+            height:                  35px;
+            background:              $steel;
+            color:                   $white;
+            text-align:              center;
+            border-top-left-radius:  10px;
+            border-top-right-radius: 10px;
+            box-shadow:              0 0 2px 2px rgba(0, 0, 0, .2);
+            i{
+                font-size:   20px;
+                line-height: 30px;
+            }
+        }
+        .title{
+            font-size:      2em;
+            font-weight:    bold;
+            text-transform: uppercase;
+            text-align:     center;
+            margin-bottom:  10px;
+
+        }
+        .user{
+            font-size:  0.8em;
+            text-align: right;
+            color:      $base;
+        }
+        .menu{
+            display:       table;
+            margin:        auto;
+            padding:       0.3em 1em;
+            border-top:    1px solid $smoke;
+            border-bottom: 1px solid $smoke;
+            text-align:    center;
+            color:         $smoke;
+            a{
+                display:        inline-block;
+                font-size:      0.8em;
+                text-transform: uppercase;
+                padding:        0 1em;
+            }
+        }
+        .description{
+            margin:     30px 0;
+            text-align: justify;
+        }
+        .separator{
+            position: relative;
+            span{
+                position:       relative;
+                display:        table;
+                font-size:      1em;
+                text-transform: uppercase;
+                text-align:     center;
+                padding:        0 1em;
+                margin:         auto;
+                background:     $white;
+            }
+            &:before{
+                position:      absolute;
+                top:           50%;
+                left:          0;
+                width:         100%;
+                content:       "";
+                border-bottom: 1px solid $smoke;
+            }
+        }
+        .nodata{
+            font-size:  0.8em;
+            text-align: center;
+            padding:    2em;
+            color:      $base;
+        }
+        .add{
+            text-align: center;
+            font-size:  0.8em;
+            margin:     0.5em 0;
+        }
+        .logs{
+            .row{
+                margin-bottom: 4rem;
+                &:last-child{
+                    margin-bottom: 0;
+                }
+            }
+            .filter{
+                display: table;
+                margin:  auto;
+                .text{
+                    padding:     0 30px;
+                    margin:      3px 0;
+                    line-height: 40px;
+                    color:       $base;
+                    font-size:   0.8em;
+                    text-align:  center;
+                }
+                .icon{
+                    display:    inline-block;
+                    margin:     3px;
+                    cursor:     pointer;
+                    transition: all 0.3s ease-in;
+                    &.deactivate{
+                        opacity: 0.2;
+                    }
+                    &:hover{
+                        opacity: 0.5;
+                    }
+                }
+                @media #{$medium-up} {
+                    .text{
+                        display:     inline-block;
+                        line-height: 50px;
+                    }
+                    .icon{
+                        width:  50px;
+                        height: 50px;
+                        &:before{
+                            font-size:   20px;
+                            line-height: 50px;
+                        }
+                    }
+                }
+            }
+            .icon{
+                width:         40px;
+                height:        40px;
+                margin:        auto;
+                background:    $smoke;
+                border-radius: 50%;
+                &:before{
+                    display:     block;
+                    text-align:  center;
+                    font-family: 'FontAwesome';
+                    font-size:   18px;
+                    line-height: 40px;
+                    color:       $iron;
+                }
+                &.type0{
+                    &:before{
+                        content: $fa_var_question;
+                    }
+                }
+                &.type1{
+                    &:before{
+                        content: $fa_var_cogs;
+                    }
+                }
+                &.type2{
+                    &:before{
+                        color:   $success-color;
+                        content: $fa_var_check;
+                    }
+                }
+                &.type3{
+                    &:before{
+                        color:   $warning-color;
+                        content: $fa_var_times;
+                    }
+                }
+                &.type4{
+                    &:before{
+                        color:   $alert-color;
+                        content: $fa_var_ban;
+                    }
+                }
+                &.type5{
+                    &:before{
+                        color:   $primary-color;
+                        content: $fa_var_comment;
+                    }
+                }
+                &.type6{
+                    &:before{
+                        color:   $primary-color;
+                        content: $fa_var_file;
+                    }
+                }
+                @media #{$medium-up} {
+                    width:  70px;
+                    height: 70px;
+                    &:before{
+                        font-size:   30px;
+                        line-height: 70px;
+                    }
+                }
+            }
+            .content{
+                padding:     0 0 2em 2em;
+                border-left: 1px solid $smoke;
+                .name{
+                    font-size:      1.2em;
+                    padding-bottom: 0.5em;
+                    text-transform: uppercase;
+                }
+                .date{
+                    font-size: 0.8em;
+                    color:     $base;
+                }
+                .type{
+                    padding:   0.5em 0;
+                    font-size: 0.7em;
+                    color:     $warning-color;
+                }
+                .text{
+                    font-size:  0.8em;
+                    overflow:   hidden;
+                    max-height: 200px;
+                    p{
+                        font-size: 1em;
+                    }
+                }
+            }
+            .user{
+                .avatar{
+                    width:           50px;
+                    height:          50px;
+                    background-size: cover !important;
+                    border-radius:   50%;
+                    margin:          auto;
+                }
+                .name{
+                    text-align: center;
+                    font-size:  0.8em;
+                    color:      $base;
+                }
+            }
+        }
+        .comments{
+            .row{
+                margin-bottom: 4rem;
+                &:last-child{
+                    margin-bottom: 0;
+                }
+            }
+            .content{
+                padding:     0 0 2em 2em;
+                border-left: 1px solid $smoke;
+                .name{
+                    font-size:      1.2em;
+                    padding-bottom: 0.5em;
+                    text-transform: uppercase;
+                }
+                .date{
+                    font-size: 0.8em;
+                    color:     $base;
+                }
+                .text{
+                    font-size: 0.8em;
+                    p{
+                        font-size: 1em;
+                    }
+                }
+            }
+            .user{
+                .avatar{
+                    width:           50px;
+                    height:          50px;
+                    background-size: cover !important;
+                    border-radius:   50%;
+                    margin:          auto;
+                }
+                .name{
+                    text-align: center;
+                    font-size:  0.8em;
+                    color:      $base;
+                }
+            }
+        }
+        form{
+            width:  100%;
+            margin: 30px auto;
+            @media #{$medium-up} {
+                width: 70%;
+            }
+        }
+    }
+    .steps{
+        display:     table;
+        white-space: nowrap;
+        margin:      1rem auto;
+        .step{
+            display: inline-table;
+            margin:  0 1px;
+            width:   240px;
+            .color{
+                height:        5px;
+                margin-bottom: 1px;
+                background:    $white;
+                border:        2px solid $white;
+            }
+            .content{
+                border:     2px solid $smoke;
+                min-height: 500px;
+                .title{
+                    text-align:     center;
+                    text-transform: uppercase;
+                    font-size:      0.8em;
+                    color:          $steel;
+                    background:     $smoke;
+                    padding:        0.5em;
+                }
+                .tasks{
+                    padding: 0 1rem;
+                    .task{
+                        display: block;
+                        width:   100%;
+                        height:  150px;
+                        margin:  1rem auto;
+                        .task-title{
+                            font-size: 0.75em;
+                            padding:   0.2em 0;
+                            span{
+                                display:   block;
+                                font-size: 0.65em;
+                                color:     $iron;
+                            }
+                            .task-icons{
+                                font-size: 1.2em;
+                            }
+                        }
+                        .task-user{
+                            font-size: 0.6em;
+                        }
+                        .task-description{
+                            height: 60px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    .statistics{
+        display:     table;
+        white-space: nowrap;
+        margin:      1rem auto;
+        div{
+            display: inline-block;
+            margin:  0 1rem;
+            .count{
+                display:       block;
+                position:      relative;
+                width:         50px;
+                height:        50px;
+                line-height:   50px;
+                color:         $steel;
+                background:    $smoke;
+                text-align:    center;
+                font-size:     1em;
+                border-radius: 50%;
+                margin:        auto;
+                &:before{
+                    position:    absolute;
+                    left:        0;
+                    top:         0;
+                    text-align:  center;
+                    font-family: 'FontAwesome';
+                    font-size:   2.5em;
+                    opacity:     0.15;
+                    width:       100%;
+                    height:      100%;
+                    color:       $white;
+                }
+                &.wait{
+                    color:      $white;
+                    background: $secondary-color;
+                    &:before{
+                        content: $fa-var-circle-o;
+                    }
+                }
+                &.run{
+                    color:      $white;
+                    background: $warning-color;
+                    &:before{
+                        content: $fa-var-play-circle-o;
+                    }
+                }
+                &.finish{
+                    color:      $white;
+                    background: $success-color;
+                    &:before{
+                        content: $fa-var-check-circle-o;
+                    }
+                }
+                &.cancel{
+                    color:      $white;
+                    background: $alert-color;
+                    &:before{
+                        content: $fa-var-ban;
+                    }
+                }
+            }
+            .title{
+                display:    block;
+                text-align: center;
+                font-size:  0.8em;
+                color:      $base;
+            }
+        }
+        @media #{$medium-up} {
+            margin: 2rem auto;
+            div{
+                margin: 0 2rem;
+                .count{
+                    width:       100px;
+                    height:      100px;
+                    line-height: 100px;
+                    font-size:   2em;
+                }
+            }
+        }
+        @media #{$large-up} {
+            div{
+                margin: 0 3rem;
+                .count{
+                    width:       150px;
+                    height:      150px;
+                    line-height: 150px;
+                    font-size:   3em;
+                }
+                .title{
+                    font-size: 1.2em;
+                }
+            }
+        }
+    }
+}

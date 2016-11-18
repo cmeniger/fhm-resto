@@ -1,0 +1,53 @@
+{% trans_default_domain instance.domain %}
+<div class="task-action">
+    <div class="left">
+        {% if document.getCommentCheck() %}
+            <a href="#"
+               title="{{ ('workflow.action.buttons.comment')|trans }}"
+               data-id="{{ task.getId() }}"
+               data-url="{{ path('fhm_api_workflow_task_modal_comment',{tid:task.getId(), wid:workflow.getId()}) }}"
+               data-modal><i class="fa fa-fw fa-comment"></i></a>
+        {% endif %}
+        {% if (document.getUploadCheck() and document.hasUserUpload(app.user)) or (document.getDownloadCheck() and document.hasUserDownload(app.user)) %}
+            <a href="#"
+               title="{{ ('workflow.action.buttons.attachment')|trans }}"
+               data-id="{{ task.getId() }}"
+               data-url="{{ path('fhm_api_workflow_task_modal_media',{tid:task.getId(), wid:workflow.getId()}) }}"
+               data-modal><i class="fa fa-fw fa-paperclip"></i></a>
+        {% endif %}
+    </div>
+    <div class="right">
+        {% if task.getStatus() == 3 %}
+            <i class="fa fa-fw fa-ban"></i>
+        {% elseif task.getStatus() == 2 %}
+            <i class="fa fa-fw fa-check-circle-o"></i>
+        {% elseif task.getStatus() == 1 or task.getParents()|length == 0 %}
+            {% if document.getCancelCheck() and document.hasUserCancel(app.user) %}
+                <a href="#"
+                   title="{{ ('workflow.action.buttons.cancel')|trans }}"
+                   onclick="return confirm('{{ ('workflow.events.confirm.cancel')|trans }}')"
+                   data-id="{{ task.getId() }}"
+                   data-url="{{ path('fhm_api_workflow_task_action_cancel',{tid:task.getId(), wid:workflow.getId()}) }}"
+                   data-action><i class="fa fa-fw fa-ban"></i></a>
+            {% endif %}
+            {% if document.getDismissCheck() and document.hasUserDismiss(app.user) %}
+                <a href="#"
+                   title="{{ ('workflow.action.buttons.dismiss')|trans }}"
+                   onclick="return confirm('{{ ('workflow.events.confirm.dismiss')|trans }}')"
+                   data-id="{{ task.getId() }}"
+                   data-url="{{ path('fhm_api_workflow_task_action_dismiss',{tid:task.getId(), wid:workflow.getId()}) }}"
+                   data-action><i class="fa fa-fw fa-times"></i></a>
+            {% endif %}
+            {% if document.getValidateCheck() and document.hasUserValidate(app.user) %}
+                <a href="#"
+                   title="{{ ('workflow.action.buttons.validate')|trans }}"
+                   onclick="return confirm('{{ ('workflow.events.confirm.validate')|trans }}')"
+                   data-id="{{ task.getId() }}"
+                   data-url="{{ path('fhm_api_workflow_task_action_validate',{tid:task.getId(), wid:workflow.getId()}) }}"
+                   data-action><i class="fa fa-fw fa-check"></i></a>
+            {% endif %}
+        {% else %}
+            <i class="fa fa-fw fa-hourglass"></i>
+        {% endif %}
+    </div>
+</div>

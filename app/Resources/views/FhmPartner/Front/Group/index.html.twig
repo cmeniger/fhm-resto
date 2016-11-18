@@ -1,0 +1,31 @@
+{% trans_default_domain instance.domain %}
+{% extends "::FhmFhm/Front/index.html.twig" %}
+
+{% block content_data %}
+    {% if documents %}
+        <div id="content_data" class="partnergroup">
+            {% for document in documents %}
+                <div class="row panel partnergroup-short">
+                    <div class="column large-3 medium-4 small-12">
+                        <div class="partnergroup-image" style="background: url('{{ asset("/images/common/partnergroup-cover-default.jpg") }}') center center no-repeat;"></div>
+                    </div>
+                    <div class="column large-9 medium-8 small-12">
+                        <div class="partnergroup-text">
+                            <h2 class="partnergroup-name">
+                                <a href="{{ path('fhm_partner_group_lite', {id: document.getAlias()}) }}">{{ document.getName() }}</a>
+                            </h2>
+
+                            <p>{{ (instance.translation ~ '.front.index.form.partner')|trans }}:
+                                <strong>{{ document.allpartner|length }}</strong></p>
+                            <a class="more button tiny right" href="{{ path('fhm_partner_group_lite', {id: document.getAlias()}) }}">{{ (instance.translation ~ '.front.index.form.more')|trans }}</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="panel nodata row">
+            <p>{{ (instance.translation ~ '.front.index.nodata')|trans }}</p>
+        </div>
+    {% endif %}
+{% endblock %}

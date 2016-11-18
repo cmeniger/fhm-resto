@@ -1,0 +1,17 @@
+{% trans_default_domain instance.domain %}
+{% extends "::FhmFhm/Admin/update.html.twig" %}
+
+{% block content_data_seo %}{% endblock %}
+
+{% block content_data_fields_data_add %}
+    <div class="row">
+        {{ form_label(form.order) }}
+        {{ form_errors(form.order) }}
+        {{ form_widget(form.order) }}
+    </div>
+    <div class="row">
+        {{ form_label(form.color) }}
+        {{ form_errors(form.color) }}
+        {{ form_widget(form.color) }}
+    </div>
+{% endblock %}

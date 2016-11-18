@@ -1,0 +1,6 @@
+services:
+    fhm_form.menu_type_extension:
+        class: Fhm\MenuBundle\Form\type\Extension\LinkType
+        tags:
+             - { name: link.type, alias: link }
+

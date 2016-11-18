@@ -1,0 +1,9 @@
+{% trans_default_domain instance.domain %}
+
+<div class="card">
+    <ul class="accordion card-accordion" data-accordion>
+        {% for category in documents %}
+            {% include category.getMenu() ? "::FhmCard/Template/Accordion/menu.html.twig" : "::FhmCard/Template/Accordion/inline.html.twig" %}
+        {% endfor %}
+    </ul>
+</div>

@@ -1,0 +1,60 @@
+{% trans_default_domain instance.domain %}
+{% extends "::FhmFhm/Admin/index.html.twig" %}
+
+{% block content_link_data %}
+    {{ parent() }}
+    <li>
+        <a href="{{ path('fhm_admin_card_category') }}" class="button small"><i class="fa fa-folder"></i> {{ ('card.category.admin.index.link')|trans }}
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('fhm_admin_card_product') }}" class="button small"><i class="fa fa-cube"></i> {{ ('card.product.admin.index.link')|trans }}
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('fhm_admin_card_ingredient') }}" class="button small"><i class="fa fa-tag"></i> {{ ('card.ingredient.admin.index.link')|trans }}
+        </a>
+    </li>
+{% endblock %}
+
+{% block content_data_action_share_links %}
+    {{ parent() }}
+    <li>
+        <a href="{{ path(instance.source ~ '_admin_' ~ instance.route ~ '_preview', {'id': document.getId()}) }}" title="{{ (instance.translation ~ '.admin.index.table.action.preview')|trans }}" target="_blank"><i class="fa fa-fw fa-search"></i> {{ (instance.translation ~ '.admin.index.table.action.preview')|trans }}
+        </a>
+    </li>
+{% endblock %}
+
+{% block content_data_action_delete_links %}
+    {{ parent() }}
+    <li>
+        <a href="{{ path(instance.source ~ '_admin_' ~ instance.route ~ '_preview', {'id': document.getId()}) }}" title="{{ (instance.translation ~ '.admin.index.table.action.preview')|trans }}" target="_blank"><i class="fa fa-fw fa-search"></i> {{ (instance.translation ~ '.admin.index.table.action.preview')|trans }}
+        </a>
+    </li>
+{% endblock %}
+
+{% block content_data_action_links %}
+    {{ parent() }}
+    <li>
+        <a href="{{ path(instance.source ~ '_admin_' ~ instance.route ~ '_preview', {'id': document.getId()}) }}" title="{{ (instance.translation ~ '.admin.index.table.action.preview')|trans }}" target="_blank"><i class="fa fa-fw fa-search"></i> {{ (instance.translation ~ '.admin.index.table.action.preview')|trans }}
+        </a>
+    </li>
+{% endblock %}
+
+{% block content_data_header %}
+    <th>{{ (instance.translation ~ '.admin.index.table.header.image')|trans }}</th>
+    {{ parent() }}
+    <th>{{ (instance.translation ~ '.admin.index.table.header.parent')|trans }}{{ macroSort.print('sort_parent', sort) }}</th>
+    <th>{{ (instance.translation ~ '.admin.index.table.header.categories')|trans }}{{ macroSort.print('sort_category', sort) }}</th>
+    <th>{{ (instance.translation ~ '.admin.index.table.header.products')|trans }}{{ macroSort.print('sort_product', sort) }}</th>
+    <th>{{ (instance.translation ~ '.admin.index.table.header.ingredients')|trans }}{{ macroSort.print('sort_ingredient', sort) }}</th>
+{% endblock %}
+
+{% block content_data_body %}
+    <td>{{ document.getImage()|image('s',50)|raw }}</td>
+    {{ parent() }}
+    <td>{{ document.getParent() ? document.getParent().getName() : '' }}</td>
+    <td>{{ document.getVarSort('category') }}</td>
+    <td>{{ document.getVarSort('product') }}</td>
+    <td>{{ document.getVarSort('ingredient') }}</td>
+{% endblock %}

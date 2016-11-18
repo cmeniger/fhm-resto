@@ -1,0 +1,16 @@
+{% trans_default_domain instance.domain %}
+
+<div class='data'>
+    <a href="#" media-tag="{{ document.getId() }}" title="{{ document.getName() }}">
+        <span class="name">
+            {{ document.getName() }}
+        </span>
+        <span class="icon" style="{{ document.getColor() ? "background-color:" ~ document.getColor() ~ ";" : "" }}">
+            {% if document.getPrivate() %}
+                <i class="fa fa-lock"></i>
+            {% else %}
+                <i class="fa fa-tag"></i>
+            {% endif %}
+        </span>
+    </a>
+</div>

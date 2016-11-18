@@ -1,0 +1,56 @@
+{% trans_default_domain instance.domain %}
+{% extends "::FhmFhm/Admin/detail.html.twig" %}
+
+{% block content_data %}
+    {{ parent() }}
+    <div id="content_data" class="row">
+        <h2>{{ (instance.translation ~ '.admin.detail.contact.title')|trans }}</h2>
+        <table class="fullwidth">
+            <tbody>
+                <tr>
+                    <td><strong>{{ (instance.translation ~ '.admin.detail.contact.phone')|trans }}</strong></td>
+                    <td>{{ document.getPhone() }}</td>
+                </tr>
+                <tr>
+                    <td><strong>{{ (instance.translation ~ '.admin.detail.contact.fax')|trans }}</strong></td>
+                    <td>{{ document.getFax() }}</td>
+                </tr>
+                <tr>
+                    <td><strong>{{ (instance.translation ~ '.admin.detail.contact.email')|trans }}</strong></td>
+                    <td>{{ document.getEmail() }}</td>
+                </tr>
+                <tr>
+                    <td><strong>{{ (instance.translation ~ '.admin.detail.contact.address')|trans }}</strong></td>
+                    <td>{{ document|addressHtml|raw }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div id="content_data" class="row">
+        <h2>{{ (instance.translation ~ '.admin.detail.social.title')|trans }}</h2>
+        <table class="fullwidth">
+            <tbody>
+                <tr>
+                    <td><strong>{{ (instance.translation ~ '.admin.detail.social.facebook')|trans }}</strong></td>
+                    <td><a href="{{ document.getFacebook() }}">{{ document.getFacebook() }}</a></td>
+                </tr>
+                <tr>
+                    <td><strong>{{ (instance.translation ~ '.admin.detail.social.twitter')|trans }}</strong></td>
+                    <td><a href="{{ document.getTwitter() }}">{{ document.getTwitter() }}</a></td>
+                </tr>
+                <tr>
+                    <td><strong>{{ (instance.translation ~ '.admin.detail.social.google')|trans }}</strong></td>
+                    <td><a href="{{ document.getGoogle() }}">{{ document.getGoogle() }}</a></td>
+                </tr>
+                <tr>
+                    <td><strong>{{ (instance.translation ~ '.admin.detail.social.instagram')|trans }}</strong></td>
+                    <td><a href="{{ document.getInstagram() }}">{{ document.getInstagram() }}</a></td>
+                </tr>
+                <tr>
+                    <td><strong>{{ (instance.translation ~ '.admin.detail.social.youtube')|trans }}</strong></td>
+                    <td><a href="{{ document.getInstagram() }}">{{ document.getYoutube() }}</a></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

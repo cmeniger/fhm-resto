@@ -1,0 +1,13 @@
+{% trans_default_domain instance.domain %}
+
+<div id="content_data" class="news">
+    <div class="row news-full">
+        <h1>{{ document.getTitle() }}</h1>
+        <h2>{{ document.getSubTitle() }}</h2>
+        <div class="news-image" style="background: url('{{ asset(document.getImage()|media("xxl","/images/common/news-cover-default.jpg")) }}') center center no-repeat;"></div>
+        <div class="news-date">{{ document.getDateStart()|localizeddate('full', 'none', app.request.locale) }} - {{ document.getDateEnd()|localizeddate('full', 'none', app.request.locale) }}</div>
+        <div class="news-resume">{{ document.getResume()|raw }}</div>
+        <div class="news-content">{{ document.getContent()|raw }}</div>
+        <div class="news-author">{{ document.getUserCreate().getUsername() }}</div>
+    </div>
+</div>

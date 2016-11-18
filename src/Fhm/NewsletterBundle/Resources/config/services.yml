@@ -1,0 +1,4 @@
+services:
+    #    fhm_newsletter.example:
+    #        class: Fhm\NewsletterBundle\Example
+    #        arguments: [@service_id, "plain_value", %parameter%]

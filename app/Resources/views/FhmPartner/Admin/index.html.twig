@@ -1,0 +1,24 @@
+{% trans_default_domain instance.domain %}
+{% extends "::FhmFhm/Admin/index.html.twig" %}
+
+{% block content_link_data %}
+    {{ parent() }}
+    <li>
+        <a href="{{ path('fhm_admin_partner_group') }}" class="button small"><i class="fa fa-cubes"></i> {{ ('partner.group.admin.index.link')|trans }}
+        </a>
+    </li>
+{% endblock %}
+
+{% block content_data_header %}
+    <th>{{ (instance.translation ~ '.admin.index.table.header.image')|trans }}</th>
+    {{ parent() }}
+    <th>{{ (instance.translation ~ '.admin.index.table.header.order')|trans }}{{ macroSort.print('order', sort) }}</th>
+    <th>{{ (instance.translation ~ '.admin.index.table.header.groups')|trans }}{{ macroSort.print('sort_partnergroup', sort) }}</th>
+{% endblock %}
+
+{% block content_data_body %}
+    <td>{{ document.getImage()|image('xs', 50)|raw }}</td>
+    {{ parent() }}
+    <td>{{ document.getOrder() }}</td>
+    <td>{{ document.getPartnergroups()|length }}</td>
+{% endblock %}

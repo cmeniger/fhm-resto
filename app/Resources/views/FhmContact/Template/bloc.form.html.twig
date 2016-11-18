@@ -1,0 +1,87 @@
+{% trans_default_domain instance.domain %}
+<div class="row contact-form-header">
+    <div class="column small-10 medium-6 small-centered">
+        <div id="map-{{ document.getId() }}" class="map"></div>
+    </div>
+</div>
+<div class="row">
+    <div class="column contact-form-row">
+        <div class="contact-form">
+            <h2>{{ document.getName() }}</h2>
+            {% if document.getDescription() %}
+                <div class="row gutter-margin-bottom">
+                    <div class="column large-8 large-centered text-center">
+                        {{ document.getDescription() }}
+                    </div>
+                </div>
+            {% endif %}
+            <div class="row">
+                <div class="column medium-6 contact-form-data">
+                    {% if document.getAddressMain() %}
+                        <div class="row contact-icon">
+                            <div class="column small-2">
+                                <i class="fa fa-map-marker"></i>
+                            </div>
+                            <div class="column small-10">
+                                {{ document|addressHtml|raw }}
+                            </div>
+                        </div>
+                    {% endif %}
+                    {% if document.getPhone() %}
+                        <div class="row contact-icon">
+                            <div class="column small-2">
+                                <i class="fa fa-phone"></i>
+                            </div>
+                            <div class="column small-10">
+                            <span>
+                                {{ document.getPhone() }}
+                            </span>
+                            </div>
+                        </div>
+                    {% endif %}
+                    {% if document.getFax() %}
+                        <div class="row contact-icon">
+                            <div class="column small-2">
+                                <i class="fa fa-fax"></i>
+                            </div>
+                            <div class="column small-10">
+                            <span>
+                                {{ document.getFax() }}
+                            </span>
+                            </div>
+                        </div>
+                    {% endif %}
+                    {% if document.getEmail() %}
+                        <div class="row contact-icon">
+                            <div class="column small-2">
+                                <i class="fa fa-envelope"></i>
+                            </div>
+                            <div class="column small-10">
+                            <span>
+                                <a href="mailto:{{ document.getEmail() }}">{{ document.getEmail() }}</a>
+                            </span>
+                            </div>
+                        </div>
+                    {% endif %}
+                    <div class="row contact-social">
+                        <div class="column">
+                            <ul class="inline-list">
+                                {{ document.getSocialFacebook() ? ("<li><a href='" ~ document.getSocialFacebook() ~ "' target='_blank'><i class='fa fa-facebook-square'></i></a></li>")|raw : "" }}
+                                {{ document.getSocialTwitter() ? ("<li><a href='" ~ document.getSocialTwitter() ~ "' target='_blank'><i class='fa fa-twitter-square'></i></a></li>")|raw : "" }}
+                                {{ document.getSocialGoogle() ? ("<li><a href='" ~ document.getSocialGoogle() ~ "' target='_blank'><i class='fa fa-google-plus-square'></i></a></li>")|raw : "" }}
+                                {{ document.getSocialInstagram() ? ("<li><a href='" ~ document.getSocialInstagram() ~ "' target='_blank'><i class='fa fa-instagram social'></i></a></li>")|raw : "" }}
+                                {{ document.getSocialFlux() ? ("<li><a href='" ~ document.getSocialFlux() ~ "' target='_blank'><i class='fa fa-rss social'></i></a></li>")|raw : "" }}
+                                {{ document.getSocialSite() ? ("<li><a href='" ~ document.getSocialSite() ~ "' target='_blank'><i class='fa fa-globe social'></i></a></li>")|raw : "" }}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="column medium-6 contact-form-fields" data-id="{{ document.getId() }}">
+                    {% if document.getForm() %}
+                        {% render(path('fhm_api_contact_form',{id:document.getId()})) %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

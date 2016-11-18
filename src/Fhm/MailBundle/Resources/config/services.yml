@@ -1,0 +1,9 @@
+services:
+    fhm_mail:
+        class: Fhm\MailBundle\Services\Mailer
+        arguments: [@mailer, @templating, @service_container]
+    listener.mail.user.mail:
+        class: Fhm\MailBundle\Listener\MailListener
+        arguments: [@service_container]
+        tags:
+          - { name: kernel.event_listener, event: fhm.fhm.mail, method: onMail }

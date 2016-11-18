@@ -1,0 +1,32 @@
+{% trans_default_domain instance.domain %}
+
+<div class="gallery-album">
+    {% if galleries %}
+        <table class="fullwidth">
+            <thead>
+                <tr>
+                    {% block content_data_header %}
+                        <th>{{ (instance.translation ~ '.front.index.table.header.name')|trans }}</th>
+                    {% endblock %}
+                    {% block content_data_header_action %}
+                        <th>{{ (instance.translation ~ '.front.index.table.header.action')|trans }}</th>
+                    {% endblock %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for gallery in galleries %}
+                    <tr>
+                        <td>{{ gallery.getName() }}</td>
+                        <td>
+                            <a href="{{ path('fhm_gallery_lite', {'id': gallery.getAlias()}) }}" title="{{ (instance.translation ~ '.front.index.table.action.detail')|trans }}"><i class="fa fa-search"></i></a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <div class="panel nodata">
+            <p>{{ (instance.translation ~ '.front.index.nodata')|trans }}</p>
+        </div>
+    {% endif %}
+</div>

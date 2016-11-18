@@ -1,0 +1,350 @@
+{% trans_default_domain instance.domain %}
+{% extends "::FhmFhm/Api/historic.html.twig" %}
+
+{% block historic_body %}
+    {# Title #}
+    <div class="row body {{ document.getTitle() != document.getHistoricParent().getTitle() ? 'warning' : '' }}">
+        <div class="title">{{ (instance.translation ~ '.historic.title')|trans }}</div>
+        <div class="content">
+            <div class="column small-5 text-center">
+                {% if document.getTitle() %}
+                    {{ document.getTitle() }}
+                {% else %}
+                    <span class="nodata">{{ ('fhm.historic.modal.nodata')|trans({},'FhmFhmBundle') }}</span>
+                {% endif %}
+            </div>
+            <div class="column small-2 text-center">
+                <div class="compare {{ document.getTitle() != document.getHistoricParent().getTitle() ? 'warning' : '' }}"></div>
+            </div>
+            <div class="column small-5 text-center">
+                {% if document.getHistoricParent().getTitle() %}
+                    {{ document.getHistoricParent().getTitle() }}
+                {% else %}
+                    <span class="nodata">{{ ('fhm.historic.modal.nodata')|trans({},'FhmFhmBundle') }}</span>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {# Subtitle #}
+    <div class="row body {{ document.getSubtitle() != document.getHistoricParent().getSubtitle() ? 'warning' : '' }}">
+        <div class="title">{{ (instance.translation ~ '.historic.subtitle')|trans }}</div>
+        <div class="content">
+            <div class="column small-5 text-center">
+                {% if document.getSubtitle() %}
+                    {{ document.getSubtitle() }}
+                {% else %}
+                    <span class="nodata">{{ ('fhm.historic.modal.nodata')|trans({},'FhmFhmBundle') }}</span>
+                {% endif %}
+            </div>
+            <div class="column small-2 text-center">
+                <div class="compare {{ document.getSubtitle() != document.getHistoricParent().getSubtitle() ? 'warning' : '' }}"></div>
+            </div>
+            <div class="column small-5 text-center">
+                {% if document.getHistoricParent().getSubtitle() %}
+                    {{ document.getHistoricParent().getSubtitle() }}
+                {% else %}
+                    <span class="nodata">{{ ('fhm.historic.modal.nodata')|trans({},'FhmFhmBundle') }}</span>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {# Resume #}
+    <div class="row body {{ document.getResume() != document.getHistoricParent().getResume() ? 'warning' : '' }}">
+        <div class="title">{{ (instance.translation ~ '.historic.resume')|trans }}</div>
+        <div class="content">
+            <div class="column small-5 text-center">
+                {% if document.getResume() %}
+                    {{ document.getResume()|raw }}
+                {% else %}
+                    <span class="nodata">{{ ('fhm.historic.modal.nodata')|trans({},'FhmFhmBundle') }}</span>
+                {% endif %}
+            </div>
+            <div class="column small-2 text-center">
+                <div class="compare {{ document.getResume() != document.getHistoricParent().getResume() ? 'warning' : '' }}"></div>
+            </div>
+            <div class="column small-5 text-center">
+                {% if document.getHistoricParent().getResume() %}
+                    {{ document.getHistoricParent().getResume()|raw }}
+                {% else %}
+                    <span class="nodata">{{ ('fhm.historic.modal.nodata')|trans({},'FhmFhmBundle') }}</span>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {# Content #}
+    <div class="row body {{ document.getContent() != document.getHistoricParent().getContent() ? 'warning' : '' }}">
+        <div class="title">{{ (instance.translation ~ '.historic.content')|trans }}</div>
+        <div class="content">
+            <div class="column small-5 text-center">
+                {% if document.getContent() %}
+                    {{ document.getContent()|raw }}
+                {% else %}
+                    <span class="nodata">{{ ('fhm.historic.modal.nodata')|trans({},'FhmFhmBundle') }}</span>
+                {% endif %}
+            </div>
+            <div class="column small-2 text-center">
+                <div class="compare {{ document.getContent() != document.getHistoricParent().getContent() ? 'warning' : '' }}"></div>
+            </div>
+            <div class="column small-5 text-center">
+                {% if document.getHistoricParent().getContent() %}
+                    {{ document.getHistoricParent().getContent()|raw }}
+                {% else %}
+                    <span class="nodata">{{ ('fhm.historic.modal.nodata')|trans({},'FhmFhmBundle') }}</span>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {# Author #}
+    <div class="row body {{ document.getAuthor() != document.getHistoricParent().getAuthor() ? 'warning' : '' }}">
+        <div class="title">{{ (instance.translation ~ '.historic.author')|trans }}</div>
+        <div class="content">
+            <div class="column small-5 text-center">
+                {% if document.getAuthor() %}
+                    {{ document.getAuthor().getUsername() }}
+                {% else %}
+                    <span class="nodata">{{ ('fhm.historic.modal.nodata')|trans({},'FhmFhmBundle') }}</span>
+                {% endif %}
+            </div>
+            <div class="column small-2 text-center">
+                <div class="compare {{ document.getAuthor() != document.getHistoricParent().getAuthor() ? 'warning' : '' }}"></div>
+            </div>
+            <div class="column small-5 text-center">
+                {% if document.getHistoricParent().getAuthor() %}
+                    {{ document.getHistoricParent().getAuthor().getUsername() }}
+                {% else %}
+                    <span class="nodata">{{ ('fhm.historic.modal.nodata')|trans({},'FhmFhmBundle') }}</span>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {# Image #}
+    <div class="row body {{ document.getImage() != document.getHistoricParent().getImage() ? 'warning' : '' }}">
+        <div class="title">{{ (instance.translation ~ '.historic.image')|trans }}</div>
+        <div class="content">
+            <div class="column small-5 text-center">
+                {% if document.getImage() %}
+                    {{ document.getImage()|image('s', 80)|raw }}
+                {% else %}
+                    <span class="nodata">{{ ('fhm.historic.modal.nodata')|trans({},'FhmFhmBundle') }}</span>
+                {% endif %}
+            </div>
+            <div class="column small-2 text-center">
+                <div class="compare {{ document.getImage() != document.getHistoricParent().getImage() ? 'warning' : '' }}"></div>
+            </div>
+            <div class="column small-5 text-center">
+                {% if document.getHistoricParent().getImage() %}
+                    {{ document.getHistoricParent().getImage()|image('s', 80)|raw }}
+                {% else %}
+                    <span class="nodata">{{ ('fhm.historic.modal.nodata')|trans({},'FhmFhmBundle') }}</span>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {# Gallery #}
+    <div class="row body {{ document.getGallery() != document.getHistoricParent().getGallery() ? 'warning' : '' }}">
+        <div class="title">{{ (instance.translation ~ '.historic.gallery')|trans }}</div>
+        <div class="content">
+            <div class="column small-5 text-center">
+                {% if document.getGallery() %}
+                    {{ document.getGallery().getName() }}
+                {% else %}
+                    <span class="nodata">{{ ('fhm.historic.modal.nodata')|trans({},'FhmFhmBundle') }}</span>
+                {% endif %}
+            </div>
+            <div class="column small-2 text-center">
+                <div class="compare {{ document.getGallery() != document.getHistoricParent().getGallery() ? 'warning' : '' }}"></div>
+            </div>
+            <div class="column small-5 text-center">
+                {% if document.getHistoricParent().getGallery() %}
+                    {{ document.getHistoricParent().getGallery().getName() }}
+                {% else %}
+                    <span class="nodata">{{ ('fhm.historic.modal.nodata')|trans({},'FhmFhmBundle') }}</span>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {# Grouping #}
+    {% if instance.grouping.visible %}
+        <div class="row body {{ document.getGrouping() != document.getHistoricParent().getGrouping() ? 'warning' : '' }}">
+            <div class="title">{{ ('fhm.historic.modal.body.grouping')|trans({},'FhmFhmBundle') }}</div>
+            <div class="content">
+                <div class="column small-5 text-center">
+                    {% if document.getGrouping() %}
+                        {% for grouping in document.getGrouping() %}
+                            {% if loop.index > 1 %}
+                                <span class="separator">|</span>
+                            {% endif %}
+                            {{ grouping }}
+                        {% endfor %}
+                    {% else %}
+                        <span class="nodata">{{ ('fhm.historic.modal.nodata')|trans({},'FhmFhmBundle') }}</span>
+                    {% endif %}
+                </div>
+                <div class="column small-2 text-center">
+                    <div class="compare {{ document.getGrouping() != document.getHistoricParent().getGrouping() ? 'warning' : '' }}"></div>
+                </div>
+                <div class="column small-5 text-center">
+                    {% if document.getHistoricParent().getGrouping() %}
+                        {% for grouping in document.getHistoricParent().getGrouping() %}
+                            {% if loop.index > 1 %}
+                                <span class="separator">|</span>
+                            {% endif %}
+                            {{ grouping }}
+                        {% endfor %}
+                    {% else %}
+                        <span class="nodata">{{ ('fhm.historic.modal.nodata')|trans({},'FhmFhmBundle') }}</span>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    {% endif %}
+    {# Languages #}
+    {% if instance.language.visible %}
+        <div class="row body {{ document.getLanguages() != document.getHistoricParent().getLanguages() ? 'warning' : '' }}">
+            <div class="title">{{ ('fhm.historic.modal.body.language')|trans({},'FhmFhmBundle') }}</div>
+            <div class="content">
+                <div class="column small-5 text-center">
+                    {% if document.getLanguages() %}
+                        {% for language in document.getLanguages() %}
+                            {% if loop.index > 1 %}
+                                <span class="separator">|</span>
+                            {% endif %}
+                            {{ language|flag|raw }}
+                        {% endfor %}
+                    {% else %}
+                        <span class="nodata">{{ ('fhm.historic.modal.nodata')|trans({},'FhmFhmBundle') }}</span>
+                    {% endif %}
+                </div>
+                <div class="column small-2 text-center">
+                    <div class="compare {{ document.getLanguages() != document.getHistoricParent().getLanguages() ? 'warning' : '' }}"></div>
+                </div>
+                <div class="column small-5 text-center">
+                    {% if document.getHistoricParent().getLanguages() %}
+                        {% for language in document.getHistoricParent().getLanguages() %}
+                            {% if loop.index > 1 %}
+                                <span class="separator">|</span>
+                            {% endif %}
+                            {{ language|flag|raw }}
+                        {% endfor %}
+                    {% else %}
+                        <span class="nodata">{{ ('fhm.historic.modal.nodata')|trans({},'FhmFhmBundle') }}</span>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    {% endif %}
+    {# SeoTitle #}
+    <div class="row body {{ document.getSeoTitle() != document.getHistoricParent().getSeoTitle() ? 'warning' : '' }}">
+        <div class="title">{{ ('fhm.historic.modal.body.seo.title')|trans({},'FhmFhmBundle') }}</div>
+        <div class="content">
+            <div class="column small-5 text-center">
+                {% if document.getSeoTitle() %}
+                    {{ document.getSeoTitle() }}
+                {% else %}
+                    <span class="nodata">{{ ('fhm.historic.modal.nodata')|trans({},'FhmFhmBundle') }}</span>
+                {% endif %}
+            </div>
+            <div class="column small-2 text-center">
+                <div class="compare {{ document.getSeoTitle() != document.getHistoricParent().getSeoTitle() ? 'warning' : '' }}"></div>
+            </div>
+            <div class="column small-5 text-center">
+                {% if document.getHistoricParent().getSeoTitle() %}
+                    {{ document.getHistoricParent().getSeoTitle() }}
+                {% else %}
+                    <span class="nodata">{{ ('fhm.historic.modal.nodata')|trans({},'FhmFhmBundle') }}</span>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {# SeoDescription #}
+    <div class="row body {{ document.getSeoDescription() != document.getHistoricParent().getSeoDescription() ? 'warning' : '' }}">
+        <div class="title">{{ ('fhm.historic.modal.body.seo.description')|trans({},'FhmFhmBundle') }}</div>
+        <div class="content">
+            <div class="column small-5 text-center">
+                {% if document.getSeoDescription() %}
+                    {{ document.getSeoDescription() }}
+                {% else %}
+                    <span class="nodata">{{ ('fhm.historic.modal.nodata')|trans({},'FhmFhmBundle') }}</span>
+                {% endif %}
+            </div>
+            <div class="column small-2 text-center">
+                <div class="compare {{ document.getSeoDescription() != document.getHistoricParent().getSeoDescription() ? 'warning' : '' }}"></div>
+            </div>
+            <div class="column small-5 text-center">
+                {% if document.getHistoricParent().getSeoDescription() %}
+                    {{ document.getHistoricParent().getSeoDescription() }}
+                {% else %}
+                    <span class="nodata">{{ ('fhm.historic.modal.nodata')|trans({},'FhmFhmBundle') }}</span>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {# SeoKeywords #}
+    <div class="row body {{ document.getSeoKeywords() != document.getHistoricParent().getSeoKeywords() ? 'warning' : '' }}">
+        <div class="title">{{ ('fhm.historic.modal.body.seo.keywords')|trans({},'FhmFhmBundle') }}</div>
+        <div class="content">
+            <div class="column small-5 text-center">
+                {% if document.getSeoKeywords() %}
+                    {{ document.getSeoKeywords() }}
+                {% else %}
+                    <span class="nodata">{{ ('fhm.historic.modal.nodata')|trans({},'FhmFhmBundle') }}</span>
+                {% endif %}
+            </div>
+            <div class="column small-2 text-center">
+                <div class="compare {{ document.getSeoKeywords() != document.getHistoricParent().getSeoKeywords() ? 'warning' : '' }}"></div>
+            </div>
+            <div class="column small-5 text-center">
+                {% if document.getHistoricParent().getSeoKeywords() %}
+                    {{ document.getHistoricParent().getSeoKeywords() }}
+                {% else %}
+                    <span class="nodata">{{ ('fhm.historic.modal.nodata')|trans({},'FhmFhmBundle') }}</span>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {# Delete #}
+    <div class="row body {{ document.getDelete() != document.getHistoricParent().getDelete() ? 'warning' : '' }}">
+        <div class="title">{{ ('fhm.historic.modal.body.delete')|trans({},'FhmFhmBundle') }}</div>
+        <div class="content">
+            <div class="column small-5 text-center">
+                {{ ('fhm.status.' ~ (document.getDelete() ? 'yes' : 'no'))|trans({},'FhmFhmBundle') }}
+            </div>
+            <div class="column small-2 text-center">
+                <div class="compare {{ document.getDelete() != document.getHistoricParent().getDelete() ? 'warning' : '' }}"></div>
+            </div>
+            <div class="column small-5 text-center">
+                {{ ('fhm.status.' ~ (document.getHistoricParent().getDelete() ? 'yes' : 'no'))|trans({},'FhmFhmBundle') }}
+            </div>
+        </div>
+    </div>
+    {# Share #}
+    <div class="row body {{ document.getShare() != document.getHistoricParent().getShare() ? 'warning' : '' }}">
+        <div class="title">{{ ('fhm.historic.modal.body.share')|trans({},'FhmFhmBundle') }}</div>
+        <div class="content">
+            <div class="column small-5 text-center">
+                {{ ('fhm.status.' ~ (document.getShare() ? 'yes' : 'no'))|trans({},'FhmFhmBundle') }}
+            </div>
+            <div class="column small-2 text-center">
+                <div class="compare {{ document.getShare() != document.getHistoricParent().getShare() ? 'warning' : '' }}"></div>
+            </div>
+            <div class="column small-5 text-center">
+                {{ ('fhm.status.' ~ (document.getHistoricParent().getShare() ? 'yes' : 'no'))|trans({},'FhmFhmBundle') }}
+            </div>
+        </div>
+    </div>
+    {# Global #}
+    <div class="row body {{ document.getGlobal() != document.getHistoricParent().getGlobal() ? 'warning' : '' }}">
+        <div class="title">{{ ('fhm.historic.modal.body.global')|trans({},'FhmFhmBundle') }}</div>
+        <div class="content">
+            <div class="column small-5 text-center">
+                {{ ('fhm.status.' ~ (document.getGlobal() ? 'yes' : 'no'))|trans({},'FhmFhmBundle') }}
+            </div>
+            <div class="column small-2 text-center">
+                <div class="compare {{ document.getGlobal() != document.getHistoricParent().getGlobal() ? 'warning' : '' }}"></div>
+            </div>
+            <div class="column small-5 text-center">
+                {{ ('fhm.status.' ~ (document.getHistoricParent().getGlobal() ? 'yes' : 'no'))|trans({},'FhmFhmBundle') }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

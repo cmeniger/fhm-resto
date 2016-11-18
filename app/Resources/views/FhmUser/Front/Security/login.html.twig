@@ -1,0 +1,126 @@
+{% set instance = instance|merge({'domain':'FhmUserBundle', 'translation':'user', 'route':'user', 'source':'fhm'}) %}
+{% set breadcrumbs = [{'link':path('project_home'), 'text':'project.home.breadcrumb'|trans({},'ProjectDefaultBundle')}, {'link':'', 'text':('user.front.login.breadcrumb')|trans({},'FhmUserBundle'), 'current':true}] %}
+{% set layout_extend = "::layout.front.html.twig" %}
+{% trans_default_domain instance.domain %}
+{% extends "::FhmFhm/Front/update.html.twig" %}
+
+{% block content_data_alert %}{% endblock %}
+{% block content_data_submit_list %}{% endblock %}
+
+{% block tagline_data %}
+    <i class="fa fa-user"></i> {{ (instance.translation ~ '.front.login.title')|trans }}
+{% endblock %}
+
+{% block content_data %}
+    <div class="main-login">
+        <div class="row">
+            <div class="large-6 columns large-centered">
+                {% if error %}
+                    <div class="error">
+                        {{ error.message is defined ? error.message|trans : error|trans }}
+                    </div>
+                {% endif %}
+                <form action="{{ path("fos_user_security_check") }}" method="POST">
+                    <input type="hidden" name="_csrf_token" value="{{ csrf_token }}"/>
+                    <div class="row">
+                        <div class=" columns">
+                            <label for="username">{{ 'user.front.login.form.username'|trans }}</label>
+                            <input type="text" id="username" name="_username" value="{{ last_username }}" required="required"/>
+                        </div>
+                        <div class=" columns">
+                            <label for="password">{{ 'user.front.login.form.password'|trans }}</label>
+                            <input type="password" id="password" name="_password" required="required"/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="small-6 columns">
+                            <a href="{{ path('fos_user_resetting_request') }}">{{ 'user.front.login.form.forget'|trans }}</a>
+                        </div>
+                        <div class="small-6 columns">
+                            <input type="checkbox" id="remember_me" class="custom" name="_remember_me" value="on"/>
+                            <label for="remember_me">{{ 'user.front.login.form.remember'|trans }}</label>
+                        </div>
+                    </div>
+                    <div class="row gutter-margin-top">
+                        <div class="medium-6 text-center columns">
+                            <button type="submit" id="_submit" name="_submit" class="small button fullwidth">{{ 'user.front.login.form.submit'|trans }}</button>
+                        </div>
+                        <div class="medium-6 text-center columns">
+                            <a href="{{ path('fos_user_registration_register') }}" class="button small fullwidth">{{ 'user.front.create.link'|trans({}, 'FhmUserBundle') }}</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="row">
+            <div class="large-8 columns large-centered">
+                <div class="separator">
+                    <span>{{ (instance.translation ~ '.front.login.alternate')|trans }}</span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="large-4 columns large-centered">
+                {#facebook #}
+                <div id="fb-root"></div>
+                <a class="link facebook" href="#" onclick="fb_login();">
+                    <span class="icon"><i class="fa fa-fw fa-facebook"></i></span>
+                    <span class="text">{{ 'user.front.login.social.facebook'|trans }}</span>
+                </a>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block body_javascripts %}
+    {{ parent() }}
+    <script>
+        $(document).ready()
+        {
+            window.fbAsyncInit = function ()
+            {
+                FB.init({
+                    appId:   '{{ oauth_facebook_id }}',
+                    xfbml:   true,
+                    status:  true,
+                    cookie:  true,
+                    version: 'v2.7'
+                });
+            };
+            (function (d, s, id)
+            {
+                var js, fjs = d.getElementsByTagName(s)[0];
+                if(d.getElementById(id))
+                {
+                    return;
+                }
+                js = d.createElement(s);
+                js.id = id;
+                js.src = "//connect.facebook.net/en_US/sdk.js";
+                fjs.parentNode.insertBefore(js, fjs);
+            }(document, 'script', 'facebook-jssdk'));
+            function fb_login()
+            {
+                FB.getLoginStatus(function (response)
+                {
+                    if(response.status === 'connected')
+                    {
+                        // connected
+                        document.location = "{{ url("hwi_oauth_service_redirect", {service: "facebook"}) }}";
+                    }
+                    else
+                    {
+                        // not_authorized
+                        FB.login(function (response)
+                        {
+                            if(response.authResponse)
+                            {
+                                document.location = "{{ url("hwi_oauth_service_redirect", {service: "facebook"}) }}";
+                            }
+                        }, {scope: 'email,public_profile'});
+                    }
+                });
+            }
+        }
+    </script>
+{% endblock %}

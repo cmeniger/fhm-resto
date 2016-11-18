@@ -1,0 +1,17 @@
+{% trans_default_domain instance.domain %}
+{% extends "::FhmFhm/Admin/detail.html.twig" %}
+
+{% block content_anchor_link_data %}
+    <dd><a href="#anchor-admin-card">{{ (instance.translation ~ '.admin.detail.card.anchor')|trans }}</a></dd>
+    {{ parent() }}
+{% endblock %}
+
+{% block content_data %}
+    <div class="row">
+        <h2 id="anchor-admin-card">{{ (instance.translation ~ '.admin.detail.card.title')|trans }}</h2>
+    </div>
+    <div class="row card">
+        {% render(path("fhm_api_card_editor",{id:document.getId()})) %}
+    </div>
+    {{ parent() }}
+{% endblock %}

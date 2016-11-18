@@ -1,0 +1,45 @@
+{% trans_default_domain instance.domain %}
+{% extends "::FhmFhm/Admin/update.html.twig" %}
+
+{% block content_data_fields_data %}
+    <div class="large-6 medium-6 small-12 columns">
+        <fieldset>
+            <legend>{{ (instance.translation ~ '.admin.update.form.fieldset.data')|trans }}</legend>
+            <div class="row">
+                {{ form_label(form.name) }}
+                {{ form_errors(form.name) }}
+                {{ form_widget(form.name) }}
+            </div>
+            <div class="row">
+                {{ form_label(form.description) }}
+                {{ form_errors(form.description) }}
+                {{ form_widget(form.description) }}
+            </div>
+            <div class="row">
+                {{ form_errors(form.add_global) }}
+                {{ form_label(form.add_global) }}
+                <div class="switch">
+                    {{ form_widget(form.add_global) }}
+                    <label for="{{ form.add_global.vars.id }}"></label>
+                </div>
+            </div>
+        </fieldset>
+    </div>
+    <div class="large-6 medium-6 small-12 columns">
+        <fieldset>
+            <legend>{{ (instance.translation ~ '.admin.update.form.fieldset.partners')|trans }}</legend>
+            <div class="row">
+                {{ form_label(form.partners) }}
+                {{ form_errors(form.partners) }}
+                {{ form_widget(form.partners) }}
+            </div>
+        </fieldset>
+    </div>
+{% endblock %}
+
+{% block content_data_submit_list_delete %}
+    <li>
+        <a href="{{ path('fhm_admin_partner') }}" class="button small button-icon button-cube">{{ ('partner.admin.index.link')|trans }}</a>
+    </li>
+    {{ parent() }}
+{% endblock %}

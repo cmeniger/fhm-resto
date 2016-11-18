@@ -1,0 +1,229 @@
+form{
+    .form-schedules{
+        select{
+            margin: 0;
+            &.am{
+                background-color: rgba($success-color, 0.1);
+            }
+            &.pm{
+                background-color: rgba($warning-color, 0.1);
+            }
+        }
+        .days{
+            margin-bottom: 1rem;
+        }
+    }
+    .form-alert{
+        .form-alert-icon{
+            color:     $primary-color;
+            font-size: 80px;
+        }
+        .form-alert-text{
+
+        }
+    }
+    .form-bloc{
+    }
+    .form-error{
+        background: $alert-color;
+        color:      $white;
+        padding:    1rem;
+        ul{
+            margin: 0;
+        }
+    }
+    .form-fields{
+        select[multiple]{
+            height: 300px;
+        }
+        .form-social{
+            text-align: center;
+            .social-icons{
+                display:     inline-block;
+                height:      37px;
+                width:       37px;
+                line-height: 37px;
+                text-align:  center;
+                color:       $white;
+                font-size:   16px;
+                &.prefix{
+                    width: 100%;
+                }
+                i{
+                    color: $white;
+                }
+                &.facebook{
+                    background-color: $color-social-facebook;
+                }
+                &.twitter{
+                    background-color: $color-social-twitter;
+                }
+                &.google{
+                    background-color: $color-social-google;
+                }
+                &.instagram{
+                    background-color: $color-social-instagram;
+                }
+                &.youtube{
+                    background-color: $color-social-youtube;
+                }
+                &.flux{
+                    background-color: $color-social-flux;
+                }
+            }
+        }
+    }
+    .form-submit{
+        margin-top: 60px;
+        ul{
+            &.f-dropdown{
+                padding: 10px;
+                li{
+                    button{
+                        text-align: left;
+                        width:      100%;
+                        margin:     1px 0;
+                        padding:    10px;
+                    }
+                    a{
+                        color:      $white;
+                        text-align: left;
+                        margin:     1px 0;
+                        padding:    10px;
+                    }
+                }
+            }
+        }
+        .button-icon{
+            &:before{
+                font-family:  'FontAwesome';
+                margin-right: 10px;
+            }
+        }
+        .button-cancel{
+            &:before{
+                content: $fa-var-angle-double-left;
+            }
+        }
+        .button-save{
+            &:before{
+                content: $fa-var-save;
+            }
+        }
+        .button-new{
+            &:before{
+                content: $fa-var-plus;
+            }
+        }
+        .button-duplicate{
+            &:before{
+                content: $fa-var-files-o;
+            }
+        }
+        .button-quit{
+            &:before{
+                content: $fa-var-home;
+            }
+        }
+        .button-gear{
+            &:before{
+                content: $fa-var-gear;
+            }
+        }
+        .button-detail{
+            &:before{
+                content: $fa-var-search;
+            }
+        }
+        .button-import{
+            &:before{
+                content: $fa-var-download;
+            }
+        }
+        .button-export{
+            &:before{
+                content: $fa-var-upload;
+            }
+        }
+        .button-delete{
+            &:before{
+                content: $fa-var-trash;
+            }
+        }
+        .button-cube{
+            &:before{
+                content: $fa-var-cube;
+            }
+        }
+        .button-cubes{
+            &:before{
+                content: $fa-var-cubes;
+            }
+        }
+        .button-image{
+            &:before{
+                content: $fa-var-image;
+            }
+        }
+        .button-video{
+            &:before{
+                content: $fa-var-video-camera;
+            }
+        }
+        .button-th{
+            &:before{
+                content: $fa-var-th;
+            }
+        }
+
+        @media(max-width: 642px) {
+            button, span, a{
+                width: 100%;
+            }
+        }
+    }
+    .form-rest{
+    }
+    &.form-update{
+    }
+    &.form-import{
+    }
+    &.form-export{
+    }
+    ul{
+        &.error{
+            background: $alert-color;
+            color:      $white;
+            margin:     0;
+            padding:    0.2em 0.5em;
+            font-size:  0.8em;
+        }
+    }
+}
+
+.form-error-main{
+    padding:    2rem;
+    background: lighten($alert-color, 30%);
+    border:     1px solid $alert-color;
+    width:      100%;
+    max-width:  100%;
+    margin:     auto;
+    .form-error-title{
+        @include font2();
+        padding:        1rem 0;
+        text-align:     center;
+        text-transform: uppercase;
+        color:          $alert-color;
+        font-size:      2em;
+    }
+    .form-error-text{
+        padding:    1rem 3rem;
+        text-align: justify;
+    }
+    .form-error-items{
+        padding: 0 3rem;
+        ul{
+            margin: 0 !important;
+        }
+    }
+}

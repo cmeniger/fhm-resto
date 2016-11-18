@@ -1,0 +1,27 @@
+{% trans_default_domain instance.domain %}
+<div class="testimony">
+    {% for document in documents %}
+        <div class="row">
+            <div class="column medium-4">
+                <img src="{{ document.getImage()|media('s') }}"/>
+            </div>
+            <div class="column medium-8">
+                <p class="gutter-padding-top content">
+                    <i class="fa fa-quote-left"></i>{{ document.getDescription() }}<i class="fa fa-quote-right"></i>
+                </p>
+                <p class="right name">
+                    {{ document.getName() }}
+                </p>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+<script>
+    $(document).ready(function ()
+    {
+        $('.testimony').slick({
+            autoplay:      true,
+            autoplaySpeed: 10000
+        });
+    });
+</script>

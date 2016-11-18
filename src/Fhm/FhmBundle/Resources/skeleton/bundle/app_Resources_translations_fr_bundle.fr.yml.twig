@@ -1,0 +1,229 @@
+{{ route[1] }}:
+    admin:
+        index:
+            title:                              Gestion des {{ route[1] }}s
+            link:                               {{ route[1]|capitalize }}s
+            breadcrumb:                         {{ route[1]|capitalize }}s
+            nodata:                             Aucune donnée
+            form:
+                search:                         Rechercher
+            table:
+                header:
+                    name:                       Nom
+                    action:                     Actions
+                    status:                     Statut
+                action:
+                    activate:                   Activer
+                    deactivate:                 Désactiver
+                    delete:                     Supprimer
+                    detail:                     Paramétrer
+                    duplicate:                  Dupliquer
+                    undelete:                   Débloquer
+                    update:                     Modifier
+                confirm:
+                    activate:                   Confirmer l'activation du {{ route[1] }} ?
+                    deactivate:                 Confirmer la désactivation du {{ route[1] }} ?
+                    delete:                     Confirmer la suppression du {{ route[1] }} ?
+                    undelete:                   Confirmer le déblocage du {{ route[1] }} ?
+
+        create:
+            title:                              Ajouter
+            link:                               Ajouter
+            breadcrumb:                         Ajouter un {{ route[1] }}
+            flash:
+                ok:                             Le {{ route[1] }} a bien été créé.
+                ko:                             Le {{ route[1] }} n'a pas été créé.
+            form:
+                name:                           Nom
+                description:                    Description
+                active:                         Activer
+                share:                          Partager
+                global:                         Globale
+                submit:
+                    save:                       Sauvegarder
+                    new:                        Sauvegarder et ajouter
+                    duplicate:                  Sauvegarder et dupliquer
+                    quit:                       Sauvegarder et quitter
+                    config:                     Sauvegarder et paramétrer
+                    cancel:                     Annuler
+                    import:                     Importer
+                    export:                     Exporter
+                fieldset:
+                    data:                       Données
+                    options:                    Options
+
+        update:
+            title:                              Modifier
+            link:                               Modifier
+            breadcrumb:                         Modifier
+            flash:
+                ok:                             Le {{ route[1] }} a bien été modifié.
+                ko:                             Le {{ route[1] }} n'a pas été modifié.
+            form:
+                name:                           Nom
+                description:                    Description
+                active:                         Activer
+                share:                          Partager
+                global:                         Globale
+                submit:
+                    save:                       Sauvegarder
+                    new:                        Sauvegarder et ajouter
+                    duplicate:                  Sauvegarder et dupliquer
+                    quit:                       Sauvegarder et quitter
+                    config:                     Sauvegarder et paramétrer
+                    cancel:                     Annuler
+                    import:                     Importer
+                    export:                     Exporter
+                    delete:                     Supprimer
+                fieldset:
+                    data:                       Données
+                    options:                    Options
+
+        detail:
+            title:                              %name%
+            link:                               Détail
+            breadcrumb:                         %name%
+            data:
+                title:                          Informations
+                id:                             ID
+                create:                         Création
+                update:                         Modification
+                name:                           Nom
+                alias:                          Alias
+                description:                    Description
+                status:                         Statut
+            url:
+                title:                          Routes disponibles
+                admin:
+                    edit:                       Modifier
+                    detail:                     Paramétrer
+                front:
+                    id:                         Afficher via l'ID
+                    name:                       Afficher via le nom
+                    alias:                      Afficher via l'alias
+                    lite:                       Afficher via l'url simplifiée
+            admin:
+                title:                          Outils d'administration
+
+        export:
+            breadcrumb:                         Exporter
+            form:
+                submit:                         Exporter
+            link:                               Exporter
+            title:                              Exporter des {{ route[1] }}s
+
+        import:
+            breadcrumb:                         Importer
+            flash:
+                ok:                             Les {{ route[1] }}s ont bien été importés (%countAdd% ajout(s), %countUpdate% modification(s), %countError% erreur(s)).
+                ko:                             Les {{ route[1] }}s n'ont pas été importés.
+            form:
+                file:                           Fichier CSV
+                submit:                         Importer
+            link:                               Importer
+            title:                              Importer des {{ route[1] }}s
+
+        deactivate:
+            flash:
+                ok:                             Le {{ route[1] }} a bien été désactivé.
+
+        delete:
+            flash:
+                ok:                             Le {{ route[1] }} a bien été supprimé.
+
+        activate:
+            flash:
+                ok:                             Le {{ route[1] }} a bien été activé.
+
+        undelete:
+            flash:
+                ok:                             Le {{ route[1] }} a bien été restauré.
+
+    front:
+        index:
+            title:                              {{ route[1]|capitalize }}s
+            link:                               {{ route[1]|capitalize }}s
+            breadcrumb:                         {{ route[1]|capitalize }}s
+            nodata:                             Aucune donnée
+            form:
+                search:                         Rechercher
+            table:
+                header:
+                    name:                       Nom
+                    action:                     Actions
+                action:
+                    detail:                     Détail
+                    delete:                     Supprimer
+                confirm:
+                    delete:                     Confirmer la suppression du {{ route[1] }} ?
+
+        create:
+            title:                              Ajouter
+            link:                               Ajouter
+            breadcrumb:                         Ajouter un {{ route[1] }}
+            flash:
+                ok:                             Le {{ route[1] }} a bien été créé.
+                ko:                             Le {{ route[1] }} n'a pas été créé.
+            form:
+                name:                           Nom
+                description:                    Description
+                submit:
+                    save:                       Sauvegarder
+                    new:                        Sauvegarder et ajouter
+                    duplicate:                  Sauvegarder et dupliquer
+                    quit:                       Sauvegarder et quitter
+                    cancel:                     Annuler
+                alert:
+                    title:                      Information
+                    text:                       L'ajout d'un {{ route[1] }} nécessite la validation d'un modérateur.
+
+        update:
+            title:                              Modifier
+            link:                               Modifier
+            breadcrumb:                         Modifier
+            flash:
+                ok:                             Le {{ route[1] }} a bien été modifié.
+                ko:                             Le {{ route[1] }} n'a pas été modifié.
+            form:
+                name:                           Nom
+                description:                    Description
+                submit:
+                    save:                       Sauvegarder
+                    new:                        Sauvegarder et ajouter
+                    duplicate:                  Sauvegarder et dupliquer
+                    quit:                       Sauvegarder et quitter
+                    cancel:                     Annuler
+                alert:
+                    title:                      Information
+                    text:                       La modification d'un {{ route[1] }} nécessite la validation d'un modérateur.
+
+        detail:
+            title:                              %name%
+            link:                               Détail
+            breadcrumb:                         %name%
+            data:
+                title:                          Informations
+                create:                         Création
+                update:                         Modification
+                name:                           Nom
+                alias:                          Alias
+                description:                    Description
+
+        delete:
+            flash:
+                ok:                             Le {{ route[1] }} a bien été supprimé.
+
+    api:
+        index:
+            title:                              {{ route[1]|capitalize }}s
+
+    pagination:
+        counter:                                Nombre de {{ route[1] }}s: %count% / %all%
+
+    autocomplete:
+        nodata:                                 Aucun résultat
+
+    error:
+        unknown:                                Le {{ route[1] }} n'existe pas.
+        delete:                                 Le {{ route[1] }} n'existe pas.
+        forbidden:                              Droits insuffisants.

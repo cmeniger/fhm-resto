@@ -1,0 +1,152 @@
+{% trans_default_domain instance.domain %}
+<div class="media media-editor mce-fhmmedia">
+    <div class="top">
+        <a href="#" class="button success" media-selector="">{{ (instance.translation ~ '.admin.index.form.selector')|trans }}</a>
+    </div>
+    <div class="content">
+        <form action="{{ path('fhm_api_media_data_editor_new') }}" method="POST" class="dropzone" id="media-dropzone-{{ selector['id'] }}" {{ form_enctype(form) }}>
+            {% if form.vars.errors|length > 0 %}
+                <div class="form-bloc form-error">
+                    <div class="row">
+                        {{ form_errors(form) }}
+                    </div>
+                </div>
+            {% endif %}
+            <div class="row">
+                <div class="column">
+                    <fieldset>
+                        <legend>{{ (instance.translation ~ '.admin.create.form.fieldset.data')|trans }}</legend>
+                        <div>
+                            {{ form_label(form.name) }}
+                            {{ form_errors(form.name) }}
+                            {{ form_widget(form.name) }}
+                        </div>
+                        <div>
+                            {{ form_label(form.description) }}
+                            {{ form_errors(form.description) }}
+                            {{ form_widget(form.description) }}
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <legend>{{ (instance.translation ~ '.admin.create.form.fieldset.file')|trans }}</legend>
+                        <div>
+                            <div class="fallback">
+                                {{ form_label(form.file) }}
+                                {{ form_errors(form.file) }}
+                                {{ form_widget(form.file) }}
+                            </div>
+                            <div id="dropzone-preview-{{ selector['id'] }}" class="single dropzone-preview">
+                                <div class="dz-default dz-message">
+                                    <span>{{ (instance.translation ~ '.dropzone.default')|trans }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    {% if watermarks %}
+                        <fieldset>
+                            <legend>{{ (instance.translation ~ '.admin.create.form.fieldset.watermark')|trans }}</legend>
+                            <label>{{ (instance.translation ~ '.admin.create.form.watermark')|trans }}</label>
+                            {% for name, size in watermarks %}
+                                <div class="row watermark">
+                                    <div class="left">
+                                        <div class="switch tiny watermark">
+                                            <input id="watermark{{ loop.index }}" type="checkbox" name="watermark[{{ name }}]">
+                                            <label for="watermark{{ loop.index }}"></label>
+                                        </div>
+                                    </div>
+                                    <div class="right">
+                                        {{ name }} ({{ size }})
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </fieldset>
+                    {% endif %}
+                </div>
+                <div class="column">
+                    <fieldset>
+                        <legend>{{ (instance.translation ~ '.admin.create.form.fieldset.tags')|trans }}</legend>
+                        <div>
+                            {{ form_label(form.tag) }}
+                            {{ form_errors(form.tag) }}
+                            {{ form_widget(form.tag) }}
+                        </div>
+                        <div>
+                            {{ form_label(form.parent) }}
+                            {{ form_errors(form.parent) }}
+                            {{ form_widget(form.parent) }}
+                        </div>
+                        <div>
+                            {{ form_label(form.tags) }}
+                            {{ form_errors(form.tags) }}
+                            {{ form_widget(form.tags) }}
+                        </div>
+                    </fieldset>
+                </div>
+            </div>
+            <div class="row">
+                {{ form_widget(form.submitSave, {'attr':{'class':'small button-icon button-new' }}) }}
+            </div>
+            <div class="row">
+                {{ form_rest(form) }}
+                <input type="hidden" name="selector[root]" value="{{ selector['root'] }}">
+            </div>
+        </form>
+    </div>
+</div>
+<script>
+    $(document).ready(function ()
+    {
+        $('#media-dropzone-{{ selector['id'] }}').dropzone({
+            paramName:                    "{{ form.file.vars.name }}",
+            previewsContainer:            "#dropzone-preview-{{ selector['id'] }}",
+            clickable:                    "#dropzone-preview-{{ selector['id'] }}",
+            autoProcessQueue:             false,
+            maxFilesize:                  9999,
+            uploadMultiple:               false,
+            acceptedFiles:                "{{ selector['filter'] }}",
+            init:                         function ()
+                                          {
+                                              var parent = this;
+                                              $("#media-dropzone-{{ selector['id'] }}").submit(function (e)
+                                              {
+                                                  if(parent.getAcceptedFiles().length > 0)
+                                                  {
+                                                      $("#media-dropzone-{{ selector['id'] }} input").prop('disabled', true);
+                                                      $("#media-dropzone-{{ selector['id'] }} textarea").prop('disabled', true);
+                                                      $("#media-dropzone-{{ selector['id'] }} checkbox").prop('disabled', true);
+                                                      $("#media-dropzone-{{ selector['id'] }} select").prop('disabled', true);
+                                                      $("#media-dropzone-{{ selector['id'] }} button").prop('disabled', true);
+                                                  }
+                                                  parent.processQueue();
+                                                  return false;
+                                              });
+                                              this.on("addedfile", function (file)
+                                              {
+                                                  $(".dz-message").hide();
+                                                  for(var i = 0; i < parent.files.length; i++)
+                                                  {
+                                                      if(parent.files[i] != file)
+                                                      {
+                                                          parent.removeFile(parent.files[i]);
+                                                      }
+                                                  }
+                                              });
+                                              this.on("success", function (file, data)
+                                              {
+                                                  tinymce.execCommand('fhmmediaNew', false, data.id);
+                                              });
+                                          },
+            dictDefaultMessage:           "{{ (instance.translation ~ '.dropzone.default')|trans }}",
+            dictFallbackMessage:          "{{ (instance.translation ~ '.dropzone.fallbackMessage')|trans }}",
+            dictFallbackText:             "{{ (instance.translation ~ '.dropzone.fallbackText')|trans }}",
+            dictFileTooBig:               "{{ (instance.translation ~ '.dropzone.fileTooBig')|trans }}",
+            dictInvalidFileType:          "{{ (instance.translation ~ '.dropzone.invalidFileType')|trans }}",
+            dictResponseError:            "{{ (instance.translation ~ '.dropzone.responseError')|trans }}",
+            dictCancelUpload:             "{{ (instance.translation ~ '.dropzone.cancelUpload')|trans }}",
+            dictCancelUploadConfirmation: "{{ (instance.translation ~ '.dropzone.cancelUploadConfirmation')|trans }}",
+            dictRemoveFile:               "{{ (instance.translation ~ '.dropzone.removeFile')|trans }}",
+            dictRemoveFileConfirmation:   "{{ (instance.translation ~ '.dropzone.removeFileConfirmation')|trans }}",
+            dictMaxFilesExceeded:         "{{ (instance.translation ~ '.dropzone.maxFilesExceeded')|trans }}"
+        });
+    });
+</script>

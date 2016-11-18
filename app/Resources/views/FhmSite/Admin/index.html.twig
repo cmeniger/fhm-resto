@@ -1,0 +1,98 @@
+{% trans_default_domain instance.domain %}
+{% extends "::FhmFhm/Admin/index.html.twig" %}
+
+{% block content_data_header %}
+    {{ parent() }}
+    <th>{{ (instance.translation ~ '.admin.index.table.header.title')|trans }}{{ macroSort.print('title', sort) }}</th>
+{% endblock %}
+
+{% block content_data_body %}
+    {{ parent() }}
+    <td>{{ document.getTitle() }}</td>
+{% endblock %}
+
+{% block content_data_action_button %}
+    <span class="default">
+        {% if document.getDefault() %}
+            <i class="fa fa-star current"></i>
+        {% else %}
+            <i class="fa fa-star-o"></i>
+        {% endif %}
+    </span>
+    {{ parent() }}
+{% endblock %}
+
+{% block content_data_action_share_button %}
+    <span class="default">
+        {% if document.getDefault() %}
+            <i class="fa fa-star current"></i>
+        {% else %}
+            <i class="fa fa-star-o"></i>
+        {% endif %}
+    </span>
+    {{ parent() }}
+{% endblock %}
+
+{% block content_data_action_delete_button %}
+    <span class="default">
+        {% if document.getDefault() %}
+            <i class="fa fa-star current"></i>
+        {% else %}
+            <i class="fa fa-star-o"></i>
+        {% endif %}
+    </span>
+    {{ parent() }}
+{% endblock %}
+
+{% block content_data_action_delete_links %}
+    {{ parent() }}
+    {% if not document.getDefault() %}
+        <li>
+            <a href="{{ path('fhm_admin_' ~ instance.route ~ '_default', {'id': document.getId()}) }}" title="{{ (instance.translation ~ '.admin.index.table.action.default')|trans }}" onclick="return confirm('{{ (instance.translation ~ '.admin.index.table.confirm.default')|trans }}')"><i class="fa fa-fw fa-star-o"></i> {{ (instance.translation ~ '.admin.index.table.action.default')|trans }}
+            </a>
+        </li>
+    {% endif %}
+{% endblock %}
+
+{% block content_data_action_links %}
+    {% if document.getDefault() %}
+        <li>
+            <a href="{{ path(instance.source ~ '_admin_' ~ instance.route ~ '_detail', {'id': document.getId()}) }}" title="{{ (instance.translation ~ '.admin.index.table.action.detail')|trans }}"><i class="fa fa-fw fa-gear"></i> {{ (instance.translation ~ '.admin.index.table.action.detail')|trans }}
+            </a>
+        </li>
+        <li>
+            <a href="{{ path(instance.source ~ '_admin_' ~ instance.route ~ '_duplicate', {'id': document.getId()}) }}" title="{{ (instance.translation ~ '.admin.index.table.action.duplicate')|trans }}"><i class="fa fa-fw fa-files-o"></i> {{ (instance.translation ~ '.admin.index.table.action.duplicate')|trans }}
+            </a>
+        </li>
+    {% else %}
+        <li>
+            <a href="{{ path(instance.source ~ '_admin_' ~ instance.route ~ '_detail', {'id': document.getId()}) }}" title="{{ (instance.translation ~ '.admin.index.table.action.detail')|trans }}"><i class="fa fa-fw fa-gear"></i> {{ (instance.translation ~ '.admin.index.table.action.detail')|trans }}
+            </a>
+        </li>
+        <li>
+            <a href="{{ path(instance.source ~ '_admin_' ~ instance.route ~ '_duplicate', {'id': document.getId()}) }}" title="{{ (instance.translation ~ '.admin.index.table.action.duplicate')|trans }}"><i class="fa fa-fw fa-files-o"></i> {{ (instance.translation ~ '.admin.index.table.action.duplicate')|trans }}
+            </a>
+        </li>
+        {% if document.getActive() %}
+            <li>
+                <a href="{{ path(instance.source ~ '_admin_' ~ instance.route ~ '_deactivate', {'id': document.getId()}) }}" title="{{ (instance.translation ~ '.admin.index.table.action.deactivate')|trans }}" onclick="return confirm('{{ (instance.translation ~ '.admin.index.table.confirm.deactivate')|trans }}')"><i class="fa fa-fw fa-eye-slash"></i> {{ (instance.translation ~ '.admin.index.table.action.deactivate')|trans }}
+                </a>
+            </li>
+        {% else %}
+            <li>
+                <a href="{{ path(instance.source ~ '_admin_' ~ instance.route ~ '_activate', {'id': document.getId()}) }}" title="{{ (instance.translation ~ '.admin.index.table.action.activate')|trans }}" onclick="return confirm('{{ (instance.translation ~ '.admin.index.table.confirm.activate')|trans }}')"><i class="fa fa-fw fa-eye"></i> {{ (instance.translation ~ '.admin.index.table.action.activate')|trans }}
+                </a>
+            </li>
+        {% endif %}
+        <li>
+            <a href="{{ path(instance.source ~ '_admin_' ~ instance.route ~ '_default', {'id': document.getId()}) }}" title="{{ (instance.translation ~ '.admin.index.table.action.default')|trans }}" onclick="return confirm('{{ (instance.translation ~ '.admin.index.table.confirm.default')|trans }}')"><i class="fa fa-fw fa-star-o"></i> {{ (instance.translation ~ '.admin.index.table.action.default')|trans }}
+            </a>
+        </li>
+    {% endif %}
+{% endblock %}
+
+{% block content_data_action_alert %}
+    {% if not document.getDefault() %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}

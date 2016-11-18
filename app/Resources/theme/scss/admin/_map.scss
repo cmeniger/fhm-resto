@@ -1,0 +1,116 @@
+.map{
+    position: relative;
+    height:   60vh;
+    #map-canvas{
+        height: 100%;
+    }
+    #map-counter{
+        position:   absolute;
+        left:       0;
+        right:      0;
+        bottom:     0;
+        padding:    2px;
+        background: $white;
+        color:      $secondary-color;
+        z-index:    7;
+        font-size:  12px;
+        .actions{
+            @include transition (all, 0.2s);
+            float:      left;
+            width:      50px;
+            text-align: center;
+            cursor:     pointer;
+            opacity:    1;
+            &:hover{
+                color: $primary-color;
+            }
+        }
+        .progressbar{
+            float: left;
+            .bar{
+                float:    left;
+                position: relative;
+                width:    100px;
+                height:   14px;
+                padding:  2px 0;
+                .current{
+                    position:   absolute;
+                    height:     100%;
+                    background: $secondary-color;
+                }
+            }
+            .text{
+                float:      left;
+                padding:    0 10px;
+                width:      50px;
+                text-align: right;
+            }
+        }
+        .count{
+            float:   left;
+            padding: 0 5px;
+        }
+        @media #{$medium} {
+            left: auto;
+        }
+    }
+    #map-aroundme{
+        @include border-radius(50%);
+        @include transition (all, 0.2s);
+        @include box-shadow(1px, 1px, 8px, $secondary-color);
+        position:    absolute;
+        left:        auto;
+        right:       5px;
+        bottom:      30px;
+        margin:      auto;
+        width:       40px;
+        height:      40px;
+        line-height: 40px;
+        background:  $white;
+        color:       $secondary-color;
+        border:      1px solid $secondary-color;
+        z-index:     7;
+        cursor:      pointer;
+        text-align:  center;
+        &:before{
+            box-sizing:  border-box;
+            position:    absolute;
+            left:        1px;
+            top:         1px;
+            width:       100%;
+            font-family: "fontawesome";
+            font-size:   1.4em;
+            content:     $fa-var-street-view;
+        }
+        &:hover{
+            color:        $primary-color;
+            border-color: $primary-color;
+        }
+        @media #{$medium} {
+            left:        0;
+            right:       0;
+            bottom:      5px;
+            width:       60px;
+            height:      60px;
+            line-height: 60px;
+            &:before{
+                font-size: 2.2em;
+            }
+        }
+    }
+    @media #{$medium} {
+        height: 65vh;
+    }
+    @media #{$large} {
+        height: 70vh;
+    }
+}
+
+.map-form{
+    .map{
+        height: 350px;
+    }
+    .hidden{
+        display: none;
+    }
+}

@@ -1,0 +1,322 @@
+{% extends "::layout.admin.html.twig" %}
+{% trans_default_domain instance.domain %}
+{% import "::Macros/dd.list.html.twig" as macroList %}
+{% import "::Macros/pagination.html.twig" as macroPagination %}
+
+{% block tagline %}
+    <div class="row">
+        <h1>
+            {% block tagline_data %}
+                {% block tagline_data_title %}
+                    {{ (instance.translation ~ '.admin.index.title')|trans }}
+                {% endblock %}
+                <br/>
+                <small>
+                    {% block tagline_data_subtitle %}
+                        {{ (instance.translation ~ '.admin.detail.title')|trans({'%name%': document.getName()}) }}
+                    {% endblock %}
+                </small>
+            {% endblock %}
+        </h1>
+    </div>
+{% endblock %}
+
+{% block content %}
+    {# Links #}
+    {% block content_link %}
+        <div class="row">
+            <ul class="button-group round">
+                {% block content_link_data %}
+                    <li>
+                        <a href="{{ path(instance.source ~ '_admin_' ~ instance.route) }}" class="button small secondary"><i class="fa fa-angle-double-left"></i></a>
+                    </li>
+                    <li>
+                        <a href="{{ path(instance.source ~ '_admin_' ~ instance.route ~ '_create') }}" class="button small success"><i class="fa fa-plus"></i> {{ (instance.translation ~ '.admin.create.link')|trans }}
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ path(instance.source ~ '_admin_' ~ instance.route ~ '_update', {'id': document.getId()}) }}" class="button small"><i class="fa fa-pencil"></i> {{ (instance.translation ~ '.admin.update.link')|trans }}
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ path(instance.source ~ '_admin_' ~ instance.route ~ '_import') }}" class="button small"><i class="fa fa-download"></i> {{ (instance.translation ~ '.admin.import.link')|trans }}
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ path(instance.source ~ '_admin_' ~ instance.route ~ '_export') }}" class="button small"><i class="fa fa-upload"></i> {{ (instance.translation ~ '.admin.export.link')|trans }}
+                        </a>
+                    </li>
+                {% endblock %}
+            </ul>
+        </div>
+    {% endblock %}
+
+    {# Anchor #}
+    {% block content_anchor %}
+        <div class="row">
+            <dl class="sub-nav">
+                {% block content_anchor_data %}
+                    <dt>{{ ('fhm.anchor.title')|trans({},'FhmFhmBundle') }} :</dt>
+                    {% block content_anchor_link %}
+                        {#<dd><a href="#anchor-top">{{ ('fhm.anchor.top')|trans({},'FhmFhmBundle') }}</a></dd>#}
+                        <dd><a href="#anchor-admin-data">{{ ('fhm.anchor.data')|trans({},'FhmFhmBundle') }}</a></dd>
+                        <dd><a href="#anchor-admin-url">{{ ('fhm.anchor.url')|trans({},'FhmFhmBundle') }}</a></dd>
+                        {% if historics is defined and historics != null %}
+                            <dd>
+                                <a href="#anchor-admin-historic">{{ ('fhm.anchor.historic')|trans({},'FhmFhmBundle') }}</a>
+                            </dd>
+                        {% endif %}
+                        {% if instance.user.admin and instance.grouping.visible %}
+                            <dd>
+                                <a href="#anchor-admin-tools">{{ ('fhm.anchor.admin')|trans({},'FhmFhmBundle') }}</a>
+                            </dd>
+                        {% endif %}
+                    {% endblock %}
+                {% endblock %}
+            </dl>
+        </div>
+    {% endblock %}
+
+    {# Document #}
+    {% block content_data %}
+        <div class="row">
+            <h2 id="anchor-admin-data">{{ (instance.translation ~ '.admin.detail.data.title')|trans }}</h2>
+            <table class="fullwidth">
+                <tbody>
+                    {% block content_data_information %}
+                        <tr>
+                            <td><strong>{{ (instance.translation ~ '.admin.detail.data.id')|trans }}</strong></td>
+                            <td>{{ document.getId() }}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>{{ (instance.translation ~ '.admin.detail.data.create')|trans }}</strong></td>
+                            <td>{{ document.getUserCreate() ? document.getUserCreate().getUsername() ~ ' - ' : '' }}{{ document.getDateCreate() | localizeddate('full', 'short', app.request.locale) }}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>{{ (instance.translation ~ '.admin.detail.data.update')|trans }}</strong></td>
+                            <td>{{ document.getUserUpdate() ? document.getUserUpdate().getUsername() ~ ' - ' : '' }}{{ document.getDateUpdate() | localizeddate('full', 'short', app.request.locale) }}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>{{ (instance.translation ~ '.admin.detail.data.name')|trans }}</strong></td>
+                            <td>{{ document.getName() }}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>{{ (instance.translation ~ '.admin.detail.data.alias')|trans }}</strong></td>
+                            <td>{{ document.getAlias() }}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>{{ (instance.translation ~ '.admin.detail.data.description')|trans }}</strong>
+                            </td>
+                            <td>{{ document.getDescription() }}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>{{ (instance.translation ~ '.admin.detail.data.status')|trans }}</strong></td>
+                            <td>
+                                {% if document.getDelete() %}
+                                    <span class="status alert radius label">{{ ('fhm.status.delete')|trans({}, 'FhmFhmBundle') }}</span>
+                                {% elseif not document.getActive() %}
+                                    <span class="status warning radius label">{{ ('fhm.status.disable')|trans({}, 'FhmFhmBundle') }}</span>
+                                {% else %}
+                                    <span class="status success radius label">{{ ('fhm.status.enable')|trans({}, 'FhmFhmBundle') }}</span>
+                                {% endif %}
+                                {% if document.getShare() and not document.hasGrouping(instance.grouping.used) %}
+                                    <span class="status regular radius label">{{ ('fhm.status.share')|trans({}, 'FhmFhmBundle') }}</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% if instance.language.visible %}
+                            <tr>
+                                <td><strong>{{ ('fhm.language.title')|trans({},'FhmFhmBundle') }}</strong></td>
+                                <td>
+                                    {% for data in document.getLanguages() %}
+                                        {{ data|flag|raw }}
+                                    {% endfor %}
+                                </td>
+                            </tr>
+                        {% endif %}
+                        {% if instance.grouping.visible %}
+                            <tr>
+                                <td><strong>{{ grouping_name }}</strong></td>
+                                <td>
+                                    {% for data in document.getGrouping() %}
+                                        <span class="status {{ data == instance.grouping.current ? 'success' : 'warning' }} radius label">{{ data }}</span>
+                                    {% endfor %}
+                                </td>
+                            </tr>
+                        {% endif %}
+                    {% endblock %}
+                </tbody>
+            </table>
+        </div>
+    {% endblock %}
+
+    {# URL #}
+    {% block content_url %}
+        <div class="row">
+            <h2 id="anchor-admin-url">{{ (instance.translation ~ '.admin.detail.url.title')|trans }}</h2>
+            <table class="fullwidth">
+                <tbody>
+                    {% block content_url_information %}
+                        <tr>
+                            <td><strong>{{ (instance.translation ~ '.admin.detail.url.admin.edit')|trans }}</strong>
+                            </td>
+                            <td>{{ path(instance.source ~ '_admin_' ~ instance.route ~ '_update', {'id':document.getId()}) }}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>{{ (instance.translation ~ '.admin.detail.url.admin.detail')|trans }}</strong>
+                            </td>
+                            <td>{{ path(instance.source ~ '_admin_' ~ instance.route ~ '_detail', {'id':document.getId()}) }}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>{{ (instance.translation ~ '.admin.detail.url.front.id')|trans }}</strong></td>
+                            <td>{{ path(instance.source ~ '_' ~ instance.route ~ '_detail', {'id':document.getId()}) }}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>{{ (instance.translation ~ '.admin.detail.url.front.name')|trans }}</strong>
+                            </td>
+                            <td>{{ path(instance.source ~ '_' ~ instance.route ~ '_detail', {'id':document.getName()}) }}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>{{ (instance.translation ~ '.admin.detail.url.front.alias')|trans }}</strong>
+                            </td>
+                            <td>{{ path(instance.source ~ '_' ~ instance.route ~ '_detail', {'id':document.getAlias()}) }}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>{{ (instance.translation ~ '.admin.detail.url.front.lite')|trans }}</strong>
+                            </td>
+                            <td>{{ path(instance.source ~ '_' ~ instance.route ~ '_lite', {'id':document.getAlias()}) }}</td>
+                        </tr>
+                    {% endblock %}
+                </tbody>
+            </table>
+        </div>
+    {% endblock %}
+
+    {# Historics #}
+    {% block content_historic %}
+        {% if historics is defined and historics != null %}
+            <div class="row historic">
+                <h2 id="anchor-admin-historic">{{ ('fhm.historic.title')|trans({},'FhmFhmBundle') }}</h2>
+                <div id="{{ paginationHistoric.idData }}">
+                    <table class="fullwidth">
+                        <thead>
+                            <tr>
+                                {% block content_historic_header %}
+                                    <th>{{ ('fhm.historic.table.header.date')|trans({},'FhmFhmBundle') }}</th>
+                                    <th>{{ ('fhm.historic.table.header.user')|trans({},'FhmFhmBundle') }}</th>
+                                    <th>{{ ('fhm.historic.table.header.difference')|trans({},'FhmFhmBundle') }}</th>
+                                {% endblock %}
+                                {% block content_historic_header_action %}
+                                    <th>{{ ('fhm.historic.table.header.action')|trans({},'FhmFhmBundle') }}</th>
+                                {% endblock %}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for historic in historics %}
+                                <tr>
+                                    {% block content_historic_body %}
+                                        <td>{{ historic.getDateCreate() | localizeddate('full', 'medium', app.request.locale) }}</td>
+                                        <td>{{ historic.getUserCreate() ? historic.getUserCreate().getUsername() : '' }}</td>
+                                        <td>{{ historic.historicDifference() }}</td>
+                                    {% endblock %}
+                                    {% if historic.getDelete() %}
+                                        {% block content_historic_action_delete %}
+                                            <td>
+                                                <div class="actions">
+                                                    {% block content_historic_action_delete_button %}
+                                                        <a href="#" data-url="{{ path(instance.source ~ '_api_' ~ instance.route ~ '_historic') }}" data-id="{{ historic.getId() }}" data-compare class="tiny radius button split no-pip alert"><i class="fa fa-columns"></i> {{ ('fhm.historic.table.action.compare')|trans({},'FhmFhmBundle') }}
+                                                            <span data-dropdown="action{{ historic.getId() }}"><i class="fa fa-angle-down"></i></span></a>
+                                                    {% endblock %}
+                                                    <ul id="action{{ historic.getId() }}" class="f-dropdown" data-dropdown-content>
+                                                        {% block content_historic_action_delete_links %}
+                                                            <li>
+                                                                <a href="{{ path(instance.source ~ '_api_' ~ instance.route ~ '_historic_copy', {'id': historic.getId()}) }}" title="{{ ('fhm.historic.table.action.copy')|trans({},'FhmFhmBundle') }}" onclick="return confirm('{{ ('fhm.historic.table.confirm.copy')|trans({},'FhmFhmBundle') }}')"><i class="fa fa-fw fa-clone"></i> {{ ('fhm.historic.table.action.copy')|trans({},'FhmFhmBundle') }}
+                                                                </a>
+                                                            </li>
+                                                        {% endblock %}
+                                                        {% block content_data_action_delete_alert %}
+                                                            <li class="alert">
+                                                                <a href="{{ path(instance.source ~ '_admin_' ~ instance.route ~ '_undelete', {'id': historic.getId()}) }}" title="{{ (instance.translation ~ '.admin.index.table.action.undelete')|trans }}" onclick="return confirm('{{ ('fhm.historic.table.confirm.undelete')|trans({},'FhmFhmBundle') }}')"><i class="fa fa-fw fa-undo"></i> {{ ('fhm.historic.table.action.undelete')|trans({},'FhmFhmBundle') }}
+                                                                </a>
+                                                            </li>
+                                                            <li class="alert">
+                                                                <a href="{{ path(instance.source ~ '_admin_' ~ instance.route ~ '_delete', {'id': historic.getId()}) }}" title="{{ (instance.translation ~ '.admin.index.table.action.delete')|trans }}" onclick="return confirm('{{ ('fhm.historic.table.confirm.delete')|trans({},'FhmFhmBundle') }}')"><i class="fa fa-fw fa-trash-o"></i> {{ ('fhm.historic.table.action.delete')|trans({},'FhmFhmBundle') }}
+                                                                </a>
+                                                            </li>
+                                                        {% endblock %}
+                                                    </ul>
+                                                </div>
+                                            </td>
+                                        {% endblock %}
+                                    {% else %}
+                                        {% block content_historic_action %}
+                                            <td>
+                                                <div class="actions">
+                                                    {% block content_historic_action_button %}
+                                                        <a href="#" data-url="{{ path(instance.source ~ '_api_' ~ instance.route ~ '_historic') }}" data-id="{{ historic.getId() }}" data-compare class="tiny radius button split no-pip"><i class="fa fa-columns"></i> {{ ('fhm.historic.table.action.compare')|trans({},'FhmFhmBundle') }}
+                                                            <span data-dropdown="action{{ historic.getId() }}"><i class="fa fa-angle-down"></i></span></a>
+                                                    {% endblock %}
+                                                    <ul id="action{{ historic.getId() }}" class="f-dropdown" data-dropdown-content>
+                                                        {% block content_historic_action_links %}
+                                                            <li>
+                                                                <a href="{{ path(instance.source ~ '_api_' ~ instance.route ~ '_historic_copy', {'id': historic.getId()}) }}" title="{{ ('fhm.historic.table.action.copy')|trans({},'FhmFhmBundle') }}" onclick="return confirm('{{ ('fhm.historic.table.confirm.copy')|trans({},'FhmFhmBundle') }}')"><i class="fa fa-fw fa-clone"></i> {{ ('fhm.historic.table.action.copy')|trans({},'FhmFhmBundle') }}
+                                                                </a>
+                                                            </li>
+                                                        {% endblock %}
+                                                        {% block content_data_action_alert %}
+                                                            <li class="alert">
+                                                                <a href="{{ path(instance.source ~ '_admin_' ~ instance.route ~ '_delete', {'id': historic.getId()}) }}" title="{{ (instance.translation ~ '.admin.index.table.action.delete')|trans }}" onclick="return confirm('{{ ('fhm.historic.table.confirm.delete')|trans({},'FhmFhmBundle') }}')"><i class="fa fa-fw fa-trash-o"></i> {{ ('fhm.historic.table.action.delete')|trans({},'FhmFhmBundle') }}
+                                                                </a>
+                                                            </li>
+                                                        {% endblock %}
+                                                    </ul>
+                                                </div>
+                                            </td>
+                                        {% endblock %}
+                                    {% endif %}
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% block content_historic_pagination %}
+                    {{ macroPagination.print(paginationHistoric) }}
+                {% endblock %}
+            </div>
+            <div id="historicModal" class="reveal-modal large historic" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
+                <h2 id="modalTitle">{{ ('fhm.historic.modal.title')|trans({},'FhmFhmBundle') }}</h2>
+                <div id="historicModalContent"></div>
+                <a class="close-reveal-modal" aria-label="Close">&#215;</a>
+            </div>
+        {% endif %}
+    {% endblock %}
+
+    {# Admin #}
+    {% block content_admin %}
+        {% if instance.user.admin %}
+            <div class="row">
+                <h2 id="anchor-admin-tools">{{ (instance.translation ~ '.admin.detail.admin.title')|trans }}</h2>
+            </div>
+            {% block content_admin_data %}
+                {# Admin - Grouping #}
+                {% if instance.grouping.visible %}
+                    <div class="row">
+                        {{ macroList.admin
+                        (
+                        document,
+                        instance.grouping.available,
+                        document.getGrouping(),
+                        instance.grouping.current,
+                        instance.source ~ '_admin_' ~ instance.route ~ '_grouping',
+                        grouping_title is defined ? grouping_title : '',
+                        grouping_list1 is defined ? grouping_list1 : '',
+                        grouping_list2 is defined ? grouping_list2 : '',
+                        1,
+                        instance
+                        ) }}
+                    </div>
+                {% endif %}
+            {% endblock %}
+        {% endif %}
+    {% endblock %}
+{% endblock %}

@@ -1,0 +1,60 @@
+{% trans_default_domain instance.domain %}
+{% extends "::FhmFhm/Admin/index.html.twig" %}
+
+{% block content_link_data %}
+    {{ parent() }}
+    <li>
+        <a href="{{ path('fhm_admin_card') }}" class="button small"><i class="fa fa-map"></i> {{ ('card.admin.index.link')|trans }}
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('fhm_admin_card_product') }}" class="button small"><i class="fa fa-cube"></i> {{ ('card.product.admin.index.link')|trans }}
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('fhm_admin_card_ingredient') }}" class="button small"><i class="fa fa-tag"></i> {{ ('card.ingredient.admin.index.link')|trans }}
+        </a>
+    </li>
+{% endblock %}
+
+{% block content_data_header %}
+    <th>{{ (instance.translation ~ '.admin.index.table.header.image')|trans }}</th>
+    {{ parent() }}
+    <th>{{ (instance.translation ~ '.admin.index.table.header.card')|trans }}{{ macroSort.print('sort_card', sort) }}</th>
+    <th>{{ (instance.translation ~ '.admin.index.table.header.route')|trans }}</th>
+    <th>{{ (instance.translation ~ '.admin.index.table.header.products')|trans }}{{ macroSort.print('sort_product', sort) }}</th>
+    <th>{{ (instance.translation ~ '.admin.index.table.header.menu')|trans }}{{ macroSort.print('menu', sort) }}</th>
+    <th>{{ (instance.translation ~ '.admin.index.table.header.order')|trans }}{{ macroSort.print('order', sort) }}</th>
+{% endblock %}
+
+{% block content_data_header_status %}
+    <th>{{ (instance.translation ~ '.admin.index.table.header.default')|trans }}{{ macroSort.print('default', sort) }}</th>
+    {{ parent() }}
+{% endblock %}
+
+{% block content_data_body %}
+    <td>{{ document.getImage()|image('s',50)|raw }}</td>
+    {{ parent() }}
+    <td>{{ document.getVarSort('card') }}</td>
+    <td>{{ document|cardCategoryRoute(instance)|raw }}</td>
+    <td>{{ document.getVarSort('product') }}</td>
+    <td>
+        {% if document.getMenu() %}
+            <span class="status success radius label">{{ ('fhm.status.yes')|trans({}, 'FhmFhmBundle') }}</span>
+        {% else %}
+            <span class="status warning radius label">{{ ('fhm.status.no')|trans({}, 'FhmFhmBundle') }}</span>
+        {% endif %}
+    </td>
+    <td>{{ document.getOrder() }}</td>
+{% endblock %}
+
+{% block content_data_status %}
+    <td>
+        {% if document.getDefault() %}
+            <span class="status success radius label">{{ ('fhm.status.yes')|trans({}, 'FhmFhmBundle') }}</span>
+        {% else %}
+            <span class="status warning radius label">{{ ('fhm.status.no')|trans({}, 'FhmFhmBundle') }}</span>
+        {% endif %}
+    </td>
+    {{ parent() }}
+{% endblock %}

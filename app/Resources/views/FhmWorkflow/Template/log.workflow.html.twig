@@ -1,0 +1,36 @@
+{% trans_default_domain instance.domain %}
+<div class="logs gutter-margin-top gutter-margin-bottom">
+    <div class="row">
+        <div class="column">
+            <div class="filter">
+                <div class="text">{{ 'workflow.log.text.filter'|trans }}</div>
+                {% for type in 0..6 %}
+                    <div class="icon type{{ type }}" data-filter="{{ type }}"></div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    {% for log in documents %}
+        <div class="row" data-log="{{ log.getType() }}">
+            <div class="column small-2 medium-4">
+                <div class="icon type{{ log.getType() }}"></div>
+            </div>
+            <div class="column small-8 medium-6">
+                <div class="content">
+                    <div class="name">{{ log.getTask().getName() }}</div>
+                    <div class="date">{{ log.getDateCreate()|localizeddate('full', 'medium', app.request.locale) }}</div>
+                    <div class="type">{{ (instance.translation ~ '.type.' ~ log.getType())|trans }}</div>
+                    <div class="text">{{ log.getDescription()|raw }}</div>
+                </div>
+            </div>
+            <div class="column small-2">
+                <div class="user">
+                    <div class="avatar" style="background:url({{ log.getUserCreate().getAvatar()|media("xs") }}) center center no-repeat"></div>
+                    <div class="name">
+                        {{ log.getUserCreate().getUsername() }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</div>

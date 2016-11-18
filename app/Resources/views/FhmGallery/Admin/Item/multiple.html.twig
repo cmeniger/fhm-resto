@@ -1,0 +1,171 @@
+{% trans_default_domain instance.domain %}
+{% extends "::FhmFhm/Admin/create.html.twig" %}
+
+{% block content_data_submit_list_button %}{% endblock %}
+{% block content_data_submit_list %}{% endblock %}
+
+{% block content_data_form_attribut %}
+    class="dropzone" id="media-dropzone"
+{% endblock %}
+
+{% block content_data_form_action %}
+    {{ path('fhm_admin_' ~ instance.route ~ '_multiple') }}
+{% endblock %}
+
+{% block tagline_data_subtitle %}
+    {{ (instance.translation ~ '.admin.multiple.title')|trans }}
+{% endblock %}
+
+{% block content_data_fields_data %}
+    <div class="large-6 medium-6 small-12 columns">
+        <fieldset>
+            <legend>{{ (instance.translation ~ '.admin.multiple.form.fieldset.data')|trans }}</legend>
+            <div class="row">
+                {{ form_label(form.title) }}
+                {{ form_errors(form.title) }}
+                {{ form_widget(form.title) }}
+            </div>
+            <div class="row">
+                {{ form_label(form.subtitle) }}
+                {{ form_errors(form.subtitle) }}
+                {{ form_widget(form.subtitle) }}
+            </div>
+            <div class="row">
+                {{ form_label(form.content) }}
+                {{ form_errors(form.content) }}
+                {{ form_widget(form.content) }}
+            </div>
+            <div class="row">
+                {{ form_label(form.link) }}
+                {{ form_errors(form.link) }}
+                {{ form_widget(form.link) }}
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend>{{ (instance.translation ~ '.admin.multiple.form.fieldset.galleries')|trans }}</legend>
+            <div class="row">
+                {{ form_label(form.galleries) }}
+                {{ form_errors(form.galleries) }}
+                {{ form_widget(form.galleries) }}
+            </div>
+        </fieldset>
+    </div>
+    <div class="large-6 medium-6 small-12 columns">
+        <fieldset>
+            <legend>{{ (instance.translation ~ '.admin.multiple.form.fieldset.file')|trans }}</legend>
+            <div class="row">
+                <div class="fallback">
+                    {{ form_label(form.file) }}
+                    {{ form_errors(form.file) }}
+                    {{ form_widget(form.file) }}
+                </div>
+                <div class="dropzone-preview">
+                    <div class="dz-default dz-message">
+                        <span>{{ ('media.dropzone.default')|trans({},'FhmMediaBundle') }}</span>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+        {% if watermarks %}
+            <fieldset>
+                <legend>{{ (instance.translation ~ '.admin.multiple.form.fieldset.watermark')|trans }}</legend>
+                <label>{{ (instance.translation ~ '.admin.multiple.form.watermark')|trans }}</label>
+                {% for name, size in watermarks %}
+                    <div class="row">
+                        <div class="column small-2">
+                            <div class="switch tiny watermark">
+                                <input id="watermark{{ loop.index }}" type="checkbox" name="watermark[{{ name }}]">
+                                <label for="watermark{{ loop.index }}"></label>
+                            </div>
+                        </div>
+                        <div class="column small-10">
+                            {{ name }} ({{ size }})
+                        </div>
+                    </div>
+                {% endfor %}
+            </fieldset>
+        {% endif %}
+        <fieldset>
+            <legend>{{ (instance.translation ~ '.admin.multiple.form.fieldset.tags')|trans }}</legend>
+            <div class="row">
+                {{ form_label(form.tag) }}
+                {{ form_errors(form.tag) }}
+                {{ form_widget(form.tag) }}
+            </div>
+            <div class="row">
+                {{ form_label(form.parent) }}
+                {{ form_errors(form.parent) }}
+                {{ form_widget(form.parent) }}
+            </div>
+            <div class="row">
+                {{ form_label(form.tags) }}
+                {{ form_errors(form.tags) }}
+                {{ form_widget(form.tags) }}
+            </div>
+        </fieldset>
+    </div>
+{% endblock %}
+
+{% block body_javascripts_ready %}
+    {{ parent() }}
+    Dropzone.options.mediaDropzone = {
+    paramName: "{{ form.file.vars.name }}",
+    previewsContainer: ".dropzone-preview",
+    clickable: '.dropzone-preview',
+    autoProcessQueue: false,
+    maxFilesize: 9999,
+    acceptedFiles: "image/*",
+    parallelUploads: 1,
+    init: function()
+    {
+    var myDropzone = this;
+    $("#media-dropzone").submit(function(e)
+    {
+    e.preventDefault();
+    $("input").prop('disabled', true);
+    $("textarea").prop('disabled', true);
+    $("checkbox").prop('disabled', true);
+    $("select").prop('disabled', true);
+    $("button").prop('disabled', true);
+    myDropzone.processQueue();
+    });
+    myDropzone.on("addedfile", function(file)
+    {
+    $(".dz-message").hide();
+    });
+    myDropzone.on("complete", function(file)
+    {
+    myDropzone.processQueue();
+    });
+    myDropzone.on("queuecomplete", function()
+    {
+    $.ajax
+    ({
+    type:    'POST',
+    url:     '{{ path('fhm_api_media_uploaded') }}',
+    data:    {
+    counter: {
+    accepted: myDropzone.getAcceptedFiles().length,
+    rejected: myDropzone.getRejectedFiles().length
+    }
+    },
+    success: function (data)
+    {
+    location.reload();
+    }
+    });
+    });
+    },
+    dictDefaultMessage: "{{ ('media.dropzone.default')|trans({},'FhmMediaBundle') }}",
+    dictFallbackMessage: "{{ ('media.dropzone.fallbackMessage')|trans({},'FhmMediaBundle') }}",
+    dictFallbackText: "{{ ('media.dropzone.fallbackText')|trans({},'FhmMediaBundle') }}",
+    dictFileTooBig: "{{ ('media.dropzone.fileTooBig')|trans({},'FhmMediaBundle') }}",
+    dictInvalidFileType: "{{ ('media.dropzone.invalidFileType')|trans({},'FhmMediaBundle') }}",
+    dictResponseError: "{{ ('media.dropzone.responseError')|trans({},'FhmMediaBundle') }}",
+    dictCancelUpload: "{{ ('media.dropzone.cancelUpload')|trans({},'FhmMediaBundle') }}",
+    dictCancelUploadConfirmation: "{{ ('media.dropzone.cancelUploadConfirmation')|trans({},'FhmMediaBundle') }}",
+    dictRemoveFile: "{{ ('media.dropzone.removeFile')|trans({},'FhmMediaBundle') }}",
+    dictRemoveFileConfirmation: "{{ ('media.dropzone.removeFileConfirmation')|trans({},'FhmMediaBundle') }}",
+    dictMaxFilesExceeded: "{{ ('media.dropzone.maxFilesExceeded')|trans({},'FhmMediaBundle') }}"
+    };
+{% endblock %}

@@ -1,0 +1,39 @@
+<div class="schedules">
+    {% if dataFormatted['close_enable'] %}
+        <div class="closed">
+            <div class="text">
+                {{ 'fhm.schedules.day.closed'|trans({},'FhmFhmBundle') }}
+            </div>
+            {% if dataFormatted['close_date'] %}
+                <div class="date">
+                    {{ 'fhm.schedules.day.reopen'|trans({'%date%':(dataFormatted['close_date']|localizeddate('medium', 'short', app.request.locale))},'FhmFhmBundle') }}
+                </div>
+            {% endif %}
+            {% if dataFormatted['close_reason'] %}
+                <div class="reason">
+                    {{ dataFormatted['close_reason'] }}
+                </div>
+            {% endif %}
+        </div>
+    {% else %}
+        {% for day in 1..7 %}
+            <div class="day">
+                <div class="text">
+                    {{ dataFormatted['days'][day]['label'] }}
+                </div>
+                {% if dataFormatted['days'][day]['all'] %}
+                    <div class="all {{ dataFormatted['days'][day]['classALL'] }}">
+                        {{ dataFormatted['days'][day]['all'] }}
+                    </div>
+                {% else %}
+                    <div class="am {{ dataFormatted['days'][day]['classAM'] }}">
+                        {{ dataFormatted['days'][day]['am'] }}
+                    </div>
+                    <div class="pm {{ dataFormatted['days'][day]['classPM'] }}">
+                        {{ dataFormatted['days'][day]['pm'] }}
+                    </div>
+                {% endif %}
+            </div>
+        {% endfor %}
+    {% endif %}
+</div>

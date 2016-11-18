@@ -1,0 +1,17 @@
+{% trans_default_domain instance.domain %}
+{% extends "::FhmFhm/Front/create.html.twig" %}
+{% block content %}
+    <div class="row">
+        <div class="large-6 columns">
+            {{ form_label(form.email) }}
+            {{ form_errors(form.email) }}
+            {{ form_widget(form.email, {'attr': {'placeholder': 'contact@vdev.com' }}) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="large-6 columns">
+            {{ form_widget(form.submitNew) }}
+        </div>
+    </div>
+{% endblock %}
+{% block tagline %}{% endblock %}

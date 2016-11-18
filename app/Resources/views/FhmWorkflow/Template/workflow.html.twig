@@ -1,0 +1,56 @@
+{% trans_default_domain instance.domain %}
+<div class="workflow">
+    <div class="row">
+        <div class="column">
+            {{ document.getDescription() }}
+        </div>
+    </div>
+    <div class="canvas" id="wfCanvas">
+        {% for flashMessage in app.session.flashbag.get('workflow') %}
+            <div class="row">
+                <div class="column">
+                    <div data-alert class="alert-box success">
+                        {{ flashMessage }}
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+        {% for flashMessage in app.session.flashbag.get('workflow-warning') %}
+            <div class="row">
+                <div class="column">
+                    <div data-alert class="alert-box warning">
+                        {{ flashMessage }}
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+        {% for flashMessage in app.session.flashbag.get('workflow-error') %}
+            <div class="row">
+                <div class="column">
+                    <div data-alert class="alert-box alert">
+                        {{ flashMessage }}
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+        <div class="line">
+            <div class="tasks">
+                {% set level = 1 %}
+                {% for task in document|wfTasks %}
+                {% if level != task.level %}
+            </div>
+        </div>
+        <div class="line">
+            <div class="tasks">
+                {% set level = task.level %}
+                {% endif %}
+                {{ task.task|wfTask(document, instance)|raw }}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+<div id="wfModal" class="reveal-modal" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
+    <div id="wfModalContent"></div>
+    <a class="close-reveal-modal" aria-label="Close">&#215;</a>
+</div>

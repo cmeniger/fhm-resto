@@ -1,0 +1,157 @@
+{% trans_default_domain instance.domain %}
+<div class="note embed">
+    {% if view_star %}
+        <div class="bloc star">
+            {% for i in 1..param_maximum %}
+                {% if average >= i %}
+                    <i class="fa fa-star"></i>
+                {% elseif average >= (i - 0.5) %}
+                    <i class="fa fa-star-half-o"></i>
+                {% else %}
+                    <i class="fa fa-star-o"></i>
+                {% endif %}
+            {% endfor %}
+        </div>
+    {% endif %}
+    {% if view_average %}
+        <div class="bloc average">
+            {{ average|round(1,'floor') }}
+        </div>
+    {% endif %}
+    {% if view_comment %}
+        <div class="bloc comment">
+            (
+            {% if view_comment_modal %}
+                <a href="#" data-reveal-id="note-comment-{{ document.getId() }}">{{ notes|length }}</a>
+            {% else %}
+                {{ notes|length }}
+            {% endif %}
+            )
+        </div>
+    {% endif %}
+    {% if view_add %}
+        <div class="bloc add">
+            {% if param_multiple == false and param_edit == true and user %}
+                <a href="#" data-reveal-id="note-edit" data-edit="{{ path('fhm_api_note_edit',{id:user.getId()}) }}" data-delete="{{ path('fhm_api_note_delete',{id:user.getId()}) }}" data-value="{{ user.getNote() }}" data-content="{{ user.getContent() }}" data-id="{{ document.getId() }}">{{ 'note.api.embed.edit.button'|trans }}</a>
+            {% else %}
+                <a href="#" data-reveal-id="note-add-{{ document.getId() }}">{{ 'note.api.embed.add.button'|trans }}</a>
+            {% endif %}
+        </div>
+    {% endif %}
+</div>
+{% if view_comment and view_comment_modal %}
+    <div id="note-comment-{{ document.getId() }}" class="reveal-modal tiny note modal" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
+        <a class="close-reveal-modal" aria-label="Close">&#215;</a>
+        <div id="modalTitle"><h2>{{ document.getName() }}</h2></div>
+        <div class="title"><span>{{ 'note.api.embed.comment.resume'|trans }}</span></div>
+        <div class="resume">
+            {% set current = param_maximum %}
+            {% for i in 1..param_maximum %}
+                <div class="star">
+                    {% for j in 1..param_maximum %}
+                        {% if current >= j %}
+                            <i class="fa fa-star"></i>
+                        {% else %}
+                            <i class="fa fa-star-o"></i>
+                        {% endif %}
+                    {% endfor %}
+                    <span class="count">
+                    {{ document|noteCount(current) }}
+                </span>
+                </div>
+                {% set current = current - 1 %}
+            {% endfor %}
+            <span class="average">
+                {{ average|round(1,'floor') }}
+                <small>{{ notes|length }}</small>
+            </span>
+        </div>
+        <div class="title"><span>{{ 'note.api.embed.comment.comment'|trans }}</span></div>
+        <div class="comment">
+            {% if notes %}
+                {% for note in notes %}
+                    <div class="data">
+                        <div class="star">
+                            {% for i in 1..param_maximum %}
+                                {% if note.getNote() >= i %}
+                                    <i class="fa fa-star"></i>
+                                {% else %}
+                                    <i class="fa fa-star-o"></i>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                        {% if note.getUser() %}
+                            <div class="user">par {{ note.getUser().getUsername() }}
+                                le {{ note.getDateCreate()|date("d/m/Y") }}</div>
+                            {% if note.getUser() and app.user and note.getUser().getId() == app.user.id and view_edit %}
+                                <a href="#" class="icon" data-reveal-id="note-edit" data-edit="{{ path('fhm_api_note_edit',{id:note.getId()}) }}" data-delete="{{ path('fhm_api_note_delete',{id:note.getId()}) }}" data-value="{{ note.getNote() }}" data-content="{{ note.getContent() }}" data-id="{{ document.getId() }}"><i class="fa fa-pencil"></i></a>
+                            {% endif %}
+                        {% else %}
+                            <div class="user">le {{ note.getDateCreate()|date("d/m/Y") }}</div>
+                        {% endif %}
+                        {% if note.getContent() %}
+                            <div class="content">{{ note.getContent() }}</div>
+                        {% else %}
+                            <div class="nodata content">{{ 'note.api.embed.comment.nodata'|trans }}</div>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            {% else %}
+                <div class="nodata">{{ 'note.api.embed.comment.nodata'|trans }}</div>
+            {% endif %}
+        </div>
+    </div>
+{% endif %}
+{% if view_add %}
+    <div id="note-add-{{ document.getId() }}" class="reveal-modal tiny note modal" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
+        <a class="close-reveal-modal" aria-label="Close">&#215;</a>
+        <div id="modalTitle"><h2>{{ document.getName() }}</h2></div>
+        <div class="title"><span>{{ 'note.api.embed.add.title'|trans }}</span></div>
+        {% if param_anonymous == false and app.user == "" %}
+            <div class="note-connect text-center">
+                <a href="{{ path('fos_user_security_login') }}" class="button tiny"><i class="fa fa-user"></i> {{ 'user.front.login.link'|trans({}, 'FhmUserBundle') }}</a>
+            </div>
+        {% else %}
+            <div class="note-add-user note-user" data-id="{{ document.getId() }}">
+                <div class="star">
+                    {% for i in 1..param_maximum %}
+                        <i class="fa fa-star-o note-add-user-item" data-value="{{ i }}" data-legend="{{ ('note.api.embed.add.value.' ~ i)|trans }}" data-id="{{ document.getId() }}"></i>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="note-add-legend note-legend" id="note-add-legend-{{ document.getId() }}"></div>
+            <form id="note-add-form-{{ document.getId() }}" action="{{ path('fhm_api_note_add',{id:document.getId()}) }}" method="POST">
+                <textarea id="note-add-content-{{ document.getId() }}" name="FhmNote[content]" placeholder="{{ 'note.api.embed.add.comment'|trans }}">{{ param_multiple == false and param_edit == true and user ? user.getContent() : '' }}</textarea>
+                <input type="hidden" id="note-add-value-{{ document.getId() }}" name="FhmNote[value]" value="{{ param_multiple == false and param_edit == true and user ? user.getNote() : param_default }}">
+                <input type="hidden" name="FhmNote[source]" value="{{ source }}">
+                <input type="hidden" name="FhmNote[object]" value="{{ object }}">
+                <input type="submit" class="button tiny right" value="{{ 'note.api.embed.add.submit'|trans }}">
+            </form>
+        {% endif %}
+    </div>
+{% endif %}
+{% if (view_edit and param_edit) or (param_multiple == false and param_edit == true and user) %}
+    <div id="note-edit" class="reveal-modal tiny note modal" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
+        <a class="close-reveal-modal" aria-label="Close">&#215;</a>
+        <div id="modalTitle"><h2>{{ document.getName() }}</h2></div>
+        <div class="title"><span>{{ 'note.api.embed.edit.title'|trans }}</span></div>
+        <div class="note-edit-user note-user" data-id="{{ document.getId() }}">
+            <div class="star">
+                {% for i in 1..param_maximum %}
+                    <i class="fa fa-star-o note-edit-user-item" data-value="{{ i }}" data-legend="{{ ('note.api.embed.add.value.' ~ i)|trans }}"></i>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="note-edit-legend note-legend" id="note-edit-legend"></div>
+        <form id="note-edit-form" action="" method="POST">
+            <textarea id="note-edit-content" name="FhmNote[content]" placeholder="{{ 'note.api.embed.edit.comment'|trans }}"></textarea>
+            <input type="hidden" id="note-edit-value" name="FhmNote[value]" value="{{ param_default }}">
+            <input type="hidden" name="FhmNote[source]" value="{{ source }}">
+            <input type="hidden" name="FhmNote[object]" value="{{ object }}">
+            <input type="submit" class="button tiny right" value="{{ 'note.api.embed.edit.submit'|trans }}">
+            {% if param_delete %}
+                <a href="#" id="note-edit-delete" class="note-delete left" onclick="return confirm('{{ 'note.api.embed.edit.confirm.delete'|trans }}')">{{ 'note.api.embed.edit.delete'|trans }}</a>
+            {% endif %}
+        </form>
+    </div>
+{% endif %}

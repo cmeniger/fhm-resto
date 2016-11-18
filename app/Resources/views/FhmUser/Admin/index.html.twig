@@ -1,0 +1,28 @@
+{% trans_default_domain instance.domain %}
+{% extends "::FhmFhm/Admin/index.html.twig" %}
+
+{% block content_data_header %}
+    <th>{{ 'user.admin.index.table.header.username'|trans }}{{ macroSort.print('username', sort) }}</th>
+    <th>{{ 'user.admin.index.table.header.email'|trans }}{{ macroSort.print('emailCanonical', sort) }}</th>
+    <th>{{ 'user.admin.index.table.header.firstname'|trans }}{{ macroSort.print('first_name', sort) }}</th>
+    <th>{{ 'user.admin.index.table.header.lastname'|trans }}{{ macroSort.print('last_name', sort) }}</th>
+    <th>{{ 'user.admin.index.table.header.create'|trans }}{{ macroSort.print('date_create', sort) }}</th>
+{% endblock %}
+
+{% block content_data_body %}
+    <td>{{ document.getUsername() }}</td>
+    <td>{{ document.getEmailCanonical() }}</td>
+    <td>{{ document.getFirstName() }}</td>
+    <td>{{ document.getLastName() }}</td>
+    <td>{{ document.getDateCreate()|localizeddate('short', 'short', app.request.locale)}}</td>
+{% endblock %}
+
+{% block content_data_status_data %}
+    {{ parent() }}
+    {% if document.isLocked() %}
+        <span class="status alert radius label">{{ (instance.translation ~ '.status.locked')|trans }}</span>
+    {% endif %}
+    {% if document.isExpired() %}
+        <span class="status alert radius label">{{ (instance.translation ~ '.status.expired')|trans }}</span>
+    {% endif %}
+{% endblock %}

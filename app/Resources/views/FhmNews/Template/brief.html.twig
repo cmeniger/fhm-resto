@@ -1,0 +1,25 @@
+{% trans_default_domain instance.domain %}
+{% import "::Macros/pagination.html.twig" as macroPagination %}
+
+<div id="content_data" class="news">
+    {% if documents %}
+        {% for news in documents %}
+            <div class="row news-brief">
+                <a href="{{ path('fhm_news_lite', {id: news.getAlias()}) }}">
+                    <div class="news-date">
+                        {{ news.getDateStart()|localizeddate('short', 'none', app.request.locale) }}
+                    </div>
+                    <div class="news-text">
+                        {{ news.getTitle() }}
+                    </div>
+                </a>
+            </div>
+        {% endfor %}
+    {% else %}
+        <div class="panel nodata row">
+            <p>{{ (instance.translation ~ '.front.index.nodata')|trans }}</p>
+        </div>
+    {% endif %}
+</div>
+{# Pagination #}
+{{ macroPagination.print(pagination) }}

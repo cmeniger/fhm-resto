@@ -1,0 +1,95 @@
+{% trans_default_domain instance.domain %}
+{% extends "::FhmFhm/Admin/update.html.twig" %}
+
+{% block content_data_seo %}{% endblock %}
+
+{% block content_data_fields_data %}
+    <div class="large-6 medium-6 small-12 columns">
+        <fieldset>
+            <legend>{{ (instance.translation ~ '.admin.update.form.fieldset.data')|trans }}</legend>
+            <div class="row">
+                {{ form_label(form.name) }}
+                {{ form_errors(form.name) }}
+                {{ form_widget(form.name) }}
+            </div>
+            <div class="row">
+                {{ form_label(form.description) }}
+                {{ form_errors(form.description) }}
+                {{ form_widget(form.description) }}
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend>{{ (instance.translation ~ '.admin.update.form.fieldset.file')|trans }}</legend>
+            <div class="row">
+                {{ form_label(form.file) }}
+                {{ form_errors(form.file) }}
+                {{ form_widget(form.file) }}
+            </div>
+            <hr/>
+            <div class="row">
+                <div class="columns small-6">
+                    {{ document|download(instance)|raw }}
+                </div>
+                <div class="columns small-6">
+                    {% if document.getType() == 'image' %}
+                        {{ (instance.translation ~ '.admin.update.form.generate')|trans }}
+                        <div class="switch tiny">
+                            <input id="generateImage" type="checkbox" name="generate">
+                            <label for="generateImage"></label>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </fieldset>
+        {% if watermarks %}
+            <fieldset>
+                <legend>{{ (instance.translation ~ '.admin.update.form.fieldset.watermark')|trans }}</legend>
+                <label>{{ (instance.translation ~ '.admin.update.form.watermark')|trans }}</label>
+                {% for name, size in watermarks %}
+                    <div class="row">
+                        <div class="column small-2">
+                            <div class="switch tiny watermark">
+                                <input id="watermark{{ loop.index }}" type="checkbox" name="watermark[{{ name }}]" {{ document.hasWatermark(name) ? "checked" : "" }}>
+                                <label for="watermark{{ loop.index }}"></label>
+                            </div>
+                        </div>
+                        <div class="column small-10">
+                            {{ name }} ({{ size }})
+                        </div>
+                    </div>
+                {% endfor %}
+            </fieldset>
+        {% endif %}
+    </div>
+    <div class="large-6 medium-6 small-12 columns">
+        <fieldset>
+            <legend>{{ (instance.translation ~ '.admin.update.form.fieldset.tags')|trans }}</legend>
+            <div class="row">
+                {{ form_label(form.tag) }}
+                {{ form_errors(form.tag) }}
+                {{ form_widget(form.tag) }}
+            </div>
+            <div class="row">
+                {{ form_label(form.parent) }}
+                {{ form_errors(form.parent) }}
+                {{ form_widget(form.parent) }}
+            </div>
+            <div class="row">
+                {{ form_label(form.tags) }}
+                {{ form_errors(form.tags) }}
+                {{ form_widget(form.tags) }}
+            </div>
+        </fieldset>
+    </div>
+{% endblock %}
+
+{% block content_data_options_data_add %}
+    <div class="large-2 columns end">
+        {{ form_errors(form.private) }}
+        {{ form_label(form.private) }}
+        <div class="switch">
+            {{ form_widget(form.private) }}
+            <label for="{{ form.private.vars.id }}"></label>
+        </div>
+    </div>
+{% endblock %}

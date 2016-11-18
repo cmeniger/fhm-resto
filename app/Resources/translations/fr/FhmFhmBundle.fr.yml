@@ -1,0 +1,138 @@
+fhm:
+    admin:
+        breadcrumb:                             Admin
+        link:                                   Console
+        title:                                  Administration
+        nodata:                                 Bientôt disponible...
+
+    menu:
+        title:                                  Administration
+        action:
+            cache:                              Vider le cache
+
+    error:
+        route:                                  La route n'existe pas.
+        forbidden:                              Droits insuffisants.
+
+    status:
+        delete:                                 Supprimé
+        enable:                                 Activé
+        disable:                                Désactivé
+        share:                                  Partagé
+        global:                                 Global
+        private:                                Privé
+        yes:                                    Oui
+        no:                                     Non
+
+    grouping:
+        name:                                   Groupe(s)
+        add:                                    Ajouter au groupe "%name%"
+        title:                                  Gestion des groupes
+        list1:                                  Disponibles
+        list2:                                  Sélectionnés
+
+    language:
+        fieldset:                               Langues
+        label:                                  Langues disponibles
+        title:                                  Langue(s)
+        code:
+            all:                                Toutes les langues
+
+    seo:
+        fieldset:                               Référencement naturel
+        title:                                  Titre (50 caractères maximum)
+        description:                            Description (150 caractères maximum)
+        keywords:                               Mots clés (séparés par une virgule)
+
+    autocomplete:
+        nodata:                                 Aucun résultat
+        placeholder:                            Rechercher
+
+    schedules:
+        title:                                  Horaires
+        nodata:                                 Non renseigné
+        days:
+            1:                                  Lundi
+            2:                                  Mardi
+            3:                                  Mercredi
+            4:                                  Jeudi
+            5:                                  Vendredi
+            6:                                  Samedi
+            7:                                  Dimanche
+        day:
+            start:                              Début
+            end:                                Fin
+            close:                              Fermé
+            hour:                               %start% à %end%
+            closed:                             Fermé
+            reopen:                             Réouverture prévue le %date%
+        close:
+            check:                              Fermé
+            reason:                             Raison
+            date:                               Réouverture
+        state:
+            nodata:                             Non renseigné
+            open:                               Ouvert
+            close:                              Fermé
+
+    mail:
+        flash:
+            disable:                            L'envoi d'e-mail est désactivé
+
+    recaptcha:
+        label:                                  Sécurité
+
+    anchor:
+        title:                                  Page
+        top:                                    Haut
+        data:                                   Informations
+        url:                                    Routes
+        historic:                               Historiques
+        admin:                                  Administration
+
+    historic:
+        title:                                  Historiques
+        table:
+            header:
+                date:                           Date
+                user:                           Utilisateur
+                difference:                     Différences
+                action:                         Actions
+            action:
+                compare:                        Comparer
+                delete:                         Supprimer
+                undelete:                       Restaurer
+                copy:                           Copier
+            confirm:
+                copy:                           Confirmer la copie de l\'historique ?
+                delete:                         Confirmer la suppression de l\'historique ?
+                undelete:                       Confirmer le déblocage de l\'historique ?
+        pagination:
+            counter:                            Nombre d'historiques: %count% / %all%
+        modal:
+            title:                              Historiques - Comparaison
+            left:                               Historique
+            right:                              Actuellement
+            filter:                             Filtrer
+            nodata:                             Vide
+            body:
+                name:                           Nom
+                description:                    Description
+                delete:                         Supprimé
+                active:                         Activé
+                share:                          Partagé
+                global:                         Global
+                order:                          Ordre
+                grouping:                       Groupe(s)
+                language:                       Langue(s)
+                seo:
+                    title:                      Référencement - Titre
+                    description:                Référencement - Description
+                    keywords:                   Référencement - Mots clés
+    pagination:
+            counter:                                Nombre de Places: %count% / %all%
+
+    sex:
+        label:                                  Sexe
+        m:                                      Monsieur
+        f:                                      Madame

@@ -1,0 +1,7 @@
+<div class="schedules state {{ show_class ? state : '' }} {{ show_indicator ? 'indicator' : '' }}"
+    {% if show_indicator %}
+        title="{{ ('fhm.schedules.state.' ~ state)|trans({},'FhmFhmBundle') }}"
+    {% endif %}
+>
+    {{ show_text ? ('fhm.schedules.state.' ~ state)|trans({},'FhmFhmBundle') : '' }}
+</div>

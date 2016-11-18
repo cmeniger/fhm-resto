@@ -1,0 +1,28 @@
+{% trans_default_domain instance.domain %}
+<div class="partner">
+    {% if documents %}
+        <div class="partner-slide">
+            {% for partner in documents %}
+                <div>
+                    <img src="{{ partner.getImage()|media('s') }}" class="partner-image" alt="{{ partner.getName() }}">
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="panel nodata row">
+            <p>{{ (instance.translation ~ '.front.index.nodata')|trans }}</p>
+        </div>
+    {% endif %}
+</div>
+<script>
+    $(document).ready(function ()
+    {
+        $('.partner-slide').slick({
+            slidesToShow:   4,
+            slidesToScroll: 1,
+            centerMode:     true,
+            arrows:         true,
+            autoplay:       true
+        });
+    });
+</script>

@@ -1,0 +1,344 @@
+contact:
+    admin:
+        index:
+            title:                              Gestion des contacts
+            link:                               Contacts
+            breadcrumb:                         Contacts
+            nodata:                             Aucune donnée
+            form:
+                search:                         Rechercher
+            table:
+                header:
+                    name:                       Nom
+                    email:                      E-mail
+                    address:                    Adresse
+                    message:                    Messages
+                    type:
+                        title:                  Type
+                        form:                   Formulaire
+                        profile:                Profil
+                    action:                     Actions
+                    status:                     Statut
+                action:
+                    activate:                   Activer
+                    deactivate:                 Désactiver
+                    delete:                     Supprimer
+                    detail:                     Aperçu
+                    duplicate:                  Dupliquer
+                    undelete:                   Restaurer
+                    update:                     Modifier
+                    preview:                    Aperçu
+                confirm:
+                    activate:                   Confirmer l'activation du contact ?
+                    deactivate:                 Confirmer la désactivation du contact ?
+                    delete:                     Confirmer la suppression du contact ?
+                    undelete:                   Confirmer le déblocage du contact ?
+
+        create:
+            title:                              Ajouter un contact
+            link:                               Ajouter
+            breadcrumb:                         Ajouter
+            flash:
+                ok:                             Le contact a bien été créé.
+                ko:                             Le contact n'a pas été créé.
+            form:
+                name:                           Nom
+                description:                    Description
+                phone:                          Téléphone
+                email:                          E-mail
+                fax:                            Fax
+                order:                          Ordre
+                address_search:                 Rechercher une adresse
+                address_main:                   Adresse
+                address_additional:             Complément d'adresse
+                city:                           Ville
+                zip_code:                       Code Postal
+                country:                        Pays
+                latitude:                       Latitude
+                longitude:                      Longitude
+                form:
+                    check:                      Formulaire
+                    template:                   Template
+                profile:
+                    check:                      Profil
+                    template:                   Template
+                    image:                      Avatar
+                active:                         Activer
+                share:                          Partager
+                global:                         Globale
+                submit:
+                    save:                       Sauvegarder
+                    new:                        Sauvegarder et ajouter
+                    duplicate:                  Sauvegarder et dupliquer
+                    quit:                       Sauvegarder et quitter
+                    config:                     Sauvegarder et paramétrer
+                    cancel:                     Annuler
+                    import:                     Importer
+                    export:                     Exporter
+                fieldset:
+                    informations:               Informations générales
+                    map:                        Géolocalisation
+                    social:                     Liens extérieurs
+                    form:                       Formulaire
+                    profile:                    Profil
+                    options:                    Options
+
+        update:
+            title:                              %name%
+            link:                               Modifier
+            breadcrumb:                         Modifier
+            flash:
+                ok:                             Le contact a bien été modifié.
+                ko:                             Le contact n'a pas été modifié.
+            form:
+                name:                           Nom
+                description:                    Description
+                phone:                          Téléphone
+                email:                          E-mail
+                fax:                            Fax
+                order:                          Ordre
+                address_search:                 Rechercher une adresse
+                address_main:                   Adresse
+                address_additional:             Complément d'adresse
+                city:                           Ville
+                zip_code:                       Code Postal
+                country:                        Pays
+                latitude:                       Latitude
+                longitude:                      Longitude
+                form:
+                    check:                      Formulaire
+                    template:                   Template
+                profile:
+                    check:                      Profil
+                    template:                   Template
+                    image:                      Avatar
+                active:                         Activer
+                share:                          Partager
+                global:                         Globale
+                submit:
+                    save:                       Sauvegarder
+                    new:                        Sauvegarder et ajouter
+                    duplicate:                  Sauvegarder et dupliquer
+                    quit:                       Sauvegarder et quitter
+                    config:                     Sauvegarder et paramétrer
+                    cancel:                     Annuler
+                    import:                     Importer
+                    export:                     Exporter
+                fieldset:
+                    informations:               Informations générales
+                    map:                        Géolocalisation
+                    social:                     Liens extérieurs
+                    form:                       Formulaire
+                    profile:                    Profil
+                    options:                    Options
+
+        detail:
+            title:                              %name%
+            link:                               Détail
+            breadcrumb:                         %name%
+            data:
+                title:                          Informations
+                id:                             ID
+                create:                         Création
+                update:                         Modification
+                name:                           Nom
+                alias:                          Alias
+                description:                    Description
+                status:                         Statut
+            url:
+                title:                          Routes disponibles
+                admin:
+                    edit:                       Modifier
+                    detail:                     Paramétrer
+                front:
+                    id:                         Afficher via l'ID
+                    name:                       Afficher via le nom
+                    alias:                      Afficher via l'alias
+                    lite:                       Afficher via l'url simplifiée
+            admin:
+                title:                          Outils d'administration
+            contact:
+                title:                          Contact
+                phone:                          Téléphone
+                fax:                            Fax
+                email:                          E-mail
+                address:                        Adresse
+            social:
+                title:                          Liens extérieurs
+                facebook:                       Facebook
+                twitter:                        Twitter
+                google:                         Google
+                instagram:                      Instagram
+                youtube:                        Youtube
+
+        export:
+            title:                              Exporter des contacts
+            link:                               Exporter
+            breadcrumb:                         Exporter
+            form:
+                submit:                         Exporter
+
+        import:
+            title:                              Importer des contacts
+            link:                               Importer
+            breadcrumb:                         Importer
+            flash:
+                ok:                             Les contacts ont bien été importés (%countAdd% ajout(s), %countUpdate% modification(s), %countError% erreur(s)).
+                ko:                             Les contacts n'ont pas été importés.
+            form:
+                file:                           Fichier CSV
+                submit:                         Importer
+
+        activate:
+            flash:
+                ok:                             Le contact a bien été activé.
+
+        deactivate:
+            flash:
+                ok:                             Le contact a bien été désactivé.
+
+        delete:
+            flash:
+                ok:                             Le contact a bien été supprimé.
+
+        undelete:
+            flash:
+                ok:                             Le contact a bien été restauré.
+
+    front:
+        index:
+            title:                              Contact
+            breadcrumb:                         Contact
+            link:                               Contact
+            nodata:                             Aucune donnée
+            team:                               Equipe
+            form:
+                search:                         Rechercher
+            flash:
+                ok:                             Votre message a bien été envoyé.
+
+        detail:
+            title:                              Contact
+            link:                               Détail
+            breadcrumb:                         %name%
+
+        form:
+            firstname:                          Prénom
+            lastname:                           Nom
+            email:                              E-mail
+            phone:                              Téléphone
+            content:                            Message
+            recaptcha:                          Sécurité
+            submit:                             Envoyer
+            load:                               Envoi en cours...
+
+    api:
+        index:
+            breadcrumb:                         Contact - Api
+            link:                               Contact - Api
+            title:                              Contact - Api
+
+    pagination:
+        counter:                                Nombre de contacts: %count% / %all%
+
+    error:
+        unknown:                                Le contact n'existe pas.
+        delete:                                 Le contact n'existe pas.
+        forbidden:                              Droits insuffisants.
+
+    email:
+        object:                                 FHMTools - Nous traitons votre message
+        body:                                   Bonjour %firstname%,<br><br>Votre message a bien été pris en compte, il sera traité dans les meilleurs délais par notre équipe.
+        list:
+            item1:                              Référence
+            item2:                              Prénom
+            item3:                              Nom
+            item4:                              E-mail
+            item5:                              Téléphone
+            item6:                              Message
+
+    message:
+        admin:
+            index:
+                title:                          Gestion des messages
+                link:                           Messages
+                breadcrumb:                     Messages
+                nodata:                         Aucune donnée
+                form:
+                    search:                     Rechercher
+                table:
+                    header:
+                        date:                   Date
+                        contact:                Contact
+                        name:                   Nom
+                        email:                  E-mail
+                        action:                 Actions
+                        status:                 Statut
+                    action:
+                        detail:                 Aperçu
+                        delete:                 Supprimer
+                        undelete:               Restaurer
+                    confirm:
+                        delete:                 Confirmer la suppression du message ?
+                        undelete:               Confirmer le déblocage du message ?
+
+            detail:
+                title:                          %name%
+                link:                           Détail
+                breadcrumb:                     %name%
+                data:
+                    title:                      Informations
+                    id:                         ID
+                    create:                     Création
+                    update:                     Modification
+                    status:                     Statut
+                contact:
+                    title:                      Contact
+                    contact:                    Contact
+                    firstname:                  Prénom
+                    lastname:                   Nom
+                    email:                      E-mail
+                    phone:                      Téléphone
+                    content:                    Message
+
+            export:
+                title:                          Exporter des messages
+                link:                           Exporter
+                breadcrumb:                     Exporter
+                form:
+                    submit:                     Exporter
+
+            import:
+                title:                          Importer des messages
+                link:                           Importer
+                breadcrumb:                     Importer
+                flash:
+                    ok:                         Les messages ont bien été importés (%countAdd% ajout(s), %countUpdate% modification(s), %countError% erreur(s)).
+                    ko:                         Les messages n'ont pas été importés.
+                form:
+                    file:                       Fichier CSV
+                    submit:                     Importer
+
+        activate:
+            flash:
+                ok:                             Le message a bien été activé.
+
+        deactivate:
+            flash:
+                ok:                             Le message a bien été désactivé.
+
+        delete:
+            flash:
+                ok:                             Le message a bien été supprimé.
+
+        undelete:
+            flash:
+                ok:                             Le message a bien été restauré.
+
+        pagination:
+            counter:                            Nombre de messages: %count% / %all%
+
+        error:
+            unknown:                            Le message n'existe pas.
+            delete:                             Le message n'existe pas.
+            forbidden:                          Droits insuffisants.

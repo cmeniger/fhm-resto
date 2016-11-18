@@ -1,0 +1,158 @@
+{% trans_default_domain instance.domain %}
+{% extends "::FhmFhm/Admin/update.html.twig" %}
+{% import "::Macros/media.html.twig" as macroMedia %}
+
+{% block content_data_fields_data %}
+    <div class="large-6 medium-6 small-12 columns">
+        <fieldset>
+            <legend>{{ (instance.translation ~ '.admin.update.form.fieldset.information')|trans }}</legend>
+            <div class="row">
+                {{ form_label(form.name) }}
+                {{ form_errors(form.name) }}
+                {{ form_widget(form.name) }}
+            </div>
+            <div class="row">
+                {{ form_label(form.description) }}
+                {{ form_errors(form.description) }}
+                {{ form_widget(form.description) }}
+            </div>
+            <div class="row">
+                {{ form_label(form.title) }}
+                {{ form_errors(form.title) }}
+                {{ form_widget(form.title) }}
+            </div>
+            <div class="row">
+                {{ form_label(form.subtitle) }}
+                {{ form_errors(form.subtitle) }}
+                {{ form_widget(form.subtitle) }}
+            </div>
+            <div class="row">
+                {{ form_label(form.menu) }}
+                {{ form_errors(form.menu) }}
+                {{ form_widget(form.menu) }}
+            </div>
+            <div class="row">
+                {{ form_label(form.news) }}
+                {{ form_errors(form.news) }}
+                {{ form_widget(form.news) }}
+            </div>
+            <div class="row">
+                {{ form_label(form.partner) }}
+                {{ form_errors(form.partner) }}
+                {{ form_widget(form.partner) }}
+            </div>
+            <div class="row">
+                {{ form_label(form.contact) }}
+                {{ form_errors(form.contact) }}
+                {{ form_widget(form.contact) }}
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend>{{ (instance.translation ~ '.admin.update.form.fieldset.social')|trans }}</legend>
+            <div class="form-social">
+                <div class="row collapse">
+                    <div class="small-3 large-2 columns">
+                        <span class="prefix facebook social-icons"><i class="fa fa-facebook"></i></span>
+                    </div>
+                    <div class="small-7 large-7 columns">
+                        {{ form_errors(form.social_facebook) }}
+                        {{ form_widget(form.social_facebook, {'attr': {'placeholder': 'http://'}}) }}
+                    </div>
+                    <div class="small-2 large-3 columns">
+                        {{ form_errors(form.social_facebook_id) }}
+                        {{ form_widget(form.social_facebook_id, {'attr': {'placeholder': 'ID'}}) }}
+                    </div>
+                </div>
+                <div class="row collapse">
+                    <div class="small-3 large-2 columns">
+                        <span class="prefix twitter social-icons"><i class="fa fa-twitter"></i></span>
+                    </div>
+                    <div class="small-7 large-7 columns">
+                        {{ form_errors(form.social_twitter) }}
+                        {{ form_widget(form.social_twitter, {'attr': {'placeholder': 'http://'}}) }}
+                    </div>
+                    <div class="small-2 large-3 columns">
+                        {{ form_errors(form.social_twitter_id) }}
+                        {{ form_widget(form.social_twitter_id, {'attr': {'placeholder': 'ID'}}) }}
+                    </div>
+                </div>
+                <div class="row collapse">
+                    <div class="small-3 large-2 columns">
+                        <span class="prefix google social-icons"><i class="fa fa-google"></i></span>
+                    </div>
+                    <div class="small-7 large-7 columns">
+                        {{ form_errors(form.social_google) }}
+                        {{ form_widget(form.social_google, {'attr': {'placeholder': 'http://'}}) }}
+                    </div>
+                    <div class="small-2 large-3 columns">
+                        {{ form_errors(form.social_google_id) }}
+                        {{ form_widget(form.social_google_id, {'attr': {'placeholder': 'ID'}}) }}
+                    </div>
+                </div>
+                <div class="row collapse">
+                    <div class="small-3 large-2 columns">
+                        <span class="prefix instagram social-icons"><i class="fa fa-instagram"></i></span>
+                    </div>
+                    <div class="small-9 large-10 columns">
+                        {{ form_errors(form.social_instagram) }}
+                        {{ form_widget(form.social_instagram, {'attr': {'placeholder': 'http://'}}) }}
+                    </div>
+                </div>
+                <div class="row collapse">
+                    <div class="small-3 large-2 columns">
+                        <span class="prefix youtube social-icons"><i class="fa fa-youtube-play"></i></span>
+                    </div>
+                    <div class="small-9 large-10 columns">
+                        {{ form_errors(form.social_youtube) }}
+                        {{ form_widget(form.social_youtube, {'attr': {'placeholder': 'http://'}}) }}
+                    </div>
+                </div>
+                <div class="row collapse">
+                    <div class="small-3 large-2 columns">
+                        <span class="prefix flux social-icons"><i class="fa fa-rss"></i></span>
+                    </div>
+                    <div class="small-9 large-10 columns">
+                        {{ form_errors(form.social_flux) }}
+                        {{ form_widget(form.social_flux, {'attr': {'placeholder': 'http://'}}) }}
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+    </div>
+    <div class="large-6 medium-6 small-12 columns">
+        <fieldset>
+            <legend>{{ (instance.translation ~ '.admin.update.form.fieldset.media')|trans }}</legend>
+            <div class="row">
+                {{ form_label(form.background) }}
+                {{ form_errors(form.background) }}
+                {{ form_widget(form.background) }}
+            </div>
+            <div class="row">
+                {{ form_label(form.logo) }}
+                {{ form_errors(form.logo) }}
+                {{ form_widget(form.logo) }}
+            </div>
+            <div class="row">
+                {{ form_label(form.slider) }}
+                {{ form_errors(form.slider) }}
+                {{ form_widget(form.slider) }}
+            </div>
+            <div class="row">
+                {{ form_label(form.gallery) }}
+                {{ form_errors(form.gallery) }}
+                {{ form_widget(form.gallery) }}
+            </div>
+        </fieldset>
+    </div>
+
+    <div class="large-6 medium-6 small-12 columns">
+        <fieldset>
+            <legend>{{ (instance.translation ~ '.admin.update.form.fieldset.notice')|trans }}</legend>
+            <div class="row">
+                {{ form_label(form.legal_notice) }}
+                {{ form_errors(form.legal_notice) }}
+                {{ form_widget(form.legal_notice) }}
+            </div>
+        </fieldset>
+    </div>
+{% endblock %}

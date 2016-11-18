@@ -1,0 +1,47 @@
+{% trans_default_domain instance.domain %}
+{% extends "::FhmFhm/Admin/index.html.twig" %}
+
+{% block content_data_header_grouping %}{% endblock %}
+{% block content_data_grouping %}{% endblock %}
+{% block content_data_header_language %}{% endblock %}
+{% block content_data_language %}{% endblock %}
+{% block content_data_header_status %}{% endblock %}
+{% block content_data_status %}{% endblock %}
+{% block content_data_action_share_links %}{% endblock %}
+{% block content_data_action_delete_links %}{% endblock %}
+{% block content_data_action_links %}{% endblock %}
+
+{% block content_link_data %}
+    <li>
+        <a href="{{ path(instance.source ~ '_admin_' ~ instance.route ~ '_import') }}" class="button small"><i class="fa fa-download"></i> {{ (instance.translation ~ '.admin.import.link')|trans }}
+        </a>
+    </li>
+    <li>
+        <a href="{{ path(instance.source ~ '_admin_' ~ instance.route ~ '_export') }}" class="button small"><i class="fa fa-upload"></i> {{ (instance.translation ~ '.admin.export.link')|trans }}
+        </a>
+    </li>
+{% endblock %}
+
+{% block content_data_header %}
+    <th>{{ (instance.translation ~ '.admin.index.table.header.parent')|trans }}{{ macroSort.print('sort_parent', sort) }}</th>
+    <th>{{ (instance.translation ~ '.admin.index.table.header.user')|trans }}{{ macroSort.print('sort_user', sort) }}</th>
+    <th>{{ (instance.translation ~ '.admin.index.table.header.date')|trans }}{{ macroSort.print('date', sort) }}</th>
+    <th>{{ (instance.translation ~ '.admin.index.table.header.note')|trans }}{{ macroSort.print('note', sort) }}</th>
+{% endblock %}
+
+{% block content_data_body %}
+    <td>{{ document.getVarSort('parent') }}</td>
+    <td>{{ document.getVarSort('user') }}</td>
+    <td>{{ document.getDate() | localizeddate('short', 'medium', app.request.locale) }}</td>
+    <td>{{ document|note(instance)|raw }}</td>
+{% endblock %}
+
+{% block content_data_action_button %}
+    <a href="{{ path(instance.source ~ '_admin_' ~ instance.route ~ '_detail', {'id': document.getId()}) }}" class="tiny radius button split no-pip"><i class="fa fa-search"></i> {{ (instance.translation ~ '.admin.index.table.action.detail')|trans }}
+        <span data-dropdown="action{{ document.getId() }}"><i class="fa fa-angle-down"></i></span></a><br>
+{% endblock %}
+
+{% block content_data_action_delete_button %}
+    <a href="{{ path(instance.source ~ '_admin_' ~ instance.route ~ '_detail', {'id': document.getId()}) }}" class="tiny radius button split no-pip alert"><i class="fa fa-search"></i> {{ (instance.translation ~ '.admin.index.table.action.detail')|trans }}
+        <span data-dropdown="action{{ document.getId() }}"><i class="fa fa-angle-down"></i></span></a><br>
+{% endblock %}

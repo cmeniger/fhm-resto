@@ -1,0 +1,26 @@
+{% trans_default_domain instance.domain %}
+{% extends "::FhmFhm/Admin/index.html.twig" %}
+
+{% block content_link_data %}
+    {{ parent() }}
+    <li>
+        <a href="{{ path('fhm_admin_workflow') }}" class="button small"><i class="fa fa-sitemap"></i> {{ ('workflow.admin.index.link')|trans }}
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('fhm_admin_workflow_task') }}" class="button small"><i class="fa fa-square"></i> {{ ('workflow.task.admin.index.link')|trans }}
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('fhm_admin_workflow_action') }}" class="button small"><i class="fa fa-ellipsis-h"></i> {{ ('workflow.action.admin.index.link')|trans }}
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('fhm_admin_workflow_step') }}" class="button small"><i class="fa fa-columns"></i> {{ ('workflow.step.admin.index.link')|trans }}
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('fhm_admin_workflow_log') }}" class="button small"><i class="fa fa-history"></i> {{ ('workflow.log.admin.index.link')|trans }}
+        </a>
+    </li>
+{% endblock %}

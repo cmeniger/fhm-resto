@@ -1,0 +1,505 @@
+partner:
+    admin:
+        index:
+            title:                              Gestion des partenaires
+            link:                               Partenaires
+            breadcrumb:                         Partenaires
+            nodata:                             Aucune donnée
+            form:
+                search:                         Rechercher
+            table:
+                header:
+                    image:                      Image
+                    name:                       Nom
+                    order:                      Importance
+                    groups:                     Groupes
+                    action:                     Actions
+                    status:                     Statut
+                action:
+                    activate:                   Activer
+                    deactivate:                 Désactiver
+                    delete:                     Supprimer
+                    detail:                     Paramétrer
+                    duplicate:                  Dupliquer
+                    undelete:                   Restaurer
+                    update:                     Modifier
+                    preview:                    Aperçu
+                confirm:
+                    activate:                   Confirmer l'activation du partenaire ?
+                    deactivate:                 Confirmer la désactivation du partenaire ?
+                    delete:                     Confirmer la suppression du partenaire ?
+                    undelete:                   Confirmer le déblocage du partenaire ?
+
+        create:
+            title:                              Ajouter
+            link:                               Ajouter
+            breadcrumb:                         Ajouter un partenaire
+            flash:
+                ok:                             Le partenaire a bien été créé.
+                ko:                             Le partenaire n'a pas été créé.
+            form:
+                name:                           Nom
+                content:                        Contenu
+                link:                           Lien externe
+                order:                          Importance (0 est le plus important)
+                image:                          Image
+                partnergroups:                  Groupes
+                active:                         Activer
+                share:                          Partager
+                global:                         Globale
+                submit:
+                    save:                       Sauvegarder
+                    new:                        Sauvegarder et ajouter
+                    duplicate:                  Sauvegarder et dupliquer
+                    quit:                       Sauvegarder et quitter
+                    config:                     Sauvegarder et paramétrer
+                    cancel:                     Annuler
+                    import:                     Importer
+                    export:                     Exporter
+                fieldset:
+                    data:                       Données
+                    date:                       Dates
+                    media:                      Médias
+                    partnergroups:              Groupes rattachés
+                    options:                    Options
+
+        update:
+            title:                              Modifier
+            link:                               Modifier
+            breadcrumb:                         Modifier
+            flash:
+                ok:                             Le partenaire a bien été modifié.
+                ko:                             Le partenaire n'a pas été modifié.
+            form:
+                name:                           Nom
+                content:                        Contenu
+                link:                           Lien externe
+                order:                          Importance (0 est le plus important)
+                image:                          Image
+                partnergroups:                  Groupes
+                active:                         Activer
+                share:                          Partager
+                global:                         Globale
+                submit:
+                    save:                       Sauvegarder
+                    new:                        Sauvegarder et ajouter
+                    duplicate:                  Sauvegarder et dupliquer
+                    quit:                       Sauvegarder et quitter
+                    config:                     Sauvegarder et paramétrer
+                    cancel:                     Annuler
+                    import:                     Importer
+                    export:                     Exporter
+                    delete:                     Supprimer
+                fieldset:
+                    data:                       Données
+                    date:                       Dates
+                    media:                      Médias
+                    partnergroups:              Groupes rattachés
+                    options:                    Options
+
+        detail:
+            title:                              %name%
+            link:                               Détail
+            breadcrumb:                         %name%
+            data:
+                title:                          Informations
+                id:                             ID
+                create:                         Création
+                update:                         Modification
+                name:                           Nom
+                alias:                          Alias
+                description:                    Description
+                status:                         Statut
+            url:
+                title:                          Routes disponibles
+                admin:
+                    edit:                       Modifier
+                    detail:                     Paramétrer
+                front:
+                    id:                         Afficher via l'ID
+                    name:                       Afficher via le nom
+                    alias:                      Afficher via l'alias
+                    lite:                       Afficher via l'url simplifiée
+            admin:
+                title:                          Outils d'administration
+            partnergroup:
+                title:                          Groupes
+                list1:                          Disponibles
+                list2:                          Sélectionnés
+
+        export:
+            breadcrumb:                         Exporter
+            form:
+                submit:                         Exporter
+            link:                               Exporter
+            title:                              Exporter des partenaires
+
+        import:
+            title:                              Importer des partenaires
+            link:                               Importer
+            breadcrumb:                         Importer
+            flash:
+                ok:                             Les partenaires ont bien été importés (%countAdd% ajout(s), %countUpdate% modification(s), %countError% erreur(s)).
+                ko:                             Les partenaires n'ont pas été importés.
+            form:
+                file:                           Fichier CSV
+                submit:                         Importer
+
+        deactivate:
+            flash:
+                ok:                             Le partenaire a bien été désactivé.
+
+        delete:
+            flash:
+                ok:                             Le partenaire a bien été supprimé.
+                use:                            Impossible de supprimer, ce media est rattaché au module %module%  à l'élémént %element%.
+                used:
+                    news:                        Actualités
+                    article:                     Articles
+                    site:                        Sites
+                    page:                        Pages
+                    gallery:                     Galerie
+                    event:                       Evènements
+                    partner:                     Partenaires
+                    slider:                      Slider
+                    product:                     Produits
+
+        activate:
+            flash:
+                ok:                             Le partenaire a bien été activé.
+
+        undelete:
+            flash:
+                ok:                             Le partenaire a bien été restauré.
+
+    front:
+        index:
+            title:                              Partenaires
+            link:                               Partenaires
+            breadcrumb:                         Partenaires
+            nodata:                             Aucune donnée
+            form:
+                search:                         Rechercher
+                more:                           En savoir +
+                update:                         Mise à jour le %date%
+            table:
+                header:
+                    name:                       Nom
+                    start:                      Début
+                    end:                        Fin
+                    action:                     Actions
+                action:
+                    detail:                     Détail
+                    delete:                     Supprimer
+                confirm:
+                    delete:                     Confirmer la suppression du partenaire ?
+
+        create:
+            title:                              Ajouter
+            link:                               Ajouter
+            breadcrumb:                         Ajouter un partenaire
+            flash:
+                ok:                             Le partenaire a bien été créé.
+                ko:                             Le partenaire n'a pas été créé.
+            form:
+                name:                           Nom
+                description:                    Description
+                submit:
+                    save:                       Sauvegarder
+                    new:                        Sauvegarder et ajouter
+                    duplicate:                  Sauvegarder et dupliquer
+                    quit:                       Sauvegarder et quitter
+                    cancel:                     Annuler
+                alert:
+                    title:                      Information
+                    text:                       L'ajout d'un partenaire nécessite la validation d'un modérateur pour être affiché.
+
+        update:
+            title:                              Modifier
+            link:                               Modifier
+            breadcrumb:                         Modifier
+            flash:
+                ok:                             Le partenaire a bien été modifié.
+                ko:                             Le partenaire n'a pas été modifié.
+            form:
+                name:                           Nom
+                description:                    Description
+                submit:
+                    save:                       Sauvegarder
+                    new:                        Sauvegarder et ajouter
+                    duplicate:                  Sauvegarder et dupliquer
+                    quit:                       Sauvegarder et quitter
+                    cancel:                     Annuler
+                alert:
+                    title:                      Information
+                    text:                       La modification d'un partenaire nécessite la validation d'un modérateur pour être affiché.
+
+        detail:
+            title:                              %name%
+            link:                               Détail
+            breadcrumb:                         %name%
+            data:
+                title:                          Informations
+                create:                         Création
+                update:                         Modification
+                name:                           Nom
+                alias:                          Alias
+                description:                    Description
+
+        delete:
+            flash:
+                ok:                             Le partenaire a bien été supprimé.
+
+    api:
+        index:
+            title:                              Partenaires
+
+    pagination:
+        counter:                                Nombre de partenaires: %count% / %all%
+
+    error:
+        unknown:                                Le partenaire n'existe pas.
+        delete:                                 Le partenaire n'existe pas.
+        forbidden:                              Droits insuffisants.
+
+    group:
+        admin:
+            index:
+                title:                          Gestion des groupes de partenaires
+                link:                           Groupes de partenaires
+                breadcrumb:                     Groupes de partenaires
+                nodata:                         Aucune donné
+                form:
+                    search:                     Rechercher
+                table:
+                    header:
+                        name:                   Nom
+                        partners:               Partenaires
+                        action:                 Actions
+                        status:                 Statut
+                    action:
+                        activate:               Activer
+                        deactivate:             Désactiver
+                        delete:                 Supprimer
+                        detail:                 Paramétrer
+                        duplicate:              Dupliquer
+                        undelete:               Restaurer
+                        update:                 Modifier
+                        preview:                Aperçu
+                    confirm:
+                        activate:               Confirmer l'activation du journal ?
+                        deactivate:             Confirmer la désactivation du journal ?
+                        delete:                 Confirmer la suppression du journal ?
+                        undelete:               Confirmer le déblocage du journal ?
+
+            create:
+                title:                          Ajouter
+                link:                           Ajouter
+                breadcrumb:                     Ajouter un journal
+                flash:
+                    ok:                         Le journal a bien été créé.
+                    ko:                         Le journal n'a pas été créé.
+                form:
+                    name:                       Nom
+                    description:                Description
+                    partner:                    Partenaires
+                    add_global:                 Ajouter les partenaires globaux
+                    partners:                   Partenaires
+                    active:                     Activer
+                    share:                      Partager
+                    global:                     Globale
+                    submit:
+                        save:                   Sauvegarder
+                        new:                    Sauvegarder et ajouter
+                        duplicate:              Sauvegarder et dupliquer
+                        quit:                   Sauvegarder et quitter
+                        config:                 Sauvegarder et paramétrer
+                        cancel:                 Annuler
+                        import:                 Importer
+                        export:                 Exporter
+                    fieldset:
+                        data:                   Données
+                        partners:               Partenaires rattachés
+                        options:                Options
+
+            update:
+                title:                          Modifier
+                link:                           Modifier
+                breadcrumb:                     Modifier
+                flash:
+                    ok:                         Le journal a bien été modifié.
+                    ko:                         Le journal n'a pas été modifié.
+                form:
+                    name:                       Nom
+                    description:                Description
+                    add_global:                 Ajouter les partenaires globaux
+                    partners:                   Partenaires
+                    active:                     Activer
+                    share:                      Partager
+                    global:                     Globale
+                    submit:
+                        save:                   Sauvegarder
+                        new:                    Sauvegarder et ajouter
+                        duplicate:              Sauvegarder et dupliquer
+                        quit:                   Sauvegarder et quitter
+                        config:                 Sauvegarder et paramétrer
+                        cancel:                 Annuler
+                        import:                 Importer
+                        export:                 Exporter
+                        delete:                 Supprimer
+                    fieldset:
+                        data:                   Données
+                        partners:               Partenaires rattachés
+                        options:                Options
+
+            detail:
+                title:                          %name%
+                link:                           Détail
+                breadcrumb:                     %name%
+                data:
+                    title:                      Informations
+                    id:                         ID
+                    create:                     Création
+                    update:                     Modification
+                    name:                       Nom
+                    alias:                      Alias
+                    description:                Description
+                    status:                     Statut
+                url:
+                    title:                      Routes disponibles
+                    admin:
+                        edit:                   Modifier
+                        detail:                 Paramétrer
+                    front:
+                        id:                     Afficher via l'ID
+                        name:                   Afficher via le nom
+                        alias:                  Afficher via l'alias
+                        lite:                   Afficher via l'url simplifiée
+                admin:
+                    title:                      Outils d'administration
+                partner:
+                    title:                      Partenaires
+                    list1:                      Disponibles
+                    list2:                      Sélectionnés
+
+            export:
+                breadcrumb:                     Exporter
+                form:
+                    submit:                     Exporter
+                link:                           Exporter
+                title:                          Exporter des groupes
+
+            import:
+                title:                          Importer des groupes
+                link:                           Importer
+                breadcrumb:                     Importer
+                flash:
+                    ok:                         Les groupes ont bien été importés (%countAdd% ajout(s), %countUpdate% modification(s), %countError% erreur(s)).
+                    ko:                         Les groupes n'ont pas été importés.
+                form:
+                    file:                       Fichier CSV
+                    submit:                     Importer
+
+            deactivate:
+                flash:
+                    ok:                         Le journal a bien été désactivé.
+
+            delete:
+                flash:
+                    ok:                         Le journal a bien été supprimé.
+
+            activate:
+                flash:
+                    ok:                         Le journal a bien été activé.
+
+            undelete:
+                flash:
+                    ok:                         Le journal a bien été restauré.
+
+        front:
+            index:
+                title:                          Groupes de partenaires
+                link:                           Groupes de partenaires
+                breadcrumb:                     Groupes de partenaires
+                nodata:                         Aucune donnée
+                form:
+                    search:                     Rechercher
+                    partner:                    Nombre de partenaires
+                    more:                       Ouvrir
+                table:
+                    header:
+                        name:                   Nom
+                        action:                 Actions
+                    action:
+                        detail:                 Détail
+                        delete:                 Supprimer
+                    confirm:
+                        delete:                 Confirmer la suppression du journal ?
+
+            create:
+                title:                          Ajouter
+                link:                           Ajouter
+                breadcrumb:                     Ajouter un journal
+                flash:
+                    ok:                         Le journal a bien été créé.
+                    ko:                         Le journal n'a pas été créé.
+                form:
+                    name:                       Nom
+                    description:                Description
+                    submit:
+                        save:                   Sauvegarder
+                        new:                    Sauvegarder et ajouter
+                        duplicate:              Sauvegarder et dupliquer
+                        quit:                   Sauvegarder et quitter
+                        cancel:                 Annuler
+                    alert:
+                        title:                  Information
+                        text:                   L'ajout d'un journal nécessite la validation d'un modérateur pour être affiché.
+
+            update:
+                title:                          Modifier
+                link:                           Modifier
+                breadcrumb:                     Modifier
+                flash:
+                    ok:                         Le journal a bien été modifié.
+                    ko:                         Le journal n'a pas été modifié.
+                form:
+                    name:                       Nom
+                    description:                Description
+                    submit:
+                        save:                   Sauvegarder
+                        new:                    Sauvegarder et ajouter
+                        duplicate:              Sauvegarder et dupliquer
+                        quit:                   Sauvegarder et quitter
+                        cancel:                 Annuler
+                    alert:
+                        title:                  Information
+                        text:                   La modification d'un journal nécessite la validation d'un modérateur pour être affiché.
+
+            detail:
+                title:                          %name%
+                link:                           Détail
+                breadcrumb:                     %name%
+                data:
+                    title:                      Informations
+                    create:                     Création
+                    update:                     Modification
+                    name:                       Nom
+                    alias:                      Alias
+                    description:                Description
+
+            delete:
+                flash:
+                    ok:                         Le journal a bien été supprimé.
+
+        api:
+            index:
+                title:                          Groupes de partenaires
+
+        pagination:
+            counter:                            Nombre de groupes: %count% / %all%
+
+        error:
+            unknown:                            Le groupe n'existe pas.
+            delete:                             Le groupe n'existe pas.
+            forbidden:                          Droits insuffisants.

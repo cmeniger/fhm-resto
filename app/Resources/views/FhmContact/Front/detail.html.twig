@@ -1,0 +1,41 @@
+{% trans_default_domain instance.domain %}
+{% extends "::FhmFhm/Front/detail.html.twig" %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="http://maps.google.com/maps/api/js?libraries=places&sensor=false"></script>
+{% endblock %}
+
+{% block content %}
+    <div id="content_data" class="row-master contact">
+        {% if document.getProfile() %}
+            <div class="row contact-profile-header">
+                <div class="column small-10 medium-6 small-centered text-center">
+                    <h2>LA TEAM</h2>
+                </div>
+            </div>
+            <div class="row">
+                <div class="column contact-profile-row">
+                    {% include ['::FhmContact/Template/bloc.profile.' ~ document.getProfileTemplate() ~ '.html.twig', '::FhmContact/Template/bloc.profile.html.twig'] %}
+                </div>
+            </div>
+        {% else %}
+            {% include('::FhmContact/Template/bloc.form.html.twig') %}
+        {% endif %}
+    </div>
+{% endblock %}
+
+{% block body_javascripts %}
+    {{ parent() }}
+    <script>
+        {% if not document.getProfile() and document.getLatitude() %}
+        $(document).addresspicker({
+            view: {
+                map: 'map-{{ document.getId() }}',
+                lat: {{ document.getLatitude() }},
+                lng: {{ document.getLongitude() }}
+            }
+        });
+        {% endif %}
+    </script>
+{% endblock %}

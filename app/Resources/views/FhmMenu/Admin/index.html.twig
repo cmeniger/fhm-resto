@@ -1,0 +1,12 @@
+{% trans_default_domain instance.domain %}
+{% extends "::FhmFhm/Admin/index.html.twig" %}
+
+{% block content_data_header %}
+    {{ parent() }}
+    <th>{{ (instance.translation ~ '.admin.index.table.header.route')|trans }}{{ macroSort.print('route', sort) }}</th>
+{% endblock %}
+
+{% block content_data_body %}
+    {{ parent() }}
+    <td>{{ document.getRoute() }}</td>
+{% endblock %}

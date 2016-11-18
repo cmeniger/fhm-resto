@@ -1,0 +1,1525 @@
+workflow:
+    admin:
+        index:
+            title:                              Gestion des workflows
+            link:                               Workflows
+            breadcrumb:                         Workflows
+            nodata:                             Aucune donnée
+            form:
+                search:                         Rechercher
+            table:
+                header:
+                    name:                       Nom
+                    task:                       Tâches
+                    comment:                    Commentaires
+                    log:                        Logs
+                    step:                       Etape
+                    state:                      Etat
+                    action:                     Actions
+                    status:                     Statut
+                action:
+                    activate:                   Activer
+                    deactivate:                 Désactiver
+                    delete:                     Supprimer
+                    detail:                     Paramétrer
+                    duplicate:                  Dupliquer
+                    undelete:                   Restaurer
+                    update:                     Modifier
+                    preview:                    Aperçu
+                confirm:
+                    activate:                   Confirmer l'activation du workflow ?
+                    deactivate:                 Confirmer la désactivation du workflow ?
+                    delete:                     Confirmer la suppression du workflow ?
+                    undelete:                   Confirmer le déblocage du workflow ?
+
+        create:
+            title:                              Ajouter
+            link:                               Ajouter
+            breadcrumb:                         Ajouter un workflow
+            flash:
+                ok:                             Le workflow a bien été créé.
+                ko:                             Le workflow n'a pas été créé.
+            form:
+                name:                           Nom
+                description:                    Description
+                tasks:                          Tâches
+                active:                         Activer
+                share:                          Partager
+                global:                         Globale
+                submit:
+                    save:                       Sauvegarder
+                    new:                        Sauvegarder et ajouter
+                    duplicate:                  Sauvegarder et dupliquer
+                    quit:                       Sauvegarder et quitter
+                    config:                     Sauvegarder et paramétrer
+                    cancel:                     Annuler
+                    import:                     Importer
+                    export:                     Exporter
+                fieldset:
+                    data:                       Données
+                    tasks:                      Tâches rattachées
+                    options:                    Options
+
+        update:
+            title:                              Modifier
+            link:                               Modifier
+            breadcrumb:                         Modifier
+            flash:
+                ok:                             Le workflow a bien été modifié.
+                ko:                             Le workflow n'a pas été modifié.
+            form:
+                name:                           Nom
+                description:                    Description
+                tasks:                          Tâches
+                active:                         Activer
+                share:                          Partager
+                global:                         Globale
+                submit:
+                    save:                       Sauvegarder
+                    new:                        Sauvegarder et ajouter
+                    duplicate:                  Sauvegarder et dupliquer
+                    quit:                       Sauvegarder et quitter
+                    config:                     Sauvegarder et paramétrer
+                    cancel:                     Annuler
+                    import:                     Importer
+                    export:                     Exporter
+                    delete:                     Supprimer
+                fieldset:
+                    data:                       Données
+                    tasks:                      Tâches rattachées
+                    options:                    Options
+
+        detail:
+            title:                              %name%
+            link:                               Détail
+            breadcrumb:                         %name%
+            data:
+                title:                          Informations
+                id:                             ID
+                create:                         Création
+                update:                         Modification
+                name:                           Nom
+                alias:                          Alias
+                description:                    Description
+                status:                         Statut
+            url:
+                title:                          Routes disponibles
+                admin:
+                    edit:                       Modifier
+                    detail:                     Paramétrer
+                front:
+                    id:                         Afficher via l'ID
+                    name:                       Afficher via le nom
+                    alias:                      Afficher via l'alias
+                    lite:                       Afficher via l'url simplifiée
+            admin:
+                title:                          Outils d'administration
+
+        export:
+            breadcrumb:                         Exporter
+            form:
+                submit:                         Exporter
+            link:                               Exporter
+            title:                              Exporter des workflows
+
+        import:
+            breadcrumb:                         Importer
+            flash:
+                ok:                             Les workflows ont bien été importés (%countAdd% ajout(s), %countUpdate% modification(s), %countError% erreur(s)).
+                ko:                             Les workflows n'ont pas été importés.
+            form:
+                file:                           Fichier CSV
+                submit:                         Importer
+            link:                               Importer
+            title:                              Importer des workflows
+
+        deactivate:
+            flash:
+                ok:                             Le workflow a bien été désactivé.
+
+        delete:
+            flash:
+                ok:                             Le workflow a bien été supprimé.
+
+        activate:
+            flash:
+                ok:                             Le workflow a bien été activé.
+
+        undelete:
+            flash:
+                ok:                             Le workflow a bien été restauré.
+
+    front:
+        index:
+            title:                              Workflows
+            link:                               Workflows
+            breadcrumb:                         Workflows
+            nodata:                             Aucune donnée
+            form:
+                search:                         Rechercher
+            table:
+                header:
+                    name:                       Nom
+                    action:                     Actions
+                action:
+                    detail:                     Détail
+                    delete:                     Supprimer
+                confirm:
+                    delete:                     Confirmer la suppression du workflow ?
+
+        create:
+            title:                              Ajouter
+            link:                               Ajouter
+            breadcrumb:                         Ajouter un workflow
+            flash:
+                ok:                             Le workflow a bien été créé.
+                ko:                             Le workflow n'a pas été créé.
+            form:
+                name:                           Nom
+                description:                    Description
+                submit:
+                    save:                       Sauvegarder
+                    new:                        Sauvegarder et ajouter
+                    duplicate:                  Sauvegarder et dupliquer
+                    quit:                       Sauvegarder et quitter
+                    cancel:                     Annuler
+                alert:
+                    title:                      Information
+                    text:                       L'ajout d'un workflow nécessite la validation d'un modérateur.
+
+        update:
+            title:                              Modifier
+            link:                               Modifier
+            breadcrumb:                         Modifier
+            flash:
+                ok:                             Le workflow a bien été modifié.
+                ko:                             Le workflow n'a pas été modifié.
+            form:
+                name:                           Nom
+                description:                    Description
+                submit:
+                    save:                       Sauvegarder
+                    new:                        Sauvegarder et ajouter
+                    duplicate:                  Sauvegarder et dupliquer
+                    quit:                       Sauvegarder et quitter
+                    cancel:                     Annuler
+                alert:
+                    title:                      Information
+                    text:                       La modification d'un workflow nécessite la validation d'un modérateur.
+
+        detail:
+            title:                              %name%
+            link:                               Détail
+            breadcrumb:                         %name%
+            data:
+                title:                          Informations
+                create:                         Création
+                update:                         Modification
+                name:                           Nom
+                alias:                          Alias
+                description:                    Description
+
+        delete:
+            flash:
+                ok:                             Le workflow a bien été supprimé.
+
+    api:
+        index:
+            title:                              Workflows
+
+    pagination:
+        counter:                                Nombre de workflows: %count% / %all%
+
+    autocomplete:
+        nodata:                                 Aucun résultat
+
+    error:
+        unknown:                                Le workflow n'existe pas.
+        delete:                                 Le workflow n'existe pas.
+        forbidden:                              Droits insuffisants.
+
+    status:
+        wait:                                   En attente
+        run:                                    En cours
+        finish:                                 Terminé
+        cancel:                                 Annulé
+
+    modal:
+        medias:                                 Pièces jointes
+        comments:                               Commentaires
+        logs:                                   Logs
+        upload:                                 Ajouter des fichiers
+        comment:                                Ajouter un commentaire
+        nodata:                                 Aucune donnée
+        add:                                    Ajouter
+
+    events:
+        error:                                  Une erreur est survenue.
+        validate:                               La tâche est validée.
+        dismiss:                                La tâche est refusée.
+        cancel:                                 Le workflow est annulé.
+        comment:                                Le commentaire est ajouté.
+        media:                                  Le média est ajouté.
+        status:                                 Le statut a été forcé.
+        confirm:
+            validate:                           Confirmer la validation de la tâche ?
+            dismiss:                            Confirmer le refus de la tâche ?
+            cancel:                             Confirmer l'annulation du workflow ?
+            status:                             Confirmer le changement de statut ?
+
+    stats:
+        task:                                   Tâches
+        comment:                                Commentaires
+        media:                                  Médias
+        log:                                    Logs
+
+    step:
+        admin:
+            index:
+                title:                          Gestion des workflows : étapes
+                link:                           Etapes
+                breadcrumb:                     Etapes
+                nodata:                         Aucune donnée
+                form:
+                    search:                     Rechercher
+                table:
+                    header:
+                        name:                   Nom
+                        order:                  Ordre
+                        color:                  Couleur
+                        action:                 Actions
+                        status:                 Statut
+                    action:
+                        activate:               Activer
+                        deactivate:             Désactiver
+                        delete:                 Supprimer
+                        detail:                 Paramétrer
+                        duplicate:              Dupliquer
+                        undelete:               Restaurer
+                        update:                 Modifier
+                    confirm:
+                        activate:               Confirmer l'activation de l'étape ?
+                        deactivate:             Confirmer la désactivation de l'étape ?
+                        delete:                 Confirmer la suppression de l'étape ?
+                        undelete:               Confirmer le déblocage de l'étape ?
+
+            create:
+                title:                          Ajouter
+                link:                           Ajouter
+                breadcrumb:                     Ajouter une étape
+                flash:
+                    ok:                         L'étape a bien été créée.
+                    ko:                         L'étape n'a pas été créée.
+                form:
+                    name:                       Nom
+                    description:                Description
+                    order:                      Ordre
+                    color:                      Couleur
+                    active:                     Activer
+                    share:                      Partager
+                    global:                     Globale
+                    submit:
+                        save:                   Sauvegarder
+                        new:                    Sauvegarder et ajouter
+                        duplicate:              Sauvegarder et dupliquer
+                        quit:                   Sauvegarder et quitter
+                        config:                 Sauvegarder et paramétrer
+                        cancel:                 Annuler
+                        import:                 Importer
+                        export:                 Exporter
+                    fieldset:
+                        data:                   Données
+                        options:                Options
+
+            update:
+                title:                          Modifier
+                link:                           Modifier
+                breadcrumb:                     Modifier
+                flash:
+                    ok:                         L'étape a bien été modifiée.
+                    ko:                         L'étape n'a pas été modifiée.
+                form:
+                    name:                       Nom
+                    description:                Description
+                    order:                      Ordre
+                    color:                      Couleur
+                    active:                     Activer
+                    share:                      Partager
+                    global:                     Globale
+                    submit:
+                        save:                   Sauvegarder
+                        new:                    Sauvegarder et ajouter
+                        duplicate:              Sauvegarder et dupliquer
+                        quit:                   Sauvegarder et quitter
+                        config:                 Sauvegarder et paramétrer
+                        cancel:                 Annuler
+                        import:                 Importer
+                        export:                 Exporter
+                        delete:                 Supprimer
+                    fieldset:
+                        data:                   Données
+                        options:                Options
+
+            detail:
+                title:                          %name%
+                link:                           Détail
+                breadcrumb:                     %name%
+                data:
+                    title:                      Informations
+                    id:                         ID
+                    create:                     Création
+                    update:                     Modification
+                    name:                       Nom
+                    alias:                      Alias
+                    description:                Description
+                    status:                     Statut
+                url:
+                    title:                      Routes disponibles
+                    admin:
+                        edit:                   Modifier
+                        detail:                 Paramétrer
+                    front:
+                        id:                     Afficher via l'ID
+                        name:                   Afficher via le nom
+                        alias:                  Afficher via l'alias
+                        lite:                   Afficher via l'url simplifiée
+                admin:
+                    title:                      Outils d'administration
+
+            export:
+                breadcrumb:                     Exporter
+                form:
+                    submit:                     Exporter
+                link:                           Exporter
+                title:                          Exporter des étapes
+
+            import:
+                breadcrumb:                     Importer
+                flash:
+                    ok:                         Les étapes ont bien été importées (%countAdd% ajout(s), %countUpdate% modification(s), %countError% erreur(s)).
+                    ko:                         Les étapes n'ont pas été importées.
+                form:
+                    file:                       Fichier CSV
+                    submit:                     Importer
+                link:                           Importer
+                title:                          Importer des étapes
+
+            deactivate:
+                flash:
+                    ok:                         L'étape a bien été désactivée.
+
+            delete:
+                flash:
+                    ok:                         L'étape a bien été supprimée.
+
+            activate:
+                flash:
+                    ok:                         L'étape a bien été activée.
+
+            undelete:
+                flash:
+                    ok:                         L'étape a bien été restaurée.
+
+        front:
+            index:
+                title:                          Workflow : étapes
+                link:                           Etapes
+                breadcrumb:                     Etapes
+                nodata:                         Aucune donnée
+                form:
+                    search:                     Rechercher
+                table:
+                    header:
+                        name:                   Nom
+                        action:                 Actions
+                    action:
+                        detail:                 Détail
+                        delete:                 Supprimer
+                    confirm:
+                        delete:                 Confirmer la suppression de l'étape ?
+
+            create:
+                title:                          Ajouter
+                link:                           Ajouter
+                breadcrumb:                     Ajouter une étape
+                flash:
+                    ok:                         L'étape a bien été créée.
+                    ko:                         L'étape n'a pas été créée.
+                form:
+                    name:                       Nom
+                    description:                Description
+                    submit:
+                        save:                   Sauvegarder
+                        new:                    Sauvegarder et ajouter
+                        duplicate:              Sauvegarder et dupliquer
+                        quit:                   Sauvegarder et quitter
+                        cancel:                 Annuler
+                    alert:
+                        title:                  Information
+                        text:                   L'ajout d'une étape nécessite la validation d'un modérateur.
+
+            update:
+                title:                          Modifier
+                link:                           Modifier
+                breadcrumb:                     Modifier
+                flash:
+                    ok:                         L'étape a bien été modifiée.
+                    ko:                         L'étape n'a pas été modifiée.
+                form:
+                    name:                       Nom
+                    description:                Description
+                    submit:
+                        save:                   Sauvegarder
+                        new:                    Sauvegarder et ajouter
+                        duplicate:              Sauvegarder et dupliquer
+                        quit:                   Sauvegarder et quitter
+                        cancel:                 Annuler
+                    alert:
+                        title:                  Information
+                        text:                   La modification d'une étape nécessite la validation d'un modérateur.
+
+            detail:
+                title:                          %name%
+                link:                           Détail
+                breadcrumb:                     %name%
+                data:
+                    title:                      Informations
+                    create:                     Création
+                    update:                     Modification
+                    name:                       Nom
+                    alias:                      Alias
+                    description:                Description
+
+            delete:
+                flash:
+                    ok:                         L'étape a bien été supprimée.
+
+        api:
+            index:
+                title:                          Etapes
+
+        pagination:
+            counter:                            Nombre d'étapes: %count% / %all%
+
+        autocomplete:
+            nodata:                             Aucun résultat
+
+        error:
+            unknown:                            L'étape n'existe pas.
+            delete:                             L'étape n'existe pas.
+            forbidden:                          Droits insuffisants.
+
+    task:
+        admin:
+            index:
+                title:                          Gestion des workflows : tâches
+                link:                           Tâches
+                breadcrumb:                     Tâches
+                nodata:                         Aucune donnée
+                form:
+                    search:                     Rechercher
+                table:
+                    header:
+                        name:                   Nom
+                        parent:                 Parents
+                        son:                    Enfants
+                        comment:                Commentaires
+                        log:                    Logs
+                        step:                   Etape
+                        state:                  Etat
+                        buttons:                Boutons
+                        action:                 Actions
+                        status:                 Statut
+                    action:
+                        activate:               Activer
+                        deactivate:             Désactiver
+                        delete:                 Supprimer
+                        detail:                 Paramétrer
+                        duplicate:              Dupliquer
+                        undelete:               Restaurer
+                        update:                 Modifier
+                    confirm:
+                        activate:               Confirmer l'activation de la tâche ?
+                        deactivate:             Confirmer la désactivation de la tâche ?
+                        delete:                 Confirmer la suppression de la tâche ?
+                        undelete:               Confirmer le déblocage de la tâche ?
+
+            create:
+                title:                          Ajouter
+                link:                           Ajouter
+                breadcrumb:                     Ajouter une tâche
+                flash:
+                    ok:                         La tâche a bien été créée.
+                    ko:                         La tâche n'a pas été créée.
+                form:
+                    name:                       Nom
+                    description:                Description
+                    workflow:                   Workflow
+                    step:                       Etape
+                    action:                     Action
+                    parents:                    Parents
+                    sons:                       Enfants
+                    active:                     Activer
+                    share:                      Partager
+                    global:                     Globale
+                    submit:
+                        save:                   Sauvegarder
+                        new:                    Sauvegarder et ajouter
+                        duplicate:              Sauvegarder et dupliquer
+                        quit:                   Sauvegarder et quitter
+                        config:                 Sauvegarder et paramétrer
+                        cancel:                 Annuler
+                        import:                 Importer
+                        export:                 Exporter
+                    fieldset:
+                        data:                   Données
+                        options:                Options
+                        tasks:                  Tâches rattachées
+
+            update:
+                title:                          Modifier
+                link:                           Modifier
+                breadcrumb:                     Modifier
+                flash:
+                    ok:                         La tâche a bien été modifiée.
+                    ko:                         La tâche n'a pas été modifiée.
+                form:
+                    name:                       Nom
+                    description:                Description
+                    workflow:                   Workflow
+                    step:                       Etape
+                    action:                     Action
+                    parents:                    Parents
+                    sons:                       Enfants
+                    active:                     Activer
+                    share:                      Partager
+                    global:                     Globale
+                    submit:
+                        save:                   Sauvegarder
+                        new:                    Sauvegarder et ajouter
+                        duplicate:              Sauvegarder et dupliquer
+                        quit:                   Sauvegarder et quitter
+                        config:                 Sauvegarder et paramétrer
+                        cancel:                 Annuler
+                        import:                 Importer
+                        export:                 Exporter
+                        delete:                 Supprimer
+                    fieldset:
+                        data:                   Données
+                        options:                Options
+                        tasks:                  Tâches rattachées
+
+            detail:
+                title:                          %name%
+                link:                           Détail
+                breadcrumb:                     %name%
+                data:
+                    title:                      Informations
+                    id:                         ID
+                    create:                     Création
+                    update:                     Modification
+                    name:                       Nom
+                    alias:                      Alias
+                    description:                Description
+                    status:                     Statut
+                url:
+                    title:                      Routes disponibles
+                    admin:
+                        edit:                   Modifier
+                        detail:                 Paramétrer
+                    front:
+                        id:                     Afficher via l'ID
+                        name:                   Afficher via le nom
+                        alias:                  Afficher via l'alias
+                        lite:                   Afficher via l'url simplifiée
+                admin:
+                    title:                      Outils d'administration
+
+            export:
+                breadcrumb:                     Exporter
+                form:
+                    submit:                     Exporter
+                link:                           Exporter
+                title:                          Exporter des tâches
+
+            import:
+                breadcrumb:                     Importer
+                flash:
+                    ok:                         Les tâches ont bien été importées (%countAdd% ajout(s), %countUpdate% modification(s), %countError% erreur(s)).
+                    ko:                         Les tâches n'ont pas été importées.
+                form:
+                    file:                       Fichier CSV
+                    submit:                     Importer
+                link:                           Importer
+                title:                          Importer des tâches
+
+            deactivate:
+                flash:
+                    ok:                         La tâche a bien été désactivée.
+
+            delete:
+                flash:
+                    ok:                         La tâche a bien été supprimée.
+
+            activate:
+                flash:
+                    ok:                         La tâche a bien été activée.
+
+            undelete:
+                flash:
+                    ok:                         La tâche a bien été restaurée.
+
+        front:
+            index:
+                title:                          Workflow : tâches
+                link:                           Tâches
+                breadcrumb:                     Tâches
+                nodata:                         Aucune donnée
+                form:
+                    search:                     Rechercher
+                table:
+                    header:
+                        name:                   Nom
+                        action:                 Actions
+                    action:
+                        detail:                 Détail
+                        delete:                 Supprimer
+                    confirm:
+                        delete:                 Confirmer la suppression de la tâche ?
+
+            create:
+                title:                          Ajouter
+                link:                           Ajouter
+                breadcrumb:                     Ajouter une tâche
+                flash:
+                    ok:                         La tâche a bien été créée.
+                    ko:                         La tâche n'a pas été créée.
+                form:
+                    name:                       Nom
+                    description:                Description
+                    submit:
+                        save:                   Sauvegarder
+                        new:                    Sauvegarder et ajouter
+                        duplicate:              Sauvegarder et dupliquer
+                        quit:                   Sauvegarder et quitter
+                        cancel:                 Annuler
+                    alert:
+                        title:                  Information
+                        text:                   L'ajout d'une tâche nécessite la validation d'un modérateur.
+
+            update:
+                title:                          Modifier
+                link:                           Modifier
+                breadcrumb:                     Modifier
+                flash:
+                    ok:                         La tâche a bien été modifiée.
+                    ko:                         La tâche n'a pas été modifiée.
+                form:
+                    name:                       Nom
+                    description:                Description
+                    submit:
+                        save:                   Sauvegarder
+                        new:                    Sauvegarder et ajouter
+                        duplicate:              Sauvegarder et dupliquer
+                        quit:                   Sauvegarder et quitter
+                        cancel:                 Annuler
+                    alert:
+                        title:                  Information
+                        text:                   La modification d'une tâche nécessite la validation d'un modérateur.
+
+            detail:
+                title:                          %name%
+                link:                           Détail
+                breadcrumb:                     %name%
+                data:
+                    title:                      Informations
+                    create:                     Création
+                    update:                     Modification
+                    name:                       Nom
+                    alias:                      Alias
+                    description:                Description
+
+            delete:
+                flash:
+                    ok:                         La tâche a bien été supprimée.
+
+        api:
+            index:
+                title:                          Tâches
+
+        pagination:
+            counter:                            Nombre de tâches: %count% / %all%
+
+        autocomplete:
+            nodata:                             Aucun résultat
+
+        error:
+            unknown:                            La tâche n'existe pas.
+            delete:                             La tâche n'existe pas.
+            forbidden:                          Droits insuffisants.
+
+    action:
+        admin:
+            index:
+                title:                          Gestion des workflows : actions
+                link:                           Actions
+                breadcrumb:                     Actions
+                nodata:                         Aucune donnée
+                form:
+                    search:                     Rechercher
+                table:
+                    header:
+                        name:                   Nom
+                        tasks:                  Tâches
+                        buttons:                Boutons
+                        action:                 Actions
+                        status:                 Statut
+                    action:
+                        activate:               Activer
+                        deactivate:             Désactiver
+                        delete:                 Supprimer
+                        detail:                 Paramétrer
+                        duplicate:              Dupliquer
+                        undelete:               Restaurer
+                        update:                 Modifier
+                    confirm:
+                        activate:               Confirmer l'activation de l'action ?
+                        deactivate:             Confirmer la désactivation de l'action ?
+                        delete:                 Confirmer la suppression de l'action ?
+                        undelete:               Confirmer le déblocage de l'action ?
+
+            create:
+                title:                          Ajouter
+                link:                           Ajouter
+                breadcrumb:                     Ajouter une action
+                flash:
+                    ok:                         L'action a bien été créée.
+                    ko:                         L'action n'a pas été créée.
+                form:
+                    name:                       Nom
+                    description:                Description
+                    validate_check:             Activer
+                    validate_users:             Utilisateurs
+                    dismiss_check:              Activer
+                    dismiss_users:              Utilisateurs
+                    cancel_check:               Activer
+                    cancel_users:               Utilisateurs
+                    upload_check:               Activer
+                    upload_users:               Utilisateurs
+                    download_check:             Activer
+                    download_users:             Utilisateurs
+                    comment_check:              Activer
+                    comment_users:              Utilisateurs
+                    tasks:                      Tâches
+                    active:                     Activer
+                    share:                      Partager
+                    global:                     Globale
+                    submit:
+                        save:                   Sauvegarder
+                        new:                    Sauvegarder et ajouter
+                        duplicate:              Sauvegarder et dupliquer
+                        quit:                   Sauvegarder et quitter
+                        config:                 Sauvegarder et paramétrer
+                        cancel:                 Annuler
+                        import:                 Importer
+                        export:                 Exporter
+                    fieldset:
+                        data:                   Données
+                        options:                Options
+                        validate:               Valider
+                        dismiss:                Rejeter
+                        cancel:                 Annuler
+                        upload:                 Ajouter des documents
+                        download:               Télécharger les documents
+                        comment:                Ajouter des commentaires
+                        tasks:                  Tâches rattachées
+
+            update:
+                title:                          Modifier
+                link:                           Modifier
+                breadcrumb:                     Modifier
+                flash:
+                    ok:                         L'action a bien été modifiée.
+                    ko:                         L'action n'a pas été modifiée.
+                form:
+                    name:                       Nom
+                    description:                Description
+                    validate_check:             Activer
+                    validate_users:             Utilisateurs
+                    dismiss_check:              Activer
+                    dismiss_users:              Utilisateurs
+                    cancel_check:               Activer
+                    cancel_users:               Utilisateurs
+                    upload_check:               Activer
+                    upload_users:               Utilisateurs
+                    download_check:             Activer
+                    download_users:             Utilisateurs
+                    comment_check:              Activer
+                    comment_users:              Utilisateurs
+                    tasks:                      Tâches
+                    active:                     Activer
+                    share:                      Partager
+                    global:                     Globale
+                    submit:
+                        save:                   Sauvegarder
+                        new:                    Sauvegarder et ajouter
+                        duplicate:              Sauvegarder et dupliquer
+                        quit:                   Sauvegarder et quitter
+                        config:                 Sauvegarder et paramétrer
+                        cancel:                 Annuler
+                        import:                 Importer
+                        export:                 Exporter
+                        delete:                 Supprimer
+                    fieldset:
+                        data:                   Données
+                        options:                Options
+                        validate:               Valider
+                        dismiss:                Rejeter
+                        cancel:                 Annuler
+                        upload:                 Ajouter des documents
+                        download:               Télécharger les documents
+                        comment:                Ajouter des commentaires
+                        tasks:                  Tâches rattachées
+
+            detail:
+                title:                          %name%
+                link:                           Détail
+                breadcrumb:                     %name%
+                data:
+                    title:                      Informations
+                    id:                         ID
+                    create:                     Création
+                    update:                     Modification
+                    name:                       Nom
+                    alias:                      Alias
+                    description:                Description
+                    status:                     Statut
+                url:
+                    title:                      Routes disponibles
+                    admin:
+                        edit:                   Modifier
+                        detail:                 Paramétrer
+                    front:
+                        id:                     Afficher via l'ID
+                        name:                   Afficher via le nom
+                        alias:                  Afficher via l'alias
+                        lite:                   Afficher via l'url simplifiée
+                admin:
+                    title:                      Outils d'administration
+
+            export:
+                breadcrumb:                     Exporter
+                form:
+                    submit:                     Exporter
+                link:                           Exporter
+                title:                          Exporter des actions
+
+            import:
+                breadcrumb:                     Importer
+                flash:
+                    ok:                         Les actions ont bien été importées (%countAdd% ajout(s), %countUpdate% modification(s), %countError% erreur(s)).
+                    ko:                         Les actions n'ont pas été importées.
+                form:
+                    file:                       Fichier CSV
+                    submit:                     Importer
+                link:                           Importer
+                title:                          Importer des actions
+
+            deactivate:
+                flash:
+                    ok:                         L'action a bien été désactivée.
+
+            delete:
+                flash:
+                    ok:                         L'action a bien été supprimée.
+
+            activate:
+                flash:
+                    ok:                         L'action a bien été activée.
+
+            undelete:
+                flash:
+                    ok:                         L'action a bien été restaurée.
+
+        front:
+            index:
+                title:                          Workflow : actions
+                link:                           Actions
+                breadcrumb:                     Actions
+                nodata:                         Aucune donnée
+                form:
+                    search:                     Rechercher
+                table:
+                    header:
+                        name:                   Nom
+                        action:                 Actions
+                    action:
+                        detail:                 Détail
+                        delete:                 Supprimer
+                    confirm:
+                        delete:                 Confirmer la suppression de l'action ?
+
+            create:
+                title:                          Ajouter
+                link:                           Ajouter
+                breadcrumb:                     Ajouter une action
+                flash:
+                    ok:                         L'action a bien été créée.
+                    ko:                         L'action n'a pas été créée.
+                form:
+                    name:                       Nom
+                    description:                Description
+                    submit:
+                        save:                   Sauvegarder
+                        new:                    Sauvegarder et ajouter
+                        duplicate:              Sauvegarder et dupliquer
+                        quit:                   Sauvegarder et quitter
+                        cancel:                 Annuler
+                    alert:
+                        title:                  Information
+                        text:                   L'ajout d'une action nécessite la validation d'un modérateur.
+
+            update:
+                title:                          Modifier
+                link:                           Modifier
+                breadcrumb:                     Modifier
+                flash:
+                    ok:                         L'action a bien été modifiée.
+                    ko:                         L'action n'a pas été modifiée.
+                form:
+                    name:                       Nom
+                    description:                Description
+                    submit:
+                        save:                   Sauvegarder
+                        new:                    Sauvegarder et ajouter
+                        duplicate:              Sauvegarder et dupliquer
+                        quit:                   Sauvegarder et quitter
+                        cancel:                 Annuler
+                    alert:
+                        title:                  Information
+                        text:                   La modification d'une action nécessite la validation d'un modérateur.
+
+            detail:
+                title:                          %name%
+                link:                           Détail
+                breadcrumb:                     %name%
+                data:
+                    title:                      Informations
+                    create:                     Création
+                    update:                     Modification
+                    name:                       Nom
+                    alias:                      Alias
+                    description:                Description
+
+            delete:
+                flash:
+                    ok:                         L'action a bien été supprimée.
+
+        api:
+            index:
+                title:                          Actions
+
+        pagination:
+            counter:                            Nombre de actions: %count% / %all%
+
+        autocomplete:
+            nodata:                             Aucun résultat
+
+        error:
+            unknown:                            L'action n'existe pas.
+            delete:                             L'action n'existe pas.
+            forbidden:                          Droits insuffisants.
+
+        buttons:
+            validate:                           Valider
+            dismiss:                            Rejeter
+            cancel:                             Annuler
+            upload:                             Ajouter des documents
+            download:                           Télécharger les documents
+            comment:                            Commentaires
+            attachment:                         Pièces jointes
+            expand:                             Détail
+            link:                               Liens
+            workflow:                           Workflow
+
+    log:
+        admin:
+            index:
+                title:                          Gestion des workflows : logs
+                link:                           Logs
+                breadcrumb:                     Logs
+                nodata:                         Aucune donnée
+                form:
+                    search:                     Rechercher
+                table:
+                    header:
+                        name:                   Nom
+                        date:                   Date
+                        type:                   Type
+                        description:            Description
+                        task:                   Tâche
+                        action:                 Actions
+                        status:                 Statut
+                    action:
+                        activate:               Activer
+                        deactivate:             Désactiver
+                        delete:                 Supprimer
+                        detail:                 Paramétrer
+                        duplicate:              Dupliquer
+                        undelete:               Restaurer
+                        update:                 Modifier
+                    confirm:
+                        activate:               Confirmer l'activation du log ?
+                        deactivate:             Confirmer la désactivation du log ?
+                        delete:                 Confirmer la suppression du log ?
+                        undelete:               Confirmer le déblocage du log ?
+
+            create:
+                title:                          Ajouter
+                link:                           Ajouter
+                breadcrumb:                     Ajouter un log
+                flash:
+                    ok:                         Le log a bien été créé.
+                    ko:                         Le log n'a pas été créé.
+                form:
+                    name:                       Nom
+                    description:                Description
+                    type:                       Type
+                    task:                       Tâche
+                    active:                     Activer
+                    share:                      Partager
+                    global:                     Globale
+                    submit:
+                        save:                   Sauvegarder
+                        new:                    Sauvegarder et ajouter
+                        duplicate:              Sauvegarder et dupliquer
+                        quit:                   Sauvegarder et quitter
+                        config:                 Sauvegarder et paramétrer
+                        cancel:                 Annuler
+                        import:                 Importer
+                        export:                 Exporter
+                    fieldset:
+                        data:                   Données
+                        options:                Options
+
+            update:
+                title:                          Modifier
+                link:                           Modifier
+                breadcrumb:                     Modifier
+                flash:
+                    ok:                         Le log a bien été modifié.
+                    ko:                         Le log n'a pas été modifié.
+                form:
+                    name:                       Nom
+                    description:                Description
+                    type:                       Type
+                    task:                       Tâche
+                    active:                     Activer
+                    share:                      Partager
+                    global:                     Globale
+                    submit:
+                        save:                   Sauvegarder
+                        new:                    Sauvegarder et ajouter
+                        duplicate:              Sauvegarder et dupliquer
+                        quit:                   Sauvegarder et quitter
+                        config:                 Sauvegarder et paramétrer
+                        cancel:                 Annuler
+                        import:                 Importer
+                        export:                 Exporter
+                        delete:                 Supprimer
+                    fieldset:
+                        data:                   Données
+                        options:                Options
+
+            detail:
+                title:                          %name%
+                link:                           Détail
+                breadcrumb:                     %name%
+                data:
+                    title:                      Informations
+                    id:                         ID
+                    create:                     Création
+                    update:                     Modification
+                    name:                       Nom
+                    alias:                      Alias
+                    description:                Description
+                    status:                     Statut
+                url:
+                    title:                      Routes disponibles
+                    admin:
+                        edit:                   Modifier
+                        detail:                 Paramétrer
+                    front:
+                        id:                     Afficher via l'ID
+                        name:                   Afficher via le nom
+                        alias:                  Afficher via l'alias
+                        lite:                   Afficher via l'url simplifiée
+                admin:
+                    title:                      Outils d'administration
+
+            export:
+                breadcrumb:                     Exporter
+                form:
+                    submit:                     Exporter
+                link:                           Exporter
+                title:                          Exporter des logs
+
+            import:
+                breadcrumb:                     Importer
+                flash:
+                    ok:                         Les logs ont bien été importés (%countAdd% ajout(s), %countUpdate% modification(s), %countError% erreur(s)).
+                    ko:                         Les logs n'ont pas été importés.
+                form:
+                    file:                       Fichier CSV
+                    submit:                     Importer
+                link:                           Importer
+                title:                          Importer des logs
+
+            deactivate:
+                flash:
+                    ok:                         Le log a bien été désactivé.
+
+            delete:
+                flash:
+                    ok:                         Le log a bien été supprimé.
+
+            activate:
+                flash:
+                    ok:                         Le log a bien été activé.
+
+            undelete:
+                flash:
+                    ok:                         Le log a bien été restauré.
+
+        front:
+            index:
+                title:                          Workflow : logs
+                link:                           Logs
+                breadcrumb:                     Logs
+                nodata:                         Aucune donnée
+                form:
+                    search:                     Rechercher
+                table:
+                    header:
+                        name:                   Nom
+                        action:                 Actions
+                    action:
+                        detail:                 Détail
+                        delete:                 Supprimer
+                    confirm:
+                        delete:                 Confirmer la suppression du log ?
+
+            create:
+                title:                          Ajouter
+                link:                           Ajouter
+                breadcrumb:                     Ajouter un log
+                flash:
+                    ok:                         Le log a bien été créé.
+                    ko:                         Le log n'a pas été créé.
+                form:
+                    name:                       Nom
+                    description:                Description
+                    submit:
+                        save:                   Sauvegarder
+                        new:                    Sauvegarder et ajouter
+                        duplicate:              Sauvegarder et dupliquer
+                        quit:                   Sauvegarder et quitter
+                        cancel:                 Annuler
+                    alert:
+                        title:                  Information
+                        text:                   L'ajout d'un log nécessite la validation d'un modérateur.
+
+            update:
+                title:                          Modifier
+                link:                           Modifier
+                breadcrumb:                     Modifier
+                flash:
+                    ok:                         Le log a bien été modifié.
+                    ko:                         Le log n'a pas été modifié.
+                form:
+                    name:                       Nom
+                    description:                Description
+                    submit:
+                        save:                   Sauvegarder
+                        new:                    Sauvegarder et ajouter
+                        duplicate:              Sauvegarder et dupliquer
+                        quit:                   Sauvegarder et quitter
+                        cancel:                 Annuler
+                    alert:
+                        title:                  Information
+                        text:                   La modification d'un log nécessite la validation d'un modérateur.
+
+            detail:
+                title:                          %name%
+                link:                           Détail
+                breadcrumb:                     %name%
+                data:
+                    title:                      Informations
+                    create:                     Création
+                    update:                     Modification
+                    name:                       Nom
+                    alias:                      Alias
+                    description:                Description
+
+            delete:
+                flash:
+                    ok:                         Le log a bien été supprimé.
+
+        api:
+            index:
+                title:                          Workflow : logs
+
+        pagination:
+            counter:                            Nombre de logs: %count% / %all%
+
+        autocomplete:
+            nodata:                             Aucun résultat
+
+        error:
+            unknown:                            Le log n'existe pas.
+            delete:                             Le log n'existe pas.
+            forbidden:                          Droits insuffisants.
+
+        type:
+            0:                                  autre
+            1:                                  système
+            2:                                  tâche > action > valider
+            3:                                  tâche > action > refuser
+            4:                                  tâche > action > annuler
+            5:                                  tâche > commentaire > ajouter
+            6:                                  tâche > média > ajouter
+
+        text:
+            status:                             Changement de statut : %before% > %after%
+            media:                              Ajout d'un nouveau fichier : %name%
+            filter:                             Filtrer :
+
+    comment:
+        admin:
+            index:
+                title:                          Gestion des workflows : commentaires
+                link:                           Commentaires
+                breadcrumb:                     Commentaires
+                nodata:                         Aucune donnée
+                form:
+                    search:                     Rechercher
+                table:
+                    header:
+                        name:                   Nom
+                        action:                 Actions
+                        status:                 Statut
+                    action:
+                        activate:               Activer
+                        deactivate:             Désactiver
+                        delete:                 Supprimer
+                        detail:                 Paramétrer
+                        duplicate:              Dupliquer
+                        undelete:               Restaurer
+                        update:                 Modifier
+                    confirm:
+                        activate:               Confirmer l'activation du commentaire ?
+                        deactivate:             Confirmer la désactivation du commentaire ?
+                        delete:                 Confirmer la suppression du commentaire ?
+                        undelete:               Confirmer le déblocage du commentaire ?
+
+            create:
+                title:                          Ajouter
+                link:                           Ajouter
+                breadcrumb:                     Ajouter un commentaire
+                flash:
+                    ok:                         Le commentaire a bien été créé.
+                    ko:                         Le commentaire n'a pas été créé.
+                form:
+                    name:                       Nom
+                    description:                Description
+                    active:                     Activer
+                    share:                      Partager
+                    global:                     Globale
+                    submit:
+                        save:                   Sauvegarder
+                        new:                    Sauvegarder et ajouter
+                        duplicate:              Sauvegarder et dupliquer
+                        quit:                   Sauvegarder et quitter
+                        config:                 Sauvegarder et paramétrer
+                        cancel:                 Annuler
+                        import:                 Importer
+                        export:                 Exporter
+                    fieldset:
+                        data:                   Données
+                        options:                Options
+
+            update:
+                title:                          Modifier
+                link:                           Modifier
+                breadcrumb:                     Modifier
+                flash:
+                    ok:                         Le commentaire a bien été modifié.
+                    ko:                         Le commentaire n'a pas été modifié.
+                form:
+                    name:                       Nom
+                    description:                Description
+                    active:                     Activer
+                    share:                      Partager
+                    global:                     Globale
+                    submit:
+                        save:                   Sauvegarder
+                        new:                    Sauvegarder et ajouter
+                        duplicate:              Sauvegarder et dupliquer
+                        quit:                   Sauvegarder et quitter
+                        config:                 Sauvegarder et paramétrer
+                        cancel:                 Annuler
+                        import:                 Importer
+                        export:                 Exporter
+                        delete:                 Supprimer
+                    fieldset:
+                        data:                   Données
+                        options:                Options
+
+            detail:
+                title:                          %name%
+                link:                           Détail
+                breadcrumb:                     %name%
+                data:
+                    title:                      Informations
+                    id:                         ID
+                    create:                     Création
+                    update:                     Modification
+                    name:                       Nom
+                    alias:                      Alias
+                    description:                Description
+                    status:                     Statut
+                url:
+                    title:                      Routes disponibles
+                    admin:
+                        edit:                   Modifier
+                        detail:                 Paramétrer
+                    front:
+                        id:                     Afficher via l'ID
+                        name:                   Afficher via le nom
+                        alias:                  Afficher via l'alias
+                        lite:                   Afficher via l'url simplifiée
+                admin:
+                    title:                      Outils d'administration
+
+            export:
+                breadcrumb:                     Exporter
+                form:
+                    submit:                     Exporter
+                link:                           Exporter
+                title:                          Exporter des commentaires
+
+            import:
+                breadcrumb:                     Importer
+                flash:
+                    ok:                         Les commentaires ont bien été importés (%countAdd% ajout(s), %countUpdate% modification(s), %countError% erreur(s)).
+                    ko:                         Les commentaires n'ont pas été importés.
+                form:
+                    file:                       Fichier CSV
+                    submit:                     Importer
+                link:                           Importer
+                title:                          Importer des commentaires
+
+            deactivate:
+                flash:
+                    ok:                         Le commentaire a bien été désactivé.
+
+            delete:
+                flash:
+                    ok:                         Le commentaire a bien été supprimé.
+
+            activate:
+                flash:
+                    ok:                         Le commentaire a bien été activé.
+
+            undelete:
+                flash:
+                    ok:                         Le commentaire a bien été restauré.
+
+        front:
+            index:
+                title:                          Workflow : commentaires
+                link:                           Commentaires
+                breadcrumb:                     Commentaires
+                nodata:                         Aucune donnée
+                form:
+                    search:                     Rechercher
+                table:
+                    header:
+                        name:                   Nom
+                        action:                 Actions
+                    action:
+                        detail:                 Détail
+                        delete:                 Supprimer
+                    confirm:
+                        delete:                 Confirmer la suppression du commentaire ?
+
+            create:
+                title:                          Ajouter
+                link:                           Ajouter
+                breadcrumb:                     Ajouter un commentaire
+                flash:
+                    ok:                         Le commentaire a bien été créé.
+                    ko:                         Le commentaire n'a pas été créé.
+                form:
+                    name:                       Nom
+                    description:                Description
+                    submit:
+                        save:                   Sauvegarder
+                        new:                    Sauvegarder et ajouter
+                        duplicate:              Sauvegarder et dupliquer
+                        quit:                   Sauvegarder et quitter
+                        cancel:                 Annuler
+                    alert:
+                        title:                  Information
+                        text:                   L'ajout d'un commentaire nécessite la validation d'un modérateur.
+
+            update:
+                title:                          Modifier
+                link:                           Modifier
+                breadcrumb:                     Modifier
+                flash:
+                    ok:                         Le commentaire a bien été modifié.
+                    ko:                         Le commentaire n'a pas été modifié.
+                form:
+                    name:                       Nom
+                    description:                Description
+                    submit:
+                        save:                   Sauvegarder
+                        new:                    Sauvegarder et ajouter
+                        duplicate:              Sauvegarder et dupliquer
+                        quit:                   Sauvegarder et quitter
+                        cancel:                 Annuler
+                    alert:
+                        title:                  Information
+                        text:                   La modification d'un commentaire nécessite la validation d'un modérateur.
+
+            detail:
+                title:                          %name%
+                link:                           Détail
+                breadcrumb:                     %name%
+                data:
+                    title:                      Informations
+                    create:                     Création
+                    update:                     Modification
+                    name:                       Nom
+                    alias:                      Alias
+                    description:                Description
+
+            delete:
+                flash:
+                    ok:                         Le commentaire a bien été supprimé.
+
+        api:
+            index:
+                title:                          Workflow : commentaires
+
+        pagination:
+            counter:                            Nombre de commentaires: %count% / %all%
+
+        autocomplete:
+            nodata:                             Aucun résultat
+
+        error:
+            unknown:                            Le commentaire n'existe pas.
+            delete:                             Le commentaire n'existe pas.
+            forbidden:                          Droits insuffisants.

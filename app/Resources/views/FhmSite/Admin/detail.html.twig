@@ -1,0 +1,47 @@
+{% trans_default_domain instance.domain %}
+{% extends "::FhmFhm/Admin/detail.html.twig" %}
+
+{% block content_admin %}{% endblock %}
+
+{% block content_data_information %}
+    <tr>
+        <td><strong>{{ (instance.translation ~ '.admin.detail.data.id')|trans }}</strong></td>
+        <td>{{ document.getId() }}</td>
+    </tr>
+    <tr>
+        <td><strong>{{ (instance.translation ~ '.admin.detail.data.create')|trans }}</strong></td>
+        <td>{{ document.getUserCreate() ? document.getUserCreate().getUsername() ~ ' - ' : '' }}{{ document.getDateCreate() | localizeddate('full', 'short', app.request.locale) }}</td>
+    </tr>
+    <tr>
+        <td><strong>{{ (instance.translation ~ '.admin.detail.data.update')|trans }}</strong></td>
+        <td>{{ document.getUserUpdate() ? document.getUserUpdate().getUsername() ~ ' - ' : '' }}{{ document.getDateUpdate() | localizeddate('full', 'short', app.request.locale) }}</td>
+    </tr>
+    <tr>
+        <td><strong>{{ (instance.translation ~ '.admin.detail.data.name')|trans }}</strong></td>
+        <td>{{ document.getName() }}</td>
+    </tr>
+    <tr>
+        <td><strong>{{ (instance.translation ~ '.admin.detail.data.alias')|trans }}</strong></td>
+        <td>{{ document.getAlias() }}</td>
+    </tr>
+    <tr>
+        <td><strong>{{ (instance.translation ~ '.admin.detail.data.description')|trans }}</strong>
+        </td>
+        <td>{{ document.getDescription() }}</td>
+    </tr>
+    <tr>
+        <td><strong>{{ (instance.translation ~ '.admin.detail.data.status')|trans }}</strong></td>
+        <td>
+            {% if document.getDelete() %}
+                <span class="status alert radius label">{{ ('fhm.status.delete')|trans({}, 'FhmFhmBundle') }}</span>
+            {% elseif not document.getActive() %}
+                <span class="status warning radius label">{{ ('fhm.status.disable')|trans({}, 'FhmFhmBundle') }}</span>
+            {% else %}
+                <span class="status success radius label">{{ ('fhm.status.enable')|trans({}, 'FhmFhmBundle') }}</span>
+            {% endif %}
+            {% if document.getShare() and not document.hasGrouping(instance.grouping.used) %}
+                <span class="status regular radius label">{{ ('fhm.status.share')|trans({}, 'FhmFhmBundle') }}</span>
+            {% endif %}
+        </td>
+    </tr>
+{% endblock %}

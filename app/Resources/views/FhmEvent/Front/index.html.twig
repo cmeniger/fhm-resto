@@ -1,0 +1,14 @@
+{% trans_default_domain instance.domain %}
+{% extends "::FhmFhm/Front/index.html.twig" %}
+{% import "::Macros/panel.html.twig" as macroPanel %}
+
+{% block content_data %}
+    {% include "::FhmEvent/Template/short.html.twig" %}
+{% endblock %}
+
+{% block content_pagination %}{% endblock %}
+
+{% block right %}
+    {{ macroPanel.calendar(instance) }}
+    {{ parent() }}
+{% endblock %}

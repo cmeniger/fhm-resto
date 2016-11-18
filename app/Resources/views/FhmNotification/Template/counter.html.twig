@@ -1,0 +1,6 @@
+{% trans_default_domain instance.domain %}
+
+<a class="counter" href="#" data-url="{{ count > 0 ? path('fhm_api_notification_modal_new') : path('fhm_api_notification_modal_all') }}" data-modal>
+    <i class="fa fa-bell"></i>
+    <span class="count {{ count > 0 ? 'new' : '' }}" data-counter>{{ count }}</span>
+</a>

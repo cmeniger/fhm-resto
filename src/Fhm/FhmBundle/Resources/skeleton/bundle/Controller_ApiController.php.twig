@@ -1,0 +1,82 @@
+<?php
+namespace {{ namespace }}\Controller;
+
+{% block use_statements %}
+use Fhm\FhmBundle\Controller\RefApiController as FhmController;
+use {{ namespace }}\Document\{{ document }};
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\HttpException;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+{% endblock use_statements %}
+
+{% block class_definition %}
+/**
+ * @Route("/api/{{ route[1] }}")
+ */
+class ApiController extends FhmController
+{% endblock class_definition %}
+{
+{% block class_body %}
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        parent::__construct('{{ src }}', '{{ document }}', '{{ route[1] }}');
+    }
+
+    /**
+     * @Route
+     * (
+     *      path="/",
+     *      name="{{ route[0] }}_api_{{ route[1] }}"
+     * )
+     * @Template("::{{ basename }}/Api/index.html.twig")
+     */
+    public function indexAction()
+    {
+        return parent::indexAction();
+    }
+
+    /**
+     * @Route
+     * (
+     *      path="/autocomplete",
+     *      name="{{ route[0] }}_api_{{ route[1] }}_autocomplete"
+     * )
+     * @Template("::{{ basename }}/Api/autocomplete.html.twig")
+     */
+    public function autocompleteAction(Request $request)
+    {
+        return parent::autocompleteAction($request);
+    }
+
+    /**
+     * @Route
+     * (
+     *      path="/historic",
+     *      name="{{ route[0] }}_api_{{ route[1] }}_historic"
+     * )
+     * @Template("::{{ basename }}/Api/historic.html.twig")
+     */
+    public function historicAction(Request $request)
+    {
+        return parent::historicAction($request);
+    }
+
+    /**
+     * @Route
+     * (
+     *      path="/historic/copy/{id}",
+     *      name="{{ route[0] }}_api_{{ route[1] }}_historic_copy",
+     *      requirements={"id"="[a-z0-9]*"}
+     * )
+     */
+    public function historicCopyAction(Request $request, $id)
+    {
+        return parent::historicCopyAction($request, $id);
+    }
+{% endblock class_body %}
+}

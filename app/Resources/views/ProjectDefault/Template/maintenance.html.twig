@@ -1,0 +1,89 @@
+{% trans_default_domain 'ProjectDefaultBundle' %}
+{% extends "::layout.html.twig" %}
+
+{% block body_header %}{% endblock %}
+
+{% block body %}
+    class="content-maintenance"
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="column text-center">
+            <div class="logo">
+                <img src="{{ asset('images/close/logo.png') }}" alt=""/>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="column text-center gutter-margin-bottom">
+            <div class="title">
+                <h1>{{ 'project.maintenance.title'|trans|raw }}</h1>
+            </div>
+        </div>
+    </div>
+    <div class="row" data-equalizer>
+        <div class="column medium-6 gutter-margin-bottom" data-equalizer-watch>
+            <div class="bloc">
+                <div class="creator gutter-margin-bottom">
+                    <p>{{ 'project.maintenance.text'|trans|raw }}</p>
+                </div>
+                {% if date %}
+                    <div class="date">
+                        <p>{{ 'project.maintenance.date'|trans|raw }}</p>
+
+                        <div class="timer-container" data-timer="{{ date|date('U') }}" data-seconds="show"></div>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+        <div class="column medium-6 gutter-margin-bottom" data-equalizer-watch>
+            <div class="bloc">
+                <div class="newsletter">
+                    <p>{{ 'project.maintenance.newsletter'|trans|raw }}</p>
+                    <div class="column medium-8 medium-centered">
+                        {% render(path('fhm_api_newsletter_embed')) %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="column">
+            <div class="social">
+                <ul class="inline-list">
+                    {% if site.getSocialFacebook() %}
+                        <li>
+                            <a href='{{ site.getSocialFacebook() }}' class="facebook" title="Facebook"><i class='fa fa-facebook'></i></a>
+                        </li>
+                    {% endif %}
+                    {% if site.getSocialTwitter() %}
+                        <li>
+                            <a href='{{ site.getSocialTwitter() }}' class="twitter" title="Twitter"><i class='fa fa-twitter'></i></a>
+                        </li>
+                    {% endif %}
+                    {% if site.getSocialGoogle() %}
+                        <li>
+                            <a href='{{ site.getSocialGoogle() }}' class="google" title="Google"><i class='fa fa-google'></i></a>
+                        </li>
+                    {% endif %}
+                    {% if site.getSocialInstagram() %}
+                        <li>
+                            <a href='{{ site.getSocialInstagram() }}' class="instagram" title="Instagram"><i class='fa fa-instagram'></i></a>
+                        </li>
+                    {% endif %}
+                    {% if site.getSocialYoutube() %}
+                        <li>
+                            <a href='{{ site.getSocialYoutube() }}' class="youtube" title="Youtube"><i class='fa fa-youtube'></i></a>
+                        </li>
+                    {% endif %}
+                    {% if site.getSocialFlux() %}
+                        <li>
+                            <a href='{{ site.getSocialFlux() }}' class="flux" title="Flux RSS"><i class='fa fa-rss'></i></a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </div>
+{% endblock %}

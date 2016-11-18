@@ -1,0 +1,539 @@
+news:
+    admin:
+        index:
+            title:                              Gestion des actualités
+            link:                               Actualités
+            breadcrumb:                         Actualités
+            nodata:                             Aucune donnée
+            form:
+                search:                         Rechercher
+            table:
+                header:
+                    name:                       Nom
+                    newsgroups:                 Journaux
+                    action:                     Actions
+                    status:                     Statut
+                action:
+                    activate:                   Activer
+                    deactivate:                 Désactiver
+                    delete:                     Supprimer
+                    detail:                     Paramétrer
+                    duplicate:                  Dupliquer
+                    undelete:                   Restaurer
+                    update:                     Modifier
+                    preview:                    Aperçu
+                confirm:
+                    activate:                   Confirmer l'activation de l'actualité ?
+                    deactivate:                 Confirmer la désactivation de l'actualité ?
+                    delete:                     Confirmer la suppression de l'actualité ?
+                    undelete:                   Confirmer le déblocage de l'actualité ?
+
+        create:
+            title:                              Ajouter
+            link:                               Ajouter
+            breadcrumb:                         Ajouter une actualité
+            flash:
+                ok:                             L'actualité a bien été créée.
+                ko:                             L'actualité n'a pas été créée.
+            form:
+                title:                          Titre
+                subtitle:                       Sous titre
+                resume:                         Accroche
+                content:                        Contenu
+                start:                          Début de publication
+                end:                            Fin de publication
+                image:                          Image
+                gallery:                        Galerie
+                newsgroups:                     Journaux
+                author:                         Auteur
+                active:                         Activer
+                share:                          Partager
+                global:                         Globale
+                submit:
+                    save:                       Sauvegarder
+                    new:                        Sauvegarder et ajouter
+                    duplicate:                  Sauvegarder et dupliquer
+                    quit:                       Sauvegarder et quitter
+                    config:                     Sauvegarder et paramétrer
+                    cancel:                     Annuler
+                    import:                     Importer
+                    export:                     Exporter
+                fieldset:
+                    data:                       Données
+                    date:                       Dates
+                    media:                      Médias
+                    newsgroups:                 Journaux rattachés
+                    options:                    Options
+
+        update:
+            title:                              Modifier
+            link:                               Modifier
+            breadcrumb:                         Modifier
+            flash:
+                ok:                             L'actualité a bien été modifiée.
+                ko:                             L'actualité n'a pas été modifiée.
+            form:
+                title:                          Titre
+                subtitle:                       Sous titre
+                resume:                         Accroche
+                content:                        Contenu
+                start:                          Début de publication
+                end:                            Fin de publication
+                image:                          Image
+                gallery:                        Galerie
+                newsgroups:                     Journaux
+                author:                         Auteur
+                active:                         Activer
+                share:                          Partager
+                global:                         Globale
+                submit:
+                    save:                       Sauvegarder
+                    new:                        Sauvegarder et ajouter
+                    duplicate:                  Sauvegarder et dupliquer
+                    quit:                       Sauvegarder et quitter
+                    config:                     Sauvegarder et paramétrer
+                    cancel:                     Annuler
+                    import:                     Importer
+                    export:                     Exporter
+                    delete:                     Supprimer
+                fieldset:
+                    data:                       Données
+                    date:                       Dates
+                    media:                      Médias
+                    newsgroups:                 Journaux rattachés
+                    options:                    Options
+
+        detail:
+            title:                              %name%
+            link:                               Détail
+            breadcrumb:                         %name%
+            data:
+                title:                          Informations
+                id:                             ID
+                create:                         Création
+                update:                         Modification
+                name:                           Nom
+                alias:                          Alias
+                description:                    Description
+                status:                         Statut
+            url:
+                title:                          Routes disponibles
+                admin:
+                    edit:                       Modifier
+                    detail:                     Paramétrer
+                front:
+                    id:                         Afficher via l'ID
+                    name:                       Afficher via le nom
+                    alias:                      Afficher via l'alias
+                    lite:                       Afficher via l'url simplifiée
+            admin:
+                title:                          Outils d'administration
+            newsgroup:
+                title:                          Journaux
+                list1:                          Disponibles
+                list2:                          Sélectionnés
+
+        export:
+            breadcrumb:                         Exporter
+            form:
+                submit:                         Exporter
+            link:                               Exporter
+            title:                              Exporter des actualités
+
+        import:
+            title:                              Importer des actualités
+            link:                               Importer
+            breadcrumb:                         Importer
+            flash:
+                ok:                             Les actualités ont bien été importés (%countAdd% ajout(s), %countUpdate% modification(s), %countError% erreur(s)).
+                ko:                             Les actualités n'ont pas été importés.
+            form:
+                file:                           Fichier CSV
+                submit:                         Importer
+
+        deactivate:
+            flash:
+                ok:                             L'actualité a bien été désactivée.
+
+        delete:
+            flash:
+                ok:                             L'actualité a bien été supprimée.
+                use:                            Impossible de supprimer, ce media est rattaché au module %module%  à l'élémént %element%.
+                used:
+                    news:                        Actualités
+                    article:                     Articles
+                    site:                        Sites
+                    page:                        Pages
+                    gallery:                     Galerie
+                    event:                       Evènements
+                    partner:                     Partenaires
+                    slider:                      Slider
+                    product:                     Produits
+                    menu:                        Menus
+
+        activate:
+            flash:
+                ok:                             L'actualité a bien été activée.
+
+        undelete:
+            flash:
+                ok:                             L'actualité a bien été restaurée.
+
+    front:
+        index:
+            title:                              Actualités
+            link:                               Actualités
+            breadcrumb:                         Actualités
+            nodata:                             Aucune donnée
+            form:
+                search:                         Rechercher
+                more:                           En savoir +
+                update:                         Mise à jour le %date%
+            table:
+                header:
+                    name:                       Nom
+                    start:                      Début publication
+                    end:                        Fin publication
+                    action:                     Actions
+                action:
+                    detail:                     Détail
+                    delete:                     Supprimer
+                confirm:
+                    delete:                     Confirmer la suppression de l'actualité ?
+
+        create:
+            title:                              Ajouter
+            link:                               Ajouter
+            breadcrumb:                         Ajouter une actualité
+            flash:
+                ok:                             L'actualité a bien été créée.
+                ko:                             L'actualité n'a pas été créée.
+            form:
+                name:                           Nom
+                description:                    Description
+                submit:
+                    save:                       Sauvegarder
+                    new:                        Sauvegarder et ajouter
+                    duplicate:                  Sauvegarder et dupliquer
+                    quit:                       Sauvegarder et quitter
+                    cancel:                     Annuler
+                alert:
+                    title:                      Information
+                    text:                       L'ajout d'une actualité nécessite la validation d'un modérateur pour être affichée.
+
+        update:
+            title:                              Modifier
+            link:                               Modifier
+            breadcrumb:                         Modifier
+            flash:
+                ok:                             L'actualité a bien été modifiée.
+                ko:                             L'actualité n'a pas été modifiée.
+            form:
+                name:                           Nom
+                description:                    Description
+                submit:
+                    save:                       Sauvegarder
+                    new:                        Sauvegarder et ajouter
+                    duplicate:                  Sauvegarder et dupliquer
+                    quit:                       Sauvegarder et quitter
+                    cancel:                     Annuler
+                alert:
+                    title:                      Information
+                    text:                       La modification d'une actualité nécessite la validation d'un modérateur pour être affichée.
+
+        detail:
+            title:                              %name%
+            link:                               Détail
+            breadcrumb:                         %name%
+            data:
+                title:                          Informations
+                create:                         Création
+                update:                         Modification
+                name:                           Nom
+                alias:                          Alias
+                description:                    Description
+
+        delete:
+            flash:
+                ok:                             L'actualité a bien été supprimée.
+
+    api:
+        index:
+            title:                              Actualités
+
+    pagination:
+        counter:                                Nombre d'actualités: %count% / %all%
+
+    error:
+        unknown:                                L'actualité n'existe pas.
+        delete:                                 L'actualité n'existe pas.
+        forbidden:                              Droits insuffisants.
+
+    historic:
+        title:                                  Titre
+        subtitle:                               Sous-titre
+        resume:                                 Résumé
+        content:                                Contenu
+        author:                                 Auteur
+        image:                                  Image
+        gallery:                                Galerie
+        newsgroups:                             Journaux
+        start:                                  Début de publication
+        end:                                    Fin de publication
+
+    group:
+        admin:
+            index:
+                title:                          Gestion des journaux
+                link:                           Journaux
+                breadcrumb:                     Journaux
+                nodata:                         Aucune donnée
+                form:
+                    search:                     Rechercher
+                table:
+                    header:
+                        name:                   Nom
+                        news:                   Actualités
+                        action:                 Actions
+                        status:                 Statut
+                    action:
+                        activate:               Activer
+                        deactivate:             Désactiver
+                        delete:                 Supprimer
+                        detail:                 Paramétrer
+                        duplicate:              Dupliquer
+                        undelete:               Restaurer
+                        update:                 Modifier
+                        preview:                Aperçu
+                    confirm:
+                        activate:               Confirmer l'activation du journal ?
+                        deactivate:             Confirmer la désactivation du journal ?
+                        delete:                 Confirmer la suppression du journal ?
+                        undelete:               Confirmer le déblocage du journal ?
+
+            create:
+                title:                          Ajouter
+                link:                           Ajouter
+                breadcrumb:                     Ajouter un journal
+                flash:
+                    ok:                         Le journal a bien été créé.
+                    ko:                         Le journal n'a pas été créé.
+                form:
+                    name:                       Nom
+                    description:                Description
+                    news:                       Actualités
+                    add_global:                 Ajouter les actualités globales
+                    sort:                       Ordre d'affichage
+                    active:                     Activer
+                    share:                      Partager
+                    global:                     Globale
+                    submit:
+                        save:                   Sauvegarder
+                        new:                    Sauvegarder et ajouter
+                        duplicate:              Sauvegarder et dupliquer
+                        quit:                   Sauvegarder et quitter
+                        config:                 Sauvegarder et paramétrer
+                        cancel:                 Annuler
+                        import:                 Importer
+                        export:                 Exporter
+                    fieldset:
+                        data:                   Données
+                        news:                   Actualités rattachées
+                        options:                Options
+
+            update:
+                title:                          Modifier
+                link:                           Modifier
+                breadcrumb:                     Modifier
+                flash:
+                    ok:                         Le journal a bien été modifié.
+                    ko:                         Le journal n'a pas été modifié.
+                form:
+                    name:                       Nom
+                    description:                Description
+                    news:                       Actualités
+                    add_global:                 Ajouter les actualités globales
+                    sort:                       Ordre d'affichage
+                    active:                     Activer
+                    share:                      Partager
+                    global:                     Globale
+                    submit:
+                        save:                   Sauvegarder
+                        new:                    Sauvegarder et ajouter
+                        duplicate:              Sauvegarder et dupliquer
+                        quit:                   Sauvegarder et quitter
+                        config:                 Sauvegarder et paramétrer
+                        cancel:                 Annuler
+                        import:                 Importer
+                        export:                 Exporter
+                        delete:                 Supprimer
+                    fieldset:
+                        data:                   Données
+                        news:                   Actualités rattachées
+                        options:                Options
+
+            detail:
+                title:                          %name%
+                link:                           Détail
+                breadcrumb:                     %name%
+                data:
+                    title:                      Informations
+                    id:                         ID
+                    create:                     Création
+                    update:                     Modification
+                    name:                       Nom
+                    alias:                      Alias
+                    description:                Description
+                    status:                     Statut
+                url:
+                    title:                      Routes disponibles
+                    admin:
+                        edit:                   Modifier
+                        detail:                 Paramétrer
+                    front:
+                        id:                     Afficher via l'ID
+                        name:                   Afficher via le nom
+                        alias:                  Afficher via l'alias
+                        lite:                   Afficher via l'url simplifiée
+                admin:
+                    title:                      Outils d'administration
+                news:
+                    title:                      Actualités
+                    list1:                      Disponibles
+                    list2:                      Sélectionnés
+
+            export:
+                breadcrumb:                     Exporter
+                form:
+                    submit:                     Exporter
+                link:                           Exporter
+                title:                          Exporter des groupes
+
+            import:
+                title:                          Importer des groupes
+                link:                           Importer
+                breadcrumb:                     Importer
+                flash:
+                    ok:                         Les journaux ont bien été importés (%countAdd% ajout(s), %countUpdate% modification(s), %countError% erreur(s)).
+                    ko:                         Les journaux n'ont pas été importés.
+                form:
+                    file:                       Fichier CSV
+                    submit:                     Importer
+
+            deactivate:
+                flash:
+                    ok:                         Le journal a bien été désactivé.
+
+            delete:
+                flash:
+                    ok:                         Le journal a bien été supprimé.
+
+            activate:
+                flash:
+                    ok:                         Le journal a bien été activé.
+
+            undelete:
+                flash:
+                    ok:                         Le journal a bien été restauré.
+
+            sort:
+                title:
+                    asc:                        Titre croissant
+                    desc:                       Titre décroissant
+                start:
+                    asc:                        Date de publication croissant
+                    desc:                       Date de publication décroissant
+                create:
+                    asc:                        Date de création croissant
+                    desc:                       Date de création décroissant
+                update:
+                    asc:                        Date de modification croissant
+                    desc:                       Date de modification décroissant
+
+        front:
+            index:
+                title:                          Journaux
+                link:                           Journaux
+                breadcrumb:                     Journaux
+                nodata:                         Aucune donnée
+                form:
+                    search:                     Rechercher
+                    news:                       Nombre d'actualités
+                    more:                       Ouvrir
+                table:
+                    header:
+                        name:                   Nom
+                        action:                 Actions
+                    action:
+                        detail:                 Détail
+                        delete:                 Supprimer
+                    confirm:
+                        delete:                 Confirmer la suppression du journal ?
+
+            create:
+                title:                          Ajouter
+                link:                           Ajouter
+                breadcrumb:                     Ajouter un journal
+                flash:
+                    ok:                         Le journal a bien été créé.
+                    ko:                         Le journal n'a pas été créé.
+                form:
+                    name:                       Nom
+                    description:                Description
+                    submit:
+                        save:                   Sauvegarder
+                        new:                    Sauvegarder et ajouter
+                        duplicate:              Sauvegarder et dupliquer
+                        quit:                   Sauvegarder et quitter
+                        cancel:                 Annuler
+                    alert:
+                        title:                  Information
+                        text:                   L'ajout d'un journal nécessite la validation d'un modérateur pour être affiché.
+
+            update:
+                title:                          Modifier
+                link:                           Modifier
+                breadcrumb:                     Modifier
+                flash:
+                    ok:                         Le journal a bien été modifié.
+                    ko:                         Le journal n'a pas été modifié.
+                form:
+                    name:                       Nom
+                    description:                Description
+                    submit:
+                        save:                   Sauvegarder
+                        new:                    Sauvegarder et ajouter
+                        duplicate:              Sauvegarder et dupliquer
+                        quit:                   Sauvegarder et quitter
+                        cancel:                 Annuler
+                    alert:
+                        title:                  Information
+                        text:                   La modification d'un journal nécessite la validation d'un modérateur pour être affiché.
+
+            detail:
+                title:                          %name%
+                link:                           Détail
+                breadcrumb:                     %name%
+                data:
+                    title:                      Informations
+                    create:                     Création
+                    update:                     Modification
+                    name:                       Nom
+                    alias:                      Alias
+                    description:                Description
+
+            delete:
+                flash:
+                    ok:                         Le journal a bien été supprimé.
+
+        api:
+            index:
+                title:                          Journaux
+
+        pagination:
+            counter:                            Nombre de journaux: %count% / %all%
+
+        error:
+            unknown:                            Le journal n'existe pas.
+            delete:                             Le journal n'existe pas.
+            forbidden:                          Droits insuffisants.

@@ -1,0 +1,232 @@
+{% extends "::layout.admin.html.twig" %}
+{% trans_default_domain instance.domain %}
+
+{% block tagline %}
+    <div class="row">
+        <h1>
+            {% block tagline_data %}
+                {% block tagline_data_title %}
+                    {{ (instance.translation ~ '.admin.index.title')|trans }}
+                {% endblock %}
+                <br/>
+                <small>
+                    {% block tagline_data_subtitle %}
+                        {{ (instance.translation ~ '.admin.update.title')|trans({'%name%': document.getName()}) }}
+                    {% endblock %}
+                </small>
+            {% endblock %}
+        </h1>
+    </div>
+{% endblock %}
+
+{% block content %}
+    {% block content_data %}
+        <div class="form form-update">
+            {% block content_data_form %}
+            <form action="{% block content_data_form_action %}{{ path(instance.source ~ '_admin_' ~ instance.route ~ '_update', {id: document.getId()}) }}{% endblock %}" {% block content_data_form_attribut %}{% endblock %} method="POST" {{ form_enctype(form) }} >
+                {% endblock %}
+                {% block content_data_errors %}
+                    {% if form.vars.errors|length > 0 %}
+                        <div class="form-bloc form-error">
+                            {% block content_data_errors_data %}
+                                <div class="row">
+                                    {{ form_errors(form) }}
+                                </div>
+                            {% endblock %}
+                        </div>
+                    {% endif %}
+                {% endblock %}
+                {% block content_data_fields %}
+                    <div class="form-bloc form-fields row">
+                        {% block content_data_fields_data %}
+                            <div class="large-6 medium-6 small-12 columns">
+                                <fieldset>
+                                    <legend>{{ (instance.translation ~ '.admin.update.form.fieldset.data')|trans }}</legend>
+                                    <div class="row">
+                                        {{ form_label(form.name) }}
+                                        {{ form_errors(form.name) }}
+                                        {{ form_widget(form.name) }}
+                                    </div>
+                                    <div class="row">
+                                        {{ form_label(form.description) }}
+                                        {{ form_errors(form.description) }}
+                                        {{ form_widget(form.description) }}
+                                    </div>
+                                    {% block content_data_fields_data_add %}{% endblock %}
+                                </fieldset>
+                            </div>
+                        {% endblock %}
+                    </div>
+                {% endblock %}
+                {% block content_data_grouping %}
+                    {% if form.grouping is defined %}
+                        <div class="form-bloc form-grouping row">
+                            {% block content_data_grouping_data %}
+                                <div class="large-6 medium-6 small-12 columns">
+                                    <fieldset>
+                                        <legend>{{ grouping_name }}</legend>
+                                        <div class="row">
+                                            {{ form_label(form.grouping, grouping_name) }}
+                                            {{ form_errors(form.grouping) }}
+                                            {{ form_widget(form.grouping) }}
+                                        </div>
+                                    </fieldset>
+                                </div>
+                            {% endblock %}
+                        </div>
+                    {% endif %}
+                {% endblock %}
+                {% block content_data_language %}
+                    {% if form.languages is defined %}
+                        <div class="form-bloc form-languages row">
+                            {% block content_data_language_data %}
+                                <div class="large-6 medium-6 small-12 columns">
+                                    <fieldset>
+                                        <legend>{{ ('fhm.language.fieldset')|trans({},'FhmFhmBundle') }}</legend>
+                                        <div class="row">
+                                            {{ form_label(form.languages, ('fhm.language.label')|trans({},'FhmFhmBundle')) }}
+                                            {{ form_errors(form.languages) }}
+                                            {{ form_widget(form.languages) }}
+                                        </div>
+                                    </fieldset>
+                                </div>
+                            {% endblock %}
+                        </div>
+                    {% endif %}
+                {% endblock %}
+                {% block content_data_seo %}
+                    <div class="form-bloc form-seo row">
+                        {% block content_data_seo_data %}
+                            <div class="large-6 medium-6 small-12 columns">
+                                <fieldset>
+                                    <legend>{{ ('fhm.seo.fieldset')|trans({},'FhmFhmBundle') }}</legend>
+                                    <div class="row">
+                                        {{ form_label(form.seo_title) }}
+                                        {{ form_errors(form.seo_title) }}
+                                        {{ form_widget(form.seo_title) }}
+                                    </div>
+                                    <div class="row">
+                                        {{ form_label(form.seo_description) }}
+                                        {{ form_errors(form.seo_description) }}
+                                        {{ form_widget(form.seo_description) }}
+                                    </div>
+                                    <div class="row">
+                                        {{ form_label(form.seo_keywords) }}
+                                        {{ form_errors(form.seo_keywords) }}
+                                        {{ form_widget(form.seo_keywords) }}
+                                    </div>
+                                </fieldset>
+                            </div>
+                        {% endblock %}
+                    </div>
+                {% endblock %}
+                {% block content_data_options %}
+                    <div class="form-bloc form-options row">
+                        {% block content_data_options_data %}
+                            <div class="large-12 columns">
+                                <fieldset>
+                                    <legend>{{ (instance.translation ~ '.admin.update.form.fieldset.options')|trans }}</legend>
+                                    {% if form.active is defined %}
+                                        <div class="large-2 columns end">
+                                            {{ form_errors(form.active) }}
+                                            {{ form_label(form.active) }}
+                                            <div class="switch">
+                                                {{ form_widget(form.active) }}
+                                                <label for="{{ form.active.vars.id }}"></label>
+                                            </div>
+                                        </div>
+                                    {% endif %}
+                                    {% if form.share is defined %}
+                                        <div class="large-2 columns end">
+                                            {{ form_errors(form.share) }}
+                                            {{ form_label(form.share) }}
+                                            <div class="switch">
+                                                {{ form_widget(form.share) }}
+                                                <label for="{{ form.share.vars.id }}"></label>
+                                            </div>
+                                        </div>
+                                    {% endif %}
+                                    {% if form.global is defined %}
+                                        <div class="large-2 columns end">
+                                            {{ form_errors(form.global) }}
+                                            {{ form_label(form.global) }}
+                                            <div class="switch">
+                                                {{ form_widget(form.global) }}
+                                                <label for="{{ form.global.vars.id }}"></label>
+                                            </div>
+                                        </div>
+                                    {% endif %}
+                                    {% block content_data_options_data_add %}{% endblock %}
+                                </fieldset>
+                            </div>
+                        {% endblock %}
+                    </div>
+                {% endblock %}
+                {% block content_data_submit %}
+                    <div class="form-bloc form-submit">
+                        {% block content_data_submit_data %}
+                            <div class="row">
+                                <ul class="button-group">
+                                    <li>
+                                        <a href="{{ path((instance.source ~ '_admin_' ~ instance.route)) }}" class="button small secondary button-icon button-cancel">{{ (instance.translation ~ '.admin.update.form.submit.cancel')|trans }}</a>
+                                    </li>
+                                    <li>{{ form_widget(form.submitSave, {'attr':{'class':'small button-icon button-save' }}
+                                        ) }}
+                                    </li>
+                                    {% block content_data_submit_list_button %}
+                                        <li>
+                                            <a href="#" data-options="align:top" data-dropdown="dropSubmit" class="button small"><i class="fa fa-bars"></i></a>
+                                        </li>
+                                    {% endblock %}
+                                </ul>
+                                {% block content_data_submit_list %}
+                                    <ul id="dropSubmit" class="small f-dropdown" data-dropdown-content>
+                                        {% block content_data_submit_list_data %}
+                                            {% if form.submitNew is defined %}
+                                                <li>{{ form_widget(form.submitNew, {'attr':{'class':'small button-icon button-new' }}) }}</li>
+                                            {% endif %}
+                                            {% if form.submitDuplicate is defined %}
+                                                <li>{{ form_widget(form.submitDuplicate, {'attr':{'class':'small button-icon button-duplicate'}}) }}</li>
+                                            {% endif %}
+                                            {% if form.submitQuit is defined %}
+                                                <li>{{ form_widget(form.submitQuit, {'attr':{'class':'small button-icon button-quit'}}) }}</li>
+                                            {% endif %}
+                                            {% if form.submitConfig is defined %}
+                                                <li>{{ form_widget(form.submitConfig, {'attr':{'class':'small button-icon button-gear'}}) }}</li>
+                                            {% endif %}
+                                            <li>
+                                                <hr/>
+                                            </li>
+                                            <li>
+                                                <a href="{{ path(instance.source ~ '_admin_' ~ instance.route ~ '_import') }}" class="button small button-icon button-import">{{ (instance.translation ~ '.admin.create.form.submit.import')|trans }}</a>
+                                            </li>
+                                            <li>
+                                                <a href="{{ path(instance.source ~ '_admin_' ~ instance.route ~ '_export') }}" class="button small button-icon button-export">{{ (instance.translation ~ '.admin.create.form.submit.export')|trans }}</a>
+                                            </li>
+                                            {% block content_data_submit_list_delete %}
+                                                <li>
+                                                    <a href="{{ path(instance.source ~ '_admin_' ~ instance.route ~ '_delete', {'id': document.getId()}) }}" onclick="return confirm('{{ (instance.translation ~ '.admin.index.table.confirm.delete')|trans }}')" class="button small alert button-icon button-delete">{{ (instance.translation ~ '.admin.update.form.submit.delete')|trans }}</a>
+                                                </li>
+                                            {% endblock %}
+                                        {% endblock %}
+                                    </ul>
+                                {% endblock %}
+                            </div>
+                        {% endblock %}
+                    </div>
+                {% endblock %}
+                {% block content_data_rest %}
+                    <div class="form-bloc form-rest">
+                        {% block content_data_rest_data %}
+                            <div class="row">
+                                {{ form_rest(form) }}
+                            </div>
+                        {% endblock %}
+                    </div>
+                {% endblock %}
+            </form>
+            {% block authers_content %}
+            {% endblock %}
+        </div>
+    {% endblock %}
+{% endblock %}

@@ -1,0 +1,53 @@
+{% trans_default_domain instance.domain %}
+{% extends "::FhmFhm/Admin/create.html.twig" %}
+
+{% block content_data_fields_data %}
+    <div class="large-6 medium-6 small-12 columns">
+        <fieldset>
+            <legend>{{ (instance.translation ~ '.admin.create.form.fieldset.data')|trans }}</legend>
+            <div class="row">
+                {{ form_label(form.title) }}
+                {{ form_errors(form.title) }}
+                {{ form_widget(form.title) }}
+            </div>
+            <div class="row">
+                {{ form_label(form.subtitle) }}
+                {{ form_errors(form.subtitle) }}
+                {{ form_widget(form.subtitle) }}
+            </div>
+            <div class="row">
+                {{ form_label(form.content) }}
+                {{ form_errors(form.content) }}
+                {{ form_widget(form.content) }}
+            </div>
+            <div class="row">
+                {{ form_label(form.link) }}
+                {{ form_errors(form.link) }}
+                {{ form_widget(form.link) }}
+            </div>
+            <div class="row">
+                {{ form_label(form.order) }}
+                {{ form_errors(form.order) }}
+                {{ form_widget(form.order) }}
+            </div>
+        </fieldset>
+    </div>
+    <div class="large-6 medium-6 small-12 columns">
+        <fieldset>
+            <legend>{{ (instance.translation ~ '.admin.create.form.fieldset.media')|trans }}</legend>
+            <div class="row">
+                {{ form_label(form.image) }}
+                {{ form_errors(form.image) }}
+                {{ form_widget(form.image) }}
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend>{{ (instance.translation ~ '.admin.create.form.fieldset.sliders')|trans }}</legend>
+            <div class="row">
+                {{ form_label(form.sliders) }}
+                {{ form_errors(form.sliders) }}
+                {{ form_widget(form.sliders) }}
+            </div>
+        </fieldset>
+    </div>
+{% endblock %}

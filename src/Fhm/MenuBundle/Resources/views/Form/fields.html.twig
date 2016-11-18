@@ -1,0 +1,11 @@
+
+{% block link_widget %}
+    {% spaceless %}
+        <div class="row">
+            <a href="#" data-toggle="modal" data-reveal-id="addData"  title="link">
+                <i class="fa fa-plus"></i>
+            </a>
+            {{ block('form_widget_simple') }}
+        </div>
+    {% endspaceless %}
+{% endblock %}

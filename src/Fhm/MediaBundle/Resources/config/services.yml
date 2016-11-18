@@ -1,0 +1,31 @@
+services:
+    fhm.twig.media_extension:
+        class: Fhm\MediaBundle\Twig\MediaExtension
+        arguments: [@service_container]
+        tags:
+            - { name: twig.extension }
+
+    fhm.twig.media_tag_extension:
+        class: Fhm\MediaBundle\Twig\MediaTagExtension
+        arguments: [@service_container]
+        tags:
+            - { name: twig.extension }
+
+    fhm.form.type.media:
+        class: Fhm\MediaBundle\Form\Type\MediaType
+        arguments: [@service_container]
+        tags:
+            - { name: form.type, alias: media }
+
+    fhm_form.media_type_extension:
+        class: Fhm\MediaBundle\Form\Extension\MediaTypeExtension
+        tags:
+            - { name: form.type_extension, alias: file }
+
+    fhm_media_local:
+        class: Fhm\MediaBundle\Services\Local
+        arguments: [@service_container]
+
+    fhm_media_s3:
+        class: Fhm\MediaBundle\Services\S3
+        arguments: [@service_container]

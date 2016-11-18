@@ -1,0 +1,8 @@
+{% extends "::layout.api.html.twig" %}
+{% trans_default_domain instance.domain %}
+
+{% block tagline %}
+    <div class="row">
+        <h1>{{ (instance.translation ~ '.api.index.title')|trans }}</h1>
+    </div>
+{% endblock %}

@@ -1,0 +1,22 @@
+{% trans_default_domain instance.domain %}
+{% import "::Macros/pagination.html.twig" as macroPagination %}
+
+<div id="content_data" class="partner">
+    {% if documents %}
+        <div class="row">
+            {% for partner in documents %}
+                <div class="column medium-4 partner-short end">
+                    <a href="{{ partner.getLink() }}" class="partner-image">
+                        {{ partner.getImage()|image('s',150)|raw }}
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="panel nodata row">
+            <p>{{ (instance.translation ~ '.front.index.nodata')|trans }}</p>
+        </div>
+    {% endif %}
+</div>
+{# Pagination #}
+{{ macroPagination.print(pagination) }}

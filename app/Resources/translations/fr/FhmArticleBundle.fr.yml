@@ -1,0 +1,260 @@
+article:
+    admin:
+        index:
+            title:                              Gestion des articles
+            link:                               Articles
+            breadcrumb:                         Articles
+            nodata:                             Aucune donnée
+            form:
+                search:                         Rechercher
+            table:
+                header:
+                    name:                       Nom
+                    action:                     Actions
+                    status:                     Statut
+                action:
+                    activate:                   Activer
+                    deactivate:                 Désactiver
+                    delete:                     Supprimer
+                    detail:                     Paramétrer
+                    duplicate:                  Dupliquer
+                    undelete:                   Restaurer
+                    update:                     Modifier
+                    preview:                    Aperçu
+                confirm:
+                    activate:                   Confirmer l'activation du article ?
+                    deactivate:                 Confirmer la désactivation du article ?
+                    delete:                     Confirmer la suppression du article ?
+                    undelete:                   Confirmer le déblocage du article ?
+
+        create:
+            title:                              Ajouter
+            link:                               Ajouter
+            breadcrumb:                         Ajouter un article
+            flash:
+                ok:                             Le article a bien été créé.
+                ko:                             Le article n'a pas été créé.
+            form:
+                title:                          Titre
+                subtitle:                       Sous titre
+                resume:                         Accroche
+                content:                        Contenu
+                image:                          Image
+                gallery:                        Galerie
+                author:                         Auteur
+                active:                         Activer
+                share:                          Partager
+                global:                         Globale
+                submit:
+                    save:                       Sauvegarder
+                    new:                        Sauvegarder et ajouter
+                    duplicate:                  Sauvegarder et dupliquer
+                    quit:                       Sauvegarder et quitter
+                    config:                     Sauvegarder et paramétrer
+                    cancel:                     Annuler
+                    import:                     Importer
+                    export:                     Exporter
+                fieldset:
+                    data:                       Données
+                    options:                    Options
+                    media:                      Médias
+
+        update:
+            title:                              Modifier
+            link:                               Modifier
+            breadcrumb:                         Modifier
+            flash:
+                ok:                             Le article a bien été modifié.
+                ko:                             Le article n'a pas été modifié.
+            form:
+                title:                          Titre
+                subtitle:                       Sous titre
+                resume:                         Accroche
+                content:                        Contenu
+                image:                          Image
+                gallery:                        Galerie
+                author:                         Auteur
+                active:                         Activer
+                share:                          Partager
+                global:                         Globale
+                submit:
+                    save:                       Sauvegarder
+                    new:                        Sauvegarder et ajouter
+                    duplicate:                  Sauvegarder et dupliquer
+                    quit:                       Sauvegarder et quitter
+                    config:                     Sauvegarder et paramétrer
+                    cancel:                     Annuler
+                    import:                     Importer
+                    export:                     Exporter
+                    delete:                     Supprimer
+                fieldset:
+                    data:                       Données
+                    options:                    Options
+                    media:                      Médias
+
+        detail:
+            title:                              %name%
+            link:                               Détail
+            breadcrumb:                         %name%
+            data:
+                title:                          Informations
+                id:                             ID
+                create:                         Création
+                update:                         Modification
+                name:                           Nom
+                alias:                          Alias
+                description:                    Description
+                status:                         Statut
+            url:
+                title:                          Routes disponibles
+                admin:
+                    edit:                       Modifier
+                    detail:                     Paramétrer
+                front:
+                    id:                         Afficher via l'ID
+                    name:                       Afficher via le nom
+                    alias:                      Afficher via l'alias
+                    lite:                       Afficher via l'url simplifiée
+            admin:
+                title:                          Outils d'administration
+
+        export:
+            breadcrumb:                         Exporter
+            form:
+                submit:                         Exporter
+            link:                               Exporter
+            title:                              Exporter des articles
+
+        import:
+            breadcrumb:                         Importer
+            flash:
+                ok:                             Les articles ont bien été importés (%countAdd% ajout(s), %countUpdate% modification(s), %countError% erreur(s)).
+                ko:                             Les articles n'ont pas été importés.
+            form:
+                file:                           Fichier CSV
+                submit:                         Importer
+            link:                               Importer
+            title:                              Importer des articles
+
+        deactivate:
+            flash:
+                ok:                             Le article a bien été désactivé.
+
+        delete:
+            flash:
+                ok:                             Le article a bien été supprimé.
+                use:                            Impossible de supprimer, ce media est rattaché au module %module%  à l'élémént %element%.
+                used:
+                    news:                        Actualités
+                    article:                     Articles
+                    site:                        Sites
+                    page:                        Pages
+                    gallery:                     Galerie
+                    event:                       Evènements
+                    partner:                     Partenaires
+                    slider:                      Slider
+                    product:                     Produits
+                    menu:                        Menus
+
+        activate:
+            flash:
+                ok:                             Le article a bien été activé.
+
+        undelete:
+            flash:
+                ok:                             Le article a bien été restauré.
+
+    front:
+        index:
+            title:                              Articles
+            link:                               Articles
+            breadcrumb:                         Articles
+            nodata:                             Aucune donnée
+            form:
+                search:                         Rechercher
+            table:
+                header:
+                    name:                       Nom
+                    action:                     Actions
+                action:
+                    detail:                     Détail
+                    delete:                     Supprimer
+                confirm:
+                    delete:                     Confirmer la suppression du article ?
+
+        create:
+            title:                              Ajouter
+            link:                               Ajouter
+            breadcrumb:                         Ajouter un article
+            flash:
+                ok:                             Le article a bien été créé.
+                ko:                             Le article n'a pas été créé.
+            form:
+                name:                           Nom
+                description:                    Description
+                submit:
+                    save:                       Sauvegarder
+                    new:                        Sauvegarder et ajouter
+                    duplicate:                  Sauvegarder et dupliquer
+                    quit:                       Sauvegarder et quitter
+                    cancel:                     Annuler
+                alert:
+                    title:                      Information
+                    text:                       L'ajout d'un article nécessite la validation d'un modérateur.
+
+        update:
+            title:                              Modifier
+            link:                               Modifier
+            breadcrumb:                         Modifier
+            flash:
+                ok:                             Le article a bien été modifié.
+                ko:                             Le article n'a pas été modifié.
+            form:
+                name:                           Nom
+                description:                    Description
+                submit:
+                    save:                       Sauvegarder
+                    new:                        Sauvegarder et ajouter
+                    duplicate:                  Sauvegarder et dupliquer
+                    quit:                       Sauvegarder et quitter
+                    cancel:                     Annuler
+                alert:
+                    title:                      Information
+                    text:                       La modification d'un article nécessite la validation d'un modérateur.
+
+        detail:
+            title:                              %name%
+            link:                               Détail
+            breadcrumb:                         %name%
+            data:
+                title:                          Informations
+                create:                         Création
+                update:                         Modification
+                name:                           Nom
+                alias:                          Alias
+                description:                    Description
+
+        delete:
+            flash:
+                ok:                             Le article a bien été supprimé.
+
+    api:
+        index:
+            title:                              Article
+
+    pagination:
+        counter:                                Nombre de articles: %count% / %all%
+
+    error:
+        unknown:                                L'article n'existe pas.
+        delete:                                 L'article n'existe pas.
+        forbidden:                              Droits insuffisants.
+
+    historic:
+        title:                                  Titre
+        subtitle:                               Sous-titre
+        resume:                                 Résumé
+        content:                                Contenu
+        author:                                 Auteur
+        image:                                  Image
+        gallery:                                Galerie

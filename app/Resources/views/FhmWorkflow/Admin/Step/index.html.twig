@@ -1,0 +1,38 @@
+{% trans_default_domain instance.domain %}
+{% extends "::FhmFhm/Admin/index.html.twig" %}
+
+{% block content_link_data %}
+    {{ parent() }}
+    <li>
+        <a href="{{ path('fhm_admin_workflow') }}" class="button small"><i class="fa fa-sitemap"></i> {{ ('workflow.admin.index.link')|trans }}
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('fhm_admin_workflow_task') }}" class="button small"><i class="fa fa-square"></i> {{ ('workflow.task.admin.index.link')|trans }}
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('fhm_admin_workflow_action') }}" class="button small"><i class="fa fa-ellipsis-h"></i> {{ ('workflow.action.admin.index.link')|trans }}
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('fhm_admin_workflow_comment') }}" class="button small"><i class="fa fa-comment"></i> {{ ('workflow.comment.admin.index.link')|trans }}
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('fhm_admin_workflow_log') }}" class="button small"><i class="fa fa-history"></i> {{ ('workflow.log.admin.index.link')|trans }}
+        </a>
+    </li>
+{% endblock %}
+
+{% block content_data_header %}
+    {{ parent() }}
+    <th>{{ (instance.translation ~ '.admin.index.table.header.order')|trans }}{{ macroSort.print('order', sort) }}</th>
+    <th>{{ (instance.translation ~ '.admin.index.table.header.color')|trans }}{{ macroSort.print('color', sort) }}</th>
+{% endblock %}
+
+{% block content_data_body %}
+    {{ parent() }}
+    <td>{{ document.getOrder() }}</td>
+    <td><div style="width:25px;height:25px;background-color: {{ document.getColor() }}"></div></td>
+{% endblock %}

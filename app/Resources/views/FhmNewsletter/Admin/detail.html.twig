@@ -1,0 +1,10 @@
+{% trans_default_domain instance.domain %}
+{% extends "::FhmFhm/Admin/detail.html.twig" %}
+
+{% block content_data_information %}
+    {{ parent() }}
+    <tr>
+        <td><strong>{{ (instance.translation ~ '.admin.detail.data.email')|trans }}</strong></td>
+        <td>{{ document.getEmail() }}</td>
+    </tr>
+{% endblock %}

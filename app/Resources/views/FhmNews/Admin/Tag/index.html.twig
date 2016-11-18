@@ -1,0 +1,26 @@
+{% trans_default_domain instance.domain %}
+{% extends "::FhmFhm/Admin/index.html.twig" %}
+
+{% block content_link_data %}
+    {{ parent() }}
+    <li>
+        <a href="{{ path('fhm_admin_news') }}" class="button small"><i class="fa fa-newspaper-o"></i> {{ ('news.admin.index.link')|trans }}
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('fhm_admin_news_group') }}" class="button small"><i class="fa fa-book"></i> {{ ('news.group.admin.index.link')|trans }}
+        </a>
+    </li>
+{% endblock %}
+
+{% block content_data_header %}
+    {{ parent() }}
+    <th>{{ (instance.translation ~ '.admin.index.table.header.primary')|trans }}{{ macroSort.print('sort_primary', sort) }}</th>
+    <th>{{ (instance.translation ~ '.admin.index.table.header.secondary')|trans }}{{ macroSort.print('sort_secondary', sort) }}</th>
+{% endblock %}
+
+{% block content_data_body %}
+    {{ parent() }}
+    <td>{{ document.getPrimaries()|length }}</td>
+    <td>{{ document.getSecondaries()|length }}</td>
+{% endblock %}

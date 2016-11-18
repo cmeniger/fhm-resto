@@ -1,0 +1,6 @@
+{% trans_default_domain instance.domain %}
+{% import "::Macros/dd.tree.html.twig" as macroTree %}
+
+{% block menu %}
+    {{ macroTree.html(site, sites, menu, instance) }}
+{% endblock %}

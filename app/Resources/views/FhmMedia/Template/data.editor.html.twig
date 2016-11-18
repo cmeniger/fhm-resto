@@ -1,0 +1,53 @@
+{% trans_default_domain instance.domain %}
+{% import "::Macros/pagination.html.twig" as macroPagination %}
+<div class="media media-editor mce-fhmmedia">
+    <div class="top">
+        <form action="#" method="POST">
+            <input type="text" class="FhmSearch_search" name="FhmSearch[search]" placeholder="{{ (instance.translation ~ '.admin.index.form.search')|trans }}" value="{{ search }}" data-type="search">
+            <button class="button" type="submit"><i class="fa fa-search"></i></button>
+            <button class="button" type="reset"><i class="fa fa-times"></i></button>
+            <a href="#" class="button success" media-new="" title="{{ (instance.translation ~ '.admin.index.form.new')|trans }}">{{ (instance.translation ~ '.admin.index.form.new')|trans }}</a>
+        </form>
+    </div>
+    <div class="content">
+        <div class="tags">
+            {% if tagMains %}
+                <ul class="side-nav">
+                    <li><a href="#" media-tag="">{{ (instance.translation ~ '.admin.index.tags.all')|trans }}</a></li>
+                    <li>
+                        <hr/>
+                    </li>
+                    {% for tagMain in tagMains %}
+                        <li><a href="#" media-tag="{{ tagMain.getId() }}">{{ tagMain|tagLabel|raw }}</a></li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+        <div class="datas">
+            {{ tag ? tag|tagBreadcrumbs(root)|raw : '' }}
+            {% if tagSons %}
+                <div class="subtags">
+                    {% for tagSon in tagSons %}
+                        {{ tagSon|tagBlocEditor(instance)|raw }}
+                    {% endfor %}
+                </div>
+            {% endif %}
+            {% if documents %}
+                <div class="medias">
+                    {% for document in documents %}
+                        {{ document|blocEditor(instance)|raw }}
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="nodata">
+                    {{ (instance.translation ~ '.admin.index.nodata')|trans }}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+    <div class="pagination">
+        {% if documents %}
+            {{ macroPagination.print(pagination, true) }}
+        {% endif %}
+    </div>
+</div>

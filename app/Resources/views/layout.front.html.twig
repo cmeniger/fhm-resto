@@ -1,0 +1,46 @@
+{% extends app.request.isxmlhttprequest ? "::ajax.html.twig" : "::layout.html.twig" %}
+{% import "::Macros/breadcrumbs.html.twig" as macroBreadcrumbs %}
+{% block css_main %}
+    {{ asset('css/front.css') }}
+{% endblock %}
+
+{% block body_header %}
+    <div id="header">
+        {# Menu #}
+        {% block menu %}
+            {{ render_esi(path('fhm_api_menu_detail', {'template':'front'})) }}
+        {% endblock %}
+
+        {# Tagline #}
+        {% block tagline %}
+        {% endblock %}
+
+        {# Breadcrumbs #}
+        {% block breadcrumbs %}
+            <div class="row">
+                {{ breadcrumbs is defined ? macroBreadcrumbs.print(breadcrumbs) : '' }}
+            </div>
+        {% endblock %}
+
+        {# Flash #}
+        {% block flash %}
+            {% for flashMessage in app.session.flashbag.get('notice') %}
+                <div data-alert class="alert-box">
+                    {{ flashMessage }}
+                    <a href="#" class="close"><i class="fa fa-times"></i></a>
+                </div>
+            {% endfor %}
+        {% endblock %}
+
+        {# Header #}
+        {% block header %}{% endblock %}
+    </div>
+{% endblock %}
+
+{% block body_content %}
+    <div id="content">
+        {% block left %}{% endblock %}
+        {% block content %}{% endblock %}
+        {% block right %}{% endblock %}
+    </div>
+{% endblock %}

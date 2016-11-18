@@ -1,0 +1,1206 @@
+card:
+    admin:
+        index:
+            title:                              Gestion des cartes
+            link:                               Cartes
+            breadcrumb:                         Cartes
+            nodata:                             Aucune donnée
+            form:
+                search:                         Rechercher
+            table:
+                header:
+                    image:                      Image
+                    name:                       Nom
+                    parent:                     Parent
+                    categories:                 Catégories
+                    products:                   Produits
+                    ingredients:                Ingrédients
+                    action:                     Actions
+                    status:                     Statut
+                action:
+                    activate:                   Activer
+                    deactivate:                 Désactiver
+                    delete:                     Supprimer
+                    detail:                     Paramétrer
+                    duplicate:                  Dupliquer
+                    undelete:                   Restaurer
+                    update:                     Modifier
+                    preview:                    Aperçu
+                confirm:
+                    activate:                   Confirmer l\'activation de la carte ?
+                    deactivate:                 Confirmer la désactivation de la carte ?
+                    delete:                     Confirmer la suppression de la carte ?
+                    undelete:                   Confirmer le déblocage de la carte ?
+
+        create:
+            title:                              Ajouter
+            link:                               Ajouter
+            breadcrumb:                         Ajouter une carte
+            flash:
+                ok:                             La carte a bien été créée.
+                ko:                             La carte n'a pas été créée.
+            form:
+                name:                           Nom
+                description:                    Description
+                image:                          Image
+                categories:                     Catégories
+                products:                       Produits
+                ingredients:                    Ingrédients
+                active:                         Activer
+                share:                          Partager
+                global:                         Globale
+                submit:
+                    save:                       Sauvegarder
+                    new:                        Sauvegarder et ajouter
+                    duplicate:                  Sauvegarder et dupliquer
+                    quit:                       Sauvegarder et quitter
+                    config:                     Sauvegarder et paramétrer
+                    cancel:                     Annuler
+                    import:                     Importer
+                    export:                     Exporter
+                fieldset:
+                    data:                       Données
+                    categories:                 Catégories rattachées
+                    products:                   Produits rattachés
+                    ingredients:                Ingrédients rattachés
+                    media:                      Médias
+                    options:                    Options
+
+        update:
+            title:                              Modifier
+            link:                               Modifier
+            breadcrumb:                         Modifier
+            flash:
+                ok:                             La carte a bien été modifiée.
+                ko:                             La carte n'a pas été modifiée.
+            form:
+                name:                           Nom
+                description:                    Description
+                image:                          Image
+                categories:                     Catégories
+                products:                       Produits
+                ingredients:                    Ingrédients
+                active:                         Activer
+                share:                          Partager
+                global:                         Globale
+                submit:
+                    save:                       Sauvegarder
+                    new:                        Sauvegarder et ajouter
+                    duplicate:                  Sauvegarder et dupliquer
+                    quit:                       Sauvegarder et quitter
+                    config:                     Sauvegarder et paramétrer
+                    cancel:                     Annuler
+                    import:                     Importer
+                    export:                     Exporter
+                    delete:                     Supprimer
+                fieldset:
+                    data:                       Données
+                    categories:                 Catégories rattachées
+                    products:                   Produits rattachés
+                    ingredients:                Ingrédients rattachés
+                    media:                      Médias
+                    options:                    Options
+
+        detail:
+            title:                              %name%
+            categories:                         Gestion des catégories
+            link:                               Détail
+            breadcrumb:                         %name%
+            card:
+                anchor:                         Carte
+                title:                          Carte
+                category:                       Catégories
+                product:                        Produits
+                ingredient:                     Ingrédients
+                preview:                        Aperçu
+            data:
+                title:                          Informations
+                id:                             ID
+                create:                         Création
+                update:                         Modification
+                name:                           Nom
+                alias:                          Alias
+                description:                    Description
+                status:                         Statut
+            url:
+                title:                          Routes disponibles
+                admin:
+                    edit:                       Modifier
+                    detail:                     Paramétrer
+                front:
+                    id:                         Afficher via l'ID
+                    name:                       Afficher via le nom
+                    alias:                      Afficher via l'alias
+                    lite:                       Afficher via l'url simplifiée
+            admin:
+                title:                          Outils d'administration
+
+        export:
+            breadcrumb:                         Exporter
+            form:
+                submit:                         Exporter
+            link:                               Exporter
+            title:                              Exporter des cartes
+
+        import:
+            breadcrumb:                         Importer
+            flash:
+                ok:                             Les cartes ont bien été importées (%countAdd% ajout(s), %countUpdate% modification(s), %countError% erreur(s)).
+                ko:                             Les cartes n'ont pas été importées.
+            form:
+                file:                           Fichier CSV
+                submit:                         Importer
+            link:                               Importer
+            title:                              Importer des cartes
+
+        deactivate:
+            flash:
+                ok:                             La carte a bien été désactivée.
+
+        delete:
+            flash:
+                ok:                             La carte a bien été supprimée.
+
+        activate:
+            flash:
+                ok:                             La carte a bien été activée.
+
+        undelete:
+            flash:
+                ok:                             La carte a bien été restaurée.
+        add:
+            title:                              Ajouter une catégorie
+            name:                               Nom
+            submit:                             Ajouter
+            module:                             Ajouter un module
+        edit:
+            title:                              Modifier le menu
+            name:                               Nom
+            submit:                             Valider
+            module:                             Ajouter un module
+
+    front:
+        index:
+            title:                              Cartes
+            link:                               Cartes
+            breadcrumb:                         Cartes
+            nodata:                             Aucune donnée
+            form:
+                search:                         Rechercher
+            table:
+                header:
+                    name:                       Nom
+                    action:                     Actions
+                action:
+                    detail:                     Détail
+                    delete:                     Supprimer
+                confirm:
+                    delete:                     Confirmer la suppression de la carte ?
+
+        create:
+            title:                              Ajouter
+            link:                               Ajouter
+            breadcrumb:                         Ajouter une carte
+            flash:
+                ok:                             La carte a bien été créée.
+                ko:                             La carte n'a pas été créée.
+            form:
+                name:                           Nom
+                description:                    Description
+                submit:
+                    save:                       Sauvegarder
+                    new:                        Sauvegarder et ajouter
+                    duplicate:                  Sauvegarder et dupliquer
+                    quit:                       Sauvegarder et quitter
+                    cancel:                     Annuler
+                alert:
+                    title:                      Information
+                    text:                       L'ajout d'une carte nécessite la validation d'un modérateur.
+
+        update:
+            title:                              Modifier
+            link:                               Modifier
+            breadcrumb:                         Modifier
+            flash:
+                ok:                             La carte a bien été modifiée.
+                ko:                             La carte n'a pas été modifiée.
+            form:
+                name:                           Nom
+                description:                    Description
+                submit:
+                    save:                       Sauvegarder
+                    new:                        Sauvegarder et ajouter
+                    duplicate:                  Sauvegarder et dupliquer
+                    quit:                       Sauvegarder et quitter
+                    cancel:                     Annuler
+                alert:
+                    title:                      Information
+                    text:                       La modification d'une carte nécessite la validation d'un modérateur.
+
+        detail:
+            title:                              %name%
+            categories:                         Gestion des Catégories
+            products:                           Gestion des Produits
+            ingredients:                        Gestion des Ingrédients
+            link:                               Détail
+            breadcrumb:                         %name%
+            data:
+                title:                          Informations
+                create:                         Création
+                update:                         Modification
+                name:                           Nom
+                alias:                          Alias
+                description:                    Description
+
+        delete:
+            flash:
+                ok:                             La carte a bien été supprimée.
+
+    api:
+        index:
+            title:                              Cartes
+        tabs:
+            category:                           Catégories
+            product:                            Produits
+            ingredient:                         Ingrédients
+            preview:                            Aperçu
+        status:
+            menu:                               Menu
+            default:                            Défaut
+            forward:                            En avant
+        action:
+            activate:                           Activer
+            deactivate:                         Désactiver
+            delete:                             Supprimer
+            undelete:                           Restaurer
+            update:                             Modifier
+            add:                                Ajouter
+        confirm:
+            activate:                           Confirmer l'activation ?
+            deactivate:                         Confirmer la désactivation ?
+            delete:                             Confirmer la suppression ?
+            undelete:                           Confirmer le déblocage ?
+        modal:
+            category:                           Gestion des catégories
+            product:                            Gestion des produits
+            ingredient:                         Gestion des ingrédients
+        form:
+            search:                             Rechercher
+            nodata:                             Aucune donnée
+            counter:                            Nombre: %count%
+
+    pagination:
+        counter:                                Nombre de cartes: %count% / %all%
+
+    autocomplete:
+        nodata:                                 Aucun résultat
+
+    error:
+        unknown:                                La carte n'existe pas.
+        delete:                                 La carte n'existe pas.
+        forbidden:                              Droits insuffisants.
+
+    category:
+        admin:
+            index:
+                title:                          Gestion des cartes : catégories
+                link:                           Catégories
+                breadcrumb:                     Catégories
+                nodata:                         Aucune donnée
+                form:
+                    search:                     Rechercher
+                table:
+                    header:
+                        image:                  Image
+                        name:                   Nom
+                        card:                   Carte
+                        route:                  Route
+                        products:               Produits
+                        menu:                   Menu
+                        order:                  Ordre
+                        default:                Par défaut
+                        action:                 Actions
+                        status:                 Statut
+                    action:
+                        activate:               Activer
+                        deactivate:             Désactiver
+                        delete:                 Supprimer
+                        detail:                 Paramétrer
+                        duplicate:              Dupliquer
+                        undelete:               Restaurer
+                        update:                 Modifier
+                    confirm:
+                        activate:               Confirmer l\'activationde de la catégorie ?
+                        deactivate:             Confirmer la désactivationde de la catégorie ?
+                        delete:                 Confirmer la suppressionde de la catégorie ?
+                        undelete:               Confirmer le déblocagede de la catégorie ?
+
+            create:
+                title:                          Ajouter
+                link:                           Ajouter
+                breadcrumb:                     Ajouter une catégorie
+                flash:
+                    ok:                         La catégorie a bien été créée.
+                    ko:                         La catégorie n'a pas été créée.
+                form:
+                    name:                       Nom
+                    description:                Description
+                    price:                      Prix
+                    menu:                       Menu
+                    image:                      Image
+                    card:                       Carte
+                    order:                      Ordre
+                    cards:                      Cartes
+                    parents:                    Parents
+                    sons:                       Enfants
+                    products:                   Produits
+                    default:                    Par défaut
+                    active:                     Activer
+                    share:                      Partager
+                    global:                     Globale
+                    submit:
+                        save:                   Sauvegarder
+                        new:                    Sauvegarder et ajouter
+                        duplicate:              Sauvegarder et dupliquer
+                        quit:                   Sauvegarder et quitter
+                        config:                 Sauvegarder et paramétrer
+                        cancel:                 Annuler
+                        import:                 Importer
+                        export:                 Exporter
+                    fieldset:
+                        data:                   Données
+                        options:                Options
+                        cards:                  Cartes rattachées
+                        products:               Produits rattachés
+                        categories:             Catégories rattachées
+
+            update:
+                title:                          Modifier
+                link:                           Modifier
+                breadcrumb:                     Modifier
+                flash:
+                    ok:                         La catégorie a bien été modifiée.
+                    ko:                         La catégorie n'a pas été modifiée.
+                form:
+                    name:                       Nom
+                    description:                Description
+                    price:                      Prix
+                    menu:                       Menu
+                    image:                      Image
+                    card:                       Carte
+                    order:                      Ordre
+                    cards:                      Cartes
+                    parents:                    Parents
+                    sons:                       Enfants
+                    products:                   Produits
+                    default:                    Par défaut
+                    active:                     Activer
+                    share:                      Partager
+                    global:                     Globale
+                    submit:
+                        save:                   Sauvegarder
+                        new:                    Sauvegarder et ajouter
+                        duplicate:              Sauvegarder et dupliquer
+                        quit:                   Sauvegarder et quitter
+                        config:                 Sauvegarder et paramétrer
+                        cancel:                 Annuler
+                        import:                 Importer
+                        export:                 Exporter
+                    fieldset:
+                        data:                   Données
+                        options:                Options
+                        cards:                  Cartes rattachées
+                        products:               Produits rattachés
+                        categories:             Catégories rattachées
+
+            detail:
+                title:                          %name%
+                link:                           Détail
+                breadcrumb:                     %name%
+                card:
+                    tile:                       Carte
+                    anchor:                     Carte
+                data:
+                    title:                      Informations
+                    id:                         ID
+                    create:                     Création
+                    update:                     Modification
+                    name:                       Nom
+                    alias:                      Alias
+                    description:                Description
+                    status:                     Statut
+                url:
+                    title:                      Routes disponibles
+                    admin:
+                        edit:                   Modifier
+                        detail:                 Paramétrer
+                    front:
+                        id:                     Afficher via l'ID
+                        name:                   Afficher via le nom
+                        alias:                  Afficher via l'alias
+                        lite:                   Afficher via l'url simplifiée
+                admin:
+                    title:                      Outils d'administration
+
+            export:
+                breadcrumb:                     Exporter
+                form:
+                    submit:                     Exporter
+                link:                           Exporter
+                title:                          Exporter des catégories
+
+            add:
+                title:                              Ajouter une catégorie
+                name:                               Nom
+                submit:                             Ajouter
+                module:                             Ajouter une catégorie
+                son:
+                    title:                           Ajouter un  nouveau produit ou selectioner dans les produits existants
+                    name:                            Nom
+                    submit:                          Ajouter
+                    module:                          jouter un module
+
+            import:
+                breadcrumb:                     Importer
+                flash:
+                    ok:                         Les catégories ont bien été importées (%countAdd% ajout(s), %countUpdate% modification(s), %countError% erreur(s)).
+                    ko:                         Les catégories n'ont pas été importées.
+                form:
+                    file:                       Fichier CSV
+                    submit:                     Importer
+                link:                           Importer
+                title:                          Importer des catégories
+
+            deactivate:
+                flash:
+                    ok:                         La catégorie a bien été désactivée.
+
+            delete:
+                flash:
+                    ok:                         La catégorie a bien été supprimée.
+
+            activate:
+                flash:
+                    ok:                         La catégorie a bien été activée.
+
+            undelete:
+                flash:
+                    ok:                         La catégorie a bien été restaurée.
+
+        front:
+            index:
+                title:                          Card : catégories
+                link:                           Catégories
+                breadcrumb:                     Catégories
+                nodata:                         Aucune donnée
+                form:
+                    search:                     Rechercher
+                table:
+                    header:
+                        name:                   Nom
+                        action:                 Actions
+                    action:
+                        detail:                 Détail
+                        delete:                 Supprimer
+                    confirm:
+                        delete:                 Confirmer la suppression de la catégorie ?
+
+            create:
+                title:                          Ajouter
+                link:                           Ajouter
+                breadcrumb:                     Ajouter un catégorie
+                flash:
+                    ok:                         La catégorie a bien été créée.
+                    ko:                         La catégorie n'a pas été créée.
+                form:
+                    name:                       Nom
+                    description:                Description
+                    submit:
+                        save:                   Sauvegarder
+                        new:                    Sauvegarder et ajouter
+                        duplicate:              Sauvegarder et dupliquer
+                        quit:                   Sauvegarder et quitter
+                        cancel:                 Annuler
+                    alert:
+                        title:                  Information
+                        text:                   L'ajout d'un catégorie nécessite la validation d'un modérateur.
+
+            update:
+                title:                          Modifier
+                link:                           Modifier
+                breadcrumb:                     Modifier
+                flash:
+                    ok:                         La catégorie a bien été modifiée.
+                    ko:                         La catégorie n'a pas été modifiée.
+                form:
+                    name:                       Nom
+                    description:                Description
+                    submit:
+                        save:                   Sauvegarder
+                        new:                    Sauvegarder et ajouter
+                        duplicate:              Sauvegarder et dupliquer
+                        quit:                   Sauvegarder et quitter
+                        cancel:                 Annuler
+                    alert:
+                        title:                  Information
+                        text:                   La modification d'une catégorie nécessite la validation d'un modérateur.
+
+            detail:
+                title:                          %name%
+                link:                           Détail
+                breadcrumb:                     %name%
+                data:
+                    title:                      Informations
+                    create:                     Création
+                    update:                     Modification
+                    name:                       Nom
+                    alias:                      Alias
+                    description:                Description
+
+            delete:
+                flash:
+                    ok:                         La catégorie a bien été supprimée.
+
+        api:
+            index:
+                title:                          Cartes : catégories
+
+            create:
+                form:
+                    name:                       Nom
+                    description:                Description
+                    price:                      Prix
+                    menu:                       Menu
+                    image:                      Image
+                    order:                      Ordre
+                    parents:                    Parents
+                    products:                   Produits
+                    submit:
+                        save:                   Sauvegarder
+                    fieldset:
+                        data:                   Données
+                        media:                  Médias
+                        products:               Produits rattachés
+                        categories:             Catégories rattachées
+
+            update:
+                form:
+                    name:                       Nom
+                    description:                Description
+                    price:                      Prix
+                    menu:                       Menu
+                    image:                      Image
+                    order:                      Ordre
+                    parents:                    Parents
+                    products:                   Produits
+                    submit:
+                        save:                   Sauvegarder
+                    fieldset:
+                        data:                   Données
+                        media:                  Médias
+                        products:               Produits rattachés
+                        categories:             Catégories rattachées
+
+        pagination:
+            counter:                            Nombre de catégories: %count% / %all%
+
+        autocomplete:
+            nodata:                             Aucun résultat
+
+        error:
+            unknown:                            La catégorie n'existe pas.
+            delete:                             La catégorie n'existe pas.
+            forbidden:                          Droits insuffisants.
+
+    product:
+        admin:
+            index:
+                title:                          Gestion des cartes : produits
+                link:                           Produits
+                breadcrumb:                     Produits
+                nodata:                         Aucune donnée
+                form:
+                    search:                     Rechercher
+                table:
+                    header:
+                        image:                  Image
+                        name:                   Nom
+                        card:                   Carte
+                        categories:             Catégories
+                        ingredients:            Ingrédients
+                        order:                  Ordre
+                        default:                Par défaut
+                        action:                 Actions
+                        status:                 Statut
+                    action:
+                        activate:               Activer
+                        deactivate:             Désactiver
+                        delete:                 Supprimer
+                        detail:                 Paramétrer
+                        duplicate:              Dupliquer
+                        undelete:               Restaurer
+                        update:                 Modifier
+                    confirm:
+                        activate:               Confirmer l\'activation du produit ?
+                        deactivate:             Confirmer la désactivation du produit ?
+                        delete:                 Confirmer la suppression du produit ?
+                        undelete:               Confirmer le déblocage du produit ?
+
+            create:
+                title:                          Ajouter
+                link:                           Ajouter
+                breadcrumb:                     Ajouter un produit
+                flash:
+                    ok:                         Le produit a bien été crééee.
+                    ko:                         Le produit n'a pas été créé.
+                form:
+                    name:                       Nom
+                    description:                Description
+                    categories:                 Catégories
+                    ingredients:                Ingrédients
+                    price:                      Prix
+                    order:                      Ordre
+                    image:                      Image
+                    card:                       Carte
+                    forward:                    En avant
+                    default:                    Par défaut
+                    active:                     Activer
+                    share:                      Partager
+                    global:                     Globale
+                    submit:
+                        save:                   Sauvegarder
+                        new:                    Sauvegarder et ajouter
+                        duplicate:              Sauvegarder et dupliquer
+                        quit:                   Sauvegarder et quitter
+                        config:                 Sauvegarder et paramétrer
+                        cancel:                 Annuler
+                        import:                 Importer
+                        export:                 Exporter
+                    fieldset:
+                        data:                   Données
+                        options:                Options
+                        data2:                  Catégories et ingrédients
+                        new:                    Ajoutez un nouveau produit
+                        old:                    Selectionner les produits
+
+            update:
+                title:                          Modifier
+                link:                           Modifier
+                breadcrumb:                     Modifier
+                flash:
+                    ok:                         Le produit a bien été modifié.
+                    ko:                         Le produit n'a pas été modifié.
+                form:
+                    name:                       Nom
+                    description:                Description
+                    categories:                 Catégories
+                    ingredients:                Ingrédients
+                    price:                      Prix
+                    order:                      Ordre
+                    image:                      Image
+                    card:                       Carte
+                    forward:                    En avant
+                    default:                    Par défaut
+                    active:                     Activer
+                    share:                      Partager
+                    global:                     Globale
+                    submit:
+                        save:                   Sauvegarder
+                        new:                    Sauvegarder et ajouter
+                        duplicate:              Sauvegarder et dupliquer
+                        quit:                   Sauvegarder et quitter
+                        config:                 Sauvegarder et paramétrer
+                        cancel:                 Annuler
+                        import:                 Importer
+                        export:                 Exporter
+                        delete:                 Supprimer
+                    fieldset:
+                        data:                   Données
+                        options:                Options
+                        data2:                  Catégories et ingrédients
+
+            detail:
+                title:                          %name%
+                link:                           Détail
+                breadcrumb:                     %name%
+                card:
+                    tile:                       Carte
+                    anchor:                     Carte
+                data:
+                    title:                      Informations
+                    id:                         ID
+                    create:                     Création
+                    update:                     Modification
+                    name:                       Nom
+                    alias:                      Alias
+                    description:                Description
+                    status:                     Statut
+                url:
+                    title:                      Routes disponibles
+                    admin:
+                        edit:                   Modifier
+                        detail:                 Paramétrer
+                    front:
+                        id:                     Afficher via l'ID
+                        name:                   Afficher via le nom
+                        alias:                  Afficher via l'alias
+                        lite:                   Afficher via l'url simplifiée
+                admin:
+                    title:                      Outils d'administration
+
+            export:
+                breadcrumb:                     Exporter
+                form:
+                    submit:                     Exporter
+                link:                           Exporter
+                title:                          Exporter des produits
+
+            import:
+                breadcrumb:                     Importer
+                flash:
+                    ok:                         Les produits ont bien été importés (%countAdd% ajout(s), %countUpdate% modification(s), %countError% erreur(s)).
+                    ko:                         Les produits n'ont pas été importés.
+                form:
+                    file:                       Fichier CSV
+                    submit:                     Importer
+                link:                           Importer
+                title:                          Importer des produits
+
+            deactivate:
+                flash:
+                    ok:                         Le produit a bien été désactivé.
+
+            delete:
+                flash:
+                    ok:                         Le produit a bien été supprimé.
+
+            activate:
+                flash:
+                    ok:                         Le produit a bien été activé.
+
+            undelete:
+                flash:
+                    ok:                         Le produit a bien été restauré.
+            add:
+              title:                            Ajouter un  nouveau produit ou selectioner dans les produits existants
+              name:                             Nom
+              submit:                           Ajouter
+              module:                           Ajouter un module
+              son:
+                 title:                         Ajouter un  nouveau ingrédient ou selectioner dans les ingrédients existants
+                 name:                          Nom
+                 submit:                        Ajouter
+                 module:                        Ajouter un module
+
+        front:
+            index:
+                title:                          Card : produits
+                link:                           Produits
+                breadcrumb:                     Produits
+                nodata:                         Aucune donnée
+                form:
+                    search:                     Rechercher
+                table:
+                    header:
+                        name:                   Nom
+                        action:                 Actions
+                    action:
+                        detail:                 Détail
+                        delete:                 Supprimer
+                    confirm:
+                        delete:                 Confirmer la suppression du produit ?
+
+            create:
+                title:                          Ajouter
+                link:                           Ajouter
+                breadcrumb:                     Ajouter un produit
+                flash:
+                    ok:                         Le produit a bien été créé.
+                    ko:                         Le produit n'a pas été créé.
+                form:
+                    name:                       Nom
+                    description:                Description
+                    submit:
+                        save:                   Sauvegarder
+                        new:                    Sauvegarder et ajouter
+                        duplicate:              Sauvegarder et dupliquer
+                        quit:                   Sauvegarder et quitter
+                        cancel:                 Annuler
+                    alert:
+                        title:                  Information
+                        text:                   L'ajout d'un produit nécessite la validation d'un modérateur.
+
+            update:
+                title:                          Modifier
+                link:                           Modifier
+                breadcrumb:                     Modifier
+                flash:
+                    ok:                         Le produit a bien été modifié.
+                    ko:                         Le produit n'a pas été modifié.
+                form:
+                    name:                       Nom
+                    description:                Description
+                    submit:
+                        save:                   Sauvegarder
+                        new:                    Sauvegarder et ajouter
+                        duplicate:              Sauvegarder et dupliquer
+                        quit:                   Sauvegarder et quitter
+                        cancel:                 Annuler
+                    alert:
+                        title:                  Information
+                        text:                   La modification d'un produit nécessite la validation d'un modérateur.
+
+            detail:
+                title:                          %name%
+                link:                           Détail
+                breadcrumb:                     %name%
+                data:
+                    title:                      Informations
+                    create:                     Création
+                    update:                     Modification
+                    name:                       Nom
+                    alias:                      Alias
+                    description:                Description
+
+            delete:
+                flash:
+                    ok:                         Le produit a bien été supprimé.
+
+        api:
+            index:
+                title:                          Card : produits
+
+            create:
+                form:
+                    name:                       Nom
+                    description:                Description
+                    price:                      Prix
+                    forward:                    En avant
+                    image:                      Image
+                    order:                      Ordre
+                    categories:                 Catégories
+                    ingredients:                Ingrédients
+                    submit:
+                        save:                   Sauvegarder
+                    fieldset:
+                        data:                   Données
+                        media:                  Médias
+                        categories:             Catégories rattachées
+                        ingredients:            Ingrédients rattachés
+
+            update:
+                form:
+                    name:                       Nom
+                    description:                Description
+                    price:                      Prix
+                    forward:                    En avant
+                    image:                      Image
+                    order:                      Ordre
+                    categories:                 Catégories
+                    ingredients:                Ingrédients
+                    submit:
+                        save:                   Sauvegarder
+                    fieldset:
+                        data:                   Données
+                        media:                  Médias
+                        categories:             Catégories rattachées
+                        ingredients:            Ingrédients rattachés
+
+        pagination:
+            counter:                            Nombre de produits: %count% / %all%
+
+        autocomplete:
+            nodata:                             Aucun résultat
+
+        error:
+            unknown:                            Le produit n'existe pas.
+            delete:                             Le produit n'existe pas.
+            forbidden:                          Droits insuffisants.
+
+    ingredient:
+        admin:
+            index:
+                title:                          Gestion des cartes : ingrédients
+                link:                           Ingrédients
+                breadcrumb:                     Ingrédients
+                nodata:                         Aucune donnée
+                form:
+                    search:                     Rechercher
+                table:
+                    header:
+                        image:                  Image
+                        name:                   Nom
+                        card:                   Carte
+                        products:               Produits
+                        order:                  Ordre
+                        default:                Par défaut
+                        action:                 Actions
+                        status:                 Statut
+                    action:
+                        activate:               Activer
+                        deactivate:             Désactiver
+                        delete:                 Supprimer
+                        detail:                 Paramétrer
+                        duplicate:              Dupliquer
+                        undelete:               Restaurer
+                        update:                 Modifier
+                    confirm:
+                        activate:               Confirmer l\'activation de l\'ingrédient ?
+                        deactivate:             Confirmer la désactivation de l\'ingrédient ?
+                        delete:                 Confirmer la suppression de l\'ingrédient ?
+                        undelete:               Confirmer le déblocage de l\'ingrédient ?
+
+            create:
+                title:                          Ajouter
+                link:                           Ajouter
+                breadcrumb:                     Ajouter un ingrédient
+                flash:
+                    ok:                         L'ingrédient a bien été créé.
+                    ko:                         L'ingrédient n'a pas été créé.
+                form:
+                    name:                       Nom
+                    description:                Description
+                    order:                      Ordre
+                    image:                      Image
+                    card:                       Carte
+                    products:                   Produits
+                    default:                    Par défaut
+                    active:                     Activer
+                    share:                      Partager
+                    global:                     Globale
+                    submit:
+                        save:                   Sauvegarder
+                        new:                    Sauvegarder et ajouter
+                        duplicate:              Sauvegarder et dupliquer
+                        quit:                   Sauvegarder et quitter
+                        config:                 Sauvegarder et paramétrer
+                        cancel:                 Annuler
+                        import:                 Importer
+                        export:                 Exporter
+                    fieldset:
+                        data:                   Données
+                        options:                Options
+                        products:               Produits rattachés
+
+            update:
+                title:                          Modifier
+                link:                           Modifier
+                breadcrumb:                     Modifier
+                flash:
+                    ok:                         L'ingrédient a bien été modifié.
+                    ko:                         L'ingrédient n'a pas été modifié.
+                form:
+                    name:                       Nom
+                    description:                Description
+                    order:                      Ordre
+                    image:                      Image
+                    card:                       Carte
+                    products:                   Produits
+                    default:                    Par défaut
+                    active:                     Activer
+                    share:                      Partager
+                    global:                     Globale
+                    submit:
+                        save:                   Sauvegarder
+                        new:                    Sauvegarder et ajouter
+                        duplicate:              Sauvegarder et dupliquer
+                        quit:                   Sauvegarder et quitter
+                        config:                 Sauvegarder et paramétrer
+                        cancel:                 Annuler
+                        import:                 Importer
+                        export:                 Exporter
+                        delete:                 Supprimer
+                    fieldset:
+                        data:                   Données
+                        options:                Options
+                        products:               Produits rattachés
+
+            detail:
+                title:                          %name%
+                link:                           Détail
+                breadcrumb:                     %name%
+                card:
+                    tile:                       Carte
+                    anchor:                     Carte
+                data:
+                    title:                      Informations
+                    id:                         ID
+                    create:                     Création
+                    update:                     Modification
+                    name:                       Nom
+                    alias:                      Alias
+                    description:                Description
+                    status:                     Statut
+                url:
+                    title:                      Routes disponibles
+                    admin:
+                        edit:                   Modifier
+                        detail:                 Paramétrer
+                    front:
+                        id:                     Afficher via l'ID
+                        name:                   Afficher via le nom
+                        alias:                  Afficher via l'alias
+                        lite:                   Afficher via l'url simplifiée
+                admin:
+                    title:                      Outils d'administration
+
+            export:
+                breadcrumb:                     Exporter
+                form:
+                    submit:                     Exporter
+                link:                           Exporter
+                title:                          Exporter des ingrédients
+
+            import:
+                breadcrumb:                     Importer
+                flash:
+                    ok:                         Les ingrédients ont bien été importés (%countAdd% ajout(s), %countUpdate% modification(s), %countError% erreur(s)).
+                    ko:                         Les ingrédients n'ont pas été importés.
+                form:
+                    file:                       Fichier CSV
+                    submit:                     Importer
+                link:                           Importer
+                title:                          Importer des ingrédients
+
+            deactivate:
+                flash:
+                    ok:                         L'ingrédient a bien été désactivé.
+
+            delete:
+                flash:
+                    ok:                         L'ingrédient a bien été supprimé.
+
+            activate:
+                flash:
+                    ok:                         L'ingrédient a bien été activé.
+
+            undelete:
+                flash:
+                    ok:                         L'ingrédient a bien été restauré.
+            add:
+                title:                          Ajouter un ingrédient
+                name:                           Nom
+                submit:                         Ajouter
+                module:                         Ajouter un module
+            edit:
+                title:                          Modifier un ingrédiient
+                name:                           Nom
+                submit:                         Valider
+                module:                         Ajouter un module
+
+        front:
+            index:
+                title:                          Card : ingrédients
+                link:                           Ingrédients
+                breadcrumb:                     Ingrédients
+                nodata:                         Aucune donnée
+                form:
+                    search:                     Rechercher
+                table:
+                    header:
+                        name:                   Nom
+                        action:                 Actions
+                    action:
+                        detail:                 Détail
+                        delete:                 Supprimer
+                    confirm:
+                        delete:                 Confirmer la suppression de l'ingrédient ?
+
+            create:
+                title:                          Ajouter
+                link:                           Ajouter
+                breadcrumb:                     Ajouter un ingrédient
+                flash:
+                    ok:                         L'ingrédient a bien été créé.
+                    ko:                         L'ingrédient n'a pas été créé.
+                form:
+                    name:                       Nom
+                    description:                Description
+                    submit:
+                        save:                   Sauvegarder
+                        new:                    Sauvegarder et ajouter
+                        duplicate:              Sauvegarder et dupliquer
+                        quit:                   Sauvegarder et quitter
+                        cancel:                 Annuler
+                    alert:
+                        title:                  Information
+                        text:                   L'ajout d'un ingrédient nécessite la validation d'un modérateur.
+
+            update:
+                title:                          Modifier
+                link:                           Modifier
+                breadcrumb:                     Modifier
+                flash:
+                    ok:                         L'ingrédient a bien été modifié.
+                    ko:                         L'ingrédient n'a pas été modifié.
+                form:
+                    name:                       Nom
+                    description:                Description
+                    submit:
+                        save:                   Sauvegarder
+                        new:                    Sauvegarder et ajouter
+                        duplicate:              Sauvegarder et dupliquer
+                        quit:                   Sauvegarder et quitter
+                        cancel:                 Annuler
+                    alert:
+                        title:                  Information
+                        text:                   La modification d'un ingrédient nécessite la validation d'un modérateur.
+
+            detail:
+                title:                          %name%
+                link:                           Détail
+                breadcrumb:                     %name%
+                data:
+                    title:                      Informations
+                    create:                     Création
+                    update:                     Modification
+                    name:                       Nom
+                    alias:                      Alias
+                    description:                Description
+
+            delete:
+                flash:
+                    ok:                         L'ingrédient a bien été supprimé.
+
+        api:
+            index:
+                title:                          Card : ingrédients
+
+            create:
+                form:
+                    name:                       Nom
+                    description:                Description
+                    image:                      Image
+                    order:                      Ordre
+                    products:                   Produits
+                    submit:
+                        save:                   Sauvegarder
+                    fieldset:
+                        data:                   Données
+                        media:                  Médias
+                        products:               Produits rattachés
+
+            update:
+                form:
+                    name:                       Nom
+                    description:                Description
+                    image:                      Image
+                    order:                      Ordre
+                    products:                   Produits
+                    submit:
+                        save:                   Sauvegarder
+                    fieldset:
+                        data:                   Données
+                        media:                  Médias
+                        products:               Produits rattachés
+
+        pagination:
+            counter:                            Nombre d'ingrédients: %count% / %all%
+
+        autocomplete:
+            nodata:                             Aucun résultat
+
+        error:
+            unknown:                            L'ingrédient n'existe pas.
+            delete:                             L'ingrédient n'existe pas.
+            forbidden:                          Droits insuffisants.

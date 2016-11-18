@@ -1,0 +1,18 @@
+{% trans_default_domain instance.domain %}
+{% extends "::FhmFhm/Front/detail.html.twig" %}
+{% import "::Macros/dd.card.html.twig" as macroTree %}
+
+{% block content_link_data %}
+    {{ parent() }}
+    {% include "::FhmCard/Api/menu.html.twig" %}
+{% endblock %}
+
+{% block content_data %}
+    <div class="row">
+        <h2>{{ (instance.translation ~ '.admin.detail.link')|trans }}</h2>
+    </div>
+    <div class="row">
+        {{ macroTree.front(tree, document, filter,'card_category', 'card_product',instance.translation ~ '.admin.detail.menu', instance) }}
+    </div>
+    {{ parent() }}
+{% endblock %}

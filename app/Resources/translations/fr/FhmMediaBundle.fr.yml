@@ -1,0 +1,546 @@
+media:
+    admin:
+        index:
+            title:                              Gestion des médias
+            link:                               Médias
+            breadcrumb:                         Médias
+            nodata:                             Aucune donnée
+            form:
+                search:                         Rechercher
+                new:                            Nouveau média
+                selector:                       Liste des médias
+            tags:
+                all:                            Tous les médias
+            table:
+                header:
+                    name:                       Nom
+                    action:                     Actions
+                    status:                     Statut
+                action:
+                    activate:                   Activer
+                    deactivate:                 Désactiver
+                    delete:                     Supprimer
+                    detail:                     Paramétrer
+                    duplicate:                  Dupliquer
+                    undelete:                   Restaurer
+                    update:                     Modifier
+                confirm:
+                    activate:                   Confirmer l'activation du média ?
+                    deactivate:                 Confirmer la désactivation du média ?
+                    delete:                     Confirmer la suppression du média ?
+                    undelete:                   Confirmer le déblocage du média ?
+
+        create:
+            title:                              Ajouter
+            link:                               Ajouter
+            breadcrumb:                         Ajouter un média
+            flash:
+                ok:                             Le média a bien été créé.
+                ko:                             Le média n'a pas été créé.
+            form:
+                name:                           Nom
+                description:                    Description
+                watermark:                      Ajouter un filigrane
+                tag:                            Nouveau tag
+                parent:                         Imbriquer dans le tag
+                tags:                           Associer aux tags
+                private:                        Privé
+                active:                         Activer
+                share:                          Partager
+                global:                         Globale
+                file:                           Ajouter le fichier
+                submit:
+                    save:                       Sauvegarder
+                    new:                        Sauvegarder et ajouter
+                    duplicate:                  Sauvegarder et dupliquer
+                    quit:                       Sauvegarder et quitter
+                    config:                     Sauvegarder et paramétrer
+                    cancel:                     Annuler
+                    import:                     Importer
+                    export:                     Exporter
+                    add:                        Ajouter
+                fieldset:
+                    data:                       Données
+                    tags:                       Tags
+                    options:                    Options
+                    média:                      Média
+                    file:                       Fichier(s)
+                    watermark:                  Filigranes
+
+        update:
+            title:                              Modifier
+            link:                               Modifier
+            breadcrumb:                         Modifier
+            flash:
+                ok:                             Le média a bien été modifié.
+                ko:                             Le média n'a pas été modifié.
+            form:
+                name:                           Nom
+                description:                    Description
+                generate:                       Regénérer les images
+                watermark:                      Ajouter un filigrane
+                tag:                            Nouveau tag
+                parent:                         Imbriquer dans le tag
+                tags:                           Associer aux tags
+                private:                        Privé
+                active:                         Activer
+                share:                          Partager
+                global:                         Globale
+                file:                           Ajouter le fichier
+                submit:
+                    save:                       Sauvegarder
+                    new:                        Sauvegarder et ajouter
+                    duplicate:                  Sauvegarder et dupliquer
+                    quit:                       Sauvegarder et quitter
+                    config:                     Sauvegarder et paramétrer
+                    cancel:                     Annuler
+                    import:                     Importer
+                    export:                     Exporter
+                    delete:                     Supprimer
+                fieldset:
+                    data:                       Données
+                    tags:                       Tags
+                    options:                    Options
+                    média:                      Média
+                    file:                       Fichier
+                    watermark:                  Filigranes
+
+        detail:
+            title:                              %name%
+            link:                               Détail
+            breadcrumb:                         %name%
+            data:
+                title:                          Informations
+                id:                             ID
+                create:                         Création
+                update:                         Modification
+                name:                           Nom
+                alias:                          Alias
+                description:                    Description
+                status:                         Statut
+            file:
+                title:                          Fichiers
+            url:
+                title:                          Routes disponibles
+                admin:
+                    edit:                       Modifier
+                    detail:                     Paramétrer
+                front:
+                    id:                         Afficher via l'ID
+                    name:                       Afficher via le nom
+                    alias:                      Afficher via l'alias
+                    lite:                       Afficher via l'url simplifiée
+            admin:
+                title:                          Outils d'administration
+
+        export:
+            breadcrumb:                         Exporter
+            form:
+                submit:                         Exporter
+            link:                               Exporter
+            title:                              Exporter des médias
+
+        import:
+            breadcrumb:                         Importer
+            flash:
+                ok:                             Les médias ont bien été importés (%countAdd% ajout(s), %countUpdate% modification(s), %countError% erreur(s)).
+                ko:                             Les médias n'ont pas été importés.
+            form:
+                file:                           Fichier CSV
+                submit:                         Importer
+            link:                               Importer
+            title:                              Importer des médias
+
+        deactivate:
+            flash:
+                ok:                             Le média a bien été désactivé.
+
+        delete:
+            flash:
+                ok:                             Le média a bien été supprimé.
+                use:                            Impossible de supprimer, ce média est rattaché au module %module%  à l'élémént %element%.
+                used:
+                    news:                        Actualités
+                    article:                     Articles
+                    site:                        Sites
+                    page:                        Pages
+                    gallery:                     Galerie
+                    event:                       Evènements
+                    partner:                     Partenaires
+                    slider:                      Slider
+                    product:                     Produits
+                    menu:                        Menus
+
+        activate:
+            flash:
+                ok:                             Le média a bien été activé.
+
+        undelete:
+            flash:
+                ok:                             Le média a bien été restauré.
+
+        uploaded:
+            flash:
+                ok:                             Les médias ont bien été créés (%accepted% ajout(s), %rejected% erreur(s)).
+
+        selector:
+            default:                            Cliquer ici pour sélectionner un média
+            preview:
+                name:                           Nom
+                extension:                      Extension
+                reset:                          Retirer le média
+
+    front:
+        index:
+            title:                              Média
+            link:                               Média
+            breadcrumb:                         Média
+            nodata:                             Aucune donnée
+            form:
+                search:                         Rechercher
+            table:
+                header:
+                    name:                       Nom
+                    action:                     Actions
+                action:
+                    detail:                     Détail
+                    delete:                     Supprimer
+                confirm:
+                    delete:                     Confirmer la suppression du média ?
+
+        create:
+            title:                              Ajouter
+            link:                               Ajouter
+            breadcrumb:                         Ajouter un média
+            flash:
+                ok:                             Le média a bien été créé.
+                ko:                             Le média n'a pas été créé.
+            form:
+                name:                           Nom
+                description:                    Description
+                watermark:                      Ajouter un filigrane
+                tag:                            Nouveau tag
+                parent:                         Imbriquer dans le tag
+                tags:                           Associer aux tags
+                active:                         Activer
+                share:                          Partager
+                global:                         Globale
+                file:                           Ajouter le fichier
+                submit:
+                    save:                       Sauvegarder
+                    new:                        Sauvegarder et ajouter
+                    duplicate:                  Sauvegarder et dupliquer
+                    quit:                       Sauvegarder et quitter
+                    config:                     Sauvegarder et paramétrer
+                    cancel:                     Annuler
+                    import:                     Importer
+                    export:                     Exporter
+                    add:                        Ajouter
+                fieldset:
+                    data:                       Données
+                    tags:                       Tags
+                    options:                    Options
+                    média:                      Média
+                    file:                       Fichier(s)
+                    watermark:                  Filigranes
+
+        update:
+            title:                              Modifier
+            link:                               Modifier
+            breadcrumb:                         Modifier
+            flash:
+                ok:                             Le média a bien été modifié.
+                ko:                             Le média n'a pas été modifié.
+            form:
+                name:                           Nom
+                description:                    Description
+                submit:
+                    save:                       Sauvegarder
+                    new:                        Sauvegarder et ajouter
+                    duplicate:                  Sauvegarder et dupliquer
+                    quit:                       Sauvegarder et quitter
+                    cancel:                     Annuler
+                alert:
+                    title:                      Information
+                    text:                       La modification d'un média nécessite la validation d'un modérateur.
+
+        detail:
+            title:                              %name%
+            link:                               Détail
+            breadcrumb:                         %name%
+            data:
+                title:                          Informations
+                create:                         Création
+                update:                         Modification
+                name:                           Nom
+                alias:                          Alias
+                description:                    Description
+
+        delete:
+            flash:
+                ok:                             Le média a bien été supprimé.
+
+    api:
+        index:
+            title:                              Média
+
+    pagination:
+        counter:                                Nombre de médias: %count% / %all%
+
+    error:
+        unknown:                                Le média n'existe pas.
+        delete:                                 Le média n'existe pas.
+        forbidden:                              Droits insuffisants.
+
+    dropzone:
+        default:                                Cliquer ou déposer des fichiers ici
+        fallbackMessage:                        Votre navigateur ne supporte pas le téléchargement de fichiers de glisser-déposer.
+        fallbackText:                           S'il vous plaît utilisez le formulaire ci-dessous de repli pour télécharger vos fichiers.
+        fileTooBig:                             Le fichier est trop gros ({{filesize}}MiB). Taille max: {{maxFilesize}}MiB.
+        invalidFileType:                        Vous ne pouvez pas télécharger ce type de fichier.
+        responseError:                          Le serveur a répondu avec {{statusCode}} code.
+        cancelUpload:                           Annuler le téléchargement
+        cancelUploadConfirmation:               Etes-vous sûr de vouloir annuler le téléchargement ?
+        removeFile:                             Etes-vous sûr de vouloir supprmierl e fichier ?
+        removeFileConfirmation:                 Le fichier a bien été supprimé.
+        maxFilesExceeded:                       Vous avez atteint le nombre maximum de fichier téléchargeable en même temps.
+
+    bloc:
+        download:                               Télécharger
+        detail:                                 Aperçu
+        insert:
+            image:                              Insérer une image
+            link:                               Insérer un lien
+
+    tag:
+        admin:
+            index:
+                title:                          Gestion des tags médias
+                link:                           Tags médias
+                breadcrumb:                     Tags médias
+                nodata:                         Aucune donnée
+                form:
+                    search:                     Rechercher
+                table:
+                    header:
+                        name:                   Nom
+                        action:                 Actions
+                        status:                 Statut
+                    action:
+                        activate:               Activer
+                        deactivate:             Désactiver
+                        delete:                 Supprimer
+                        detail:                 Paramétrer
+                        duplicate:              Dupliquer
+                        undelete:               Restaurer
+                        update:                 Modifier
+                    confirm:
+                        activate:               Confirmer l'activation du tag ?
+                        deactivate:             Confirmer la désactivation du tag ?
+                        delete:                 Confirmer la suppression du tag ?
+                        undelete:               Confirmer le déblocage du tag ?
+
+            create:
+                title:                          Ajouter
+                link:                           Ajouter
+                breadcrumb:                     Ajouter un tag
+                flash:
+                    ok:                         Le tag a bien été créé.
+                    ko:                         Le tag n'a pas été créé.
+                form:
+                    name:                       Nom
+                    description:                Description
+                    parent:                     Imbriquer dans le tag
+                    color:                      Couleur
+                    private:                    Privé
+                    active:                     Activer
+                    share:                      Partager
+                    global:                     Globale
+                    submit:
+                        save:                   Sauvegarder
+                        new:                    Sauvegarder et ajouter
+                        duplicate:              Sauvegarder et dupliquer
+                        quit:                   Sauvegarder et quitter
+                        config:                 Sauvegarder et paramétrer
+                        cancel:                 Annuler
+                        import:                 Importer
+                        export:                 Exporter
+                    fieldset:
+                        data:                   Données
+                        options:                Options
+
+            update:
+                title:                          Modifier
+                link:                           Modifier
+                breadcrumb:                     Modifier
+                flash:
+                    ok:                         Le tag a bien été modifié.
+                    ko:                         Le tag n'a pas été modifié.
+                form:
+                    name:                       Nom
+                    description:                Description
+                    parent:                     Imbriquer dans le tag
+                    color:                      Couleur
+                    private:                    Privé
+                    active:                     Activer
+                    share:                      Partager
+                    global:                     Globale
+                    submit:
+                        save:                   Sauvegarder
+                        new:                    Sauvegarder et ajouter
+                        duplicate:              Sauvegarder et dupliquer
+                        quit:                   Sauvegarder et quitter
+                        config:                 Sauvegarder et paramétrer
+                        cancel:                 Annuler
+                        import:                 Importer
+                        export:                 Exporter
+                        delete:                 Supprimer
+                    fieldset:
+                        data:                   Données
+                        options:                Options
+
+            detail:
+                title:                          %name%
+                link:                           Détail
+                breadcrumb:                     %name%
+                data:
+                    title:                      Informations
+                    id:                         ID
+                    create:                     Création
+                    update:                     Modification
+                    name:                       Nom
+                    alias:                      Alias
+                    description:                Description
+                    status:                     Statut
+                url:
+                    title:                      Routes disponibles
+                    admin:
+                        edit:                   Modifier
+                        detail:                 Paramétrer
+                    front:
+                        id:                     Afficher via l'ID
+                        name:                   Afficher via le nom
+                        alias:                  Afficher via l'alias
+                        lite:                   Afficher via l'url simplifiée
+                admin:
+                    title:                      Outils d'administration
+
+            export:
+                breadcrumb:                     Exporter
+                form:
+                    submit:                     Exporter
+                link:                           Exporter
+                title:                          Exporter des tags
+
+            import:
+                breadcrumb:                     Importer
+                flash:
+                    ok:                         Les tags ont bien été importés (%countAdd% ajout(s), %countUpdate% modification(s), %countError% erreur(s)).
+                    ko:                         Les tags n'ont pas été importés.
+                form:
+                    file:                       Fichier CSV
+                    submit:                     Importer
+                link:                           Importer
+                title:                          Importer des tags
+
+            deactivate:
+                flash:
+                    ok:                         Le tag a bien été désactivé.
+
+            delete:
+                flash:
+                    ok:                         Le tag a bien été supprimé.
+
+            activate:
+                flash:
+                    ok:                         Le tag a bien été activé.
+
+            undelete:
+                flash:
+                    ok:                         Le tag a bien été restauré.
+
+        front:
+            index:
+                title:                          Tags média
+                link:                           Tags média
+                breadcrumb:                     Tags média
+                nodata:                         Aucune donnée
+                form:
+                    search:                     Rechercher
+                table:
+                    header:
+                        name:                   Nom
+                        action:                 Actions
+                    action:
+                        detail:                 Détail
+                        delete:                 Supprimer
+                    confirm:
+                        delete:                 Confirmer la suppression du tag ?
+
+            create:
+                title:                          Ajouter
+                link:                           Ajouter
+                breadcrumb:                     Ajouter un tag
+                flash:
+                    ok:                         Le tag a bien été créé.
+                    ko:                         Le tag n'a pas été créé.
+                form:
+                    name:                       Nom
+                    description:                Description
+                    submit:
+                        save:                   Sauvegarder
+                        new:                    Sauvegarder et ajouter
+                        duplicate:              Sauvegarder et dupliquer
+                        quit:                   Sauvegarder et quitter
+                        cancel:                 Annuler
+                    alert:
+                        title:                  Information
+                        text:                   L'ajout d'un tag nécessite la validation d'un modérateur.
+
+            update:
+                title:                          Modifier
+                link:                           Modifier
+                breadcrumb:                     Modifier
+                flash:
+                    ok:                         Le tag a bien été modifié.
+                    ko:                         Le tag n'a pas été modifié.
+                form:
+                    name:                       Nom
+                    description:                Description
+                    submit:
+                        save:                   Sauvegarder
+                        new:                    Sauvegarder et ajouter
+                        duplicate:              Sauvegarder et dupliquer
+                        quit:                   Sauvegarder et quitter
+                        cancel:                 Annuler
+                    alert:
+                        title:                  Information
+                        text:                   La modification d'un tag nécessite la validation d'un modérateur.
+
+            detail:
+                title:                          %name%
+                link:                           Détail
+                breadcrumb:                     %name%
+                data:
+                    title:                      Informations
+                    create:                     Création
+                    update:                     Modification
+                    name:                       Nom
+                    alias:                      Alias
+                    description:                Description
+
+            delete:
+                flash:
+                    ok:                         Le tag a bien été supprimé.
+
+        api:
+            index:
+                title:                          Tags média
+
+        pagination:
+            counter:                            Nombre de tags: %count% / %all%
+
+        error:
+            unknown:                            Le tag n'existe pas.
+            delete:                             Le tag n'existe pas.
+            forbidden:                          Droits insuffisants.

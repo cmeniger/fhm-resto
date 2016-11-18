@@ -1,0 +1,58 @@
+{% extends layout_extend is defined ? layout_extend : "::layout.front.html.twig" %}
+{% trans_default_domain instance.domain %}
+
+{% block tagline %}
+    <div class="row text-center">
+        <h1>{% block tagline_data %}{{ (instance.translation ~ '.front.detail.title')|trans({'%name%': document.getName()}) }}{% endblock %}</h1>
+    </div>
+{% endblock %}
+
+{% block content %}
+
+    {# Links #}
+    {% block content_link %}
+        <div class="row">
+            <ul class="button-group">
+                {% block content_link_data %}
+                    <li>
+                        <a href="{{ instance.lastroute }}" class="button secondary tiny"><i class="fa fa-reply"> {{ ('project.home.return')|trans({},'ProjectDefaultBundle') }}</i></a>
+                    </li>
+                {% endblock %}
+            </ul>
+        </div>
+    {% endblock %}
+
+    {# Document #}
+    {% block content_data %}
+        <div id="content_data" class="row">
+            <h2>{{ (instance.translation ~ '.front.detail.data.title')|trans }}</h2>
+            <table class="fullwidth">
+                <tbody>
+                    {% block content_data_information %}
+                        <tr>
+                            <td><strong>{{ (instance.translation ~ '.front.detail.data.create')|trans }}</strong></td>
+                            <td>{{ document.getUserCreate() ? document.getUserCreate().getUsername() ~ ' - ' : '' }}{{ document.getDateCreate() | localizeddate('full', 'short', app.request.locale) }}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>{{ (instance.translation ~ '.front.detail.data.update')|trans }}</strong></td>
+                            <td>{{ document.getUserUpdate() ? document.getUserUpdate().getUsername() ~ ' - ' : '' }}{{ document.getDateUpdate() | localizeddate('full', 'short', app.request.locale) }}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>{{ (instance.translation ~ '.front.detail.data.name')|trans }}</strong></td>
+                            <td>{{ document.getName() }}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>{{ (instance.translation ~ '.front.detail.data.alias')|trans }}</strong></td>
+                            <td>{{ document.getAlias() }}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>{{ (instance.translation ~ '.front.detail.data.description')|trans }}</strong>
+                            </td>
+                            <td>{{ document.getDescription() }}</td>
+                        </tr>
+                    {% endblock %}
+                </tbody>
+            </table>
+        </div>
+    {% endblock %}
+{% endblock %}

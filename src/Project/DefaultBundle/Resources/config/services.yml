@@ -1,0 +1,8 @@
+services:
+    project_twig_global:
+        class: Project\DefaultBundle\Services\TwigGlobal
+        arguments: ['@service_container']
+
+    fhm_cache:
+        class: Project\DefaultBundle\Services\Cache
+        arguments: ['@service_container']

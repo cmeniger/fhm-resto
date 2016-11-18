@@ -1,0 +1,55 @@
+{% trans_default_domain instance.domain %}
+{% for flashMessage in app.session.flashbag.get('contact-' ~ document.getId()) %}
+    <div data-alert class="alert-box">
+        {{ flashMessage }}
+        <a href="#" class="close"><i class="fa fa-times"></i></a>
+    </div>
+{% endfor %}
+<form action="{{ path('fhm_api_contact_form',{id:document.getId()}) }}" id="{{ document.getId() }}" method="POST" {{ form_enctype(form) }}>
+    <div class="row">
+        <div class="large-6 columns">
+            {{ form_label(form.firstname) }}
+            {{ form_errors(form.firstname) }}
+            {{ form_widget(form.firstname) }}
+        </div>
+        <div class="large-6 columns">
+            {{ form_label(form.lastname) }}
+            {{ form_errors(form.lastname) }}
+            {{ form_widget(form.lastname) }}
+        </div>
+        <div class="large-6 columns">
+            {{ form_label(form.email) }}
+            {{ form_errors(form.email) }}
+            {{ form_widget(form.email) }}
+        </div>
+        <div class="large-6 columns">
+            {{ form_label(form.phone) }}
+            {{ form_errors(form.phone) }}
+            {{ form_widget(form.phone) }}
+        </div>
+        <div class="columns">
+            {{ form_label(form.content) }}
+            {{ form_errors(form.content) }}
+            {{ form_widget(form.content) }}
+        </div>
+        <div class="columns gutter-margin-bottom">
+            {{ form_label(form.recaptcha) }}
+            {{ form_errors(form.recaptcha) }}
+            {% do form.recaptcha.setRendered %}
+            <div id="recaptcha-container"></div>
+            <script type="text/javascript">
+                $(document).ready(function() {
+                    $.getScript("{{ constant('\\EWZ\\Bundle\\RecaptchaBundle\\Form\\Type\\RecaptchaType::RECAPTCHA_API_JS_SERVER') }}", function() {
+                        Recaptcha.create("{{ form.recaptcha.vars.public_key }}", "recaptcha-container", {
+                            theme: "{{ form.recaptcha.vars.attr.options.theme }}"
+                        });
+                    });
+                });
+            </script>
+        </div>
+        <div class="columns">
+            {{ form_widget(form.submit, {'attr': {'data-load': "<i class='fa fa-spin fa-refresh'></i> " ~ 'contact.front.form.load'|trans}}) }}
+        </div>
+    </div>
+    {{ form_rest(form) }}
+</form>

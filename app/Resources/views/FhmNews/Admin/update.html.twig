@@ -1,0 +1,99 @@
+{% trans_default_domain instance.domain %}
+{% extends "::FhmFhm/Admin/update.html.twig" %}
+
+{% block content_data_fields_data %}
+    <div class="large-6 medium-6 small-12 columns">
+        <fieldset>
+            <legend>{{ (instance.translation ~ '.admin.update.form.fieldset.data')|trans }}</legend>
+            <div class="row">
+                {{ form_label(form.title) }}
+                {{ form_errors(form.title) }}
+                {{ form_widget(form.title) }}
+            </div>
+            <div class="row">
+                {{ form_label(form.subtitle) }}
+                {{ form_errors(form.subtitle) }}
+                {{ form_widget(form.subtitle) }}
+            </div>
+            <div class="row">
+                {{ form_label(form.resume) }}
+                {{ form_errors(form.resume) }}
+                {{ form_widget(form.resume) }}
+            </div>
+            <div class="row">
+                {{ form_label(form.content) }}
+                {{ form_errors(form.content) }}
+                {{ form_widget(form.content) }}
+            </div>
+            <div class="row">
+                {{ form_label(form.author) }}
+                {{ form_errors(form.author) }}
+                {{ form_widget(form.author) }}
+            </div>
+        </fieldset>
+    </div>
+    <div class="large-6 medium-6 small-12 columns">
+        <fieldset>
+            <legend>{{ (instance.translation ~ '.admin.update.form.fieldset.date')|trans }}</legend>
+            <div class="row">
+                {{ form_label(form.date_start) }}
+                {{ form_errors(form.date_start) }}
+                {{ form_widget(form.date_start) }}
+            </div>
+            <div class="row">
+                {{ form_label(form.date_end) }}
+                {{ form_errors(form.date_end) }}
+                {{ form_widget(form.date_end) }}
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend>{{ (instance.translation ~ '.admin.update.form.fieldset.media')|trans }}</legend>
+            <div class="row">
+                {{ form_label(form.image) }}
+                {{ form_errors(form.image) }}
+                {{ form_widget(form.image) }}
+            </div>
+            <div class="row">
+                {{ form_label(form.gallery) }}
+                {{ form_errors(form.gallery) }}
+                {{ form_widget(form.gallery) }}
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend>{{ (instance.translation ~ '.admin.update.form.fieldset.newsgroups')|trans }}</legend>
+            <div class="row">
+                {{ form_label(form.newsgroups) }}
+                {{ form_errors(form.newsgroups) }}
+                {{ form_widget(form.newsgroups) }}
+            </div>
+        </fieldset>
+    </div>
+{% endblock %}
+
+{% block content_data_submit_list_data %}
+    {{ parent() }}
+    <li>
+        <a href="{{ path('fhm_admin_news_group') }}" class="button small button-icon button-cubes">{{ ('news.group.admin.index.link')|trans }}</a>
+    </li>
+{% endblock %}
+
+{% block body_javascripts_ready %}
+    {{ parent() }}
+    $('.datetimepicker').datetimepicker(
+    {
+        format: 'd/m/Y H:i',
+        lang:   'fr',
+        step:   30,
+        onShow: function(ct, input)
+        {
+            if($(input).attr('id') == 'FhmUpdate_date_start')
+            {
+                $('#FhmUpdate_date_start').datetimepicker({formatDate: 'd/m/Y', minDate: false, maxDate: $('#FhmUpdate_date_end').val() ? $('#FhmUpdate_date_end').val().substring(0, 10) : false });
+            }
+            if($(input).attr('id') == 'FhmUpdate_date_end')
+            {
+                $('#FhmUpdate_date_end').datetimepicker({formatDate: 'd/m/Y', maxDate: false, minDate: $('#FhmUpdate_date_start').val() ? $('#FhmUpdate_date_start').val().substring(0, 10) : false });
+            }
+        }
+    });
+{% endblock %}

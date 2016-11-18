@@ -1,0 +1,19 @@
+{% trans_default_domain instance.domain %}
+
+<div class="column small-4 column-media">
+    {% if document.getType() == 'image' %}
+        <div class="preview-media data image" style="background:url('{{ document|media('s') }}') no-repeat center center;"></div>
+    {% else %}
+        <div class="preview-media data file {{ document.getExtension() }}"></div>
+    {% endif %}
+</div>
+<div class="column small-8 column-description">
+    <div>
+        <small>{{ (instance.translation ~ '.admin.selector.preview.name')|trans }}</small>
+    </div>
+    <div class="preview-name">{{ document.getName()|length > 40 ? document.getName()|slice(0,40) ~ '...' : document.getName() }}</div>
+    <div>
+        <small>{{ (instance.translation ~ '.admin.selector.preview.extension')|trans }}</small>
+    </div>
+    <div class="preview-extension">{{ document.getExtension() }}</div>
+</div>

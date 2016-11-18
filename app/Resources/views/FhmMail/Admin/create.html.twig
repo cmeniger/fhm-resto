@@ -1,0 +1,29 @@
+{% trans_default_domain instance.domain %}
+{% extends "::FhmFhm/Admin/create.html.twig" %}
+
+{% block content_data_grouping %}{% endblock %}
+{% block content_data_language %}{% endblock %}
+{% block content_data_seo %}{% endblock %}
+{% block content_data_options %}{% endblock %}
+{% block content_data_submit_list_button %}{% endblock %}
+{% block content_data_submit_list %}{% endblock %}
+
+{% block content_data_fields_data %}
+    <div class="large-6 medium-6 small-12 columns">
+        <div class="row">
+            {{ form_label(form.to) }}
+            {{ form_errors(form.to) }}
+            {{ form_widget(form.to) }}
+        </div>
+        <div class="row">
+            {{ form_label(form.object) }}
+            {{ form_errors(form.object) }}
+            {{ form_widget(form.object) }}
+        </div>
+        <div class="row">
+            {{ form_label(form.body) }}
+            {{ form_errors(form.body) }}
+            {{ form_widget(form.body) }}
+        </div>
+    </div>
+{% endblock %}

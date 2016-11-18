@@ -1,0 +1,45 @@
+{% trans_default_domain instance.domain %}
+{% extends "::FhmFhm/Admin/detail.html.twig" %}
+
+{% block content_url %}{% endblock %}
+
+{% block content_link_data %}
+    {{ parent() }}
+    <li>
+        <a href="{{ path('fhm_admin_media_tag') }}" class="button small"><i class="fa fa-tags"></i> {{ ('media.tag.admin.index.link')|trans }}
+        </a>
+    </li>
+{% endblock %}
+
+{% block content_anchor_link %}
+    <dd><a href="#anchor-top">top</a></dd>
+    <dd><a href="#anchor-admin-data">data</a></dd>
+    <dd><a href="#anchor-admin-file">file</a></dd>
+    <dd><a href="#anchor-admin-url">url</a></dd>
+    <dd><a href="#anchor-admin-tools">admin</a></dd>
+{% endblock %}
+
+{% block content_data %}
+    {{ parent() }}
+    <div class="row">
+        <h2 id="anchor-admin-file">{{ (instance.translation ~ '.admin.detail.file.title')|trans }}</h2>
+        <table class="fullwidth media-table">
+            <tbody>
+                    {% if document.getType() == 'image' %}
+                        {% for name, size in files %}
+                            <tr>
+                                <td>{{ document|download(instance, name)|raw }}</td>
+                                <td>{{ name }} ({{ size }})</td>
+                                <td>{{ document|media(name) }}</td>
+                            </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr>
+                            <td>{{ document|download(instance)|raw }}</td>
+                            <td>{{ document|media() }}</td>
+                        </tr>
+                    {% endif %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

@@ -1,0 +1,231 @@
+{{ source }}
+
+    {{ directory }}:
+        admin:
+            index:
+                title:                          Gestion des {{ route[1] }}s : {{ directory }}s
+                link:                           {{ directory|capitalize }}s
+                breadcrumb:                     {{ directory|capitalize }}s
+                nodata:                         Aucune donnée
+                form:
+                    search:                     Rechercher
+                table:
+                    header:
+                        name:                   Nom
+                        action:                 Actions
+                        status:                 Statut
+                    action:
+                        activate:               Activer
+                        deactivate:             Désactiver
+                        delete:                 Supprimer
+                        detail:                 Paramétrer
+                        duplicate:              Dupliquer
+                        undelete:               Débloquer
+                        update:                 Modifier
+                    confirm:
+                        activate:               Confirmer l'activation du {{ directory }} ?
+                        deactivate:             Confirmer la désactivation du {{ directory }} ?
+                        delete:                 Confirmer la suppression du {{ directory }} ?
+                        undelete:               Confirmer le déblocage du {{ directory }} ?
+
+            create:
+                title:                          Ajouter
+                link:                           Ajouter
+                breadcrumb:                     Ajouter un {{ directory }}
+                flash:
+                    ok:                         Le {{ directory }} a bien été créé.
+                    ko:                         Le {{ directory }} n'a pas été créé.
+                form:
+                    name:                       Nom
+                    description:                Description
+                    active:                     Activer
+                    share:                      Partager
+                    global:                     Globale
+                    submit:
+                        save:                   Sauvegarder
+                        new:                    Sauvegarder et ajouter
+                        duplicate:              Sauvegarder et dupliquer
+                        quit:                   Sauvegarder et quitter
+                        config:                 Sauvegarder et paramétrer
+                        cancel:                 Annuler
+                        import:                 Importer
+                        export:                 Exporter
+                    fieldset:
+                        data:                   Données
+                        options:                Options
+
+            update:
+                title:                          Modifier
+                link:                           Modifier
+                breadcrumb:                     Modifier
+                flash:
+                    ok:                         Le {{ directory }} a bien été modifié.
+                    ko:                         Le {{ directory }} n'a pas été modifié.
+                form:
+                    name:                       Nom
+                    description:                Description
+                    active:                     Activer
+                    share:                      Partager
+                    global:                     Globale
+                    submit:
+                        save:                   Sauvegarder
+                        new:                    Sauvegarder et ajouter
+                        duplicate:              Sauvegarder et dupliquer
+                        quit:                   Sauvegarder et quitter
+                        config:                 Sauvegarder et paramétrer
+                        cancel:                 Annuler
+                        import:                 Importer
+                        export:                 Exporter
+                        delete:                 Supprimer
+                    fieldset:
+                        data:                   Données
+                        options:                Options
+
+            detail:
+                title:                          %name%
+                link:                           Détail
+                breadcrumb:                     %name%
+                data:
+                    title:                      Informations
+                    id:                         ID
+                    create:                     Création
+                    update:                     Modification
+                    name:                       Nom
+                    alias:                      Alias
+                    description:                Description
+                    status:                     Statut
+                url:
+                    title:                      Routes disponibles
+                    admin:
+                        edit:                   Modifier
+                        detail:                 Paramétrer
+                    front:
+                        id:                     Afficher via l'ID
+                        name:                   Afficher via le nom
+                        alias:                  Afficher via l'alias
+                        lite:                   Afficher via l'url simplifiée
+                admin:
+                    title:                      Outils d'administration
+
+            export:
+                breadcrumb:                     Exporter
+                form:
+                    submit:                     Exporter
+                link:                           Exporter
+                title:                          Exporter des {{ directory }}s
+
+            import:
+                breadcrumb:                     Importer
+                flash:
+                    ok:                         Les {{ directory }}s ont bien été importés (%countAdd% ajout(s), %countUpdate% modification(s), %countError% erreur(s)).
+                    ko:                         Les {{ directory }}s n'ont pas été importés.
+                form:
+                    file:                       Fichier CSV
+                    submit:                     Importer
+                link:                           Importer
+                title:                          Importer des {{ directory }}s
+
+            deactivate:
+                flash:
+                    ok:                         Le {{ directory }} a bien été désactivé.
+
+            delete:
+                flash:
+                    ok:                         Le {{ directory }} a bien été supprimé.
+
+            activate:
+                flash:
+                    ok:                         Le {{ directory }} a bien été activé.
+
+            undelete:
+                flash:
+                    ok:                         Le {{ directory }} a bien été restauré.
+
+        front:
+            index:
+                title:                          {{ route[1]|capitalize }} : {{ directory }}s
+                link:                           {{ directory|capitalize }}s
+                breadcrumb:                     {{ directory|capitalize }}s
+                nodata:                         Aucune donnée
+                form:
+                    search:                     Rechercher
+                table:
+                    header:
+                        name:                   Nom
+                        action:                 Actions
+                    action:
+                        detail:                 Détail
+                        delete:                 Supprimer
+                    confirm:
+                        delete:                 Confirmer la suppression du {{ directory }} ?
+
+            create:
+                title:                          Ajouter
+                link:                           Ajouter
+                breadcrumb:                     Ajouter un {{ directory }}
+                flash:
+                    ok:                         Le {{ directory }} a bien été créé.
+                    ko:                         Le {{ directory }} n'a pas été créé.
+                form:
+                    name:                       Nom
+                    description:                Description
+                    submit:
+                        save:                   Sauvegarder
+                        new:                    Sauvegarder et ajouter
+                        duplicate:              Sauvegarder et dupliquer
+                        quit:                   Sauvegarder et quitter
+                        cancel:                 Annuler
+                    alert:
+                        title:                  Information
+                        text:                   L'ajout d'un {{ directory }} nécessite la validation d'un modérateur.
+
+            update:
+                title:                          Modifier
+                link:                           Modifier
+                breadcrumb:                     Modifier
+                flash:
+                    ok:                         Le {{ directory }} a bien été modifié.
+                    ko:                         Le {{ directory }} n'a pas été modifié.
+                form:
+                    name:                       Nom
+                    description:                Description
+                    submit:
+                        save:                   Sauvegarder
+                        new:                    Sauvegarder et ajouter
+                        duplicate:              Sauvegarder et dupliquer
+                        quit:                   Sauvegarder et quitter
+                        cancel:                 Annuler
+                    alert:
+                        title:                  Information
+                        text:                   La modification d'un {{ directory }} nécessite la validation d'un modérateur.
+
+            detail:
+                title:                          %name%
+                link:                           Détail
+                breadcrumb:                     %name%
+                data:
+                    title:                      Informations
+                    create:                     Création
+                    update:                     Modification
+                    name:                       Nom
+                    alias:                      Alias
+                    description:                Description
+
+            delete:
+                flash:
+                    ok:                         Le {{ directory }} a bien été supprimé.
+
+        api:
+            index:
+                title:                          {{ route[1]|capitalize }} : {{ directory }}s
+
+        pagination:
+            counter:                            Nombre de {{ directory }}s: %count% / %all%
+
+        autocomplete:
+            nodata:                             Aucun résultat
+
+        error:
+            unknown:                            Le {{ directory }} n'existe pas.
+            delete:                             Le {{ directory }} n'existe pas.
+            forbidden:                          Droits insuffisants.

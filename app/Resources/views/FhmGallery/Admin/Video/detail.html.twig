@@ -1,0 +1,31 @@
+{% trans_default_domain instance.domain %}
+{% extends "::FhmFhm/Admin/detail.html.twig" %}
+{% import "::Macros/dd.list.html.twig" as macroList %}
+
+{% block content_data %}
+    {{ parent() }}
+    <div class="row">
+        <fieldset>
+            <legend>{{ (instance.translation ~ '.admin.detail.video.title')|trans }}</legend>
+            {{ document.getVideo()|video|raw }}
+        </fieldset>
+    </div>
+    <div class="row">
+        {{
+        macroList.admin
+        (
+        document,
+        gallery1,
+        gallery2,
+        '',
+        'fhm_admin_gallery_item_gallery',
+        (instance.translation ~ '.admin.detail.gallery.title')|trans,
+        (instance.translation ~ '.admin.detail.gallery.list1')|trans,
+        (instance.translation ~ '.admin.detail.gallery.list2')|trans,
+        2,
+        instance,
+        'fhm_admin_gallery'
+        )
+        }}
+    </div>
+{% endblock %}

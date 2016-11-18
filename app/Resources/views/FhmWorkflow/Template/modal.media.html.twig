@@ -1,0 +1,123 @@
+{% trans_default_domain instance.domain %}
+<div class="workflow">
+    <div class="modal" id="top">
+        <a href="#top" class="top"><i class="fa fa-chevron-up"></i></a>
+
+        <div class="title">{{ document.getName() }}</div>
+        <div class="user">{{ document.getUserUpdate() ? document.getUserUpdate().getUsername() ~ ' - ' : '' }}{{ document.getDateUpdate() | localizeddate('short', 'short', app.request.locale) }}</div>
+        <div class="description">
+            {{ document.getDescription() }}
+            <div class="add text-right">
+                <a href="#"
+                   title="{{ ('workflow.action.buttons.expand')|trans }}"
+                   data-id="{{ document.getId() }}"
+                   data-url="{{ path('fhm_api_workflow_task_modal_expand',{tid:document.getId(), wid:workflow.getId()}) }}"
+                   data-modal><i class="fa fa-expand"></i> {{ ('workflow.action.buttons.expand')|trans }}</a>
+            </div>
+        </div>
+        {% if document.getAction().getUploadCheck() and document.getAction().hasUserUpload(app.user) %}
+            <div class="separator"><span>{{ 'workflow.modal.upload'|trans }}</span></div>
+            <form action="{{ path('fhm_api_workflow_task_add_media',{tid:document.getId(), wid:workflow.getId()}) }}" class="dropzone" id="media-dropzone" method="POST" enctype="multipart/form-data">
+                {% for flashMessage in app.session.flashbag.get('workflow') %}
+                    <div data-alert class="alert-box success">
+                        {{ flashMessage }}
+                    </div>
+                {% endfor %}
+                {% for flashMessage in app.session.flashbag.get('workflow-error') %}
+                    <div data-alert class="alert-box alert">
+                        {{ flashMessage }}
+                    </div>
+                {% endfor %}
+                <div class="fallback">
+                    <input type="file" name="file">
+                </div>
+                <div class="dropzone-preview">
+                    <div class="dz-default dz-message">
+                        <span>{{ ('media.dropzone.default')|trans({},'FhmMediaBundle') }}</span>
+                    </div>
+                </div>
+                <button type="submit" class="tiny align-center gutter-margin-top">{{ 'media.front.create.form.submit.save'|trans({},'FhmMediaBundle') }}</button>
+            </form>
+        {% endif %}
+        {% if document.getAction().getDownloadCheck() and document.getAction().hasUserDownload(app.user) %}
+            <div class="separator"><span>{{ 'workflow.modal.medias'|trans }}</span></div>
+            {% if document.getMedias()|length > 0 %}
+                <div class="row media gutter-margin-top gutter-margin-bottom">
+                    <div class="columns media-datas">
+                        <div class="row bloc medias">
+                            {% for media in document.getMedias() %}
+                                <div class="large-3 medium-4 small-6 columns end">
+                                    {{ media|blocFront(instance)|raw }}
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            {% else %}
+                <div class="nodata">{{ 'workflow.modal.nodata'|trans }}</div>
+            {% endif %}
+        {% endif %}
+    </div>
+</div>
+<div id="modal-media-zoom" class="reveal-modal" data-reveal>
+    <a href="#" data-reveal-id="wfModal" class="button secondary tiny"><i class="fa fa-reply"></i> {{ 'project.home.return'|trans({},'ProjectDefaultBundle') }}</a>
+    <div class="media-zoom"></div>
+    <a class="close-reveal-modal" aria-label="Close">&#215;</a>
+</div>
+<script>
+    $(document).media();
+    $('#media-dropzone').dropzone({
+        paramName:                    "file",
+        previewsContainer:            ".dropzone-preview",
+        clickable:                    '.dropzone-preview',
+        autoProcessQueue:             false,
+        maxFilesize:                  9999,
+        parallelUploads:              1,
+        init:                         function ()
+                                      {
+                                          var myDropzone = this;
+                                          $("#media-dropzone").submit(function (e)
+                                          {
+                                              e.preventDefault();
+                                              $("button").prop('disabled', true);
+                                              myDropzone.processQueue();
+                                          });
+                                          myDropzone.on("addedfile", function (file)
+                                          {
+                                              $(".dz-message").hide();
+                                          });
+                                          myDropzone.on("complete", function (file)
+                                          {
+                                              myDropzone.processQueue();
+                                          });
+                                          myDropzone.on("queuecomplete", function ()
+                                          {
+                                              $.ajax
+                                              ({
+                                                  type:    'POST',
+                                                  url:     '{{ path('fhm_api_workflow_task_modal_media',{tid:document.getId(), wid:workflow.getId()}) }}',
+                                                  data:    {},
+                                                  success: function (data)
+                                                           {
+                                                               $('#wfModalContent').fadeToggle(400, "linear", function ()
+                                                               {
+                                                                   $('#wfModalContent').html(data).fadeToggle(400, "linear");
+                                                                   $(document).workflow();
+                                                               });
+                                                           }
+                                              });
+                                          });
+                                      },
+        dictDefaultMessage:           "{{ ('media.dropzone.default')|trans({},'FhmMediaBundle') }}",
+        dictFallbackMessage:          "{{ ('media.dropzone.fallbackMessage')|trans({},'FhmMediaBundle') }}",
+        dictFallbackText:             "{{ ('media.dropzone.fallbackText')|trans({},'FhmMediaBundle') }}",
+        dictFileTooBig:               "{{ ('media.dropzone.fileTooBig')|trans({},'FhmMediaBundle') }}",
+        dictInvalidFileType:          "{{ ('media.dropzone.invalidFileType')|trans({},'FhmMediaBundle') }}",
+        dictResponseError:            "{{ ('media.dropzone.responseError')|trans({},'FhmMediaBundle') }}",
+        dictCancelUpload:             "{{ ('media.dropzone.cancelUpload')|trans({},'FhmMediaBundle') }}",
+        dictCancelUploadConfirmation: "{{ ('media.dropzone.cancelUploadConfirmation')|trans({},'FhmMediaBundle') }}",
+        dictRemoveFile:               "{{ ('media.dropzone.removeFile')|trans({},'FhmMediaBundle') }}",
+        dictRemoveFileConfirmation:   "{{ ('media.dropzone.removeFileConfirmation')|trans({},'FhmMediaBundle') }}",
+        dictMaxFilesExceeded:         "{{ ('media.dropzone.maxFilesExceeded')|trans({},'FhmMediaBundle') }}"
+    });
+</script>

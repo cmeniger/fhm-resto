@@ -1,0 +1,42 @@
+{% trans_default_domain instance.domain %}
+{% import "::Macros/pagination.html.twig" as macroPagination %}
+
+<div id="content_data" class="event">
+    {% if documents %}
+        {% for event in documents %}
+            <div class="large-12 column panel panel-ffse panel-calendar-insidepanel">
+                <div class="panel-wrapper">
+                    <div class="page-module-style page-module-calendar">
+                        <div class="column large-12">
+                            <div class="calendar-insidepanel">
+                                <div class="column large-5 small-12 calendar-image">
+                                    <a href="{{ path("fhm_event_lite", {id:event.getAlias()}) }}" class="calendar-cover" style="display: block; height: 175px; background: url('{{ event.getImage()|medium("/images/common/calendar-default.jpg") }}') center center no-repeat; background-size: cover !important; "></a>
+                                </div>
+                                <div class="column large-7 small-12 calendar-content">
+                                    <h3 class="calendar-title">
+                                        <a href="{{ path("fhm_event_lite", {id:event.getAlias()}) }}">
+                                            {{ event.getTitle() }}
+                                            <small><span class="calendar-date">du {{ event.getDateStart() | localizeddate('full', 'none', app.request.locale) }} au {{ event.getDateEnd() | localizeddate('full', 'none', app.request.locale) }}</span></small>
+                                        </a>
+                                    </h3>
+                                    <div class="calendar-teaser">
+                                        <div class="text">
+                                            <p>{{ event.getResume|raw }}</p>
+                                        </div>
+                                    </div>
+                                    <a class="button tiny more" href="{{ path("fhm_event_lite", {id:event.getAlias()}) }}">Lire la suite</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    {% else %}
+        <div class="panel nodata row">
+            <p>{{ (instance.translation ~ '.front.index.nodata')|trans }}</p>
+        </div>
+    {% endif %}
+</div>
+{# Pagination #}
+{{ macroPagination.print(pagination) }}

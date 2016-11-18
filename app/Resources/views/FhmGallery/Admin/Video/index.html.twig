@@ -1,0 +1,30 @@
+{% trans_default_domain instance.domain %}
+{% extends "::FhmFhm/Admin/index.html.twig" %}
+
+{% block content_link_data %}
+    {{ parent() }}
+    <li>
+        <a href="{{ path('fhm_admin_gallery_album') }}" class="button small"><i class="fa fa-book"></i> {{ ('gallery.album.admin.index.link')|trans }}
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('fhm_admin_gallery') }}" class="button small"><i class="fa fa-th"></i> {{ ('gallery.admin.index.link')|trans }}
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('fhm_admin_gallery_item') }}" class="button small"><i class="fa fa-photo"></i> {{ ('gallery.item.admin.index.link')|trans }}
+        </a>
+    </li>
+{% endblock %}
+
+{% block content_data_header %}
+    {{ parent() }}
+    <th>{{ (instance.translation ~ '.admin.index.table.header.video')|trans }}{{ macroSort.print('video', sort) }}</th>
+    <th>{{ (instance.translation ~ '.admin.index.table.header.galleries')|trans }}{{ macroSort.print('sort_gallery', sort) }}</th>
+{% endblock %}
+
+ {% block content_data_body %}
+     {{ parent() }}
+     <td>{{ document.getVideo() }}</td>
+     <td>{{ document.getGalleries()|length }}</td>
+ {% endblock %}

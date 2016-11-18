@@ -1,0 +1,11 @@
+{% trans_default_domain instance.domain %}
+{% extends "::FhmFhm/Front/detail.html.twig" %}
+{% import "::Macros/dd.sort.html.twig" as macroPage %}
+
+{% block tagline %}{% endblock %}
+
+{% block content %}
+    {% for data in modules %}
+        {{ macroPage.html(data, instance) }}
+    {% endfor %}
+{% endblock %}

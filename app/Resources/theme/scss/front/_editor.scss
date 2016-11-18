@@ -1,0 +1,31 @@
+textarea
+{
+    &.editor
+    {
+        position:   absolute !important;
+        display:    block !important;
+        z-index:    -1 !important;
+        width:      10px !important;
+        height:     $form-spacing !important;
+        padding:    0 !important;
+        margin:     -$form-spacing*2 0 0 45% !important;
+        min-height: 10px !important;
+    }
+}
+
+.mce-tinymce
+{
+    margin: 0 0 $form-spacing 0 !important;
+}
+
+.mce-fullscreen
+{
+    .mce-menu
+    {
+        position: fixed;
+    }
+    .mce-tooltip
+    {
+        position: fixed;
+    }
+}

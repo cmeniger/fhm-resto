@@ -1,0 +1,12 @@
+{% trans_default_domain instance.domain %}
+{% extends "::FhmFhm/Admin/import.html.twig" %}
+
+{% block content_link_data %}
+    <li>
+        <a href="{{ path(instance.source ~ '_admin_' ~ instance.route) }}" class="button small secondary"><i class="fa fa-angle-double-left"></i></a>
+    </li>
+    <li>
+        <a href="{{ path(instance.source ~ '_admin_' ~ instance.route ~ '_export') }}" class="button small"><i class="fa fa-upload"></i> {{ (instance.translation ~ '.admin.export.link')|trans }}
+        </a>
+    </li>
+{% endblock %}

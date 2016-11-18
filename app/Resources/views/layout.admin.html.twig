@@ -1,0 +1,51 @@
+{% extends app.request.isxmlhttprequest ? "::ajax.html.twig" : "::layout.html.twig" %}
+
+{% block body %}class="admin"{% endblock %}
+{% block css_main %}
+    {{ asset('css/admin.css') }}
+{% endblock %}
+
+{% block body_header %}
+    <div id="header">
+        {# Menu #}
+        {% block menu %}
+            {% render(path('fhm_api_menu_detail', {'template':'admin'})) %}
+        {% endblock %}
+
+        {# Header #}
+        {% block header %}{% endblock %}
+    </div>
+{% endblock %}
+
+{% block body_content %}
+    <div class="large-2 columns">
+        <div id="menu">
+            {% include "::ProjectDefault/Admin/menu.html.twig" %}
+        </div>
+    </div>
+    <div class="large-10 columns content">
+        {# Tagline #}
+        {% block tagline %}
+        {% endblock %}
+
+        {# Breadcrumbs #}
+        {% block breadcrumbs %}
+            <div class="row">
+                {{ breadcrumbs is defined ? macroBreadcrumbs.print(breadcrumbs) : '' }}
+            </div>
+        {% endblock %}
+
+        {# Flash #}
+        {% block flash %}
+            {% for flashMessage in app.session.flashbag.get('notice') %}
+                <div data-alert class="alert-box">
+                    {{ flashMessage }}
+                    <a href="#" class="close"><i class="fa fa-times"></i></a>
+                </div>
+            {% endfor %}
+        {% endblock %}
+        <div id="content">
+            {% block content %}{% endblock %}
+        </div>
+    </div>
+{% endblock %}

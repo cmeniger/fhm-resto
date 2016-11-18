@@ -1,0 +1,105 @@
+.schedules{
+    padding: 1rem;
+    .closed{
+        .text{
+            color:          $alert-color;
+            text-transform: uppercase;
+            font-weight:    bold;
+        }
+        .date{
+            color:     $secondary-color;
+            font-size: 0.8em;
+        }
+        .reason{
+            margin-top: 1em;
+            text-align: justify;
+            font-size:  1em;
+        }
+    }
+    .day{
+        clear:         both;
+        border-bottom: 1px dashed $smoke;
+        overflow:      auto;
+        padding:       0.3em 0;
+        &:last-child{
+            border-bottom: 0px;
+        }
+        .text{
+            float:          left;
+            text-transform: uppercase;
+            width:          30%;
+            overflow:       hidden;
+            padding:        0.2em;
+            font-size:      1em;
+            font-weight:    bold;
+            @media #{$small-only} {
+                text-align: left;
+            }
+        }
+        .am{
+            float:      left;
+            width:      35%;
+            overflow:   hidden;
+            padding:    0.2em;
+            text-align: center;
+            &.closed{
+                color: $alert-color;
+            }
+            &.empty{
+                color: $smoke;
+            }
+        }
+        .pm{
+            float:      left;
+            width:      35%;
+            overflow:   hidden;
+            padding:    0.2em;
+            text-align: center;
+            &.closed{
+                color: $alert-color;
+            }
+            &.empty{
+                color: $smoke;
+            }
+        }
+        .all{
+            float:      left;
+            width:      70%;
+            overflow:   hidden;
+            padding:    0.2em;
+            text-align: center;
+            &.closed{
+                color: $alert-color;
+            }
+            &.empty{
+                color: $smoke;
+            }
+        }
+    }
+    &.state{
+        padding: 0;
+        color:   $secondary-color;
+        &.indicator{
+            @include border-radius(50%);
+            position:   absolute;
+            width:      10px;
+            height:     10px;
+            right:      0;
+            bottom:     0;
+            border:     1px solid $white;
+            background: $secondary-color;
+            &.open{
+                background: $success-color;
+            }
+            &.close{
+                background: $alert-color;
+            }
+        }
+        &.open{
+            color: $success-color;
+        }
+        &.close{
+            color: $alert-color;
+        }
+    }
+}

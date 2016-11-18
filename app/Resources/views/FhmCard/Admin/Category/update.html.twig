@@ -1,0 +1,79 @@
+{% trans_default_domain instance.domain %}
+{% extends "::FhmFhm/Admin/update.html.twig" %}
+
+{% block content_data_fields_data_add %}
+    <div class="row">
+        {{ form_label(form.card) }}
+        {{ form_errors(form.card) }}
+        {{ form_widget(form.card) }}
+    </div>
+    <div class="row">
+        <div class="row collapse">
+            {{ form_label(form.price) }}
+            <div class="small-10 columns">
+                {{ form_errors(form.price) }}
+                {{ form_widget(form.price) }}
+            </div>
+            <div class="small-2 columns">
+                {{ form_errors(form.currency) }}
+                {{ form_widget(form.currency) }}
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        {{ form_label(form.order) }}
+        {{ form_errors(form.order) }}
+        {{ form_widget(form.order) }}
+    </div>
+    <div class="row">
+        {{ form_label(form.image) }}
+        {{ form_errors(form.image) }}
+        {{ form_widget(form.image) }}
+    </div>
+{% endblock %}
+
+{% block content_data_fields_data %}
+    {{ parent() }}
+    <div class="large-6 medium-6 small-12 columns">
+        <fieldset>
+            <legend>{{ (instance.translation ~ '.admin.update.form.fieldset.categories')|trans }}</legend>
+            <div class="row">
+                {{ form_label(form.sons) }}
+                {{ form_errors(form.sons) }}
+                {{ form_widget(form.sons) }}
+            </div>
+            <div class="row">
+                {{ form_label(form.parents) }}
+                {{ form_errors(form.parents) }}
+                {{ form_widget(form.parents) }}
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend>{{ (instance.translation ~ '.admin.update.form.fieldset.products')|trans }}</legend>
+            <div class="row">
+                {{ form_label(form.products) }}
+                {{ form_errors(form.products) }}
+                {{ form_widget(form.products) }}
+            </div>
+        </fieldset>
+    </div>
+{% endblock %}
+
+{% block content_data_options_data_add %}
+    <div class="large-2 columns end">
+        {{ form_errors(form.menu) }}
+        {{ form_label(form.menu) }}
+        <div class="switch">
+            {{ form_widget(form.menu) }}
+            <label for="{{ form.menu.vars.id }}"></label>
+        </div>
+    </div>
+    <div class="large-2 columns end">
+        {{ form_errors(form.default) }}
+        {{ form_label(form.default) }}
+        <div class="switch">
+            {{ form_widget(form.default) }}
+            <label for="{{ form.default.vars.id }}"></label>
+        </div>
+    </div>
+{% endblock %}

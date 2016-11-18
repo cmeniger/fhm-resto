@@ -1,0 +1,8 @@
+user:
+    email:
+        mismatch:                               Les deux e-mails ne sont pas identiques
+    password:
+        mismatch:                               Les deux mots de passe ne sont pas identiques
+
+geolocation:
+    unique:                                     Ces coordonnées sont déjà utilisées.

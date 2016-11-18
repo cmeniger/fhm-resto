@@ -1,0 +1,31 @@
+{% extends "::layout.front.html.twig" %}
+{% trans_default_domain instance.domain %}
+
+{% block tagline %}{% endblock %}
+
+{% block content %}
+    {# Not AJAX request #}
+    {% if not app.request.isxmlhttprequest %}
+        {# Links #}
+        <div class="row">
+            <ul class="button-group">
+                <li>
+                    <a href="{{ instance.lastroute }}" class="button secondary"><i class="fa fa-angle-double-left"></i></a>
+                </li>
+            </ul>
+        </div>
+        {# Search #}
+        <form action="{{ path('fhm_news_group_lite',{id:document.getAlias()}) }}" method="POST" {{ form_enctype(form) }} >
+            <div class="row collapse">
+                <div class="small-6 columns">
+                    {{ form_widget(form.search) }}
+                </div>
+                <div class="small-1 columns end">
+                    <button class="button postfix" type="submit"><i class="fa fa-search"></i></button>
+                </div>
+            </div>
+        </form>
+    {% endif %}
+    {# News #}
+    {% include "::FhmNews/Template/short.html.twig" %}
+{% endblock %}

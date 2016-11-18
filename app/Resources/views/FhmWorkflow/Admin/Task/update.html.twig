@@ -1,0 +1,36 @@
+{% trans_default_domain instance.domain %}
+{% extends "::FhmFhm/Admin/update.html.twig" %}
+
+{% block content_data_seo %}{% endblock %}
+
+{% block content_data_fields_data_add %}
+    <div class="row">
+        {{ form_label(form.step) }}
+        {{ form_errors(form.step) }}
+        {{ form_widget(form.step) }}
+    </div>
+    <div class="row">
+        {{ form_label(form.action) }}
+        {{ form_errors(form.action) }}
+        {{ form_widget(form.action) }}
+    </div>
+{% endblock %}
+
+{% block content_data_fields_data %}
+    {{ parent() }}
+    <div class="large-6 medium-6 small-12 columns">
+        <fieldset>
+            <legend>{{ (instance.translation ~ '.admin.update.form.fieldset.tasks')|trans }}</legend>
+            <div class="row">
+                {{ form_label(form.parents) }}
+                {{ form_errors(form.parents) }}
+                {{ form_widget(form.parents) }}
+            </div>
+            <div class="row">
+                {{ form_label(form.sons) }}
+                {{ form_errors(form.sons) }}
+                {{ form_widget(form.sons) }}
+            </div>
+        </fieldset>
+    </div>
+{% endblock %}

@@ -1,24 +1,27 @@
 security:
     encoders:
-        FOS\UserBundle\Model\UserInterface: sha512
+        Core\UserBundle\Document\User: bcrypt
 
     role_hierarchy:
-        ROLE_MODERATOR:                     ROLE_USER
-        ROLE_ADMIN:                         ROLE_MODERATOR
-        ROLE_SUPER_ADMIN:                   ROLE_ADMIN
+            ROLE_MODERATOR:                     ROLE_USER
+            ROLE_ADMIN:                         ROLE_MODERATOR
+            ROLE_SUPER_ADMIN:                   ROLE_ADMIN
 
     providers:
         fos_userbundle:
             id:                             fos_user.user_provider.username
-        fhm_userbundle:
-            id:                             fhm_user.security.user_provider
+#        fhm_userbundle:
+#            id:                             fhm_user.security.user_provider
 
     firewalls:
         main:
             pattern:                        ^/
             form_login:
-                provider:                   fhm_userbundle
-                csrf_provider:              form.csrf_provider
+                provider:                   fos_userbundle
+                csrf_token_generator:       security.csrf.token_manager
+                check_path:                 fos_user_security_check
+#                login_path:                 fos_user_security_login
+                failure_path:               fos_user_security_login
             oauth:
                 resource_owners:
                     facebook:               fhm_user_check_facebook
@@ -29,12 +32,16 @@ security:
                 check_path:                 fos_user_security_check
                 oauth_user_provider:
                     service:                fhm_user.oauth.user_provider
+            #Don't touch logout
+            logout:
+                 path:                      fos_user_security_logout
+                 target:                    homepage
             logout:                         true
             anonymous:                      true
 
     access_control:
-        - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/admin/, role: ROLE_MODERATOR }
-        - { path: ^/mail/, role: ROLE_ADMIN }
+        - { path: ^/(%app_locales%)/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/(%app_locales%)/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/(%app_locales%)/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/(%app_locales%)/admin/, role: ROLE_ADMIN }
+        - { path: ^/(%app_locales%)/mail/, role: ROLE_ADMIN }

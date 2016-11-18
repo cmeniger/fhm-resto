@@ -1,0 +1,13 @@
+{% trans_default_domain instance.domain %}
+{% extends "::FhmFhm/Front/index.html.twig" %}
+
+{% block content_search %}{% endblock %}
+{% block content_pagination %}{% endblock %}
+
+{% block content_data %}
+    <div id="content_data" class="workflow">
+        <div id="wfStep">
+            {% render(path('fhm_api_workflow_step_board')) %}
+        </div>
+    </div>
+{% endblock %}

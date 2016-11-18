@@ -1,0 +1,739 @@
+$hover-color: #007095;
+
+@mixin modules() {
+    &.module
+    {
+        font-family: 'FontAwesome';
+        font-size:   60px;
+        font-weight: normal;
+        &:before
+        {
+            content: $fa-var-file-o;
+        }
+    }
+    &.module-text
+    {
+        &:before
+        {
+            content: $fa-var-file-text-o;
+        }
+    }
+    &.module-videos
+    {
+        &:before
+        {
+            content: $fa-var-file-video-o;
+        }
+    }
+    &.module-gallery
+    {
+        &:before
+        {
+            content: $fa-var-file-image-o;
+        }
+    }
+    &.module-news
+    {
+        &:before
+        {
+            content: $fa-var-list;
+        }
+    }
+}
+
+.dd-sort
+{
+    position: relative;
+    margin:   0;
+    padding:  20px;
+    overflow: auto;
+    border:   1px solid $gainsboro;
+    .dd-sort-list
+    {
+        display:    block;
+        position:   relative;
+        margin:     0;
+        padding:    0;
+        list-style: none;
+    }
+    .dd-sort-item
+    {
+        display:     block;
+        position:    relative;
+        margin:      0;
+        padding:     0;
+        min-height:  30px;
+        font-size:   14px;
+        line-height: 30px;
+    }
+    .dd-sort-placeholder
+    {
+        display:     block;
+        position:    relative;
+        margin:      0;
+        padding:     0;
+        min-height:  100px;
+        font-size:   14px;
+        line-height: 100px;
+        background:  rgba(0, 112, 149, 0.1);
+        border:      1px dashed $primary-color;
+    }
+    .dd-sort-handle
+    {
+        display:     block;
+        position:    absolute;
+        margin:      0;
+        padding:     0;
+        left:        0;
+        top:         0;
+        width:       30px;
+        height:      100px;
+        line-height: 100px;
+        font-weight: bold;
+        text-align:  center;
+        color:       $white;
+        border:      1px solid $primary-color;
+        background:  $primary-color;
+        cursor:      pointer;
+        transition:  background-color 300ms ease-out;
+        &:hover
+        {
+            background: $hover-color;
+        }
+    }
+    .dd-sort-content
+    {
+        display:     block;
+        margin:      10px 0;
+        padding:     0 0 0 30px;
+        height:      100px;
+        font-weight: bold;
+        color:       $black;
+        border:      1px solid $iron;
+        background:  $white;
+        transition:  background-color 50ms ease-out;
+        &:hover
+        {
+            background: rgba(0, 112, 149, 0.1);
+        }
+        &.deactive
+        {
+        }
+        &.delete
+        {
+        }
+        .bloc-icon
+        {
+            float:       left;
+            width:       100px;
+            height:      100%;
+            line-height: 100px;
+            color:       $base;
+            text-align:  center;
+            transition:  color 300ms ease-out;
+            @include modules();
+            &:hover
+            {
+                color: $hover-color;
+            }
+        }
+        .bloc-page
+        {
+            float:       left;
+            height:      100%;
+            padding:     0 10px;
+            border-left: 1px solid $iron;
+            p
+            {
+                color:      $black;
+                font-size:  12px;
+                text-align: justify;
+                overflow:   hidden;
+            }
+        }
+        .bloc-module
+        {
+            overflow: auto;
+        }
+        .bloc-actions
+        {
+            float:       right;
+            width:       40px;
+            height:      100%;
+            padding:     0 10px;
+            text-align:  center;
+            border-left: 1px solid $iron;
+            a
+            {
+                display:   block;
+                clear:     both;
+                font-size: 20px;
+            }
+        }
+    }
+    .dd-sort-master
+    {
+        position: relative;
+        margin:   0;
+        padding:  0;
+        height:   70px;
+        .icon
+        {
+            float:            left;
+            margin:           0 10px 0 0;
+            width:            70px;
+            height:           70px;
+            line-height:      70px;
+            background-color: $primary-color;
+            text-align:       center;
+            transition:       background-color 300ms ease-out;
+            &:hover
+            {
+                background: $hover-color;
+            }
+        }
+        a
+        {
+            color:      $white;
+            font-size:  40px;
+            transition: background-color 50ms ease-out;
+        }
+    }
+}
+
+.dd-sort-list
+{
+    &.dd-sort-drag
+    {
+        position:    absolute;
+        z-index:     9999;
+        list-style:  none;
+        font-size:   0.875rem;
+        line-height: 30px;
+        box-shadow:  0px 0px 4px $base;
+        .dd-sort-handle
+        {
+            display:     block;
+            position:    absolute;
+            margin:      0;
+            padding:     0;
+            left:        0;
+            top:         0;
+            width:       30px;
+            height:      100px;
+            line-height: 100px;
+            font-weight: bold;
+            text-align:  center;
+            text-indent: 100%;
+            color:       $primary-color;
+            border:      1px solid $primary-color;
+            background:  $white;
+            overflow:    hidden;
+            &:before
+            {
+                display:     block;
+                position:    absolute;
+                font-family: 'FontAwesome';
+                font-weight: normal;
+                content:     $fa-var-arrows;
+                left:        0;
+                top:         0;
+                width:       100%;
+                text-indent: 0;
+            }
+        }
+        .dd-sort-content
+        {
+            display:     block;
+            margin:      0;
+            padding:     0 0 0 30px;
+            height:      100px;
+            font-weight: bold;
+            color:       $black;
+            border:      1px solid $primary-color;
+            background:  $white;
+            &.deactive
+            {
+            }
+            &.delete
+            {
+            }
+            .bloc-icon
+            {
+                float:       left;
+                width:       100px;
+                height:      100%;
+                line-height: 100px;
+                color:       $base;
+                text-align:  center;
+                transition:  color 300ms ease-out;
+                @include modules();
+                &:hover
+                {
+                    color: $hover-color;
+                }
+            }
+            .bloc-page
+            {
+                float:       left;
+                height:      100%;
+                padding:     0 10px;
+                border-left: 1px solid $iron;
+                p
+                {
+                    height:     60px;
+                    color:      $black;
+                    font-size:  12px;
+                    text-align: justify;
+                    overflow:   hidden;
+                }
+            }
+            .bloc-actions
+            {
+                float:       right;
+                width:       40px;
+                height:      100%;
+                padding:     0 10px;
+                text-align:  center;
+                border-left: 1px solid $iron;
+                a
+                {
+                    display:   block;
+                    clear:     both;
+                    font-size: 20px;
+                }
+            }
+        }
+    }
+}
+
+.dd-sort-module
+{
+    margin:      0 0 1rem;
+    padding:     20px;
+    width:       100%;
+    height:      120px;
+    line-height: 80px;
+    border:      1px solid $iron;
+    cursor:      pointer;
+    color:       $gainsboro;
+    text-align:  center;
+    transition:  background-color 50ms ease-out;
+    @include modules();
+    &:hover
+    {
+        background: rgba(0, 112, 149, 0.1);
+    }
+    &.select
+    {
+        color: $primary-color;
+    }
+    &.load
+    {
+        &:before
+        {
+            content: $fa-var-refresh;
+        }
+    }
+}
+
+.dd-tree
+{
+    position: relative;
+    margin:   0 0 20px 0;
+    padding:  15px;
+    border:   1px solid $gainsboro;
+    .dd-tree-list
+    {
+        display:    block;
+        position:   relative;
+        margin:     0;
+        padding:    0 0 0 30px;
+        list-style: none;
+        .dd-tree-list
+        {
+            padding-left: 30px;
+        }
+    }
+    .dd-tree-item
+    {
+        display:     block;
+        position:    relative;
+        margin:      0;
+        padding:     0;
+        min-height:  30px;
+        font-size:   14px;
+        line-height: 30px;
+    }
+    .dd-tree-placeholder
+    {
+        display:     block;
+        position:    relative;
+        margin:      0;
+        padding:     0;
+        min-height:  30px;
+        font-size:   14px;
+        line-height: 30px;
+        background:  rgba(0, 112, 149, 0.1);
+        border:      1px dashed $primary-color;
+    }
+    .dd-tree-handle
+    {
+        display:     block;
+        position:    absolute;
+        margin:      0;
+        padding:     0;
+        left:        0;
+        top:         0;
+        width:       30px;
+        height:      30px;
+        font-weight: bold;
+        text-align:  center;
+        color:       $white;
+        border:      1px solid $primary-color;
+        background:  $primary-color;
+        cursor:      pointer;
+        transition:  background-color 300ms ease-out;
+        &:hover
+        {
+            background: $hover-color;
+        }
+    }
+    .dd-tree-content
+    {
+        display:     block;
+        margin:      10px 0;
+        padding:     0 10px 0 40px;
+        height:      30px;
+        font-weight: bold;
+        color:       $black;
+        border:      1px solid $iron;
+        background:  $smoke;
+        transition:  background-color 50ms ease-out;
+        &:hover
+        {
+            background: rgba(0, 112, 149, 0.1);
+        }
+        &.deactive
+        {
+        }
+        &.delete
+        {
+        }
+        .dd-tree-status
+        {
+            float:        left;
+            margin-right: 15px;
+        }
+        .dd-tree-page
+        {
+            float:        left;
+            font-size:    18px;
+            margin-right: 15px;
+            color:        $black;
+            .nodata
+            {
+                color: $iron;
+            }
+        }
+        .dd-tree-actions
+        {
+            float:      left;
+            text-align: center;
+            width:      80px;
+        }
+    }
+    .dd-tree-master
+    {
+        position:    relative;
+        margin:      0;
+        padding:     0;
+        min-height:  30px;
+        font-size:   14px;
+        line-height: 30px;
+        .dd-tree-handle
+        {
+            color:      $primary-color;
+            border:     1px solid $iron;
+            background: $white;
+        }
+        .dd-tree-content
+        {
+            margin: 0 0 10px 0;
+        }
+    }
+}
+
+.dd-tree-list
+{
+    &.dd-tree-drag
+    {
+        position:    absolute;
+        z-index:     9999;
+        list-style:  none;
+        font-size:   0.875rem;
+        line-height: 30px;
+        box-shadow:  0px 0px 4px $base;
+        .dd-tree-list
+        {
+            display:    block;
+            position:   relative;
+            margin:     0;
+            padding:    0 0 0 30px;
+            list-style: none;
+            .dd-tree-list
+            {
+                padding-left: 30px;
+            }
+        }
+        .dd-tree-item
+        {
+            display:     block;
+            position:    relative;
+            margin:      0;
+            padding:     0;
+            min-height:  30px;
+            font-size:   14px;
+            line-height: 30px;
+        }
+        .dd-tree-placeholder
+        {
+            display:     block;
+            position:    relative;
+            margin:      0;
+            padding:     0;
+            min-height:  30px;
+            font-size:   14px;
+            line-height: 30px;
+            background:  rgba(0, 112, 149, 0.1);
+            border:      1px dashed $primary-color;
+        }
+        .dd-tree-handle
+        {
+            display:     block;
+            position:    absolute;
+            margin:      0;
+            padding:     0;
+            left:        0;
+            top:         0;
+            width:       30px;
+            height:      30px;
+            font-weight: bold;
+            text-align:  center;
+            color:       $white;
+            border:      1px solid $primary-color;
+            background:  $primary-color;
+            cursor:      pointer;
+            transition:  background-color 300ms ease-out;
+        }
+        .dd-tree-content
+        {
+            display:     block;
+            margin:      0;
+            padding:     0 10px 0 40px;
+            height:      30px;
+            font-weight: bold;
+            color:       $black;
+            border:      1px solid $iron;
+            background:  $white;
+            &.deactive
+            {
+            }
+            &.delete
+            {
+            }
+            .dd-tree-status
+            {
+                float:        left;
+                margin-right: 15px;
+            }
+            .dd-tree-page
+            {
+                float:        left;
+                color:        $base;
+                font-size:    18px;
+                margin-right: 15px;
+            }
+            .dd-tree-actions
+            {
+                float:      left;
+                text-align: center;
+                width:      80px;
+            }
+        }
+    }
+}
+
+.dd-list
+{
+    position: relative;
+    margin:   0;
+    padding:  10px;
+    overflow: auto;
+    height:   300px;
+    width:    250px;
+    border:   1px solid $gainsboro;
+    .dd-list-list
+    {
+        margin:     0;
+        padding:    0;
+        overflow:   auto;
+        list-style: none;
+    }
+    .dd-list-item
+    {
+        display:  block;
+        position: relative;
+        margin:   2px 0;
+        padding:  0;
+        width:    100%;
+        height:   30px;
+    }
+    .dd-list-placeholder
+    {
+        margin:     2px 0;
+        padding:    0;
+        width:      100%;
+        height:     30px;
+        background: rgba(0, 112, 149, 0.1);
+        border:     1px dashed $primary-color;
+    }
+    .dd-list-handle
+    {
+        display:     block;
+        position:    absolute;
+        margin:      0;
+        padding:     0;
+        left:        0;
+        top:         0;
+        z-index:     2;
+        width:       30px;
+        height:      30px;
+        line-height: 30px;
+        text-align:  center;
+        color:       $white;
+        border:      1px solid $primary-color;
+        background:  $primary-color;
+        cursor:      pointer;
+        transition:  background-color 300ms ease-out;
+        &:hover
+        {
+            background: $hover-color;
+        }
+    }
+    .dd-list-content
+    {
+        display:     block;
+        position:    relative;
+        margin:      0;
+        padding:     0 5px 0 35px;
+        z-index:     1;
+        height:      30px;
+        line-height: 30px;
+        font-weight: bold;
+        font-size:   12px;
+        color:       $black;
+        border:      1px solid $iron;
+        background:  $smoke;
+        overflow:    hidden;
+        &.current
+        {
+            color:      $white;
+            background: $success-color;
+            border:     1px solid $success-color;
+        }
+        span
+        {
+            position: absolute;
+            z-index:  2;
+            &.action
+            {
+                height:      30px;
+                line-height: 30px;
+                right:       3px;
+            }
+            &.status
+            {
+                right: 20px;
+                top: 5px;
+            }
+        }
+    }
+    .dd-list-empty
+    {
+        margin:     2px 0;
+        padding:    0;
+        width:      100%;
+        height:     30px;
+        background: rgba(240, 138, 36, 0.1);
+        border:     1px dashed $warning-color;
+    }
+}
+
+.dd-list-list
+{
+    &.dd-list-drag
+    {
+        position:   absolute;
+        z-index:    9999;
+        box-shadow: 0px 0px 4px $base;
+        list-style: none;
+        .dd-list-handle
+        {
+            display:     block;
+            position:    absolute;
+            margin:      0;
+            padding:     0;
+            left:        0;
+            top:         0;
+            z-index:     2;
+            width:       30px;
+            height:      30px;
+            line-height: 30px;
+            font-weight: bold;
+            text-align:  center;
+            color:       $white;
+            border:      1px solid $primary-color;
+            background:  $primary-color;
+        }
+        .dd-list-content
+        {
+            display:     block;
+            position:    relative;
+            margin:      0;
+            padding:     0 5px 0 35px;
+            z-index:     1;
+            height:      30px;
+            line-height: 30px;
+            font-weight: bold;
+            font-size:   12px;
+            color:       $white;
+            border:      1px solid $warning-color;
+            background:  $warning-color;
+            overflow:    hidden;
+            span
+            {
+                position: absolute;
+                z-index:  2;
+                &.action
+                {
+                    height:      30px;
+                    line-height: 30px;
+                    right:       3px;
+                }
+                &.status
+                {
+                    right: 20px;
+                    top: 5px;
+                }
+            }
+        }
+    }
+}
+
+.dd-list-module
+{
+    float:    left;
+    margin:   0 20px 0 0;
+    overflow: auto;
+}

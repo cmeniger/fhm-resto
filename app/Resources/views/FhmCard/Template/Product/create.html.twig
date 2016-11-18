@@ -1,0 +1,95 @@
+{% trans_default_domain instance.domain %}
+<div class="form form-create">
+    <form action="{{ path('fhm_api_card_product_create',{idCard:card.getId(), idCategory:category ? category.getId() : 0}) }}" method="POST" {{ form_enctype(form) }}>
+        {% if form.vars.errors|length > 0 %}
+            <div class="form-bloc form-error">
+                <div class="row">
+                    {{ form_errors(form) }}
+                </div>
+            </div>
+        {% endif %}
+        <div class="form-bloc form-fields row">
+            <div class="large-6 medium-6 small-12 columns">
+                <fieldset>
+                    <legend>{{ (instance.translation ~ '.api.create.form.fieldset.data')|trans }}</legend>
+                    <div class="row">
+                        {{ form_label(form.name) }}
+                        {{ form_errors(form.name) }}
+                        {{ form_widget(form.name) }}
+                    </div>
+                    <div class="row">
+                        {{ form_label(form.description) }}
+                        {{ form_errors(form.description) }}
+                        {{ form_widget(form.description) }}
+                    </div>
+                    <div class="row">
+                        <div class="row collapse">
+                            {{ form_label(form.price) }}
+                            <div class="small-10 columns">
+                                {{ form_errors(form.price) }}
+                                {{ form_widget(form.price) }}
+                            </div>
+                            <div class="small-2 columns">
+                                {{ form_errors(form.currency) }}
+                                {{ form_widget(form.currency) }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        {{ form_label(form.order) }}
+                        {{ form_errors(form.order) }}
+                        {{ form_widget(form.order) }}
+                    </div>
+                    <div class="row">
+                        {{ form_errors(form.forward) }}
+                        {{ form_label(form.forward) }}
+                        <div class="switch">
+                            {{ form_widget(form.forward) }}
+                            <label for="{{ form.forward.vars.id }}"></label>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+            <div class="large-6 medium-6 small-12 columns">
+                <fieldset>
+                    <legend>{{ (instance.translation ~ '.api.create.form.fieldset.media')|trans }}</legend>
+                    <div class="row">
+                        {{ form_label(form.image) }}
+                        {{ form_errors(form.image) }}
+                        {{ form_widget(form.image,{attr:{'data-callback':'modal-editor'}}) }}
+                    </div>
+                </fieldset>
+            </div>
+        </div>
+        <div class="form-bloc form-fields row">
+            <div class="large-6 medium-6 small-12 columns">
+                <fieldset>
+                    <legend>{{ (instance.translation ~ '.api.create.form.fieldset.categories')|trans }}</legend>
+                    <div class="row">
+                        {{ form_label(form.categories) }}
+                        {{ form_errors(form.categories) }}
+                        {{ form_widget(form.categories) }}
+                    </div>
+                </fieldset>
+            </div>
+            <div class="large-6 medium-6 small-12 columns">
+                <fieldset>
+                    <legend>{{ (instance.translation ~ '.api.create.form.fieldset.ingredients')|trans }}</legend>
+                    <div class="row">
+                        {{ form_label(form.ingredients) }}
+                        {{ form_errors(form.ingredients) }}
+                        {{ form_widget(form.ingredients) }}
+                    </div>
+                </fieldset>
+            </div>
+        </div>
+        <div class="form-bloc form-submit">
+            {{ form_widget(form.submitSave, {'attr':{'class':'small button-icon button-save'}}) }}
+        </div>
+        <div class="form-bloc form-rest">
+            <div class="row">
+                {{ form_rest(form) }}
+            </div>
+        </div>
+    </form>
+</div>

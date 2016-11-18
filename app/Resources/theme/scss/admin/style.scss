@@ -1,0 +1,349 @@
+//
+// Gradient
+//
+
+//
+// Tools
+//
+
+.reset-margin{
+    margin: 0 !important;
+}
+
+.reset-margin-bottom{
+    margin-bottom: 0 !important;
+}
+
+.reset-margin-top{
+    margin-top: 0 !important;
+}
+
+.reset-margin-right{
+    margin-right: 0 !important;
+}
+
+.reset-margin-left{
+    margin-left: 0 !important;
+}
+
+.gutter-margin{
+    margin: $column-gutter !important;
+}
+
+.gutter-margin-top{
+    margin-top: $column-gutter !important;
+}
+
+.gutter-margin-bottom{
+    margin-bottom: $column-gutter !important;
+}
+
+.gutter-margin-right{
+    margin-right: $column-gutter !important;
+}
+
+.gutter-margin-left{
+    margin-left: $column-gutter !important;
+}
+
+.reset-padding{
+    padding: 0 !important;
+}
+
+.reset-padding-bottom{
+    padding-bottom: 0 !important;
+}
+
+.reset-padding-top{
+    padding-top: 0 !important;
+}
+
+.reset-padding-right{
+    padding-right: 0 !important;
+}
+
+.reset-padding-left{
+    padding-left: 0 !important;
+}
+
+.gutter-padding{
+    padding: $column-gutter !important;
+}
+
+.gutter-padding-top{
+    padding-top: $column-gutter !important;
+}
+
+.gutter-padding-bottom{
+    padding-bottom: $column-gutter !important;
+}
+
+.gutter-padding-right{
+    padding-right: $column-gutter !important;
+}
+
+.gutter-padding-left{
+    padding-left: $column-gutter !important;
+}
+
+.align-center{
+    display: block;
+    margin:  0 auto;
+}
+
+.fullwidth{
+    width: 100%;
+}
+
+h1, h2, h3, h4, h5, h6{
+    @include font1();
+    text-transform: uppercase;
+}
+
+h1{
+    padding: 30px 0;
+}
+
+h2{
+    padding:       5px 10px;
+    font-size:     14px;
+    font-weight:   bold;
+    color:         #008CBA;
+    background:    rgba(0, 140, 186, 0.1);
+    border-bottom: 3px solid #008CBA;
+}
+
+h3{
+}
+
+h4{
+}
+
+h5{
+}
+
+h6{
+}
+
+//
+// Colors
+//
+
+a{
+    @include transition(all, .3s, ease-in);
+    &:hover, &:focus{
+        opacity: .5;
+    }
+}
+
+li{
+    list-style: none;
+}
+
+html, body{
+    height:  100%;
+    margin:  0;
+    padding: 0;
+}
+
+body{
+    @include font2();
+    display: table;
+    width:   100%;
+}
+
+#header{
+    .master-slider{
+        padding: $column-gutter;
+    }
+}
+
+#footer{
+
+    display:    table-row;
+    height:     2em;
+    width:      100%;
+    text-align: center;
+    padding:    10px;
+    font-size:  0.8em;
+}
+
+#content{
+}
+
+#menu{
+    padding:                    50px 2px;
+    background:                 #FFF;
+    border-right:               1px solid #333;
+    border-bottom-right-radius: 10px;
+    font-size:                  14px;
+    h1{
+        padding:     0 0 10px 0;
+        font-size:   14px;
+        font-weight: bold;
+    }
+    .link{
+        position: relative;
+        clear:    both;
+        width:    100%;
+        overflow: hidden;
+        a{
+            display:    block;
+            color:      #000;
+            transition: color 300ms ease-out;
+            .menu{
+                color:        #CCC;
+                margin-right: 3px;
+                font-size:    0.9em;
+            }
+            &:hover{
+                color: #777;
+            }
+        }
+        span{
+            position:      absolute;
+            top:           0;
+            right:         5px;
+            padding:       0 5px;
+            background:    #EEE;
+            border-radius: 3px;
+            a{
+                float:       left;
+                margin-left: 4px;
+                font-size:   12px;
+                color:       #008CBA;
+                &:first-child{
+                    margin-left: 0;
+                }
+                &:hover{
+                    color: #007BA0
+                }
+            }
+        }
+    }
+    .action{
+        display:  block;
+        width:    75%;
+        margin:   auto;
+        overflow: hidden;
+    }
+}
+
+//
+// Menu
+//
+
+.tree{
+    .title-area{
+        .name{
+            a{
+                @include font1();
+                color:          white;
+                display:        block;
+                padding:        0 15px;
+                line-height:    45px;
+                font-size:      25px;
+                text-transform: uppercase;
+                transition:     color 300ms ease-out;
+                &:hover{
+                    color: rgba(255, 255, 255, 0.7);
+                }
+            }
+        }
+    }
+}
+
+//
+// Menu left admin
+//
+
+li{
+    &.fa{
+        &.menu{
+            color: #CCC;
+        }
+    }
+}
+
+//
+// Pagination
+//
+
+ul{
+    &.pagination{
+        margin-left: 0;
+    }
+    &.tag{
+        margin:      0;
+        line-height: 0;
+        list-style:  none;
+        li{
+            display:     inline-block;
+            margin-left: 2px;
+            padding:     0;
+            &:first-child{
+                margin-left: 0;
+            }
+            .label{
+                &.parent{
+                    background-color: #E7E7E7;
+                    color:            #333;
+                }
+                &.current{
+                    background-color: #999;
+                    color:            #333;
+                }
+            }
+        }
+    }
+}
+
+//
+// Actions
+//
+
+.actions{
+    .button{
+        margin:  0 !important;
+        padding: 0.7em 3em 0.7em 1em !important;
+        span{
+            width: 1.5rem !important;
+            i{
+                margin-left: -0.4em !important;
+                margin-top:  -0.4em !important;
+            }
+        }
+    }
+    ul{
+        li[class="alert"]{
+            border-top: 1px solid $smoke;
+            a{
+                color: $alert-color;
+            }
+        }
+        li[class="alert"] ~ li[class="alert"]{
+            border-top: 0;
+        }
+        li[class="separator"]{
+            border-top: 1px solid $smoke;
+        }
+    }
+    span{
+        &.default{
+            color: $gainsboro;
+            .current{
+                color: $success-color;
+            }
+        }
+    }
+}
+
+//#card-menu{
+//  background: rgba(255,255,255,.5) !important;
+//}
+#card-menu {
+  background: rgba(255,255,255,.5) !important;
+}
+.top-bar-section ul li{
+  background: transparent !important;
+}

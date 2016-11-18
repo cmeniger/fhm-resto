@@ -1,0 +1,42 @@
+{% trans_default_domain instance.domain %}
+{% form_theme form _self %}
+
+{% block form_errors %}
+    {% spaceless %}
+        {% if errors is defined and errors|length > 0 %}
+            <ul class="alert error">
+                {% for error in errors %}
+                    <li>{{ error.message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endspaceless %}
+{% endblock form_errors %}
+
+<div class="form form-create">
+    <form action="{{ path('fhm_api_newsletter_embed') }}" method="POST" {{ form_enctype(form) }} data-type="ajax" data-content="#content-newsletter">
+        <div class="form-bloc form-fields">
+            <div class="row collapse" id="content-newsletter">
+                {% if process %}
+                    <ul class="alert success">
+                        <li>
+                            {{ 'newsletter.front.create.flash.ok'|trans }}
+                        </li>
+                    </ul>
+                {% endif %}
+                {{ form_errors(form.email) }}
+                <div class="small-10 columns">
+                    {{ form_widget(form.email, {'attr': {'placeholder': 'mail@domain.com' }}) }}
+                </div>
+                <div class="small-2 columns">
+                    <button class="button postfix" type="submit"><i class="fa fa-chevron-right"></i></button>
+                </div>
+            </div>
+        </div>
+        <div class="form-bloc form-rest">
+            <div class="row">
+                {{ form_rest(form) }}
+            </div>
+        </div>
+    </form>
+</div>

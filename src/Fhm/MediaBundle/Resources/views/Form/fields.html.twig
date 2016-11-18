@@ -1,0 +1,29 @@
+{% block media_widget %}
+    {% spaceless %}
+        <div class="media-selector {% if disabled %} disabled {% endif %}" data-id="{{ form.vars.id }}" data-filter="{{ form.vars.filter }}" data-private="{{ form.vars.private }}" data-root="{{ form.vars.root }}" data-reveal-id="modal-{{ form.vars.name }}">
+            <div class="default">
+                <span>{{ ('media.admin.selector.default')|trans({},'FhmMediaBundle') }}</span>
+            </div>
+            <div class="preview"></div>
+            <div class="field">
+                <input type="text" value="{{ value }}" id="{{ id }}-field" {% if required %} required="required" {% endif %}/>
+            </div>
+        </div>
+        <div id="modal-{{ form.vars.name }}" class="reveal-modal medium" data-reveal>
+            <a class="close-reveal-modal" aria-label="Close">&#215;</a>
+
+            <div class="media-load">
+                <i class="fa fa-refresh fa-spin"></i>
+            </div>
+        </div>
+        <div id="modal-{{ form.vars.name }}-new" class="reveal-modal medium" data-reveal>
+            <a class="close-reveal-modal" aria-label="Close">&#215;</a>
+
+            <div class="media-load">
+                <i class="fa fa-refresh fa-spin"></i>
+            </div>
+        </div>
+        <a href="#" class="media-reset right" data-id="{{ form.vars.id }}">{{ ('media.admin.selector.preview.reset')|trans({},'FhmMediaBundle') }}</a>
+        <input type="hidden" value="{{ value }}" id="{{ id }}" name="{{ full_name }}"/>
+    {% endspaceless %}
+{% endblock %}

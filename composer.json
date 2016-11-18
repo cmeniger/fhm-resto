@@ -15,6 +15,7 @@
         "ext-pdo_sqlite"                       : "*",
         "doctrine/doctrine-bundle"             : "^1.6",
         "doctrine/doctrine-fixtures-bundle"    : "^2.2",
+        "symfony/assetic-bundle"               : "^2.8",
         "doctrine/orm"                         : "^2.5",
         "erusev/parsedown"                     : "^1.5",
         "ezyang/htmlpurifier"                  : "^4.7",
@@ -34,8 +35,11 @@
         "hwi/oauth-bundle"                     : "^0.5.1",
         "egeloen/google-map-bundle"            : "dev-master",
         "egeloen/google-map"                   : "^2.0@dev",
-        "willdurand/geocoder":                  "~2.0",
-        "widop/http-adapter"                   : "~1.1.0"
+        "willdurand/geocoder"                  : "~2.0",
+        "excelwebzone/recaptcha-bundle"        : "^1.4",
+        "widop/http-adapter"                   : "~1.1.0",
+        "php-http/httplug-bundle"              : "^1.0",
+        "php-http/guzzle6-adapter"             : "^1.1"
     },
     "require-dev": {
         "phpunit/phpunit"                      : "^4.8 || ^5.0",

@@ -1,0 +1,25 @@
+{% trans_default_domain instance.domain %}
+{% extends "::FhmFhm/Admin/detail.html.twig" %}
+{% import "::Macros/dd.list.html.twig" as macroList %}
+
+{% block content_data %}
+    {{ parent() }}
+    <div class="row">
+        {{
+        macroList.admin
+        (
+            document,
+            partner1,
+            partner2,
+            '',
+            'fhm_admin_partner_group_partner',
+            (instance.translation ~ '.admin.detail.partner.title')|trans,
+            (instance.translation ~ '.admin.detail.partner.list1')|trans,
+            (instance.translation ~ '.admin.detail.partner.list2')|trans,
+            2,
+            instance,
+            'fhm_admin_partner'
+        )
+        }}
+    </div>
+{% endblock %}

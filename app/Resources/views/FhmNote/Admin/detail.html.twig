@@ -1,0 +1,104 @@
+{% trans_default_domain instance.domain %}
+{% extends "::FhmFhm/Admin/detail.html.twig" %}
+
+{% block content_url %}{% endblock %}
+{% block content_admin %}{% endblock %}
+{% block content_anchor %}{% endblock %}
+
+{% block content_link_data %}
+    <li>
+        <a href="{{ path('fhm_admin') }}" class="button small secondary"><i class="fa fa-angle-double-left"></i></a>
+    </li>
+    <li>
+        <a href="{{ path(instance.source ~ '_admin_' ~ instance.route) }}" class="button small"><i class="fa fa-star-o"></i> {{ (instance.translation ~ '.admin.index.link')|trans }}
+        </a>
+    </li>
+{% endblock %}
+
+{% block content_data %}
+    <div class="row">
+        <h2 id="anchor-admin-data">{{ (instance.translation ~ '.admin.detail.data.title')|trans }}</h2>
+        <table class="fullwidth">
+            <tbody>
+                <tr>
+                    <td><strong>{{ (instance.translation ~ '.admin.detail.data.id')|trans }}</strong></td>
+                    <td>{{ document.getId() }}</td>
+                </tr>
+                <tr>
+                    <td><strong>{{ (instance.translation ~ '.admin.detail.data.parent')|trans }}</strong></td>
+                    <td>{{ document.getParent() ? document.getParent().getName() : '' }}</td>
+                </tr>
+                <tr>
+                    <td><strong>{{ (instance.translation ~ '.admin.detail.data.user')|trans }}</strong></td>
+                    <td>{{ document.getUser() ? document.getUser().getUsername() : '' }}</td>
+                </tr>
+                <tr>
+                    <td><strong>{{ (instance.translation ~ '.admin.detail.data.date')|trans }}</strong></td>
+                    <td>{{ document.getDate() | localizeddate('full', 'short', app.request.locale) }}</td>
+                </tr>
+                <tr>
+                    <td><strong>{{ (instance.translation ~ '.admin.detail.data.note')|trans }}</strong></td>
+                    <td>{{ document|note(instance)|raw }}</td>
+                </tr>
+                <tr>
+                    <td><strong>{{ (instance.translation ~ '.admin.detail.data.content')|trans }}</strong></td>
+                    <td>{{ document.getContent() }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    {% if document.getParent() %}
+        <div class="row">
+            <h2 id="anchor-admin-parent">{{ (instance.translation ~ '.admin.detail.parent.title')|trans }}</h2>
+            <table class="fullwidth">
+                <tbody>
+                    <tr>
+                        <td><strong>{{ (instance.translation ~ '.admin.detail.parent.id')|trans }}</strong></td>
+                        <td>{{ document.getParent().getId() }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>{{ (instance.translation ~ '.admin.detail.parent.name')|trans }}</strong></td>
+                        <td>{{ document.getParent().getName() }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>{{ (instance.translation ~ '.admin.detail.parent.alias')|trans }}</strong></td>
+                        <td>{{ document.getParent().getAlias() }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>{{ (instance.translation ~ '.admin.detail.parent.address')|trans }}</strong></td>
+                        <td>{{ document.getParent()|addressInline()|raw }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    {% endif %}
+    {% if document.getUser() %}
+        <div class="row">
+            <h2 id="anchor-admin-user">{{ (instance.translation ~ '.admin.detail.user.title')|trans }}</h2>
+            <table class="fullwidth">
+                <tbody>
+                    <tr>
+                        <td><strong>{{ (instance.translation ~ '.admin.detail.user.id')|trans }}</strong></td>
+                        <td>{{ document.getUser().getId() }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>{{ (instance.translation ~ '.admin.detail.user.username')|trans }}</strong></td>
+                        <td>{{ document.getUser().getUsername() }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>{{ (instance.translation ~ '.admin.detail.user.firstname')|trans }}</strong></td>
+                        <td>{{ document.getUser().getFirstname() }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>{{ (instance.translation ~ '.admin.detail.user.lastname')|trans }}</strong></td>
+                        <td>{{ document.getUser().getLastname() }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>{{ (instance.translation ~ '.admin.detail.user.email')|trans }}</strong></td>
+                        <td>{{ document.getUser().getEmail() }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    {% endif %}
+{% endblock %}

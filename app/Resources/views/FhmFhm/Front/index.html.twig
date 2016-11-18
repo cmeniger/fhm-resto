@@ -1,0 +1,84 @@
+{% extends layout_extend is defined ? layout_extend : "::layout.front.html.twig" %}
+{% trans_default_domain instance.domain %}
+{% import "::Macros/pagination.html.twig" as macroPagination %}
+
+{% block tagline %}
+    {% if not app.request.isxmlhttprequest %}
+        <div class="row text-center">
+            <h1>
+                {% block tagline_data %}
+                    {{ (instance.translation ~ '.front.index.title')|trans }}
+                {% endblock %}
+            </h1>
+        </div>
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+    {# Not AJAX request #}
+    {% if not app.request.isxmlhttprequest %}
+        {# Search #}
+        {% block content_search %}
+            <form action="{% block content_search_url %}{{ path(instance.source ~ '_' ~ instance.route) }}{% endblock %}" method="POST" {{ form_enctype(form) }} {% block content_search_parameter %}{% endblock %}>
+                <div class="column medium-6 medium-centered">
+                    <div class="row collapse">
+                        <div class="small-10 medium-11 columns">
+                            {{ form_widget(form.search) }}
+                        </div>
+                        <div class="small-2 medium-1 columns end">
+                            <button class="button postfix" type="submit"><i class="fa fa-search"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        {% endblock %}
+    {% endif %}
+
+    {# List #}
+    {% block content_data %}
+        <div id="content_data" class="row">
+            {% if documents %}
+                <table class="fullwidth">
+                    <thead>
+                        <tr>
+                            {% block content_data_header %}
+                                <th>{{ (instance.translation ~ '.front.index.table.header.name')|trans }}</th>
+                            {% endblock %}
+                            {% block content_data_header_action %}
+                                <th>{{ (instance.translation ~ '.front.index.table.header.action')|trans }}</th>
+                            {% endblock %}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for document in documents %}
+                            <tr>
+                                {% block content_data_body %}
+                                    <td>{{ document.getName() }}</td>
+                                {% endblock %}
+                                {% block content_data_action %}
+                                    <td>
+                                        {% block content_data_action_links %}
+                                            <a href="{{ path(instance.source ~ '_' ~ instance.route ~ '_lite', {'id': document.getAlias()}) }}" title="{{ (instance.translation ~ '.front.index.table.action.detail')|trans }}"><i class="fa fa-search"></i></a>
+                                        {% endblock %}
+                                    </td>
+                                {% endblock %}
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                {% block content_nodata %}
+                    <div class="nodata">
+                        {{ (instance.translation ~ '.front.index.nodata')|trans }}
+                    </div>
+                {% endblock %}
+            {% endif %}
+        </div>
+    {% endblock %}
+
+    {# Pagination #}
+    {% block content_pagination %}
+        {{ macroPagination.print(pagination) }}
+    {% endblock %}
+
+{% endblock %}

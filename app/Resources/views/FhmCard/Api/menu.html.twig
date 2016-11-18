@@ -1,0 +1,17 @@
+{% trans_default_domain instance.domain %}
+<li>
+    <a href="{{ path('fhm_api_card_embedcategories',{'id': card.getId()}) }}" class="button small"> {{ ('card.api.detail.categories')|trans({}, 'FhmCardBundle')}}
+    </a>
+</li>
+<li>
+    <a href="{{ path('fhm_api_card_embedproducts', {'id': card.getId()}) }}" class="button small">{{ ('card.api.detail.products')|trans({}, 'FhmCardBundle') }}
+    </a>
+</li>
+<li>
+    <a href="{{ path('fhm_api_card_embedingredients',{'id': card.getId()}) }}" class="button small">{{ ('card.api.detail.ingredients')|trans({}, 'FhmCardBundle')}}
+    </a>
+</li>
+<li>
+    <a href="{{ path('fhm_api_card_overview',{'id': card.getId()}) }}" class="button small"> {{ ('card.api.detail.overview')|trans({}, 'FhmCardBundle') }}
+    </a>
+</li>

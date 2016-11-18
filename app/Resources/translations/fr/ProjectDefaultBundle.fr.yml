@@ -1,0 +1,80 @@
+project:
+    admin:
+
+    home:
+        breadcrumb:                             Accueil
+        link:                                   Accueil
+        return:                                 Retour
+        conection:                              Connexion
+        contact:                                Contact
+        aroundme:                               Autour de moi
+        placenote:                              Notez vos établissements
+        place:                                  Vous avez un établissement ?
+        placetext:                              Rejoignez <strong>gratuitement</strong> la communauté <br/><span class="blue"><strong>ChichaMaps</strong></span> pour augmenter votre <strong>visibilité </strong> </br>et attirer de <strong>nouveaux clients</strong>.
+        about:
+            title:                              A propos de nous
+            description:                        ChichaMaps est l’annuaire géolocalisé de référence qui recense les salons de thé chicha à travers le monde !
+            userplace:
+                title:                          Vous êtes gérant
+                description:                    Gagnez en visibilité en ajoutant votre salon de thé chicha !
+                button:                         Ajouter mon établissement
+            user:
+                title:                          Vous êtes client
+                description:                    Trouvez un salon de thé chicha facilement, où que vous soyez ! Notez, commentez et mettez en favoris vos chichas préférés
+                button:                         Créer mon compte
+
+    tree:
+        admin:                                  Administration
+        connected:                              %username%
+        console:                                Console
+        home:                                   Accueil
+        back:                                   Retour
+
+    footer:                                     ChichaMaps 2016 Tous droits réservés. Site réalisé par
+
+    construct:
+        title:                                  Site en cours de construction
+        text:                                   Le site est en cours de construction par
+        date:                                   Ouverture du site prévue dans :
+        newsletter:                             Pour être tenu informé de l'ouverture du site, inscrivez-vous à notre newsletter.
+
+    maintenance:
+        title:                                  Site en cours de maintenance
+        text:                                   Le site est actuellement en maintenance.<br/>Désolé pour la gêne occasionnée.
+        date:                                   Fin estimée de la maintenance dans :
+        newsletter:                             Pour être tenu informé de la réouverture du site, inscrivez-vous à notre newsletter.
+
+    timer:
+        days:                                   Jours
+        hours:                                  Heures
+        minutes:                                Minutes
+        seconds:                                Secondes
+
+    seo:
+        title:                                  ChichaMaps
+        description:                            ChichaMaps description
+        keywords:                               ChichaMaps, word1, word2
+
+    pagination:
+            counter:                            Nombre de Places: %count% / %all%
+    search:
+         title:                                 Rechercher
+         types:                                 Services
+         styles:                                Ambiances
+         features:                              Caractéristiques
+         result:                                établissements correspondent à vos critères
+         refresh:                               Actualiser la recherche
+         city:                                  Ville
+         detail:                                Détail
+         plus:                                  Affiner
+         open:                                  Ouvert
+         close:                                 Fermé
+         searchplus:                            Affiner la recherche
+         happyhour:                             Happy hour
+         delivery:                              Livraision
+         terrace:                               Terrasse
+         avanced:                               Avancée
+         cancel:                                Annuler
+
+    email:
+        sign:                                   A bientôt !<br><br><strong>L'équipe ChichaMaps</strong>

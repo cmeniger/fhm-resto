@@ -1,0 +1,31 @@
+{% trans_default_domain instance.domain %}
+{% import "::Macros/pagination.html.twig" as macroPagination %}
+<script src="//maps.google.com/maps/api/js?libraries=places&sensor=false"></script>
+<script src="{{ asset('js/jquery.addresspicker.js') }}"></script>
+
+<div id="content_data" class="map">
+    {% if documents %}
+        {% for contact in documents %}
+            {% if contact.getLatitude() %}
+                <div class="map-form">
+                    <div id="map-{{ contact.getId() }}" class="map"></div>
+                </div>
+                <script>
+                    $(document).addresspicker({
+                        view: {
+                            map: 'map-{{ contact.getId() }}',
+                            lat: {{ contact.getLatitude() }},
+                            lng: {{ contact.getLongitude() }}
+                        }
+                    });
+                </script>
+            {% endif %}
+        {% endfor %}
+    {% else %}
+        <div class="panel nodata row">
+            <p>{{ (instance.translation ~ '.front.index.nodata')|trans }}</p>
+        </div>
+    {% endif %}
+</div>
+{# Pagination #}
+{{ macroPagination.print(pagination) }}
