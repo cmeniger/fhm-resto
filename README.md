@@ -1,83 +1,110 @@
-Symfony Demo Application
+FHM-TOOLS-V2
+------------
+
+Clone project
+-------------
+
+From docker terminal :
+
+    cd /var/www
+    git clone http://gitlab.fhmsolutions.com/fhmsolutions/fhm-tools-v2.git
+    cd fhm-tools-v2/
+
+HOST config
+-----------
+
+Linux
+-----
+Open a new terminal and edit :
+
+    sudo nano /etc/hosts
+
+And add the following line :
+
+    127.0.0.1 fhm-tools-v2.local
+
+Symfony Standard Edition
 ========================
 
-The "Symfony Demo Application" is a reference application created to show how
-to develop Symfony applications following the recommended best practices.
+Welcome to the Symfony Standard Edition - a fully-functional Symfony2
+application that you can use as the skeleton for your new applications.
 
-[![Build Status](https://travis-ci.org/symfony/symfony-demo.svg?branch=master)](https://travis-ci.org/symfony/symfony-demo)
+This document contains information on how to download, install, and start
+using Symfony. For a more detailed explanation, see the [Installation][1]
+chapter of the Symfony Documentation.
 
-Requirements
-------------
+1) Installing the vendor for the project
+----------------------------------------
 
-  * PHP 5.5.9 or higher;
-  * PDO-SQLite PHP extension enabled;
-  * and the [usual Symfony application requirements](http://symfony.com/doc/current/reference/requirements.html).
+When it comes to installing the Symfony Standard Edition, you have the
+following options.
 
-If unsure about meeting these requirements, download the demo application and
-browse the `http://localhost:8000/config.php` script to get more detailed
-information.
+### Use Composer (*recommended*)
 
-Installation
-------------
+As Symfony uses [Composer][2] to manage its dependencies, the recommended way
+to create a new project is to use it.
 
-[![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
+If you don't have Composer yet, download it following the instructions on
+http://getcomposer.org/ or just run the following command:
 
-First, install the [Symfony Installer](https://github.com/symfony/symfony-installer)
-if you haven't already. Then, install the Symfony Demo Application executing
-this command anywhere in your system:
+In docker :
 
-```bash
-$ symfony demo
+    cd /var/www/fhm-tools-v2
+    composer selfupdate
+    composer install
+    chmod -R 777 var/cache var/logs
 
-# if you're using Windows:
-$ php symfony demo
-```
+2) Checking your System Configuration
+-------------------------------------
 
-If the `demo` command is not available, update your Symfony Installer to the
-most recent version executing the `symfony self-update` command.
+Before starting coding, make sure that your local system is properly
+configured for Symfony.
 
-> **NOTE**
->
-> If you can't use the Symfony Installer, download and install the demo
-> application using Git and Composer:
->
->     $ git clone https://github.com/symfony/symfony-demo
->     $ cd symfony-demo/
->     $ composer install --no-interaction
+Execute the check script from the command line:
 
-Usage
------
+    php bin/symfony_requirements
 
-There is no need to configure a virtual host in your web server to access the application.
-Just use the built-in web server:
+Or access the `config.php` script from a browser:
 
-```bash
-$ cd symfony-demo/
-$ php bin/console server:run
-```
+    http://fhm-tools-v2.local/config.php
 
-This command will start a web server for the Symfony application. Now you can
-access the application in your browser at <http://localhost:8000>. You can
-stop the built-in web server by pressing `Ctrl + C` while you're in the
-terminal.
+If you get any warnings or recommendations, fix them before moving on.
 
-> **NOTE**
->
-> If you want to use a fully-featured web server (like Nginx or Apache) to run
-> Symfony Demo application, configure it to point at the `web/` directory of the project.
-> For more details, see:
-> http://symfony.com/doc/current/cookbook/configuration/web_server_configuration.html
+3) Browsing the Demo Application
+--------------------------------
 
-Troubleshooting
----------------
+Congratulations! You're now ready to use Symfony.
 
-The current Symfony Demo application uses Symfony 3.x version. If you want to
-use the legacy Symfony 2.8 version, clone the Git repository and checkout the
-`v0.8.4` tag, which is the last one compatible with Symfony 2.8:
+From the `config.php` page, click the "Bypass configuration and go to the
+Welcome page" link to load up your first Symfony page.
 
-```bash
-$ git clone https://github.com/symfony/symfony-demo
-$ cd symfony-demo/
-$ git checkout tags/v0.8.4 -b v0.8.4
-$ composer install
-```
+You can also use a web-based configurator by clicking on the "Configure your
+Symfony Application online" link of the `config.php` page.
+
+To see a real-live Symfony page in action, access the following page:
+
+    http://fhm-tools-v2.local/app_dev.php
+
+4) Add FOSUser users for sending email
+--------------------------------------
+
+To send email, you must create these users and give admin rights by running the following command :
+
+    php app/console fos:user:create fhm support@fhmsolutions.com fhm
+    php app/console fos:user:create admin admin@fhm-tools-v2.com admin
+    php app/console fos:user:create noreply noreply@fhm-tools-v2.com noreply
+    php app/console fos:user:promote fhm ROLE_SUPER_ADMIN
+    php app/console fos:user:promote admin ROLE_ADMIN
+
+You can connect to the application with these credentials :
+
+    http://fhm-tools-v2.local/app_dev.php/login
+
+5) Useful command line
+----------------------
+
+Generate static files for integration :
+
+    npm install
+    bower install
+    gulp

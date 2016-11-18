@@ -1,13 +1,13 @@
 parameters:
     database_driver:   pdo_mysql
-    database_host:     127.0.0.1
+    database_host:     docker_fhmmysql_1
     database_port:     ~
     database_name:     ~
-    database_user:     ~
+    database_user:     root
     database_password: ~
 
     mailer_transport:  smtp
-    mailer_host:       vagrant
+    mailer_host:       docker_fhmmailer_1
     mailer_port:       1025
     mailer_user:       ~
     mailer_password:   ~
@@ -20,14 +20,14 @@ parameters:
     debug_redirects:        false
     use_assetic_controller: true
 
-    mongodb_server: mongodb://localhost:27017
-    mongodb_database: fhm-tools
+    mongodb_server: mongodb://docker_fhmmongo_1:27017
+    mongodb_database: fhm-tools-v2
     mongodb_username :
     mongodb_password :
     mongodb_replicaSet: ''
 
     mongo.session.options:
-        database: fhm-tools_session
+        database: fhm-tools-v2_session
         collection: session
 
     oauth.facebook.id:      'null'
@@ -48,7 +48,7 @@ parameters:
             version:     latest
         s3:
             host:        http://s3-eu-west-1.amazonaws.com/
-            bucket:      fhm-tools
+            bucket:      fhm-tools-v2
             environment: test
 
     project:
@@ -67,11 +67,11 @@ parameters:
         project:  "FHMTools"
         sign:     "L'équipe FHM-Tools"
         footer:   "FHMTools 2015 - 2016, tous droits réservés."
-        host:     http://fhm-tools.local
-        admin:    admin@fhm-tools.com
-        noreply:  noreply@fhm-tools.com
-        contact:  contact@fhm-tools.com
-    fhm_mailer.noreply: noreply@fhm-tools.com
+        host:     http://fhm-tools-v2.local
+        admin:    admin@fhm-tools-v2.com
+        noreply:  noreply@fhm-tools-v2.com
+        contact:  contact@fhm-tools-v2.com
+    fhm_mailer.noreply: noreply@fhm-tools-v2.com
 
     fhm_fhm:
         pagination:
