@@ -61,4 +61,12 @@ class ArticleType extends AbstractType
             'data_class' => Article::class,
         ]);
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getBlockPrefix()
+    {
+        return "fhm_article";
+    }
 }
