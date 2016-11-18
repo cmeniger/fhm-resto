@@ -1,0 +1,77 @@
+{% extends parent_extends %}
+
+{% block javascripts %}
+
+    {{ parent() }}
+    <script src="//maps.google.com/maps/api/js?libraries=places&sensor=false"></script>
+
+{% endblock %}
+
+{% block content_data_fields_data %}
+    {% block geolocation_map %}
+        <div class="row">
+            <div class="column medium-6 map-form">
+                <div class="">
+                    {{ form_label(form.address_search) }}
+                    {{ form_errors(form.address_search) }}
+                    {{ form_widget(form.address_search) }}
+                </div>
+                <div id="map" class="map"></div>
+            </div>
+            <div class="column medium-6">
+                <div>
+                    {{ form_label(form.address_main) }}
+                    {{ form_errors(form.address_main) }}
+                    {{ form_widget(form.address_main) }}
+                </div>
+                <div>
+                    {{ form_label(form.address_additional) }}
+                    {{ form_errors(form.address_additional) }}
+                    {{ form_widget(form.address_additional) }}
+                </div>
+                <div>
+                    {{ form_label(form.zip_code) }}
+                    {{ form_errors(form.zip_code) }}
+                    {{ form_widget(form.zip_code) }}
+                </div>
+                <div>
+                    {{ form_label(form.city) }}
+                    {{ form_errors(form.city) }}
+                    {{ form_widget(form.city) }}
+                </div>
+                <div>
+                    {{ form_label(form.country) }}
+                    {{ form_errors(form.country) }}
+                    {{ form_widget(form.country) }}
+                </div>
+                <div class="row">
+                    <div class="column small-6">
+                        {{ form_label(form.latitude) }}
+                        {{ form_widget(form.latitude) }}
+                    </div>
+                    <div class="column small-6">
+                        {{ form_label(form.longitude) }}
+                        {{ form_widget(form.longitude) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endblock %}
+{% endblock %}
+
+{% block body_javascripts_script %}
+    {{ parent() }}
+    <script>
+        $(document).addresspicker({
+            anchors: {
+                map:     'map',
+                search:  '{{ form.address_search.vars.id }}',
+                address: '{{ form.address_main.vars.id }}',
+                zipcode: '{{ form.zip_code.vars.id }}',
+                city:    '{{ form.city.vars.id }}',
+                country: '{{ form.country.vars.id }}',
+                lat:     '{{ form.latitude.vars.id }}',
+                lng:     '{{ form.longitude.vars.id }}'
+            }});
+    </script>
+{% endblock %}

@@ -29,6 +29,7 @@ class AppKernel extends Kernel
             new Core\UserBundle\CoreUserBundle(),
             new Fhm\ArticleBundle\FhmArticleBundle(),
             new Core\MailBundle\FhmMailBundle(),
+            new Core\GeolocationBundle\FhmGeolocationBundle()
         ];
 
         // Some bundles are only used while developing the application or during

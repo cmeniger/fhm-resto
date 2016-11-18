@@ -177,3 +177,11 @@ hwi_oauth:
             scope:         "email profile"
     http_client:
         verify_peer:       false
+
+# Google Map
+ivory_google_map:
+    geocoder:
+        format: json
+    api_key: ~
+    language: "%locale%"
+    debug: "%kernel.debug%"
