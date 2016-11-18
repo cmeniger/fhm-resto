@@ -1,48 +1,56 @@
-# This file is auto-generated during the composer install
 parameters:
-    database_driver: pdo_mysql
-    database_host: docker_fhmmysql_1
-    database_port: null
-    database_name: null
-    database_user: null
-    database_password: null
-    mailer_transport: smtp
-    mailer_host: docker_fhmmailer_1
-    mailer_port: 1025
-    mailer_user: null
-    mailer_password: null
-    mailer_encryption: null
-    locale: fr
-    secret: ThisTokenIsNotSoSecretChangeItFHMT0Ol$
-    debug_toolbar: true
-    debug_redirects: false
+    database_driver:   pdo_mysql
+    database_host:     127.0.0.1
+    database_port:     ~
+    database_name:     ~
+    database_user:     ~
+    database_password: ~
+
+    mailer_transport:  smtp
+    mailer_host:       vagrant
+    mailer_port:       1025
+    mailer_user:       ~
+    mailer_password:   ~
+    mailer_encryption: ~
+
+    locale:            fr
+    secret:            ThisTokenIsNotSoSecretChangeItFHMT0Ol$
+
+    debug_toolbar:          true
+    debug_redirects:        false
     use_assetic_controller: true
-    mongodb_server: 'mongodb://docker_fhmmongo_1:27017'
+
+    mongodb_server: mongodb://localhost:27017
     mongodb_database: fhm-tools
-    mongodb_username: null
-    mongodb_password: null
+    mongodb_username :
+    mongodb_password :
     mongodb_replicaSet: ''
+
     mongo.session.options:
         database: fhm-tools_session
         collection: session
-    oauth.facebook.id: 'null'
-    oauth.facebook.secret: 'null'
-    oauth.twitter.id: 'null'
-    oauth.twitter.secret: 'null'
-    oauth.google.id: 'null'
-    oauth.google.secret: 'null'
-    recaptcha_public_key: 6LfZ9SQTAAAAAKHbN5Sp8eaEZrX7OIA5m8S_vvGR
-    recaptcha_private_key: 6LfZ9SQTAAAAAEIP0FVscmWH3U3VUE5wmrJnmtJy
+
+    oauth.facebook.id:      'null'
+    oauth.facebook.secret:  'null'
+    oauth.twitter.id:       'null'
+    oauth.twitter.secret:   'null'
+    oauth.google.id:        'null'
+    oauth.google.secret:    'null'
+
+    recaptcha_public_key:  '6LfZ9SQTAAAAAKHbN5Sp8eaEZrX7OIA5m8S_vvGR'
+    recaptcha_private_key: '6LfZ9SQTAAAAAEIP0FVscmWH3U3VUE5wmrJnmtJy'
+
     aws:
         sdk:
-            key: AKIAJH54WHWXZIXWLL7A
-            secret: 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
-            region: eu-west-1
-            version: latest
+            key:         AKIAJH54WHWXZIXWLL7A
+            secret:      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
+            region:      eu-west-1
+            version:     latest
         s3:
-            host: 'http://s3-eu-west-1.amazonaws.com/'
-            bucket: fhm-tools
+            host:        http://s3-eu-west-1.amazonaws.com/
+            bucket:      fhm-tools
             environment: test
+
     project:
         construct: true
         maintenance: false
@@ -53,47 +61,43 @@ parameters:
         analytics:
             active: true
             id: UA-60572981-4
+
     fhm_mailer:
-        enable: true
-        project: FHMTools
-        sign: 'L''équipe FHM-Tools'
-        footer: 'FHMTools 2015 - 2016, tous droits réservés.'
-        host: 'http://fhm-tools-v2.local'
-        admin: admin@fhm-tools.com
-        noreply: noreply@fhm-tools.com
-        contact: contact@fhm-tools.com
-        transport: "%mailer_transport%"
-        fhm_host: "%mailer_host%"
-        fhm_port: "%mailer_port%"
-        fhm_user: "%mailer_user%"
-        fhm_password: "%mailer_password%"
-        fhm_encryption: "%mailer_encryption%"
+        enable:   true
+        project:  "FHMTools"
+        sign:     "L'équipe FHM-Tools"
+        footer:   "FHMTools 2015 - 2016, tous droits réservés."
+        host:     http://fhm-tools.local
+        admin:    admin@fhm-tools.com
+        noreply:  noreply@fhm-tools.com
+        contact:  contact@fhm-tools.com
     fhm_mailer.noreply: noreply@fhm-tools.com
+
     fhm_fhm:
         pagination:
             admin:
-                page: 20
-                left: 5
+                page:  20
+                left:  5
                 right: 5
             front:
-                page: 20
-                left: 5
+                page:  20
+                left:  5
                 right: 5
         autocomplete:
-            page: 10
-            left: 2
-            right: 2
+            page:      10
+            left:      2
+            right:     2
         historic:
-            page: 5
-            left: 5
-            right: 5
-        grouping: fhm_grouping
-        languages:
-            exceptions: false
-            codes: false
+            page:      5
+            left:      5
+            right:     5
+        grouping:      fhm_grouping
+        languages:     false
+
     fhm_map:
         page: 1
         step: 500
+
     fhm_page:
         modules:
             - gallery
@@ -108,45 +112,49 @@ parameters:
             - article
             - news
             - media
+
     fhm_mappicker:
-        backgroundColor: '#FFF'
-        fillColor: '#DDD'
-        fillColorHover: '#F00'
-        fillColorSelected: '#00F'
-        fillColorSelectedHover: '#F00'
-        fillOpacity: 1
-        fillOpacityHover: 1
-        fillOpacitySelected: 1
-        fillOpacitySelectedHover: 1
-        strokeColor: '#BBB'
-        strokeOpacity: 1
-        strokeWidth: 1
-        cursorHover: pointer
-        cursorSelectedHover: pointer
+        backgroundColor:            '#FFF'
+        fillColor:                  '#DDD'
+        fillColorHover:             '#F00'
+        fillColorSelected:          '#00F'
+        fillColorSelectedHover:     '#F00'
+        fillOpacity:                1
+        fillOpacityHover:           1
+        fillOpacitySelected:        1
+        fillOpacitySelectedHover:   1
+        strokeColor:                '#BBB'
+        strokeOpacity:              1
+        strokeWidth:                1
+        cursorHover:                pointer
+        cursorSelectedHover:        pointer
         maps:
             - france_region
             - france_domtom
+
     fhm_media:
-        service: fhm_media_local
-        watermark: 0
-        admin: 20
-        front: 16
+        service:    fhm_media_local
+        watermark:  0
+        admin:      20
+        front:      16
         files:
             origin: '0:0'
-            xxs: '50'
-            xs: '100'
-            s: '360'
-            m: '720'
-            l: '1080'
-            xl: '1440'
-            xxl: '2800'
+            xxs:    '50'
+            xs:     '100'
+            s:      '360'
+            m:      '720'
+            l:      '1080'
+            xl:     '1440'
+            xxl:    '2800'
+
     fhm_cache:
         maxage: 3600
         expires: '+3600 seconds'
+
     fhm_note:
-        maximum: 5
-        default: 1
+        maximum:   5
+        default:   1
         anonymous: false
-        multiple: false
-        edit: true
-        delete: true
+        multiple:  false
+        edit:      true
+        delete:    true

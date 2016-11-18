@@ -1,60 +1,17 @@
-fhm_article:
-    resource: "@FhmArticleBundle/Controller/"
+routing_fhm:
+    resource: "routing_fhm.yml"
+
+routing_shop:
+    resource: "routing_shop.yml"
+
+routing_other:
+    resource: "routing_other.yml"
+
+routing_project:
+    resource: "routing_project.yml"
+
+# Toujours laisser ce bundle à la fin.
+fhm_error:
+    resource: "@FhmErrorBundle/Controller/"
     type:     annotation
-    prefix:   /{_locale}
-    requirements:
-        _locale: '%app_locales%'
-    defaults:
-        _locale: '%locale%'
-
-app:
-    resource: '@CoreFhmBundle/Controller/'
-    type:     annotation
-    prefix:   /{_locale}
-    requirements:
-        _locale: '%app_locales%'
-    defaults:
-        _locale: '%locale%'
-
-# These lines define a route using YAML configuration. The controller used by
-# the route (FrameworkBundle:Template:template) is a convenient shortcut when
-# the template can be rendered without executing any logic in your own controller.
-# See http://symfony.com/doc/current/cookbook/templating/render_without_controller.html
-homepage:
-    path: /{_locale}
-    requirements:
-        _locale: '%app_locales%'
-    defaults:
-        _controller: FrameworkBundle:Template:template
-        template:    default/homepage.html.twig
-        _locale:     '%locale%'
-
-# fos_user
-fos_user:
-    resource: "@FOSUserBundle/Resources/config/routing/all.xml"
-    prefix:   /{_locale}
-
-fhm_user:
-    resource: "@CoreUserBundle/Controller/"
-    prefix:   /{_locale}
-
-hwi_oauth_login:
-    resource: "@HWIOAuthBundle/Resources/config/routing/login.xml"
-    prefix:   /{_locale}/connect
-
-hwi_oauth_connect:
-    resource: "@HWIOAuthBundle/Resources/config/routing/connect.xml"
-    prefix:   /{_locale}/connect
-
-hwi_oauth_redirect:
-    resource: "@HWIOAuthBundle/Resources/config/routing/redirect.xml"
-    prefix:   /{_locale}/connect
-
-facebook_login:
-    path:  fhm_user_check_facebook
-
-twitter_login:
-    path:  fhm_user_check_twitter
-
-google_login:
-    path:  fhm_user_check_google
+    prefix:   /

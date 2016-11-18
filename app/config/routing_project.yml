@@ -1,0 +1,4 @@
+project_default:
+    resource: "@ProjectDefaultBundle/Controller/"
+    type:     annotation
+    prefix:   /

@@ -1,8 +1,0 @@
-{% trans_default_domain 'FhmUserBundle' %}
-{% extends "::FhmMail/Template/" ~ version ~ ".html.twig" %}
-{% import "::Macros/mail.html.twig" as macroMail %}
-
-{% block body %}
-    {{ macroMail.row('user.email.reset.body'|trans({'%firstname%':user.getFirstname()})|raw) }}
-    {{ macroMail.button(urlConfirm, 'user.email.reset.button'|trans|raw) }}
-{% endblock %}

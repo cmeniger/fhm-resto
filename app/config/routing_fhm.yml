@@ -1,0 +1,109 @@
+fhm_note:
+    resource: "@FhmNoteBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+fhm_testimony:
+    resource: "@FhmTestimonyBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+fhm_card:
+    resource: "@FhmCardBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+fhm_notification:
+    resource: "@FhmNotificationBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+fhm_workflow:
+    resource: "@FhmWorkflowBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+fhm_mail:
+    resource: "@FhmMailBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+fhm_gallery:
+    resource: "@FhmGalleryBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+fhm_slider:
+    resource: "@FhmSliderBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+fhm_media:
+    resource: "@FhmMediaBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+fhm_newsletter:
+    resource: "@FhmNewsletterBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+fhm_article:
+    resource: "@FhmArticleBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+fhm_partner:
+    resource: "@FhmPartnerBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+fhm_event:
+    resource: "@FhmEventBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+fhm_news:
+    resource: "@FhmNewsBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+fhm_contact:
+    resource: "@FhmContactBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+fhm_map_picker:
+    resource: "@FhmMapPickerBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+fhm_page:
+    resource: "@FhmPageBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+fhm_menu:
+    resource: "@FhmMenuBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+fhm_site:
+    resource: "@FhmSiteBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+fhm_fhm:
+    resource: "@FhmFhmBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+fhm_geolocation:
+    resource: "@FhmGeolocationBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+fhm_user:
+    resource: "@FhmUserBundle/Controller/"
+    type:     annotation
+    prefix:   /
