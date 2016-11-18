@@ -2,6 +2,7 @@
 
 namespace Fhm\GeolocationBundle\Services;
 
+use Ivory\GoogleMap\Service\Geocoder\Request\GeocoderAddressRequest;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class Geocoder
@@ -12,13 +13,12 @@ class Geocoder
     public function __construct(ContainerInterface $container)
     {
         $this->container = $container;
-        $this->geocoder  = $this->container->get('ivory_google_map.geocoder');
+        $this->geocoder  = $this->container->get('ivory.google_map.geocoder');
     }
 
     public function geocode($address)
     {
-        $request = $this->container->get('ivory_google_map.geocoder_request');
-        $request->setAddress($address);
+        $request = new GeocoderAddressRequest($address);
         $response = $this->geocoder->geocode($request);
         $results  = $response->getResults();
         $result   = array_shift($results);

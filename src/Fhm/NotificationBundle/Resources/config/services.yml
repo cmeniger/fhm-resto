@@ -1,4 +1,4 @@
 services:
     fhm_notification:
         class: Fhm\NotificationBundle\Services\Notification
-        arguments: [@service_container]
+        arguments: ["@service_container"]

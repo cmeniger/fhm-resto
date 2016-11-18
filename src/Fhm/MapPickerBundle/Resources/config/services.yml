@@ -1,12 +1,12 @@
 services:
     mappicker.nomap:
         class: Fhm\MapPickerBundle\Services\MapNoMap
-        arguments: [@templating, @service_container]
+        arguments: ["@templating", "@service_container"]
 
     mappicker.france_domtom:
         class: Fhm\MapPickerBundle\Services\MapFranceDomtom
-        arguments: [@templating, @service_container]
+        arguments: ["@templating", "@service_container"]
 
     mappicker.france_region:
         class: Fhm\MapPickerBundle\Services\MapFranceRegion
-        arguments: [@templating, @service_container]
+        arguments: ["@templating", "@service_container"]

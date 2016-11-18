@@ -2,7 +2,8 @@
 namespace Fhm\UserBundle\EventListener;
 
 use Fhm\UserBundle\Document\User;
-use Symfony\Component\Security\Core\SecurityContext;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 
@@ -11,7 +12,7 @@ class ActivityListener
     protected $context;
     protected $container;
  
-    public function __construct(SecurityContext $context, Container $container)
+    public function __construct(TokenStorage $context, ContainerInterface $container)
     {
         $this->context   = $context;
         $this->container = $container;
