@@ -1,20 +1,9 @@
 FHM-TOOLS-V2
 ------------
 
-Clone project
--------------
+1) HOST CONFIG
+--------------
 
-From docker terminal :
-
-    cd /var/www
-    git clone http://gitlab.fhmsolutions.com/fhmsolutions/fhm-tools-v2.git
-    cd fhm-tools-v2/
-
-HOST config
------------
-
-Linux
------
 Open a new terminal and edit :
 
     sudo nano /etc/hosts
@@ -22,6 +11,15 @@ Open a new terminal and edit :
 And add the following line :
 
     127.0.0.1 fhm-tools-v2.local
+
+2) DOCKER - Clone project
+-------------------------
+
+In docker :
+
+    cd /var/www
+    git clone http://gitlab.fhmsolutions.com/fhmsolutions/fhm-tools-v2.git
+    cd fhm-tools-v2/
 
 Symfony Standard Edition
 ========================
@@ -33,7 +31,7 @@ This document contains information on how to download, install, and start
 using Symfony. For a more detailed explanation, see the [Installation][1]
 chapter of the Symfony Documentation.
 
-1) Installing the vendor for the project
+3) Installing the vendor for the project
 ----------------------------------------
 
 When it comes to installing the Symfony Standard Edition, you have the
@@ -54,7 +52,7 @@ In docker :
     composer install
     chmod -R 777 var/cache var/logs
 
-2) Checking your System Configuration
+4) Checking your System Configuration
 -------------------------------------
 
 Before starting coding, make sure that your local system is properly
@@ -70,7 +68,7 @@ Or access the `config.php` script from a browser:
 
 If you get any warnings or recommendations, fix them before moving on.
 
-3) Browsing the Demo Application
+5) Browsing the Demo Application
 --------------------------------
 
 Congratulations! You're now ready to use Symfony.
@@ -85,7 +83,7 @@ To see a real-live Symfony page in action, access the following page:
 
     http://fhm-tools-v2.local/app_dev.php
 
-4) Add FOSUser users for sending email
+6) Add FOSUser users for sending email
 --------------------------------------
 
 To send email, you must create these users and give admin rights by running the following command :
@@ -100,11 +98,21 @@ You can connect to the application with these credentials :
 
     http://fhm-tools-v2.local/app_dev.php/login
 
-5) Useful command line
+7) Useful command line
 ----------------------
 
-Generate static files for integration :
+Generate static files for integration, in docker :
 
+    cd /var/www/fhm-tools-v2
     npm install
     bower install
     gulp
+    
+8) CHMOD
+--------
+
+When you install or update composer, npm or bower from your docker container, it will generate folder and files with the root user. So from you host machine, you will get a padlock on your generated files / folders and can’t update them. To fix it, from you host machine, open a terminal and set your user for these files / folders. 
+
+    sudo chown -R [user]:[group] [path]
+    sudo chown -R fhm-devops:fhm-devops ~/vagrant/www/fhm-tools-v2
+
