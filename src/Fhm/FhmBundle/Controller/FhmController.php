@@ -670,7 +670,6 @@ class FhmController extends Controller
         {
             $value = $value[$sub];
         }
-
         return $value;
     }
 

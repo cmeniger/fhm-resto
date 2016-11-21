@@ -1,7 +1,7 @@
 services:
     fhm_grouping:
         class: Fhm\FhmBundle\Services\Grouping
-        arguments: []
+        arguments: ["@service_container"]
 
     fhm_schedules:
         class: Fhm\FhmBundle\Services\Schedules

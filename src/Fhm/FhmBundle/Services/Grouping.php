@@ -15,19 +15,22 @@ class Grouping extends FhmController
     protected $site;
     protected $menu;
     protected $visible;
+    protected $container;
 
-
-    public function __construct()
+    /**
+     * @param ContainerInterface $container
+     */
+    public function __construct(ContainerInterface $container)
     {
+        $this->container = $container;
         $this->initLanguage();
         $this->site    = $this->dmRepository('FhmSiteBundle:Site')->getDefault();
         $this->menu    = ($this->site) ? $this->site->getMenu() : "";
         $this->visible = false;
-
-        $this->get('session')->set('site', $this->site ? $this->site->getId() : '');
-        $this->get('session')->set('menu', $this->menu ? $this->menu->getId() : '');
+        $session       = $this->container->get('session');
+        $session->set('site', $this->site ? $this->site->getId() : '');
+        $session->set('menu', $this->menu ? $this->menu->getId() : '');
     }
-
 
     /**
      * @return mixed
@@ -50,46 +53,37 @@ class Grouping extends FhmController
      */
     public function loadTwigGlobal()
     {
-        $this->get('twig')->addGlobal('site', $this->site);
-        $this->get('twig')->addGlobal('menu', $this->menu);
-        $this->get('twig')->addGlobal('instance', (array) $this->instanceData());
-        $this->get('twig')->addGlobal(
-            'grouping_name',
-            $this->get('translator')->trans('fhm.grouping.name', array(), 'FhmFhmBundle')
-        );
-        $this->get('twig')->addGlobal(
-            'grouping_add',
-            $this->get('translator')->trans('fhm.grouping.add', array("%name%" => $this->getGrouping()), 'FhmFhmBundle')
-        );
-        $this->get('twig')->addGlobal(
-            'grouping_title',
-            $this->get('translator')->trans('fhm.grouping.title', array(), 'FhmFhmBundle')
-        );
-        $this->get('twig')->addGlobal(
-            'grouping_list1',
-            $this->get('translator')->trans('fhm.grouping.list1', array(), 'FhmFhmBundle')
-        );
-        $this->get('twig')->addGlobal(
-            'grouping_list2',
-            $this->get('translator')->trans('fhm.grouping.list2', array(), 'FhmFhmBundle')
-        );
+        $this->container->get('twig')->addGlobal('site', $this->site);
+        $this->container->get('twig')->addGlobal('menu', $this->menu);
+        $this->container->get('twig')->addGlobal('instance', (array) $this->instanceData());
+        $this->container->get('twig')->addGlobal('grouping_name', $this->container->get('translator')->trans('fhm.grouping.name', array(), 'FhmFhmBundle'));
+        $this->container->get('twig')->addGlobal('grouping_add', $this->container->get('translator')->trans('fhm.grouping.add', array("%name%" => $this->getGrouping()), 'FhmFhmBundle'));
+        $this->container->get('twig')->addGlobal('grouping_title', $this->container->get('translator')->trans('fhm.grouping.title', array(), 'FhmFhmBundle'));
+        $this->container->get('twig')->addGlobal('grouping_list1', $this->container->get('translator')->trans('fhm.grouping.list1', array(), 'FhmFhmBundle'));
+        $this->container->get('twig')->addGlobal('grouping_list2', $this->container->get('translator')->trans('fhm.grouping.list2', array(), 'FhmFhmBundle'));
 
         return $this;
     }
 
     /**
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     * @return $this
      */
     public function loadGrouping()
     {
-        if ($this->site == '') {
+        $this->setContainer($this->container);
+        if($this->site == '')
+        {
             return $this->redirect($this->generateUrl('fhm_admin_site_create'));
-        } elseif ($this->menu == '') {
+        }
+        elseif($this->menu == '')
+        {
             $controller = new \Project\DefaultBundle\Controller\FrontController();
             $controller->setContainer($this->container);
 
-            return $controller->templateAction('default');
-        } else {
+            return $controller->templateAction('default', null);
+        }
+        else
+        {
             $controller = new \Fhm\MenuBundle\Controller\FrontController();
             $controller->setContainer($this->container);
 
