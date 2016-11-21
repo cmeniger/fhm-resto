@@ -99,7 +99,7 @@ class FhmController extends Controller
         $class = $this->class . 'Historic';
         if(class_exists($class))
         {
-            $request        = $this->get('request');
+            $request        = $this->get('request_stack');
             $instance       = $this->instanceData();
             $dataPagination = $request->get('FhmPagination');
 
@@ -121,10 +121,10 @@ class FhmController extends Controller
         $class = $this->class . 'Historic';
         if(class_exists($class))
         {
-            $request                  = $this->get('request');
+            $request                  = $this->get('request_stack');
             $dataPagination           = $request->get('FhmPagination');
             $instance                 = $this->instanceData();
-            $pagination               = $this->setPagination($this->getParameters(array('historic', 'page'), 'fhm_fhm'), $this->getParameters(array('historic', 'left'), 'fhm_fhm'), $this->getParameters(array('historic', 'right'), 'fhm_fhm'))->getPagination($request->isXmlHttpRequest() ? $dataPagination['pagination'] : 1, count((array) $this->historicData($document)), $this->dmRepository($this->repository . 'Historic')->getHistoricCount($document, $instance->grouping->filtered, $instance->user->super), 'pagination', array(), $this->generateUrl($this->container->get('request')->get('_route'), array('id' => $document->getId())));
+            $pagination               = $this->setPagination($this->getParameters(array('historic', 'page'), 'fhm_fhm'), $this->getParameters(array('historic', 'left'), 'fhm_fhm'), $this->getParameters(array('historic', 'right'), 'fhm_fhm'))->getPagination($request->isXmlHttpRequest() ? $dataPagination['pagination'] : 1, count((array) $this->historicData($document)), $this->dmRepository($this->repository . 'Historic')->getHistoricCount($document, $instance->grouping->filtered, $instance->user->super), 'pagination', array(), $this->generateUrl($this->container->get('request_stack')->get('_route'), array('id' => $document->getId())));
             $pagination->idData       = "content_data_historic";
             $pagination->idPagination = "content_pagination_historic";
             $pagination->counter      = $this->get('translator')->trans('fhm.historic.pagination.counter', array('%count%' => $pagination->page, '%all%' => $pagination->count), 'FhmFhmBundle');
@@ -159,9 +159,9 @@ class FhmController extends Controller
     {
         $this->initLanguage();
         $fhmExtension      = new \Fhm\FhmBundle\Twig\FhmExtension($this->container);
-        $roleSuperAdmin    = $this->get('security.context')->isGranted('ROLE_SUPER_ADMIN');
-        $roleAdmin         = $this->get('security.context')->isGranted('ROLE_ADMIN');
-        $roleModerator     = $this->get('security.context')->isGranted('ROLE_MODERATOR');
+        $roleSuperAdmin    = $this->get('security.authorization_checker')->isGranted('ROLE_SUPER_ADMIN');
+        $roleAdmin         = $this->get('security.authorization_checker')->isGranted('ROLE_ADMIN');
+        $roleModerator     = $this->get('security.authorization_checker')->isGranted('ROLE_MODERATOR');
         $groupingCurrent   = $this->grouping ? $this->grouping : $this->get($this->getParameters("grouping", "fhm_fhm"))->getGrouping();
         $groupingUsed      = $groupingCurrent;
         $groupingUsed      = $roleModerator ? $this->getUser()->getFirstGrouping() : $groupingUsed;
@@ -302,8 +302,8 @@ class FhmController extends Controller
             $locale         = $this->getParameters(array(), 'locale');
             $session        = $this->container->get('session')->get('_locale');
             $used           = $session ? $session : $locale;
-            $used           = $this->get('security.context')->isGranted('ROLE_MODERATOR') ? $this->getUser()->getLanguages() : $used;
-            $used           = $this->get('security.context')->isGranted('ROLE_ADMIN') ? $this->container->get('session')->get('_localeAdmin') : $used;
+            $used           = $this->get('security.authorization_checker')->isGranted('ROLE_MODERATOR') ? $this->getUser()->getLanguages() : $used;
+            $used           = $this->get('security.authorization_checker')->isGranted('ROLE_ADMIN') ? $this->container->get('session')->get('_localeAdmin') : $used;
             $this->language = $used;
         }
 
@@ -402,7 +402,7 @@ class FhmController extends Controller
             )
         );
         $sort               = new \stdClass();
-        $sort->path         = $path ? $path : $this->generateUrl($this->container->get('request')->get('_route'));
+        $sort->path         = $path ? $path : $this->generateUrl($this->container->get('request_stack')->get('_route'));
         $sort->field        = $field ? $field : $this->sort[0];
         $sort->order        = $order ? $order : $this->sort[1];
         $sort->post         = json_encode($post);
@@ -480,7 +480,7 @@ class FhmController extends Controller
             )
         );
         $pagination               = new \stdClass();
-        $pagination->path         = $path ? $path : $this->generateUrl($this->container->get('request')->get('_route'));
+        $pagination->path         = $path ? $path : $this->generateUrl($this->container->get('request_stack')->get('_route'));
         $pagination->current      = $page;
         $pagination->post         = json_encode($post);
         $pagination->page         = $countPage;
