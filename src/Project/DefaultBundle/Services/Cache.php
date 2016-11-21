@@ -46,11 +46,11 @@ class Cache extends FhmController
         {
             if(empty($maxage))
             {
-                $maxage = $this->getParameter('maxage', 'fhm_cache');
+                $maxage = $this->getParameters('maxage', 'fhm_cache');
             }
             if(empty($expires))
             {
-                $expires = $this->getParameter('expires', 'fhm_cache');
+                $expires = $this->getParameters('expires', 'fhm_cache');
             }
             if(is_int($expires))
             {

@@ -21,7 +21,7 @@ class FrontController extends FhmController
      */
     public function homeAction()
     {
-        return $this->get($this->getParameter("grouping", "fhm_fhm"))->loadGrouping();
+        return $this->get($this->getParameters("grouping", "fhm_fhm"))->loadGrouping();
     }
 
     /**
