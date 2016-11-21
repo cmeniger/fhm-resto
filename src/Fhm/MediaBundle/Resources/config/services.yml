@@ -20,7 +20,7 @@ services:
     fhm_form.media_type_extension:
         class: Fhm\MediaBundle\Form\Extension\MediaTypeExtension
         tags:
-            - { name: form.type_extension, alias: file }
+            - { name: form.type_extension, extended_type: Symfony\Component\Form\Extension\Core\Type\FileType, alias: file }
 
     fhm_media_local:
         class: Fhm\MediaBundle\Services\Local
