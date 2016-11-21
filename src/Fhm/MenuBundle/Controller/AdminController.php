@@ -86,7 +86,7 @@ class AdminController extends FhmController
             'form'        => $form->createView(),
             'instance'    => $instance,
             'document'    => $document,
-            'modules'     => $this->getParameter('modules', 'fhm_menu'),
+            'modules'     => $this->getParameters('modules', 'fhm_menu'),
             'breadcrumbs' => array(
                 array(
                     'link' => $this->get('router')->generate('project_home'),
@@ -130,7 +130,7 @@ class AdminController extends FhmController
             (
                 "tree"    => $tree,
                 "treemap" => $treemap,
-                "modules" => $this->getParameter('modules', 'fhm_menu')
+                "modules" => $this->getParameters('modules', 'fhm_menu')
             )
         );
     }
@@ -149,7 +149,7 @@ class AdminController extends FhmController
         $response = parent::updateAction($request, $id);
         $path     = (is_object($response)) ? $response : '';
 
-        return (is_array($response)) ? array_merge($response, array("modules" => $this->getParameter('modules', 'fhm_menu'))) : $path;
+        return (is_array($response)) ? array_merge($response, array("modules" => $this->getParameters('modules', 'fhm_menu'))) : $path;
     }
 
     /**
@@ -610,7 +610,7 @@ class AdminController extends FhmController
     {
         if($module === "media")
         {
-            $route = $this->get($this->getParameter('service','fhm_media'))->setDocument($document)->getPathWeb();
+            $route = $this->get($this->getParameters('service','fhm_media'))->setDocument($document)->getPathWeb();
         }
         else
         {

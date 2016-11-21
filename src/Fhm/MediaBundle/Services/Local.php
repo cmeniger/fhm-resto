@@ -24,7 +24,7 @@ class Local extends FhmController
     public function __construct(ContainerInterface $container)
     {
         $this->container = $container;
-        $this->files     = $this->_filesInit($this->getParameter('files', 'fhm_media'));
+        $this->files     = $this->_filesInit($this->getParameters('files', 'fhm_media'));
         $this->file      = null;
         // Path
         $this->path                = new \stdClass();

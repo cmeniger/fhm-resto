@@ -52,7 +52,7 @@ class AdminController extends FhmController
         $instance     = $this->instanceData();
         $classType    = $this->form->type->create;
         $classHandler = $this->form->handler->create;
-        $form         = $this->createForm(new $classType($instance, $document, $this->getParameter('maps', 'fhm_mappicker')), $document);
+        $form         = $this->createForm(new $classType($instance, $document, $this->getParameters('maps', 'fhm_mappicker')), $document);
         $handler      = new $classHandler($form, $request);
         $process      = $handler->process();
         if($process)
@@ -124,7 +124,7 @@ class AdminController extends FhmController
         {
             throw $this->createNotFoundException($this->get('translator')->trans($this->translation[1] . '.error.unknown', array(), $this->translation[0]));
         }
-        $form    = $this->createForm(new $classType($instance, $document, $this->getParameter('maps', 'fhm_mappicker')), $document);
+        $form    = $this->createForm(new $classType($instance, $document, $this->getParameters('maps', 'fhm_mappicker')), $document);
         $handler = new $classHandler($form, $request);
         $process = $handler->process($document, $this->dm(), $this->bundle);
         if($process)

@@ -50,7 +50,7 @@ class RefFrontController extends FhmController
         // Ajax pagination request
         if(isset($dataPagination['pagination']))
         {
-            $documents = $this->dmRepository()->getFrontIndex($dataSearch['search'], $dataPagination['pagination'], $this->getParameter(array('pagination', 'front', 'page'), 'fhm_fhm'), $instance->grouping->current);
+            $documents = $this->dmRepository()->getFrontIndex($dataSearch['search'], $dataPagination['pagination'], $this->getParameters(array('pagination', 'front', 'page'), 'fhm_fhm'), $instance->grouping->current);
 
             return array(
                 'documents'  => $documents,
@@ -61,7 +61,7 @@ class RefFrontController extends FhmController
         // Router request
         else
         {
-            $documents = $this->dmRepository()->getFrontIndex($dataSearch['search'], 1, $this->getParameter(array('pagination', 'front', 'page'), 'fhm_fhm'), $instance->grouping->current);
+            $documents = $this->dmRepository()->getFrontIndex($dataSearch['search'], 1, $this->getParameters(array('pagination', 'front', 'page'), 'fhm_fhm'), $instance->grouping->current);
 
             return array(
                 'documents'   => $documents,
@@ -271,7 +271,7 @@ class RefFrontController extends FhmController
         // Change grouping
         if($instance->grouping->different && $document->getGrouping())
         {
-            $this->get($this->getParameter("grouping", "fhm_fhm"))->setGrouping($document->getFirstGrouping());
+            $this->get($this->getParameters("grouping", "fhm_fhm"))->setGrouping($document->getFirstGrouping());
         }
 
         return array(

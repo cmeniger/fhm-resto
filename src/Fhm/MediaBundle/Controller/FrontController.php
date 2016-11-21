@@ -103,13 +103,13 @@ class FrontController extends FhmController
             $document->setWatermark((array) $request->get('watermark'));
             $document->setActive(true);
             $this->dmPersist($document);
-            $this->get($this->getParameter('service','fhm_media'))->setDocument($document)->setWatermark($request->get('watermark'))->execute();
+            $this->get($this->getParameters('service','fhm_media'))->setDocument($document)->setWatermark($request->get('watermark'))->execute();
         }
 
         return array(
             'form'        => $form->createView(),
             'instance'    => $this->instanceData(),
-            'watermarks'  => $this->getParameter('watermark', 'fhm_media') ? $this->getParameter('files', 'fhm_media') : '',
+            'watermarks'  => $this->getParameters('watermark', 'fhm_media') ? $this->getParameters('files', 'fhm_media') : '',
             'breadcrumbs' => array(
                 array(
                     'link' => $this->get('router')->generate('project_home'),

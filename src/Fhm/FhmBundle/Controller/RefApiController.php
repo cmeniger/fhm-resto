@@ -58,13 +58,13 @@ class RefApiController extends FhmController
         $instance       = $this->instanceData();
         $dataSearch     = $request->get('text');
         $dataPagination = $request->get('pagination');
-        $documents      = $this->dmRepository()->getFrontIndex($dataSearch, $dataPagination, $this->getParameter(array('autocomplete', 'page'), 'fhm_fhm'), $instance->grouping->current);
+        $documents      = $this->dmRepository()->getFrontIndex($dataSearch, $dataPagination, $this->getParameters(array('autocomplete', 'page'), 'fhm_fhm'), $instance->grouping->current);
 
         return array(
             'text'       => $dataSearch,
             'field'      => $request->get('field'),
             'documents'  => $documents,
-            'pagination' => $this->setPagination($this->getParameter(array('autocomplete', 'page'), 'fhm_fhm'), $this->getParameter(array('autocomplete', 'left'), 'fhm_fhm'), $this->getParameter(array('autocomplete', 'right'), 'fhm_fhm'))->getPagination($dataPagination, count($documents), $this->dmRepository()->getFrontCount($dataSearch, $instance->grouping->current)),
+            'pagination' => $this->setPagination($this->getParameters(array('autocomplete', 'page'), 'fhm_fhm'), $this->getParameters(array('autocomplete', 'left'), 'fhm_fhm'), $this->getParameter(array('autocomplete', 'right'), 'fhm_fhm'))->getPagination($dataPagination, count($documents), $this->dmRepository()->getFrontCount($dataSearch, $instance->grouping->current)),
             'instance'   => $instance,
         );
     }

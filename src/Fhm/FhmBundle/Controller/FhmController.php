@@ -103,7 +103,7 @@ class FhmController extends Controller
             $instance       = $this->instanceData();
             $dataPagination = $request->get('FhmPagination');
 
-            return $this->dmRepository($this->repository . 'Historic')->getHistoricIndex($document, $request->isXmlHttpRequest() ? $dataPagination['pagination'] : 1, $this->getParameter(array('historic', 'page'), 'fhm_fhm'), $instance->grouping->filtered, $instance->user->super);
+            return $this->dmRepository($this->repository . 'Historic')->getHistoricIndex($document, $request->isXmlHttpRequest() ? $dataPagination['pagination'] : 1, $this->getParameters(array('historic', 'page'), 'fhm_fhm'), $instance->grouping->filtered, $instance->user->super);
         }
         else
         {
@@ -124,7 +124,7 @@ class FhmController extends Controller
             $request                  = $this->get('request');
             $dataPagination           = $request->get('FhmPagination');
             $instance                 = $this->instanceData();
-            $pagination               = $this->setPagination($this->getParameter(array('historic', 'page'), 'fhm_fhm'), $this->getParameter(array('historic', 'left'), 'fhm_fhm'), $this->getParameter(array('historic', 'right'), 'fhm_fhm'))->getPagination($request->isXmlHttpRequest() ? $dataPagination['pagination'] : 1, count((array) $this->historicData($document)), $this->dmRepository($this->repository . 'Historic')->getHistoricCount($document, $instance->grouping->filtered, $instance->user->super), 'pagination', array(), $this->generateUrl($this->container->get('request')->get('_route'), array('id' => $document->getId())));
+            $pagination               = $this->setPagination($this->getParameters(array('historic', 'page'), 'fhm_fhm'), $this->getParameters(array('historic', 'left'), 'fhm_fhm'), $this->getParameters(array('historic', 'right'), 'fhm_fhm'))->getPagination($request->isXmlHttpRequest() ? $dataPagination['pagination'] : 1, count((array) $this->historicData($document)), $this->dmRepository($this->repository . 'Historic')->getHistoricCount($document, $instance->grouping->filtered, $instance->user->super), 'pagination', array(), $this->generateUrl($this->container->get('request')->get('_route'), array('id' => $document->getId())));
             $pagination->idData       = "content_data_historic";
             $pagination->idPagination = "content_pagination_historic";
             $pagination->counter      = $this->get('translator')->trans('fhm.historic.pagination.counter', array('%count%' => $pagination->page, '%all%' => $pagination->count), 'FhmFhmBundle');
@@ -162,23 +162,23 @@ class FhmController extends Controller
         $roleSuperAdmin    = $this->get('security.context')->isGranted('ROLE_SUPER_ADMIN');
         $roleAdmin         = $this->get('security.context')->isGranted('ROLE_ADMIN');
         $roleModerator     = $this->get('security.context')->isGranted('ROLE_MODERATOR');
-        $groupingCurrent   = $this->grouping ? $this->grouping : $this->get($this->getParameter("grouping", "fhm_fhm"))->getGrouping();
+        $groupingCurrent   = $this->grouping ? $this->grouping : $this->get($this->getParameters("grouping", "fhm_fhm"))->getGrouping();
         $groupingUsed      = $groupingCurrent;
         $groupingUsed      = $roleModerator ? $this->getUser()->getFirstGrouping() : $groupingUsed;
         $groupingUsed      = $roleAdmin ? "" : $groupingUsed;
         $groupingFiltered  = $groupingCurrent;
         $groupingFiltered  = $roleModerator ? $this->getUser()->getGrouping() : $groupingFiltered;
         $groupingFiltered  = $roleAdmin ? "" : $groupingFiltered;
-        $groupingAvailable = $this->get($this->getParameter("grouping", "fhm_fhm"))->getGroupingAvailable();
+        $groupingAvailable = $this->get($this->getParameters("grouping", "fhm_fhm"))->getGroupingAvailable();
         $groupingAvailable = $roleModerator ? $this->getUser()->getGrouping() : $groupingAvailable;
-        $groupingAvailable = $roleAdmin ? $this->get($this->getParameter("grouping", "fhm_fhm"))->getGroupingAvailable() : $groupingAvailable;
+        $groupingAvailable = $roleAdmin ? $this->get($this->getParameters("grouping", "fhm_fhm"))->getGroupingAvailable() : $groupingAvailable;
         $languageCurrent   = $this->language_disable ? false : $this->language;
         $languageFiltered  = $languageCurrent;
         $languageFiltered  = $roleModerator ? $this->getUser()->getLanguages() : $languageFiltered;
         $languageFiltered  = $roleAdmin ? "" : $languageFiltered;
-        $languageAvailable = $this->getParameter(array("languages", "codes"), "fhm_fhm");
+        $languageAvailable = $this->getParameters(array("languages", "codes"), "fhm_fhm");
         $languageAvailable = $roleModerator ? $this->getUser()->getLanguages() : $languageAvailable;
-        $languageAvailable = $roleAdmin ? $this->getParameter(array("languages", "codes"), "fhm_fhm") : $languageAvailable;
+        $languageAvailable = $roleAdmin ? $this->getParameters(array("languages", "codes"), "fhm_fhm") : $languageAvailable;
         foreach((array) $languageAvailable as $key => $value)
         {
             unset($languageAvailable[$key]);
@@ -199,14 +199,14 @@ class FhmController extends Controller
         $data->language->filtered  = $languageFiltered;
         $data->language->different = $document ? !$document->hasLanguage($languageCurrent) : false;
         $data->language->available = $languageAvailable;
-        $data->language->visible   = $this->language_disable ? false : $this->getParameter(array("languages", "codes"), "fhm_fhm");
+        $data->language->visible   = $this->language_disable ? false : $this->getParameters(array("languages", "codes"), "fhm_fhm");
         $data->grouping            = new \stdClass();
         $data->grouping->current   = $groupingCurrent;
         $data->grouping->used      = $groupingUsed;
         $data->grouping->filtered  = $groupingFiltered;
         $data->grouping->different = $groupingUsed != '' && $document ? !$document->hasGrouping($groupingUsed) : false;
         $data->grouping->available = $groupingAvailable;
-        $data->grouping->visible   = $this->get($this->getParameter("grouping", "fhm_fhm"))->getVisible();
+        $data->grouping->visible   = $this->get($this->getParameters("grouping", "fhm_fhm"))->getVisible();
         $data->user                = new \stdClass();
         $data->user->document      = $this->getUser();
         $data->user->super         = $roleSuperAdmin;
@@ -297,9 +297,9 @@ class FhmController extends Controller
     public function initLanguage()
     {
         $this->initLanguageDisable();
-        if(!$this->language_disable && $this->getParameter(array('languages', 'codes'), 'fhm_fhm'))
+        if(!$this->language_disable && $this->getParameters(array('languages', 'codes'), 'fhm_fhm'))
         {
-            $locale         = $this->getParameter(array(), 'locale');
+            $locale         = $this->getParameters(array(), 'locale');
             $session        = $this->container->get('session')->get('_locale');
             $used           = $session ? $session : $locale;
             $used           = $this->get('security.context')->isGranted('ROLE_MODERATOR') ? $this->getUser()->getLanguages() : $used;
@@ -315,7 +315,7 @@ class FhmController extends Controller
      */
     public function initLanguageDisable()
     {
-        $exceptions = $this->getParameter(array('languages', 'exceptions'), 'fhm_fhm');
+        $exceptions = $this->getParameters(array('languages', 'exceptions'), 'fhm_fhm');
         if(in_array($this->view, (array) $exceptions))
         {
             $this->setLanguageDisable(true);
@@ -442,16 +442,16 @@ class FhmController extends Controller
             if($this->section == "Front" || $this->section == "Api")
             {
                 $this->pagination        = new \stdClass();
-                $this->pagination->page  = !is_null($page) ? $page : $this->getParameter(array('pagination', 'front', 'page'), 'fhm_fhm');
-                $this->pagination->left  = !is_null($left) ? $left : $this->getParameter(array('pagination', 'front', 'left'), 'fhm_fhm');
-                $this->pagination->right = !is_null($right) ? $right : $this->getParameter(array('pagination', 'front', 'right'), 'fhm_fhm');
+                $this->pagination->page  = !is_null($page) ? $page : $this->getParameters(array('pagination', 'front', 'page'), 'fhm_fhm');
+                $this->pagination->left  = !is_null($left) ? $left : $this->getParameters(array('pagination', 'front', 'left'), 'fhm_fhm');
+                $this->pagination->right = !is_null($right) ? $right : $this->getParameters(array('pagination', 'front', 'right'), 'fhm_fhm');
             }
             else
             {
                 $this->pagination        = new \stdClass();
-                $this->pagination->page  = !is_null($page) ? $page : $this->getParameter(array('pagination', 'admin', 'page'), 'fhm_fhm');
-                $this->pagination->left  = !is_null($left) ? $left : $this->getParameter(array('pagination', 'admin', 'left'), 'fhm_fhm');
-                $this->pagination->right = !is_null($right) ? $right : $this->getParameter(array('pagination', 'admin', 'right'), 'fhm_fhm');
+                $this->pagination->page  = !is_null($page) ? $page : $this->getParameters(array('pagination', 'admin', 'page'), 'fhm_fhm');
+                $this->pagination->left  = !is_null($left) ? $left : $this->getParameters(array('pagination', 'admin', 'left'), 'fhm_fhm');
+                $this->pagination->right = !is_null($right) ? $right : $this->getParameters(array('pagination', 'admin', 'right'), 'fhm_fhm');
             }
         }
 
@@ -664,7 +664,7 @@ class FhmController extends Controller
      */
     protected function getParameters($route, $parent)
     {
-        $parameters = $this->container->getParameter($parent);
+        $parameters = $this->getParameter($parent);
         $value      = $parameters;
         foreach((array) $route as $sub)
         {

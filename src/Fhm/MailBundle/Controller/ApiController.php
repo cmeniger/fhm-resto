@@ -44,7 +44,7 @@ class ApiController extends FhmController
      */
     public function adminTestAction()
     {
-        $this->get('session')->getFlashBag()->add('notice', $this->get('translator')->trans("mail.test.flash.ok", array("%email%" => $this->getParameter('admin', 'fhm_mailer')), $this->translation[0]));
+        $this->get('session')->getFlashBag()->add('notice', $this->get('translator')->trans("mail.test.flash.ok", array("%email%" => $this->getParameters('admin', 'fhm_mailer')), $this->translation[0]));
         $this->container->get('fhm_mail')->AdminTest();
 
         return $this->redirect($this->getLastRoute());
@@ -78,7 +78,7 @@ class ApiController extends FhmController
             "user"             => $this->getUser(),
             "urlConfirm"       => $this->container->get('router')->generate('fos_user_registration_confirm', array('token' => md5($this->getUser()->getUsername())), true),
             "version"          => "mail",
-            "server_http_host" => $this->getParameter('host', 'fhm_mailer')
+            "server_http_host" => $this->getParameters('host', 'fhm_mailer')
         );
     }
 
@@ -97,7 +97,7 @@ class ApiController extends FhmController
             "user"             => $this->getUser(),
             "urlConfirm"       => $this->container->get('router')->generate('fos_user_registration_confirm', array('token' => md5($this->getUser()->getUsername())), true),
             "version"          => "mail",
-            "server_http_host" => $this->getParameter('host', 'fhm_mailer')
+            "server_http_host" => $this->getParameters('host', 'fhm_mailer')
         );
     }
 
@@ -127,7 +127,7 @@ class ApiController extends FhmController
         (
             "message"          => $message,
             "version"          => "mail",
-            "server_http_host" => $this->getParameter('host', 'fhm_mailer')
+            "server_http_host" => $this->getParameters('host', 'fhm_mailer')
         );
     }
 }

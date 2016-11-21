@@ -93,13 +93,13 @@ class AdminController extends FhmController
             $document->setAlias($this->getAlias($document->getId(), $document->getName()));
             $document->setWatermark((array) $request->get('watermark'));
             $this->dmPersist($document);
-            $this->get($this->getParameter('service','fhm_media'))->setDocument($document)->setWatermark($request->get('watermark'))->execute();
+            $this->get($this->getParameters('service','fhm_media'))->setDocument($document)->setWatermark($request->get('watermark'))->execute();
         }
 
         return array(
             'form'        => $form->createView(),
             'instance'    => $instance,
-            'watermarks'  => $this->getParameter('watermark', 'fhm_media') ? $this->getParameter('files', 'fhm_media') : '',
+            'watermarks'  => $this->getParameters('watermark', 'fhm_media') ? $this->getParameters('files', 'fhm_media') : '',
             'breadcrumbs' => array(
                 array(
                     'link' => $this->get('router')->generate('project_home'),
@@ -194,11 +194,11 @@ class AdminController extends FhmController
             $this->dmPersist($document);
             if($document->getFile())
             {
-                $this->get($this->getParameter('service','fhm_media'))->setDocument($document)->setWatermark($request->get('watermark'))->execute();
+                $this->get($this->getParameters('service','fhm_media'))->setDocument($document)->setWatermark($request->get('watermark'))->execute();
             }
             elseif($request->get('generate') || $document->getWatermark() != $request->get('watermark'))
             {
-                $this->get($this->getParameter('service','fhm_media'))->setDocument($document)->setWatermark($request->get('watermark'))->generateImage();
+                $this->get($this->getParameters('service','fhm_media'))->setDocument($document)->setWatermark($request->get('watermark'))->generateImage();
                 $document->setWatermark((array) $request->get('watermark'));
                 $this->dmPersist($document);
             }
@@ -218,7 +218,7 @@ class AdminController extends FhmController
             'document'    => $document,
             'form'        => $form->createView(),
             'instance'    => $instance,
-            'watermarks'  => $this->getParameter('watermark', 'fhm_media') ? $this->getParameter('files', 'fhm_media') : '',
+            'watermarks'  => $this->getParameters('watermark', 'fhm_media') ? $this->getParameters('files', 'fhm_media') : '',
             'breadcrumbs' => array(
                 array(
                     'link' => $this->get('router')->generate('project_home'),
@@ -259,7 +259,7 @@ class AdminController extends FhmController
         return array_merge(
             parent::detailAction($id),
             array(
-                'files' => $this->getParameter('files', 'fhm_media')
+                'files' => $this->getParameters('files', 'fhm_media')
             )
         );
     }
@@ -293,7 +293,7 @@ class AdminController extends FhmController
         // Delete
         if($document->getDelete())
         {
-            $this->get($this->getParameter('service','fhm_media'))->setDocument($document)->remove();
+            $this->get($this->getParameters('service','fhm_media'))->setDocument($document)->remove();
             $this->dmRemove($document);
             // Message
             $this->get('session')->getFlashBag()->add('notice', $this->get('translator')->trans($this->translation[1] . '.admin.delete.flash.ok', array(), $this->translation[0]));

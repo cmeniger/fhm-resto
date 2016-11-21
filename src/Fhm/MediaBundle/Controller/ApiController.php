@@ -84,11 +84,11 @@ class ApiController extends FhmController
         $tag        = (isset($data['tag'])) ? $this->dmRepository('FhmMediaBundle:MediaTag')->find($data['tag']) : '';
         $pagination = (isset($data['pagination'])) ? $data['pagination'] : 1;
         $search     = (isset($data['search'])) ? $data['search'] : '';
-        $documents  = $this->dmRepository()->setTag((isset($data['tag'])) ? $data['tag'] : '')->getAdminIndex($search, $pagination, $this->getParameter('admin', 'fhm_media'), $instance->grouping->filtered, $instance->user->super);
+        $documents  = $this->dmRepository()->setTag((isset($data['tag'])) ? $data['tag'] : '')->getAdminIndex($search, $pagination, $this->getParameters('admin', 'fhm_media'), $instance->grouping->filtered, $instance->user->super);
 
         return array(
             'documents'  => $documents,
-            'pagination' => $this->setSection('Admin')->setPagination($this->getParameter('admin', 'fhm_media'))->getPagination($pagination, count($documents), $this->dmRepository()->setTag((isset($data['tag'])) ? $data['tag'] : '')->getAdminCount($search, $instance->grouping->filtered, $instance->user->super), 'pagination', array(), $this->generateUrl('fhm_api_media_data_admin')),
+            'pagination' => $this->setSection('Admin')->setPagination($this->getParameters('admin', 'fhm_media'))->getPagination($pagination, count($documents), $this->dmRepository()->setTag((isset($data['tag'])) ? $data['tag'] : '')->getAdminCount($search, $instance->grouping->filtered, $instance->user->super), 'pagination', array(), $this->generateUrl('fhm_api_media_data_admin')),
             'instance'   => $instance,
             'tag'        => $tag,
             'tagMains'   => $tagMains,
@@ -117,7 +117,7 @@ class ApiController extends FhmController
 
         return array(
             'documents'  => $documents,
-            'pagination' => $this->setSection('Front')->setPagination($this->getParameter('front', 'fhm_media'))->getPagination($pagination, count($documents), $this->dmRepository()->setTag((isset($data['tag'])) ? $data['tag'] : '')->setPrivate(false)->getFrontCount($search, $instance->grouping->used, $instance->user->super), 'pagination', array(), $this->generateUrl('fhm_api_media_data_front')),
+            'pagination' => $this->setSection('Front')->setPagination($this->getParameters('front', 'fhm_media'))->getPagination($pagination, count($documents), $this->dmRepository()->setTag((isset($data['tag'])) ? $data['tag'] : '')->setPrivate(false)->getFrontCount($search, $instance->grouping->used, $instance->user->super), 'pagination', array(), $this->generateUrl('fhm_api_media_data_front')),
             'instance'   => $instance,
             'tag'        => $tag,
             'tagMains'   => $tagMains,
@@ -137,7 +137,7 @@ class ApiController extends FhmController
     {
         $data       = $request->get('media');
         $selector   = $request->get('selector');
-        $root       = $this->get($this->getParameter('service', 'fhm_media'))->tagRoot($selector['root']);
+        $root       = $this->get($this->getParameters('service', 'fhm_media'))->tagRoot($selector['root']);
         $instance   = $this->instanceData();
         $tagMains   = $this->dmRepository('FhmMediaBundle:MediaTag')->setParent(true)->setRoot($root)->setPrivate($selector['private'])->getAllEnable($instance->grouping->filtered);
         $tagSons    = (isset($data['tag'])) ? $this->dmRepository('FhmMediaBundle:MediaTag')->setPrivate($selector['private'])->getSonsEnable($data['tag'], $instance->grouping->filtered) : '';
@@ -152,7 +152,7 @@ class ApiController extends FhmController
             'modalNew'      => isset($selector['new']) ? $selector['new'] : null,
             'root'          => $root,
             'documents'     => $documents,
-            'pagination'    => $this->setPagination($this->getParameter('front', 'fhm_media'))->getPagination($pagination, count($documents), $this->dmRepository()->setTag((isset($data['tag']) && $data['tag']) ? $data['tag'] : $root)->setParent(true)->setPrivate($selector['private'])->getFrontCount($search, $instance->grouping->filtered, $instance->user->super), 'pagination', array(), $this->generateUrl('fhm_api_media_data_selector')),
+            'pagination'    => $this->setPagination($this->getParameters('front', 'fhm_media'))->getPagination($pagination, count($documents), $this->dmRepository()->setTag((isset($data['tag']) && $data['tag']) ? $data['tag'] : $root)->setParent(true)->setPrivate($selector['private'])->getFrontCount($search, $instance->grouping->filtered, $instance->user->super), 'pagination', array(), $this->generateUrl('fhm_api_media_data_selector')),
             'instance'      => $instance,
             'tag'           => $tag,
             'tagMains'      => $tagMains,
@@ -172,21 +172,21 @@ class ApiController extends FhmController
     {
         $data       = $request->get('media');
         $selector   = $request->get('selector');
-        $root       = $this->get($this->getParameter('service', 'fhm_media'))->tagRoot($selector['root']);
+        $root       = $this->get($this->getParameters('service', 'fhm_media'))->tagRoot($selector['root']);
         $instance   = $this->instanceData();
         $tagMains   = $this->dmRepository('FhmMediaBundle:MediaTag')->setParent(true)->setRoot($root)->setPrivate($selector['private'])->getAllEnable($instance->grouping->filtered);
         $tagSons    = (isset($data['tag'])) ? $this->dmRepository('FhmMediaBundle:MediaTag')->setPrivate($selector['private'])->getSonsEnable($data['tag'], $instance->grouping->filtered) : '';
         $tag        = (isset($data['tag'])) ? $this->dmRepository('FhmMediaBundle:MediaTag')->find($data['tag']) : '';
         $pagination = (isset($data['pagination'])) ? $data['pagination'] : 1;
         $search     = (isset($data['search'])) ? $data['search'] : '';
-        $documents  = $this->dmRepository()->setTag((isset($data['tag']) && $data['tag']) ? $data['tag'] : $root)->setFilter($selector['filter'])->setParent(true)->setPrivate($selector['private'])->getFrontIndex($search, $pagination, $this->getParameter('front', 'fhm_media'), $instance->grouping->filtered, $instance->user->super);
+        $documents  = $this->dmRepository()->setTag((isset($data['tag']) && $data['tag']) ? $data['tag'] : $root)->setFilter($selector['filter'])->setParent(true)->setPrivate($selector['private'])->getFrontIndex($search, $pagination, $this->getParameters('front', 'fhm_media'), $instance->grouping->filtered, $instance->user->super);
 
         return array(
             'selector'   => $selector,
             'search'     => $search,
             'root'       => $root,
             'documents'  => $documents,
-            'pagination' => $this->setPagination($this->getParameter('front', 'fhm_media'))->getPagination($pagination, count($documents), $this->dmRepository()->setTag((isset($data['tag']) && $data['tag']) ? $data['tag'] : $root)->setParent(true)->setPrivate($selector['private'])->getFrontCount($search, $instance->grouping->filtered, $instance->user->super), 'pagination', array(), $this->generateUrl('fhm_api_media_data_selector')),
+            'pagination' => $this->setPagination($this->getParameters('front', 'fhm_media'))->getPagination($pagination, count($documents), $this->dmRepository()->setTag((isset($data['tag']) && $data['tag']) ? $data['tag'] : $root)->setParent(true)->setPrivate($selector['private'])->getFrontCount($search, $instance->grouping->filtered, $instance->user->super), 'pagination', array(), $this->generateUrl('fhm_api_media_data_selector')),
             'instance'   => $instance,
             'tag'        => $tag,
             'tagMains'   => $tagMains,
@@ -205,7 +205,7 @@ class ApiController extends FhmController
     public function dataEditorNewAction(Request $request)
     {
         $selector     = $request->get('selector');
-        $root         = $this->get($this->getParameter('service', 'fhm_media'))->tagRoot($selector['root']);
+        $root         = $this->get($this->getParameters('service', 'fhm_media'))->tagRoot($selector['root']);
         $document     = $this->document;
         $instance     = $this->instanceData();
         $classType    = $this->form->type->create;
@@ -260,7 +260,7 @@ class ApiController extends FhmController
             $document->setWatermark((array) $request->get('watermark'));
             $document->setActive(true);
             $this->dmPersist($document);
-            $this->get($this->getParameter('service', 'fhm_media'))->setDocument($document)->setWatermark($request->get('watermark'))->execute();
+            $this->get($this->getParameters('service', 'fhm_media'))->setDocument($document)->setWatermark($request->get('watermark'))->execute();
             // Response
             $response = new JsonResponse();
 
@@ -271,7 +271,7 @@ class ApiController extends FhmController
             'selector'   => $selector,
             'form'       => $form->createView(),
             'instance'   => $instance,
-            'watermarks' => $this->getParameter('watermark', 'fhm_media') ? $this->getParameter('files', 'fhm_media') : ''
+            'watermarks' => $this->getParameters('watermark', 'fhm_media') ? $this->getParameters('files', 'fhm_media') : ''
         );
     }
 
@@ -324,7 +324,7 @@ class ApiController extends FhmController
     public function dataNewAction(Request $request)
     {
         $selector     = $request->get('selector');
-        $root         = $this->get($this->getParameter('service', 'fhm_media'))->tagRoot($selector['root']);
+        $root         = $this->get($this->getParameters('service', 'fhm_media'))->tagRoot($selector['root']);
         $document     = $this->document;
         $instance     = $this->instanceData();
         $classType    = $this->form->type->create;
@@ -379,7 +379,7 @@ class ApiController extends FhmController
             $document->setWatermark((array) $request->get('watermark'));
             $document->setActive(true);
             $this->dmPersist($document);
-            $this->get($this->getParameter('service', 'fhm_media'))->setDocument($document)->setWatermark($request->get('watermark'))->execute();
+            $this->get($this->getParameters('service', 'fhm_media'))->setDocument($document)->setWatermark($request->get('watermark'))->execute();
             // Response
             $response = new JsonResponse();
 
@@ -394,7 +394,7 @@ class ApiController extends FhmController
             'selectorRoot'   => isset($selector['root']) ? $selector['root'] : null,
             'form'           => $form->createView(),
             'instance'       => $instance,
-            'watermarks'     => $this->getParameter('watermark', 'fhm_media') ? $this->getParameter('files', 'fhm_media') : ''
+            'watermarks'     => $this->getParameters('watermark', 'fhm_media') ? $this->getParameters('files', 'fhm_media') : ''
         );
     }
 }

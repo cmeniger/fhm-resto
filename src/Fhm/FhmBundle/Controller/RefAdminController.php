@@ -52,7 +52,7 @@ class RefAdminController extends FhmController
         {
             $this->setSort($dataSort['field'], $dataSort['order']);
             $dataSort  = $this->getSort($dataSort['field'], $dataSort['order']);
-            $documents = $this->dmRepository()->setSort($dataSort->field, $dataSort->order)->getAdminIndex($dataSearch['search'], $dataPagination['pagination'], $this->getParameter(array('pagination', 'admin', 'page'), 'fhm_fhm'), $instance->grouping->filtered, $instance->user->super);
+            $documents = $this->dmRepository()->setSort($dataSort->field, $dataSort->order)->getAdminIndex($dataSearch['search'], $dataPagination['pagination'], $this->getParameters(array('pagination', 'admin', 'page'), 'fhm_fhm'), $instance->grouping->filtered, $instance->user->super);
 
             return array(
                 'documents'  => $documents,
@@ -64,7 +64,7 @@ class RefAdminController extends FhmController
         // Router request
         else
         {
-            $documents = $this->dmRepository()->setSort($dataSort->field, $dataSort->order)->getAdminIndex($dataSearch['search'], 1, $this->getParameter(array('pagination', 'admin', 'page'), 'fhm_fhm'), $instance->grouping->filtered, $instance->user->super);
+            $documents = $this->dmRepository()->setSort($dataSort->field, $dataSort->order)->getAdminIndex($dataSearch['search'], 1, $this->getParameters(array('pagination', 'admin', 'page'), 'fhm_fhm'), $instance->grouping->filtered, $instance->user->super);
 
             return array(
                 'documents'   => $documents,

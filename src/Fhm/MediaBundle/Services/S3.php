@@ -28,7 +28,7 @@ class S3 extends FhmController
     public function __construct(ContainerInterface $container)
     {
         $this->container = $container;
-        $this->files     = $this->_filesInit($this->getParameter('files', 'fhm_media'));
+        $this->files     = $this->_filesInit($this->getParameters('files', 'fhm_media'));
         $this->file      = null;
         // Init AWS
         $this->_awsInit();
@@ -636,7 +636,7 @@ class S3 extends FhmController
      */
     private function _awsInit()
     {
-        $parameters = $this->getParameter(array(), 'aws');
+        $parameters = $this->getParameters(array(), 'aws');
         // SDK
         $sdk = new \Aws\Sdk([
             'version'     => $parameters['sdk']['version'],

@@ -82,7 +82,7 @@ class ApiController extends FhmController
         // Change grouping
         if($instance->grouping->different && $document->getGrouping())
         {
-            $this->get($this->getParameter("grouping", "fhm_fhm"))->setGrouping($document->getFirstGrouping());
+            $this->get($this->getParameters("grouping", "fhm_fhm"))->setGrouping($document->getFirstGrouping());
         }
 
         return $this->render(
@@ -144,7 +144,7 @@ class ApiController extends FhmController
     {
         if($module === "media")
         {
-            $route = $this->get($this->getParameter('service','fhm_media'))->setDocument($document)->getPathWeb();
+            $route = $this->get($this->getParameters('service','fhm_media'))->setDocument($document)->getPathWeb();
         }
         else
         {
