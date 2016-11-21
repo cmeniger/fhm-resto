@@ -57,7 +57,7 @@ class FhmEventListener
         $route       = $event->getRequest()->attributes->get('_route');
         $authorized  = false;
         $authorized  = in_array($route, $firewall) ? true : $authorized;
-        $authorized  = $this->container->get('security.context')->isGranted('ROLE_ADMIN') ? true : $authorized;
+        $authorized  = $this->container->get('security.authorization_checker')->isGranted('ROLE_ADMIN') ? true : $authorized;
         $authorized  = in_array($this->container->get('kernel')->getEnvironment(), array('test', 'dev')) ? true : $authorized;
         if($construct && !$authorized)
         {

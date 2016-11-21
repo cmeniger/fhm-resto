@@ -30,12 +30,10 @@ class ApiController extends RefApiController
      */
     public function localeAction(Request $request, $locale)
     {
-        if($locale)
-        {
+        if ($locale) {
             $this->get('session')->set('_locale', $locale);
         }
-        if($this->get('security.context')->isGranted('ROLE_ADMIN'))
-        {
+        if ($this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
             $this->get('session')->set('_localeAdmin', $locale);
         }
 

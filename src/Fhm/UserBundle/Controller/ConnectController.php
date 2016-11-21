@@ -21,12 +21,12 @@ class ConnectController extends ContainerAware
 {
     public function registrationAction(Request $request, $key)
     {
-        $connect = $this->container->getParameters('hwi_oauth.connect');
+        $connect = $this->getParameters('hwi_oauth.connect');
         if(!$connect)
         {
             throw new NotFoundHttpException();
         }
-        $hasUser = $this->container->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED');
+        $hasUser = $this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED');
         if($hasUser)
         {
             throw new AccessDeniedException('Cannot connect already registered account.');
@@ -44,7 +44,7 @@ class ConnectController extends ContainerAware
         // enable compatibility with FOSUserBundle 1.3.x and 2.x
         if(interface_exists('FOS\UserBundle\Form\Factory\FactoryInterface'))
         {
-            $form = $this->container->get('hwi_oauth.registration.form.factory')->createForm();
+            $form = $this->get('hwi_oauth.registration.form.factory')->createForm();
         }
         else
         {
@@ -54,11 +54,11 @@ class ConnectController extends ContainerAware
         if($formHandler->process($request, $form, $userInformation))
         {
             // Connect user
-            $this->container->get('hwi_oauth.account.connector')->connect($form->getData(), $userInformation);
+            $this->get('hwi_oauth.account.connector')->connect($form->getData(), $userInformation);
             // Authenticate the user
             $this->authenticateUser($request, $form->getData(), $error->getResourceOwnerName(), $error->getRawToken());
             // Getting user
-            $user = $this->container->get('security.context')->getToken()->getUser();
+            $user = $this->get('security.token_storage')->getToken()->getUser();
             // Getting social network source
             $source = $userInformation->getResourceOwner()->getName();
             // Updating user by source
