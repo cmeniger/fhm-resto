@@ -113,7 +113,7 @@ swiftmailer:
 fos_user:
     db_driver: mongodb
     firewall_name: main
-    user_class: Core\UserBundle\Document\User
+    user_class: Fhm\UserBundle\Document\User
     from_email:
         address:     "%fhm_mailer.noreply%"
         sender_name: noreply

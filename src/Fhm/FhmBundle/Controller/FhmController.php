@@ -662,7 +662,7 @@ class FhmController extends Controller
      *
      * @return mixed
      */
-    protected function getParameter($route, $parent)
+    protected function getParameters($route, $parent)
     {
         $parameters = $this->container->getParameter($parent);
         $value      = $parameters;
