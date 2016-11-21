@@ -115,7 +115,7 @@ class FrontController extends FhmController
         // Ajax pagination request
         if(isset($dataPagination['pagination']))
         {
-            $documents = $this->dmRepository("FhmPartnerBundle:Partner")->getPartnerByGroupIndex($document, $dataSearch['search'], $dataPagination['pagination'], $this->getParameter(array('pagination', 'front', 'page'), 'fhm_fhm'));
+            $documents = $this->dmRepository("FhmPartnerBundle:Partner")->getPartnerByGroupIndex($document, $dataSearch['search'], $dataPagination['pagination'], $this->getParameters(array('pagination', 'front', 'page'), 'fhm_fhm'));
 
             return array_merge(
                 $response,
@@ -127,7 +127,7 @@ class FrontController extends FhmController
         // Router request
         else
         {
-            $documents = $this->dmRepository("FhmPartnerBundle:Partner")->getPartnerByGroupIndex($document, $dataSearch['search'], 1, $this->getParameter(array('pagination', 'front', 'page'), 'fhm_fhm'));
+            $documents = $this->dmRepository("FhmPartnerBundle:Partner")->getPartnerByGroupIndex($document, $dataSearch['search'], 1, $this->getParameters(array('pagination', 'front', 'page'), 'fhm_fhm'));
 
             return array_merge(
                 $response,
@@ -185,7 +185,7 @@ class FrontController extends FhmController
         // Router request
         else
         {
-            $documents = $this->dmRepository("FhmPartnerBundle:Partner")->getPartnerByGroupIndex($document, '', 1, $this->getParameter(array('pagination', 'front', 'page'), 'fhm_fhm'));
+            $documents = $this->dmRepository("FhmPartnerBundle:Partner")->getPartnerByGroupIndex($document, '', 1, $this->getParameters(array('pagination', 'front', 'page'), 'fhm_fhm'));
 
             return array_merge(
                 $response,

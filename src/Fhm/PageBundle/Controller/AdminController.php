@@ -145,7 +145,7 @@ class AdminController extends FhmController
             array
             (
                 "sons" => $childs,
-                "modules" => $this->getParameter('modules', 'fhm_page')
+                "modules" => $this->getParameters('modules', 'fhm_page')
             )
         );
     }

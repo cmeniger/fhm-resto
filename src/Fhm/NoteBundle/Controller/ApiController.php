@@ -96,12 +96,12 @@ class ApiController extends FhmController
             'view_comment_modal' => $comment_modal,
             'view_add'           => $add,
             'view_edit'          => $edit,
-            'param_maximum'      => $this->getParameter('maximum', 'fhm_note'),
-            'param_anonymous'    => $this->getParameter('anonymous', 'fhm_note'),
-            'param_multiple'     => $this->getParameter('multiple', 'fhm_note'),
-            'param_edit'         => $this->getParameter('edit', 'fhm_note'),
-            'param_delete'       => $this->getParameter('delete', 'fhm_note'),
-            'param_default'      => $this->getParameter('default', 'fhm_note'),
+            'param_maximum'      => $this->getParameters('maximum', 'fhm_note'),
+            'param_anonymous'    => $this->getParameters('anonymous', 'fhm_note'),
+            'param_multiple'     => $this->getParameters('multiple', 'fhm_note'),
+            'param_edit'         => $this->getParameters('edit', 'fhm_note'),
+            'param_delete'       => $this->getParameters('delete', 'fhm_note'),
+            'param_default'      => $this->getParameters('default', 'fhm_note'),
             'object'             => $object,
             'source'             => $source,
             'document'           => $document,
@@ -123,7 +123,7 @@ class ApiController extends FhmController
     public function addAction(Request $request, $id)
     {
         $data   = $request->get('FhmNote');
-        $value  = $data['value'] > $this->getParameter('maximum', 'fhm_note') ? $this->getParameter('maximum', 'fhm_note') : ($data['value'] < 0 ? 0 : $data['value']);
+        $value  = $data['value'] > $this->getParameters('maximum', 'fhm_note') ? $this->getParameters('maximum', 'fhm_note') : ($data['value'] < 0 ? 0 : $data['value']);
         $bundle = ucfirst($data['source']) . ucfirst($data['object']) . 'Bundle:' . ucfirst($data['object']);
         $object = $this->dmRepository($bundle)->find($id);
         // ERROR - unknown
@@ -135,7 +135,7 @@ class ApiController extends FhmController
         elseif($this->getUser())
         {
             $document = $this->dmRepository()->getByUserAndObject($this->getUser(), $object);
-            if(!$document || $this->getParameter('multiple', 'fhm_note'))
+            if(!$document || $this->getParameters('multiple', 'fhm_note'))
             {
                 $note = new \Fhm\NoteBundle\Document\Note();
                 $note->setName('[' . ucfirst($data['object']) . '] ' . $object->getName());
@@ -149,7 +149,7 @@ class ApiController extends FhmController
             }
         }
         // Anonymous
-        elseif($this->getParameter('anonymous', 'fhm_note'))
+        elseif($this->getParameters('anonymous', 'fhm_note'))
         {
             $note = new \Fhm\NoteBundle\Document\Note();
             $note->setName('[' . ucfirst($data['object']) . '] ' . $object->getName());
@@ -181,7 +181,7 @@ class ApiController extends FhmController
     public function editAction(Request $request, $id)
     {
         $data     = $request->get('FhmNote');
-        $value    = $data['value'] > $this->getParameter('maximum', 'fhm_note') ? $this->getParameter('maximum', 'fhm_note') : ($data['value'] < 0 ? 0 : $data['value']);
+        $value    = $data['value'] > $this->getParameters('maximum', 'fhm_note') ? $this->getParameters('maximum', 'fhm_note') : ($data['value'] < 0 ? 0 : $data['value']);
         $document = $this->dmRepository()->find($id);
         // ERROR - unknown
         if($document == "")
@@ -189,7 +189,7 @@ class ApiController extends FhmController
             throw $this->createNotFoundException($this->get('translator')->trans($this->translation[1] . '.error.unknown', array(), $this->translation[0]));
         }
         // ERROR - forbidden
-        if(!$this->getParameter('edit', 'fhm_note') || $document->getUser() != $this->getUser())
+        if(!$this->getParameters('edit', 'fhm_note') || $document->getUser() != $this->getUser())
         {
             throw new HttpException(403, $this->get('translator')->trans($this->translation[1] . '.error.forbidden', array(), $this->translation[0]));
         }
@@ -211,7 +211,7 @@ class ApiController extends FhmController
     public function deleteAction(Request $request, $id)
     {
         $data     = $request->get('FhmNote');
-        $value    = $data['value'] > $this->getParameter('maximum', 'fhm_note') ? $this->getParameter('maximum', 'fhm_note') : ($data['value'] < 0 ? 0 : $data['value']);
+        $value    = $data['value'] > $this->getParameters('maximum', 'fhm_note') ? $this->getParameters('maximum', 'fhm_note') : ($data['value'] < 0 ? 0 : $data['value']);
         $document = $this->dmRepository()->find($id);
         // ERROR - unknown
         if($document == "")
@@ -219,7 +219,7 @@ class ApiController extends FhmController
             throw $this->createNotFoundException($this->get('translator')->trans($this->translation[1] . '.error.unknown', array(), $this->translation[0]));
         }
         // ERROR - forbidden
-        if(!$this->getParameter('delete', 'fhm_note') || $document->getUser() != $this->getUser())
+        if(!$this->getParameters('delete', 'fhm_note') || $document->getUser() != $this->getUser())
         {
             throw new HttpException(403, $this->get('translator')->trans($this->translation[1] . '.error.forbidden', array(), $this->translation[0]));
         }

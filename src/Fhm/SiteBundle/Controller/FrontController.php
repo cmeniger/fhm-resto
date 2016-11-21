@@ -49,7 +49,7 @@ class FrontController extends FhmController
     public function detailAction($id)
     {
         parent::detailAction($id);
-        $this->get($this->getParameter("grouping", "fhm_fhm"))->setGrouping($id);
+        $this->get($this->getParameters("grouping", "fhm_fhm"))->setGrouping($id);
 
         return $this->redirect($this->generateUrl('project_home'));
     }
