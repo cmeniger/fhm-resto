@@ -132,7 +132,7 @@ fos_user:
                 sender_name:    Registration
 
     from_email:
-        address:     %fhm_mailer.noreply%
+        address:     "%fhm_mailer.noreply%"
         sender_name: noreply
     service:
         mailer: fhm_user.mailer.twig_swift
