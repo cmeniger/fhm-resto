@@ -228,4 +228,4 @@ testimony:
             title:                              Témoignage
 
     pagination:
-        counter:                                Nombre de témoignages: %count% / %all%
+        counter:                                "Nombre de témoignages: %count% / %all%"

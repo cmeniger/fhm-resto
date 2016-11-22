@@ -279,7 +279,7 @@ gallery:
             title:                              Galleries
 
     pagination:
-        counter:                                Nombre de galeries: %count% / %all%
+        counter:                                "Nombre de galeries: %count% / %all%"
 
     error:
         unknown:                                La galerie n'existe pas.
@@ -289,7 +289,7 @@ gallery:
     item:
         admin:
             index:
-                title:                          Gestion des galeries : images
+                title:                          Gestion des galeries ':' images
                 link:                           Images
                 breadcrumb:                     Images
                 nodata:                         Aucune donnée
@@ -556,7 +556,7 @@ gallery:
                 flash:
                     ok:                         L'image a bien été supprimée.
         pagination:
-            counter:                            Nombre d'images: %count% / %all%
+            counter:                            "Nombre d'images: %count% / %all%"
 
         error:
             unknown:                            L'image n'existe pas.
@@ -566,7 +566,7 @@ gallery:
     video:
         admin:
             index:
-                title:                          Gestion des galeries : vidéos
+                title:                          Gestion des galeries ':' vidéos
                 link:                           Vidéos
                 breadcrumb:                     Vidéos
                 nodata:                         Aucune donnée
@@ -801,7 +801,7 @@ gallery:
                 flash:
                     ok:                         La vidéo a bien été supprimée.
         pagination:
-            counter:                            Nombre de vidéos: %count% / %all%
+            counter:                            "Nombre de vidéos: %count% / %all%"
 
         error:
             unknown:                            La vidéo n'existe pas.
@@ -811,7 +811,7 @@ gallery:
     album:
         admin:
             index:
-                title:                          Gestion des galeries : albums
+                title:                          Gestion des galeries ':' albums
                 link:                           Albums
                 breadcrumb:                     Albums
                 nodata:                         Aucune donnée
@@ -1065,7 +1065,7 @@ gallery:
                 flash:
                     ok:                         L'album a bien été supprimé.
         pagination:
-            counter:                            Nombre d'albums: %count% / %all%
+            counter:                            "Nombre d'albums: %count% / %all%"
 
         error:
             unknown:                            L'album n'existe pas.

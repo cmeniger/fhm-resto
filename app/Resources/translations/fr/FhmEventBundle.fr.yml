@@ -260,7 +260,7 @@ event:
             title:                              Évènements
 
     pagination:
-        counter:                                Nombre d'évènements: %count% / %all%
+        counter:                                "Nombre d'évènements: %count% / %all%"
 
     error:
         unknown:                                L'évènement n'existe pas.
@@ -513,7 +513,7 @@ event:
                 title:                          Calendriers
 
         pagination:
-            counter:                            Nombre de calendriers: %count% / %all%
+            counter:                            "Nombre de calendriers: %count% / %all%"
 
         error:
             unknown:                            Le calendrier n'existe pas.

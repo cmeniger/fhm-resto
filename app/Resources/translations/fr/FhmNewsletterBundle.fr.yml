@@ -226,7 +226,7 @@ newsletter:
             title:                              Newsletter
 
     pagination:
-        counter:                                Nombre de newsletters: %count% / %all%
+        counter:                                "Nombre de newsletters: %count% / %all%"
 
     error:
         unknown:                                L'email n'existe pas.

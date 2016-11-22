@@ -20,7 +20,7 @@ class TwigGlobal extends FhmController
     public function __construct(ContainerInterface $container)
     {
         $this->container = $container;
-        $this->session   = $this->container->get('request')->getSession();
+        $this->session   = $this->container->get('session');
     }
 
     /**

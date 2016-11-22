@@ -286,7 +286,7 @@ site:
             title:                              Site
 
     pagination:
-        counter:                                Nombre de sites: %count% / %all%
+        counter:                                "Nombre de sites: %count% / %all%"
 
     error:
         unknown:                                Le site n'existe pas.

@@ -285,7 +285,7 @@ media:
             title:                              Média
 
     pagination:
-        counter:                                Nombre de médias: %count% / %all%
+        counter:                                "Nombre de médias: %count% / %all%"
 
     error:
         unknown:                                Le média n'existe pas.
@@ -296,7 +296,7 @@ media:
         default:                                Cliquer ou déposer des fichiers ici
         fallbackMessage:                        Votre navigateur ne supporte pas le téléchargement de fichiers de glisser-déposer.
         fallbackText:                           S'il vous plaît utilisez le formulaire ci-dessous de repli pour télécharger vos fichiers.
-        fileTooBig:                             Le fichier est trop gros ({{filesize}}MiB). Taille max: {{maxFilesize}}MiB.
+        fileTooBig:                             Le fichier est trop gros ({{filesize}}MiB). Taille max {{maxFilesize}}MiB.
         invalidFileType:                        Vous ne pouvez pas télécharger ce type de fichier.
         responseError:                          Le serveur a répondu avec {{statusCode}} code.
         cancelUpload:                           Annuler le téléchargement
@@ -538,7 +538,7 @@ media:
                 title:                          Tags média
 
         pagination:
-            counter:                            Nombre de tags: %count% / %all%
+            counter:                            "Nombre de tags: %count% / %all%"
 
         error:
             unknown:                            Le tag n'existe pas.

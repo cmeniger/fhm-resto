@@ -57,7 +57,7 @@ menu:
                     options:                    Options
                 alert:
                     title:                      Information
-                    text:                       (1): Il faut renseigner soit une Route soit une Page. Si les 2 champs sont renseignés, c'est la Route qui sera utilisée.
+                    text:                       (1) Il faut renseigner soit une Route soit une Page. Si les 2 champs sont renseignés, c'est la Route qui sera utilisée.
 
         update:
             title:                              Modifier
@@ -90,7 +90,7 @@ menu:
                                 options:                    Options
                 alert:
                     title:                      Information
-                    text:                       (1): Il faut renseigner soit une Route soit une Page. Si les 2 champs sont renseignés, c'est la Route qui sera utilisée.
+                    text:                       (1) Il faut renseigner soit une Route soit une Page. Si les 2 champs sont renseignés, c'est la Route qui sera utilisée.
 
         detail:
             title:                              %name%
@@ -304,7 +304,7 @@ menu:
             title:                              Menu
 
     pagination:
-        counter:                                Nombre de menus: %count% / %all%
+        counter:                                "Nombre de menus: %count% / %all%"
 
     error:
         unknown:                                Le menu n'existe pas.

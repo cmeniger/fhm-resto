@@ -244,7 +244,7 @@ page:
             title:                              Page
 
     pagination:
-        counter:                                Nombre de pages: %count% / %all%
+        counter:                                "Nombre de pages: %count% / %all%"
 
     error:
         unknown:                                La page n'existe pas.

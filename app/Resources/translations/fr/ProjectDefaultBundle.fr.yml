@@ -56,7 +56,7 @@ project:
         keywords:                               ChichaMaps, word1, word2
 
     pagination:
-            counter:                            Nombre de Places: %count% / %all%
+         counter:                               "Nombre de Places: '%count%' / '%all%'"
     search:
          title:                                 Rechercher
          types:                                 Services

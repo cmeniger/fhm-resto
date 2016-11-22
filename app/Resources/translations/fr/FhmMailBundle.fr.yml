@@ -233,7 +233,7 @@ mail:
             title:                              Emails
 
     pagination:
-        counter:                                Nombre d'emails: %count% / %all%
+        counter:                                "Nombre d'emails: %count% / %all%"
 
     error:
         unknown:                                L'email n'existe pas.

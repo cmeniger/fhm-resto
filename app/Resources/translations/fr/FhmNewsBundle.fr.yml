@@ -262,7 +262,7 @@ news:
             title:                              Actualités
 
     pagination:
-        counter:                                Nombre d'actualités: %count% / %all%
+        counter:                                "Nombre d'actualités: %count% / %all%"
 
     error:
         unknown:                                L'actualité n'existe pas.
@@ -531,7 +531,7 @@ news:
                 title:                          Journaux
 
         pagination:
-            counter:                            Nombre de journaux: %count% / %all%
+            counter:                            "Nombre de journaux: %count% / %all%"
 
         error:
             unknown:                            Le journal n'existe pas.
