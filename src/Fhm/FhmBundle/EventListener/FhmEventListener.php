@@ -1,7 +1,8 @@
 <?php
 namespace Fhm\FhmBundle\EventListener;
 
-use Symfony\Component\DependencyInjection\ContainerAware;
+use Symfony\Component\DependencyInjection\ContainerAwareInterface;
+use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
@@ -13,8 +14,9 @@ use Symfony\Component\HttpKernel\Event\FinishRequestEvent;
 use Symfony\Component\HttpKernel\Event\PostResponseEvent;
 use Symfony\Component\HttpKernel\HttpKernel;
 
-class FhmEventListener extends ContainerAware
+class FhmEventListener implements ContainerAwareInterface
 {
+    use ContainerAwareTrait;
     /**
      * @param GetResponseEvent $event
      *
@@ -27,17 +29,14 @@ class FhmEventListener extends ContainerAware
         $this->container->get($parameters["grouping"])->loadTwigGlobal();
         $this->container->get('project_twig_global')->load();
         // Locale
-        if($event->getRequest()->hasPreviousSession())
-        {
-            if($locale = $event->getRequest()->attributes->get('_locale'))
-            {
+        if ($event->getRequest()->hasPreviousSession()) {
+            if ($locale = $event->getRequest()->attributes->get('_locale')) {
                 $event->getRequest()->getSession()->set('_locale', $locale);
             }
             $event->getRequest()->setLocale($event->getRequest()->getSession()->get('_locale'));
         }
         // Construct / Maintenance
-        if(HttpKernel::MASTER_REQUEST != $event->getRequestType() || $event->getRequest()->isXmlHttpRequest())
-        {
+        if (HttpKernel::MASTER_REQUEST != $event->getRequestType() || $event->getRequest()->isXmlHttpRequest()) {
             return false;
         }
         $parameters  = $this->container->getParameter("project");
@@ -48,16 +47,43 @@ class FhmEventListener extends ContainerAware
         $route       = $event->getRequest()->attributes->get('_route');
         $authorized  = false;
         $authorized  = in_array($route, $firewall) ? true : $authorized;
-        $authorized  = $this->container->get('security.context')->isGranted('ROLE_ADMIN') ? true : $authorized;
-        $authorized  = in_array($this->container->get('kernel')->getEnvironment(), array('test', 'dev')) ? true : $authorized;
-        if($construct && !$authorized)
-        {
-            $event->setResponse(new Response($this->container->get('templating')->render('::ProjectDefault/Template/construct.html.twig', array('date' => $date, 'site' => $this->container->get($this->container->getParameter("fhm_fhm")["grouping"])->getSite())), 503));
+        $authorized  = $this->container->get('security.authorization_checker')->isGranted('ROLE_ADMIN') ?
+            true :
+            $authorized;
+        $authorized  = in_array($this->container->get('kernel')->getEnvironment(), array('test', 'dev')) ?
+            true :
+            $authorized;
+        if ($construct && !$authorized) {
+            $event->setResponse(
+                new Response(
+                    $this->container->get('templating')->render(
+                        '::ProjectDefault/Template/construct.html.twig',
+                        array(
+                            'date' => $date,
+                            'site' => $this->container->get(
+                                $this->container->getParameter("fhm_fhm")["grouping"]
+                            )->getSite()
+                        )
+                    ),
+                    503
+                )
+            );
             $event->stopPropagation();
-        }
-        elseif($maintenance && !$authorized)
-        {
-            $event->setResponse(new Response($this->container->get('templating')->render('::ProjectDefault/Template/maintenance.html.twig', array('date' => $date, 'site' => $this->container->get($this->container->getParameter("fhm_fhm")["grouping"])->getSite())), 503));
+        } elseif ($maintenance && !$authorized) {
+            $event->setResponse(
+                new Response(
+                    $this->container->get('templating')->render(
+                        '::ProjectDefault/Template/maintenance.html.twig',
+                        array(
+                            'date' => $date,
+                            'site' => $this->container->get(
+                                $this->container->getParameter("fhm_fhm")["grouping"]
+                            )->getSite()
+                        )
+                    ),
+                    503
+                )
+            );
             $event->stopPropagation();
         }
 

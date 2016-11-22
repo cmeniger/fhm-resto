@@ -1,39 +1,41 @@
 <?php
 namespace Project\DefaultBundle\Services;
 
-use Fhm\FhmBundle\Controller\FhmController;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Fhm\FhmBundle\Services\Tools;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Session\Session;
 
 /**
  * Class Cache
  *
  * @package Project\DefaultBundle\Services
  */
-class Cache extends FhmController
+class Cache
 {
     private $session;
+    private $tools;
 
     /**
-     * @param ContainerInterface $container
+     * Cache constructor.
+     * @param $tools
      */
-    public function __construct(ContainerInterface $container)
+    public function __construct(Tools $tools, $session)
     {
-        $this->container = $container;
-        $this->session   = $this->container->get('request')->getSession();
+        $this->tools     = $tools;
+        $this->session   = $session;
     }
 
     /**
-     * @return $this
+     * @param int $maxage
+     * @param int $expires
+     * @param bool $nocache
+     * @return Response
      */
     public function getResponseCache($maxage = 0, $expires = 0, $nocache = false)
     {
         // HTTP Cache
         $response = new Response();
         // Don't cache anything
-        if($nocache)
-        {
+        if ($nocache) {
             $response->setPrivate();
             $response->setMaxAge(0);
             $response->setSharedMaxAge(0);
@@ -41,19 +43,14 @@ class Cache extends FhmController
             $response->headers->addCacheControlDirective('no-store', true);
             $response->headers->addCacheControlDirective('no-cache', true);
             $response->headers->addCacheControlDirective('max-age', 0);
-        }
-        else
-        {
-            if(empty($maxage))
-            {
-                $maxage = $this->getParameters('maxage', 'fhm_cache');
+        } else {
+            if (empty($maxage)) {
+                $maxage = $this->tools->getParameters('maxage', 'fhm_cache');
             }
-            if(empty($expires))
-            {
-                $expires = $this->getParameters('expires', 'fhm_cache');
+            if (empty($expires)) {
+                $expires = $this->tools->getParameters('expires', 'fhm_cache');
             }
-            if(is_int($expires))
-            {
+            if (is_int($expires)) {
                 $expires = sprintf('+%s seconds', $expires);
             }
             $response->setMaxAge($maxage);
@@ -63,8 +60,7 @@ class Cache extends FhmController
             $response->setExpires($dateExpires);
             $response->setPublic();
             // Check that the Response is not modified for the given Request
-            if($response->isNotModified($this->getRequest()))
-            {
+            if ($response->isNotModified($this->getRequest())) {
                 return $response;
             }
         }

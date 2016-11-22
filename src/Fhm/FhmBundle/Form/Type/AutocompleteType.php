@@ -28,7 +28,13 @@ class AutocompleteType extends AbstractType
             'property'           => 'name',
             'cascade_validation' => true,
             'url'                => '',
-            'attr'               => array('placeholder' => $this->container->get('translator')->trans('fhm.autocomplete.placeholder', array(), 'FhmFhmBundle'))
+            'attr'               => array(
+                'placeholder' => $this->container->get('translator')->trans(
+                    'fhm.autocomplete.placeholder',
+                    array(),
+                    'FhmFhmBundle'
+                )
+            )
         ));
     }
 
@@ -39,8 +45,7 @@ class AutocompleteType extends AbstractType
      */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
-        if(array_key_exists('url', $options))
-        {
+        if (array_key_exists('url', $options)) {
             $route             = is_array($options['url']) ? $options['url'][0] : $options['url'];
             $parameters        = is_array($options['url']) ? $options['url'][1] : array();
             $view->vars['url'] = $this->container->get('router')->generate($route, $parameters);

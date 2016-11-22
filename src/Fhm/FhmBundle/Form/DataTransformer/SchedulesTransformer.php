@@ -28,8 +28,7 @@ class SchedulesTransformer implements DataTransformerInterface
      */
     public function transform($value)
     {
-        if($value === null)
-        {
+        if ($value === null) {
             return array();
         }
 
@@ -41,8 +40,7 @@ class SchedulesTransformer implements DataTransformerInterface
      */
     public function reverseTransform($value)
     {
-        if($value === null)
-        {
+        if ($value === null) {
             return array();
         }
 

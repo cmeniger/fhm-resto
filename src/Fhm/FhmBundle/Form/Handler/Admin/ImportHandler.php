@@ -24,33 +24,26 @@ class ImportHandler
     }
 
     /**
-     * Process form
-     *
-     * @return boolean
+     * @return array|bool
      */
     public function process()
     {
-        if('POST' == $this->request->getMethod())
-        {
+        if ('POST' == $this->request->getMethod()) {
             $this->form->handleRequest($this->request);
-            if($this->form->isValid())
-            {
+            if ($this->form->isValid()) {
                 $handle = fopen($this->form->get('file')->getData()->getRealPath(), 'r');
                 $datas  = array();
                 $final  = array();
                 ini_set('auto_detect_line_endings', true);
-                while(($data = fgetcsv($handle, 0, ';')) !== false)
-                {
+                while (($data = fgetcsv($handle, 0, ';')) !== false) {
                     $datas[] = count($data) > 1 ? $data : explode(',', $data[0]);
                 }
                 ini_set('auto_detect_line_endings', false);
                 // Format data
                 $header = array_shift($datas);
-                foreach($datas as $data)
-                {
+                foreach ($datas as $data) {
                     $tab = array();
-                    for($i = 0; $i < count($data); $i++)
-                    {
+                    for ($i = 0; $i < count($data); $i++) {
                         $tab[$header[$i]] = $data[$i];
                     }
                     $final[] = $tab;

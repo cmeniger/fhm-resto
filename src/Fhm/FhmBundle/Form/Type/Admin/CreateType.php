@@ -31,23 +31,20 @@ class CreateType extends AbstractType
             ->add('submitDuplicate', 'submit', array('label' => $this->instance->translation . '.admin.create.form.submit.duplicate'))
             ->add('submitQuit', 'submit', array('label' => $this->instance->translation . '.admin.create.form.submit.quit'))
             ->add('submitConfig', 'submit', array('label' => $this->instance->translation . '.admin.create.form.submit.config'));
-        if($this->instance->language->visible)
-        {
+        if ($this->instance->language->visible) {
             $builder->add('languages', 'choice', array(
                 'choices'  => $this->instance->language->available,
                 'multiple' => true,
             ));
         }
-        if($this->instance->grouping->visible)
-        {
+        if ($this->instance->grouping->visible) {
             $builder
                 ->add('grouping', 'choice', array(
                     'choices'  => $this->instance->grouping->available,
                     'multiple' => true,
                 ))
                 ->add('share', 'checkbox', array('label' => $this->instance->translation . '.admin.create.form.share', 'required' => false));
-            if($this->instance->user->admin)
-            {
+            if ($this->instance->user->admin) {
                 $builder->add('global', 'checkbox', array('label' => $this->instance->translation . '.admin.create.form.global', 'required' => false));
             }
         }

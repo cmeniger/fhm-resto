@@ -5,4 +5,4 @@ services:
 
     fhm_cache:
         class: Project\DefaultBundle\Services\Cache
-        arguments: ['@service_container']
+        arguments: ['@fhm_tools', '@session']

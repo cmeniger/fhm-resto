@@ -115,8 +115,8 @@ class Tools
             $locale         = $this->getParameter(array(), 'locale');
             $session        = $this->getSession()->get('_locale');
             $used           = $session ? $session : $locale;
-            $used           = $this->getContainer()->get('security.context')->isGranted('ROLE_MODERATOR') ? $this->getUser()->getLanguages() : $used;
-            $used           = $this->getContainer()->get('security.context')->isGranted('ROLE_ADMIN') ? $this->getSession()->get('_localeAdmin') : $used;
+            $used           = $this->getContainer()->get('security.authorization_checker')->isGranted('ROLE_MODERATOR') ? $this->getUser()->getLanguages() : $used;
+            $used           = $this->getContainer()->get('security.authorization_checker')->isGranted('ROLE_ADMIN') ? $this->getSession()->get('_localeAdmin') : $used;
             $this->language = $used;
         }
 
@@ -253,9 +253,9 @@ class Tools
     {
         $this->initLanguage();
         $fhmExtension      = new \Fhm\FhmBundle\Twig\FhmExtension($this->getContainer());
-        $roleSuperAdmin    = $this->getContainer()->get('security.context')->isGranted('ROLE_SUPER_ADMIN');
-        $roleAdmin         = $this->getContainer()->get('security.context')->isGranted('ROLE_ADMIN');
-        $roleModerator     = $this->getContainer()->get('security.context')->isGranted('ROLE_MODERATOR');
+        $roleSuperAdmin    = $this->getContainer()->get('security.authorization_checker')->isGranted('ROLE_SUPER_ADMIN');
+        $roleAdmin         = $this->getContainer()->get('security.authorization_checker')->isGranted('ROLE_ADMIN');
+        $roleModerator     = $this->getContainer()->get('security.authorization_checker')->isGranted('ROLE_MODERATOR');
         $groupingCurrent   = $this->grouping ? $this->grouping : $this->getContainer()->get($this->getParameter("grouping", "fhm_fhm"))->getGrouping();
         $groupingUsed      = $groupingCurrent;
         $groupingUsed      = $roleModerator ? $this->getUser()->getFirstGrouping() : $groupingUsed;
@@ -731,7 +731,7 @@ class Tools
      */
     public function getUser()
     {
-        return $this->getContainer()->get('security.context')->getToken()->getUser();
+        return $this->getContainer()->get('security.token_storage')->getToken()->getUser();
     }
 
     /**

@@ -29,11 +29,9 @@ class CreateHandler
      */
     public function process()
     {
-        if('POST' == $this->request->getMethod())
-        {
+        if ('POST' == $this->request->getMethod()) {
             $this->form->handleRequest($this->request);
-            if($this->form->isValid())
-            {
+            if ($this->form->isValid()) {
                 return true;
             }
         }
