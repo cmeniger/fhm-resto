@@ -11,17 +11,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
  */
 class FrontController extends Controller
 {
-    private $tools;
-
-    /**
-     *
-     * @param \Fhm\FhmBundle\Services\Tools $tools
-     */
-    public function __construct(\Fhm\FhmBundle\Services\Tools $tools =null)
-    {
-        $this->tools = $tools;
-    }
-
     /**
      * @Route
      * (
@@ -32,7 +21,8 @@ class FrontController extends Controller
      */
     public function homeAction()
     {
-        return $this->tools->getContainer()->get($this->tools->getParameters("grouping", "fhm_fhm"))->loadGrouping();
+
+        return $this->get($this->getParameter("fhm_fhm")["grouping"])->loadGrouping();
     }
 
     /**
@@ -52,6 +42,12 @@ class FrontController extends Controller
         $date     = new \DateTime();
         $response->setLastModified($date);
 
-        return $this->render($template, array('instance' => $this->tools->instanceData()), $response);
+        return $this->render(
+            $template,
+            array(
+                'instance' => $this->get('fhm_tools')->instanceData()
+            ),
+            $response
+        );
     }
 }

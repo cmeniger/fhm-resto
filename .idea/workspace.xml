@@ -3,10 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="228afecf-5121-4859-ae7d-99168f4be07e" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/config/config.yml" afterPath="$PROJECT_DIR$/app/config/config.yml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Fhm/FhmBundle/Services/Tools.php" afterPath="$PROJECT_DIR$/src/Fhm/FhmBundle/Services/Tools.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Fhm/SiteBundle/Resources/config/services.yml" afterPath="$PROJECT_DIR$/src/Fhm/SiteBundle/Resources/config/services.yml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Fhm/SiteBundle/Services/Grouping.php" afterPath="$PROJECT_DIR$/src/Fhm/SiteBundle/Services/Grouping.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Project/DefaultBundle/Controller/FrontController.php" afterPath="$PROJECT_DIR$/src/Project/DefaultBundle/Controller/FrontController.php" />
     </list>
     <ignored path="fhm-tools-v2.iws" />
@@ -48,11 +44,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="RefApiController.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="RefApiController.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Fhm/FhmBundle/Controller/RefApiController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="306">
-              <caret line="38" column="46" selection-start-line="38" selection-start-column="46" selection-end-line="38" selection-end-column="46" />
+            <state relative-caret-position="414">
+              <caret line="38" column="50" selection-start-line="38" selection-start-column="50" selection-end-line="38" selection-end-column="50" />
               <folding>
                 <element signature="e#43#74#0#PHP" expanded="true" />
               </folding>
@@ -80,11 +76,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="FrontController.php" pinned="false" current-in-tab="false">
+      <file leaf-file-name="FrontController.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Project/DefaultBundle/Controller/FrontController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="396">
-              <caret line="22" column="5" selection-start-line="22" selection-start-column="5" selection-end-line="22" selection-end-column="5" />
+            <state relative-caret-position="324">
+              <caret line="19" column="23" selection-start-line="19" selection-start-column="23" selection-end-line="19" selection-end-column="23" />
               <folding>
                 <element signature="e#51#108#0#PHP" expanded="true" />
               </folding>
@@ -198,9 +194,9 @@
         <option value="$PROJECT_DIR$/src/Fhm/SiteBundle/Resources/config/services.yml" />
         <option value="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Controller/SecurityController.php" />
         <option value="$PROJECT_DIR$/app/config/config.yml" />
-        <option value="$PROJECT_DIR$/src/Project/DefaultBundle/Controller/FrontController.php" />
         <option value="$PROJECT_DIR$/src/Fhm/FhmBundle/Services/Tools.php" />
         <option value="$PROJECT_DIR$/src/Fhm/FhmBundle/Controller/RefApiController.php" />
+        <option value="$PROJECT_DIR$/src/Project/DefaultBundle/Controller/FrontController.php" />
       </list>
     </option>
   </component>
@@ -1156,7 +1152,7 @@
       <workItem from="1479464764992" duration="2478000" />
       <workItem from="1479477345837" duration="3464000" />
       <workItem from="1479480877848" duration="6445000" />
-      <workItem from="1479747164069" duration="26658000" />
+      <workItem from="1479747164069" duration="27469000" />
     </task>
     <task id="LOCAL-00001" summary="config and theme">
       <created>1479481064394</created>
@@ -1277,11 +1273,18 @@
       <option name="project" value="LOCAL" />
       <updated>1479833434416</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="fix fosuserbundle">
+      <created>1479836429307</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1479836429307</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="39045000" />
+    <option name="totallyTimeSpent" value="39856000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="3905" y="24" width="1855" height="1056" extended-state="6" />
@@ -1352,7 +1355,8 @@
     <MESSAGE value="fix security config&#10;" />
     <MESSAGE value="fix security config" />
     <MESSAGE value="replace sameas by same as : twig deprecated" />
-    <option name="LAST_COMMIT_MESSAGE" value="replace sameas by same as : twig deprecated" />
+    <MESSAGE value="fix fosuserbundle" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix fosuserbundle" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1747,16 +1751,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Project/DefaultBundle/Controller/FrontController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="396">
-          <caret line="22" column="5" selection-start-line="22" selection-start-column="5" selection-end-line="22" selection-end-column="5" />
-          <folding>
-            <element signature="e#51#108#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Fhm/SiteBundle/Resources/config/services.yml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="54">
@@ -1785,10 +1779,20 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Fhm/FhmBundle/Controller/RefApiController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="38" column="46" selection-start-line="38" selection-start-column="46" selection-end-line="38" selection-end-column="46" />
+        <state relative-caret-position="414">
+          <caret line="38" column="50" selection-start-line="38" selection-start-column="50" selection-end-line="38" selection-end-column="50" />
           <folding>
             <element signature="e#43#74#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Project/DefaultBundle/Controller/FrontController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="324">
+          <caret line="19" column="23" selection-start-line="19" selection-start-column="23" selection-end-line="19" selection-end-column="23" />
+          <folding>
+            <element signature="e#51#108#0#PHP" expanded="true" />
           </folding>
         </state>
       </provider>
