@@ -28,12 +28,12 @@ hwi_oauth_connect:
 hwi_oauth_redirect:
     resource: "@HWIOAuthBundle/Resources/config/routing/redirect.xml"
     prefix:   /redirect
-
-facebook_login:
-    pattern:  fhm_user_check_facebook
-
-twitter_login:
-    pattern:  fhm_user_check_twitter
-
-google_login:
-    pattern:  fhm_user_check_google
+#
+#facebook_login:
+#    pattern:  fhm_user_check_facebook
+#
+#twitter_login:
+#    pattern:  fhm_user_check_twitter
+#
+#google_login:
+#    pattern:  fhm_user_check_google
