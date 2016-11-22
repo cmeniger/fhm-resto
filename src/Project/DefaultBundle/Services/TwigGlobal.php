@@ -2,6 +2,7 @@
 namespace Project\DefaultBundle\Services;
 
 use Fhm\FhmBundle\Controller\FhmController;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Session\Session;
 
@@ -10,7 +11,7 @@ use Symfony\Component\HttpFoundation\Session\Session;
  *
  * @package Project\DefaultBundle\Services
  */
-class TwigGlobal extends FhmController
+class TwigGlobal extends Controller
 {
     private $session;
 

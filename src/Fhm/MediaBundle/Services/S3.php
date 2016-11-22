@@ -2,6 +2,7 @@
 namespace Fhm\MediaBundle\Services;
 
 use Fhm\FhmBundle\Controller\FhmController;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -10,7 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
  *
  * @package Fhm\MediaBundle\Services
  */
-class S3 extends FhmController
+class S3 extends Controller
 {
     protected $container;
     protected $document;
