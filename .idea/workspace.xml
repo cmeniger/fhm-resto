@@ -3,9 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="228afecf-5121-4859-ae7d-99168f4be07e" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Fhm/FhmBundle/Services/Grouping.php" afterPath="$PROJECT_DIR$/src/Fhm/FhmBundle/Services/Grouping.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Fhm/MenuBundle/Controller/FrontController.php" afterPath="$PROJECT_DIR$/src/Fhm/MenuBundle/Controller/FrontController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Project/DefaultBundle/Controller/FrontController.php" afterPath="$PROJECT_DIR$/src/Project/DefaultBundle/Controller/FrontController.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Fhm/FhmBundle/Resources/config/services.yml" afterPath="$PROJECT_DIR$/src/Fhm/FhmBundle/Resources/config/services.yml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Fhm/FhmBundle/Services/Tools.php" afterPath="$PROJECT_DIR$/src/Fhm/FhmBundle/Services/Tools.php" />
     </list>
     <ignored path="fhm-tools-v2.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -26,11 +25,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="Grouping.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Grouping.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Fhm/FhmBundle/Services/Grouping.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="216">
-              <caret line="60" column="43" selection-start-line="60" selection-start-column="43" selection-end-line="60" selection-end-column="43" />
+            <state relative-caret-position="144">
+              <caret line="23" column="44" selection-start-line="23" selection-start-column="38" selection-end-line="23" selection-end-column="44" />
               <folding>
                 <element signature="e#41#102#0#PHP" expanded="true" />
               </folding>
@@ -115,18 +114,18 @@
       <file leaf-file-name="services.yml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Fhm/FhmBundle/Resources/config/services.yml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="309">
-              <caret line="19" column="23" selection-start-line="19" selection-start-column="23" selection-end-line="19" selection-end-column="23" />
+            <state relative-caret-position="54">
+              <caret line="3" column="31" selection-start-line="3" selection-start-column="31" selection-end-line="3" selection-end-column="31" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="FhmEventListener.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Fhm/FhmBundle/EventListener/FhmEventListener.php">
+      <file leaf-file-name="Tools.php" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/Fhm/FhmBundle/Services/Tools.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="936">
-              <caret line="63" column="62" selection-start-line="63" selection-start-column="50" selection-end-line="63" selection-end-column="62" />
+            <state relative-caret-position="216">
+              <caret line="126" column="20" selection-start-line="126" selection-start-column="20" selection-end-line="126" selection-end-column="20" />
               <folding />
             </state>
           </provider>
@@ -171,7 +170,6 @@
         <option value="$PROJECT_DIR$/src/Fhm/FhmBundle/Controller/AdminController.php" />
         <option value="$PROJECT_DIR$/src/Fhm/FhmBundle/Controller/ApiController.php" />
         <option value="$PROJECT_DIR$/src/Fhm/FhmBundle/Controller/RefAdminController.php" />
-        <option value="$PROJECT_DIR$/src/Fhm/FhmBundle/Resources/config/services.yml" />
         <option value="$PROJECT_DIR$/src/Fhm/FhmBundle/EventListener/FhmEventListener.php" />
         <option value="$PROJECT_DIR$/src/Fhm/FhmBundle/Form/DataTransformer/SchedulesTransformer.php" />
         <option value="$PROJECT_DIR$/src/Fhm/FhmBundle/Form/Handler/Admin/CreateHandler.php" />
@@ -188,7 +186,6 @@
         <option value="$PROJECT_DIR$/src/Project/DefaultBundle/Services/Cache.php" />
         <option value="$PROJECT_DIR$/src/Project/DefaultBundle/Resources/config/services.yml" />
         <option value="$PROJECT_DIR$/src/Project/DefaultBundle/Controller/IntegrationController.php" />
-        <option value="$PROJECT_DIR$/src/Fhm/FhmBundle/Services/Tools.php" />
         <option value="$PROJECT_DIR$/src/Fhm/WorkflowBundle/Controller/Action/AdminController.php" />
         <option value="$PROJECT_DIR$/src/Fhm/WorkflowBundle/Controller/Action/ApiController.php" />
         <option value="$PROJECT_DIR$/src/Fhm/WorkflowBundle/Controller/Action/FrontController.php" />
@@ -197,6 +194,8 @@
         <option value="$PROJECT_DIR$/src/Fhm/MenuBundle/Controller/FrontController.php" />
         <option value="$PROJECT_DIR$/src/Project/DefaultBundle/Controller/FrontController.php" />
         <option value="$PROJECT_DIR$/src/Fhm/FhmBundle/Services/Grouping.php" />
+        <option value="$PROJECT_DIR$/src/Fhm/FhmBundle/Resources/config/services.yml" />
+        <option value="$PROJECT_DIR$/src/Fhm/FhmBundle/Services/Tools.php" />
       </list>
     </option>
   </component>
@@ -289,6 +288,36 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="DefaultBundle" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="fhm-tools-v2" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="fhm-tools-v2" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Project" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="DefaultBundle" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Resources" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="config" />
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
           </PATH>
@@ -944,7 +973,7 @@
       <workItem from="1479464764992" duration="2478000" />
       <workItem from="1479477345837" duration="3464000" />
       <workItem from="1479480877848" duration="6445000" />
-      <workItem from="1479747164069" duration="19676000" />
+      <workItem from="1479747164069" duration="19935000" />
     </task>
     <task id="LOCAL-00001" summary="config and theme">
       <created>1479481064394</created>
@@ -1030,26 +1059,33 @@
       <option name="project" value="LOCAL" />
       <updated>1479825990416</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="grouping">
+      <created>1479829215105</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1479829215105</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="32063000" />
+    <option name="totallyTimeSpent" value="32322000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="3905" y="24" width="1855" height="1056" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Remote Host" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25815368" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25815368" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32672232" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.073068894" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.073068894" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.18371607" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.47390395" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -1101,7 +1137,8 @@
     <MESSAGE value="new fhmbundle" />
     <MESSAGE value="fix cache service" />
     <MESSAGE value="workflow" />
-    <option name="LAST_COMMIT_MESSAGE" value="workflow" />
+    <MESSAGE value="grouping" />
+    <option name="LAST_COMMIT_MESSAGE" value="grouping" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -1365,7 +1402,7 @@
         <state relative-caret-position="270">
           <caret line="15" column="0" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
           <folding>
-            <element signature="e#49#82#0#PHP" expanded="true" />
+            <element signature="e#49#82#0#PHP" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1440,14 +1477,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Fhm/FhmBundle/Services/Tools.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="292">
-          <caret line="708" column="34" selection-start-line="708" selection-start-column="34" selection-end-line="708" selection-end-column="34" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Fhm/FhmBundle/EventListener/FhmEventListener.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="936">
@@ -1490,14 +1519,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Fhm/FhmBundle/Resources/config/services.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="309">
-          <caret line="19" column="23" selection-start-line="19" selection-start-column="23" selection-end-line="19" selection-end-column="23" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/vendor/symfony/symfony/src/Symfony/Bundle/FrameworkBundle/Controller/Controller.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-3726">
@@ -1526,11 +1547,27 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Fhm/FhmBundle/Services/Grouping.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="216">
-          <caret line="60" column="43" selection-start-line="60" selection-start-column="43" selection-end-line="60" selection-end-column="43" />
+        <state relative-caret-position="144">
+          <caret line="23" column="44" selection-start-line="23" selection-start-column="38" selection-end-line="23" selection-end-column="44" />
           <folding>
             <element signature="e#41#102#0#PHP" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Fhm/FhmBundle/Resources/config/services.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="54">
+          <caret line="3" column="31" selection-start-line="3" selection-start-column="31" selection-end-line="3" selection-end-column="31" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Fhm/FhmBundle/Services/Tools.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="216">
+          <caret line="126" column="20" selection-start-line="126" selection-start-column="20" selection-end-line="126" selection-end-column="20" />
+          <folding />
         </state>
       </provider>
     </entry>

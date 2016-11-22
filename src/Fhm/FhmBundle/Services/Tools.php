@@ -128,7 +128,7 @@ class Tools
      */
     public function initLanguageDisable()
     {
-        $exceptions = $this->getParameter(array('languages', 'exceptions'), 'fhm_fhm');
+        $exceptions = $this->getParameters(array('languages', 'exceptions'), 'fhm_fhm');
         if(in_array($this->view, (array) $exceptions))
         {
             $this->setLanguageDisable(true);

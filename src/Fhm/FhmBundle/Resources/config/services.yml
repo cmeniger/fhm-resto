@@ -1,7 +1,7 @@
 services:
     fhm_grouping:
         class: Fhm\FhmBundle\Services\Grouping
-        arguments: ["@service_container"]
+        arguments: ["@fhm_tools"]
 
     fhm_tools:
         class: Fhm\FhmBundle\Services\Tools
