@@ -33,7 +33,6 @@ security:
             logout:
                  path:                      fos_user_security_logout
                  target:                    project_home
-            logout:                         true
             anonymous:                      true
 
     access_control:
