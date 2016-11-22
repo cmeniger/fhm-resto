@@ -11,6 +11,10 @@ services:
         class: Fhm\GeolocationBundle\Services\Geocoder
         arguments: ["@service_container"]
 
+    fhm_geolocation_controller:
+        class: Fhm\GeolocationBundle\Controller\MapController
+        arguments: ["@fhm_tools"]
+
     fhm.twig.geolocation_extension:
         class: Fhm\GeolocationBundle\Twig\GeolocationExtension
         tags:
