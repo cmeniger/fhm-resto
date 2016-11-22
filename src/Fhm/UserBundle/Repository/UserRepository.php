@@ -35,19 +35,16 @@ class UserRepository extends FhmRepository
     {
         $builder = (($page > 0 && $count > 0) && $search) ? $this->search($search) : $this->createQueryBuilder();
         // Grouping
-        if($grouping != "")
-        {
+        if ($grouping != "") {
             $builder->addOr($builder->expr()->field('grouping')->in((array) $grouping));
             $builder->addOr($builder->expr()->field('share')->equals(true));
         }
         // RoleSuperAdmin
-        if(!$roleSuperAdmin)
-        {
+        if (!$roleSuperAdmin) {
             $builder->field('delete')->equals(false);
         }
         // Pagination
-        if($page > 0 && $count > 0)
-        {
+        if ($page > 0 && $count > 0) {
             $builder->limit($count);
             $builder->skip(($page - 1) * $count);
         }
@@ -73,14 +70,12 @@ class UserRepository extends FhmRepository
     {
         $builder = ($search) ? $this->search($search) : $this->createQueryBuilder();
         // Grouping
-        if($grouping != "")
-        {
+        if ($grouping != "") {
             $builder->addOr($builder->expr()->field('grouping')->in((array) $grouping));
             $builder->addOr($builder->expr()->field('share')->equals(true));
         }
         // RoleSuperAdmin
-        if(!$roleSuperAdmin)
-        {
+        if (!$roleSuperAdmin) {
             $builder->field('delete')->equals(false);
         }
         // Common
@@ -105,14 +100,12 @@ class UserRepository extends FhmRepository
     {
         $builder = (($page > 0 && $count > 0) && $search) ? $this->search($search) : $this->createQueryBuilder();
         // Grouping
-        if($grouping != "")
-        {
+        if ($grouping != "") {
             $builder->addOr($builder->expr()->field('grouping')->in((array) $grouping));
             $builder->addOr($builder->expr()->field('share')->equals(true));
         }
         // Pagination
-        if($page > 0 && $count > 0)
-        {
+        if ($page > 0 && $count > 0) {
             $builder->limit($count);
             $builder->skip(($page - 1) * $count);
         }
@@ -139,8 +132,7 @@ class UserRepository extends FhmRepository
     {
         $builder = ($search) ? $this->search($search) : $this->createQueryBuilder();
         // Grouping
-        if($grouping != "")
-        {
+        if ($grouping != "") {
             $builder->addOr($builder->expr()->field('grouping')->in((array) $grouping));
             $builder->addOr($builder->expr()->field('share')->equals(true));
         }
@@ -185,16 +177,11 @@ class UserRepository extends FhmRepository
             ->getQuery()
             ->execute()
             ->toArray();
-        if(count($results) > 1)
-        {
+        if (count($results) > 1) {
             return 'error';
-        }
-        elseif(count($results) == 1)
-        {
+        } elseif (count($results) == 1) {
             return array_shift($results);
-        }
-        else
-        {
+        } else {
             return '';
         }
     }

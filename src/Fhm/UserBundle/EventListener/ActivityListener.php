@@ -26,12 +26,10 @@ class ActivityListener
      */
     public function onCoreController(FilterControllerEvent $event)
     {
-        if($this->context->getToken() != "")
-        {
+        if ($this->context->getToken() != "") {
             $user = $this->context->getToken()->getUser();
 
-            if($user instanceof User)
-            {
+            if ($user instanceof User) {
                 $user->setDateActivity(new \DateTime());
                 $dm = $this->container->get('doctrine_mongodb')->getManager();
                 $dm->persist($user);

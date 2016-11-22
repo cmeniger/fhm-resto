@@ -5,7 +5,7 @@
     <div id="header">
         {# Menu #}
         {% block menu %}
-            {% render(path('fhm_api_menu_detail', {'template':'front'})) %}
+            {{  render(path('fhm_api_menu_detail', {'template':'front'})) }}
         {% endblock %}
 
         {# Tagline #}

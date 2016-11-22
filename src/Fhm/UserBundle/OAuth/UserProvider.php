@@ -20,14 +20,10 @@ class UserProvider extends FOSUBUserProvider
      */
     public function loadUserByOAuthUserResponse(UserResponseInterface $response)
     {
-        try
-        {
+        try {
             return parent::loadUserByOAuthUserResponse($response);
-        }
-        catch(UsernameNotFoundException $e)
-        {
-            if(null === $user = $this->userManager->findUserByEmail($response->getEmail()))
-            {
+        } catch (UsernameNotFoundException $e) {
+            if (null === $user = $this->userManager->findUserByEmail($response->getEmail())) {
                 return $this->createUserByOAuthUserResponse($response);
             }
 
@@ -47,11 +43,8 @@ class UserProvider extends FOSUBUserProvider
     }
 
     /**
-     * Ad-hoc creation of user
-     *
      * @param UserResponseInterface $response
-     *
-     * @return User
+     * @return FOSUserInterface
      */
     protected function createUserByOAuthUserResponse(UserResponseInterface $response)
     {
@@ -59,12 +52,6 @@ class UserProvider extends FOSUBUserProvider
         $this->updateUserByOAuthUserResponse($user, $response);
         $user->setEmail($response->getEmail());
         $user->setImageFacebook($response->getProfilePicture());
-        
-//        if(!$user->getPassword()) {
-//            // generate unique token
-//            $secret = md5(uniqid(rand(), true));
-//            $user->setPassword($secret);
-//        }
         $user->setUsername($response->getNickname() ? $response->getNickname() : $response->getEmail());
         $user->setEnabled(true);
 
@@ -72,11 +59,8 @@ class UserProvider extends FOSUBUserProvider
     }
 
     /**
-     * Attach OAuth sign-in provider account to existing user
-     *
-     * @param FOSUserInterface      $user
+     * @param FOSUserInterface $user
      * @param UserResponseInterface $response
-     *
      * @return FOSUserInterface
      */
     protected function updateUserByOAuthUserResponse(FOSUserInterface $user, UserResponseInterface $response)
@@ -85,11 +69,6 @@ class UserProvider extends FOSUBUserProvider
         $providerNameSetter = 'setId' . ucfirst($providerName);
         $user->$providerNameSetter($response->getEmail());
         $user->setImageFacebook($response->getProfilePicture());
-//        if(!$user->getPassword()) {
-//            // generate unique token
-//            $secret = md5(uniqid(rand(), true));
-//            $user->setPassword($secret);
-//        }
         $user->setUsername($response->getNickname() ? $response->getNickname() : $response->getEmail());
 
         return $user;
@@ -97,23 +76,40 @@ class UserProvider extends FOSUBUserProvider
 
     /**
      * @param $pass
-     *
      * @return string
      */
-    function encryptPass( $pass ) {
+    public function encryptPass($pass)
+    {
         $cryptKey      = 'qJB0rGtIn5UB1xG03efyCp';
-        $qEncoded      = base64_encode( mcrypt_encrypt( MCRYPT_RIJNDAEL_256, md5( $cryptKey ), $pass, MCRYPT_MODE_CBC, md5( md5( $cryptKey ) ) ) );
+        $qEncoded      = base64_encode(
+            mcrypt_encrypt(
+                MCRYPT_RIJNDAEL_256,
+                md5($cryptKey),
+                $pass,
+                MCRYPT_MODE_CBC,
+                md5(md5($cryptKey))
+            )
+        );
         return( $qEncoded );
     }
 
     /**
      * @param $pass
-     *
      * @return string
      */
-    function decryptPass( $pass ) {
+    public function decryptPass($pass)
+    {
         $cryptKey      = 'qJB0rGtIn5UB1xG03efyCp';
-        $qDecoded      = rtrim( mcrypt_decrypt( MCRYPT_RIJNDAEL_256, md5( $cryptKey ), base64_decode( $pass ), MCRYPT_MODE_CBC, md5( md5( $cryptKey ) ) ), "\0");
+        $qDecoded      = rtrim(
+            mcrypt_decrypt(
+                MCRYPT_RIJNDAEL_256,
+                md5($cryptKey),
+                base64_decode($pass),
+                MCRYPT_MODE_CBC,
+                md5(md5($cryptKey))
+            ),
+            "\0"
+        );
         return( $qDecoded );
     }
 }

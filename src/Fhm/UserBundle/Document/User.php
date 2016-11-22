@@ -734,7 +734,9 @@ class User extends GeolocationWithUser
     public function setCsvData($data)
     {
         $this->username          = (isset($data['username'])) ? $data['username'] : $this->username;
-        $this->usernameCanonical = (isset($data['username'])) ? strtolower($data['username']) : $this->usernameCanonical;
+        $this->usernameCanonical = (isset($data['username'])) ?
+            strtolower($data['username']) :
+            $this->usernameCanonical;
         $this->email             = (isset($data['email'])) ? $data['email'] : $this->email;
         $this->emailCanonical    = (isset($data['email'])) ? strtolower($data['email']) : $this->emailCanonical;
         $this->first_name        = (isset($data['first_name'])) ? $data['first_name'] : $this->first_name;
@@ -752,8 +754,7 @@ class User extends GeolocationWithUser
     {
         $list  = array();
         $roles = $this->getRoles();
-        foreach($roles as $role)
-        {
+        foreach ($roles as $role) {
             $list[$role] = $role;
         }
 

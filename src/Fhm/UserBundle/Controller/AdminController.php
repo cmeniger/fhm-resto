@@ -224,13 +224,19 @@ class AdminController extends FhmController
         $form         = $this->createForm(new $classType($instance), $document);
         $handler      = new $classHandler($form, $request);
         $process      = $handler->process();
-        if($process)
-        {
+        if ($process) {
             // Persist
-            $userManager = $this->container->get('fos_user.user_manager');
+            $userManager = $this->get('fos_user.user_manager');
             $userManager->updateUser($document);
             // Message
-            $this->get('session')->getFlashBag()->add('notice', $this->get('translator')->trans($this->translation[1] . '.admin.detail.password.flash.ok', array(), $this->translation[0]));
+            $this->get('session')->getFlashBag()->add(
+                'notice',
+                $this->get('translator')->trans(
+                    $this->translation[1] . '.admin.detail.password.flash.ok',
+                    array(),
+                    $this->translation[0]
+                )
+            );
 
             return $this->redirect($this->generateUrl('fhm_admin_' . $this->route . '_detail', array('id' => $id)));
         }
