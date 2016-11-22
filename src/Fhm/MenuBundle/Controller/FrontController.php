@@ -9,7 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 /**
- * @Route("/menu")
+ * @Route("/menu", service="fhm_menu_controller_front")
  */
 class FrontController extends FhmController
 {

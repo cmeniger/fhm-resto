@@ -7,7 +7,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 /**
- * @Route("/")
+ * @Route("/", service="project_default_controller_front")
  */
 class FrontController extends Controller
 {
