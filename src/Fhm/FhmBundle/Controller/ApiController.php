@@ -28,15 +28,20 @@ class ApiController extends RefApiController
      *      defaults={"locale"=null}
      * )
      */
-    public function localeAction($locale)
+    public function localeAction(Request $request, $locale)
     {
         if ($locale) {
             $this->get('session')->set('_locale', $locale);
         }
-        if ($this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
+
+        if ($this->get('security.')->isGranted('ROLE_ADMIN')) {
             $this->get('session')->set('_localeAdmin', $locale);
         }
 
-        return $this->redirect($this->getLastRoute() ? $this->getLastRoute() : $this->generateUrl('project_home'));
+        return $this->redirect(
+            $this->fhm_tools->getLastRoute() ?
+                $this->fhm_tools->getLastRoute() :
+                $this->generateUrl('project_home')
+        );
     }
 }

@@ -1,7 +1,6 @@
 <?php
 namespace Fhm\FhmBundle\Services;
 
-use Fhm\FhmBundle\Controller\FhmController;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Session\Session;
 
@@ -10,12 +9,12 @@ use Symfony\Component\HttpFoundation\Session\Session;
  *
  * @package Fhm\FhmBundle\Services
  */
-class Grouping extends FhmController
+class Grouping
 {
     protected $site;
     protected $menu;
     protected $visible;
-    protected $container;
+    protected $fhm_tools;
 
     /**
      * @param ContainerInterface $container
@@ -23,11 +22,12 @@ class Grouping extends FhmController
     public function __construct(ContainerInterface $container)
     {
         $this->container = $container;
-        $this->initLanguage();
-        $this->site    = $this->dmRepository('FhmSiteBundle:Site')->getDefault();
+        $this->fhm_tools = $container->get('fhm_tools');
+        $this->fhm_tools->initLanguage();
+        $this->site    = $this->fhm_tools->dmRepository('FhmSiteBundle:Site')->getDefault();
         $this->menu    = ($this->site) ? $this->site->getMenu() : "";
         $this->visible = false;
-        $session       = $this->container->get('session');
+        $session       = $this->container->get('request')->getSession();
         $session->set('site', $this->site ? $this->site->getId() : '');
         $session->set('menu', $this->menu ? $this->menu->getId() : '');
     }
@@ -55,7 +55,7 @@ class Grouping extends FhmController
     {
         $this->container->get('twig')->addGlobal('site', $this->site);
         $this->container->get('twig')->addGlobal('menu', $this->menu);
-        $this->container->get('twig')->addGlobal('instance', (array) $this->instanceData());
+        //        $this->container->get('twig')->addGlobal('instance', (array) $this->fhm_tools->instanceData());
         $this->container->get('twig')->addGlobal('grouping_name', $this->container->get('translator')->trans('fhm.grouping.name', array(), 'FhmFhmBundle'));
         $this->container->get('twig')->addGlobal('grouping_add', $this->container->get('translator')->trans('fhm.grouping.add', array("%name%" => $this->getGrouping()), 'FhmFhmBundle'));
         $this->container->get('twig')->addGlobal('grouping_title', $this->container->get('translator')->trans('fhm.grouping.title', array(), 'FhmFhmBundle'));
@@ -70,17 +70,18 @@ class Grouping extends FhmController
      */
     public function loadGrouping()
     {
-        $this->setContainer($this->container);
+        $controller = new \Symfony\Bundle\FrameworkBundle\Controller\Controller();
+        $controller->setContainer($this->container);
         if($this->site == '')
         {
-            return $this->redirect($this->generateUrl('fhm_admin_site_create'));
+            return $controller->redirect($controller->generateUrl('fhm_admin_site_create'));
         }
         elseif($this->menu == '')
         {
             $controller = new \Project\DefaultBundle\Controller\FrontController();
             $controller->setContainer($this->container);
 
-            return $controller->templateAction('default', null);
+            return $controller->templateAction('default');
         }
         else
         {

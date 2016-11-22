@@ -2,7 +2,6 @@
 namespace Fhm\FhmBundle\EventListener;
 
 use Symfony\Component\DependencyInjection\ContainerAware;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
@@ -14,16 +13,8 @@ use Symfony\Component\HttpKernel\Event\FinishRequestEvent;
 use Symfony\Component\HttpKernel\Event\PostResponseEvent;
 use Symfony\Component\HttpKernel\HttpKernel;
 
-class FhmEventListener
+class FhmEventListener extends ContainerAware
 {
-
-    protected $container;
-
-    public function __construct(ContainerInterface $container)
-    {
-        $this->container = $container;
-    }
-
     /**
      * @param GetResponseEvent $event
      *
@@ -57,7 +48,7 @@ class FhmEventListener
         $route       = $event->getRequest()->attributes->get('_route');
         $authorized  = false;
         $authorized  = in_array($route, $firewall) ? true : $authorized;
-        $authorized  = $this->container->get('security.authorization_checker')->isGranted('ROLE_ADMIN') ? true : $authorized;
+        $authorized  = $this->container->get('security.context')->isGranted('ROLE_ADMIN') ? true : $authorized;
         $authorized  = in_array($this->container->get('kernel')->getEnvironment(), array('test', 'dev')) ? true : $authorized;
         if($construct && !$authorized)
         {

@@ -2,7 +2,6 @@
 namespace Fhm\FhmBundle\Controller;
 
 use Fhm\FhmBundle\Document\Fhm;
-//use Fhm\FhmBundle\Controller\RefAdminController as FhmController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpKernel\Exception\HttpException;
@@ -33,7 +32,7 @@ class AdminController extends RefAdminController
     public function adminAction()
     {
         return array(
-            'instance'    => $this->instanceData(),
+            'instance'    => $this->fhm_tools->instanceData(),
             'breadcrumbs' => array(
                 array(
                     'link' => $this->get('router')->generate('project_home'),
@@ -62,9 +61,11 @@ class AdminController extends RefAdminController
      */
     public function cacheAction($env)
     {
-        exec("sudo rm -rf " . __DIR__ . "/../../../../app/cache " . __DIR__ . "/../../../../app/logs");
-        exec("php " . __DIR__ . "/../../../../app/console cache:clear --env=" . $env);
-        exec("sudo chmod -R 777 " . __DIR__ . "/../../../../app/cache " . __DIR__ . "/../../../../app/logs");
+        exec(
+            "sudo rm -rf " . __DIR__ . "/../../../../app/cache " . __DIR__ . "/../../../../app/logs"
+            . "&& php " . __DIR__ . "/../../../../app/console cache:clear --env=" . $env
+            . "&& sudo chmod -R 777 " . __DIR__ . "/../../../../app/cache " . __DIR__ . "/../../../../app/logs"
+        );
 
         return new JsonResponse(array(
             'error'  => '',

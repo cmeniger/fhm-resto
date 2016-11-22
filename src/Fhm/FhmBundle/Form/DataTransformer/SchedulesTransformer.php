@@ -1,7 +1,6 @@
 <?php
 namespace Fhm\FhmBundle\Form\DataTransformer;
 
-use Fhm\FhmBundle\Controller\FhmController;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 

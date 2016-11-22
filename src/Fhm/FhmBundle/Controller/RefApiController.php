@@ -2,15 +2,22 @@
 namespace Fhm\FhmBundle\Controller;
 
 use Fhm\FhmBundle\Document\Fhm;
-use Fhm\FhmBundle\Controller\FhmController;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
-class RefApiController extends FhmController
+class RefApiController extends Controller
 {
+    protected $fhm_tools;
+    protected $source;
+    protected $class;
+    protected $document;
+    protected $translation;
+    protected $route;
+    protected $form;
+    protected $container;
+
     /**
      * @param string $src
      * @param string $bundle
@@ -19,17 +26,26 @@ class RefApiController extends FhmController
      */
     public function __construct($src = 'Fhm', $bundle = 'Fhm', $route = '', $document = '')
     {
-        parent::__construct();
-        $this->source      = strtolower($src);
-        $this->repository  = $src . $bundle . 'Bundle:' . ($document ? $document : $bundle);
-        $this->class       = $src . '\\' . $bundle . 'Bundle' . '\\Document\\' . ($document ? $document : $bundle);
-        $this->document    = new $this->class();
-        $this->translation = array($src . $bundle . 'Bundle', strtolower($bundle));
-        $this->view        = $src . $bundle;
-        $this->route       = $route;
-        $this->bundle      = strtolower($bundle);
-        $this->section     = "Api";
-        $this->initForm($src . '\\' . $bundle . 'Bundle');
+        $datas             = $this->fhm_tools->initData($src, $bundle, $route, $document, 'api');
+        $this->source      = $datas['source'];
+        $this->class       = $datas['class'];
+        $this->document    = $datas['document'];
+        $this->translation = $datas['translation'];
+        $this->route       = $datas['route'];
+        $this->form        = $datas['form'];
+    }
+
+    /**
+     * @param \Fhm\FhmBundle\Services\Tools $tools
+     *
+     * @return $this
+     */
+    public function setFhmTools(\Fhm\FhmBundle\Services\Tools $tools)
+    {
+        $this->setContainer($tools->getContainer());
+        $this->fhm_tools = $tools;
+
+        return $this;
     }
 
     /**
@@ -38,13 +54,13 @@ class RefApiController extends FhmController
     public function indexAction()
     {
         // ERROR - Unknown route
-        if(!$this->routeExists($this->source . '_admin_' . $this->route))
+        if(!$this->fhm_tools->routeExists($this->source . '_admin_' . $this->route))
         {
-            throw $this->createNotFoundException($this->get('translator')->trans('fhm.error.route', array(), 'FhmFhmBundle'));
+            throw $this->createNotFoundException($this->fhm_tools->trans('fhm.error.route', array(), 'FhmFhmBundle'));
         }
 
         return array(
-            'instance' => $this->instanceData(),
+            'instance' => $this->fhm_tools->instanceData(),
         );
     }
 
@@ -55,16 +71,16 @@ class RefApiController extends FhmController
      */
     public function autocompleteAction(Request $request)
     {
-        $instance       = $this->instanceData();
+        $instance       = $this->fhm_tools->instanceData();
         $dataSearch     = $request->get('text');
         $dataPagination = $request->get('pagination');
-        $documents      = $this->dmRepository()->getFrontIndex($dataSearch, $dataPagination, $this->getParameters(array('autocomplete', 'page'), 'fhm_fhm'), $instance->grouping->current);
+        $documents      = $this->fhm_tools->dmRepository()->getFrontIndex($dataSearch, $dataPagination, $this->fhm_tools->getParameter(array('autocomplete', 'page'), 'fhm_fhm'), $instance->grouping->current);
 
         return array(
             'text'       => $dataSearch,
             'field'      => $request->get('field'),
             'documents'  => $documents,
-            'pagination' => $this->setPagination($this->getParameters(array('autocomplete', 'page'), 'fhm_fhm'), $this->getParameters(array('autocomplete', 'left'), 'fhm_fhm'), $this->getParameter(array('autocomplete', 'right'), 'fhm_fhm'))->getPagination($dataPagination, count($documents), $this->dmRepository()->getFrontCount($dataSearch, $instance->grouping->current)),
+            'pagination' => $this->fhm_tools->setPagination($this->fhm_tools->getParameter(array('autocomplete', 'page'), 'fhm_fhm'), $this->fhm_tools->getParameter(array('autocomplete', 'left'), 'fhm_fhm'), $this->fhm_tools->getParameter(array('autocomplete', 'right'), 'fhm_fhm'))->getPagination($dataPagination, count($documents), $this->fhm_tools->dmRepository()->getFrontCount($dataSearch, $instance->grouping->current)),
             'instance'   => $instance,
         );
     }
@@ -79,12 +95,12 @@ class RefApiController extends FhmController
         $class = $this->class . 'Historic';
         if(!class_exists($class))
         {
-            throw $this->createNotFoundException($this->get('translator')->trans('fhm.error.route', array(), 'FhmFhmBundle'));
+            throw $this->createNotFoundException($this->fhm_tools->trans('fhm.error.route', array(), 'FhmFhmBundle'));
         }
 
         return array(
-            'document' => $this->dmRepository($this->repository . 'Historic')->find($request->get('id')),
-            'instance' => $this->instanceData()
+            'document' => $this->fhm_tools->dmRepository($this->repository . 'Historic')->find($request->get('id')),
+            'instance' => $this->fhm_tools->instanceData()
         );
     }
 
@@ -99,16 +115,16 @@ class RefApiController extends FhmController
         $class = $this->class . 'Historic';
         if(!class_exists($class))
         {
-            throw $this->createNotFoundException($this->get('translator')->trans('fhm.error.route', array(), 'FhmFhmBundle'));
+            throw $this->createNotFoundException($this->fhm_tools->trans('fhm.error.route', array(), 'FhmFhmBundle'));
         }
-        $historic = $this->dmRepository($this->repository . 'Historic')->find($request->get('id'));
+        $historic = $this->fhm_tools->dmRepository($this->repository . 'Historic')->find($request->get('id'));
         $document = $historic->getHistoricParent();
         // Add
-        $this->historicAdd($document, true);
+        $this->fhm_tools->historicAdd($document, true);
         // Copy
-        $document->historicMerge($this->dm(), $historic);
-        $this->dmPersist($document);
+        $document->historicMerge($this->fhm_tools->dm(), $historic);
+        $this->fhm_tools->dmPersist($document);
 
-        return $this->redirect($this->getLastRoute());
+        return $this->redirect($this->fhm_tools->getLastRoute());
     }
 }

@@ -214,7 +214,7 @@ EOT
         $auto = true;
         $output->write('Importing the bundle routing resource: ');
         $routingFile = substr($bundle, 0, 7) == 'Project' ? 'routing_project' : (substr($bundle, 0, 3) == 'Shop' ? 'routing_shop' : (substr($bundle, 0, 3) == 'Fhm' ? 'routing_fhm' : 'routing_other'));
-        $routing     = new RoutingManipulator($this->getContainer()->getParameters('kernel.root_dir') . '/config/' . $routingFile . '.yml');
+        $routing     = new RoutingManipulator($this->getContainer()->getParameter('kernel.root_dir') . '/config/' . $routingFile . '.yml');
         try
         {
             $ret = $auto ? $routing->addResource($bundle, $format) : true;

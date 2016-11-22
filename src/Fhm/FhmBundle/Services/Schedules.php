@@ -1,7 +1,6 @@
 <?php
 namespace Fhm\FhmBundle\Services;
 
-use Fhm\FhmBundle\Controller\FhmController;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Validator\Constraints\DateTime;
@@ -12,7 +11,7 @@ use Symfony\Component\Validator\Exception\ValidatorException;
  *
  * @package Fhm\FhmBundle\Services
  */
-class Schedules extends FhmController
+class Schedules
 {
     protected $data;
     protected $data_implode;
@@ -25,7 +24,6 @@ class Schedules extends FhmController
         $this->container    = $container;
         $this->data         = array();
         $this->data_implode = array();
-        parent::__construct();
     }
 
     /**

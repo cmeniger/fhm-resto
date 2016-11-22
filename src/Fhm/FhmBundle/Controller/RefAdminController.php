@@ -2,13 +2,22 @@
 namespace Fhm\FhmBundle\Controller;
 
 use Fhm\FhmBundle\Document\Fhm;
-use Fhm\FhmBundle\Controller\FhmController;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
-class RefAdminController extends FhmController
+class RefAdminController extends Controller
 {
+    protected $fhm_tools;
+    protected $source;
+    protected $class;
+    protected $document;
+    protected $translation;
+    protected $route;
+    protected $form;
+    protected $container;
+
     /**
      * @param string $src
      * @param string $bundle
@@ -17,17 +26,26 @@ class RefAdminController extends FhmController
      */
     public function __construct($src = 'Fhm', $bundle = 'Fhm', $route = '', $document = '')
     {
-        parent::__construct();
-        $this->source      = strtolower($src);
-        $this->repository  = $src . $bundle . 'Bundle:' . ($document ? $document : $bundle);
-        $this->class       = $src . '\\' . $bundle . 'Bundle' . '\\Document\\' . ($document ? $document : $bundle);
-        $this->document    = new $this->class();
-        $this->translation = array($src . $bundle . 'Bundle', strtolower($bundle));
-        $this->view        = $src . $bundle;
-        $this->route       = $route;
-        $this->bundle      = strtolower($bundle);
-        $this->section     = "Admin";
-        $this->initForm($src . '\\' . $bundle . 'Bundle');
+        $datas             = $this->fhm_tools->initData($src, $bundle, $route, $document, 'admin');
+        $this->source      = $datas['source'];
+        $this->class       = $datas['class'];
+        $this->document    = $datas['document'];
+        $this->translation = $datas['translation'];
+        $this->route       = $datas['route'];
+        $this->form        = $datas['form'];
+    }
+
+    /**
+     * @param \Fhm\FhmBundle\Services\Tools $tools
+     *
+     * @return $this
+     */
+    public function setFhmTools(\Fhm\FhmBundle\Services\Tools $tools)
+    {
+        $this->setContainer($tools->getContainer());
+        $this->fhm_tools = $tools;
+
+        return $this;
     }
 
     /**
@@ -36,54 +54,83 @@ class RefAdminController extends FhmController
     public function indexAction()
     {
         // ERROR - Unknown route
-        if(!$this->routeExists($this->source . '_admin_' . $this->route))
-        {
-            throw $this->createNotFoundException($this->get('translator')->trans('fhm.error.route', array(), 'FhmFhmBundle'));
+        if (!$this->fhm_tools->routeExists($this->source . '_admin_' . $this->route)) {
+            throw $this->createNotFoundException($this->fhm_tools->trans('fhm.error.route', array(), 'FhmFhmBundle'));
         }
-        $instance       = $this->instanceData();
+        $instance       = $this->fhm_tools->instanceData();
         $classType      = $this->form->type->search;
         $form           = $this->createForm(new $classType($instance), null);
         $request        = $this->get('request');
         $dataSearch     = $request->get('FhmSearch');
         $dataPagination = $request->get('FhmPagination');
-        $dataSort       = $request->get('FhmSort') ? $request->get('FhmSort') : $this->getSort();
+        $dataSort       = $request->get('FhmSort') ? $request->get('FhmSort') : $this->fhm_tools->getSort();
         // Ajax request
-        if($request->isXmlHttpRequest())
-        {
-            $this->setSort($dataSort['field'], $dataSort['order']);
-            $dataSort  = $this->getSort($dataSort['field'], $dataSort['order']);
-            $documents = $this->dmRepository()->setSort($dataSort->field, $dataSort->order)->getAdminIndex($dataSearch['search'], $dataPagination['pagination'], $this->getParameters(array('pagination', 'admin', 'page'), 'fhm_fhm'), $instance->grouping->filtered, $instance->user->super);
+        if ($request->isXmlHttpRequest()) {
+            $this->fhm_tools->setSort($dataSort['field'], $dataSort['order']);
+            $dataSort  = $this->fhm_tools->getSort($dataSort['field'], $dataSort['order']);
+            $documents = $this->fhm_tools->dmRepository()
+                ->setSort($dataSort->field, $dataSort->order)
+                ->getAdminIndex(
+                    $dataSearch['search'],
+                    $dataPagination['pagination'],
+                    $this->fhm_tools->getParameter(array('pagination', 'admin', 'page'), 'fhm_fhm'),
+                    $instance->grouping->filtered,
+                    $instance->user->super
+                );
 
             return array(
                 'documents'  => $documents,
-                'pagination' => $this->getPagination($dataPagination['pagination'], count($documents), $this->dmRepository()->getAdminCount($dataSearch['search'], $instance->grouping->filtered, $instance->user->super), 'pagination', $this->formRename($form->getName(), $dataSearch)),
+                'pagination' => $this->fhm_tools->getPagination(
+                    $dataPagination['pagination'],
+                    count($documents),
+                    $this->fhm_tools->dmRepository()->getAdminCount(
+                        $dataSearch['search'],
+                        $instance->grouping->filtered,
+                        $instance->user->super
+                    ),
+                    'pagination',
+                    $this->fhm_tools->formRename($form->getName(), $dataSearch)
+                ),
                 'sort'       => $dataSort,
                 'instance'   => $instance,
             );
-        }
-        // Router request
-        else
-        {
-            $documents = $this->dmRepository()->setSort($dataSort->field, $dataSort->order)->getAdminIndex($dataSearch['search'], 1, $this->getParameters(array('pagination', 'admin', 'page'), 'fhm_fhm'), $instance->grouping->filtered, $instance->user->super);
+        } else {
+            $documents = $this->fhm_tools->dmRepository()->setSort($dataSort->field, $dataSort->order)->getAdminIndex(
+                $dataSearch['search'],
+                1,
+                $this->fhm_tools->getParameter(array('pagination', 'admin', 'page'), 'fhm_fhm'),
+                $instance->grouping->filtered,
+                $instance->user->super
+            );
 
             return array(
                 'documents'   => $documents,
-                'pagination'  => $this->getPagination(1, count($documents), $this->dmRepository()->getAdminCount($dataSearch['search'], $instance->grouping->filtered, $instance->user->super), 'pagination', $this->formRename($form->getName(), $dataSearch)),
+                'pagination'  => $this->fhm_tools->getPagination(
+                    1,
+                    count($documents),
+                    $this->fhm_tools->dmRepository()->getAdminCount(
+                        $dataSearch['search'],
+                        $instance->grouping->filtered,
+                        $instance->user->super
+                    ),
+                    'pagination',
+                    $this->fhm_tools->formRename($form->getName(), $dataSearch)
+                ),
                 'sort'        => $dataSort,
                 'form'        => $form->createView(),
                 'instance'    => $instance,
                 'breadcrumbs' => array(
                     array(
-                        'link' => $this->get('router')->generate('project_home'),
-                        'text' => $this->get('translator')->trans('project.home.breadcrumb', array(), 'ProjectDefaultBundle'),
+                        'link' => $this->fhm_tools->getUrl('project_home'),
+                        'text' => $this->fhm_tools->trans('project.home.breadcrumb', array(), 'ProjectDefaultBundle'),
                     ),
                     array(
-                        'link' => $this->get('router')->generate('fhm_admin'),
-                        'text' => $this->get('translator')->trans('fhm.admin.breadcrumb', array(), 'FhmFhmBundle'),
+                        'link' => $this->fhm_tools->getUrl('fhm_admin'),
+                        'text' => $this->fhm_tools->trans('fhm.admin.breadcrumb', array(), 'FhmFhmBundle'),
                     ),
                     array(
-                        'link'    => $this->get('router')->generate($this->source . '_admin_' . $this->route),
-                        'text'    => $this->get('translator')->trans($this->translation[1] . '.admin.index.breadcrumb', array(), $this->translation[0]),
+                        'link'    => $this->fhm_tools->getUrl($this->source . '_admin_' . $this->route),
+                        'text'    => $this->fhm_tools->trans('.admin.index.breadcrumb'),
                         'current' => true
                     )
                 )
@@ -99,32 +146,58 @@ class RefAdminController extends FhmController
     public function createAction(Request $request)
     {
         // ERROR - Unknown route
-        if(!$this->routeExists($this->source . '_admin_' . $this->route) || !$this->routeExists($this->source . '_admin_' . $this->route . '_create'))
-        {
-            throw $this->createNotFoundException($this->get('translator')->trans('fhm.error.route', array(), 'FhmFhmBundle'));
+        if (
+            !$this->fhm_tools->routeExists($this->source . '_admin_' . $this->route)
+            || !$this->fhm_tools->routeExists($this->source . '_admin_' . $this->route . '_create')
+        ) {
+            throw $this->createNotFoundException($this->fhm_tools->trans('fhm.error.route', array(), 'FhmFhmBundle'));
         }
         $document     = $this->document;
-        $instance     = $this->instanceData();
+        $instance     = $this->fhm_tools->instanceData();
         $classType    = $this->form->type->create;
         $classHandler = $this->form->handler->create;
         $form         = $this->createForm(new $classType($instance, $document), $document);
         $handler      = new $classHandler($form, $request);
         $process      = $handler->process();
-        if($process)
-        {
+        if ($process) {
             $data = $request->get($form->getName());
             // Persist
             $document->setUserCreate($this->getUser());
-            $document->setAlias($this->getAlias($document->getId(), $document->getName()));
-            $this->dmPersist($document);
+            $document->setAlias($this->fhm_tools->getAlias($document->getId(), $document->getName()));
+            $this->fhm_tools->dmPersist($document);
             // Message
-            $this->get('session')->getFlashBag()->add('notice', $this->get('translator')->trans($this->translation[1] . '.admin.create.flash.ok', array(), $this->translation[0]));
+            $this->get('session')->getFlashBag()->add('notice', $this->fhm_tools->trans('.admin.create.flash.ok'));
             // Redirect
-            $redirect = $this->redirect($this->generateUrl($this->source . '_admin_' . $this->route));
-            $redirect = isset($data['submitSave']) ? $this->redirect($this->generateUrl($this->source . '_admin_' . $this->route . '_update', array('id' => $document->getId()))) : $redirect;
-            $redirect = isset($data['submitDuplicate']) ? $this->redirect($this->generateUrl($this->source . '_admin_' . $this->route . '_duplicate', array('id' => $document->getId()))) : $redirect;
-            $redirect = isset($data['submitNew']) ? $this->redirect($this->generateUrl($this->source . '_admin_' . $this->route . '_create')) : $redirect;
-            $redirect = isset($data['submitConfig']) ? $this->redirect($this->generateUrl($this->source . '_admin_' . $this->route . '_detail', array('id' => $document->getId()))) : $redirect;
+            $redirect = $this->redirect($this->fhm_tools->getUrl($this->source . '_admin_' . $this->route));
+            $redirect = isset($data['submitSave']) ?
+                $this->redirect(
+                    $this->fhm_tools->getUrl(
+                        $this->source . '_admin_' . $this->route . '_update',
+                        array('id' => $document->getId())
+                    )
+                ):
+                $redirect;
+            $redirect = isset($data['submitDuplicate']) ?
+                $this->redirect(
+                    $this->fhm_tools->getUrl(
+                        $this->source . '_admin_' . $this->route . '_duplicate',
+                        array('id' => $document->getId())
+                    )
+                ) :
+                $redirect;
+            $redirect = isset($data['submitNew']) ?
+                $this->redirect(
+                    $this->fhm_tools->getUrl($this->source . '_admin_' . $this->route . '_create')
+                ) :
+                $redirect;
+            $redirect = isset($data['submitConfig']) ?
+                $this->redirect(
+                    $this->fhm_tools->getUrl(
+                        $this->source . '_admin_' . $this->route . '_detail',
+                        array('id' => $document->getId())
+                    )
+                ) :
+                $redirect;
 
             return $redirect;
         }
@@ -134,20 +207,20 @@ class RefAdminController extends FhmController
             'instance'    => $instance,
             'breadcrumbs' => array(
                 array(
-                    'link' => $this->get('router')->generate('project_home'),
-                    'text' => $this->get('translator')->trans('project.home.breadcrumb', array(), 'ProjectDefaultBundle'),
+                    'link' => $this->fhm_tools->getUrl('project_home'),
+                    'text' => $this->fhm_tools->trans('project.home.breadcrumb', array(), 'ProjectDefaultBundle'),
                 ),
                 array(
-                    'link' => $this->get('router')->generate('fhm_admin'),
-                    'text' => $this->get('translator')->trans('fhm.admin.breadcrumb', array(), 'FhmFhmBundle'),
+                    'link' => $this->fhm_tools->getUrl('fhm_admin'),
+                    'text' => $this->fhm_tools->trans('fhm.admin.breadcrumb', array(), 'FhmFhmBundle'),
                 ),
                 array(
-                    'link' => $this->get('router')->generate($this->source . '_admin_' . $this->route),
-                    'text' => $this->get('translator')->trans($this->translation[1] . '.admin.index.breadcrumb', array(), $this->translation[0]),
+                    'link' => $this->fhm_tools->getUrl($this->source . '_admin_' . $this->route),
+                    'text' => $this->fhm_tools->trans('.admin.index.breadcrumb'),
                 ),
                 array(
-                    'link'    => $this->get('router')->generate($this->source . '_admin_' . $this->route . '_create'),
-                    'text'    => $this->get('translator')->trans($this->translation[1] . '.admin.create.breadcrumb', array(), $this->translation[0]),
+                    'link'    => $this->fhm_tools->getUrl($this->source . '_admin_' . $this->route . '_create'),
+                    'text'    => $this->fhm_tools->trans('.admin.create.breadcrumb'),
                     'current' => true
                 )
             )
@@ -163,15 +236,15 @@ class RefAdminController extends FhmController
     public function duplicateAction(Request $request, $id)
     {
         // ERROR - Unknown route
-        if(!$this->routeExists($this->source . '_admin_' . $this->route) || !$this->routeExists($this->source . '_admin_' . $this->route . '_duplicate'))
-        {
-            throw $this->createNotFoundException($this->get('translator')->trans('fhm.error.route', array(), 'FhmFhmBundle'));
+        if (!$this->fhm_tools->routeExists($this->source . '_admin_' . $this->route) ||
+            !$this->fhm_tools->routeExists($this->source . '_admin_' . $this->route . '_duplicate')
+        ) {
+            throw $this->createNotFoundException($this->fhm_tools->trans('fhm.error.route', array(), 'FhmFhmBundle'));
         }
-        $document = $this->dmRepository()->find($id);
+        $document = $this->fhm_tools->dmRepository()->find($id);
         // ERROR - unknown
-        if($document == "")
-        {
-            throw $this->createNotFoundException($this->get('translator')->trans($this->translation[1] . '.error.unknown', array(), $this->translation[0]));
+        if ($document == "") {
+            throw $this->createNotFoundException($this->fhm_tools->trans('.error.unknown'));
         }
         $this->document = $document;
 
@@ -187,48 +260,45 @@ class RefAdminController extends FhmController
     public function updateAction(Request $request, $id)
     {
         // ERROR - Unknown route
-        if(!$this->routeExists($this->source . '_admin_' . $this->route) || !$this->routeExists($this->source . '_admin_' . $this->route . '_update'))
-        {
-            throw $this->createNotFoundException($this->get('translator')->trans('fhm.error.route', array(), 'FhmFhmBundle'));
+        if (!$this->fhm_tools->routeExists($this->source . '_admin_' . $this->route) ||
+            !$this->fhm_tools->routeExists($this->source . '_admin_' . $this->route . '_update')
+        ) {
+            throw $this->createNotFoundException($this->fhm_tools->trans('fhm.error.route', array(), 'FhmFhmBundle'));
         }
-        $document     = $this->dmRepository()->find($id);
-        $instance     = $this->instanceData($document);
+        $document     = $this->fhm_tools->dmRepository()->find($id);
+        $instance     = $this->fhm_tools->instanceData($document);
         $classType    = $this->form->type->update;
         $classHandler = $this->form->handler->update;
         // ERROR - unknown
-        if($document == "")
-        {
-            throw $this->createNotFoundException($this->get('translator')->trans($this->translation[1] . '.error.unknown', array(), $this->translation[0]));
+        if ($document == "") {
+            throw $this->createNotFoundException($this->fhm_tools->trans('.error.unknown'));
         }
-        if(!$instance->user->admin && $instance->grouping->different)
-        {
-            throw new HttpException(403, $this->get('translator')->trans($this->translation[1] . '.error.forbidden', array(), $this->translation[0]));
+        if (!$instance->user->admin && $instance->grouping->different) {
+            throw new HttpException(403, $this->fhm_tools->trans('.error.forbidden'));
         }
-        if(!$instance->user->super && $document->getDelete())
-        {
-            throw new HttpException(403, $this->get('translator')->trans($this->translation[1] . '.error.forbidden', array(), $this->translation[0]));
+        if (!$instance->user->super && $document->getDelete()) {
+            throw new HttpException(403, $this->fhm_tools->trans('.error.forbidden'));
         }
-        $this->historic($document);
+        $this->fhm_tools->historic($document);
         $form    = $this->createForm(new $classType($instance, $document), $document);
         $handler = new $classHandler($form, $request);
         $process = $handler->process();
-        if($process)
-        {
+        if ($process) {
             $data = $request->get($form->getName());
             // Persist
             $document->setUserUpdate($this->getUser());
-//            $document->setAlias($this->getAlias($document->getId(), $document->getName()));
-            $this->dmPersist($document);
+            //            $document->setAlias($this->fhm_tools->getAlias($document->getId(), $document->getName()));
+            $this->fhm_tools->dmPersist($document);
             // Historic
-            $this->historicAdd($document);
+            $this->fhm_tools->historicAdd($document);
             // Message
-            $this->get('session')->getFlashBag()->add('notice', $this->get('translator')->trans($this->translation[1] . '.admin.update.flash.ok', array(), $this->translation[0]));
+            $this->get('session')->getFlashBag()->add('notice', $this->fhm_tools->trans('.admin.update.flash.ok'));
             // Redirect
-            $redirect = $this->redirect($this->generateUrl($this->source . '_admin_' . $this->route));
-            $redirect = isset($data['submitSave']) ? $this->redirect($this->generateUrl($this->source . '_admin_' . $this->route . '_update', array('id' => $document->getId()))) : $redirect;
-            $redirect = isset($data['submitDuplicate']) ? $this->redirect($this->generateUrl($this->source . '_admin_' . $this->route . '_duplicate', array('id' => $document->getId()))) : $redirect;
-            $redirect = isset($data['submitNew']) ? $this->redirect($this->generateUrl($this->source . '_admin_' . $this->route . '_create')) : $redirect;
-            $redirect = isset($data['submitConfig']) ? $this->redirect($this->generateUrl($this->source . '_admin_' . $this->route . '_detail', array('id' => $document->getId()))) : $redirect;
+            $redirect = $this->redirect($this->fhm_tools->getUrl($this->source . '_admin_' . $this->route));
+            $redirect = isset($data['submitSave']) ? $this->redirect($this->fhm_tools->getUrl($this->source . '_admin_' . $this->route . '_update', array('id' => $document->getId()))) : $redirect;
+            $redirect = isset($data['submitDuplicate']) ? $this->redirect($this->fhm_tools->getUrl($this->source . '_admin_' . $this->route . '_duplicate', array('id' => $document->getId()))) : $redirect;
+            $redirect = isset($data['submitNew']) ? $this->redirect($this->fhm_tools->getUrl($this->source . '_admin_' . $this->route . '_create')) : $redirect;
+            $redirect = isset($data['submitConfig']) ? $this->redirect($this->fhm_tools->getUrl($this->source . '_admin_' . $this->route . '_detail', array('id' => $document->getId()))) : $redirect;
 
             return $redirect;
         }
@@ -239,24 +309,24 @@ class RefAdminController extends FhmController
             'instance'    => $instance,
             'breadcrumbs' => array(
                 array(
-                    'link' => $this->get('router')->generate('project_home'),
-                    'text' => $this->get('translator')->trans('project.home.breadcrumb', array(), 'ProjectDefaultBundle'),
+                    'link' => $this->fhm_tools->getUrl('project_home'),
+                    'text' => $this->fhm_tools->trans('project.home.breadcrumb', array(), 'ProjectDefaultBundle'),
                 ),
                 array(
-                    'link' => $this->get('router')->generate('fhm_admin'),
-                    'text' => $this->get('translator')->trans('fhm.admin.breadcrumb', array(), 'FhmFhmBundle'),
+                    'link' => $this->fhm_tools->getUrl('fhm_admin'),
+                    'text' => $this->fhm_tools->trans('fhm.admin.breadcrumb', array(), 'FhmFhmBundle'),
                 ),
                 array(
-                    'link' => $this->get('router')->generate($this->source . '_admin_' . $this->route),
-                    'text' => $this->get('translator')->trans($this->translation[1] . '.admin.index.breadcrumb', array(), $this->translation[0]),
+                    'link' => $this->fhm_tools->getUrl($this->source . '_admin_' . $this->route),
+                    'text' => $this->fhm_tools->trans('.admin.index.breadcrumb'),
                 ),
                 array(
-                    'link' => $this->get('router')->generate($this->source . '_admin_' . $this->route . '_detail', array('id' => $id)),
-                    'text' => $this->get('translator')->trans($this->translation[1] . '.admin.detail.breadcrumb', array('%name%' => $document->getName()), $this->translation[0]),
+                    'link' => $this->fhm_tools->getUrl($this->source . '_admin_' . $this->route . '_detail', array('id' => $id)),
+                    'text' => $this->fhm_tools->trans('.admin.detail.breadcrumb', array('%name%' => $document->getName())),
                 ),
                 array(
-                    'link'    => $this->get('router')->generate($this->source . '_admin_' . $this->route . '_update', array('id' => $id)),
-                    'text'    => $this->get('translator')->trans($this->translation[1] . '.admin.update.breadcrumb', array(), $this->translation[0]),
+                    'link'    => $this->fhm_tools->getUrl($this->source . '_admin_' . $this->route . '_update', array('id' => $id)),
+                    'text'    => $this->fhm_tools->trans('.admin.update.breadcrumb'),
                     'current' => true
                 )
             )
@@ -271,39 +341,39 @@ class RefAdminController extends FhmController
     public function detailAction($id)
     {
         // ERROR - Unknown route
-        if(!$this->routeExists($this->source . '_admin_' . $this->route) || !$this->routeExists($this->source . '_admin_' . $this->route . '_detail'))
+        if(!$this->fhm_tools->routeExists($this->source . '_admin_' . $this->route) || !$this->fhm_tools->routeExists($this->source . '_admin_' . $this->route . '_detail'))
         {
-            throw $this->createNotFoundException($this->get('translator')->trans('fhm.error.route', array(), 'FhmFhmBundle'));
+            throw $this->createNotFoundException($this->fhm_tools->trans('fhm.error.route', array(), 'FhmFhmBundle'));
         }
-        $document = $this->dmRepository()->find($id);
-        $instance = $this->instanceData($document);
+        $document = $this->fhm_tools->dmRepository()->find($id);
+        $instance = $this->fhm_tools->instanceData($document);
         // ERROR - unknown
         if($document == "")
         {
-            throw $this->createNotFoundException($this->get('translator')->trans($this->translation[1] . '.error.unknown', array(), $this->translation[0]));
+            throw $this->createNotFoundException($this->fhm_tools->trans('.error.unknown'));
         }
 
         return array(
             'document'           => $document,
             'instance'           => $instance,
-            'historics'          => $this->historicData($document),
-            'paginationHistoric' => $this->historicPagination($document),
+            'historics'          => $this->fhm_tools->historicData($document),
+            'paginationHistoric' => $this->fhm_tools->historicPagination($document),
             'breadcrumbs'        => array(
                 array(
-                    'link' => $this->get('router')->generate('project_home'),
-                    'text' => $this->get('translator')->trans('project.home.breadcrumb', array(), 'ProjectDefaultBundle'),
+                    'link' => $this->fhm_tools->getUrl('project_home'),
+                    'text' => $this->fhm_tools->trans('project.home.breadcrumb', array(), 'ProjectDefaultBundle'),
                 ),
                 array(
-                    'link' => $this->get('router')->generate('fhm_admin'),
-                    'text' => $this->get('translator')->trans('fhm.admin.breadcrumb', array(), 'FhmFhmBundle'),
+                    'link' => $this->fhm_tools->getUrl('fhm_admin'),
+                    'text' => $this->fhm_tools->trans('fhm.admin.breadcrumb', array(), 'FhmFhmBundle'),
                 ),
                 array(
-                    'link' => $this->get('router')->generate($this->source . '_admin_' . $this->route),
-                    'text' => $this->get('translator')->trans($this->translation[1] . '.admin.index.breadcrumb', array(), $this->translation[0]),
+                    'link' => $this->fhm_tools->getUrl($this->source . '_admin_' . $this->route),
+                    'text' => $this->fhm_tools->trans('.admin.index.breadcrumb'),
                 ),
                 array(
-                    'link'    => $this->get('router')->generate($this->source . '_admin_' . $this->route . '_detail', array('id' => $id)),
-                    'text'    => $this->get('translator')->trans($this->translation[1] . '.admin.detail.breadcrumb', array('%name%' => $document->getName()), $this->translation[0]),
+                    'link'    => $this->fhm_tools->getUrl($this->source . '_admin_' . $this->route . '_detail', array('id' => $id)),
+                    'text'    => $this->fhm_tools->trans('.admin.detail.breadcrumb', array('%name%' => $document->getName())),
                     'current' => true
                 )
             )
@@ -318,37 +388,37 @@ class RefAdminController extends FhmController
     public function deleteAction($id)
     {
         // ERROR - Unknown route
-        if(!$this->routeExists($this->source . '_admin_' . $this->route))
+        if(!$this->fhm_tools->routeExists($this->source . '_admin_' . $this->route))
         {
-            throw $this->createNotFoundException($this->get('translator')->trans('fhm.error.route', array(), 'FhmFhmBundle'));
+            throw $this->createNotFoundException($this->fhm_tools->trans('fhm.error.route', array(), 'FhmFhmBundle'));
         }
-        $document = $this->dmRepository()->find($id);
+        $document = $this->fhm_tools->dmRepository()->find($id);
         // ERROR - Unknown
         if($document == "")
         {
-            throw $this->createNotFoundException($this->get('translator')->trans($this->translation[1] . '.error.unknown', array(), $this->translation[0]));
+            throw $this->createNotFoundException($this->fhm_tools->trans( '.error.unknown'));
         }
         // ERROR - Forbidden
         elseif($document->getDelete() && !$this->getUser()->isSuperAdmin())
         {
-            throw new HttpException(403, $this->get('translator')->trans($this->translation[1] . '.error.forbidden', array(), $this->translation[0]));
+            throw new HttpException(403, $this->fhm_tools->trans( '.error.forbidden'));
         }
         // Delete
         if($document->getDelete())
         {
-            $this->dmRemove($document);
+            $this->fhm_tools->dmRemove($document);
             // Message
-            $this->get('session')->getFlashBag()->add('notice', $this->get('translator')->trans($this->translation[1] . '.admin.delete.flash.ok', array(), $this->translation[0]));
+            $this->get('session')->getFlashBag()->add('notice', $this->fhm_tools->trans('.admin.delete.flash.ok'));
         }
         else
         {
             $document->setDelete(true);
-            $this->dmPersist($document);
+            $this->fhm_tools->dmPersist($document);
             // Message
-            $this->get('session')->getFlashBag()->add('notice', $this->get('translator')->trans($this->translation[1] . '.admin.delete.flash.ok', array(), $this->translation[0]));
+            $this->get('session')->getFlashBag()->add('notice', $this->fhm_tools->trans('.admin.delete.flash.ok'));
         }
 
-        return $this->redirect($this->generateUrl($this->source . '_admin_' . $this->route));
+        return $this->redirect($this->fhm_tools->getUrl($this->source . '_admin_' . $this->route));
     }
 
     /**
@@ -359,28 +429,28 @@ class RefAdminController extends FhmController
     public function undeleteAction($id)
     {
         // ERROR - Unknown route
-        if(!$this->routeExists($this->source . '_admin_' . $this->route))
+        if(!$this->fhm_tools->routeExists($this->source . '_admin_' . $this->route))
         {
-            throw $this->createNotFoundException($this->get('translator')->trans('fhm.error.route', array(), 'FhmFhmBundle'));
+            throw $this->createNotFoundException($this->fhm_tools->trans('fhm.error.route', array(), 'FhmFhmBundle'));
         }
-        $document = $this->dmRepository()->find($id);
+        $document = $this->fhm_tools->dmRepository()->find($id);
         // ERROR - Unknown
         if($document == "")
         {
-            throw $this->createNotFoundException($this->get('translator')->trans($this->translation[1] . '.error.unknown', array(), $this->translation[0]));
+            throw $this->createNotFoundException($this->fhm_tools->trans( '.error.unknown'));
         }
         // ERROR - Forbidden
         elseif($document->getDelete() && !$this->getUser()->isSuperAdmin())
         {
-            throw new HttpException(403, $this->get('translator')->trans($this->translation[1] . '.error.forbidden', array(), $this->translation[0]));
+            throw new HttpException(403, $this->fhm_tools->trans( '.error.forbidden'));
         }
         // Undelete
         $document->setDelete(false);
-        $this->dmPersist($document);
+        $this->fhm_tools->dmPersist($document);
         // Message
-        $this->get('session')->getFlashBag()->add('notice', $this->get('translator')->trans($this->translation[1] . '.admin.undelete.flash.ok', array(), $this->translation[0]));
+        $this->get('session')->getFlashBag()->add('notice', $this->fhm_tools->trans('.admin.undelete.flash.ok'));
 
-        return $this->redirect($this->generateUrl($this->source . '_admin_' . $this->route));
+        return $this->redirect($this->fhm_tools->getUrl($this->source . '_admin_' . $this->route));
     }
 
     /**
@@ -391,23 +461,23 @@ class RefAdminController extends FhmController
     public function activateAction($id)
     {
         // ERROR - Unknown route
-        if(!$this->routeExists($this->source . '_admin_' . $this->route))
+        if(!$this->fhm_tools->routeExists($this->source . '_admin_' . $this->route))
         {
-            throw $this->createNotFoundException($this->get('translator')->trans('fhm.error.route', array(), 'FhmFhmBundle'));
+            throw $this->createNotFoundException($this->fhm_tools->trans('fhm.error.route', array(), 'FhmFhmBundle'));
         }
-        $document = $this->dmRepository()->find($id);
+        $document = $this->fhm_tools->dmRepository()->find($id);
         // ERROR - Unknown
         if($document == "")
         {
-            throw $this->createNotFoundException($this->get('translator')->trans($this->translation[1] . '.error.unknown', array(), $this->translation[0]));
+            throw $this->createNotFoundException($this->fhm_tools->trans( '.error.unknown'));
         }
         // Deactivate
         $document->setActive(true);
-        $this->dmPersist($document);
+        $this->fhm_tools->dmPersist($document);
         // Message
-        $this->get('session')->getFlashBag()->add('notice', $this->get('translator')->trans($this->translation[1] . '.admin.activate.flash.ok', array(), $this->translation[0]));
+        $this->get('session')->getFlashBag()->add('notice', $this->fhm_tools->trans('.admin.activate.flash.ok'));
 
-        return $this->redirect($this->generateUrl($this->source . '_admin_' . $this->route));
+        return $this->redirect($this->fhm_tools->getUrl($this->source . '_admin_' . $this->route));
     }
 
     /**
@@ -418,23 +488,23 @@ class RefAdminController extends FhmController
     public function deactivateAction($id)
     {
         // ERROR - Unknown route
-        if(!$this->routeExists($this->source . '_admin_' . $this->route))
+        if(!$this->fhm_tools->routeExists($this->source . '_admin_' . $this->route))
         {
-            throw $this->createNotFoundException($this->get('translator')->trans('fhm.error.route', array(), 'FhmFhmBundle'));
+            throw $this->createNotFoundException($this->fhm_tools->trans('fhm.error.route', array(), 'FhmFhmBundle'));
         }
-        $document = $this->dmRepository()->find($id);
+        $document = $this->fhm_tools->dmRepository()->find($id);
         // ERROR - Unknown
         if($document == "")
         {
-            throw $this->createNotFoundException($this->get('translator')->trans($this->translation[1] . '.error.unknown', array(), $this->translation[0]));
+            throw $this->createNotFoundException($this->fhm_tools->trans( '.error.unknown'));
         }
         // Deactivate
         $document->setActive(false);
-        $this->dmPersist($document);
+        $this->fhm_tools->dmPersist($document);
         // Message
-        $this->get('session')->getFlashBag()->add('notice', $this->get('translator')->trans($this->translation[1] . '.admin.deactivate.flash.ok', array(), $this->translation[0]));
+        $this->get('session')->getFlashBag()->add('notice', $this->fhm_tools->trans('.admin.deactivate.flash.ok'));
 
-        return $this->redirect($this->generateUrl($this->source . '_admin_' . $this->route));
+        return $this->redirect($this->fhm_tools->getUrl($this->source . '_admin_' . $this->route));
     }
 
     /**
@@ -445,11 +515,11 @@ class RefAdminController extends FhmController
     public function importAction(Request $request)
     {
         // ERROR - Unknown route
-        if(!$this->routeExists($this->source . '_admin_' . $this->route) || !$this->routeExists($this->source . '_admin_' . $this->route . '_import'))
+        if(!$this->fhm_tools->routeExists($this->source . '_admin_' . $this->route) || !$this->fhm_tools->routeExists($this->source . '_admin_' . $this->route . '_import'))
         {
-            throw $this->createNotFoundException($this->get('translator')->trans('fhm.error.route', array(), 'FhmFhmBundle'));
+            throw $this->createNotFoundException($this->fhm_tools->trans('fhm.error.route', array(), 'FhmFhmBundle'));
         }
-        $instance     = $this->instanceData();
+        $instance     = $this->fhm_tools->instanceData();
         $classType    = $this->form->type->import;
         $classHandler = $this->form->handler->import;
         $form         = $this->createForm(new $classType($instance), null);
@@ -462,9 +532,9 @@ class RefAdminController extends FhmController
             {
                 if(!isset($data['alias']))
                 {
-                    $data['alias'] = $this->getAlias(isset($data['id']) ? $data['id'] : null, $data['name']);
+                    $data['alias'] = $this->fhm_tools->getAlias(isset($data['id']) ? $data['id'] : null, $data['name']);
                 }
-                $document = $this->dmRepository()->getImport($data);
+                $document = $this->fhm_tools->dmRepository()->getImport($data);
                 // Counter
                 if($document === 'error')
                 {
@@ -474,18 +544,18 @@ class RefAdminController extends FhmController
                 {
                     $count[1]++;
                     $document->setCsvData($data);
-                    $this->dmPersist($document);
+                    $this->fhm_tools->dmPersist($document);
                 }
                 else
                 {
                     $count[0]++;
                     $document = new $this->class();
                     $document->setCsvData($data);
-                    $this->dmPersist($document);
+                    $this->fhm_tools->dmPersist($document);
                 }
             }
             // Message
-            $this->get('session')->getFlashBag()->add('notice', $this->get('translator')->trans($this->translation[1] . '.admin.import.flash.ok', array('%countAdd%' => $count[0], '%countUpdate%' => $count[1], '%countError%' => $count[2]), $this->translation[0]));
+            $this->get('session')->getFlashBag()->add('notice', $this->fhm_tools->trans('.admin.import.flash.ok', array('%countAdd%' => $count[0], '%countUpdate%' => $count[1], '%countError%' => $count[2])));
         }
 
         return array(
@@ -493,20 +563,20 @@ class RefAdminController extends FhmController
             'instance'    => $instance,
             'breadcrumbs' => array(
                 array(
-                    'link' => $this->get('router')->generate('project_home'),
-                    'text' => $this->get('translator')->trans('project.home.breadcrumb', array(), 'ProjectDefaultBundle'),
+                    'link' => $this->fhm_tools->getUrl('project_home'),
+                    'text' => $this->fhm_tools->trans('project.home.breadcrumb', array(), 'ProjectDefaultBundle'),
                 ),
                 array(
-                    'link' => $this->get('router')->generate('fhm_admin'),
-                    'text' => $this->get('translator')->trans('fhm.admin.breadcrumb', array(), 'FhmFhmBundle'),
+                    'link' => $this->fhm_tools->getUrl('fhm_admin'),
+                    'text' => $this->fhm_tools->trans('fhm.admin.breadcrumb', array(), 'FhmFhmBundle'),
                 ),
                 array(
-                    'link' => $this->get('router')->generate($this->source . '_admin_' . $this->route),
-                    'text' => $this->get('translator')->trans($this->translation[1] . '.admin.index.breadcrumb', array(), $this->translation[0]),
+                    'link' => $this->fhm_tools->getUrl($this->source . '_admin_' . $this->route),
+                    'text' => $this->fhm_tools->trans('.admin.index.breadcrumb'),
                 ),
                 array(
-                    'link'    => $this->get('router')->generate($this->source . '_admin_' . $this->route . '_import'),
-                    'text'    => $this->get('translator')->trans($this->translation[1] . '.admin.import.breadcrumb', array(), $this->translation[0]),
+                    'link'    => $this->fhm_tools->getUrl($this->source . '_admin_' . $this->route . '_import'),
+                    'text'    => $this->fhm_tools->trans('.admin.import.breadcrumb'),
                     'current' => true
                 )
             )
@@ -521,11 +591,11 @@ class RefAdminController extends FhmController
     public function exportAction(Request $request)
     {
         // ERROR - Unknown route
-        if(!$this->routeExists($this->source . '_admin_' . $this->route) || !$this->routeExists($this->source . '_admin_' . $this->route . '_export'))
+        if(!$this->fhm_tools->routeExists($this->source . '_admin_' . $this->route) || !$this->fhm_tools->routeExists($this->source . '_admin_' . $this->route . '_export'))
         {
-            throw $this->createNotFoundException($this->get('translator')->trans('fhm.error.route', array(), 'FhmFhmBundle'));
+            throw $this->createNotFoundException($this->fhm_tools->trans('fhm.error.route', array(), 'FhmFhmBundle'));
         }
-        $instance     = $this->instanceData();
+        $instance     = $this->fhm_tools->instanceData();
         $classType    = $this->form->type->export;
         $classHandler = $this->form->handler->export;
         $form         = $this->createForm(new $classType($instance), null);
@@ -533,14 +603,14 @@ class RefAdminController extends FhmController
         $process      = $handler->process();
         if($process)
         {
-            $documents = $this->dmRepository()->getExport();
+            $documents = $this->fhm_tools->dmRepository()->getExport();
             $datas     = array($this->document->getCsvHeader());
             foreach($documents as $document)
             {
                 $datas[] = $document->getCsvData();
             }
 
-            return $this->csvExport($datas);
+            return $this->fhm_tools->csvExport($datas);
         }
 
         return array(
@@ -548,20 +618,20 @@ class RefAdminController extends FhmController
             'instance'    => $instance,
             'breadcrumbs' => array(
                 array(
-                    'link' => $this->get('router')->generate('project_home'),
-                    'text' => $this->get('translator')->trans('project.home.breadcrumb', array(), 'ProjectDefaultBundle'),
+                    'link' => $this->fhm_tools->getUrl('project_home'),
+                    'text' => $this->fhm_tools->trans('project.home.breadcrumb', array(), 'ProjectDefaultBundle'),
                 ),
                 array(
-                    'link' => $this->get('router')->generate('fhm_admin'),
-                    'text' => $this->get('translator')->trans('fhm.admin.breadcrumb', array(), 'FhmFhmBundle'),
+                    'link' => $this->fhm_tools->getUrl('fhm_admin'),
+                    'text' => $this->fhm_tools->trans('fhm.admin.breadcrumb', array(), 'FhmFhmBundle'),
                 ),
                 array(
-                    'link' => $this->get('router')->generate($this->source . '_admin_' . $this->route),
-                    'text' => $this->get('translator')->trans($this->translation[1] . '.admin.index.breadcrumb', array(), $this->translation[0]),
+                    'link' => $this->fhm_tools->getUrl($this->source . '_admin_' . $this->route),
+                    'text' => $this->fhm_tools->trans('.admin.index.breadcrumb'),
                 ),
                 array(
-                    'link'    => $this->get('router')->generate($this->source . '_admin_' . $this->route . '_export'),
-                    'text'    => $this->get('translator')->trans($this->translation[1] . '.admin.export.breadcrumb', array(), $this->translation[0]),
+                    'link'    => $this->fhm_tools->getUrl($this->source . '_admin_' . $this->route . '_export'),
+                    'text'    => $this->fhm_tools->trans('.admin.export.breadcrumb'),
                     'current' => true
                 )
             )
@@ -576,13 +646,13 @@ class RefAdminController extends FhmController
     public function groupingAction(Request $request)
     {
         $groupings = json_decode($request->get('list'));
-        $document  = $this->dmRepository()->find($request->get('id'));
+        $document  = $this->fhm_tools->dmRepository()->find($request->get('id'));
         $document->resetGrouping();
         foreach($groupings as $key => $grouping)
         {
             $document->addGrouping($grouping->id);
         }
-        $this->dmPersist($document);
+        $this->fhm_tools->dmPersist($document);
 
         return new Response();
     }
