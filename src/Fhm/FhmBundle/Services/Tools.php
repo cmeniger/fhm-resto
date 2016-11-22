@@ -1,6 +1,7 @@
 <?php
 namespace Fhm\FhmBundle\Services;
 
+use Fhm\UserBundle\Document\User;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Symfony\Component\HttpFoundation\Response;
@@ -360,7 +361,7 @@ class Tools implements ContainerAwareInterface
         $data->user->super         = $roleSuperAdmin;
         $data->user->admin         = $roleAdmin;
         $data->user->moderator     = $roleModerator;
-        $data->user->grouping      = $this->getUser() ? $this->getUser()->getGrouping() : '';
+        $data->user->grouping      = ($this->getUser() instanceof User) ? $this->getUser()->getGrouping() : '';
         // Error
         if ($this->section == "Admin" &&
             !$data->user->admin &&

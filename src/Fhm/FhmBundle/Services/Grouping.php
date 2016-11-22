@@ -28,7 +28,7 @@ class Grouping
         $this->site    = $this->fhm_tools->dmRepository('FhmSiteBundle:Site')->getDefault();
         $this->menu    = ($this->site) ? $this->site->getMenu() : "";
         $this->visible = false;
-        $session       = $this->fhm_tools->getContainer()->get('request')->getSession();
+        $session       = $this->fhm_tools->getContainer()->get('session');
         $session->set('site', $this->site ? $this->site->getId() : '');
         $session->set('menu', $this->menu ? $this->menu->getId() : '');
     }
