@@ -6,3 +6,7 @@ services:
     fhm_cache:
         class: Project\DefaultBundle\Services\Cache
         arguments: ['@fhm_tools', '@session']
+
+    project_default_controller_front:
+        class: Project\DefaultBundle\Controller\FrontController
+        arguments: ['@fhm_tools']

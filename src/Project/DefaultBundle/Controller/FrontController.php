@@ -32,7 +32,7 @@ class FrontController extends Controller
      */
     public function homeAction()
     {
-        return $this->get($this->tools->getParameters("grouping", "fhm_fhm"))->loadGrouping();
+        return $this->tools->getContainer()->get($this->tools->getParameters("grouping", "fhm_fhm"))->loadGrouping();
     }
 
     /**
