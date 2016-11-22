@@ -13,10 +13,11 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 class FrontController extends FhmController
 {
     /**
-     * Constructor
+     * @param \Fhm\FhmBundle\Services\Tools $tools
      */
-    public function __construct()
+    public function __construct(\Fhm\FhmBundle\Services\Tools $tools)
     {
+        $this->setFhmTools($tools);
         parent::__construct('Fhm', 'Workflow', 'workflow_action', 'WorkflowAction');
         $this->form->type->create = 'Fhm\\WorkflowBundle\\Form\\Type\\Front\\Action\\CreateType';
         $this->form->type->update = 'Fhm\\WorkflowBundle\\Form\\Type\\Front\\Action\\UpdateType';

@@ -1,7 +1,7 @@
 <?php
 namespace Project\DefaultBundle\Controller;
 
-use Fhm\FhmBundle\Controller\FhmController;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -9,8 +9,19 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 /**
  * @Route("/")
  */
-class FrontController extends FhmController
+class FrontController extends Controller
 {
+    private $tools;
+
+    /**
+     *
+     * @param \Fhm\FhmBundle\Services\Tools $tools
+     */
+    public function __construct(\Fhm\FhmBundle\Services\Tools $tools)
+    {
+        $this->tools = $tools;
+    }
+
     /**
      * @Route
      * (
@@ -21,7 +32,7 @@ class FrontController extends FhmController
      */
     public function homeAction()
     {
-        return $this->get($this->getParameters("grouping", "fhm_fhm"))->loadGrouping();
+        return $this->get($this->tools->getParameters("grouping", "fhm_fhm"))->loadGrouping();
     }
 
     /**
@@ -35,10 +46,12 @@ class FrontController extends FhmController
     {
         // Response HTTP Cache
         $response = $this->get('fhm_cache')->getResponseCache();
-        $template = ($this->container->get('templating')->exists('::ProjectDefault/Template/' . $name . '.html.twig')) ? '::ProjectDefault/Template/' . $name . '.html.twig' : '::ProjectDefault/Template/default.html.twig';
+        $template = ($this->get('templating')->exists('::ProjectDefault/Template/' . $name . '.html.twig')) ?
+            '::ProjectDefault/Template/' . $name . '.html.twig' :
+            '::ProjectDefault/Template/default.html.twig';
         $date     = new \DateTime();
         $response->setLastModified($date);
 
-        return $this->render($template, array('instance' => $this->instanceData()), $response);
+        return $this->render($template, array('instance' => $this->tools->instanceData()), $response);
     }
 }

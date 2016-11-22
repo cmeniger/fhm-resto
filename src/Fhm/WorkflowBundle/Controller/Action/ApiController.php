@@ -15,10 +15,12 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 class ApiController extends FhmController
 {
     /**
-     * Constructor
+     *
+     * @param \Fhm\FhmBundle\Services\Tools $tools
      */
-    public function __construct()
+    public function __construct(\Fhm\FhmBundle\Services\Tools $tools)
     {
+        $this->setFhmTools($tools);
         parent::__construct('Fhm', 'Workflow', 'workflow_action', 'WorkflowAction');
         $this->translation = array('FhmWorkflowBundle', 'workflow.action');
     }

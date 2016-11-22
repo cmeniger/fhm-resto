@@ -1,7 +1,7 @@
 services:
     fhm_workflow:
         class: Fhm\WorkflowBundle\Services\Workflow
-        arguments: ["@service_container"]
+        arguments: ["@fhm_tools"]
 
     fhm.twig.workflow_extension:
         class: Fhm\WorkflowBundle\Twig\WorkflowExtension

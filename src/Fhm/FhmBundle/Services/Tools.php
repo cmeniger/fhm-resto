@@ -700,7 +700,7 @@ class Tools
      *
      * @return mixed
      */
-    public function getParameter($route, $parent)
+    public function getParameters($route, $parent)
     {
         $parameters = $this->getContainer()->getParameter($parent);
         $value      = $parameters;
