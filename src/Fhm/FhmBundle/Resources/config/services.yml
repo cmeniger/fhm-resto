@@ -1,19 +1,19 @@
 services:
     fhm_grouping:
         class: Fhm\FhmBundle\Services\Grouping
-        arguments: [@service_container]
+        arguments: ["@service_container"]
 
     fhm_tools:
         class: Fhm\FhmBundle\Services\Tools
-        arguments: [@service_container]
+        arguments: ["@service_container"]
 
     fhm_schedules:
         class: Fhm\FhmBundle\Services\Schedules
-        arguments: [@service_container]
+        arguments: ["@service_container"]
 
     fhm.twig.fhm_extension:
         class: Fhm\FhmBundle\Twig\FhmExtension
-        arguments: [@service_container]
+        arguments: ["@service_container"]
         tags:
             - { name: twig.extension }
 
@@ -32,12 +32,12 @@ services:
 
     fhm.form.type.autocomplete:
         class: Fhm\FhmBundle\Form\Type\AutocompleteType
-        arguments: [@service_container]
+        arguments: ["@service_container"]
         tags:
             - { name: form.type, alias: autocomplete }
 
     fhm.form.type.schedules:
         class: Fhm\FhmBundle\Form\Type\SchedulesType
-        arguments: [@service_container]
+        arguments: ["@service_container"]
         tags:
             - { name: form.type, alias: schedules }
