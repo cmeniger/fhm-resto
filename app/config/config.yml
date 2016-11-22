@@ -8,7 +8,6 @@ imports:
     - { resource: parameters.yml }
     - { resource: security.yml }
     - { resource: services.yml }
-    - { resource: "@FhmArticleBundle/Resources/config/services.yml" }
 
 sensio_framework_extra:
      request:
@@ -51,7 +50,8 @@ framework:
     trusted_proxies: ~
     session:
         handler_id:  session.handler.native_file
-        save_path:   "%kernel.root_dir%/../var/sessions/%kernel.environment%"
+        save_path: "/var/lib/php/sessions"
+#        save_path:   "%kernel.root_dir%/../var/sessions/%kernel.environment%"
     fragments:       ~
     http_method_override: true
     assets: ~

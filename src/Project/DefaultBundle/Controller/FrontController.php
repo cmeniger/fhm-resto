@@ -17,7 +17,7 @@ class FrontController extends Controller
      *
      * @param \Fhm\FhmBundle\Services\Tools $tools
      */
-    public function __construct(\Fhm\FhmBundle\Services\Tools $tools)
+    public function __construct(\Fhm\FhmBundle\Services\Tools $tools =null)
     {
         $this->tools = $tools;
     }

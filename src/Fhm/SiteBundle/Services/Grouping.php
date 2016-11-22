@@ -2,6 +2,7 @@
 namespace Fhm\SiteBundle\Services;
 
 use Fhm\FhmBundle\Services\Grouping as FhmGrouping;
+use Fhm\FhmBundle\Services\Tools;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Session\Session;
 
@@ -15,27 +16,25 @@ class Grouping extends FhmGrouping
     private $session;
 
     /**
-     * @param ContainerInterface $container
+     * Grouping constructor.
+     * @param Tools $tools
      */
-    public function __construct(ContainerInterface $container)
+    public function __construct(Tools $tools)
     {
+        parent::__construct($tools);
         $this->visible   = true;
-        $this->container = $container;
-        $this->session   = $this->container->get('request')->getSession();
+        $this->session   = $this->fhm_tools->getContainer()->get('session');
         $site            = "";
-        if($this->session->get('site') != '')
-        {
-            $site = $this->dmRepository('FhmSiteBundle:Site')->find($this->session->get('site'));
-            if($site == '')
-            {
+        if ($this->session->get('site') != '') {
+            $site = $this->fhm_tools->dmRepository('FhmSiteBundle:Site')->find($this->session->get('site'));
+            if ($site == '') {
                 $this->session->set('site', '');
             }
         }
-        if($this->session->get('site') == '')
-        {
-            $site = $this->dmRepository('FhmSiteBundle:Site')->getDefault();
-            if($site)
-            {
+
+        if ($this->session->get('site') == '') {
+            $site = $this->fhm_tools->dmRepository('FhmSiteBundle:Site')->getDefault();
+            if ($site) {
                 $this->session->set('site', $site->getId());
             }
         }
@@ -48,12 +47,28 @@ class Grouping extends FhmGrouping
      */
     public function loadTwigGlobal()
     {
+        $container = $this->fhm_tools->getContainer();
         parent::loadTwigGlobal();
-        $this->container->get('twig')->addGlobal('grouping_name', $this->container->get('translator')->trans('site.grouping.name', array(), 'FhmSiteBundle'));
-        $this->container->get('twig')->addGlobal('grouping_add', $this->container->get('translator')->trans('site.grouping.add', array("%name%" => $this->getGrouping()), 'FhmSiteBundle'));
-        $this->container->get('twig')->addGlobal('grouping_title', $this->container->get('translator')->trans('site.grouping.title', array(), 'FhmSiteBundle'));
-        $this->container->get('twig')->addGlobal('grouping_list1', $this->container->get('translator')->trans('site.grouping.list1', array(), 'FhmSiteBundle'));
-        $this->container->get('twig')->addGlobal('grouping_list2', $this->container->get('translator')->trans('site.grouping.list2', array(), 'FhmSiteBundle'));
+        $container->get('twig')->addGlobal(
+            'grouping_name',
+            $this->fhm_tools->trans('site.grouping.name', array(), 'FhmSiteBundle')
+        );
+        $container->get('twig')->addGlobal(
+            'grouping_add',
+            $this->fhm_tools->trans('site.grouping.add', array("%name%" => $this->getGrouping()), 'FhmSiteBundle')
+        );
+        $container->get('twig')->addGlobal(
+            'grouping_title',
+            $this->fhm_tools->trans('site.grouping.title', array(), 'FhmSiteBundle')
+        );
+        $container->get('twig')->addGlobal(
+            'grouping_list1',
+            $this->fhm_tools->trans('site.grouping.list1', array(), 'FhmSiteBundle')
+        );
+        $container->get('twig')->addGlobal(
+            'grouping_list2',
+            $this->fhm_tools->trans('site.grouping.list2', array(), 'FhmSiteBundle')
+        );
 
         return $this;
     }
@@ -73,13 +88,15 @@ class Grouping extends FhmGrouping
      */
     public function setGrouping($grouping)
     {
-        if($grouping)
-        {
-            $document = $this->dmRepository('FhmSiteBundle:Site')->getById($grouping);
-            $document = ($document) ? $document : $this->dmRepository('FhmSiteBundle:Site')->getByAlias($grouping);
-            $document = ($document) ? $document : $this->dmRepository('FhmSiteBundle:Site')->getByName($grouping);
-            if($document)
-            {
+        if ($grouping) {
+            $document = $this->fhm_tools->dmRepository('FhmSiteBundle:Site')->getById($grouping);
+            $document = ($document) ?
+                $document :
+                $this->fhm_tools->dmRepository('FhmSiteBundle:Site')->getByAlias($grouping);
+            $document = ($document) ?
+                $document :
+                $this->fhm_tools->dmRepository('FhmSiteBundle:Site')->getByName($grouping);
+            if ($document) {
                 $this->session->set('site', $document->getId());
                 $this->site = $document;
                 $this->menu = $document->getMenu();
@@ -95,10 +112,9 @@ class Grouping extends FhmGrouping
      */
     public function getGroupingAvailable()
     {
-        $sites    = $this->dmRepository('FhmSiteBundle:Site')->getAll();
+        $sites    = $this->fhm_tools->dmRepository('FhmSiteBundle:Site')->getAll();
         $grouping = array();
-        foreach($sites as $site)
-        {
+        foreach ($sites as $site) {
             $grouping[$site->getName()] = $site->getName();
         }
 

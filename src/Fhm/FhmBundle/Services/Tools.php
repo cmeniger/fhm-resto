@@ -295,6 +295,9 @@ class Tools implements ContainerAwareInterface
     {
         $this->initLanguage();
         $fhmExtension    = new \Fhm\FhmBundle\Twig\FhmExtension($this->getContainer());
+//        if (! $this->getContainer()->get('security.token_storage')->getToken()) {
+//            return null;
+//        }
         $roleSuperAdmin  = $this->getContainer()->get('security.authorization_checker')->isGranted('ROLE_SUPER_ADMIN');
         $roleAdmin       = $this->getContainer()->get('security.authorization_checker')->isGranted('ROLE_ADMIN');
         $roleModerator   = $this->getContainer()->get('security.authorization_checker')->isGranted('ROLE_MODERATOR');
