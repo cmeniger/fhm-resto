@@ -24,11 +24,11 @@ security:
                 failure_path:               fos_user_security_login
             oauth:
                 resource_owners:
-                    facebook:               fhm_user_check_facebook
-                    twitter:                fhm_user_check_twitter
-                    google:                 fhm_user_check_google
-                login_path:                 fos_user_security_login
-                failure_path:               fos_user_security_login
+                    facebook:               /login/check-facebook
+                    twitter:                /login/check-twitter
+                    google:                 /login/check-google
+                login_path:                 /login
+                failure_path:               /login
                 check_path:                 fos_user_security_check
                 oauth_user_provider:
                     service:                fhm_user.oauth.user_provider
