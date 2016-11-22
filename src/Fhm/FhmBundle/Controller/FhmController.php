@@ -8,6 +8,10 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Doctrine\Common\Collections\ArrayCollection;
 
+/**
+ * Class FhmController
+ * @package Fhm\FhmBundle\Controller
+ */
 class FhmController extends Controller
 {
     protected $source;
@@ -51,12 +55,10 @@ class FhmController extends Controller
     protected function historic($document)
     {
         $class = $this->class . 'Historic';
-        if(class_exists($class))
-        {
+        if (class_exists($class)) {
             $session = $this->get('session');
             $obj     = clone($document);
-            if(!$session->get('historic_' . $document->getId()))
-            {
+            if (!$session->get('historic_' . $document->getId())) {
                 $session->set('historic_' . $document->getId(), $obj);
             }
         }
@@ -73,8 +75,7 @@ class FhmController extends Controller
     protected function historicAdd($document, $object = false)
     {
         $class = $this->class . 'Historic';
-        if(class_exists($class))
-        {
+        if (class_exists($class)) {
             $session  = $this->get('session');
             $obj      = $object ? $document : $session->get('historic_' . $document->getId());
             $historic = new $class;
@@ -97,16 +98,19 @@ class FhmController extends Controller
     protected function historicData($document)
     {
         $class = $this->class . 'Historic';
-        if(class_exists($class))
-        {
+        if (class_exists($class)) {
             $request        = $this->get('request_stack');
             $instance       = $this->instanceData();
             $dataPagination = $request->get('FhmPagination');
 
-            return $this->dmRepository($this->repository . 'Historic')->getHistoricIndex($document, $request->isXmlHttpRequest() ? $dataPagination['pagination'] : 1, $this->getParameters(array('historic', 'page'), 'fhm_fhm'), $instance->grouping->filtered, $instance->user->super);
-        }
-        else
-        {
+            return $this->dmRepository($this->repository . 'Historic')->getHistoricIndex(
+                $document,
+                $request->isXmlHttpRequest() ? $dataPagination['pagination'] : 1,
+                $this->getParameters(array('historic', 'page'), 'fhm_fhm'),
+                $instance->grouping->filtered,
+                $instance->user->super
+            );
+        } else {
             return null;
         }
     }
@@ -119,20 +123,39 @@ class FhmController extends Controller
     protected function historicPagination($document)
     {
         $class = $this->class . 'Historic';
-        if(class_exists($class))
-        {
+        if (class_exists($class)) {
             $request                  = $this->get('request_stack');
             $dataPagination           = $request->get('FhmPagination');
             $instance                 = $this->instanceData();
-            $pagination               = $this->setPagination($this->getParameters(array('historic', 'page'), 'fhm_fhm'), $this->getParameters(array('historic', 'left'), 'fhm_fhm'), $this->getParameters(array('historic', 'right'), 'fhm_fhm'))->getPagination($request->isXmlHttpRequest() ? $dataPagination['pagination'] : 1, count((array) $this->historicData($document)), $this->dmRepository($this->repository . 'Historic')->getHistoricCount($document, $instance->grouping->filtered, $instance->user->super), 'pagination', array(), $this->generateUrl($this->container->get('request_stack')->get('_route'), array('id' => $document->getId())));
+            $pagination               = $this->setPagination(
+                $this->getParameters(array('historic', 'page'), 'fhm_fhm'),
+                $this->getParameters(array('historic', 'left'), 'fhm_fhm'),
+                $this->getParameters(array('historic', 'right'), 'fhm_fhm')
+            )->getPagination(
+                $request->isXmlHttpRequest() ? $dataPagination['pagination'] : 1,
+                count((array) $this->historicData($document)),
+                $this->dmRepository($this->repository . 'Historic')->getHistoricCount(
+                    $document,
+                    $instance->grouping->filtered,
+                    $instance->user->super
+                ),
+                'pagination',
+                array(),
+                $this->generateUrl(
+                    $this->container->get('request_stack')->get('_route'),
+                    array('id' => $document->getId())
+                )
+            );
             $pagination->idData       = "content_data_historic";
             $pagination->idPagination = "content_pagination_historic";
-            $pagination->counter      = $this->get('translator')->trans('fhm.historic.pagination.counter', array('%count%' => $pagination->page, '%all%' => $pagination->count), 'FhmFhmBundle');
+            $pagination->counter      = $this->get('translator')->trans(
+                'fhm.historic.pagination.counter',
+                array('%count%' => $pagination->page, '%all%' => $pagination->count),
+                'FhmFhmBundle'
+            );
 
             return $pagination;
-        }
-        else
-        {
+        } else {
             return null;
         }
     }
@@ -144,7 +167,7 @@ class FhmController extends Controller
      */
     protected function routeExists($name)
     {
-        $router = $this->container->get('router');
+        $router = $this->get('router');
 
         return ($router->getRouteCollection()->get($name) === null) ? false : true;
     }
@@ -162,7 +185,9 @@ class FhmController extends Controller
         $roleSuperAdmin    = $this->get('security.authorization_checker')->isGranted('ROLE_SUPER_ADMIN');
         $roleAdmin         = $this->get('security.authorization_checker')->isGranted('ROLE_ADMIN');
         $roleModerator     = $this->get('security.authorization_checker')->isGranted('ROLE_MODERATOR');
-        $groupingCurrent   = $this->grouping ? $this->grouping : $this->get($this->getParameters("grouping", "fhm_fhm"))->getGrouping();
+        $groupingCurrent   = $this->grouping ?
+            $this->grouping :
+            $this->get($this->getParameters("grouping", "fhm_fhm"))->getGrouping();
         $groupingUsed      = $groupingCurrent;
         $groupingUsed      = $roleModerator ? $this->getUser()->getFirstGrouping() : $groupingUsed;
         $groupingUsed      = $roleAdmin ? "" : $groupingUsed;
@@ -171,16 +196,19 @@ class FhmController extends Controller
         $groupingFiltered  = $roleAdmin ? "" : $groupingFiltered;
         $groupingAvailable = $this->get($this->getParameters("grouping", "fhm_fhm"))->getGroupingAvailable();
         $groupingAvailable = $roleModerator ? $this->getUser()->getGrouping() : $groupingAvailable;
-        $groupingAvailable = $roleAdmin ? $this->get($this->getParameters("grouping", "fhm_fhm"))->getGroupingAvailable() : $groupingAvailable;
+        $groupingAvailable = $roleAdmin ?
+            $this->get($this->getParameters("grouping", "fhm_fhm"))->getGroupingAvailable() :
+            $groupingAvailable;
         $languageCurrent   = $this->language_disable ? false : $this->language;
         $languageFiltered  = $languageCurrent;
         $languageFiltered  = $roleModerator ? $this->getUser()->getLanguages() : $languageFiltered;
         $languageFiltered  = $roleAdmin ? "" : $languageFiltered;
         $languageAvailable = $this->getParameters(array("languages", "codes"), "fhm_fhm");
         $languageAvailable = $roleModerator ? $this->getUser()->getLanguages() : $languageAvailable;
-        $languageAvailable = $roleAdmin ? $this->getParameters(array("languages", "codes"), "fhm_fhm") : $languageAvailable;
-        foreach((array) $languageAvailable as $key => $value)
-        {
+        $languageAvailable = $roleAdmin ?
+            $this->getParameters(array("languages", "codes"), "fhm_fhm") :
+            $languageAvailable;
+        foreach ((array) $languageAvailable as $key => $value) {
             unset($languageAvailable[$key]);
             $languageAvailable[$value] = $fhmExtension->getCountry($value);
         }
@@ -199,7 +227,9 @@ class FhmController extends Controller
         $data->language->filtered  = $languageFiltered;
         $data->language->different = $document ? !$document->hasLanguage($languageCurrent) : false;
         $data->language->available = $languageAvailable;
-        $data->language->visible   = $this->language_disable ? false : $this->getParameters(array("languages", "codes"), "fhm_fhm");
+        $data->language->visible   = $this->language_disable ?
+            false :
+            $this->getParameters(array("languages", "codes"), "fhm_fhm");
         $data->grouping            = new \stdClass();
         $data->grouping->current   = $groupingCurrent;
         $data->grouping->used      = $groupingUsed;
@@ -214,9 +244,16 @@ class FhmController extends Controller
         $data->user->moderator     = $roleModerator;
         $data->user->grouping      = $this->getUser() ? $this->getUser()->getGrouping() : '';
         // Error
-        if($this->section == "Admin" && !$data->user->admin && !$data->user->moderator && $data->grouping->current != '' && !$data->user->document->hasGrouping($data->grouping->current))
-        {
-            throw new HttpException(403, $this->get('translator')->trans('fhm.error.forbidden', array(), 'FhmFhmBundle'));
+        if ($this->section == "Admin" &&
+            !$data->user->admin &&
+            !$data->user->moderator &&
+            $data->grouping->current != '' &&
+            !$data->user->document->hasGrouping($data->grouping->current)
+        ) {
+            throw new HttpException(
+                403,
+                $this->get('translator')->trans('fhm.error.forbidden', array(), 'FhmFhmBundle')
+            );
         }
 
         return $data;
@@ -234,8 +271,7 @@ class FhmController extends Controller
         $fp = fopen('php://output', 'w');
         ob_start();
         // Copy line per line
-        foreach($datas as $data)
-        {
+        foreach ($datas as $data) {
             fputcsv($fp, $data, $this->csvDelimiter);
         }
         // Close file
@@ -244,7 +280,10 @@ class FhmController extends Controller
         // Response
         $response = new Response();
         $response->headers->set('Content-Type', 'text/csv');
-        $response->headers->set('Content-Disposition', 'attachment;filename=' . (($filename == '') ? date('YmdHis') . '_export.csv' : $filename));
+        $response->headers->set(
+            'Content-Disposition',
+            'attachment;filename=' . (($filename == '') ? date('YmdHis') . '_export.csv' : $filename)
+        );
         $response->setContent($csv);
 
         return $response;
@@ -259,8 +298,7 @@ class FhmController extends Controller
     protected function formRename($name, $datas)
     {
         $post = array();
-        foreach((array) $datas as $key => $value)
-        {
+        foreach ((array) $datas as $key => $value) {
             $post[$name . "[" . $key . "]"] = $value;
         }
 
@@ -297,13 +335,16 @@ class FhmController extends Controller
     public function initLanguage()
     {
         $this->initLanguageDisable();
-        if(!$this->language_disable && $this->getParameters(array('languages', 'codes'), 'fhm_fhm'))
-        {
+        if (!$this->language_disable && $this->getParameters(array('languages', 'codes'), 'fhm_fhm')) {
             $locale         = $this->getParameters(array(), 'locale');
             $session        = $this->container->get('session')->get('_locale');
             $used           = $session ? $session : $locale;
-            $used           = $this->get('security.authorization_checker')->isGranted('ROLE_MODERATOR') ? $this->getUser()->getLanguages() : $used;
-            $used           = $this->get('security.authorization_checker')->isGranted('ROLE_ADMIN') ? $this->container->get('session')->get('_localeAdmin') : $used;
+            $used           = $this->get('security.authorization_checker')->isGranted('ROLE_MODERATOR') ?
+                $this->getUser()->getLanguages() :
+                $used;
+            $used           = $this->get('security.authorization_checker')->isGranted('ROLE_ADMIN') ?
+                $this->container->get('session')->get('_localeAdmin') :
+                $used;
             $this->language = $used;
         }
 
@@ -316,8 +357,7 @@ class FhmController extends Controller
     public function initLanguageDisable()
     {
         $exceptions = $this->getParameters(array('languages', 'exceptions'), 'fhm_fhm');
-        if(in_array($this->view, (array) $exceptions))
-        {
+        if (in_array($this->view, (array) $exceptions)) {
             $this->setLanguageDisable(true);
         }
 
@@ -420,8 +460,7 @@ class FhmController extends Controller
      */
     protected function setSort($field, $order = 'asc')
     {
-        if($field)
-        {
+        if ($field) {
             $this->sort = array($field, $order);
         }
 
@@ -437,21 +476,29 @@ class FhmController extends Controller
      */
     protected function setPagination($page = null, $left = null, $right = null)
     {
-        if(!$this->pagination)
-        {
-            if($this->section == "Front" || $this->section == "Api")
-            {
+        if (!$this->pagination) {
+            if ($this->section == "Front" || $this->section == "Api") {
                 $this->pagination        = new \stdClass();
-                $this->pagination->page  = !is_null($page) ? $page : $this->getParameters(array('pagination', 'front', 'page'), 'fhm_fhm');
-                $this->pagination->left  = !is_null($left) ? $left : $this->getParameters(array('pagination', 'front', 'left'), 'fhm_fhm');
-                $this->pagination->right = !is_null($right) ? $right : $this->getParameters(array('pagination', 'front', 'right'), 'fhm_fhm');
-            }
-            else
-            {
+                $this->pagination->page  = !is_null($page) ?
+                    $page :
+                    $this->getParameters(array('pagination', 'front', 'page'), 'fhm_fhm');
+                $this->pagination->left  = !is_null($left) ?
+                    $left :
+                    $this->getParameters(array('pagination', 'front', 'left'), 'fhm_fhm');
+                $this->pagination->right = !is_null($right) ?
+                    $right :
+                    $this->getParameters(array('pagination', 'front', 'right'), 'fhm_fhm');
+            } else {
                 $this->pagination        = new \stdClass();
-                $this->pagination->page  = !is_null($page) ? $page : $this->getParameters(array('pagination', 'admin', 'page'), 'fhm_fhm');
-                $this->pagination->left  = !is_null($left) ? $left : $this->getParameters(array('pagination', 'admin', 'left'), 'fhm_fhm');
-                $this->pagination->right = !is_null($right) ? $right : $this->getParameters(array('pagination', 'admin', 'right'), 'fhm_fhm');
+                $this->pagination->page  = !is_null($page) ?
+                    $page :
+                    $this->getParameters(array('pagination', 'admin', 'page'), 'fhm_fhm');
+                $this->pagination->left  = !is_null($left) ?
+                    $left :
+                    $this->getParameters(array('pagination', 'admin', 'left'), 'fhm_fhm');
+                $this->pagination->right = !is_null($right) ?
+                    $right :
+                    $this->getParameters(array('pagination', 'admin', 'right'), 'fhm_fhm');
             }
         }
 
@@ -480,14 +527,22 @@ class FhmController extends Controller
             )
         );
         $pagination               = new \stdClass();
-        $pagination->path         = $path ? $path : $this->generateUrl($this->container->get('request_stack')->get('_route'));
+        $pagination->path         = $path ?
+            $path :
+            $this->generateUrl($this->container->get('request_stack')->get('_route'));
         $pagination->current      = $page;
         $pagination->post         = json_encode($post);
         $pagination->page         = $countPage;
         $pagination->count        = $countAll;
-        $pagination->counter      = $this->get('translator')->trans($this->translation[1] . '.pagination.counter', array('%count%' => $countPage, '%all%' => $pagination->count), $this->translation[0]);
+        $pagination->counter      = $this->get('translator')->trans(
+            $this->translation[1] . '.pagination.counter',
+            array('%count%' => $countPage, '%all%' => $pagination->count),
+            $this->translation[0]
+        );
         $pagination->tag          = "FhmPagination[" . $tag . "]";
-        $pagination->max          = $this->pagination->page > 0 ? ceil($pagination->count / $this->pagination->page) : 0;
+        $pagination->max          = $this->pagination->page > 0 ?
+            ceil($pagination->count / $this->pagination->page) :
+            0;
         $pagination->section      = $this->section;
         $pagination->idData       = "content_data";
         $pagination->idPagination = "content_pagination";
@@ -502,8 +557,7 @@ class FhmController extends Controller
         $obj->text    = 1;
         $datas[]      = $obj;
         // Pagination - Separator
-        if(($pagination->current - $left) > 2)
-        {
+        if (($pagination->current - $left) > 2) {
             $obj          = new \stdClass();
             $obj->page    = ceil(($pagination->current - $left) / 2);
             $obj->current = false;
@@ -511,10 +565,8 @@ class FhmController extends Controller
             $datas[]      = $obj;
         }
         // Pagination - Bloc current
-        for($i = ($pagination->current - $left); $i <= ($pagination->current + $right); $i++)
-        {
-            if($i > 1 && $i < $pagination->max)
-            {
+        for ($i = ($pagination->current - $left); $i <= ($pagination->current + $right); $i++) {
+            if ($i > 1 && $i < $pagination->max) {
                 $obj          = new \stdClass();
                 $obj->page    = $i;
                 $obj->current = ($i == $pagination->current) ? true : false;
@@ -523,20 +575,19 @@ class FhmController extends Controller
             }
         }
         // Pagination - Separator
-        if(($pagination->current + $right) < ($pagination->max - 1))
-        {
+        if (($pagination->current + $right) < ($pagination->max - 1)) {
             $obj          = new \stdClass();
-            $obj->page    = floor(($pagination->max - ($pagination->current + $right)) / 2) + $pagination->current + $right;
+            $obj->page    = floor(($pagination->max - ($pagination->current + $right)) / 2) +
+                $pagination->current + $right;
             $obj->current = false;
             $obj->text    = '...';
             $datas[]      = $obj;
         }
         // Pagination - Page max
-        if($pagination->max > 1)
-        {
+        if ($pagination->max > 1) {
             $obj          = new \stdClass();
             $obj->page    = $pagination->max;
-            $obj->current = ($pagination->current == $pagination->max) ? true : false;;
+            $obj->current = ($pagination->current == $pagination->max);
             $obj->text = $pagination->max;
             $datas[]   = $obj;
         }
@@ -555,7 +606,9 @@ class FhmController extends Controller
         $referer = $request->headers->get('referer');
         $route   = ($referer && $request->getBaseUrl() == '') ? $referer : '';
         $route   = ($referer == '' && $request->getBaseUrl()) ? $request->getBaseUrl() : $route;
-        $route   = ($referer && $request->getBaseUrl()) ? str_replace($request->getBaseUrl(), '', substr($referer, strpos($referer, $request->getBaseUrl()))) : $route;
+        $route   = ($referer && $request->getBaseUrl()) ?
+            str_replace($request->getBaseUrl(), '', substr($referer, strpos($referer, $request->getBaseUrl()))) :
+            $route;
 
         return $route;
     }
@@ -581,8 +634,7 @@ class FhmController extends Controller
             'Œ' => 'oe', 'œ' => 'oe',
             '$' => 's'
         );
-        while($alias == "" || !$unique)
-        {
+        while ($alias == "" || !$unique) {
             $alias  = $name;
             $alias  = strtr($alias, $replace);
             $alias  = preg_replace('#[^A-Za-z0-9]+#', '-', $alias);
@@ -610,8 +662,7 @@ class FhmController extends Controller
         $alias  = "";
         $unique = false;
         $code   = $multiple ? 1 : 0;
-        while($alias == "" || !$unique)
-        {
+        while ($alias == "" || !$unique) {
             $alias  = $name;
             $alias  = ($code > 0) ? $alias . '_' . str_pad($code, $length, '0', STR_PAD_LEFT) : $alias;
             $unique = $this->dmRepository($repository)->isUnique($id, $alias);
@@ -629,8 +680,7 @@ class FhmController extends Controller
     protected function getCollection($datas)
     {
         $collection = new ArrayCollection();
-        foreach($datas as $data)
-        {
+        foreach ($datas as $data) {
             $collection->add($data);
         }
 
@@ -645,10 +695,8 @@ class FhmController extends Controller
     protected function getList($datas)
     {
         $list = array();
-        foreach($datas as $data)
-        {
-            if($data->getActive() && !$data->getDelete())
-            {
+        foreach ($datas as $data) {
+            if ($data->getActive() && !$data->getDelete()) {
                 $list[$data->getId()] = $data;
             }
         }
@@ -666,8 +714,7 @@ class FhmController extends Controller
     {
         $parameters = $this->getParameter($parent);
         $value      = $parameters;
-        foreach((array) $route as $sub)
-        {
+        foreach ((array) $route as $sub) {
             $value = $value[$sub];
         }
         return $value;
@@ -690,7 +737,11 @@ class FhmController extends Controller
     {
         $this->initLanguage();
 
-        return $this->dm()->getRepository(($repository == null) ? $this->repository : $repository)->setParent($this->parent)->setLanguage($this->language);
+        return $this->dm()->getRepository(
+            ($repository == null) ?
+                $this->repository :
+                $repository
+        )->setParent($this->parent)->setLanguage($this->language);
     }
 
     /**
@@ -700,8 +751,7 @@ class FhmController extends Controller
      */
     protected function dmDetach(&$obj)
     {
-        if($obj != "")
-        {
+        if ($obj != "") {
             $this->dm()->detach($obj);
         }
 
@@ -715,8 +765,7 @@ class FhmController extends Controller
      */
     protected function dmPersist(&$obj)
     {
-        if($obj != "")
-        {
+        if ($obj != "") {
             $this->dm()->persist($obj);
             $this->dm()->flush();
         }
@@ -731,8 +780,7 @@ class FhmController extends Controller
      */
     protected function dmRemove(&$obj)
     {
-        if($obj != "")
-        {
+        if ($obj != "") {
             $this->dm()->remove($obj);
             $this->dm()->flush();
         }

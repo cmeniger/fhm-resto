@@ -37,7 +37,11 @@ class AdminController extends RefAdminController
             'breadcrumbs' => array(
                 array(
                     'link' => $this->get('router')->generate('project_home'),
-                    'text' => $this->get('translator')->trans('project.home.breadcrumb', array(), 'ProjectDefaultBundle'),
+                    'text' => $this->get('translator')->trans(
+                        'project.home.breadcrumb',
+                        array(),
+                        'ProjectDefaultBundle'
+                    ),
                 ),
                 array(
                     'link'    => $this->get('router')->generate('fhm_admin'),

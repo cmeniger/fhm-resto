@@ -28,7 +28,7 @@ class ApiController extends RefApiController
      *      defaults={"locale"=null}
      * )
      */
-    public function localeAction(Request $request, $locale)
+    public function localeAction($locale)
     {
         if ($locale) {
             $this->get('session')->set('_locale', $locale);
