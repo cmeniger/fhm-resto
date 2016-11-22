@@ -255,7 +255,7 @@ partner:
             title:                              Partenaires
 
     pagination:
-        counter:                                Nombre de partenaires: %count% / %all%
+        counter:                                "Nombre de partenaires: %count% / %all%"
 
     error:
         unknown:                                Le partenaire n'existe pas.
@@ -497,7 +497,7 @@ partner:
                 title:                          Groupes de partenaires
 
         pagination:
-            counter:                            Nombre de groupes: %count% / %all%
+            counter:                            "Nombre de groupes: %count% / %all%"
 
         error:
             unknown:                            Le groupe n'existe pas.

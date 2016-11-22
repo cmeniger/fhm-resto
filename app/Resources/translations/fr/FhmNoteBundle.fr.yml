@@ -265,7 +265,7 @@ note:
 
 
     pagination:
-        counter:                                Nombre de notes: %count% / %all%
+        counter:                                "Nombre de notes: %count% / %all%"
 
     autocomplete:
         nodata:                                 Aucun résultat

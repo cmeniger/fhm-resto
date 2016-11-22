@@ -223,9 +223,9 @@ article:
                     text:                       La modification d'un article nécessite la validation d'un modérateur.
 
         detail:
-            title:                              %name%
+            title:                              "%name%"
             link:                               Détail
-            breadcrumb:                         %name%
+            breadcrumb:                         "%name%"
             data:
                 title:                          Informations
                 create:                         Création
@@ -243,7 +243,7 @@ article:
             title:                              Article
 
     pagination:
-        counter:                                Nombre de articles: %count% / %all%
+        counter:                                "Nombre de articles: '%count%' / '%all%'"
 
     error:
         unknown:                                L'article n'existe pas.

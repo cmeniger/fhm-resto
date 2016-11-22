@@ -228,7 +228,7 @@ workflow:
             title:                              Workflows
 
     pagination:
-        counter:                                Nombre de workflows: %count% / %all%
+        counter:                                "Nombre de workflows: %count% / %all%"
 
     autocomplete:
         nodata:                                 Aucun résultat
@@ -276,7 +276,7 @@ workflow:
     step:
         admin:
             index:
-                title:                          Gestion des workflows : étapes
+                title:                          Gestion des workflows ':' étapes
                 link:                           Etapes
                 breadcrumb:                     Etapes
                 nodata:                         Aucune donnée
@@ -422,7 +422,7 @@ workflow:
 
         front:
             index:
-                title:                          Workflow : étapes
+                title:                          Workflow ':' étapes
                 link:                           Etapes
                 breadcrumb:                     Etapes
                 nodata:                         Aucune donnée
@@ -499,7 +499,7 @@ workflow:
                 title:                          Etapes
 
         pagination:
-            counter:                            Nombre d'étapes: %count% / %all%
+            counter:                            "Nombre d'étapes: %count% / %all%"
 
         autocomplete:
             nodata:                             Aucun résultat
@@ -512,7 +512,7 @@ workflow:
     task:
         admin:
             index:
-                title:                          Gestion des workflows : tâches
+                title:                          Gestion des workflows ':' tâches
                 link:                           Tâches
                 breadcrumb:                     Tâches
                 nodata:                         Aucune donnée
@@ -671,7 +671,7 @@ workflow:
 
         front:
             index:
-                title:                          Workflow : tâches
+                title:                          Workflow ':' tâches
                 link:                           Tâches
                 breadcrumb:                     Tâches
                 nodata:                         Aucune donnée
@@ -748,7 +748,7 @@ workflow:
                 title:                          Tâches
 
         pagination:
-            counter:                            Nombre de tâches: %count% / %all%
+            counter:                            "Nombre de tâches: %count% / %all%"
 
         autocomplete:
             nodata:                             Aucun résultat
@@ -761,7 +761,7 @@ workflow:
     action:
         admin:
             index:
-                title:                          Gestion des workflows : actions
+                title:                          Gestion des workflows ':' actions
                 link:                           Actions
                 breadcrumb:                     Actions
                 nodata:                         Aucune donnée
@@ -943,7 +943,7 @@ workflow:
 
         front:
             index:
-                title:                          Workflow : actions
+                title:                          Workflow ':' actions
                 link:                           Actions
                 breadcrumb:                     Actions
                 nodata:                         Aucune donnée
@@ -1020,7 +1020,7 @@ workflow:
                 title:                          Actions
 
         pagination:
-            counter:                            Nombre de actions: %count% / %all%
+            counter:                            "Nombre de actions: %count% / %all%"
 
         autocomplete:
             nodata:                             Aucun résultat
@@ -1045,7 +1045,7 @@ workflow:
     log:
         admin:
             index:
-                title:                          Gestion des workflows : logs
+                title:                          Gestion des workflows ':' logs
                 link:                           Logs
                 breadcrumb:                     Logs
                 nodata:                         Aucune donnée
@@ -1193,7 +1193,7 @@ workflow:
 
         front:
             index:
-                title:                          Workflow : logs
+                title:                          Workflow ':' logs
                 link:                           Logs
                 breadcrumb:                     Logs
                 nodata:                         Aucune donnée
@@ -1267,10 +1267,10 @@ workflow:
 
         api:
             index:
-                title:                          Workflow : logs
+                title:                          Workflow ':' logs
 
         pagination:
-            counter:                            Nombre de logs: %count% / %all%
+            counter:                            "Nombre de logs: %count% / %all%"
 
         autocomplete:
             nodata:                             Aucun résultat
@@ -1290,14 +1290,14 @@ workflow:
             6:                                  tâche > média > ajouter
 
         text:
-            status:                             Changement de statut : %before% > %after%
-            media:                              Ajout d'un nouveau fichier : %name%
-            filter:                             Filtrer :
+            status:                             Changement de statut ':' %before% > %after%
+            media:                              Ajout d'un nouveau fichier ':' %name%
+            filter:                             Filtrer ':'
 
     comment:
         admin:
             index:
-                title:                          Gestion des workflows : commentaires
+                title:                          Gestion des workflows ':' commentaires
                 link:                           Commentaires
                 breadcrumb:                     Commentaires
                 nodata:                         Aucune donnée
@@ -1437,7 +1437,7 @@ workflow:
 
         front:
             index:
-                title:                          Workflow : commentaires
+                title:                          Workflow ':' commentaires
                 link:                           Commentaires
                 breadcrumb:                     Commentaires
                 nodata:                         Aucune donnée
@@ -1511,10 +1511,10 @@ workflow:
 
         api:
             index:
-                title:                          Workflow : commentaires
+                title:                          Workflow ':' commentaires
 
         pagination:
-            counter:                            Nombre de commentaires: %count% / %all%
+            counter:                            "Nombre de commentaires: %count% / %all%"
 
         autocomplete:
             nodata:                             Aucun résultat

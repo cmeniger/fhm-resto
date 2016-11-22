@@ -108,7 +108,7 @@ fhm:
                 delete:                         Confirmer la suppression de l\'historique ?
                 undelete:                       Confirmer le déblocage de l\'historique ?
         pagination:
-            counter:                            Nombre d'historiques: %count% / %all%
+            counter:                            "Nombre d'historiques: %count% / %all%"
         modal:
             title:                              Historiques - Comparaison
             left:                               Historique
@@ -130,7 +130,7 @@ fhm:
                     description:                Référencement - Description
                     keywords:                   Référencement - Mots clés
     pagination:
-            counter:                                Nombre de Places: %count% / %all%
+        counter:                                "Nombre de Places: %count% / %all%"
 
     sex:
         label:                                  Sexe

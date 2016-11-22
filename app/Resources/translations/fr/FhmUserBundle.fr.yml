@@ -241,7 +241,7 @@ user:
                 title:                          Félicitations %username%
                 mail:
                     title:                      Votre inscription est bien enregistrée.
-                    text:                       Un e-mail automatique de confirmation vient d'être envoyé à l'adresse suivante:
+                    text:                       Un e-mail automatique de confirmation vient d'être envoyé à l'adresse suivante':'
                 faq:
                     title:                      Vous ne trouvez pas votre e-mail de confirmation ?
                     list1:                      Merci de vérifier dans les "<strong>courriers indésirables</strong>" ou "<strong>spam</strong>".
@@ -253,7 +253,7 @@ user:
                     text:                       Vous pouvez vous connecter dès à présent.
                 start:
                     title:                      Bien commencer
-                    text:                       Nous vous conseillons de:
+                    text:                       Nous vous conseillons de':'
                     list1:                      Compléter votre <a href="%route%"><strong>profil</strong></a>.
 
         update:
@@ -367,7 +367,7 @@ user:
                 breadcrumb:                     Mot de passe oublié
                 mail:
                     title:                      Votre demande est bien enregistrée.
-                    text:                       Un e-mail automatique de confirmation vient d'être envoyé à l'adresse suivante:
+                    text:                       Un e-mail automatique de confirmation vient d'être envoyé à l'adresse suivante':'
                 faq:
                     title:                      Vous ne trouvez pas votre e-mail de confirmation ?
                     list1:                      Merci de vérifier dans les "<strong>courriers indésirables</strong>" ou "<strong>spam</strong>".
@@ -399,7 +399,7 @@ user:
             title:                              Utilisateur - Api
 
     pagination:
-        counter:                                Nombre d'utilisateurs: %count% / %all%
+        counter:                                "Nombre d'utilisateurs: %count% / %all%"
 
     error:
         unknown:                                L'utilisateur n'existe pas.
@@ -413,12 +413,12 @@ user:
     email:
         register:
             object:                             Bienvenue sur ChichaMaps
-            body:                               Hello %firstname%,<br><br>Votre compte a bien été créé.<br>Pour l'activer, vous devez cliquer sur le bouton suivant :
+            body:                               Hello %firstname%,<br><br>Votre compte a bien été créé.<br>Pour l'activer, vous devez cliquer sur le bouton suivant ':'
             button:                             Activer mon compte
 
         reset:
             object:                             ChichaMaps - Réinitialiser son mot de passe
-            body:                               Hello %firstname%,<br><br>Pour réinitialiser votre mot de passe, vous devez cliquer sur le bouton suivant :
+            body:                               Hello %firstname%,<br><br>Pour réinitialiser votre mot de passe, vous devez cliquer sur le bouton suivant ':'
             button:                             Réinitialiser
 
 "Bad credentials":                              Identifiant et/ou mot de passe incorrect

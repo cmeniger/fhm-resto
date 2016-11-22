@@ -152,7 +152,7 @@ mappicker:
                 ok:                             La carte a bien été supprimée.
 
     pagination:
-        counter:                                Nombre de cartes: %count% / %all%
+        counter:                                Nombre de cartes:
 
     error:
         unknown:                                La carte n'existe pas.

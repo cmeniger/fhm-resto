@@ -287,10 +287,10 @@ card:
         form:
             search:                             Rechercher
             nodata:                             Aucune donnée
-            counter:                            Nombre: %count%
+            counter:                            "Nombre: %count%"
 
     pagination:
-        counter:                                Nombre de cartes: %count% / %all%
+        counter:                                "Nombre de cartes: %count% / %all%"
 
     autocomplete:
         nodata:                                 Aucun résultat
@@ -303,7 +303,7 @@ card:
     category:
         admin:
             index:
-                title:                          Gestion des cartes : catégories
+                title:                          Gestion des cartes ':' catégories
                 link:                           Catégories
                 breadcrumb:                     Catégories
                 nodata:                         Aucune donnée
@@ -489,7 +489,7 @@ card:
 
         front:
             index:
-                title:                          Card : catégories
+                title:                          Card ':' catégories
                 link:                           Catégories
                 breadcrumb:                     Catégories
                 nodata:                         Aucune donnée
@@ -563,7 +563,7 @@ card:
 
         api:
             index:
-                title:                          Cartes : catégories
+                title:                          Cartes ':' catégories
 
             create:
                 form:
@@ -602,7 +602,7 @@ card:
                         categories:             Catégories rattachées
 
         pagination:
-            counter:                            Nombre de catégories: %count% / %all%
+            counter:                            'Nombre de catégories: %count% / %all%'
 
         autocomplete:
             nodata:                             Aucun résultat
@@ -615,7 +615,7 @@ card:
     product:
         admin:
             index:
-                title:                          Gestion des cartes : produits
+                title:                          Gestion des cartes ':' produits
                 link:                           Produits
                 breadcrumb:                     Produits
                 nodata:                         Aucune donnée
@@ -794,7 +794,7 @@ card:
 
         front:
             index:
-                title:                          Card : produits
+                title:                          Card ':' produits
                 link:                           Produits
                 breadcrumb:                     Produits
                 nodata:                         Aucune donnée
@@ -868,7 +868,7 @@ card:
 
         api:
             index:
-                title:                          Card : produits
+                title:                          Card ':' produits
 
             create:
                 form:
@@ -907,7 +907,7 @@ card:
                         ingredients:            Ingrédients rattachés
 
         pagination:
-            counter:                            Nombre de produits: %count% / %all%
+            counter:                            'Nombre de produits: %count% / %all%'
 
         autocomplete:
             nodata:                             Aucun résultat
@@ -920,7 +920,7 @@ card:
     ingredient:
         admin:
             index:
-                title:                          Gestion des cartes : ingrédients
+                title:                          Gestion des cartes ':' ingrédients
                 link:                           Ingrédients
                 breadcrumb:                     Ingrédients
                 nodata:                         Aucune donnée
@@ -1090,7 +1090,7 @@ card:
 
         front:
             index:
-                title:                          Card : ingrédients
+                title:                          Card ':' ingrédients
                 link:                           Ingrédients
                 breadcrumb:                     Ingrédients
                 nodata:                         Aucune donnée
@@ -1164,7 +1164,7 @@ card:
 
         api:
             index:
-                title:                          Card : ingrédients
+                title:                          Card ':' ingrédients
 
             create:
                 form:
@@ -1195,7 +1195,7 @@ card:
                         products:               Produits rattachés
 
         pagination:
-            counter:                            Nombre d'ingrédients: %count% / %all%
+            counter:                            "Nombre d'ingrédients: %count% / %all%"
 
         autocomplete:
             nodata:                             Aucun résultat

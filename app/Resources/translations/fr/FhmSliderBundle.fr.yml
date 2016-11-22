@@ -255,7 +255,7 @@ slider:
         more:                                   En savoir +
 
     pagination:
-        counter:                                Nombre de sliders: %count% / %all%
+        counter:                                "Nombre de sliders: %count% / %all%"
 
     error:
         unknown:                                Le slider n'existe pas.
@@ -511,7 +511,7 @@ slider:
                 flash:
                     ok:                         L'image a bien été supprimée.
         pagination:
-            counter:                            Nombre d'images: %count% / %all%
+            counter:                            "Nombre d'images: %count% / %all%"
 
         error:
             unknown:                            L'image n'existe pas.

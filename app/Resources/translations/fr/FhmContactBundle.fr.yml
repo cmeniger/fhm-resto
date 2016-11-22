@@ -239,7 +239,7 @@ contact:
             title:                              Contact - Api
 
     pagination:
-        counter:                                Nombre de contacts: %count% / %all%
+        counter:                                "Nombre de contacts: %count% / %all%"
 
     error:
         unknown:                                Le contact n'existe pas.
@@ -336,7 +336,7 @@ contact:
                 ok:                             Le message a bien été restauré.
 
         pagination:
-            counter:                            Nombre de messages: %count% / %all%
+            counter:                            "Nombre de messages: %count% / %all%"
 
         error:
             unknown:                            Le message n'existe pas.
