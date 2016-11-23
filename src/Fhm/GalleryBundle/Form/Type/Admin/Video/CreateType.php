@@ -1,8 +1,13 @@
 <?php
 namespace Fhm\GalleryBundle\Form\Type\Admin\Video;
 
+use Doctrine\Bundle\MongoDBBundle\Form\Type\DocumentType;
 use Fhm\FhmBundle\Form\Type\Admin\CreateType as FhmType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 class CreateType extends FhmType
 {
@@ -10,13 +15,13 @@ class CreateType extends FhmType
     {
         parent::buildForm($builder, $options);
         $builder
-            ->add('title', 'text', array('label' => $this->instance->translation . '.admin.create.form.title'))
-            ->add('subtitle', 'text', array('label' => $this->instance->translation . '.admin.create.form.subtitle', 'required' => false))
-            ->add('content', 'textarea', array('label' => $this->instance->translation . '.admin.create.form.content', 'attr' => array('class' => 'editor'), 'required' => false))
-            ->add('link', 'text', array('label' => $this->instance->translation . '.admin.create.form.link', 'required' => false))
-            ->add('order', 'integer', array('label' => $this->instance->translation . '.admin.create.form.order', 'required' => false))
-            ->add('video', 'url', array('label' => $this->instance->translation . '.admin.create.form.video'))
-            ->add('galleries', 'document', array(
+            ->add('title',TextType::class, array('label' => $this->instance->translation . '.admin.create.form.title'))
+            ->add('subtitle', TextType::class, array('label' => $this->instance->translation . '.admin.create.form.subtitle', 'required' => false))
+            ->add('content', TextareaType::class, array('label' => $this->instance->translation . '.admin.create.form.content', 'attr' => array('class' => 'editor'), 'required' => false))
+            ->add('link',TextType::class, array('label' => $this->instance->translation . '.admin.create.form.link', 'required' => false))
+            ->add('order', IntegerType::class, array('label' => $this->instance->translation . '.admin.create.form.order', 'required' => false))
+            ->add('video', UrlType::class, array('label' => $this->instance->translation . '.admin.create.form.video'))
+            ->add('galleries',DocumentType::class, array(
                 'label'         => $this->instance->translation . '.admin.create.form.galleries',
                 'class'         => 'FhmGalleryBundle:Gallery',
                 'property'      => 'name',
