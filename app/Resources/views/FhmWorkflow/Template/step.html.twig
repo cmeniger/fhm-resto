@@ -1,7 +1,7 @@
 {% trans_default_domain instance.domain %}
 <div class="row">
     <div class="column">
-        {% render(path('fhm_api_workflow_status')) %}
+        {{ render(path('fhm_api_workflow_status')) }}
     </div>
 </div>
 {% if documents %}
@@ -14,7 +14,7 @@
                         {{ document.getOrder() }} - {{ document.getName() }}
                     </div>
                     <div class="tasks">
-                        {% render(path('fhm_api_workflow_step_workflow',{id:document.getId()})) %}
+                        {{ render(path('fhm_api_workflow_step_workflow',{id:document.getId()})) }}
                     </div>
                 </div>
             </div>

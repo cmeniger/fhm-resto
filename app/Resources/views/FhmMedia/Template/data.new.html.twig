@@ -8,7 +8,7 @@
     </div>
 </div>
 <div class="form form-create">
-    <form action="{{ path('fhm_api_media_data_new') }}" method="POST" class="dropzone" id="media-dropzone-{{ selectorIndex }}" {{ form_enctype(form) }}>
+    <form action="{{ path('fhm_api_media_data_new') }}" method="POST" class="dropzone" id="media-dropzone-{{ selectorIndex }}" {{ form_start(form) }}>
         {% if form.vars.errors|length > 0 %}
             <div class="form-bloc form-error">
                 <div class="row">

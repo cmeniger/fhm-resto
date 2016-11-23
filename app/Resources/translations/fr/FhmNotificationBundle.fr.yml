@@ -88,9 +88,9 @@ notification:
                     options:                    Options
 
         detail:
-            title:                              %name%
+            title:                              '%name%'
             link:                               Détail
-            breadcrumb:                         %name%
+            breadcrumb:                         '%name%'
             data:
                 title:                          Informations
                 id:                             ID
@@ -208,9 +208,9 @@ notification:
                     text:                       La modification d'une notification nécessite la validation d'un modérateur.
 
         detail:
-            title:                              %name%
+            title:                              '%name%'
             link:                               Détail
-            breadcrumb:                         %name%
+            breadcrumb:                         '%name%'
             data:
                 title:                          Informations
                 create:                         Création

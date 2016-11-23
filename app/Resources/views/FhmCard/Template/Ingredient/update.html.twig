@@ -1,6 +1,6 @@
 {% trans_default_domain instance.domain %}
 <div class="form form-update">
-    <form action="{{ path('fhm_api_card_ingredient_update',{idCard:card.getId(), idIngredient:document.getId()}) }}" method="POST" {{ form_enctype(form) }}>
+    <form action="{{ path('fhm_api_card_ingredient_update',{idCard:card.getId(), idIngredient:document.getId()}) }}" method="POST" {{ form_start(form) }}>
         {% if form.vars.errors|length > 0 %}
             <div class="form-bloc form-error">
                 <div class="row">

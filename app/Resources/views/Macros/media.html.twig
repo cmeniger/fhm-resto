@@ -54,7 +54,7 @@
                 <h2>Liste de media</h2>
             </div>
             <div class="modal-body">
-                {% render(path('fhm_api_media_data_front',{'id':  dataId })) %}
+                {{ render(path('fhm_api_media_data_front',{'id':  dataId })) }}
             </div>
             <div class="modal-footer">
                 <a class="close-reveal-modal" aria-label="Close">&#215;</a>

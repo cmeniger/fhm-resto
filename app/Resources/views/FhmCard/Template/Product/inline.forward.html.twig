@@ -7,7 +7,7 @@
         <div class="ingredient-content">
             <span class="title">{{ 'card.ingredient.front.index.link'|trans }}</span>
             {% if product.getIngredients().count() > 0 %}
-                {% render(path('fhm_api_card_ingredient_embed', {idCard:card.getId(), idProduct:product.getId(), template:'inline'})) %}
+                {{ render(path('fhm_api_card_ingredient_embed', {idCard:card.getId(), idProduct:product.getId(), template:'inline'})) }}
             {% endif %}
         </div>
     </div>

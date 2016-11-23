@@ -44,7 +44,7 @@
 
         {# Search #}
         {% block content_search %}
-            <form action="{% block content_search_url %}{{ path(instance.source ~ '_admin_' ~ instance.route) }}{% endblock %}" method="POST" {{ form_enctype(form) }} {% block content_search_parameter %}{% endblock %}>
+            <form action="{% block content_search_url %}{{ path(instance.source ~ '_admin_' ~ instance.route) }}{% endblock %}" method="POST" {{ form_start(form) }} {% block content_search_parameter %}{% endblock %}>
                 <div class="row collapse">
                     <div class="small-6 columns">
                         {{ form_widget(form.search) }}

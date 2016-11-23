@@ -74,9 +74,9 @@ mail:
                     options:                    Options
 
         detail:
-            title:                              %name%
+            title:                              "%name%"
             link:                               Détail
-            breadcrumb:                         %name%
+            breadcrumb:                         "%name%"
             data:
                 title:                          Informations
                 id:                             ID
@@ -213,9 +213,9 @@ mail:
                     text:                       La modification d'un email nécessite la validation d'un modérateur.
 
         detail:
-            title:                              %name%
+            title:                              "%name%"
             link:                               Détail
-            breadcrumb:                         %name%
+            breadcrumb:                         "%name%"
             data:
                 title:                          Informations
                 create:                         Création

@@ -19,7 +19,7 @@
     {% if not app.request.isxmlhttprequest %}
         {# Search #}
         {% block content_search %}
-            <form action="{% block content_search_url %}{{ path(instance.source ~ '_' ~ instance.route) }}{% endblock %}" method="POST" {{ form_enctype(form) }} {% block content_search_parameter %}{% endblock %}>
+            <form action="{% block content_search_url %}{{ path(instance.source ~ '_' ~ instance.route) }}{% endblock %}" method="POST" {{ form_start(form) }} {% block content_search_parameter %}{% endblock %}>
                 <div class="column medium-6 medium-centered">
                     <div class="row collapse">
                         <div class="small-10 medium-11 columns">

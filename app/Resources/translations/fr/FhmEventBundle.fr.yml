@@ -102,9 +102,9 @@ event:
                     options:                    Options
 
         detail:
-            title:                              %name%
+            title:                              '%name%'
             link:                               Détail
-            breadcrumb:                         %name%
+            breadcrumb:                         '%name%'
             data:
                 title:                          Informations
                 id:                             ID
@@ -240,9 +240,9 @@ event:
                     text:                       La modification d'un évènement nécessite la validation d'un modérateur pour être affiché.
 
         detail:
-            title:                              %name%
+            title:                              '%name%'
             link:                               Détail
-            breadcrumb:                         %name%
+            breadcrumb:                         '%name%'
             data:
                 title:                          Informations
                 create:                         Création
@@ -369,9 +369,9 @@ event:
                         options:                Options
 
             detail:
-                title:                          %name%
+                title:                          '%name%'
                 link:                           Détail
-                breadcrumb:                     %name%
+                breadcrumb:                     '%name%'
                 data:
                     title:                      Informations
                     id:                         ID
@@ -493,9 +493,9 @@ event:
                         text:                   La modification d'un calendrier nécessite la validation d'un modérateur pour être affiché.
 
             detail:
-                title:                          %name%
+                title:                          '%name%'
                 link:                           Détail
-                breadcrumb:                     %name%
+                breadcrumb:                     '%name%'
                 data:
                     title:                      Informations
                     create:                     Création

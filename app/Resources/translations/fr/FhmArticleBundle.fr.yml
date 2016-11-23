@@ -93,9 +93,9 @@ article:
                     media:                      Médias
 
         detail:
-            title:                              %name%
+            title:                              '%name%'
             link:                               Détail
-            breadcrumb:                         %name%
+            breadcrumb:                         '%name%'
             data:
                 title:                          Informations
                 id:                             ID

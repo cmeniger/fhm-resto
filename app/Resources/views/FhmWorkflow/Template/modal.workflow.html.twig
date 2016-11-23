@@ -28,13 +28,13 @@
         {% endif %}
         <div class="separator" id="comment"><span>{{ 'workflow.modal.comments'|trans }}</span></div>
         {% if document.getSortComment() > 0 %}
-            {% render(path('fhm_api_workflow_comment_workflow',{id:document.getId()})) %}
+            {{ render(path('fhm_api_workflow_comment_workflow',{id:document.getId()})) }}
         {% else %}
             <div class="nodata">{{ 'workflow.modal.nodata'|trans }}</div>
         {% endif %}
         <div class="separator" id="log"><span>{{ 'workflow.modal.logs'|trans }}</span></div>
         {% if document.getSortLog() > 0 %}
-            {% render(path('fhm_api_workflow_log_workflow',{id:document.getId()})) %}
+            {{ render(path('fhm_api_workflow_log_workflow',{id:document.getId()})) }}
         {% else %}
             <div class="nodata">{{ 'workflow.modal.nodata'|trans }}</div>
         {% endif %}

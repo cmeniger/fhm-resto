@@ -9,7 +9,7 @@
     <div id="header">
         {# Menu #}
         {% block menu %}
-            {% render(path('fhm_api_menu_detail', {'template':'admin'})) %}
+            {{ render(path('fhm_api_menu_detail', {'template':'admin'})) }}
         {% endblock %}
 
         {# Header #}

@@ -44,7 +44,7 @@
     {% block content_data %}
         <div class="form form-import">
             {% block content_data_form %}
-            <form action="{{ path((instance.source ~ '_admin_' ~ instance.route ~ '_import')) }}" method="POST" {{ form_enctype(form) }} >
+            <form action="{{ path((instance.source ~ '_admin_' ~ instance.route ~ '_import')) }}" method="POST" {{ form_start(form) }} >
                 {% endblock %}
                 {% block content_data_errors %}
                     {% if form.vars.errors|length > 0 %}

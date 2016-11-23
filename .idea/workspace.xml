@@ -2,21 +2,91 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="de711e3b-ec4c-4812-b0a1-69bbce67b4e0" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Fhm/ContactBundle/Form/Type/Admin/CreateType.php" afterPath="$PROJECT_DIR$/src/Fhm/ContactBundle/Form/Type/Admin/CreateType.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Fhm/ContactBundle/Form/Type/Admin/UpdateType.php" afterPath="$PROJECT_DIR$/src/Fhm/ContactBundle/Form/Type/Admin/UpdateType.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Fhm/ContactBundle/Form/Type/Template/DefaultType.php" afterPath="$PROJECT_DIR$/src/Fhm/ContactBundle/Form/Type/Template/DefaultType.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Fhm/ContactBundle/Form/Type/Template/TestType.php" afterPath="$PROJECT_DIR$/src/Fhm/ContactBundle/Form/Type/Template/TestType.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Fhm/EventBundle/Form/Type/Admin/CreateType.php" afterPath="$PROJECT_DIR$/src/Fhm/EventBundle/Form/Type/Admin/CreateType.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Fhm/EventBundle/Form/Type/Admin/UpdateType.php" afterPath="$PROJECT_DIR$/src/Fhm/EventBundle/Form/Type/Admin/UpdateType.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Fhm/GalleryBundle/Form/Type/Admin/Album/CreateType.php" afterPath="$PROJECT_DIR$/src/Fhm/GalleryBundle/Form/Type/Admin/Album/CreateType.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Fhm/GalleryBundle/Form/Type/Admin/Album/UpdateType.php" afterPath="$PROJECT_DIR$/src/Fhm/GalleryBundle/Form/Type/Admin/Album/UpdateType.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Fhm/GalleryBundle/Form/Type/Admin/CreateType.php" afterPath="$PROJECT_DIR$/src/Fhm/GalleryBundle/Form/Type/Admin/CreateType.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Fhm/GalleryBundle/Form/Type/Admin/Item/CreateType.php" afterPath="$PROJECT_DIR$/src/Fhm/GalleryBundle/Form/Type/Admin/Item/CreateType.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Fhm/GalleryBundle/Form/Type/Admin/Item/MultipleType.php" afterPath="$PROJECT_DIR$/src/Fhm/GalleryBundle/Form/Type/Admin/Item/MultipleType.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Fhm/GalleryBundle/Form/Type/Admin/Item/UpdateType.php" afterPath="$PROJECT_DIR$/src/Fhm/GalleryBundle/Form/Type/Admin/Item/UpdateType.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Fhm/GalleryBundle/Form/Type/Admin/UpdateType.php" afterPath="$PROJECT_DIR$/src/Fhm/GalleryBundle/Form/Type/Admin/UpdateType.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Fhm/GalleryBundle/Form/Type/Admin/Video/CreateType.php" afterPath="$PROJECT_DIR$/src/Fhm/GalleryBundle/Form/Type/Admin/Video/CreateType.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Fhm/GalleryBundle/Form/Type/Admin/Video/UpdateType.php" afterPath="$PROJECT_DIR$/src/Fhm/GalleryBundle/Form/Type/Admin/Video/UpdateType.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Resources/translations/fr/FhmArticleBundle.fr.yml" afterPath="$PROJECT_DIR$/app/Resources/translations/fr/FhmArticleBundle.fr.yml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Resources/translations/fr/FhmCardBundle.fr.yml" afterPath="$PROJECT_DIR$/app/Resources/translations/fr/FhmCardBundle.fr.yml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Resources/translations/fr/FhmContactBundle.fr.yml" afterPath="$PROJECT_DIR$/app/Resources/translations/fr/FhmContactBundle.fr.yml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Resources/translations/fr/FhmEventBundle.fr.yml" afterPath="$PROJECT_DIR$/app/Resources/translations/fr/FhmEventBundle.fr.yml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Resources/translations/fr/FhmGalleryBundle.fr.yml" afterPath="$PROJECT_DIR$/app/Resources/translations/fr/FhmGalleryBundle.fr.yml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Resources/translations/fr/FhmMailBundle.fr.yml" afterPath="$PROJECT_DIR$/app/Resources/translations/fr/FhmMailBundle.fr.yml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Resources/translations/fr/FhmMapPickerBundle.fr.yml" afterPath="$PROJECT_DIR$/app/Resources/translations/fr/FhmMapPickerBundle.fr.yml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Resources/translations/fr/FhmMediaBundle.fr.yml" afterPath="$PROJECT_DIR$/app/Resources/translations/fr/FhmMediaBundle.fr.yml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Resources/translations/fr/FhmMenuBundle.fr.yml" afterPath="$PROJECT_DIR$/app/Resources/translations/fr/FhmMenuBundle.fr.yml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Resources/translations/fr/FhmNewsBundle.fr.yml" afterPath="$PROJECT_DIR$/app/Resources/translations/fr/FhmNewsBundle.fr.yml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Resources/translations/fr/FhmNewsletterBundle.fr.yml" afterPath="$PROJECT_DIR$/app/Resources/translations/fr/FhmNewsletterBundle.fr.yml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Resources/translations/fr/FhmNoteBundle.fr.yml" afterPath="$PROJECT_DIR$/app/Resources/translations/fr/FhmNoteBundle.fr.yml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Resources/translations/fr/FhmNotificationBundle.fr.yml" afterPath="$PROJECT_DIR$/app/Resources/translations/fr/FhmNotificationBundle.fr.yml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Resources/translations/fr/FhmPageBundle.fr.yml" afterPath="$PROJECT_DIR$/app/Resources/translations/fr/FhmPageBundle.fr.yml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Resources/translations/fr/FhmPartnerBundle.fr.yml" afterPath="$PROJECT_DIR$/app/Resources/translations/fr/FhmPartnerBundle.fr.yml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Resources/translations/fr/FhmSiteBundle.fr.yml" afterPath="$PROJECT_DIR$/app/Resources/translations/fr/FhmSiteBundle.fr.yml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Resources/translations/fr/FhmSliderBundle.fr.yml" afterPath="$PROJECT_DIR$/app/Resources/translations/fr/FhmSliderBundle.fr.yml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Resources/translations/fr/FhmTestimonyBundle.fr.yml" afterPath="$PROJECT_DIR$/app/Resources/translations/fr/FhmTestimonyBundle.fr.yml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Resources/translations/fr/FhmUserBundle.fr.yml" afterPath="$PROJECT_DIR$/app/Resources/translations/fr/FhmUserBundle.fr.yml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Resources/translations/fr/FhmWorkflowBundle.fr.yml" afterPath="$PROJECT_DIR$/app/Resources/translations/fr/FhmWorkflowBundle.fr.yml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Resources/views/FhmCard/Admin/detail.html.twig" afterPath="$PROJECT_DIR$/app/Resources/views/FhmCard/Admin/detail.html.twig" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Resources/views/FhmCard/Front/detail.html.twig" afterPath="$PROJECT_DIR$/app/Resources/views/FhmCard/Front/detail.html.twig" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Resources/views/FhmCard/Template/Accordion/inline.html.twig" afterPath="$PROJECT_DIR$/app/Resources/views/FhmCard/Template/Accordion/inline.html.twig" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Resources/views/FhmCard/Template/Accordion/menu.html.twig" afterPath="$PROJECT_DIR$/app/Resources/views/FhmCard/Template/Accordion/menu.html.twig" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Resources/views/FhmCard/Template/Category/create.html.twig" afterPath="$PROJECT_DIR$/app/Resources/views/FhmCard/Template/Category/create.html.twig" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Resources/views/FhmCard/Template/Category/inline.html.twig" afterPath="$PROJECT_DIR$/app/Resources/views/FhmCard/Template/Category/inline.html.twig" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Resources/views/FhmCard/Template/Category/menu.html.twig" afterPath="$PROJECT_DIR$/app/Resources/views/FhmCard/Template/Category/menu.html.twig" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Resources/views/FhmCard/Template/Category/update.html.twig" afterPath="$PROJECT_DIR$/app/Resources/views/FhmCard/Template/Category/update.html.twig" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Resources/views/FhmCard/Template/Editor/index.html.twig" afterPath="$PROJECT_DIR$/app/Resources/views/FhmCard/Template/Editor/index.html.twig" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Resources/views/FhmCard/Template/Editor/preview.html.twig" afterPath="$PROJECT_DIR$/app/Resources/views/FhmCard/Template/Editor/preview.html.twig" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Resources/views/FhmCard/Template/Editor/product.html.twig" afterPath="$PROJECT_DIR$/app/Resources/views/FhmCard/Template/Editor/product.html.twig" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Resources/views/FhmCard/Template/Ingredient/create.html.twig" afterPath="$PROJECT_DIR$/app/Resources/views/FhmCard/Template/Ingredient/create.html.twig" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Resources/views/FhmCard/Template/Ingredient/update.html.twig" afterPath="$PROJECT_DIR$/app/Resources/views/FhmCard/Template/Ingredient/update.html.twig" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Resources/views/FhmCard/Template/Inline/inline.html.twig" afterPath="$PROJECT_DIR$/app/Resources/views/FhmCard/Template/Inline/inline.html.twig" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Resources/views/FhmCard/Template/Inline/menu.html.twig" afterPath="$PROJECT_DIR$/app/Resources/views/FhmCard/Template/Inline/menu.html.twig" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Resources/views/FhmCard/Template/Product/create.html.twig" afterPath="$PROJECT_DIR$/app/Resources/views/FhmCard/Template/Product/create.html.twig" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Resources/views/FhmCard/Template/Product/inline.forward.html.twig" afterPath="$PROJECT_DIR$/app/Resources/views/FhmCard/Template/Product/inline.forward.html.twig" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Resources/views/FhmCard/Template/Product/inline.inline.html.twig" afterPath="$PROJECT_DIR$/app/Resources/views/FhmCard/Template/Product/inline.inline.html.twig" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Resources/views/FhmCard/Template/Product/update.html.twig" afterPath="$PROJECT_DIR$/app/Resources/views/FhmCard/Template/Product/update.html.twig" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Resources/views/FhmCard/Template/Tabs/inline.html.twig" afterPath="$PROJECT_DIR$/app/Resources/views/FhmCard/Template/Tabs/inline.html.twig" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Resources/views/FhmCard/Template/Tabs/menu.html.twig" afterPath="$PROJECT_DIR$/app/Resources/views/FhmCard/Template/Tabs/menu.html.twig" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Resources/views/FhmContact/Template/bloc.form.html.twig" afterPath="$PROJECT_DIR$/app/Resources/views/FhmContact/Template/bloc.form.html.twig" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Resources/views/FhmContact/Template/form.default.html.twig" afterPath="$PROJECT_DIR$/app/Resources/views/FhmContact/Template/form.default.html.twig" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Resources/views/FhmEvent/Front/Group/detail.html.twig" afterPath="$PROJECT_DIR$/app/Resources/views/FhmEvent/Front/Group/detail.html.twig" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Resources/views/FhmFhm/Admin/create.html.twig" afterPath="$PROJECT_DIR$/app/Resources/views/FhmFhm/Admin/create.html.twig" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Resources/views/FhmFhm/Admin/export.html.twig" afterPath="$PROJECT_DIR$/app/Resources/views/FhmFhm/Admin/export.html.twig" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Resources/views/FhmFhm/Admin/import.html.twig" afterPath="$PROJECT_DIR$/app/Resources/views/FhmFhm/Admin/import.html.twig" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Resources/views/FhmFhm/Admin/index.html.twig" afterPath="$PROJECT_DIR$/app/Resources/views/FhmFhm/Admin/index.html.twig" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Resources/views/FhmFhm/Admin/update.html.twig" afterPath="$PROJECT_DIR$/app/Resources/views/FhmFhm/Admin/update.html.twig" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Resources/views/FhmFhm/Front/create.html.twig" afterPath="$PROJECT_DIR$/app/Resources/views/FhmFhm/Front/create.html.twig" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Resources/views/FhmFhm/Front/form.html.twig" afterPath="$PROJECT_DIR$/app/Resources/views/FhmFhm/Front/form.html.twig" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Resources/views/FhmFhm/Front/index.html.twig" afterPath="$PROJECT_DIR$/app/Resources/views/FhmFhm/Front/index.html.twig" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Resources/views/FhmGallery/Front/Album/detail.html.twig" afterPath="$PROJECT_DIR$/app/Resources/views/FhmGallery/Front/Album/detail.html.twig" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Resources/views/FhmGallery/Front/detail.html.twig" afterPath="$PROJECT_DIR$/app/Resources/views/FhmGallery/Front/detail.html.twig" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Resources/views/FhmMedia/Admin/index.html.twig" afterPath="$PROJECT_DIR$/app/Resources/views/FhmMedia/Admin/index.html.twig" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Resources/views/FhmMedia/Front/index.html.twig" afterPath="$PROJECT_DIR$/app/Resources/views/FhmMedia/Front/index.html.twig" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Resources/views/FhmMedia/Template/data.editor.new.html.twig" afterPath="$PROJECT_DIR$/app/Resources/views/FhmMedia/Template/data.editor.new.html.twig" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Resources/views/FhmMedia/Template/data.new.html.twig" afterPath="$PROJECT_DIR$/app/Resources/views/FhmMedia/Template/data.new.html.twig" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Resources/views/FhmNews/Front/Group/detail.html.twig" afterPath="$PROJECT_DIR$/app/Resources/views/FhmNews/Front/Group/detail.html.twig" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Resources/views/FhmNewsletter/Template/embed.html.twig" afterPath="$PROJECT_DIR$/app/Resources/views/FhmNewsletter/Template/embed.html.twig" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Resources/views/FhmNotification/Admin/detail.html.twig" afterPath="$PROJECT_DIR$/app/Resources/views/FhmNotification/Admin/detail.html.twig" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Resources/views/FhmNotification/Template/modal.all.html.twig" afterPath="$PROJECT_DIR$/app/Resources/views/FhmNotification/Template/modal.all.html.twig" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Resources/views/FhmNotification/Template/modal.new.html.twig" afterPath="$PROJECT_DIR$/app/Resources/views/FhmNotification/Template/modal.new.html.twig" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Resources/views/FhmPartner/Front/Group/detail.html.twig" afterPath="$PROJECT_DIR$/app/Resources/views/FhmPartner/Front/Group/detail.html.twig" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Resources/views/FhmUser/Admin/detail.html.twig" afterPath="$PROJECT_DIR$/app/Resources/views/FhmUser/Admin/detail.html.twig" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Resources/views/FhmWorkflow/Front/Step/index.html.twig" afterPath="$PROJECT_DIR$/app/Resources/views/FhmWorkflow/Front/Step/index.html.twig" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Resources/views/FhmWorkflow/Front/index.html.twig" afterPath="$PROJECT_DIR$/app/Resources/views/FhmWorkflow/Front/index.html.twig" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Resources/views/FhmWorkflow/Template/modal.comment.html.twig" afterPath="$PROJECT_DIR$/app/Resources/views/FhmWorkflow/Template/modal.comment.html.twig" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Resources/views/FhmWorkflow/Template/modal.expand.html.twig" afterPath="$PROJECT_DIR$/app/Resources/views/FhmWorkflow/Template/modal.expand.html.twig" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Resources/views/FhmWorkflow/Template/modal.workflow.html.twig" afterPath="$PROJECT_DIR$/app/Resources/views/FhmWorkflow/Template/modal.workflow.html.twig" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Resources/views/FhmWorkflow/Template/step.html.twig" afterPath="$PROJECT_DIR$/app/Resources/views/FhmWorkflow/Template/step.html.twig" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Resources/views/Macros/media.html.twig" afterPath="$PROJECT_DIR$/app/Resources/views/Macros/media.html.twig" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Resources/views/ProjectDefault/Template/construct.html.twig" afterPath="$PROJECT_DIR$/app/Resources/views/ProjectDefault/Template/construct.html.twig" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Resources/views/ProjectDefault/Template/maintenance.html.twig" afterPath="$PROJECT_DIR$/app/Resources/views/ProjectDefault/Template/maintenance.html.twig" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Resources/views/layout.admin.html.twig" afterPath="$PROJECT_DIR$/app/Resources/views/layout.admin.html.twig" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/config/services.yml" afterPath="$PROJECT_DIR$/app/config/services.yml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Fhm/FhmBundle/Resources/skeleton/bundle/app_Resources_translations_fr_bundle.fr.yml.twig" afterPath="$PROJECT_DIR$/src/Fhm/FhmBundle/Resources/skeleton/bundle/app_Resources_translations_fr_bundle.fr.yml.twig" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Fhm/FhmBundle/Resources/skeleton/directory/app_Resources_translations_fr_bundle.fr.yml.twig" afterPath="$PROJECT_DIR$/src/Fhm/FhmBundle/Resources/skeleton/directory/app_Resources_translations_fr_bundle.fr.yml.twig" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Fhm/MediaBundle/Form/Extension/MediaTypeExtension.php" afterPath="$PROJECT_DIR$/src/Fhm/MediaBundle/Form/Extension/MediaTypeExtension.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Fhm/MediaBundle/Resources/config/services.yml" afterPath="$PROJECT_DIR$/src/Fhm/MediaBundle/Resources/config/services.yml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Fhm/MediaBundle/Services/Local.php" afterPath="$PROJECT_DIR$/src/Fhm/MediaBundle/Services/Local.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Fhm/MediaBundle/Services/S3.php" afterPath="$PROJECT_DIR$/src/Fhm/MediaBundle/Services/S3.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Fhm/MediaBundle/Twig/MediaExtension.php" afterPath="$PROJECT_DIR$/src/Fhm/MediaBundle/Twig/MediaExtension.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/config.php" afterPath="$PROJECT_DIR$/web/config.php" />
     </list>
     <ignored path="fhm-tools-v2.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -142,38 +212,6 @@
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
           </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="fhm-tools-v2" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="fhm-tools-v2" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="fhm-tools-v2" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="fhm-tools-v2" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Fhm" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-          </PATH>
         </subPane>
       </pane>
       <pane id="Scratches" />
@@ -223,12 +261,12 @@
       <updated>1479909998922</updated>
       <workItem from="1479910003551" duration="249000" />
       <workItem from="1479910330855" duration="771000" />
-      <workItem from="1479911686610" duration="4500000" />
+      <workItem from="1479911686610" duration="4516000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="5520000" />
+    <option name="totallyTimeSpent" value="5536000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1920" y="24" width="1920" height="1056" extended-state="6" />
@@ -236,7 +274,7 @@
     <layout>
       <window_info id="Gulp" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Remote Host" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.255603" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.255603" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />

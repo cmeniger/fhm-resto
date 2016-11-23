@@ -29,7 +29,7 @@ class S3
     public function __construct(\Fhm\FhmBundle\Services\Tools $tools, \Symfony\Component\HttpKernel\KernelInterface $kernel)
     {
         $this->fhm_tools = $tools;
-        $this->files     = $this->_filesInit($this->fhm_tools->getParameter('files', 'fhm_media'));
+        $this->files     = $this->_filesInit($this->fhm_tools->getParameters('files', 'fhm_media'));
         $this->file      = null;
         // Init AWS
         $this->_awsInit();

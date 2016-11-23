@@ -93,9 +93,9 @@ menu:
                     text:                       (1) Il faut renseigner soit une Route soit une Page. Si les 2 champs sont renseignés, c'est la Route qui sera utilisée.
 
         detail:
-            title:                              %name%
+            title:                              '%name%'
             link:                               Détail
-            breadcrumb:                         %name%
+            breadcrumb:                         '%name%'
             data:
                 title:                          Informations
                 id:                             ID
@@ -284,9 +284,9 @@ menu:
                     text:                       La modification d'un menu nécessite la validation d'un modérateur pour être affiché.
 
         detail:
-            title:                              %name%
+            title:                              '%name%'
             link:                               Détail
-            breadcrumb:                         %name%
+            breadcrumb:                         '%name%'
             data:
                 title:                          Informations
                 create:                         Création

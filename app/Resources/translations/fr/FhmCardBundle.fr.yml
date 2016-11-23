@@ -102,10 +102,10 @@ card:
                     options:                    Options
 
         detail:
-            title:                              %name%
+            title:                              '%name%'
             categories:                         Gestion des catégories
             link:                               Détail
-            breadcrumb:                         %name%
+            breadcrumb:                         '%name%'
             card:
                 anchor:                         Carte
                 title:                          Carte
@@ -238,12 +238,12 @@ card:
                     text:                       La modification d'une carte nécessite la validation d'un modérateur.
 
         detail:
-            title:                              %name%
+            title:                              '%name%'
             categories:                         Gestion des Catégories
             products:                           Gestion des Produits
             ingredients:                        Gestion des Ingrédients
             link:                               Détail
-            breadcrumb:                         %name%
+            breadcrumb:                         '%name%'
             data:
                 title:                          Informations
                 create:                         Création
@@ -414,9 +414,9 @@ card:
                         categories:             Catégories rattachées
 
             detail:
-                title:                          %name%
+                title:                          '%name%'
                 link:                           Détail
-                breadcrumb:                     %name%
+                breadcrumb:                     '%name%'
                 card:
                     tile:                       Carte
                     anchor:                     Carte
@@ -546,9 +546,9 @@ card:
                         text:                   La modification d'une catégorie nécessite la validation d'un modérateur.
 
             detail:
-                title:                          %name%
+                title:                          '%name%'
                 link:                           Détail
-                breadcrumb:                     %name%
+                breadcrumb:                     '%name%'
                 data:
                     title:                      Informations
                     create:                     Création
@@ -720,9 +720,9 @@ card:
                         data2:                  Catégories et ingrédients
 
             detail:
-                title:                          %name%
+                title:                          '%name%'
                 link:                           Détail
-                breadcrumb:                     %name%
+                breadcrumb:                     '%name%'
                 card:
                     tile:                       Carte
                     anchor:                     Carte
@@ -851,9 +851,9 @@ card:
                         text:                   La modification d'un produit nécessite la validation d'un modérateur.
 
             detail:
-                title:                          %name%
+                title:                          '%name%'
                 link:                           Détail
-                breadcrumb:                     %name%
+                breadcrumb:                     '%name%'
                 data:
                     title:                      Informations
                     create:                     Création
@@ -1016,9 +1016,9 @@ card:
                         products:               Produits rattachés
 
             detail:
-                title:                          %name%
+                title:                          '%name%'
                 link:                           Détail
-                breadcrumb:                     %name%
+                breadcrumb:                     '%name%'
                 card:
                     tile:                       Carte
                     anchor:                     Carte
@@ -1147,9 +1147,9 @@ card:
                         text:                   La modification d'un ingrédient nécessite la validation d'un modérateur.
 
             detail:
-                title:                          %name%
+                title:                          '%name%'
                 link:                           Détail
-                breadcrumb:                     %name%
+                breadcrumb:                     '%name%'
                 data:
                     title:                      Informations
                     create:                     Création

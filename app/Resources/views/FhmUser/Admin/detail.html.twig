@@ -115,7 +115,7 @@
     <div class="row">
         <fieldset>
             <legend>{{ (instance.translation ~ '.admin.detail.password.title')|trans }}</legend>
-            <form action="{{ path('fhm_admin_' ~ instance.route ~ '_password', {'id': document.getId()}) }}" method="POST" {{ form_enctype(formPassword) }}>
+            <form action="{{ path('fhm_admin_' ~ instance.route ~ '_password', {'id': document.getId()}) }}" method="POST" {{ form_start(formPassword) }}>
                 <div class="row">
                     <div class="large-12 columns">
                         {{ form_errors(formPassword) }}

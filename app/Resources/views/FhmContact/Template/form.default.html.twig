@@ -5,7 +5,7 @@
         <a href="#" class="close"><i class="fa fa-times"></i></a>
     </div>
 {% endfor %}
-<form action="{{ path('fhm_api_contact_form',{id:document.getId()}) }}" id="{{ document.getId() }}" method="POST" {{ form_enctype(form) }}>
+<form action="{{ path('fhm_api_contact_form',{id:document.getId()}) }}" id="{{ document.getId() }}" method="POST" {{ form_start(form) }}>
     <div class="row">
         <div class="large-6 columns">
             {{ form_label(form.firstname) }}

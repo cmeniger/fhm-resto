@@ -104,9 +104,9 @@ news:
                     options:                    Options
 
         detail:
-            title:                              %name%
+            title:                              '%name%'
             link:                               Détail
-            breadcrumb:                         %name%
+            breadcrumb:                         '%name%'
             data:
                 title:                          Informations
                 id:                             ID
@@ -242,9 +242,9 @@ news:
                     text:                       La modification d'une actualité nécessite la validation d'un modérateur pour être affichée.
 
         detail:
-            title:                              %name%
+            title:                              '%name%'
             link:                               Détail
-            breadcrumb:                         %name%
+            breadcrumb:                         '%name%'
             data:
                 title:                          Informations
                 create:                         Création
@@ -373,9 +373,9 @@ news:
                         options:                Options
 
             detail:
-                title:                          %name%
+                title:                          '%name%'
                 link:                           Détail
-                breadcrumb:                     %name%
+                breadcrumb:                     '%name%'
                 data:
                     title:                      Informations
                     id:                         ID
@@ -511,9 +511,9 @@ news:
                         text:                   La modification d'un journal nécessite la validation d'un modérateur pour être affiché.
 
             detail:
-                title:                          %name%
+                title:                          '%name%'
                 link:                           Détail
-                breadcrumb:                     %name%
+                breadcrumb:                     '%name%'
                 data:
                     title:                      Informations
                     create:                     Création
