@@ -371,7 +371,7 @@
                 {% endif %}
                 {% if is_granted('IS_AUTHENTICATED_FULLY') %}
                     <li class="notification">
-                        {% render(path('fhm_api_notification_counter')) %}
+                        {{ render(path('fhm_api_notification_counter')) }}
                     </li>
                     <li class="divider"></li>
                     {% if is_granted("ROLE_ADMIN") %}
@@ -560,7 +560,7 @@
                     <li class="divider"></li>
                 {% endif %}
                 <li class="notification">
-                    {% render(path('fhm_api_notification_counter')) %}
+                    {{ render(path('fhm_api_notification_counter')) }}
                 </li>
                 <li class="divider"></li>
                 <li class="has-dropdown">

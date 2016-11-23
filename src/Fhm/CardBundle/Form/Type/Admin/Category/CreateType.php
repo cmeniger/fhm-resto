@@ -1,7 +1,13 @@
 <?php
 namespace Fhm\CardBundle\Form\Type\Admin\Category;
 
+use Doctrine\Bundle\MongoDBBundle\Form\Type\DocumentType;
 use Fhm\FhmBundle\Form\Type\Admin\CreateType as FhmType;
+use Fhm\MediaBundle\Form\Type\MediaType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\MoneyType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 class CreateType extends FhmType
@@ -10,17 +16,17 @@ class CreateType extends FhmType
     {
         parent::buildForm($builder, $options);
         $builder
-            ->add('price', 'money', array('label' => $this->instance->translation . '.admin.create.form.price', 'currency' => '', 'required' => false))
-            ->add('currency', 'text', array('label' => $this->instance->translation . '.admin.create.form.currency', 'required' => false))
-            ->add('order', 'integer', array('label' => $this->instance->translation . '.admin.create.form.order', 'required' => false))
-            ->add('menu', 'checkbox', array('label' => $this->instance->translation . '.admin.create.form.menu', 'required' => false))
-            ->add('default', 'checkbox', array('label' => $this->instance->translation . '.admin.create.form.default', 'required' => false))
-            ->add('image', 'media', array(
+            ->add('price', MoneyType::class, array('label' => $this->instance->translation . '.admin.create.form.price', 'currency' => '', 'required' => false))
+            ->add('currency', TextType::class, array('label' => $this->instance->translation . '.admin.create.form.currency', 'required' => false))
+            ->add('order', IntegerType::class, array('label' => $this->instance->translation . '.admin.create.form.order', 'required' => false))
+            ->add('menu',CheckboxType::class , array('label' => $this->instance->translation . '.admin.create.form.menu', 'required' => false))
+            ->add('default', CheckboxType::class, array('label' => $this->instance->translation . '.admin.create.form.default', 'required' => false))
+            ->add('image',MediaType::class, array(
                 'label'    => $this->instance->translation . '.admin.create.form.image',
                 'filter'   => 'image/*',
                 'required' => false
             ))
-            ->add('card', 'document', array(
+            ->add('card', DocumentType::class, array(
                 'label'         => $this->instance->translation . '.admin.create.form.card',
                 'class'         => 'FhmCardBundle:Card',
                 'property'      => 'name',
@@ -30,7 +36,7 @@ class CreateType extends FhmType
                 },
                 'required'      => false
             ))
-            ->add('products', 'document', array(
+            ->add('products', DocumentType::class, array(
                 'label'         => $this->instance->translation . '.admin.create.form.products',
                 'class'         => 'FhmCardBundle:CardProduct',
                 'property'      => 'name',
@@ -42,7 +48,7 @@ class CreateType extends FhmType
                 'by_reference'  => false,
                 'required'      => false
             ))
-            ->add('parents', 'document', array(
+            ->add('parents', DocumentType::class, array(
                 'label'         => $this->instance->translation . '.admin.create.form.parents',
                 'class'         => 'FhmCardBundle:CardCategory',
                 'property'      => 'name',
@@ -54,7 +60,7 @@ class CreateType extends FhmType
                 'by_reference'  => false,
                 'required'      => false
             ))
-            ->add('sons', 'document', array(
+            ->add('sons', DocumentType::class, array(
                 'label'         => $this->instance->translation . '.admin.create.form.sons',
                 'class'         => 'FhmCardBundle:CardCategory',
                 'property'      => 'name',

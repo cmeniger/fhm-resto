@@ -3,8 +3,10 @@
 namespace Fhm\FhmBundle\Form\Type\Admin;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ImportType extends AbstractType
 {
@@ -18,16 +20,19 @@ class ImportType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('file', 'file', array('label' => $this->instance->translation . '.admin.import.form.file'))
-            ->add('submit', 'submit', array('label' => $this->instance->translation . '.admin.import.form.submit'));
+            ->add('file', FileType::class, array('label' => $this->instance->translation . '.admin.import.form.file'))
+            ->add('submit', SubmitType::class, array('label' => $this->instance->translation . '.admin.import.form.submit'));
     }
 
-    public function getName()
+    /**
+     * @return string
+     */
+    public function getBlockPrefix()
     {
         return 'FhmImport';
     }
 
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults
             (
