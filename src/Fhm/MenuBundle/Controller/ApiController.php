@@ -50,9 +50,9 @@ class ApiController extends FhmController
      */
     public function detailAction($template, $id)
     {
-        $response = $this->get('fhm_cache')->getResponseCache(0, 0, true);
+        $response = $this->fhm_tools->getContainer()->get('fhm_cache')->getResponseCache(0, 0, true);
         if (is_null($id)) {
-            $site = $this->getDoctrine()->getManager()->getRepository("FhmSiteBundle:Site")->getDefault();
+            $site = $this->fhm_tools->dmRepository("FhmSiteBundle:Site")->getDefault();
             $id   = ($site && $site->getMenu()) ? $site->getMenu()->getId() : null;
             if (is_null($id)) {
                 return $this->render(

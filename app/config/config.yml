@@ -64,6 +64,7 @@ twig:
     globals:
         project: "%project%"
         mailer: "%fhm_mailer%"
+        oauth_facebook_id: "%oauth.facebook.id%"
     form_themes:
         - "bootstrap_3_layout.html.twig"
         - "form/fields.html.twig"

@@ -238,7 +238,7 @@ user:
                     save:                       S'inscrire
                     cancel:                     Annuler
             checkemail:
-                title:                          Félicitations %username%
+                title:                          Félicitations "%username%"
                 mail:
                     title:                      Votre inscription est bien enregistrée.
                     text:                       Un e-mail automatique de confirmation vient d'être envoyé à l'adresse suivante':'
@@ -247,7 +247,7 @@ user:
                     list1:                      Merci de vérifier dans les "<strong>courriers indésirables</strong>" ou "<strong>spam</strong>".
                     list2:                      Pour être sûr de bien recevoir nos e-mails, nous vous invitons à ajouter <strong>noreply@fhmtools.com</strong> à votre liste de contacts.
             confirmed:
-                title:                          Félicitations %username%
+                title:                          Félicitations "%username%"
                 message:
                     title:                      Votre compte est activé.
                     text:                       Vous pouvez vous connecter dès à présent.

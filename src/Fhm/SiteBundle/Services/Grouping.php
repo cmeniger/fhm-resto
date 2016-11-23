@@ -47,11 +47,11 @@ class Grouping extends FhmGrouping
     public function loadTwigGlobal()
     {
         parent::loadTwigGlobal();
-        $this->twig->addGlobal('grouping_name', $this->fhm_tools->trans('site.grouping.name', array(), 'FhmSiteBundle'));
-        $this->twig->addGlobal('grouping_add', $this->fhm_tools->trans('site.grouping.add', array("%name%" => $this->getGrouping()), 'FhmSiteBundle'));
-        $this->twig->addGlobal('grouping_title', $this->fhm_tools->trans('site.grouping.title', array(), 'FhmSiteBundle'));
-        $this->twig->addGlobal('grouping_list1', $this->fhm_tools->trans('site.grouping.list1', array(), 'FhmSiteBundle'));
-        $this->twig->addGlobal('grouping_list2', $this->fhm_tools->trans('site.grouping.list2', array(), 'FhmSiteBundle'));
+        $this->fhm_tools->getContainer()->get('twig')->addGlobal('grouping_name', $this->fhm_tools->trans('site.grouping.name', array(), 'FhmSiteBundle'));
+        $this->fhm_tools->getContainer()->get('twig')->addGlobal('grouping_add', $this->fhm_tools->trans('site.grouping.add', array("%name%" => $this->getGrouping()), 'FhmSiteBundle'));
+        $this->fhm_tools->getContainer()->get('twig')->addGlobal('grouping_title', $this->fhm_tools->trans('site.grouping.title', array(), 'FhmSiteBundle'));
+        $this->fhm_tools->getContainer()->get('twig')->addGlobal('grouping_list1', $this->fhm_tools->trans('site.grouping.list1', array(), 'FhmSiteBundle'));
+        $this->fhm_tools->getContainer()->get('twig')->addGlobal('grouping_list2', $this->fhm_tools->trans('site.grouping.list2', array(), 'FhmSiteBundle'));
 
         return $this;
     }

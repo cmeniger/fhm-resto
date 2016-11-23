@@ -25,7 +25,7 @@ project:
 
     tree:
         admin:                                  Administration
-        connected:                              %username%
+        connected:                              "%username%"
         console:                                Console
         home:                                   Accueil
         back:                                   Retour
