@@ -1,7 +1,9 @@
 <?php
 namespace Fhm\CardBundle\Form\Type\Admin;
 
+use Doctrine\Bundle\MongoDBBundle\Form\Type\DocumentType;
 use Fhm\FhmBundle\Form\Type\Admin\CreateType as FhmType;
+use Fhm\MediaBundle\Form\Type\MediaType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 class CreateType extends FhmType
@@ -10,12 +12,12 @@ class CreateType extends FhmType
     {
         parent::buildForm($builder, $options);
         $builder
-            ->add('image', 'media', array(
+            ->add('image', MediaType::class, array(
                 'label'    => $this->instance->translation . '.admin.create.form.image',
                 'filter'   => 'image/*',
                 'required' => false
             ))
-            ->add('categories', 'document', array(
+            ->add('categories', DocumentType::class, array(
                 'label'         => $this->instance->translation . '.admin.create.form.categories',
                 'class'         => 'FhmCardBundle:CardCategory',
                 'property'      => 'name',
@@ -27,7 +29,7 @@ class CreateType extends FhmType
                 'by_reference'  => false,
                 'required'      => false
             ))
-            ->add('products', 'document', array(
+            ->add('products', DocumentType::class, array(
                 'label'         => $this->instance->translation . '.admin.create.form.products',
                 'class'         => 'FhmCardBundle:CardProduct',
                 'property'      => 'name',
@@ -39,7 +41,7 @@ class CreateType extends FhmType
                 'by_reference'  => false,
                 'required'      => false
             ))
-            ->add('ingredients', 'document', array(
+            ->add('ingredients', DocumentType::class, array(
                 'label'         => $this->instance->translation . '.admin.create.form.ingredients',
                 'class'         => 'FhmCardBundle:CardIngredient',
                 'property'      => 'name',

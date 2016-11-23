@@ -1,7 +1,7 @@
 <?php
 namespace Fhm\FhmBundle\Form\Type;
 
-use Doctrine\Bundle\MongoDBBundle\Tests\Fixtures\Form\Document;
+use Doctrine\Bundle\MongoDBBundle\Form\Type\DocumentType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\Form\FormInterface;
@@ -63,7 +63,7 @@ class AutocompleteType extends AbstractType
      */
     public function getParent()
     {
-        return Document::class;
+        return DocumentType::class;
     }
 
 }

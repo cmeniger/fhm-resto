@@ -1,7 +1,13 @@
 <?php
 namespace Fhm\CardBundle\Form\Type\Admin\Product;
 
+use Doctrine\Bundle\MongoDBBundle\Form\Type\DocumentType;
 use Fhm\FhmBundle\Form\Type\Admin\UpdateType as FhmType;
+use Fhm\MediaBundle\Form\Type\MediaType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\MoneyType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 class UpdateType extends FhmType
@@ -10,17 +16,17 @@ class UpdateType extends FhmType
     {
         parent::buildForm($builder, $options);
         $builder
-            ->add('price', 'money', array('label' => $this->instance->translation . '.admin.update.form.price', 'currency' => '', 'required' => false))
-            ->add('currency', 'text', array('label' => $this->instance->translation . '.admin.update.form.currency', 'required' => false))
-            ->add('order', 'integer', array('label' => $this->instance->translation . '.admin.update.form.order', 'required' => false))
-            ->add('forward', 'checkbox', array('label' => $this->instance->translation . '.admin.update.form.forward', 'required' => false))
-            ->add('default', 'checkbox', array('label' => $this->instance->translation . '.admin.update.form.default', 'required' => false))
-            ->add('image', 'media', array(
+            ->add('price', MoneyType::class, array('label' => $this->instance->translation . '.admin.update.form.price', 'currency' => '', 'required' => false))
+            ->add('currency', TextType::class, array('label' => $this->instance->translation . '.admin.update.form.currency', 'required' => false))
+            ->add('order', IntegerType::class, array('label' => $this->instance->translation . '.admin.update.form.order', 'required' => false))
+            ->add('forward', CheckboxType::class, array('label' => $this->instance->translation . '.admin.update.form.forward', 'required' => false))
+            ->add('default', CheckboxType::class, array('label' => $this->instance->translation . '.admin.update.form.default', 'required' => false))
+            ->add('image',MediaType::class, array(
                 'label'    => $this->instance->translation . '.admin.update.form.image',
                 'filter'   => 'image/*',
                 'required' => false
             ))
-            ->add('card', 'document', array(
+            ->add('card', DocumentType::class, array(
                 'label'         => $this->instance->translation . '.admin.update.form.card',
                 'class'         => 'FhmCardBundle:Card',
                 'property'      => 'name',
@@ -30,7 +36,7 @@ class UpdateType extends FhmType
                 },
                 'required'      => false
             ))
-            ->add('categories', 'document', array(
+            ->add('categories',DocumentType::class, array(
                 'label'         => $this->instance->translation . '.admin.update.form.categories',
                 'class'         => 'FhmCardBundle:CardCategory',
                 'property'      => 'name',
@@ -42,7 +48,7 @@ class UpdateType extends FhmType
                 'required'      => false,
                 'by_reference'  => false
             ))
-            ->add('ingredients', 'document', array(
+            ->add('ingredients', DocumentType::class, array(
                 'label'         => $this->instance->translation . '.admin.update.form.ingredients',
                 'class'         => 'FhmCardBundle:CardIngredient',
                 'property'      => 'name',
