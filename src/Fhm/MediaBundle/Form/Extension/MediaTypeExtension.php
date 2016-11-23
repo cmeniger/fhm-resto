@@ -9,28 +9,35 @@
 namespace Fhm\MediaBundle\Form\Extension;
 
 use Symfony\Component\Form\AbstractTypeExtension;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class MediaTypeExtension extends AbstractTypeExtension
 {
-
+    /**
+      *
+      * Returns the name of the type being extended.
+      *
+      * @return string The name of the type being extended
+    */
     public function getExtendedType()
     {
-        return 'file';
+        return FileType::class;
     }
 
     /**
-     * Add image_path
-     * @param \Symfony\Component\OptionsResolver\OptionsResolverInterface $resolver
+     * Add the image_path option
+     *
+     * @param OptionsResolver $resolver
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setOptional(array('media_path'));
+        $resolver->setDefined(array('image_path'));
     }
-
     /**
      *
      * @param \Symfony\Component\Form\FormView $view
