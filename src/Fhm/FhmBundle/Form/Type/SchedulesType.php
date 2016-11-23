@@ -3,6 +3,10 @@ namespace Fhm\FhmBundle\Form\Type;
 
 use Fhm\FhmBundle\Form\DataTransformer\SchedulesTransformer;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -22,12 +26,13 @@ class SchedulesType extends AbstractType
     {
         $this->container = $container;
     }
-
     /**
-     * @param OptionsResolverInterface $resolver
+     * @param OptionsResolver $resolver
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
+        $resolver->setRequired(['subscriber']);
+
         $resolver->setDefaults(array(
             'translation_domain' => 'FhmFhmBundle',
             'cascade_validation' => true,
@@ -37,14 +42,6 @@ class SchedulesType extends AbstractType
             'editor'             => false,
             'subscriber'         => null
         ));
-    }
-
-    /**
-     * @param OptionsResolver $resolver
-     */
-    public function configureOptions(OptionsResolver $resolver)
-    {
-        $resolver->setRequired(['subscriber']);
     }
 
     /**
@@ -62,15 +59,15 @@ class SchedulesType extends AbstractType
         for($i = 1; $i < 8; $i++)
         {
             $builder
-                ->add('days_' . $i . '_0', 'choice', array('label' => 'fhm.schedules.day.start', 'choices' => $this->_listTime($options['step']), 'attr' => array('class' => 'am'), 'required' => false))
-                ->add('days_' . $i . '_1', 'choice', array('label' => 'fhm.schedules.day.end', 'choices' => $this->_listTime($options['step']), 'attr' => array('class' => 'am'), 'required' => false))
-                ->add('days_' . $i . '_2', 'choice', array('label' => 'fhm.schedules.day.start', 'choices' => $this->_listTime($options['step']), 'attr' => array('class' => 'pm'), 'required' => false))
-                ->add('days_' . $i . '_3', 'choice', array('label' => 'fhm.schedules.day.end', 'choices' => $this->_listTime($options['step']), 'attr' => array('class' => 'pm'), 'required' => false));
+                ->add('days_' . $i . '_0', ChoiceType::class, array('label' => 'fhm.schedules.day.start', 'choices' => $this->_listTime($options['step']), 'attr' => array('class' => 'am'), 'required' => false))
+                ->add('days_' . $i . '_1', ChoiceType::class, array('label' => 'fhm.schedules.day.end', 'choices' => $this->_listTime($options['step']), 'attr' => array('class' => 'am'), 'required' => false))
+                ->add('days_' . $i . '_2', ChoiceType::class, array('label' => 'fhm.schedules.day.start', 'choices' => $this->_listTime($options['step']), 'attr' => array('class' => 'pm'), 'required' => false))
+                ->add('days_' . $i . '_3', ChoiceType::class, array('label' => 'fhm.schedules.day.end', 'choices' => $this->_listTime($options['step']), 'attr' => array('class' => 'pm'), 'required' => false));
         }
         $builder
-            ->add('close_enable', 'checkbox', array('label' => 'fhm.schedules.close.check', 'required' => false))
-            ->add('close_reason', 'textarea', array('label' => 'fhm.schedules.close.reason', 'required' => false, 'attr' => array('class' => $options['editor'] ? 'editor' : '')))
-            ->add('close_date', 'datetime', array('label' => 'fhm.schedules.close.date', 'widget' => 'single_text', 'input' => 'datetime', 'format' => 'dd/MM/yyyy HH:mm', 'attr' => array('class' => 'datetimepicker', 'step' => $options['step']), 'required' => false))
+            ->add('close_enable', CheckboxType::class, array('label' => 'fhm.schedules.close.check', 'required' => false))
+            ->add('close_reason', TextareaType::class, array('label' => 'fhm.schedules.close.reason', 'required' => false, 'attr' => array('class' => $options['editor'] ? 'editor' : '')))
+            ->add('close_date', DateTimeType::class, array('label' => 'fhm.schedules.close.date', 'widget' => 'single_text', 'input' => 'datetime', 'format' => 'dd/MM/yyyy HH:mm', 'attr' => array('class' => 'datetimepicker', 'step' => $options['step']), 'required' => false))
             ->addModelTransformer(new SchedulesTransformer($this->container));
     }
 
@@ -83,10 +80,11 @@ class SchedulesType extends AbstractType
     {
     }
 
+
     /**
      * @return string
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'schedules';
     }

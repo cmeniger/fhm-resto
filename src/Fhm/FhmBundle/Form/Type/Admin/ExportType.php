@@ -3,8 +3,9 @@
 namespace Fhm\FhmBundle\Form\Type\Admin;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ExportType extends AbstractType
 {
@@ -18,15 +19,18 @@ class ExportType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('submit', 'submit', array('label' => $this->instance->translation . '.admin.export.form.submit'));
+            ->add('submit', SubmitType::class, array('label' => $this->instance->translation . '.admin.export.form.submit'));
     }
 
-    public function getName()
+    /**
+     * @return string
+     */
+    public function getBlockPrefix()
     {
         return 'FhmExport';
     }
 
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults
             (
