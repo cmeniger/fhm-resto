@@ -11,21 +11,21 @@ use Fhm\FhmBundle\Services\Grouping as FhmGrouping;
  */
 class Grouping extends FhmGrouping
 {
+    private $session;
     /**
      * Grouping constructor.
-     *
-     * @param \Fhm\FhmBundle\Services\Tools $tools
-     * @param \Twig_Environment             $twig
+     * @param Tools $tools
      */
     public function __construct(Tools $tools)
     {
         parent::__construct($tools);
         $this->visible = true;
         $site          = "";
+        $this->session = $tools->getSession();
+
         if ($this->session->get('site') != '') {
             $site = $this->fhm_tools->dmRepository('FhmSiteBundle:Site')->find($this->session->get('site'));
-            if ($site == '')
-            {
+            if ($site == '') {
                 $this->session->set('site', '');
             }
         }

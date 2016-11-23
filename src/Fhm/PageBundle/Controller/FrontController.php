@@ -2,6 +2,7 @@
 namespace Fhm\PageBundle\Controller;
 
 use Fhm\FhmBundle\Controller\RefFrontController as FhmController;
+use Fhm\FhmBundle\Services\Tools;
 use Fhm\PageBundle\Document\Page;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
@@ -10,15 +11,16 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 /**
- * @Route("/page")
+ * @Route("/page", service="fhm_page_controller_front")
  */
 class FrontController extends FhmController
 {
     /**
      * Constructor
      */
-    public function __construct()
+    public function __construct(Tools $tools)
     {
+        $this->setFhmTools($tools);
         parent::__construct('Fhm', 'Page', 'page');
     }
 

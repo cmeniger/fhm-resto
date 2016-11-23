@@ -1,4 +1,10 @@
 services:
-    #    fhm_page.example:
-    #        class: Fhm\PageBundle\Example
-    #        arguments: [@service_id, "plain_value", %parameter%]
+        fhm_page_controller_admin:
+            class: Fhm\PageBundle\Controller\AdminController
+            arguments: ["@fhm_tools"]
+        fhm_page_controller_api:
+            class: Fhm\PageBundle\Controller\ApiController
+            arguments: ["@fhm_tools"]
+        fhm_page_controller_front:
+            class: Fhm\PageBundle\Controller\FrontController
+            arguments: ["@fhm_tools"]

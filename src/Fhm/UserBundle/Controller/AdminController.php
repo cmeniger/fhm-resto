@@ -3,6 +3,7 @@
 namespace Fhm\UserBundle\Controller;
 
 use Fhm\FhmBundle\Controller\RefAdminController as FhmController;
+use Fhm\FhmBundle\Services\Tools;
 use Fhm\UserBundle\Document\User;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -10,15 +11,16 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 /**
- * @Route("/admin/user")
+ * @Route("/admin/user", service ="fhm_user_controller_admin")
  */
 class AdminController extends FhmController
 {
     /**
      * Constructor
      */
-    public function __construct()
+    public function __construct(Tools $tools)
     {
+        $this->setFhmTools($tools);
         parent::__construct('Fhm', 'User', 'user');
     }
 
@@ -87,8 +89,8 @@ class AdminController extends FhmController
      */
     public function detailAction($id)
     {
-        $document  = $this->dmRepository()->find($id);
-        $instance  = $this->instanceData();
+        $document  = $this->fhm_tools->dmRepository()->find($id);
+        $instance  = $this->fhm_tools->instanceData();
         $classType = 'Fhm\\UserBundle\\Form\\Type\\Admin\\PasswordType';
         $form      = $this->createForm(new $classType($instance), $document);
 
@@ -195,13 +197,13 @@ class AdminController extends FhmController
     public function rolesAction(Request $request)
     {
         $roles    = json_decode($request->get('list'));
-        $document = $this->dmRepository()->find($request->get('id'));
+        $document = $this->fhm_tools->dmRepository()->find($request->get('id'));
         $document->setRoles(array());
         foreach($roles as $key => $role)
         {
             $document->addRole($role->id);
         }
-        $this->dmPersist($document);
+        $this->fhm_tools->dmPersist($document);
 
         return new Response();
     }
@@ -217,8 +219,8 @@ class AdminController extends FhmController
      */
     public function passwordAction(Request $request, $id)
     {
-        $document     = $this->dmRepository()->find($id);
-        $instance     = $this->instanceData();
+        $document     = $this->fhm_tools->dmRepository()->find($id);
+        $instance     = $this->fhm_tools->instanceData();
         $classType    = 'Fhm\\UserBundle\\Form\\Type\\Admin\\PasswordType';
         $classHandler = 'Fhm\\UserBundle\\Form\\Handler\\Admin\\PasswordHandler';
         $form         = $this->createForm(new $classType($instance), $document);

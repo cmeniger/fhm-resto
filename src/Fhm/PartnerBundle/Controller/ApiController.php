@@ -112,7 +112,7 @@ class ApiController extends FhmController
                 // Change grouping
                 if($instance->grouping->different && $document->getGrouping())
                 {
-                    $this->get($this->fhm_tools->getParameter("grouping", "fhm_fhm"))->setGrouping($document->getFirstGrouping());
+                    $this->get($this->fhm_tools->getParameters("grouping", "fhm_fhm"))->setGrouping($document->getFirstGrouping());
                 }
             }
             // Partner
