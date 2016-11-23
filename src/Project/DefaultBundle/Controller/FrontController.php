@@ -1,6 +1,8 @@
 <?php
 namespace Project\DefaultBundle\Controller;
 
+use Fhm\FhmBundle\Controller\RefFrontController;
+use Fhm\FhmBundle\Services\Tools;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -9,8 +11,18 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 /**
  * @Route("/", service="project_default_controller_front")
  */
-class FrontController extends Controller
+class FrontController extends RefFrontController
 {
+    /**
+     * FrontController constructor.
+     * @param $fhm_tools
+     */
+
+    public function __construct(Tools $fhm_tools)
+    {
+        $this->setFhmTools($fhm_tools);
+    }
+
     /**
      * @Route
      * (
@@ -21,8 +33,7 @@ class FrontController extends Controller
      */
     public function homeAction()
     {
-
-        return $this->get($this->getParameter("fhm_fhm")["grouping"])->loadGrouping();
+        return $this->fhm_tools->getContainer()->get($this->getParameter("fhm_fhm")["grouping"])->loadGrouping();
     }
 
     /**
