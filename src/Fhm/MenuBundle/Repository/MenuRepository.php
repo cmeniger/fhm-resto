@@ -31,13 +31,11 @@ class MenuRepository extends FhmRepository
     {
         $builder = $this->createQueryBuilder();
         // Language
-        if($this->language)
-        {
+        if ($this->language) {
             $builder->field('languages')->in((array) $this->language);
         }
         // Grouping
-        if($grouping != "")
-        {
+        if ($grouping != "") {
             $builder->addOr($builder->expr()->field('grouping')->in((array) $grouping));
             $builder->addOr($builder->expr()->field('share')->equals(true));
         }
@@ -78,8 +76,7 @@ class MenuRepository extends FhmRepository
         $current          = $this->find($idp);
         $current->branchs = array();
         $branchs          = $current->getChilds();
-        foreach($branchs as $branch)
-        {
+        foreach ($branchs as $branch) {
             $current->branchs[] = $this->getTree($branch->getId());
         }
 
@@ -96,8 +93,7 @@ class MenuRepository extends FhmRepository
     {
         $current = $this->find($idp);
         $map     = array();
-        if($current->getParent() != '0')
-        {
+        if ($current->getParent() != '0') {
             $map = array_merge($map, $this->getTreeMap($current->getParent()));
         }
         $map[] = $current;
