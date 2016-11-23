@@ -1,4 +1,13 @@
 services:
+    fhm_admin_controller_admin:
+        class: Fhm\FhmBundle\Controller\AdminController
+        arguments: ["@fhm_tools"]
+
+    fhm_admin_controller_api:
+        class: Fhm\FhmBundle\Controller\ApiController
+        arguments: ["@fhm_tools"]
+
+
     fhm_grouping:
         class: Fhm\FhmBundle\Services\Grouping
         arguments: ["@fhm_tools"]

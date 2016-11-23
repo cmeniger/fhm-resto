@@ -17,7 +17,8 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
 class ApiController extends FhmController
 {
     /**
-     * Constructor
+     * ApiController constructor.
+     * @param Tools $tools
      */
     public function __construct(Tools $tools)
     {
@@ -85,7 +86,7 @@ class ApiController extends FhmController
         }
         // Change grouping
         if ($instance->grouping->different && $document->getGrouping()) {
-            $this->get($this->fhm_tools->getParameters("grouping", "fhm_fhm"))
+            $this->get($this->getParameter("fhm_fhm")["grouping"])
                  ->setGrouping($document->getFirstGrouping());
         }
 
@@ -147,7 +148,7 @@ class ApiController extends FhmController
     private function getRoute($module, $document)
     {
         if ($module === "media") {
-            $route = $this->get($this->fhm_tools->getParameters('service', 'fhm_media'))
+            $route = $this->get($this->getParameter('fhm_media')['service'])
                 ->setDocument($document)
                 ->getPathWeb();
         } else {

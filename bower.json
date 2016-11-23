@@ -1,0 +1,16 @@
+{
+    "name": "fhm-integration-tools",
+    "dependencies":
+    {
+        "foundation":            "zurb/bower-foundation#~5.5.3",
+        "fontawesome":           "*",
+        "elusive-iconfont":      "*",
+        "hover":                 "~2.0.2",
+        "animate.css":           "https://github.com/daneden/animate.css.git#~3.4.0",
+        "slick-carousel":        "~1.5.9",
+        "tinymce":               "*",
+        "js-marker-clusterer":   "*",
+        "inview":                "*",
+        "nestable2":             "~1.2.4"
+    }
+}

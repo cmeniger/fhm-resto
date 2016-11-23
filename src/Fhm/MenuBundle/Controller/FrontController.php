@@ -2,6 +2,7 @@
 namespace Fhm\MenuBundle\Controller;
 
 use Fhm\FhmBundle\Controller\RefFrontController as FhmController;
+use Fhm\FhmBundle\Services\Tools;
 use Fhm\MenuBundle\Document\Menu;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
@@ -14,10 +15,12 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 class FrontController extends FhmController
 {
     /**
-     * Constructor
+     * AdminController constructor.
+     * @param Tools $tools
      */
-    public function __construct()
+    public function __construct(Tools $tools)
     {
+        $this->setFhmTools($tools);
         parent::__construct('Fhm', 'Menu', 'menu');
     }
 
@@ -32,9 +35,12 @@ class FrontController extends FhmController
     public function indexAction()
     {
         // For activate this route, delete next line
-        throw $this->createNotFoundException($this->get('translator')->trans('fhm.error.route', array(), 'FhmFhmBundle'));
+        throw $this->createNotFoundException(
+            $this->get('translator')->trans('fhm.error.route', array(), 'FhmFhmBundle')
+        );
 
-        return parent::indexAction();
+        /** To uncomment when authorized */
+       // return parent::indexAction();
     }
 
     /**
@@ -49,39 +55,30 @@ class FrontController extends FhmController
     public function detailAction($id)
     {
         $parent   = parent::detailAction($id);
-        $session  = $this->container->get('session');
+        $session  = $this->get('session');
         $document = $parent['document'];
         $modules  = '';
-        if($document->getRoute())
-        {
-            $route     = $this->container->get('router')->match($document->getRoute());
+        if ($document->getRoute()) {
+            $route     = $this->get('router')->match($document->getRoute());
             $variables = array();
-            foreach($route as $key => $value)
-            {
-                if(substr($key, 0, 1) !== '_')
-                {
+            foreach ($route as $key => $value) {
+                if (substr($key, 0, 1) !== '_') {
                     $variables[$key] = $value;
                 }
             }
             $session->set('menu', $id);
-            if($route['_route'] == "project_template")
-            {
-                $controller = new \Project\DefaultBundle\Controller\FrontController();
-                $controller->setContainer($this->container);
-
-                return $controller->templateAction($variables["name"], null);
-            }
-            else
-            {
+            if ($route['_route'] == "project_template") {
+                return $this->get('project_default_controller_front')->templateAction($variables["name"], null);
+            } else {
                 return $this->redirect($this->generateUrl($route['_route'], $variables));
             }
         }
 
         return array(
             'document' => $document,
-            'sites'    => $this->dmRepository("FhmSiteBundle:Site")->getFrontIndex(),
+            'sites'    => $this->fhm_tools->dmRepository("FhmSiteBundle:Site")->getFrontIndex(),
             'modules'  => $modules,
-            'submenu'  => $this->dmRepository("FhmMenuBundle:Menu")->getTree($document->getId()),
+            'submenu'  => $this->fhm_tools->dmRepository("FhmMenuBundle:Menu")->getTree($document->getId()),
             'instance' => $parent['instance']
         );
     }
@@ -97,9 +94,11 @@ class FrontController extends FhmController
     public function createAction(Request $request)
     {
         // For activate this route, delete next line
-        throw $this->createNotFoundException($this->get('translator')->trans('fhm.error.route', array(), 'FhmFhmBundle'));
-
-        return parent::createAction($request);
+        throw $this->createNotFoundException(
+            $this->get('translator')->trans('fhm.error.route', array(), 'FhmFhmBundle')
+        );
+        /** To uncomment when authorized */
+        //return parent::createAction($request);
     }
 
     /**
@@ -114,9 +113,11 @@ class FrontController extends FhmController
     public function updateAction(Request $request, $id)
     {
         // For activate this route, delete next line
-        throw $this->createNotFoundException($this->get('translator')->trans('fhm.error.route', array(), 'FhmFhmBundle'));
-
-        return parent::updateAction($request, $id);
+        throw $this->createNotFoundException(
+            $this->get('translator')->trans('fhm.error.route', array(), 'FhmFhmBundle')
+        );
+        /** To uncomment when authorized */
+        //return parent::updateAction($request, $id);
     }
 
     /**
@@ -130,9 +131,11 @@ class FrontController extends FhmController
     public function deleteAction($id)
     {
         // For activate this route, delete next line
-        throw $this->createNotFoundException($this->get('translator')->trans('fhm.error.route', array(), 'FhmFhmBundle'));
-
-        return parent::deleteAction($id);
+        throw $this->createNotFoundException(
+            $this->get('translator')->trans('fhm.error.route', array(), 'FhmFhmBundle')
+        );
+        /** To uncomment when authorized */
+        //return parent::deleteAction($id);
     }
 
     /**

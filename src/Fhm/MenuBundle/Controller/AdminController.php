@@ -2,6 +2,7 @@
 namespace Fhm\MenuBundle\Controller;
 
 use Fhm\FhmBundle\Controller\RefAdminController as FhmController;
+use Fhm\FhmBundle\Services\Tools;
 use Fhm\MenuBundle\Document\Menu;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -10,15 +11,17 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 /**
- * @Route("/admin/menu")
+ * @Route("/admin/menu", service="fhm_menu_controller_admin")
  */
 class AdminController extends FhmController
 {
     /**
-     * Constructor
+     * AdminController constructor.
+     * @param Tools $tools
      */
-    public function __construct()
+    public function __construct(Tools $tools)
     {
+        $this->setFhmTools($tools);
         parent::__construct('Fhm', 'Menu', 'menu');
         $this->setParent(true);
     }
@@ -47,37 +50,71 @@ class AdminController extends FhmController
     public function createAction(Request $request)
     {
         // ERROR - Unknown route
-        if(!$this->routeExists($this->source . '_admin_' . $this->route) || !$this->routeExists($this->source . '_admin_' . $this->route . '_create'))
-        {
-            throw $this->createNotFoundException($this->get('translator')->trans('fhm.error.route', array(), 'FhmFhmBundle'));
+        if (!$this->fhm_tools->routeExists($this->source.'_admin_'.$this->route) ||
+            !$this->fhm_tools->routeExists($this->source.'_admin_'.$this->route . '_create')) {
+            throw $this->createNotFoundException($this->get('translator')->trans(
+                'fhm.error.route',
+                array(),
+                'FhmFhmBundle'
+            ));
         }
         $document     = $this->document;
-        $instance     = $this->instanceData();
+        $instance     = $this->fhm_tools->instanceData();
         $classType    = $this->form->type->create;
         $classHandler = $this->form->handler->create;
         $form         = $this->createForm(new $classType($instance, $document), $document);
         $handler      = new $classHandler($form, $request);
         $process      = $handler->process();
-        if($process)
-        {
+        if ($process) {
             $data = $request->get($form->getName());
             // Persist
             $document->setUserCreate($this->getUser());
-            $document->setAlias($this->getAlias($document->getId(), $document->getName()));
-            $this->dmPersist($document);
+            $document->setAlias($this->fhm_tools->getAlias($document->getId(), $document->getName()));
+            $this->fhm_tools->dmPersist($document);
             // Menu
-            if($data['id'])
-            {
+            if ($data['id']) {
                 $this->_treeDuplicate($data['id'], $document->getId());
             }
             // Message
-            $this->get('session')->getFlashBag()->add('notice', $this->get('translator')->trans($this->translation[1] . '.admin.create.flash.ok', array(), $this->translation[0]));
+            $this->get('session')->getFlashBag()->add(
+                'notice',
+                $this->get('translator')->trans(
+                    $this->translation[1] . '.admin.create.flash.ok',
+                    array(),
+                    $this->translation[0]
+                )
+            );
             // Redirect
-            $redirect = $this->redirect($this->generateUrl($this->source . '_admin_' . $this->route));
-            $redirect = isset($data['submitSave']) ? $this->redirect($this->generateUrl($this->source . '_admin_' . $this->route . '_update', array('id' => $document->getId()))) : $redirect;
-            $redirect = isset($data['submitDuplicate']) ? $this->redirect($this->generateUrl($this->source . '_admin_' . $this->route . '_duplicate', array('id' => $document->getId()))) : $redirect;
-            $redirect = isset($data['submitNew']) ? $this->redirect($this->generateUrl($this->source . '_admin_' . $this->route . '_create')) : $redirect;
-            $redirect = isset($data['submitConfig']) ? $this->redirect($this->generateUrl($this->source . '_admin_' . $this->route . '_detail', array('id' => $document->getId()))) : $redirect;
+            $redirect = $this->redirect($this->generateUrl(
+                $this->source . '_admin_' . $this->route
+            ));
+            $redirect = isset($data['submitSave']) ?
+                $this->redirect(
+                    $this->generateUrl(
+                        $this->source . '_admin_' . $this->route . '_update',
+                        array('id' => $document->getId())
+                    )
+                ) :
+                $redirect;
+            $redirect = isset($data['submitDuplicate']) ?
+                $this->redirect(
+                    $this->generateUrl(
+                        $this->source . '_admin_' . $this->route . '_duplicate',
+                        array('id' => $document->getId())
+                    )
+                ) :
+                $redirect;
+
+            $redirect = isset($data['submitNew']) ?
+                $this->redirect($this->generateUrl($this->source . '_admin_' . $this->route . '_create')) :
+                $redirect;
+
+            $redirect = isset($data['submitConfig']) ?
+                $this->redirect($this->generateUrl(
+                    $this->source . '_admin_' . $this->route . '_detail',
+                    array('id' => $document->getId())
+                )) :
+                $redirect;
 
             return $redirect;
         }
@@ -86,11 +123,15 @@ class AdminController extends FhmController
             'form'        => $form->createView(),
             'instance'    => $instance,
             'document'    => $document,
-            'modules'     => $this->getParameters('modules', 'fhm_menu'),
+            'modules'     => $this->fhm_tools->getParameters('modules', 'fhm_menu'),
             'breadcrumbs' => array(
                 array(
                     'link' => $this->get('router')->generate('project_home'),
-                    'text' => $this->get('translator')->trans('project.home.breadcrumb', array(), 'ProjectDefaultBundle'),
+                    'text' => $this->get('translator')->trans(
+                        'project.home.breadcrumb',
+                        array(),
+                        'ProjectDefaultBundle'
+                    ),
                 ),
                 array(
                     'link' => $this->get('router')->generate('fhm_admin'),
@@ -98,11 +139,16 @@ class AdminController extends FhmController
                 ),
                 array(
                     'link' => $this->get('router')->generate($this->source . '_admin_' . $this->route),
-                    'text' => $this->get('translator')->trans($this->translation[1] . '.admin.index.breadcrumb', array(), $this->translation[0]),
+                    'text' => $this->get('translator')->trans(
+                        $this->translation[1] . '.admin.index.breadcrumb',
+                        array(),
+                        $this->translation[0]
+                    ),
                 ),
                 array(
                     'link'    => $this->get('router')->generate($this->source . '_admin_' . $this->route . '_create'),
-                    'text'    => $this->get('translator')->trans($this->translation[1] . '.admin.create.breadcrumb', array(), $this->translation[0]),
+                    'text'    => $this->get('translator')
+                        ->trans($this->translation[1] . '.admin.create.breadcrumb', array(), $this->translation[0]),
                     'current' => true
                 )
             )
@@ -120,8 +166,8 @@ class AdminController extends FhmController
      */
     public function detailAction($id)
     {
-        $tree    = $this->dmRepository()->getTree($id);
-        $treemap = $this->dmRepository()->getTreeMap($id);
+        $tree    = $this->fhm_tools->dmRepository()->getTree($id);
+        $treemap = $this->fhm_tools->dmRepository()->getTreeMap($id);
 
         return array_merge
         (
@@ -130,7 +176,7 @@ class AdminController extends FhmController
             (
                 "tree"    => $tree,
                 "treemap" => $treemap,
-                "modules" => $this->getParameters('modules', 'fhm_menu')
+                "modules" => $this->fhm_tools->getParameters('modules', 'fhm_menu')
             )
         );
     }
@@ -149,7 +195,9 @@ class AdminController extends FhmController
         $response = parent::updateAction($request, $id);
         $path     = (is_object($response)) ? $response : '';
 
-        return (is_array($response)) ? array_merge($response, array("modules" => $this->getParameters('modules', 'fhm_menu'))) : $path;
+        return (is_array($response)) ?
+            array_merge($response, array("modules" => $this->fhm_tools->getParameters('modules', 'fhm_menu'))) :
+            $path;
     }
 
     /**
@@ -176,12 +224,12 @@ class AdminController extends FhmController
      */
     public function deleteAction($id)
     {
-        $document = $this->dmRepository()->find($id);
+        $document = $this->fhm_tools->dmRepository()->find($id);
         $delete   = ($document->getDelete()) ? true : false;
         $this->_treeDelete($id, $document, $delete);
         parent::deleteAction($id);
 
-        return $this->redirect($this->getLastRoute());
+        return $this->redirect($this->fhm_tools->getLastRoute());
     }
 
     /**
@@ -197,7 +245,7 @@ class AdminController extends FhmController
         parent::undeleteAction($id);
         $this->_treeUndelete($id);
 
-        return $this->redirect($this->getLastRoute());
+        return $this->redirect($this->fhm_tools->getLastRoute());
     }
 
     /**
@@ -213,7 +261,7 @@ class AdminController extends FhmController
         parent::activateAction($id);
         $this->_treeActive($id, true);
 
-        return $this->redirect($this->getLastRoute());
+        return $this->redirect($this->fhm_tools->getLastRoute());
     }
 
     /**
@@ -229,7 +277,7 @@ class AdminController extends FhmController
         parent::deactivateAction($id);
         $this->_treeActive($id, false);
 
-        return $this->redirect($this->getLastRoute());
+        return $this->redirect($this->fhm_tools->getLastRoute());
     }
 
     /**
@@ -268,32 +316,30 @@ class AdminController extends FhmController
     public function addAction(Request $request)
     {
         $datas          = $request->get('FhmAdd');
-        $instance       = $this->instanceData();
+        $instance       = $this->fhm_tools->instanceData();
         $document       = new Menu();
-        $documentParent = $this->dmRepository()->find($datas['parent']);
-        if($datas['module'] != '' && $datas['data'] != '')
-        {
-            if($datas['module'] == "newsGroup")
-            {
-                $documentMenu = $this->dmRepository('FhmNewsBundle:' . ucfirst($datas['module']))->find($datas['data']);
+        $documentParent = $this->fhm_tools->dmRepository()->find($datas['parent']);
+        if ($datas['module'] != '' && $datas['data'] != '') {
+            if ($datas['module'] == "newsGroup") {
+                $documentMenu = $this->fhm_tools
+                    ->dmRepository('FhmNewsBundle:' . ucfirst($datas['module']))->find($datas['data']);
+            } else {
+                $documentMenu = $this->fhm_tools
+                    ->dmRepository('Fhm' . ucfirst($datas['module']) . 'Bundle:' . ucfirst($datas['module']))
+                    ->find($datas['data']);
             }
-            else
-            {
-                $documentMenu = $this->dmRepository('Fhm' . ucfirst($datas['module']) . 'Bundle:' . ucfirst($datas['module']))->find($datas['data']);
-            }
-            if(!empty($datas['name']))
-            {
+            if (!empty($datas['name'])) {
                 $document->setName($datas['name']);
-            }
-            else
-            {
+            } else {
                 $document->setName($documentMenu->getName());
             }
             $document->setRoute($this->_getRoute($datas['module'], $documentMenu));
-            $document->setModule(array('type' => $datas['module'], 'id' => $datas['data'], "name" => $documentMenu->getName()));
-        }
-        else
-        {
+            $document->setModule(array(
+                'type' => $datas['module'],
+                'id' => $datas['data'],
+                "name" => $documentMenu->getName()
+            ));
+        } else {
             $document->setName($datas['name']);
             $document->setRoute($datas['route']);
         }
@@ -303,10 +349,10 @@ class AdminController extends FhmController
         $document->setAlias($this->getAlias($document->getId(), $document->getName()));
         $documentParent->addChild($document);
         $document->addGrouping($instance->grouping->used);
-        $this->dmPersist($document);
-        $this->dmPersist($documentParent);
+        $this->fhm_tools->dmPersist($document);
+        $this->fhm_tools->dmPersist($documentParent);
 
-        return $this->redirect($this->getLastRoute());
+        return $this->redirect($this->fhm_tools->getLastRoute());
     }
 
     /**
@@ -319,45 +365,46 @@ class AdminController extends FhmController
     public function editAction(Request $request)
     {
         $datas    = $request->get('FhmUpdate');
-        $instance = $this->instanceData();
-        $document = $this->dmRepository()->find($datas['id']);
-        if($document == "")
-        {
-            throw $this->createNotFoundException($this->get('translator')->trans($this->translation[1] . '.error.unknown', array(), $this->translation[0]));
+        $instance = $this->fhm_tools->instanceData();
+        $document = $this->fhm_tools->dmRepository()->find($datas['id']);
+        if ($document == "") {
+            throw $this->createNotFoundException(
+                $this->get('translator')->trans(
+                    $this->translation[1] . '.error.unknown',
+                    array(),
+                    $this->translation[0]
+                )
+            );
         }
-        if($datas['module'] != '' && $datas['data'] != '')
-        {
-            if($datas['module'] == "newsGroup")
-            {
-                $documentMenu = $this->dmRepository('FhmNewsBundle:' . ucfirst($datas['module']))->find($datas['data']);
+        if ($datas['module'] != '' && $datas['data'] != '') {
+            if ($datas['module'] == "newsGroup") {
+                $documentMenu = $this->fhm_tools
+                    ->dmRepository('FhmNewsBundle:' . ucfirst($datas['module']))->find($datas['data']);
+            } else {
+                $documentMenu = $this->fhm_tools
+                    ->dmRepository('Fhm' . ucfirst($datas['module']) . 'Bundle:' . ucfirst($datas['module']))
+                    ->find($datas['data']);
             }
-            else
-            {
-                $documentMenu = $this->dmRepository('Fhm' . ucfirst($datas['module']) . 'Bundle:' . ucfirst($datas['module']))->find($datas['data']);
-            }
-            if(!empty($datas['name']))
-            {
+            if (!empty($datas['name'])) {
                 $document->setName($datas['name']);
-            }
-            else
-            {
+            } else {
                 $document->setName($documentMenu->getName());
             }
             $document->setRoute($this->_getRoute($datas['module'], $documentMenu));
-            $document->setModule(array('type' => $datas['module'], 'id' => $datas['data'], "name" => $documentMenu->getName()));
-        }
-        else
-        {
+            $document->setModule(
+                array('type' => $datas['module'], 'id' => $datas['data'], "name" => $documentMenu->getName())
+            );
+        } else {
             $document->setName($datas['name']);
             $document->setRoute($datas['route']);
         }
         $document->setDescription($datas['description']);
         $document->setIcon($datas['icon']);
-        $document->setAlias($this->getAlias($document->getId(), $document->getName()));
+        $document->setAlias($this->fhm_tools->getAlias($document->getId(), $document->getName()));
         $document->addGrouping($instance->grouping->used);
-        $this->dmPersist($document);
+        $this->fhm_tools->dmPersist($document);
 
-        return $this->redirect($this->getLastRoute());
+        return $this->redirect($this->fhm_tools->getLastRoute());
     }
 
     /**
@@ -387,17 +434,15 @@ class AdminController extends FhmController
     public function moduleAction(Request $request)
     {
         $module = $request->get('module');
-        if($module == "newsGroup")
-        {
-            $datasRepository = $this->dmRepository('FhmNewsBundle:' . ucfirst($module))->findAll();
-        }
-        else
-        {
-            $datasRepository = $this->dmRepository('Fhm' . ucfirst($module) . 'Bundle:' . ucfirst($module))->findAll();
+        if ($module == "newsGroup") {
+            $datasRepository = $this->fhm_tools->dmRepository('FhmNewsBundle:' . ucfirst($module))->findAll();
+        } else {
+            $datasRepository = $this->fhm_tools->dmRepository('Fhm' . ucfirst($module) . 'Bundle:' . ucfirst($module))
+                ->findAll();
         }
 
         return array(
-            'instance' => $this->instanceData(),
+            'instance' => $this->fhm_tools->instanceData(),
             'datas'    => $datasRepository,
             'module'   => $module
         );
@@ -414,24 +459,25 @@ class AdminController extends FhmController
     public function addmoduleAction(Request $request)
     {
         $datas    = $request->get('FhmAdd');
-        $document = $this->dmRepository()->find($datas['id']);
-        if($datas['module'] != '' && $datas['data'] != '')
-        {
-            $instance = $this->instanceData();
-            if($datas['module'] == "newsGroup")
-            {
-                $documentMenu = $this->dmRepository('FhmNewsBundle:' . ucfirst($datas['module']))->find($datas['data']);
-            }
-            else
-            {
-                $documentMenu = $this->dmRepository('Fhm' . ucfirst($datas['module']) . 'Bundle:' . ucfirst($datas['module']))->find($datas['data']);
+        $document = $this->fhm_tools->dmRepository()->find($datas['id']);
+        if ($datas['module'] != '' && $datas['data'] != '') {
+            $this->fhm_tools->instanceData();
+            if ($datas['module'] == "newsGroup") {
+                $documentMenu = $this->fhm_tools->dmRepository('FhmNewsBundle:' . ucfirst($datas['module']))
+                    ->find($datas['data']);
+            } else {
+                $documentMenu = $this->fhm_tools->dmRepository(
+                    'Fhm' . ucfirst($datas['module']) . 'Bundle:' . ucfirst($datas['module'])
+                )->find($datas['data']);
             }
             $document->setRoute($this->_getRoute($datas['module'], $documentMenu));
-            $document->setModule(array('type' => $datas['module'], 'id' => $datas['data'], "name" => $documentMenu->getName()));
-            $this->dmPersist($document);
+            $document->setModule(
+                array('type' => $datas['module'], 'id' => $datas['data'], "name" => $documentMenu->getName())
+            );
+            $this->fhm_tools->dmPersist($document);
         }
 
-        return $this->redirect($this->getLastRoute());
+        return $this->redirect($this->fhm_tools->getLastRoute());
     }
 
     /**
@@ -445,26 +491,21 @@ class AdminController extends FhmController
      */
     private function _treeDelete($idp, $document, $delete)
     {
-        $sons = $this->dmRepository()->getSons($idp);
+        $sons = $this->fhm_tools->dmRepository()->getSons($idp);
         // remove childs form parent
-        if($delete && $document->getParent() != '0')
-        {
-            $documentParent = $this->dmRepository()->find($document->getParent());
+        if ($delete && $document->getParent() != '0') {
+            $documentParent = $this->fhm_tools->dmRepository()->find($document->getParent());
             $documentParent->removeChild($document);
-            $this->dmPersist($documentParent);
+            $this->fhm_tools->dmPersist($documentParent);
         }
         //delete all childs
-        foreach($sons as $son)
-        {
+        foreach ($sons as $son) {
             $this->_treeDelete($son->getId(), $son, $delete);
-            if($delete)
-            {
-                $this->dmRemove($son);
-            }
-            else
-            {
+            if ($delete) {
+                $this->fhm_tools->dmRemove($son);
+            } else {
                 $son->setDelete(true);
-                $this->dmPersist($son);
+                $this->fhm_tools->dmPersist($son);
             }
         }
 
@@ -480,12 +521,11 @@ class AdminController extends FhmController
      */
     private function _treeUndelete($idp)
     {
-        $documentParent = $this->dmRepository()->find($idp);
-        foreach($documentParent->getChilds() as $son)
-        {
+        $documentParent = $this->fhm_tools->dmRepository()->find($idp);
+        foreach ($documentParent->getChilds() as $son) {
             $this->_treeUndelete($son->getId());
             $son->setDelete(false);
-            $this->dmPersist($son);
+            $this->fhm_tools->dmPersist($son);
         }
 
         return $this;
@@ -501,12 +541,11 @@ class AdminController extends FhmController
      */
     private function _treeActive($idp, $active)
     {
-        $documentParent = $this->dmRepository()->find($idp);
-        foreach($documentParent->getChilds() as $son)
-        {
+        $documentParent = $this->fhm_tools->dmRepository()->find($idp);
+        foreach ($documentParent->getChilds() as $son) {
             $this->_treeActive($son->getId(), $active);
             $son->setActive($active);
-            $this->dmPersist($son);
+            $this->fhm_tools->dmPersist($son);
         }
 
         return $this;
@@ -523,36 +562,31 @@ class AdminController extends FhmController
     private function _treeSort($parent, $list)
     {
         $order          = 1;
-        $documentParent = $this->dmRepository()->find($parent);
+        $documentParent = $this->fhm_tools->dmRepository()->find($parent);
         $tabChilds      = $documentParent->getChilds();
         $documentParent->setChilds(new ArrayCollection());
-        foreach($list as $obj)
-        {
-            $document = $this->dmRepository()->find($obj->id);
-            if(isset($obj->children))
-            {
+        foreach ($list as $obj) {
+            $document = $this->fhm_tools->dmRepository()->find($obj->id);
+            if (isset($obj->children)) {
                 $this->_treeSort($obj->id, $obj->children);
             }
             // change order in parent
-            foreach($tabChilds as $key => $son)
-            {
-                if($son->getId() == $obj->id)
-                {
+            foreach ($tabChilds as $key => $son) {
+                if ($son->getId() == $obj->id) {
                     $documentParent->addChild($son);
                 }
             }
             //add new child in parent and remove child in old parent
-            if($parent == $documentParent->getId())
-            {
-                $documentOldParent = $this->dmRepository()->find($document->getParent());
+            if ($parent == $documentParent->getId()) {
+                $documentOldParent = $this->fhm_tools->dmRepository()->find($document->getParent());
                 $documentOldParent->removeChild($document);
                 $documentParent->addChild($document);
-                $this->dmPersist($documentOldParent);
+                $this->fhm_tools->dmPersist($documentOldParent);
             }
             $document->setOrder($order);
             $document->setParent($parent);
-            $this->dmPersist($document);
-            $this->dmPersist($documentParent);
+            $this->fhm_tools->dmPersist($document);
+            $this->fhm_tools->dmPersist($documentParent);
             $order++;
         }
 
@@ -569,12 +603,10 @@ class AdminController extends FhmController
      */
     private function _treeDuplicate($ids, $idt)
     {
-        $documentSource = $this->dmRepository()->find($ids);
-        $documentTarget = $this->dmRepository()->find($idt);
-        if($documentSource and $documentSource->getChilds())
-        {
-            foreach($documentSource->getChilds() as $child)
-            {
+        $documentSource = $this->fhm_tools->dmRepository()->find($ids);
+        $documentTarget = $this->fhm_tools->dmRepository()->find($idt);
+        if ($documentSource and $documentSource->getChilds()) {
+            foreach ($documentSource->getChilds() as $child) {
                 $document = new \Fhm\MenuBundle\Document\Menu;
                 $document->setName($child->getName());
                 $document->setDescription($child->getDescription());
@@ -590,11 +622,11 @@ class AdminController extends FhmController
                 $document->setModule($child->getModule());
                 $document->setParent($idt);
                 $document->setAlias($this->getAlias($document->getId(), $document->getName()));
-                $this->dmPersist($document);
+                $this->fhm_tools->dmPersist($document);
                 $documentTarget->addChild($document);
                 $this->_treeDuplicate($child->getId(), $document->getId());
             }
-            $this->dmPersist($documentTarget);
+            $this->fhm_tools->dmPersist($documentTarget);
         }
 
         return $this;
@@ -608,12 +640,9 @@ class AdminController extends FhmController
      */
     private function _getRoute($module, $document)
     {
-        if($module === "media")
-        {
-            $route = $this->get($this->getParameters('service','fhm_media'))->setDocument($document)->getPathWeb();
-        }
-        else
-        {
+        if ($module === "media") {
+            $route = $this->get($this->fhm_tools->getParameters('service','fhm_media'))->setDocument($document)->getPathWeb();
+        } else {
             $route = '/' . $module . '/detail/' . $document->getAlias();
         }
 

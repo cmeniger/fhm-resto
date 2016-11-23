@@ -2,6 +2,7 @@
 namespace Fhm\FhmBundle\Controller;
 
 use Fhm\FhmBundle\Document\Fhm;
+use Fhm\FhmBundle\Services\Tools;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpKernel\Exception\HttpException;
@@ -9,15 +10,16 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 /**
- * @Route("/admin")
+ * @Route("/admin", service="fhm_admin_controller_admin")
  */
 class AdminController extends RefAdminController
 {
     /**
      * Constructor
      */
-    public function __construct()
+    public function __construct(Tools $tools)
     {
+        $this->setFhmTools($tools);
         parent::__construct();
     }
 

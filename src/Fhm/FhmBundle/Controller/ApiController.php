@@ -1,6 +1,7 @@
 <?php
 namespace Fhm\FhmBundle\Controller;
 
+use Fhm\FhmBundle\Services\Tools;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
@@ -8,15 +9,17 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 /**
- * @Route("/api")
+ * @Route("/api" , service="fhm_admin_controller_api")
  */
 class ApiController extends RefApiController
 {
     /**
-     * Constructor
+     * ApiController constructor.
+     * @param Tools $tools
      */
-    public function __construct()
+    public function __construct(Tools $tools)
     {
+        $this->setFhmTools($tools);
         parent::__construct();
     }
 
@@ -34,7 +37,7 @@ class ApiController extends RefApiController
             $this->get('session')->set('_locale', $locale);
         }
 
-        if ($this->get('security.')->isGranted('ROLE_ADMIN')) {
+        if ($this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
             $this->get('session')->set('_localeAdmin', $locale);
         }
 
