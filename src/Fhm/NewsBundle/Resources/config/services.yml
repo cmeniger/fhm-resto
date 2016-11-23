@@ -1,36 +1,36 @@
 services:
     fhm_news_controller_admin:
         class: Fhm\NewsBundle\Controller\AdminController
-        arguments: [@fhm_tools]
+        arguments: ["@fhm_tools"]
 
     fhm_news_controller_front:
         class: Fhm\NewsBundle\Controller\FrontController
-        arguments: [@fhm_tools]
+        arguments: ["@fhm_tools"]
 
     fhm_news_controller_api:
         class: Fhm\NewsBundle\Controller\ApiController
-        arguments: [@fhm_tools]
+        arguments: ["@fhm_tools"]
 
     fhm_news_controller_group_admin:
         class: Fhm\NewsBundle\Controller\Group\AdminController
-        arguments: [@fhm_tools]
+        arguments: ["@fhm_tools"]
 
     fhm_news_controller_group_front:
         class: Fhm\NewsBundle\Controller\Group\FrontController
-        arguments: [@fhm_tools]
+        arguments: ["@fhm_tools"]
 
     fhm_news_controller_group_api:
         class: Fhm\NewsBundle\Controller\Group\ApiController
-        arguments: [@fhm_tools]
+        arguments: ["@fhm_tools"]
 
     fhm_news_controller_tag_admin:
         class: Fhm\NewsBundle\Controller\Tag\AdminController
-        arguments: [@fhm_tools]
+        arguments: ["@fhm_tools"]
 
     fhm_news_controller_tag_front:
         class: Fhm\NewsBundle\Controller\Tag\FrontController
-        arguments: [@fhm_tools]
+        arguments: ["@fhm_tools"]
 
     fhm_news_controller_tag_api:
         class: Fhm\NewsBundle\Controller\Tag\ApiController
-        arguments: [@fhm_tools]
+        arguments: ["@fhm_tools"]

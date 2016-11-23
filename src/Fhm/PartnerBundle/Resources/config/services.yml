@@ -1,24 +1,24 @@
 services:
     fhm_partner_controller_admin:
         class: Fhm\PartnerBundle\Controller\AdminController
-        arguments: [@fhm_tools]
+        arguments: ["@fhm_tools"]
 
     fhm_partner_controller_front:
         class: Fhm\PartnerBundle\Controller\FrontController
-        arguments: [@fhm_tools]
+        arguments: ["@fhm_tools"]
 
     fhm_partner_controller_api:
         class: Fhm\PartnerBundle\Controller\ApiController
-        arguments: [@fhm_tools]
+        arguments: ["@fhm_tools"]
 
     fhm_partner_controller_group_admin:
         class: Fhm\PartnerBundle\Controller\Group\AdminController
-        arguments: [@fhm_tools]
+        arguments: ["@fhm_tools"]
 
     fhm_partner_controller_group_front:
         class: Fhm\PartnerBundle\Controller\Group\FrontController
-        arguments: [@fhm_tools]
+        arguments: ["@fhm_tools"]
 
     fhm_partner_controller_group_api:
         class: Fhm\PartnerBundle\Controller\Group\ApiController
-        arguments: [@fhm_tools]
+        arguments: ["@fhm_tools"]

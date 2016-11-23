@@ -1,22 +1,22 @@
 services:
     fhm_note:
         class: Fhm\NoteBundle\Services\Note
-        arguments: [@fhm_tools]
+        arguments: ["@fhm_tools"]
 
     twig.extension.note:
         class: Fhm\NoteBundle\Twig\NoteExtension
-        arguments: [@templating, @fhm_note]
+        arguments: ["@templating", "@fhm_note"]
         tags:
             - { name: twig.extension }
             
     fhm_note_controller_admin:
         class: Fhm\NoteBundle\Controller\AdminController
-        arguments: [@fhm_tools]
+        arguments: ["@fhm_tools"]
 
     fhm_note_controller_front:
         class: Fhm\NoteBundle\Controller\FrontController
-        arguments: [@fhm_tools]
+        arguments: ["@fhm_tools"]
 
     fhm_note_controller_api:
         class: Fhm\NoteBundle\Controller\ApiController
-        arguments: [@fhm_tools]
+        arguments: ["@fhm_tools"]

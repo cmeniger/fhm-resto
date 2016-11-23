@@ -1,7 +1,7 @@
 services:
     fhm_geocoder:
         class: Fhm\GeolocationBundle\Services\Geocoder
-        arguments: [@service_container]
+        arguments: ["@service_container"]
 
     fhm.twig.geolocation_extension:
         class: Fhm\GeolocationBundle\Twig\GeolocationExtension
@@ -10,4 +10,4 @@ services:
 
     fhm_map_controller:
         class: Fhm\GeolocationBundle\Controller\MapController
-        arguments: [@fhm_tools]
+        arguments: ["@fhm_tools"]

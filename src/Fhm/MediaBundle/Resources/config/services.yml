@@ -1,13 +1,13 @@
 services:
     fhm.twig.media_extension:
         class: Fhm\MediaBundle\Twig\MediaExtension
-        arguments: [@templating, @fhm_tools]
+        arguments: ["@templating", "@fhm_tools"]
         tags:
             - { name: twig.extension }
 
     fhm.twig.media_tag_extension:
         class: Fhm\MediaBundle\Twig\MediaTagExtension
-        arguments: [@templating, @fhm_tools]
+        arguments: ["@templating", "@fhm_tools"]
         tags:
             - { name: twig.extension }
 
@@ -23,32 +23,32 @@ services:
 
     fhm_media_local:
         class: Fhm\MediaBundle\Services\Local
-        arguments: [@fhm_tools, @kernel]
+        arguments: ["@fhm_tools", "@kernel"]
 
     fhm_media_s3:
         class: Fhm\MediaBundle\Services\S3
-        arguments: [@fhm_tools, @kernel]
+        arguments: ["@fhm_tools", "@kernel"]
 
     fhm_media_controller_admin:
         class: Fhm\MediaBundle\Controller\AdminController
-        arguments: [@fhm_tools]
+        arguments: ["@fhm_tools"]
 
     fhm_media_controller_front:
         class: Fhm\MediaBundle\Controller\FrontController
-        arguments: [@fhm_tools]
+        arguments: ["@fhm_tools"]
 
     fhm_media_controller_api:
         class: Fhm\MediaBundle\Controller\ApiController
-        arguments: [@fhm_tools]
+        arguments: ["@fhm_tools"]
 
     fhm_media_controller_tag_admin:
         class: Fhm\MediaBundle\Controller\Tag\AdminController
-        arguments: [@fhm_tools]
+        arguments: ["@fhm_tools"]
 
     fhm_media_controller_tag_front:
         class: Fhm\MediaBundle\Controller\Tag\FrontController
-        arguments: [@fhm_tools]
+        arguments: ["@fhm_tools"]
 
     fhm_media_controller_tag_api:
         class: Fhm\MediaBundle\Controller\Tag\ApiController
-        arguments: [@fhm_tools]
+        arguments: ["@fhm_tools"]

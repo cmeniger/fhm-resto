@@ -2,6 +2,7 @@
 namespace Fhm\SiteBundle\Controller;
 
 use Fhm\FhmBundle\Controller\RefAdminController as FhmController;
+use Fhm\FhmBundle\Services\Tools;
 use Fhm\SiteBundle\Document\Site;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\HttpException;
@@ -18,7 +19,7 @@ class AdminController extends FhmController
      *
      * @param \Fhm\FhmBundle\Services\Tools $tools
      */
-    public function __construct(\Fhm\FhmBundle\Services\Tools $tools)
+    public function __construct(Tools $tools)
     {
         $this->setFhmTools($tools);
         parent::__construct('Fhm', 'Site', 'site');

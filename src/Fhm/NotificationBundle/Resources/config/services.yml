@@ -1,16 +1,16 @@
 services:
     fhm_notification:
         class: Fhm\NotificationBundle\Services\Notification
-        arguments: [@fhm_tools]
+        arguments: ["@fhm_tools"]
             
     fhm_notification_controller_admin:
         class: Fhm\NotificationBundle\Controller\AdminController
-        arguments: [@fhm_tools]
+        arguments: ["@fhm_tools"]
 
     fhm_notification_controller_front:
         class: Fhm\NotificationBundle\Controller\FrontController
-        arguments: [@fhm_tools]
+        arguments: ["@fhm_tools"]
 
     fhm_notification_controller_api:
         class: Fhm\NotificationBundle\Controller\ApiController
-        arguments: [@fhm_tools]
+        arguments: ["@fhm_tools"]

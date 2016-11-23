@@ -1,24 +1,24 @@
 services:
     fhm_slider_controller_admin:
         class: Fhm\SliderBundle\Controller\AdminController
-        arguments: [@fhm_tools]
+        arguments: ["@fhm_tools"]
 
     fhm_slider_controller_front:
         class: Fhm\SliderBundle\Controller\FrontController
-        arguments: [@fhm_tools]
+        arguments: ["@fhm_tools"]
 
     fhm_slider_controller_api:
         class: Fhm\SliderBundle\Controller\ApiController
-        arguments: [@fhm_tools]
+        arguments: ["@fhm_tools"]
 
     fhm_slider_controller_item_admin:
         class: Fhm\SliderBundle\Controller\Item\AdminController
-        arguments: [@fhm_tools]
+        arguments: ["@fhm_tools"]
 
     fhm_slider_controller_item_front:
         class: Fhm\SliderBundle\Controller\Item\FrontController
-        arguments: [@fhm_tools]
+        arguments: ["@fhm_tools"]
 
     fhm_slider_controller_item_api:
         class: Fhm\SliderBundle\Controller\Item\ApiController
-        arguments: [@fhm_tools]
+        arguments: ["@fhm_tools"]
