@@ -105,7 +105,7 @@ Generate static files for integration, in docker :
 
     cd /var/www/fhm-tools-v2
     npm install
-    bower install
+    bower install --allow-root
     gulp
     
 8) CHMOD
