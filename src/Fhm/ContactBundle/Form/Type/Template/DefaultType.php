@@ -3,8 +3,12 @@ namespace Fhm\ContactBundle\Form\Type\Template;
 
 use EWZ\Bundle\RecaptchaBundle\Validator\Constraints\True as RecaptchaTrue;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class DefaultType extends AbstractType
 {
@@ -30,20 +34,23 @@ class DefaultType extends AbstractType
 //                ),
 //                'mapped'      => false
 //            ))
-            ->add('firstname', 'text', array('label' => $this->instance->translation . '.front.form.firstname', 'mapped' => false))
-            ->add('lastname', 'text', array('label' => $this->instance->translation . '.front.form.lastname', 'mapped' => false))
-            ->add('email', 'email', array('label' => $this->instance->translation . '.front.form.email', 'mapped' => false))
-            ->add('phone', 'text', array('label' => $this->instance->translation . '.front.form.phone', 'mapped' => false, 'required' => false))
-            ->add('content', 'textarea', array('label' => $this->instance->translation . '.front.form.content', 'mapped' => false))
-            ->add('submit', 'submit', array('label' => $this->instance->translation . '.front.form.submit'));
+            ->add('firstname', TextType::class, array('label' => $this->instance->translation . '.front.form.firstname', 'mapped' => false))
+            ->add('lastname', TextType::class, array('label' => $this->instance->translation . '.front.form.lastname', 'mapped' => false))
+            ->add('email', EmailType::class, array('label' => $this->instance->translation . '.front.form.email', 'mapped' => false))
+            ->add('phone', TextType::class, array('label' => $this->instance->translation . '.front.form.phone', 'mapped' => false, 'required' => false))
+            ->add('content', TextareaType::class, array('label' => $this->instance->translation . '.front.form.content', 'mapped' => false))
+            ->add('submit', SubmitType::class, array('label' => $this->instance->translation . '.front.form.submit'));
     }
 
-    public function getName()
+    /**
+     * @return string
+     */
+    public function getBlockPrefix()
     {
         return 'FhmContactDefault';
     }
 
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults
         (

@@ -2,8 +2,13 @@
 namespace Fhm\ContactBundle\Form\Type\Template;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+
 
 class TestType extends AbstractType
 {
@@ -17,20 +22,23 @@ class TestType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('firstname', 'text', array('label' => $this->instance->translation . '.form.firstname'))
-            ->add('lastname', 'text', array('label' => $this->instance->translation . '.form.lastname'))
-            ->add('email', 'email', array('label' => $this->instance->translation . '.form.email'))
-            ->add('phone', 'text', array('label' => $this->instance->translation . '.form.phone', 'required' => false))
-            ->add('content', 'textarea', array('label' => $this->instance->translation . '.form.content'))
-            ->add('submit', 'submit', array('label' => $this->instance->translation . '.form.submit'));
+            ->add('firstname', TextType::class, array('label' => $this->instance->translation . '.form.firstname'))
+            ->add('lastname', TextType::class, array('label' => $this->instance->translation . '.form.lastname'))
+            ->add('email', EmailType::class, array('label' => $this->instance->translation . '.form.email'))
+            ->add('phone',TextType::class, array('label' => $this->instance->translation . '.form.phone', 'required' => false))
+            ->add('content', TextareaType::class, array('label' => $this->instance->translation . '.form.content'))
+            ->add('submit', SubmitType::class, array('label' => $this->instance->translation . '.form.submit'));
     }
 
-    public function getName()
+    /**
+     * @return string
+     */
+    public function getBlockPrefix()
     {
-        return 'FhmContactTest';
+        return 'FhmContactDefault';
     }
 
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults
         (

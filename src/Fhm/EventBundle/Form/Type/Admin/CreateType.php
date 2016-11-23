@@ -1,8 +1,13 @@
 <?php
 namespace Fhm\EventBundle\Form\Type\Admin;
 
+use Doctrine\Bundle\MongoDBBundle\Form\Type\DocumentType;
 use Fhm\EventBundle\Form\Type\Admin\Group\AddType;
 use Fhm\FhmBundle\Form\Type\Admin\CreateType as FhmType;
+use Fhm\MediaBundle\Form\Type\MediaType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 class CreateType extends FhmType
@@ -11,18 +16,18 @@ class CreateType extends FhmType
     {
         parent::buildForm($builder, $options);
         $builder
-            ->add('title', 'text', array('label' => $this->instance->translation . '.admin.create.form.title'))
-            ->add('subtitle', 'text', array('label' => $this->instance->translation . '.admin.create.form.subtitle', 'required' => false))
-            ->add('resume', 'textarea', array('label' => $this->instance->translation . '.admin.create.form.resume', 'attr' => array('class' => 'editor')))
-            ->add('content', 'textarea', array('label' => $this->instance->translation . '.admin.create.form.content', 'attr' => array('class' => 'editor')))
-            ->add('date_start', 'datetime', array('label' => $this->instance->translation . '.admin.create.form.start', 'widget' => 'single_text', 'input' => 'datetime', 'format' => 'dd/MM/yyyy HH:mm', 'attr' => array('class' => 'datetimepicker')))
-            ->add('date_end', 'datetime', array('label' => $this->instance->translation . '.admin.create.form.end', 'widget' => 'single_text', 'input' => 'datetime', 'format' => 'dd/MM/yyyy HH:mm', 'attr' => array('class' => 'datetimepicker')))
-            ->add('image', 'media', array(
+            ->add('title', TextType::class, array('label' => $this->instance->translation . '.admin.create.form.title'))
+            ->add('subtitle', TextType::class, array('label' => $this->instance->translation . '.admin.create.form.subtitle', 'required' => false))
+            ->add('resume', TextareaType::class, array('label' => $this->instance->translation . '.admin.create.form.resume', 'attr' => array('class' => 'editor')))
+            ->add('content', TextareaType::class, array('label' => $this->instance->translation . '.admin.create.form.content', 'attr' => array('class' => 'editor')))
+            ->add('date_start', DateTimeType::class, array('label' => $this->instance->translation . '.admin.create.form.start', 'widget' => 'single_text', 'input' => 'datetime', 'format' => 'dd/MM/yyyy HH:mm', 'attr' => array('class' => 'datetimepicker')))
+            ->add('date_end', DateTimeType::class, array('label' => $this->instance->translation . '.admin.create.form.end', 'widget' => 'single_text', 'input' => 'datetime', 'format' => 'dd/MM/yyyy HH:mm', 'attr' => array('class' => 'datetimepicker')))
+            ->add('image', MediaType::class, array(
                 'label'    => $this->instance->translation . '.admin.create.form.image',
                 'filter'   => 'image/*',
                 'required' => false
             ))
-            ->add('eventgroups', 'document', array(
+            ->add('eventgroups',DocumentType::class, array(
                 'label'         => $this->instance->translation . '.admin.create.form.eventgroups',
                 'class'         => 'FhmEventBundle:EventGroup',
                 'property'      => 'name',

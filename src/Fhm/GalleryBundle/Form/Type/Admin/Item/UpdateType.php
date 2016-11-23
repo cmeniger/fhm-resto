@@ -1,7 +1,11 @@
 <?php
 namespace Fhm\GalleryBundle\Form\Type\Admin\Item;
 
+use Doctrine\Bundle\MongoDBBundle\Form\Type\DocumentType;
 use Fhm\FhmBundle\Form\Type\Admin\UpdateType as FhmType;
+use Fhm\MediaBundle\Form\Type\MediaType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 class UpdateType extends FhmType
@@ -10,16 +14,16 @@ class UpdateType extends FhmType
     {
         parent::buildForm($builder, $options);
         $builder
-            ->add('title', 'text', array('label' => $this->instance->translation . '.admin.update.form.title'))
-            ->add('subtitle', 'text', array('label' => $this->instance->translation . '.admin.update.form.subtitle', 'required' => false))
+            ->add('title', TextType::class, array('label' => $this->instance->translation . '.admin.update.form.title'))
+            ->add('subtitle', TextType::class, array('label' => $this->instance->translation . '.admin.update.form.subtitle', 'required' => false))
             ->add('content', 'textarea', array('label' => $this->instance->translation . '.admin.update.form.content', 'attr' => array('class' => 'editor'), 'required' => false))
-            ->add('link', 'text', array('label' => $this->instance->translation . '.admin.update.form.link', 'required' => false))
-            ->add('order', 'integer', array('label' => $this->instance->translation . '.admin.update.form.order', 'required' => false))
-            ->add('image', 'media', array(
+            ->add('link', TextType::class, array('label' => $this->instance->translation . '.admin.update.form.link', 'required' => false))
+            ->add('order', IntegerType::class, array('label' => $this->instance->translation . '.admin.update.form.order', 'required' => false))
+            ->add('image', MediaType::class, array(
                 'label'  => $this->instance->translation . '.admin.update.form.image',
                 'filter' => 'image/*'
             ))
-            ->add('galleries', 'document', array(
+            ->add('galleries', DocumentType::class, array(
                 'label'         => $this->instance->translation . '.admin.update.form.galleries',
                 'class'         => 'FhmGalleryBundle:Gallery',
                 'property'      => 'name',
