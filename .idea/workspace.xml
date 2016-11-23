@@ -1,22 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="228afecf-5121-4859-ae7d-99168f4be07e" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Fhm/ArticleBundle/Form/Type/Admin/CreateType.php" afterPath="$PROJECT_DIR$/src/Fhm/ArticleBundle/Form/Type/Admin/CreateType.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Fhm/FhmBundle/Form/Type/Admin/CreateType.php" afterPath="$PROJECT_DIR$/src/Fhm/FhmBundle/Form/Type/Admin/CreateType.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Fhm/FhmBundle/Form/Type/Admin/ExportType.php" afterPath="$PROJECT_DIR$/src/Fhm/FhmBundle/Form/Type/Admin/ExportType.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Fhm/FhmBundle/Form/Type/Admin/ImportType.php" afterPath="$PROJECT_DIR$/src/Fhm/FhmBundle/Form/Type/Admin/ImportType.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Fhm/FhmBundle/Form/Type/Admin/SearchType.php" afterPath="$PROJECT_DIR$/src/Fhm/FhmBundle/Form/Type/Admin/SearchType.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Fhm/FhmBundle/Form/Type/Admin/UpdateType.php" afterPath="$PROJECT_DIR$/src/Fhm/FhmBundle/Form/Type/Admin/UpdateType.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Fhm/FhmBundle/Form/Type/Api/CreateType.php" afterPath="$PROJECT_DIR$/src/Fhm/FhmBundle/Form/Type/Api/CreateType.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Fhm/FhmBundle/Form/Type/Api/SearchType.php" afterPath="$PROJECT_DIR$/src/Fhm/FhmBundle/Form/Type/Api/SearchType.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Fhm/FhmBundle/Form/Type/Api/UpdateType.php" afterPath="$PROJECT_DIR$/src/Fhm/FhmBundle/Form/Type/Api/UpdateType.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Fhm/FhmBundle/Form/Type/AutocompleteType.php" afterPath="$PROJECT_DIR$/src/Fhm/FhmBundle/Form/Type/AutocompleteType.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Fhm/FhmBundle/Form/Type/Front/CreateType.php" afterPath="$PROJECT_DIR$/src/Fhm/FhmBundle/Form/Type/Front/CreateType.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Fhm/FhmBundle/Form/Type/Front/SearchType.php" afterPath="$PROJECT_DIR$/src/Fhm/FhmBundle/Form/Type/Front/SearchType.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Fhm/FhmBundle/Form/Type/Front/UpdateType.php" afterPath="$PROJECT_DIR$/src/Fhm/FhmBundle/Form/Type/Front/UpdateType.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Fhm/FhmBundle/Form/Type/SchedulesType.php" afterPath="$PROJECT_DIR$/src/Fhm/FhmBundle/Form/Type/SchedulesType.php" />
-    </list>
+    <list default="true" id="228afecf-5121-4859-ae7d-99168f4be07e" name="Default" comment="" />
     <ignored path="fhm-tools-v2.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path=".idea/dataSources.local.xml" />
@@ -296,46 +281,6 @@
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Fhm" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="fhm-tools-v2" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="fhm-tools-v2" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Fhm" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="FhmBundle" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="fhm-tools-v2" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="fhm-tools-v2" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
               <option name="myItemId" value="app" />
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
@@ -401,7 +346,7 @@
       <workItem from="1479477345837" duration="3464000" />
       <workItem from="1479480877848" duration="6445000" />
       <workItem from="1479747164069" duration="30085000" />
-      <workItem from="1479892300326" duration="9233000" />
+      <workItem from="1479892300326" duration="9648000" />
     </task>
     <task id="LOCAL-00001" summary="config and theme">
       <created>1479481064394</created>
@@ -540,14 +485,14 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="51705000" />
+    <option name="totallyTimeSpent" value="52120000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1920" y="24" width="1920" height="1056" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Remote Host" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.19103523" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.19103523" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
