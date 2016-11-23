@@ -2,6 +2,7 @@
 namespace Fhm\MenuBundle\Controller;
 
 use Fhm\FhmBundle\Controller\RefAdminController as FhmController;
+use Fhm\FhmBundle\Services\Tools;
 use Fhm\MenuBundle\Document\Menu;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -10,15 +11,17 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 /**
- * @Route("/admin/menu")
+ * @Route("/admin/menu", service="fhm_menu_controller_admin")
  */
 class AdminController extends FhmController
 {
     /**
-     * Constructor
+     * AdminController constructor.
+     * @param Tools $tools
      */
-    public function __construct()
+    public function __construct(Tools $tools)
     {
+        $this->setFhmTools($tools);
         parent::__construct('Fhm', 'Menu', 'menu');
         $this->setParent(true);
     }
@@ -47,37 +50,71 @@ class AdminController extends FhmController
     public function createAction(Request $request)
     {
         // ERROR - Unknown route
-        if(!$this->routeExists($this->source . '_admin_' . $this->route) || !$this->routeExists($this->source . '_admin_' . $this->route . '_create'))
-        {
-            throw $this->createNotFoundException($this->get('translator')->trans('fhm.error.route', array(), 'FhmFhmBundle'));
+        if (!$this->fhm_tools->routeExists($this->fhm_tools->source.'_admin_'.$this->fhm_tools->route) ||
+            !$this->fhm_tools->routeExists($this->fhm_tools->source.'_admin_'.$this->fhm_tools->route . '_create')) {
+            throw $this->createNotFoundException($this->get('translator')->trans(
+                'fhm.error.route',
+                array(),
+                'FhmFhmBundle'
+            ));
         }
-        $document     = $this->document;
-        $instance     = $this->instanceData();
+        $document     = $this->fhm_tools->document;
+        $instance     = $this->fhm_tools->instanceData();
         $classType    = $this->form->type->create;
         $classHandler = $this->form->handler->create;
         $form         = $this->createForm(new $classType($instance, $document), $document);
         $handler      = new $classHandler($form, $request);
         $process      = $handler->process();
-        if($process)
-        {
+        if ($process) {
             $data = $request->get($form->getName());
             // Persist
             $document->setUserCreate($this->getUser());
-            $document->setAlias($this->getAlias($document->getId(), $document->getName()));
-            $this->dmPersist($document);
+            $document->setAlias($this->fhm_tools->getAlias($document->getId(), $document->getName()));
+            $this->fhm_tools->dmPersist($document);
             // Menu
-            if($data['id'])
-            {
+            if ($data['id']) {
                 $this->_treeDuplicate($data['id'], $document->getId());
             }
             // Message
-            $this->get('session')->getFlashBag()->add('notice', $this->get('translator')->trans($this->translation[1] . '.admin.create.flash.ok', array(), $this->translation[0]));
+            $this->get('session')->getFlashBag()->add(
+                'notice',
+                $this->get('translator')->trans(
+                    $this->fhm_tools->translation[1] . '.admin.create.flash.ok',
+                    array(),
+                    $this->fhm_tools->translation[0]
+                )
+            );
             // Redirect
-            $redirect = $this->redirect($this->generateUrl($this->source . '_admin_' . $this->route));
-            $redirect = isset($data['submitSave']) ? $this->redirect($this->generateUrl($this->source . '_admin_' . $this->route . '_update', array('id' => $document->getId()))) : $redirect;
-            $redirect = isset($data['submitDuplicate']) ? $this->redirect($this->generateUrl($this->source . '_admin_' . $this->route . '_duplicate', array('id' => $document->getId()))) : $redirect;
-            $redirect = isset($data['submitNew']) ? $this->redirect($this->generateUrl($this->source . '_admin_' . $this->route . '_create')) : $redirect;
-            $redirect = isset($data['submitConfig']) ? $this->redirect($this->generateUrl($this->source . '_admin_' . $this->route . '_detail', array('id' => $document->getId()))) : $redirect;
+            $redirect = $this->redirect($this->generateUrl(
+                $this->fhm_tools->source . '_admin_' . $this->fhm_tools->route
+            ));
+            $redirect = isset($data['submitSave']) ?
+                $this->redirect(
+                    $this->generateUrl(
+                        $this->source . '_admin_' . $this->route . '_update',
+                        array('id' => $document->getId())
+                    )
+                ) :
+                $redirect;
+            $redirect = isset($data['submitDuplicate']) ?
+                $this->redirect(
+                    $this->generateUrl(
+                        $this->source . '_admin_' . $this->route . '_duplicate',
+                        array('id' => $document->getId())
+                    )
+                ) :
+                $redirect;
+
+            $redirect = isset($data['submitNew']) ?
+                $this->redirect($this->generateUrl($this->source . '_admin_' . $this->route . '_create')) :
+                $redirect;
+
+            $redirect = isset($data['submitConfig']) ?
+                $this->redirect($this->generateUrl(
+                    $this->source . '_admin_' . $this->route . '_detail',
+                    array('id' => $document->getId())
+                )) :
+                $redirect;
 
             return $redirect;
         }
@@ -86,23 +123,31 @@ class AdminController extends FhmController
             'form'        => $form->createView(),
             'instance'    => $instance,
             'document'    => $document,
-            'modules'     => $this->getParameters('modules', 'fhm_menu'),
+            'modules'     => $this->fhm_tools->getParameters('modules', 'fhm_menu'),
             'breadcrumbs' => array(
                 array(
                     'link' => $this->get('router')->generate('project_home'),
-                    'text' => $this->get('translator')->trans('project.home.breadcrumb', array(), 'ProjectDefaultBundle'),
+                    'text' => $this->get('translator')->trans(
+                        'project.home.breadcrumb',
+                        array(),
+                        'ProjectDefaultBundle'
+                    ),
                 ),
                 array(
                     'link' => $this->get('router')->generate('fhm_admin'),
                     'text' => $this->get('translator')->trans('fhm.admin.breadcrumb', array(), 'FhmFhmBundle'),
                 ),
                 array(
-                    'link' => $this->get('router')->generate($this->source . '_admin_' . $this->route),
-                    'text' => $this->get('translator')->trans($this->translation[1] . '.admin.index.breadcrumb', array(), $this->translation[0]),
+                    'link' => $this->get('router')->generate($this->fhm_tools->source . '_admin_' . $this->fhm_tools->route),
+                    'text' => $this->get('translator')->trans(
+                        $this->translation[1] . '.admin.index.breadcrumb',
+                        array(),
+                        $this->translation[0]
+                    ),
                 ),
                 array(
-                    'link'    => $this->get('router')->generate($this->source . '_admin_' . $this->route . '_create'),
-                    'text'    => $this->get('translator')->trans($this->translation[1] . '.admin.create.breadcrumb', array(), $this->translation[0]),
+                    'link'    => $this->get('router')->generate($this->fhm_tools->source . '_admin_' . $this->fhm_tools->route . '_create'),
+                    'text'    => $this->get('translator')->trans($this->fhm_tools->translation[1] . '.admin.create.breadcrumb', array(), $this->translation[0]),
                     'current' => true
                 )
             )

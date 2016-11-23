@@ -1,6 +1,7 @@
 <?php
 namespace Fhm\FhmBundle\Controller;
 
+use Fhm\FhmBundle\Services\Tools;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
@@ -8,15 +9,17 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 /**
- * @Route("/api")
+ * @Route("/api" , service="fhm_admin_controller_api")
  */
 class ApiController extends RefApiController
 {
     /**
-     * Constructor
+     * ApiController constructor.
+     * @param Tools $tools
      */
-    public function __construct()
+    public function __construct(Tools $tools)
     {
+        $this->setFhmTools($tools);
         parent::__construct();
     }
 

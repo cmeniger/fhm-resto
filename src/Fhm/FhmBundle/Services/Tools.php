@@ -868,8 +868,7 @@ class Tools implements ContainerAwareInterface
      */
     public function dmDetach(&$obj)
     {
-        if($obj != "")
-        {
+        if ($obj != "") {
             $this->dm()->detach($obj);
         }
 
@@ -883,8 +882,7 @@ class Tools implements ContainerAwareInterface
      */
     public function dmPersist(&$obj)
     {
-        if($obj != "")
-        {
+        if ($obj != "") {
             $this->dm()->persist($obj);
             $this->dm()->flush();
         }
@@ -899,8 +897,7 @@ class Tools implements ContainerAwareInterface
      */
     public function dmRemove(&$obj)
     {
-        if($obj != "")
-        {
+        if ($obj != "") {
             $this->dm()->remove($obj);
             $this->dm()->flush();
         }
