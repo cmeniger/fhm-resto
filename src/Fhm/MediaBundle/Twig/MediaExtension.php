@@ -1,5 +1,8 @@
 <?php
 namespace Fhm\MediaBundle\Twig;
+
+use Fhm\FhmBundle\Services\Tools;
+
 /**
  * Class MediaExtension
  *
@@ -18,12 +21,12 @@ class MediaExtension extends \Twig_Extension
      * @param \Symfony\Component\Templating\EngineInterface $template
      * @param \Fhm\FhmBundle\Services\Tools                 $tools
      */
-    public function __construct(\Symfony\Component\Templating\EngineInterface $template, \Fhm\FhmBundle\Services\Tools $tools)
+    public function __construct(\Symfony\Component\Templating\EngineInterface $template, Tools $tools)
     {
         $container       = $tools->getContainer();
         $this->fhm_tools = $tools;
         $this->template  = $template;
-        $this->service   = $container->get($tools->getParameter('service', 'fhm_media'));
+        $this->service   = $container->get($tools->getParameters('service', 'fhm_media'));
         $this->path      = $this->service->getPath();
     }
 
