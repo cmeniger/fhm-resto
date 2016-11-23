@@ -1,7 +1,14 @@
 <?php
 namespace Fhm\GalleryBundle\Form\Type\Admin;
 
+use Doctrine\Bundle\MongoDBBundle\Form\Type\DocumentType;
 use Fhm\FhmBundle\Form\Type\Admin\CreateType as FhmType;
+use Fhm\MediaBundle\Form\Type\MediaType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 class CreateType extends FhmType
@@ -10,21 +17,21 @@ class CreateType extends FhmType
     {
         parent::buildForm($builder, $options);
         $builder
-            ->add('title', 'text', array('label' => $this->instance->translation . '.admin.create.form.title'))
-            ->add('subtitle', 'text', array('label' => $this->instance->translation . '.admin.create.form.subtitle', 'required' => false))
-            ->add('resume', 'textarea', array('label' => $this->instance->translation . '.admin.create.form.resume', 'attr' => array('class' => 'editor'), 'required' => false))
-            ->add('content', 'textarea', array('label' => $this->instance->translation . '.admin.create.form.content', 'attr' => array('class' => 'editor'), 'required' => false))
-            ->add('add_global_item', 'checkbox', array('label' => $this->instance->translation . '.admin.create.form.add_global_item', 'required' => false))
-            ->add('add_global_video', 'checkbox', array('label' => $this->instance->translation . '.admin.create.form.add_global_video', 'required' => false))
-            ->add('order_item', 'choice', array('label' => $this->instance->translation . '.admin.create.form.order_item', 'choices' => $this->_sortChoices()))
-            ->add('order_video', 'choice', array('label' => $this->instance->translation . '.admin.create.form.order_video', 'choices' => $this->_sortChoices()))
-            ->add('order', 'integer', array('label' => $this->instance->translation . '.admin.create.form.order', 'required' => false))
-            ->add('image', 'media', array(
+            ->add('title', TextType::class, array('label' => $this->instance->translation . '.admin.create.form.title'))
+            ->add('subtitle', TextType::class, array('label' => $this->instance->translation . '.admin.create.form.subtitle', 'required' => false))
+            ->add('resume', TextareaType::class, array('label' => $this->instance->translation . '.admin.create.form.resume', 'attr' => array('class' => 'editor'), 'required' => false))
+            ->add('content', TextareaType::class, array('label' => $this->instance->translation . '.admin.create.form.content', 'attr' => array('class' => 'editor'), 'required' => false))
+            ->add('add_global_item', CheckboxType::class, array('label' => $this->instance->translation . '.admin.create.form.add_global_item', 'required' => false))
+            ->add('add_global_video', CheckboxType::class, array('label' => $this->instance->translation . '.admin.create.form.add_global_video', 'required' => false))
+            ->add('order_item', ChoiceType::class, array('label' => $this->instance->translation . '.admin.create.form.order_item', 'choices' => $this->_sortChoices()))
+            ->add('order_video', ChoiceType::class, array('label' => $this->instance->translation . '.admin.create.form.order_video', 'choices' => $this->_sortChoices()))
+            ->add('order', IntegerType::class, array('label' => $this->instance->translation . '.admin.create.form.order', 'required' => false))
+            ->add('image', MediaType::class, array(
                 'label'    => $this->instance->translation . '.admin.create.form.image',
                 'filter'   => 'image/*',
                 'required' => false
             ))
-            ->add('albums', 'document', array(
+            ->add('albums', DocumentType::class, array(
                 'label'         => $this->instance->translation . '.admin.create.form.albums',
                 'class'         => 'FhmGalleryBundle:GalleryAlbum',
                 'property'      => 'name',
@@ -36,7 +43,7 @@ class CreateType extends FhmType
                 'multiple'      => true,
                 'by_reference'  => false
             ))
-            ->add('items', 'document', array(
+            ->add('items', DocumentType::class, array(
                 'label'         => $this->instance->translation . '.admin.create.form.items',
                 'class'         => 'FhmGalleryBundle:GalleryItem',
                 'property'      => 'name',
@@ -48,7 +55,7 @@ class CreateType extends FhmType
                 'multiple'      => true,
                 'by_reference'  => false
             ))
-            ->add('videos', 'document', array(
+            ->add('videos', DocumentType::class, array(
                 'label'         => $this->instance->translation . '.admin.create.form.videos',
                 'class'         => 'FhmGalleryBundle:GalleryVideo',
                 'property'      => 'name',

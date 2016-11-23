@@ -1,7 +1,13 @@
 <?php
 namespace Fhm\GalleryBundle\Form\Type\Admin\Album;
 
+use Doctrine\Bundle\MongoDBBundle\Form\Type\DocumentType;
 use Fhm\FhmBundle\Form\Type\Admin\UpdateType as FhmType;
+use Fhm\MediaBundle\Form\Type\MediaType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 class UpdateType extends FhmType
@@ -10,17 +16,17 @@ class UpdateType extends FhmType
     {
         parent::buildForm($builder, $options);
         $builder
-            ->add('title', 'text', array('label' => $this->instance->translation . '.admin.update.form.title'))
-            ->add('subtitle', 'text', array('label' => $this->instance->translation . '.admin.update.form.subtitle', 'required' => false))
-            ->add('content', 'textarea', array('label' => $this->instance->translation . '.admin.update.form.content', 'attr' => array('class' => 'editor'), 'required' => false))
-            ->add('add_global', 'checkbox', array('label' => $this->instance->translation . '.admin.update.form.add_global', 'required' => false))
-            ->add('sort', 'choice', array('label' => $this->instance->translation . '.admin.update.form.sort', 'choices' => $this->_sortChoices()))
-            ->add('image', 'media', array(
+            ->add('title', TextType::class, array('label' => $this->instance->translation . '.admin.update.form.title'))
+            ->add('subtitle', TextType::class, array('label' => $this->instance->translation . '.admin.update.form.subtitle', 'required' => false))
+            ->add('content', TextareaType::class, array('label' => $this->instance->translation . '.admin.update.form.content', 'attr' => array('class' => 'editor'), 'required' => false))
+            ->add('add_global',CheckboxType::class, array('label' => $this->instance->translation . '.admin.update.form.add_global', 'required' => false))
+            ->add('sort', ChoiceType::class, array('label' => $this->instance->translation . '.admin.update.form.sort', 'choices' => $this->_sortChoices()))
+            ->add('image', MediaType::class, array(
                 'label'    => $this->instance->translation . '.admin.update.form.image',
                 'filter'   => 'image/*',
                 'required' => false
             ))
-            ->add('galleries', 'document', array(
+            ->add('galleries', DocumentType::class, array(
                 'label'         => $this->instance->translation . '.admin.update.form.galleries',
                 'class'         => 'FhmGalleryBundle:Gallery',
                 'property'      => 'name',

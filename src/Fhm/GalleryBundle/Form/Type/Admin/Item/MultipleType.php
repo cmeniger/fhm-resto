@@ -1,7 +1,11 @@
 <?php
 namespace Fhm\GalleryBundle\Form\Type\Admin\Item;
 
+use Doctrine\Bundle\MongoDBBundle\Form\Type\DocumentType;
 use Fhm\FhmBundle\Form\Type\Admin\CreateType as FhmType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 class MultipleType extends FhmType
@@ -10,11 +14,11 @@ class MultipleType extends FhmType
     {
         parent::buildForm($builder, $options);
         $builder
-            ->add('title', 'text', array('label' => $this->instance->translation . '.admin.multiple.form.title'))
-            ->add('subtitle', 'text', array('label' => $this->instance->translation . '.admin.multiple.form.subtitle', 'required' => false))
-            ->add('content', 'textarea', array('label' => $this->instance->translation . '.admin.multiple.form.content', 'attr' => array('class' => 'editor'), 'required' => false))
-            ->add('link', 'text', array('label' => $this->instance->translation . '.admin.multiple.form.link', 'required' => false))
-            ->add('galleries', 'document', array(
+            ->add('title', TextType::class, array('label' => $this->instance->translation . '.admin.multiple.form.title'))
+            ->add('subtitle', TextType::class, array('label' => $this->instance->translation . '.admin.multiple.form.subtitle', 'required' => false))
+            ->add('content',TextareaType::class, array('label' => $this->instance->translation . '.admin.multiple.form.content', 'attr' => array('class' => 'editor'), 'required' => false))
+            ->add('link', TextType::class, array('label' => $this->instance->translation . '.admin.multiple.form.link', 'required' => false))
+            ->add('galleries', DocumentType::class, array(
                 'label'         => $this->instance->translation . '.admin.multiple.form.galleries',
                 'class'         => 'FhmGalleryBundle:Gallery',
                 'property'      => 'name',
@@ -26,9 +30,9 @@ class MultipleType extends FhmType
                 'multiple'      => true,
                 'by_reference'  => false
             ))
-            ->add('file', 'file', array('label' => $this->instance->translation . '.admin.multiple.form.file', 'mapped' => false))
-            ->add('tag', 'text', array('label' => $this->instance->translation . '.admin.multiple.form.tag', 'required' => false, 'mapped' => false))
-            ->add('parent', 'document', array(
+            ->add('file', FileType::class, array('label' => $this->instance->translation . '.admin.multiple.form.file', 'mapped' => false))
+            ->add('tag', TextType::class, array('label' => $this->instance->translation . '.admin.multiple.form.tag', 'required' => false, 'mapped' => false))
+            ->add('parent',DocumentType::class, array(
                 'label'              => $this->instance->translation . '.admin.multiple.form.parent',
                 'class'              => 'FhmMediaBundle:MediaTag',
                 'property'           => 'route',
@@ -39,7 +43,7 @@ class MultipleType extends FhmType
                 'required'           => false,
                 'mapped'             => false
             ))
-            ->add('tags', 'document', array(
+            ->add('tags', DocumentType::class, array(
                 'label'              => $this->instance->translation . '.admin.multiple.form.tags',
                 'class'              => 'FhmMediaBundle:MediaTag',
                 'property'           => 'route',
