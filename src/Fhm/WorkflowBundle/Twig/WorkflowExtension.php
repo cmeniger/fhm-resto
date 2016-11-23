@@ -1,21 +1,22 @@
 <?php
 namespace Fhm\WorkflowBundle\Twig;
 
-use Symfony\Component\HttpKernel\KernelInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\Intl\Intl;
-
 class WorkflowExtension extends \Twig_Extension
 {
-    protected $container;
+    protected $fhm_tools;
+    protected $template;
     protected $tasks;
 
     /**
-     * @param ContainerInterface $container
+     * WorkflowExtension constructor.
+     *
+     * @param \Symfony\Component\Templating\EngineInterface $template
+     * @param \Fhm\FhmBundle\Services\Tools                 $tools
      */
-    public function __construct(ContainerInterface $container)
+    public function __construct(\Symfony\Component\Templating\EngineInterface $template, \Fhm\FhmBundle\Services\Tools $tools)
     {
-        $this->container = $container;
+        $this->fhm_tools = $tools;
+        $this->template  = $template;
         $this->tasks     = array();
     }
 
@@ -52,7 +53,7 @@ class WorkflowExtension extends \Twig_Extension
      */
     public function getTask($task, $workflow, $instance)
     {
-        return $this->container->get('templating')->render
+        return $this->template->render
         (
             '::FhmWorkflow/Template/task.html.twig',
             array
@@ -78,7 +79,7 @@ class WorkflowExtension extends \Twig_Extension
             return null;
         }
 
-        return $this->container->get('templating')->render
+        return $this->template->render
         (
             '::FhmWorkflow/Template/task.action.html.twig',
             array
@@ -123,7 +124,7 @@ class WorkflowExtension extends \Twig_Extension
      */
     public function getStepTask($task, $workflow, $instance)
     {
-        return $this->container->get('templating')->render
+        return $this->template->render
         (
             '::FhmWorkflow/Template/step.task.html.twig',
             array
@@ -149,7 +150,7 @@ class WorkflowExtension extends \Twig_Extension
             return null;
         }
 
-        return $this->container->get('templating')->render
+        return $this->template->render
         (
             '::FhmWorkflow/Template/step.action.html.twig',
             array

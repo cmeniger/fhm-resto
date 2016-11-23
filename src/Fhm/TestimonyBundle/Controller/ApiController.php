@@ -8,15 +8,18 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * @Route("/api/testimony")
+ * @Route("/api/testimony", service="fhm_testimony_controller_api")
  */
 class ApiController extends FhmController
 {
     /**
-     * Constructor
+     * ApiController constructor.
+     *
+     * @param \Fhm\FhmBundle\Services\Tools $tools
      */
-    public function __construct()
+    public function __construct(\Fhm\FhmBundle\Services\Tools $tools)
     {
+        $this->setFhmTools($tools);
         parent::__construct('Fhm', 'Testimony', 'testimony');
     }
 
@@ -45,26 +48,26 @@ class ApiController extends FhmController
     public function detailAction($template, $rows, $pagination)
     {
         $document  = "";
-        $instance  = $this->instanceData();
+        $instance  = $this->fhm_tools->instanceData();
         $classType = '\Fhm\FhmBundle\Form\Type\Front\SearchType';
         $form      = $this->createForm(new $classType($instance), null);
         $form->setData($this->get('request')->get($form->getName()));
         $dataSearch     = $form->getData();
         $dataPagination = $this->get('request')->get('FhmPagination');
-        $this->setPagination($rows);
+        $this->fhm_tools->setPagination($rows);
         // Ajax pagination request
         if($pagination && isset($dataPagination['pagination']))
         {
-            $documents  = $this->dmRepository()->getFrontIndex($dataSearch['search'], $dataPagination['pagination'], $this->pagination->page, $instance->grouping->current);
-            $pagination = $this->getPagination($dataPagination['pagination'], count($documents), $this->dmRepository()->getFrontCount($dataSearch['search'], $instance->grouping->current), 'pagination', $this->formRename($form->getName(), $dataSearch), $this->generateUrl('fhm_api_testimony_detail', array('template' => $template, 'rows' => $rows, 'pagination' => $pagination)));
+            $documents  = $this->fhm_tools->dmRepository()->getFrontIndex($dataSearch['search'], $dataPagination['pagination'], $this->pagination->page, $instance->grouping->current);
+            $pagination = $this->fhm_tools->getPagination($dataPagination['pagination'], count($documents), $this->fhm_tools->dmRepository()->getFrontCount($dataSearch['search'], $instance->grouping->current), 'pagination', $this->fhm_tools->formRename($form->getName(), $dataSearch), $this->fhm_tools->getUrl('fhm_api_testimony_detail', array('template' => $template, 'rows' => $rows, 'pagination' => $pagination)));
         }
         // Router request
         else
         {
-            $documents = $this->dmRepository()->getFrontIndex($dataSearch['search'], 1, $this->pagination->page, $instance->grouping->current);
+            $documents = $this->fhm_tools->dmRepository()->getFrontIndex($dataSearch['search'], 1, $this->pagination->page, $instance->grouping->current);
             if($pagination)
             {
-                $pagination = $this->getPagination(1, count($documents), $this->dmRepository()->getFrontCount($dataSearch['search'], $instance->grouping->current), 'pagination', $this->formRename($form->getName(), $dataSearch), $this->generateUrl('fhm_api_testimony_detail', array('template' => $template, 'rows' => $rows, 'pagination' => $pagination)));
+                $pagination = $this->fhm_tools->getPagination(1, count($documents), $this->fhm_tools->dmRepository()->getFrontCount($dataSearch['search'], $instance->grouping->current), 'pagination', $this->fhm_tools->formRename($form->getName(), $dataSearch), $this->fhm_tools->getUrl('fhm_api_testimony_detail', array('template' => $template, 'rows' => $rows, 'pagination' => $pagination)));
             }
         }
 

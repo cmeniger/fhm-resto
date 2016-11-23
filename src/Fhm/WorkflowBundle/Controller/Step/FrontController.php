@@ -8,15 +8,18 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 /**
- * @Route("/workflowstep")
+ * @Route("/workflowstep", service="fhm_workflow_controller_step_front")
  */
 class FrontController extends FhmController
 {
     /**
-     * Constructor
+     * FrontController constructor.
+     *
+     * @param \Fhm\FhmBundle\Services\Tools $tools
      */
-    public function __construct()
+    public function __construct(\Fhm\FhmBundle\Services\Tools $tools)
     {
+        $this->setFhmTools($tools);
         parent::__construct('Fhm', 'Workflow', 'workflow_step', 'WorkflowStep');
         $this->form->type->create = 'Fhm\\WorkflowBundle\\Form\\Type\\Front\\Step\\CreateType';
         $this->form->type->update = 'Fhm\\WorkflowBundle\\Form\\Type\\Front\\Step\\UpdateType';
@@ -34,19 +37,19 @@ class FrontController extends FhmController
     public function indexAction()
     {
         return array(
-            'instance'    => $this->instanceData(),
+            'instance'    => $this->fhm_tools->instanceData(),
             'breadcrumbs' => array(
                 array(
-                    'link' => $this->get('router')->generate('project_home'),
-                    'text' => $this->get('translator')->trans('project.home.breadcrumb', array(), 'ProjectDefaultBundle'),
+                    'link' => $this->fhm_tools->getUrl('project_home'),
+                    'text' => $this->fhm_tools->trans('project.home.breadcrumb', array(), 'ProjectDefaultBundle'),
                 ),
                 array(
-                    'link' => $this->get('router')->generate('fhm_workflow'),
-                    'text' => $this->get('translator')->trans('workflow.front.index.breadcrumb', array(), $this->translation[0]),
+                    'link' => $this->fhm_tools->getUrl('fhm_workflow'),
+                    'text' => $this->fhm_tools->trans('workflow.front.index.breadcrumb'),
                 ),
                 array(
-                    'link'    => $this->get('router')->generate($this->source . '_' . $this->route),
-                    'text'    => $this->get('translator')->trans($this->translation[1] . '.front.index.breadcrumb', array(), $this->translation[0]),
+                    'link'    => $this->fhm_tools->getUrl($this->source . '_' . $this->route),
+                    'text'    => $this->fhm_tools->trans('.front.index.breadcrumb'),
                     'current' => true
                 )
             )
@@ -64,7 +67,7 @@ class FrontController extends FhmController
     public function createAction(Request $request)
     {
         // For activate this route, delete next line
-        throw $this->createNotFoundException($this->get('translator')->trans('fhm.error.route', array(), 'FhmFhmBundle'));
+        throw $this->createNotFoundException($this->fhm_tools->trans('fhm.error.route', array(), 'FhmFhmBundle'));
 
         return parent::createAction($request);
     }
@@ -81,7 +84,7 @@ class FrontController extends FhmController
     public function duplicateAction(Request $request, $id)
     {
         // For activate this route, delete next line
-        throw $this->createNotFoundException($this->get('translator')->trans('fhm.error.route', array(), 'FhmFhmBundle'));
+        throw $this->createNotFoundException($this->fhm_tools->trans('fhm.error.route', array(), 'FhmFhmBundle'));
 
         return parent::duplicateAction($request, $id);
     }
@@ -98,7 +101,7 @@ class FrontController extends FhmController
     public function updateAction(Request $request, $id)
     {
         // For activate this route, delete next line
-        throw $this->createNotFoundException($this->get('translator')->trans('fhm.error.route', array(), 'FhmFhmBundle'));
+        throw $this->createNotFoundException($this->fhm_tools->trans('fhm.error.route', array(), 'FhmFhmBundle'));
 
         return parent::updateAction($request, $id);
     }
@@ -128,7 +131,7 @@ class FrontController extends FhmController
     public function deleteAction($id)
     {
         // For activate this route, delete next line
-        throw $this->createNotFoundException($this->get('translator')->trans('fhm.error.route', array(), 'FhmFhmBundle'));
+        throw $this->createNotFoundException($this->fhm_tools->trans('fhm.error.route', array(), 'FhmFhmBundle'));
 
         return parent::deleteAction($id);
     }

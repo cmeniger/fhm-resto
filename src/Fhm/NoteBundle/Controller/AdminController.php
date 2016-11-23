@@ -10,15 +10,18 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 /**
- * @Route("/admin/note")
+ * @Route("/admin/note", service="fhm_note_controller_admin")
  */
 class AdminController extends FhmController
 {
     /**
-     * Constructor
+     * AdminController constructor.
+     *
+     * @param \Fhm\FhmBundle\Services\Tools $tools
      */
-    public function __construct()
+    public function __construct(\Fhm\FhmBundle\Services\Tools $tools)
     {
+        $this->setFhmTools($tools);
         parent::__construct('Fhm', 'Note', 'note');
     }
 
@@ -46,7 +49,7 @@ class AdminController extends FhmController
     public function createAction(Request $request)
     {
         // For activate this route, delete next line
-        throw $this->createNotFoundException($this->get('translator')->trans('fhm.error.route', array(), 'FhmFhmBundle'));
+        throw $this->createNotFoundException($this->fhm_tools->trans('fhm.error.route', array(), 'FhmFhmBundle'));
 
         return parent::createAction($request);
     }
@@ -63,7 +66,7 @@ class AdminController extends FhmController
     public function duplicateAction(Request $request, $id)
     {
         // For activate this route, delete next line
-        throw $this->createNotFoundException($this->get('translator')->trans('fhm.error.route', array(), 'FhmFhmBundle'));
+        throw $this->createNotFoundException($this->fhm_tools->trans('fhm.error.route', array(), 'FhmFhmBundle'));
 
         return parent::duplicateAction($request, $id);
     }
@@ -80,7 +83,7 @@ class AdminController extends FhmController
     public function updateAction(Request $request, $id)
     {
         // For activate this route, delete next line
-        throw $this->createNotFoundException($this->get('translator')->trans('fhm.error.route', array(), 'FhmFhmBundle'));
+        throw $this->createNotFoundException($this->fhm_tools->trans('fhm.error.route', array(), 'FhmFhmBundle'));
 
         return parent::updateAction($request, $id);
     }
@@ -97,16 +100,16 @@ class AdminController extends FhmController
     public function detailAction($id)
     {
         // ERROR - Unknown route
-        if(!$this->routeExists($this->source . '_admin_' . $this->route) || !$this->routeExists($this->source . '_admin_' . $this->route . '_detail'))
+        if(!$this->fhm_tools->routeExists($this->source . '_admin_' . $this->route) || !$this->fhm_tools->routeExists($this->source . '_admin_' . $this->route . '_detail'))
         {
-            throw $this->createNotFoundException($this->get('translator')->trans('fhm.error.route', array(), 'FhmFhmBundle'));
+            throw $this->createNotFoundException($this->fhm_tools->trans('fhm.error.route', array(), 'FhmFhmBundle'));
         }
-        $document = $this->dmRepository()->find($id);
-        $instance = $this->instanceData($document);
+        $document = $this->fhm_tools->dmRepository()->find($id);
+        $instance = $this->fhm_tools->instanceData($document);
         // ERROR - unknown
         if($document == "")
         {
-            throw $this->createNotFoundException($this->get('translator')->trans($this->translation[1] . '.error.unknown', array(), $this->translation[0]));
+            throw $this->createNotFoundException($this->fhm_tools->trans('.error.unknown'));
         }
 
         return array(
@@ -116,20 +119,20 @@ class AdminController extends FhmController
             'paginationHistoric' => $this->historicPagination($document),
             'breadcrumbs'        => array(
                 array(
-                    'link' => $this->get('router')->generate('project_home'),
-                    'text' => $this->get('translator')->trans('project.home.breadcrumb', array(), 'ProjectDefaultBundle'),
+                    'link' => $this->fhm_tools->getUrl('project_home'),
+                    'text' => $this->fhm_tools->trans('project.home.breadcrumb', array(), 'ProjectDefaultBundle'),
                 ),
                 array(
-                    'link' => $this->get('router')->generate('fhm_admin'),
-                    'text' => $this->get('translator')->trans('fhm.admin.breadcrumb', array(), 'FhmFhmBundle'),
+                    'link' => $this->fhm_tools->getUrl('fhm_admin'),
+                    'text' => $this->fhm_tools->trans('fhm.admin.breadcrumb', array(), 'FhmFhmBundle'),
                 ),
                 array(
-                    'link' => $this->get('router')->generate($this->source . '_admin_' . $this->route),
-                    'text' => $this->get('translator')->trans($this->translation[1] . '.admin.index.breadcrumb', array(), $this->translation[0]),
+                    'link' => $this->fhm_tools->getUrl($this->source . '_admin_' . $this->route),
+                    'text' => $this->fhm_tools->trans('.admin.index.breadcrumb'),
                 ),
                 array(
-                    'link'    => $this->get('router')->generate($this->source . '_admin_' . $this->route . '_detail', array('id' => $id)),
-                    'text'    => $this->get('translator')->trans($this->translation[1] . '.admin.detail.breadcrumb', array('%name%' => $document->getId()), $this->translation[0]),
+                    'link'    => $this->fhm_tools->getUrl($this->source . '_admin_' . $this->route . '_detail', array('id' => $id)),
+                    'text'    => $this->fhm_tools->trans('.admin.detail.breadcrumb', array('%name%' => $document->getId())),
                     'current' => true
                 )
             )
@@ -173,7 +176,7 @@ class AdminController extends FhmController
     public function activateAction($id)
     {
         // For activate this route, delete next line
-        throw $this->createNotFoundException($this->get('translator')->trans('fhm.error.route', array(), 'FhmFhmBundle'));
+        throw $this->createNotFoundException($this->fhm_tools->trans('fhm.error.route', array(), 'FhmFhmBundle'));
 
         return parent::activateAction($id);
     }
@@ -189,7 +192,7 @@ class AdminController extends FhmController
     public function deactivateAction($id)
     {
         // For activate this route, delete next line
-        throw $this->createNotFoundException($this->get('translator')->trans('fhm.error.route', array(), 'FhmFhmBundle'));
+        throw $this->createNotFoundException($this->fhm_tools->trans('fhm.error.route', array(), 'FhmFhmBundle'));
 
         return parent::deactivateAction($id);
     }
@@ -230,7 +233,7 @@ class AdminController extends FhmController
     public function groupingAction(Request $request)
     {
         // For activate this route, delete next line
-        throw $this->createNotFoundException($this->get('translator')->trans('fhm.error.route', array(), 'FhmFhmBundle'));
+        throw $this->createNotFoundException($this->fhm_tools->trans('fhm.error.route', array(), 'FhmFhmBundle'));
 
         return parent::groupingAction($request);
     }

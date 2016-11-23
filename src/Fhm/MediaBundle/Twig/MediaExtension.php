@@ -1,22 +1,29 @@
 <?php
 namespace Fhm\MediaBundle\Twig;
-
-use Symfony\Component\HttpKernel\KernelInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
-
+/**
+ * Class MediaExtension
+ *
+ * @package Fhm\MediaBundle\Twig
+ */
 class MediaExtension extends \Twig_Extension
 {
-    protected $container;
+    protected $fhm_tools;
+    protected $template;
     protected $service;
     protected $path;
 
     /**
-     * @param ContainerInterface $container
+     * MapNoMap constructor.
+     *
+     * @param \Symfony\Component\Templating\EngineInterface $template
+     * @param \Fhm\FhmBundle\Services\Tools                 $tools
      */
-    public function __construct(ContainerInterface $container)
+    public function __construct(\Symfony\Component\Templating\EngineInterface $template, \Fhm\FhmBundle\Services\Tools $tools)
     {
-        $this->container = $container;
-        $this->service   = $container->get($container->getParameter('fhm_media')['service']);
+        $container       = $tools->getContainer();
+        $this->fhm_tools = $tools;
+        $this->template  = $template;
+        $this->service   = $container->get($tools->getParameter('service', 'fhm_media'));
         $this->path      = $this->service->getPath();
     }
 
@@ -60,7 +67,7 @@ class MediaExtension extends \Twig_Extension
      */
     public function getBlocAdmin($media, $instance)
     {
-        return $this->container->get('templating')->render
+        return $this->template->render
         (
             '::FhmMedia/Template/Bloc/admin.' . ($media->getType() == 'image' ? 'image' : 'file') . '.html.twig',
             array
@@ -79,7 +86,7 @@ class MediaExtension extends \Twig_Extension
      */
     public function getBlocFront($media, $instance)
     {
-        return $this->container->get('templating')->render
+        return $this->template->render
         (
             '::FhmMedia/Template/Bloc/front.' . ($media->getType() == 'image' ? 'image' : 'file') . '.html.twig',
             array
@@ -99,7 +106,7 @@ class MediaExtension extends \Twig_Extension
      */
     public function getBlocSelector($media, $instance, $selected = '')
     {
-        return $this->container->get('templating')->render
+        return $this->template->render
         (
             '::FhmMedia/Template/Bloc/selector.' . ($media->getType() == 'image' ? 'image' : 'file') . '.html.twig',
             array
@@ -119,7 +126,7 @@ class MediaExtension extends \Twig_Extension
      */
     public function getBlocEditor($media, $instance)
     {
-        return $this->container->get('templating')->render
+        return $this->template->render
         (
             '::FhmMedia/Template/Bloc/editor.' . ($media->getType() == 'image' ? 'image' : 'file') . '.html.twig',
             array
@@ -138,7 +145,7 @@ class MediaExtension extends \Twig_Extension
      */
     public function getBlocDownload($media, $instance, $format = 'origin')
     {
-        return $this->container->get('templating')->render
+        return $this->template->render
         (
             '::FhmMedia/Template/Bloc/download.html.twig',
             array
@@ -158,7 +165,7 @@ class MediaExtension extends \Twig_Extension
      */
     public function getBlocSecure($media, $instance, $url, $title = '')
     {
-        return $this->container->get('templating')->render
+        return $this->template->render
         (
             '::FhmMedia/Template/Bloc/secure.' . ($media->getType() == 'image' ? 'image' : 'file') . '.html.twig',
             array
@@ -235,7 +242,7 @@ class MediaExtension extends \Twig_Extension
      */
     public function getDimension($media, $axe = '', $ratio = '')
     {
-        $path   = $this->service->setDocument($media)->getPath();
+        $path = $this->service->setDocument($media)->getPath();
         if(!file_exists($path->fullWeb . 'origin.' . $media->getExtension()))
         {
             return '';

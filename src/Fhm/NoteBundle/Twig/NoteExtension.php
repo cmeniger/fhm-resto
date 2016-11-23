@@ -1,20 +1,25 @@
 <?php
 namespace Fhm\NoteBundle\Twig;
-
-use Symfony\Component\HttpKernel\KernelInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\Intl\Intl;
-
+/**
+ * Class NoteExtension
+ *
+ * @package Fhm\NoteBundle\Twig
+ */
 class NoteExtension extends \Twig_Extension
 {
-    protected $container;
+    protected $template;
+    protected $note;
 
     /**
-     * @param ContainerInterface $container
+     * NoteExtension constructor.
+     *
+     * @param \Symfony\Component\Templating\EngineInterface $template
+     * @param \Fhm\NoteBundle\Services\Note                 $note
      */
-    public function __construct(ContainerInterface $container)
+    public function __construct(\Symfony\Component\Templating\EngineInterface $template, \Fhm\NoteBundle\Services\Note $note)
     {
-        $this->container = $container;
+        $this->template = $template;
+        $this->note     = $note;
     }
 
     /**
@@ -36,7 +41,7 @@ class NoteExtension extends \Twig_Extension
      */
     public function getCount($document, $value)
     {
-        return $this->container->get('fhm_note')->count($document, $value);
+        return $this->note->count($document, $value);
     }
 
     /**
@@ -47,7 +52,7 @@ class NoteExtension extends \Twig_Extension
      */
     public function getNote($document, $instance)
     {
-        return $this->container->get('templating')->render
+        return $this->template->render
         (
             '::FhmNote/Template/note.html.twig',
             array

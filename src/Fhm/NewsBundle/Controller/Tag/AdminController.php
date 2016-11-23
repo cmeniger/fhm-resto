@@ -10,15 +10,18 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 /**
- * @Route("/admin/newstag")
+ * @Route("/admin/newstag", service="fhm_news_controller_tag_admin")
  */
 class AdminController extends FhmController
 {
     /**
-     * Constructor
+     * AdminController constructor.
+     *
+     * @param \Fhm\FhmBundle\Services\Tools $tools
      */
-    public function __construct()
+    public function __construct(\Fhm\FhmBundle\Services\Tools $tools)
     {
+        $this->setFhmTools($tools);
         parent::__construct('Fhm', 'News', 'news_tag', 'NewsTag');
         $this->form->type->create = 'Fhm\\NewsBundle\\Form\\Type\\Admin\\Tag\\CreateType';
         $this->form->type->update = 'Fhm\\NewsBundle\\Form\\Type\\Admin\\Tag\\UpdateType';

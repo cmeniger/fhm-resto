@@ -10,15 +10,18 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 /**
- * @Route("/api/workflowstep")
+ * @Route("/api/workflowstep", service="fhm_workflow_controller_step_api")
  */
 class ApiController extends FhmController
 {
     /**
-     * Constructor
+     * ApiController constructor.
+     *
+     * @param \Fhm\FhmBundle\Services\Tools $tools
      */
-    public function __construct()
+    public function __construct(\Fhm\FhmBundle\Services\Tools $tools)
     {
+        $this->setFhmTools($tools);
         parent::__construct('Fhm', 'Workflow', 'workflow_step', 'WorkflowStep');
         $this->translation = array('FhmWorkflowBundle', 'workflow.step');
     }
@@ -60,8 +63,8 @@ class ApiController extends FhmController
     public function boardAction()
     {
         return array(
-            'documents' => $this->dmRepository()->getAllEnable(),
-            'instance'  => $this->instanceData()
+            'documents' => $this->fhm_tools->dmRepository()->getAllEnable(),
+            'instance'  => $this->fhm_tools->instanceData()
         );
     }
 
@@ -77,9 +80,9 @@ class ApiController extends FhmController
     public function workflowAction($id)
     {
         return array(
-            'document'  => $this->dmRepository()->find($id),
-            'workflows' => $this->dmRepository('FhmWorkflowBundle:Workflow')->getByStep($id, true),
-            'instance'  => $this->instanceData()
+            'document'  => $this->fhm_tools->dmRepository()->find($id),
+            'workflows' => $this->fhm_tools->dmRepository('FhmWorkflowBundle:Workflow')->getByStep($id, true),
+            'instance'  => $this->fhm_tools->instanceData()
         );
     }
 }

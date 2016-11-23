@@ -7,15 +7,17 @@ namespace Fhm\MapPickerBundle\Services;
  */
 abstract class AbstractMap
 {
-    protected $container;
     protected $template;
+    protected $fhm_tools;
     private $name;
     private $width;
     private $height;
     private $zones;
-    private $params;
     private $document;
 
+    /**
+     * AbstractMap constructor.
+     */
     public function __construct()
     {
     }
@@ -134,16 +136,8 @@ abstract class AbstractMap
             'height'   => $this->height,
             'zones'    => $this->zones,
             'instance' => $this->_instance(),
-            'params'   => $this->_parameter(array())
+            'params'   => $this->_parameter()
         ));
-    }
-
-    /**
-     * @return mixed
-     */
-    private function _repository()
-    {
-        return $this->container->get('doctrine_mongodb')->getManager()->getRepository('FhmMapPickerBundle:MapPicker');
     }
 
     /**
@@ -161,20 +155,10 @@ abstract class AbstractMap
     }
 
     /**
-     * @param        $route
-     * @param string $parent
-     *
      * @return mixed
      */
-    private function _parameter($route, $parent = 'fhm_mappicker')
+    private function _parameter()
     {
-        $parameters = $this->container->getParameter($parent);
-        $value      = $parameters;
-        foreach((array) $route as $sub)
-        {
-            $value = $value[$sub];
-        }
-
-        return $value;
+        return $this->fhm_tools->getParameter(array(), 'fhm_mappicker');
     }
 }

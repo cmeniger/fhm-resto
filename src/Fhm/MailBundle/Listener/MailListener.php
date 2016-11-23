@@ -4,19 +4,30 @@ namespace Fhm\MailBundle\Listener;
 
 use Fhm\FhmBundle\Event\MailEvent;
 
-use Symfony\Component\DependencyInjection\ContainerInterface;
-
+/**
+ * Class MailListener
+ *
+ * @package Fhm\MailBundle\Listener
+ */
 class MailListener
 {
-    protected $container;
+    protected $mailer;
 
-    public function __construct(ContainerInterface $container)
+    /**
+     * MailListener constructor.
+     *
+     * @param \Fhm\MailBundle\Services\Mailer $mailer
+     */
+    public function __construct(\Fhm\MailBundle\Services\Mailer $mailer)
     {
-        $this->container = $container;
+        $this->mailer = $mailer;
     }
 
+    /**
+     * @param MailEvent $event
+     */
     public function onMail(MailEvent $event)
     {
-        $this->container->get('fhm_mail')->contactUser($event->getData());
+        $this->mailer->contactUser($event->getData());
     }
 }

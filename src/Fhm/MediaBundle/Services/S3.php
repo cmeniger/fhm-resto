@@ -1,9 +1,6 @@
 <?php
 namespace Fhm\MediaBundle\Services;
 
-use Fhm\FhmBundle\Controller\FhmController;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -11,9 +8,9 @@ use Symfony\Component\HttpFoundation\Response;
  *
  * @package Fhm\MediaBundle\Services
  */
-class S3 extends Controller
+class S3
 {
-    protected $container;
+    protected $fhm_tools;
     protected $document;
     private $files;
     private $file;
@@ -24,12 +21,15 @@ class S3 extends Controller
     private $aws_host;
 
     /**
-     * @param ContainerInterface $container
+     * Local constructor.
+     *
+     * @param \Fhm\FhmBundle\Services\Tools                 $tools
+     * @param \Symfony\Component\HttpKernel\KernelInterface $kernel
      */
-    public function __construct(ContainerInterface $container)
+    public function __construct(\Fhm\FhmBundle\Services\Tools $tools, \Symfony\Component\HttpKernel\KernelInterface $kernel)
     {
-        $this->container = $container;
-        $this->files     = $this->_filesInit($this->getParameters('files', 'fhm_media'));
+        $this->fhm_tools = $tools;
+        $this->files     = $this->_filesInit($this->fhm_tools->getParameter('files', 'fhm_media'));
         $this->file      = null;
         // Init AWS
         $this->_awsInit();
@@ -41,7 +41,7 @@ class S3 extends Controller
         $this->path->web             = 'web/';
         $this->path->watermark       = 'watermark.png';
         $this->path->files           = '';
-        $this->path->localRoot       = $container->get('kernel')->getRootDir() . '/../';
+        $this->path->localRoot       = $kernel->getRootDir() . '/../';
         $this->path->local           = $this->path->localRoot . $this->path->origin;
         $this->path->fullWeb         = '';
         $this->path->fullOrigin      = $this->path->root . $this->path->origin;
@@ -49,7 +49,6 @@ class S3 extends Controller
         $this->path->fullLocal       = '';
         $this->path->fullLocalOrigin = '';
         $this->path->fullLocalWeb    = '';
-        parent::__construct();
     }
 
     /**
@@ -210,9 +209,9 @@ class S3 extends Controller
     {
         if($root === '&user')
         {
-            $root      = $this->getUser()->getUsername();
-            $tagParent = $this->dmRepository('FhmMediaBundle:MediaTag')->getByAlias('users');
-            $tag       = $this->dmRepository('FhmMediaBundle:MediaTag')->getByAlias($root);
+            $root      = $this->fhm_tools->getUser()->getUsername();
+            $tagParent = $this->fhm_tools->dmRepository('FhmMediaBundle:MediaTag')->getByAlias('users');
+            $tag       = $this->fhm_tools->dmRepository('FhmMediaBundle:MediaTag')->getByAlias($root);
             if(!$tagParent)
             {
                 $tagParent = new \Fhm\MediaBundle\Document\MediaTag();
@@ -220,7 +219,7 @@ class S3 extends Controller
                 $tagParent->setAlias('users');
                 $tagParent->setActive(true);
                 $tagParent->setPrivate(true);
-                $this->dmPersist($tagParent);
+                $this->fhm_tools->dmPersist($tagParent);
             }
             if(!$tag)
             {
@@ -230,23 +229,23 @@ class S3 extends Controller
                 $tag->setParent($tagParent);
                 $tag->setActive(true);
                 $tag->setPrivate(true);
-                $this->dmPersist($tag);
+                $this->fhm_tools->dmPersist($tag);
             }
 
             return $tag->getId();
         }
         if($root)
         {
-            $tag = $this->dmRepository('FhmMediaBundle:MediaTag')->getById($root);
-            $tag = ($tag) ? $tag : $this->dmRepository('FhmMediaBundle:MediaTag')->getByAlias($root);
-            $tag = ($tag) ? $tag : $this->dmRepository('FhmMediaBundle:MediaTag')->getByName($root);
+            $tag = $this->fhm_tools->dmRepository('FhmMediaBundle:MediaTag')->getById($root);
+            $tag = ($tag) ? $tag : $this->fhm_tools->dmRepository('FhmMediaBundle:MediaTag')->getByAlias($root);
+            $tag = ($tag) ? $tag : $this->fhm_tools->dmRepository('FhmMediaBundle:MediaTag')->getByName($root);
             if(!$tag)
             {
                 $tag = new \Fhm\MediaBundle\Document\MediaTag();
                 $tag->setName($root);
                 $tag->setAlias($root);
                 $tag->setActive(true);
-                $this->dmPersist($tag);
+                $this->fhm_tools->dmPersist($tag);
             }
 
             return $tag->getId();
@@ -509,15 +508,15 @@ class S3 extends Controller
      */
     private function _tag()
     {
-        $tagType      = $this->dmRepository('FhmMediaBundle:MediaTag')->getByAlias($this->document->getType());
-        $tagExtension = $this->dmRepository('FhmMediaBundle:MediaTag')->getByAlias($this->document->getExtension());
+        $tagType      = $this->fhm_tools->dmRepository('FhmMediaBundle:MediaTag')->getByAlias($this->document->getType());
+        $tagExtension = $this->fhm_tools->dmRepository('FhmMediaBundle:MediaTag')->getByAlias($this->document->getExtension());
         if(!$tagType)
         {
             $tagType = new \Fhm\MediaBundle\Document\MediaTag();
             $tagType->setName($this->document->getType());
             $tagType->setAlias($this->document->getType());
             $tagType->setActive(true);
-            $this->dmPersist($tagType);
+            $this->fhm_tools->dmPersist($tagType);
         }
         if(!$tagExtension)
         {
@@ -526,11 +525,11 @@ class S3 extends Controller
             $tagExtension->setAlias($this->document->getExtension());
             $tagExtension->setParent($tagType);
             $tagExtension->setActive(true);
-            $this->dmPersist($tagExtension);
+            $this->fhm_tools->dmPersist($tagExtension);
         }
         $this->document->addTag($tagType);
         $this->document->addTag($tagExtension);
-        $this->dmPersist($this->document);
+        $this->fhm_tools->dmPersist($this->document);
 
         return $this;
     }
@@ -637,7 +636,7 @@ class S3 extends Controller
      */
     private function _awsInit()
     {
-        $parameters = $this->getParameters(array(), 'aws');
+        $parameters = $this->fhm_tools->getParameter(array(), 'aws');
         // SDK
         $sdk = new \Aws\Sdk([
             'version'     => $parameters['sdk']['version'],

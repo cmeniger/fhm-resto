@@ -1,9 +1,6 @@
 <?php
 namespace Fhm\MapPickerBundle\Services;
 
-use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\Templating\EngineInterface;
-
 /**
  * Class MapFranceDomtom
  *
@@ -11,9 +8,15 @@ use Symfony\Component\Templating\EngineInterface;
  */
 class MapFranceDomtom extends AbstractMap
 {
-    public function __construct(EngineInterface $template, ContainerInterface $container)
+    /**
+     * MapFranceDomtom constructor.
+     *
+     * @param \Symfony\Component\Templating\EngineInterface $template
+     * @param \Fhm\FhmBundle\Services\Tools                 $tools
+     */
+    public function __construct(\Symfony\Component\Templating\EngineInterface $template, \Fhm\FhmBundle\Services\Tools $tools)
     {
-        $this->container = $container;
+        $this->fhm_tools = $tools;
         $this->template  = $template;
         $this->setName("france_domtom");
         $this->setWidth(470);

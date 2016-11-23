@@ -1,9 +1,6 @@
 <?php
 namespace Fhm\MapPickerBundle\Services;
 
-use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\Templating\EngineInterface;
-
 /**
  * Class MapFranceRegion
  *
@@ -11,9 +8,15 @@ use Symfony\Component\Templating\EngineInterface;
  */
 class MapNoMap extends AbstractMap
 {
-    public function __construct(EngineInterface $template, ContainerInterface $container)
+    /**
+     * MapNoMap constructor.
+     *
+     * @param \Symfony\Component\Templating\EngineInterface $template
+     * @param \Fhm\FhmBundle\Services\Tools                 $tools
+     */
+    public function __construct(\Symfony\Component\Templating\EngineInterface $template, \Fhm\FhmBundle\Services\Tools $tools)
     {
-        $this->container = $container;
+        $this->fhm_tools = $tools;
         $this->template  = $template;
         $this->setName("nomap");
         $this->setWidth(0);

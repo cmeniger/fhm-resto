@@ -9,15 +9,18 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 /**
- * @Route("/admin/galleryitem")
+ * @Route("/admin/galleryitem", service="fhm_gallery_controller_item_admin")
  */
 class AdminController extends FhmController
 {
     /**
-     * Constructor
+     * AdminController constructor.
+     *
+     * @param \Fhm\FhmBundle\Services\Tools $tools
      */
-    public function __construct()
+    public function __construct(\Fhm\FhmBundle\Services\Tools $tools)
     {
+        $this->setFhmTools($tools);
         parent::__construct('Fhm', 'Gallery', 'gallery_item', 'GalleryItem');
         $this->form->type->create = 'Fhm\\GalleryBundle\\Form\\Type\\Admin\\Item\\CreateType';
         $this->form->type->update = 'Fhm\\GalleryBundle\\Form\\Type\\Admin\\Item\\UpdateType';
@@ -61,12 +64,12 @@ class AdminController extends FhmController
     public function multipleAction(Request $request)
     {
         // ERROR - Unknown route
-        if(!$this->routeExists('fhm_admin_' . $this->route) || !$this->routeExists('fhm_admin_' . $this->route . '_multiple'))
+        if(!$this->fhm_tools->routeExists('fhm_admin_' . $this->route) || !$this->fhm_tools->routeExists('fhm_admin_' . $this->route . '_multiple'))
         {
-            throw $this->createNotFoundException($this->get('translator')->trans('fhm.error.route', array(), 'FhmFhmBundle'));
+            throw $this->createNotFoundException($this->fhm_tools->trans('fhm.error.route', array(), 'FhmFhmBundle'));
         }
         $document     = $this->document;
-        $instance     = $this->instanceData();
+        $instance     = $this->fhm_tools->instanceData();
         $classType    = 'Fhm\\GalleryBundle\\Form\\Type\\Admin\\Item\\MultipleType';
         $classHandler = $this->form->handler->create;
         $form         = $this->createForm(new $classType($instance, $document), $document);
@@ -84,19 +87,19 @@ class AdminController extends FhmController
             );
             $file     = new UploadedFile($fileData['tmp_name'], $fileData['name'], $fileData['type']);
             $tab      = explode('.', $fileData['name']);
-            $name     = $data['title'] ? $this->getUnique(null, $data['title'], true) : $tab[0];
+            $name     = $data['title'] ? $this->fhm_tools->getUnique(null, $data['title'], true) : $tab[0];
             // Persist media
             $media = new \Fhm\MediaBundle\Document\Media();
             $media->setName($name);
             $media->setFile($file);
             $media->setUserCreate($this->getUser());
-            $media->setAlias($this->getAlias($media->getId(), $media->getName()));
+            $media->setAlias($this->fhm_tools->getAlias($media->getId(), $media->getName()));
             $media->addGrouping($instance->grouping->current);
             $media->setWatermark((array) $request->get('watermark'));
             // Tag
             if(isset($data['tag']) && $data['tag'])
             {
-                $tag = $this->dmRepository('FhmMediaBundle:MediaTag')->getByName($data['tag']);
+                $tag = $this->fhm_tools->dmRepository('FhmMediaBundle:MediaTag')->getByName($data['tag']);
                 if($tag == "")
                 {
                     $tag = new \Fhm\MediaBundle\Document\MediaTag();
@@ -105,49 +108,49 @@ class AdminController extends FhmController
                 }
                 if(isset($data['parent']) && $data['parent'])
                 {
-                    $tag->setParent($this->dmRepository('FhmMediaBundle:MediaTag')->find($data['parent']));
+                    $tag->setParent($this->fhm_tools->dmRepository('FhmMediaBundle:MediaTag')->find($data['parent']));
                 }
-                $this->dmPersist($tag);
+                $this->fhm_tools->dmPersist($tag);
                 $media->addTag($tag);
             }
             if(isset($data['tags']) && $data['tags'])
             {
                 foreach($data['tags'] as $tagId)
                 {
-                    $media->addTag($this->dmRepository('FhmMediaBundle:MediaTag')->find($tagId));
+                    $media->addTag($this->fhm_tools->dmRepository('FhmMediaBundle:MediaTag')->find($tagId));
                 }
             }
-            $this->dmPersist($media);
+            $this->fhm_tools->dmPersist($media);
             //upload file
-            $this->get($this->getParameters('service','fhm_media'))->setDocument($media)->setWatermark($request->get('watermark'))->execute();
+            $this->get($this->fhm_tools->getParameter('service','fhm_media'))->setDocument($media)->setWatermark($request->get('watermark'))->execute();
             $document->setTitle($name);
             $document->setUserCreate($this->getUser());
-            $document->setAlias($this->getAlias($document->getId(), $document->getName()));
+            $document->setAlias($this->fhm_tools->getAlias($document->getId(), $document->getName()));
             $document->addGrouping($instance->grouping->current);
             $document->setImage($media);
-            $this->dmPersist($document);
+            $this->fhm_tools->dmPersist($document);
         }
 
         return array(
             'form'        => $form->createView(),
             'instance'    => $instance,
-            'watermarks'  => $this->getParameters('watermark', 'fhm_media') ? $this->getParameters('files', 'fhm_media') : '',
+            'watermarks'  => $this->fhm_tools->getParameter('watermark', 'fhm_media') ? $this->fhm_tools->getParameter('files', 'fhm_media') : '',
             'breadcrumbs' => array(
                 array(
-                    'link' => $this->get('router')->generate('project_home'),
-                    'text' => $this->get('translator')->trans('project.home.breadcrumb', array(), 'ProjectDefaultBundle'),
+                    'link' => $this->fhm_tools->getUrl('project_home'),
+                    'text' => $this->fhm_tools->trans('project.home.breadcrumb', array(), 'ProjectDefaultBundle'),
                 ),
                 array(
-                    'link' => $this->get('router')->generate('fhm_admin'),
-                    'text' => $this->get('translator')->trans('fhm.admin.breadcrumb', array(), 'FhmFhmBundle'),
+                    'link' => $this->fhm_tools->getUrl('fhm_admin'),
+                    'text' => $this->fhm_tools->trans('fhm.admin.breadcrumb', array(), 'FhmFhmBundle'),
                 ),
                 array(
-                    'link' => $this->get('router')->generate('fhm_admin_' . $this->route),
-                    'text' => $this->get('translator')->trans($this->translation[1] . '.admin.index.breadcrumb', array(), $this->translation[0]),
+                    'link' => $this->fhm_tools->getUrl('fhm_admin_' . $this->route),
+                    'text' => $this->fhm_tools->trans('.admin.index.breadcrumb'),
                 ),
                 array(
-                    'link'    => $this->get('router')->generate('fhm_admin_' . $this->route . '_create'),
-                    'text'    => $this->get('translator')->trans($this->translation[1] . '.admin.create.breadcrumb', array(), $this->translation[0]),
+                    'link'    => $this->fhm_tools->getUrl('fhm_admin_' . $this->route . '_create'),
+                    'text'    => $this->fhm_tools->trans('.admin.create.breadcrumb'),
                     'current' => true
                 )
             )
@@ -194,12 +197,12 @@ class AdminController extends FhmController
      */
     public function detailAction($id)
     {
-        $document = $this->dmRepository()->find($id);
-        $instance = $this->instanceData($document);
+        $document = $this->fhm_tools->dmRepository()->find($id);
+        $instance = $this->fhm_tools->instanceData($document);
 
         return array_merge(
             array(
-                'gallery1' => $this->dmRepository('FhmGalleryBundle:Gallery')->getAllEnable($instance->grouping->current),
+                'gallery1' => $this->fhm_tools->dmRepository('FhmGalleryBundle:Gallery')->getAllEnable($instance->grouping->current),
                 'gallery2' => $this->getList($document->getGalleries())
             ),
             parent::detailAction($id)
@@ -307,16 +310,16 @@ class AdminController extends FhmController
     public function listGalleryAction(Request $request)
     {
         $datas    = json_decode($request->get('list'));
-        $document = $this->dmRepository()->find($request->get('id'));
+        $document = $this->fhm_tools->dmRepository()->find($request->get('id'));
         foreach($document->getGalleries() as $gallery)
         {
             $document->removeGallery($gallery);
         }
         foreach($datas as $key => $data)
         {
-            $document->addGallery($this->dmRepository('FhmGalleryBundle:Gallery')->find($data->id));
+            $document->addGallery($this->fhm_tools->dmRepository('FhmGalleryBundle:Gallery')->find($data->id));
         }
-        $this->dmPersist($document);
+        $this->fhm_tools->dmPersist($document);
 
         return new Response();
     }

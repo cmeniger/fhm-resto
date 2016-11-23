@@ -1,4 +1,16 @@
 services:
-    #    fhm_testimony.example:
-    #        class: Fhm\TestimonyBundle\Example
-    #        arguments: [@service_id, "plain_value", %parameter%]
+    fhm_testimony:
+        class: Fhm\TestimonyBundle\Services\Testimony
+        arguments: [@fhm_tools]
+
+    fhm_testimony_controller_admin:
+        class: Fhm\TestimonyBundle\Controller\AdminController
+        arguments: [@fhm_tools]
+
+    fhm_testimony_controller_front:
+        class: Fhm\TestimonyBundle\Controller\FrontController
+        arguments: [@fhm_tools]
+
+    fhm_testimony_controller_api:
+        class: Fhm\TestimonyBundle\Controller\ApiController
+        arguments: [@fhm_tools]

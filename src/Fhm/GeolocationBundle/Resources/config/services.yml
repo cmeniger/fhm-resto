@@ -1,21 +1,13 @@
 services:
-    fhm_map:
-        class: Fhm\GeolocationBundle\Services\Map
-        arguments: ["@service_container"]
-
-    fhm_marker:
-        class: Fhm\GeolocationBundle\Services\Marker
-        arguments: ["@templating", "@service_container"]
-
     fhm_geocoder:
         class: Fhm\GeolocationBundle\Services\Geocoder
-        arguments: ["@service_container"]
-
-    fhm_geolocation_controller:
-        class: Fhm\GeolocationBundle\Controller\MapController
-        arguments: ["@fhm_tools"]
+        arguments: [@service_container]
 
     fhm.twig.geolocation_extension:
         class: Fhm\GeolocationBundle\Twig\GeolocationExtension
         tags:
             - { name: twig.extension }
+
+    fhm_map_controller:
+        class: Fhm\GeolocationBundle\Controller\MapController
+        arguments: [@fhm_tools]

@@ -9,15 +9,18 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 /**
- * @Route("/admin/news")
+ * @Route("/admin/news", service="fhm_news_controller_admin")
  */
 class AdminController extends FhmController
 {
     /**
-     * Constructor
+     * AdminController constructor.
+     *
+     * @param \Fhm\FhmBundle\Services\Tools $tools
      */
-    public function __construct()
+    public function __construct(\Fhm\FhmBundle\Services\Tools $tools)
     {
+        $this->setFhmTools($tools);
         parent::__construct('Fhm', 'News', 'news');
     }
 
@@ -86,12 +89,12 @@ class AdminController extends FhmController
      */
     public function detailAction($id)
     {
-        $document = $this->dmRepository()->find($id);
-        $instance = $this->instanceData($document);
+        $document = $this->fhm_tools->dmRepository()->find($id);
+        $instance = $this->fhm_tools->instanceData($document);
 
         return array_merge(
             array(
-                'newsgroups1' => $this->dmRepository('FhmNewsBundle:NewsGroup')->getListEnable($instance->grouping->current),
+                'newsgroups1' => $this->fhm_tools->dmRepository('FhmNewsBundle:NewsGroup')->getListEnable($instance->grouping->current),
                 'newsgroups2' => $this->getList($document->getNewsgroups())
             ),
             parent::detailAction($id)
@@ -213,17 +216,17 @@ class AdminController extends FhmController
     public function newsgroupAction(Request $request)
     {
         $newsgroups = json_decode($request->get('list'));
-        $document   = $this->dmRepository()->find($request->get('id'));
+        $document   = $this->fhm_tools->dmRepository()->find($request->get('id'));
         foreach($document->getNewsgroups() as $newsgroup)
         {
             $document->removeNewsgroup($newsgroup);
         }
         foreach($newsgroups as $key => $data)
         {
-            $newsgroup = $this->dmRepository('FhmNewsBundle:NewsGroup')->find($data->id);
+            $newsgroup = $this->fhm_tools->dmRepository('FhmNewsBundle:NewsGroup')->find($data->id);
             $document->addNewsgroup($newsgroup);
         }
-        $this->dmPersist($document);
+        $this->fhm_tools->dmPersist($document);
 
         return new Response();
     }

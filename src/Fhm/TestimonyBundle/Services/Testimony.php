@@ -1,23 +1,21 @@
 <?php
 namespace Fhm\TestimonyBundle\Services;
-
-use Fhm\FhmBundle\Controller\FhmController;
-use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\HttpFoundation\Session\Session;
-
 /**
  * Class Testimony
  *
  * @package Fhm\TestimonyBundle\Services
  */
-class Testimony extends FhmController
+class Testimony
 {
+    private $fhm_tools;
+
     /**
-     * @param ContainerInterface $container
+     * Testimony constructor.
+     *
+     * @param \Fhm\FhmBundle\Services\Tools $tools
      */
-    public function __construct(ContainerInterface $container)
+    public function __construct(\Fhm\FhmBundle\Services\Tools $tools)
     {
-        $this->container = $container;
-        parent::__construct();
+        $this->fhm_tools = $tools;
     }
 }

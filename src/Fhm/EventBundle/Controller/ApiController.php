@@ -10,15 +10,18 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 /**
- * @Route("/api/event")
+ * @Route("/api/event", service="fhm_event_controller_api")
  */
 class ApiController extends FhmController
 {
     /**
-     * Constructor
+     * ApiController constructor.
+     *
+     * @param \Fhm\FhmBundle\Services\Tools $tools
      */
-    public function __construct()
+    public function __construct(\Fhm\FhmBundle\Services\Tools $tools)
     {
+        $this->setFhmTools($tools);
         parent::__construct('Fhm', 'Event', 'event');
     }
 
@@ -87,30 +90,30 @@ class ApiController extends FhmController
     public function detailAction($template, $id, $rows, $pagination)
     {
         $document = "";
-        $instance = $this->instanceData();
+        $instance = $this->fhm_tools->instanceData();
         // Event
         if($id && $template == 'full')
         {
-            $document  = $this->dmRepository()->getById($id);
-            $document  = ($document) ? $document : $this->dmRepository()->getByAlias($id);
-            $document  = ($document) ? $document : $this->dmRepository()->getByName($id);
-            $instance  = $this->instanceData($document);
+            $document  = $this->fhm_tools->dmRepository()->getById($id);
+            $document  = ($document) ? $document : $this->fhm_tools->dmRepository()->getByAlias($id);
+            $document  = ($document) ? $document : $this->fhm_tools->dmRepository()->getByName($id);
+            $instance  = $this->fhm_tools->instanceData($document);
             $documents = '';
             $form      = '';
             // ERROR - unknown
             if($document == "")
             {
-                throw $this->createNotFoundException($this->get('translator')->trans('event.group.error.unknown', array(), 'FhmEventBundle'));
+                throw $this->createNotFoundException($this->fhm_tools->trans('event.group.error.unknown', array(), 'FhmEventBundle'));
             }
             // ERROR - Forbidden
             elseif(!$instance->user->admin && ($document->getDelete() || !$document->getActive()))
             {
-                throw new HttpException(403, $this->get('translator')->trans('event.group.error.forbidden', array(), 'FhmEventBundle'));
+                throw new HttpException(403, $this->fhm_tools->trans('event.group.error.forbidden', array(), 'FhmEventBundle'));
             }
             // Change grouping
             if($instance->grouping->different && $document->getGrouping() && !$document->getGlobal())
             {
-                $this->get($this->getParameters("grouping", "fhm_fhm"))->setGrouping($document->getFirstGrouping());
+                $this->get($this->fhm_tools->getParameter("grouping", "fhm_fhm"))->setGrouping($document->getFirstGrouping());
             }
         }
         else
@@ -118,24 +121,24 @@ class ApiController extends FhmController
             // Group
             if($id)
             {
-                $document = $this->dmRepository("FhmEventBundle:EventGroup")->getById($id);
-                $document = ($document) ? $document : $this->dmRepository("FhmEventBundle:EventGroup")->getByAlias($id);
-                $document = ($document) ? $document : $this->dmRepository("FhmEventBundle:EventGroup")->getByName($id);
-                $instance = $this->instanceData($document);
+                $document = $this->fhm_tools->dmRepository("FhmEventBundle:EventGroup")->getById($id);
+                $document = ($document) ? $document : $this->fhm_tools->dmRepository("FhmEventBundle:EventGroup")->getByAlias($id);
+                $document = ($document) ? $document : $this->fhm_tools->dmRepository("FhmEventBundle:EventGroup")->getByName($id);
+                $instance = $this->fhm_tools->instanceData($document);
                 // ERROR - unknown
                 if($document == "")
                 {
-                    throw $this->createNotFoundException($this->get('translator')->trans('event.group.error.unknown', array(), 'FhmEventBundle'));
+                    throw $this->createNotFoundException($this->fhm_tools->trans('event.group.error.unknown', array(), 'FhmEventBundle'));
                 }
                 // ERROR - Forbidden
                 elseif(!$instance->user->admin && ($document->getDelete() || !$document->getActive()))
                 {
-                    throw new HttpException(403, $this->get('translator')->trans('event.group.error.forbidden', array(), 'FhmEventBundle'));
+                    throw new HttpException(403, $this->fhm_tools->trans('event.group.error.forbidden', array(), 'FhmEventBundle'));
                 }
                 // Change grouping
                 if($instance->grouping->different && $document->getGrouping() && !$document->getGlobal())
                 {
-                    $this->get($this->getParameters("grouping", "fhm_fhm"))->setGrouping($document->getFirstGrouping());
+                    $this->get($this->fhm_tools->getParameter("grouping", "fhm_fhm"))->setGrouping($document->getFirstGrouping());
                 }
             }
             // Event
@@ -144,28 +147,28 @@ class ApiController extends FhmController
             $form->setData($this->get('request')->get($form->getName()));
             $dataSearch     = $form->getData();
             $dataPagination = $this->get('request')->get('FhmPagination');
-            $this->setPagination($rows);
+            $this->fhm_tools->setPagination($rows);
             // Ajax pagination request
             if($pagination && isset($dataPagination['pagination']))
             {
                 $documents  = $document ?
-                    $this->dmRepository()->getEventByGroupIndex($document, $dataSearch['search'], $dataPagination['pagination'], $this->pagination->page) :
-                    $this->dmRepository()->getFrontIndex($dataSearch['search'], $dataPagination['pagination'], $this->pagination->page);
+                    $this->fhm_tools->dmRepository()->getEventByGroupIndex($document, $dataSearch['search'], $dataPagination['pagination'], $this->pagination->page) :
+                    $this->fhm_tools->dmRepository()->getFrontIndex($dataSearch['search'], $dataPagination['pagination'], $this->pagination->page);
                 $pagination = $document ?
-                    $this->getPagination($dataPagination['pagination'], count($documents), $this->dmRepository("FhmEventBundle:Event")->getEventByGroupCount($document, $dataSearch['search']), 'pagination', $this->formRename($form->getName(), $dataSearch), $this->generateUrl('fhm_api_event_detail', array('template' => $template, 'group' => $id, 'rows' => $rows, 'pagination' => $pagination))) :
-                    $this->getPagination($dataPagination['pagination'], count($documents), $this->dmRepository("FhmEventBundle:Event")->getFrontCount($dataSearch['search']), 'pagination', $this->formRename($form->getName(), $dataSearch), $this->generateUrl('fhm_api_event_detail', array('template' => $template, 'group' => $id, 'rows' => $rows, 'pagination' => $pagination)));
+                    $this->fhm_tools->getPagination($dataPagination['pagination'], count($documents), $this->fhm_tools->dmRepository("FhmEventBundle:Event")->getEventByGroupCount($document, $dataSearch['search']), 'pagination', $this->fhm_tools->formRename($form->getName(), $dataSearch), $this->fhm_tools->getUrl('fhm_api_event_detail', array('template' => $template, 'group' => $id, 'rows' => $rows, 'pagination' => $pagination))) :
+                    $this->fhm_tools->getPagination($dataPagination['pagination'], count($documents), $this->fhm_tools->dmRepository("FhmEventBundle:Event")->getFrontCount($dataSearch['search']), 'pagination', $this->fhm_tools->formRename($form->getName(), $dataSearch), $this->fhm_tools->getUrl('fhm_api_event_detail', array('template' => $template, 'group' => $id, 'rows' => $rows, 'pagination' => $pagination)));
             }
             // Router request
             else
             {
                 $documents = $document ?
-                    $this->dmRepository()->getEventByGroupIndex($document, $dataSearch['search'], 1, $this->pagination->page) :
-                    $this->dmRepository()->getFrontIndex($dataSearch['search'], 1, $this->pagination->page);
+                    $this->fhm_tools->dmRepository()->getEventByGroupIndex($document, $dataSearch['search'], 1, $this->pagination->page) :
+                    $this->fhm_tools->dmRepository()->getFrontIndex($dataSearch['search'], 1, $this->pagination->page);
                 if($pagination)
                 {
                     $pagination = $document ?
-                        $this->getPagination(1, count($documents), $this->dmRepository("FhmEventBundle:Event")->getEventByGroupCount($document, $dataSearch['search']), 'pagination', $this->formRename($form->getName(), $dataSearch), $this->generateUrl('fhm_api_event_detail', array('template' => $template, 'group' => $id, 'rows' => $rows, 'pagination' => $pagination))) :
-                        $this->getPagination(1, count($documents), $this->dmRepository("FhmEventBundle:Event")->getFrontCount($dataSearch['search']), 'pagination', $this->formRename($form->getName(), $dataSearch), $this->generateUrl('fhm_api_event_detail', array('template' => $template, 'group' => $id, 'rows' => $rows, 'pagination' => $pagination)));
+                        $this->fhm_tools->getPagination(1, count($documents), $this->fhm_tools->dmRepository("FhmEventBundle:Event")->getEventByGroupCount($document, $dataSearch['search']), 'pagination', $this->fhm_tools->formRename($form->getName(), $dataSearch), $this->fhm_tools->getUrl('fhm_api_event_detail', array('template' => $template, 'group' => $id, 'rows' => $rows, 'pagination' => $pagination))) :
+                        $this->fhm_tools->getPagination(1, count($documents), $this->fhm_tools->dmRepository("FhmEventBundle:Event")->getFrontCount($dataSearch['search']), 'pagination', $this->fhm_tools->formRename($form->getName(), $dataSearch), $this->fhm_tools->getUrl('fhm_api_event_detail', array('template' => $template, 'group' => $id, 'rows' => $rows, 'pagination' => $pagination)));
                 }
             }
         }
@@ -193,9 +196,9 @@ class ApiController extends FhmController
      */
     public function getAllAction()
     {
-        $instance = $this->instanceData();
+        $instance = $this->fhm_tools->instanceData();
         $events   = array();
-        $aEvents  = $this->dmRepository()->getEventEnable($instance->grouping->current);
+        $aEvents  = $this->fhm_tools->dmRepository()->getEventEnable($instance->grouping->current);
         foreach($aEvents as $event)
         {
             $interval                                          = $event->getDateStart()->diff($event->getDateEnd());
@@ -225,11 +228,11 @@ class ApiController extends FhmController
     public function getDateAction($date)
     {
         // ERROR - Unknown route
-        if(!$this->routeExists('fhm_' . $this->route))
+        if(!$this->fhm_tools->routeExists('fhm_' . $this->route))
         {
-            throw $this->createNotFoundException($this->get('translator')->trans('fhm.error.route', array(), 'FhmFhmBundle'));
+            throw $this->createNotFoundException($this->fhm_tools->trans('fhm.error.route', array(), 'FhmFhmBundle'));
         }
-        $instance  = $this->instanceData();
+        $instance  = $this->fhm_tools->instanceData();
         $classType = "\\Fhm\\FhmBundle\\Form\\Type\\Front\\SearchType";
         $form      = $this->createForm(new $classType($instance), null);
         $form->setData($this->get('request')->get($form->getName()));
@@ -238,22 +241,22 @@ class ApiController extends FhmController
         // Ajax pagination request
         if(isset($dataPagination['pagination']))
         {
-            $documents = $this->dmRepository()->getFrontDateIndex($date, $dataSearch['search'], $dataPagination['pagination'], $this->getParameters(array('pagination', 'front', 'page'), 'fhm_fhm'), $instance->grouping->current);
+            $documents = $this->fhm_tools->dmRepository()->getFrontDateIndex($date, $dataSearch['search'], $dataPagination['pagination'], $this->fhm_tools->getParameter(array('pagination', 'front', 'page'), 'fhm_fhm'), $instance->grouping->current);
 
             return array(
                 'documents'  => $documents,
-                'pagination' => $this->getPagination($dataPagination['pagination'], count($documents), $this->dmRepository()->getFrontDateCount($date, $dataSearch['search'], $instance->grouping->current), 'pagination', $this->formRename($form->getName(), $dataSearch), $this->generateUrl('fhm_api_event_date', array('date' => $date))),
+                'pagination' => $this->fhm_tools->getPagination($dataPagination['pagination'], count($documents), $this->fhm_tools->dmRepository()->getFrontDateCount($date, $dataSearch['search'], $instance->grouping->current), 'pagination', $this->fhm_tools->formRename($form->getName(), $dataSearch), $this->fhm_tools->getUrl('fhm_api_event_date', array('date' => $date))),
                 'instance'   => $instance,
             );
         }
         // Router request
         else
         {
-            $documents = $this->dmRepository()->getFrontDateIndex($date, $dataSearch['search'], 1, $this->getParameters(array('pagination', 'front', 'page'), 'fhm_fhm'), $instance->grouping->current);
+            $documents = $this->fhm_tools->dmRepository()->getFrontDateIndex($date, $dataSearch['search'], 1, $this->fhm_tools->getParameter(array('pagination', 'front', 'page'), 'fhm_fhm'), $instance->grouping->current);
 
             return array(
                 'documents'  => $documents,
-                'pagination' => $this->getPagination(1, count($documents), $this->dmRepository()->getFrontDateCount($date, $dataSearch['search'], $instance->grouping->current), 'pagination', $this->formRename($form->getName(), $dataSearch), $this->generateUrl('fhm_api_event_date', array('date' => $date))),
+                'pagination' => $this->fhm_tools->getPagination(1, count($documents), $this->fhm_tools->dmRepository()->getFrontDateCount($date, $dataSearch['search'], $instance->grouping->current), 'pagination', $this->fhm_tools->formRename($form->getName(), $dataSearch), $this->fhm_tools->getUrl('fhm_api_event_date', array('date' => $date))),
                 'form'       => $form->createView(),
                 'instance'   => $instance
             );

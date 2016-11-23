@@ -1,10 +1,82 @@
 services:
     fhm_workflow:
         class: Fhm\WorkflowBundle\Services\Workflow
-        arguments: ["@fhm_tools"]
+        arguments: [@fhm_tools]
 
     fhm.twig.workflow_extension:
         class: Fhm\WorkflowBundle\Twig\WorkflowExtension
-        arguments: ["@service_container"]
+        arguments: [@templating, @fhm_tools]
         tags:
             - { name: twig.extension }
+            
+    fhm_workflow_controller_admin:
+        class: Fhm\WorkflowBundle\Controller\AdminController
+        arguments: [@fhm_tools]
+
+    fhm_workflow_controller_front:
+        class: Fhm\WorkflowBundle\Controller\FrontController
+        arguments: [@fhm_tools]
+
+    fhm_workflow_controller_api:
+        class: Fhm\WorkflowBundle\Controller\ApiController
+        arguments: [@fhm_tools]
+
+    fhm_workflow_controller_action_admin:
+        class: Fhm\WorkflowBundle\Controller\Action\AdminController
+        arguments: [@fhm_tools]
+
+    fhm_workflow_controller_action_front:
+        class: Fhm\WorkflowBundle\Controller\Action\FrontController
+        arguments: [@fhm_tools]
+
+    fhm_workflow_controller_action_api:
+        class: Fhm\WorkflowBundle\Controller\Action\ApiController
+        arguments: [@fhm_tools]
+
+    fhm_workflow_controller_comment_admin:
+        class: Fhm\WorkflowBundle\Controller\Comment\AdminController
+        arguments: [@fhm_tools]
+
+    fhm_workflow_controller_comment_front:
+        class: Fhm\WorkflowBundle\Controller\Comment\FrontController
+        arguments: [@fhm_tools]
+
+    fhm_workflow_controller_comment_api:
+        class: Fhm\WorkflowBundle\Controller\Comment\ApiController
+        arguments: [@fhm_tools]
+
+    fhm_workflow_controller_log_admin:
+        class: Fhm\WorkflowBundle\Controller\Log\AdminController
+        arguments: [@fhm_tools]
+
+    fhm_workflow_controller_log_front:
+        class: Fhm\WorkflowBundle\Controller\Log\FrontController
+        arguments: [@fhm_tools]
+
+    fhm_workflow_controller_log_api:
+        class: Fhm\WorkflowBundle\Controller\Log\ApiController
+        arguments: [@fhm_tools]
+
+    fhm_workflow_controller_step_admin:
+        class: Fhm\WorkflowBundle\Controller\Step\AdminController
+        arguments: [@fhm_tools]
+
+    fhm_workflow_controller_step_front:
+        class: Fhm\WorkflowBundle\Controller\Step\FrontController
+        arguments: [@fhm_tools]
+
+    fhm_workflow_controller_step_api:
+        class: Fhm\WorkflowBundle\Controller\Step\ApiController
+        arguments: [@fhm_tools]
+
+    fhm_workflow_controller_task_admin:
+        class: Fhm\WorkflowBundle\Controller\Task\AdminController
+        arguments: [@fhm_tools]
+
+    fhm_workflow_controller_task_front:
+        class: Fhm\WorkflowBundle\Controller\Task\FrontController
+        arguments: [@fhm_tools]
+
+    fhm_workflow_controller_task_api:
+        class: Fhm\WorkflowBundle\Controller\Task\ApiController
+        arguments: [@fhm_tools]

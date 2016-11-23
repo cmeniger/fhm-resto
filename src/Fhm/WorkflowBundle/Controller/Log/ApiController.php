@@ -10,15 +10,18 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 /**
- * @Route("/api/workflowlog")
+ * @Route("/api/workflowlog", service="fhm_workflow_controller_log_api")
  */
 class ApiController extends FhmController
 {
     /**
-     * Constructor
+     * ApiController constructor.
+     *
+     * @param \Fhm\FhmBundle\Services\Tools $tools
      */
-    public function __construct()
+    public function __construct(\Fhm\FhmBundle\Services\Tools $tools)
     {
+        $this->setFhmTools($tools);
         parent::__construct('Fhm', 'Workflow', 'workflow_log', 'WorkflowLog');
         $this->translation = array('FhmWorkflowBundle', 'workflow.log');
     }
@@ -60,8 +63,8 @@ class ApiController extends FhmController
      */
     public function workflowAction($id)
     {
-        $document = $this->dmRepository('FhmWorkflowBundle:Workflow')->find($id);
-        $instance = $this->instanceData($document);
+        $document = $this->fhm_tools->dmRepository('FhmWorkflowBundle:Workflow')->find($id);
+        $instance = $this->fhm_tools->instanceData($document);
         $iterator = $document->getAllLogs()->getIterator();
         $iterator->uasort(function ($a, $b)
         {
@@ -86,8 +89,8 @@ class ApiController extends FhmController
      */
     public function taskAction($id)
     {
-        $document = $this->dmRepository('FhmWorkflowBundle:WorkflowTask')->find($id);
-        $instance = $this->instanceData($document);
+        $document = $this->fhm_tools->dmRepository('FhmWorkflowBundle:WorkflowTask')->find($id);
+        $instance = $this->fhm_tools->instanceData($document);
         $iterator = $document->getLogs()->getIterator();
         $iterator->uasort(function ($a, $b)
         {

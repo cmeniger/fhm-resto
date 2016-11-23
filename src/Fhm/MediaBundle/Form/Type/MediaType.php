@@ -7,16 +7,18 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
+/**
+ * Class MediaType
+ *
+ * @package Fhm\MediaBundle\Form\Type
+ */
 class MediaType extends AbstractType
 {
-    protected $container;
-
     /**
-     * @param ContainerInterface $container
+     * MediaType constructor.
      */
-    public function __construct(ContainerInterface $container)
+    public function __construct()
     {
-        $this->container = $container;
     }
 
     /**

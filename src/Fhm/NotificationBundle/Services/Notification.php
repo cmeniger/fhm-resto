@@ -1,24 +1,23 @@
 <?php
 namespace Fhm\NotificationBundle\Services;
 
-use Fhm\FhmBundle\Controller\FhmController;
-use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\HttpFoundation\Session\Session;
-
 /**
  * Class Notification
  *
  * @package Fhm\NotificationBundle\Services
  */
-class Notification extends FhmController
+class Notification
 {
+    private $fhm_tools;
+
     /**
-     * @param ContainerInterface $container
+     * Notification constructor.
+     *
+     * @param \Fhm\FhmBundle\Services\Tools $tools
      */
-    public function __construct(ContainerInterface $container)
+    public function __construct(\Fhm\FhmBundle\Services\Tools $tools)
     {
-        $this->container = $container;
-        parent::__construct();
+        $this->fhm_tools = $tools;
     }
 
     /**
@@ -32,12 +31,12 @@ class Notification extends FhmController
     public function create(\Fhm\UserBundle\Document\User $user, $content = '', $template = 'default', $parameter = array())
     {
         $document = new \Fhm\NotificationBundle\Document\Notification();
-        $document->setUserCreate($this->getUser());
+        $document->setUserCreate($this->fhm_tools->getUser());
         $document->setUser($user);
         $document->setContent($content);
         $document->setTemplate($template);
         $document->setParameter($parameter);
-        $this->dmPersist($document);
+        $this->fhm_tools->dmPersist($document);
 
         return $this;
     }

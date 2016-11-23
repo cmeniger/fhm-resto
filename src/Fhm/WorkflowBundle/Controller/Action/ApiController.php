@@ -10,11 +10,12 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 /**
- * @Route("/api/workflowaction")
+ * @Route("/api/workflowaction", service="fhm_workflow_controller_action_api")
  */
 class ApiController extends FhmController
 {
     /**
+     * ApiController constructor.
      *
      * @param \Fhm\FhmBundle\Services\Tools $tools
      */

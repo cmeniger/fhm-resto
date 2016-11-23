@@ -10,15 +10,18 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 /**
- * @Route("/api/contact")
+ * @Route("/api/contact", service="fhm_contact_controller_api")
  */
 class ApiController extends FhmController
 {
     /**
-     * Constructor
+     * ApiController constructor.
+     *
+     * @param \Fhm\FhmBundle\Services\Tools $tools
      */
-    public function __construct()
+    public function __construct(\Fhm\FhmBundle\Services\Tools $tools)
     {
+        $this->setFhmTools($tools);
         parent::__construct('Fhm', 'Contact', 'contact');
     }
 
@@ -57,16 +60,16 @@ class ApiController extends FhmController
      */
     public function formAction(Request $request, $id)
     {
-        $document = $this->dmRepository()->find($id);
-        $instance = $this->instanceData($document);
+        $document = $this->fhm_tools->dmRepository()->find($id);
+        $instance = $this->fhm_tools->instanceData($document);
         if($document == "")
         {
-            throw $this->createNotFoundException($this->get('translator')->trans($this->translation[1] . '.error.unknown', array(), $this->translation[0]));
+            throw $this->createNotFoundException($this->fhm_tools->trans('.error.unknown'));
         }
         // ERROR - Forbidden
         elseif(!$instance->user->admin && ($document->getDelete() || !$document->getActive()))
         {
-            throw new HttpException(403, $this->get('translator')->trans($this->translation[1] . '.error.forbidden', array(), $this->translation[0]));
+            throw new HttpException(403, $this->fhm_tools->trans('.error.forbidden'));
         }
         $template     = $this->get('templating')->exists("::FhmContact/Template/form." . $document->getFormTemplate() . ".html.twig") ? $document->getFormTemplate() : "default";
         $classType    = "\\Fhm\\ContactBundle\\Form\\Type\\Template\\" . ucfirst($template) . "Type";
@@ -95,8 +98,8 @@ class ApiController extends FhmController
             $message->setField($data);
             // Contact
             $document->addMessage($message);
-            $this->dmPersist($message);
-            $this->dmPersist($document);
+            $this->fhm_tools->dmPersist($message);
+            $this->fhm_tools->dmPersist($document);
             // Email
             $this->container->get('fhm_mail')->contact
             (
@@ -107,7 +110,7 @@ class ApiController extends FhmController
                 )
             );
             // Message
-            $this->get('session')->getFlashBag()->add('contact-' . $id, $this->get('translator')->trans($this->translation[1] . '.front.index.flash.ok', array(), $this->translation[0]));
+            $this->get('session')->getFlashBag()->add('contact-' . $id, $this->fhm_tools->trans('.front.index.flash.ok'));
             // Reset form
             $form = $this->createForm(new $classType($instance), null);
         }
@@ -134,7 +137,7 @@ class ApiController extends FhmController
     public function emailAction(Request $request)
     {
         $datas    = $request->get('FhmContact');
-        $document = $this->dmRepository()->find($datas['id']);
+        $document = $this->fhm_tools->dmRepository()->find($datas['id']);
         if($document)
         {
             // Message
@@ -146,8 +149,8 @@ class ApiController extends FhmController
             $message->setContent($datas['content']);
             // Contact
             $document->addMessage($message);
-            $this->dmPersist($message);
-            $this->dmPersist($document);
+            $this->fhm_tools->dmPersist($message);
+            $this->fhm_tools->dmPersist($document);
             // Email
             $this->container->get('fhm_mail')->contact
             (
@@ -158,9 +161,9 @@ class ApiController extends FhmController
                 )
             );
             // Message
-            $this->get('session')->getFlashBag()->add('notice', $this->get('translator')->trans($this->translation[1] . '.front.index.flash.ok', array(), $this->translation[0]));
+            $this->get('session')->getFlashBag()->add('notice', $this->fhm_tools->trans('.front.index.flash.ok'));
         }
 
-        return $this->redirect($this->generateUrl('project_home'));
+        return $this->redirect($this->fhm_tools->getUrl('project_home'));
     }
 }

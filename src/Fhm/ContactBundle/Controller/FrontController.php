@@ -8,15 +8,18 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 /**
- * @Route("/contact")
+ * @Route("/contact", service="fhm_contact_controller_front")
  */
 class FrontController extends FhmController
 {
     /**
-     * Constructor
+     * FrontController constructor.
+     *
+     * @param \Fhm\FhmBundle\Services\Tools $tools
      */
-    public function __construct()
+    public function __construct(\Fhm\FhmBundle\Services\Tools $tools)
     {
+        $this->setFhmTools($tools);
         parent::__construct('Fhm', 'Contact', 'contact');
     }
 
@@ -31,11 +34,11 @@ class FrontController extends FhmController
     public function indexAction()
     {
         // ERROR - Unknown route
-        if(!$this->routeExists($this->source . '_' . $this->route))
+        if(!$this->fhm_tools->routeExists($this->source . '_' . $this->route))
         {
-            throw $this->createNotFoundException($this->get('translator')->trans('fhm.error.route', array(), 'FhmFhmBundle'));
+            throw $this->createNotFoundException($this->fhm_tools->trans('fhm.error.route', array(), 'FhmFhmBundle'));
         }
-        $instance  = $this->instanceData();
+        $instance  = $this->fhm_tools->instanceData();
         $classType = $this->form->type->search;
         $form      = $this->createForm(new $classType($instance), null);
         $form->setData($this->get('request')->get($form->getName()));
@@ -44,32 +47,32 @@ class FrontController extends FhmController
         // Ajax pagination request
         if(isset($dataPagination['pagination']))
         {
-            $documents = $this->dmRepository()->getFrontIndex($dataSearch['search'], $dataPagination['pagination'], $this->getParameters(array('pagination', 'front', 'page'), 'fhm_fhm'), $instance->grouping->current);
+            $documents = $this->fhm_tools->dmRepository()->getFrontIndex($dataSearch['search'], $dataPagination['pagination'], $this->fhm_tools->getParameter(array('pagination', 'front', 'page'), 'fhm_fhm'), $instance->grouping->current);
 
             return array(
                 'documents'  => $documents,
-                'pagination' => $this->getPagination($dataPagination['pagination'], count($documents), $this->dmRepository()->getFrontCount($dataSearch['search'], $instance->grouping->current), 'pagination', $this->formRename($form->getName(), $dataSearch)),
+                'pagination' => $this->fhm_tools->getPagination($dataPagination['pagination'], count($documents), $this->fhm_tools->dmRepository()->getFrontCount($dataSearch['search'], $instance->grouping->current), 'pagination', $this->fhm_tools->formRename($form->getName(), $dataSearch)),
                 'instance'   => $instance,
             );
         }
         // Router request
         else
         {
-            $documents = $this->dmRepository()->getFrontIndex($dataSearch['search'], 1, $this->getParameters(array('pagination', 'front', 'page'), 'fhm_fhm'), $instance->grouping->current);
+            $documents = $this->fhm_tools->dmRepository()->getFrontIndex($dataSearch['search'], 1, $this->fhm_tools->getParameter(array('pagination', 'front', 'page'), 'fhm_fhm'), $instance->grouping->current);
 
             return array(
                 'documents'   => $documents,
-                'pagination'  => $this->getPagination(1, count($documents), $this->dmRepository()->getFrontCount($dataSearch['search'], $instance->grouping->current), 'pagination', $this->formRename($form->getName(), $dataSearch)),
+                'pagination'  => $this->fhm_tools->getPagination(1, count($documents), $this->fhm_tools->dmRepository()->getFrontCount($dataSearch['search'], $instance->grouping->current), 'pagination', $this->fhm_tools->formRename($form->getName(), $dataSearch)),
                 'form'        => $form->createView(),
                 'instance'    => $instance,
                 'breadcrumbs' => array(
                     array(
-                        'link' => $this->get('router')->generate('project_home'),
-                        'text' => $this->get('translator')->trans('project.home.breadcrumb', array(), 'ProjectDefaultBundle'),
+                        'link' => $this->fhm_tools->getUrl('project_home'),
+                        'text' => $this->fhm_tools->trans('project.home.breadcrumb', array(), 'ProjectDefaultBundle'),
                     ),
                     array(
-                        'link' => $this->get('router')->generate($this->source . '_' . $this->route),
-                        'text' => $this->get('translator')->trans($this->translation[1] . '.front.index.breadcrumb', array(), $this->translation[0]),
+                        'link' => $this->fhm_tools->getUrl($this->source . '_' . $this->route),
+                        'text' => $this->fhm_tools->trans('.front.index.breadcrumb'),
                         'current' => true
                     )
                 )
@@ -102,7 +105,7 @@ class FrontController extends FhmController
     public function createAction(Request $request)
     {
         // For activate this route, delete next line
-        throw $this->createNotFoundException($this->get('translator')->trans('fhm.error.route', array(), 'FhmFhmBundle'));
+        throw $this->createNotFoundException($this->fhm_tools->trans('fhm.error.route', array(), 'FhmFhmBundle'));
 
         return parent::createAction($request);
     }
@@ -119,7 +122,7 @@ class FrontController extends FhmController
     public function updateAction(Request $request, $id)
     {
         // For activate this route, delete next line
-        throw $this->createNotFoundException($this->get('translator')->trans('fhm.error.route', array(), 'FhmFhmBundle'));
+        throw $this->createNotFoundException($this->fhm_tools->trans('fhm.error.route', array(), 'FhmFhmBundle'));
 
         return parent::updateAction($request, $id);
     }
@@ -135,7 +138,7 @@ class FrontController extends FhmController
     public function deleteAction($id)
     {
         // For activate this route, delete next line
-        throw $this->createNotFoundException($this->get('translator')->trans('fhm.error.route', array(), 'FhmFhmBundle'));
+        throw $this->createNotFoundException($this->fhm_tools->trans('fhm.error.route', array(), 'FhmFhmBundle'));
 
         return parent::deleteAction($id);
     }

@@ -1,19 +1,25 @@
 <?php
 namespace Fhm\MediaBundle\Twig;
-
-use Symfony\Component\HttpKernel\KernelInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
-
+/**
+ * Class MediaTagExtension
+ *
+ * @package Fhm\MediaBundle\Twig
+ */
 class MediaTagExtension extends \Twig_Extension
 {
-    protected $container;
+    protected $fhm_tools;
+    protected $template;
 
     /**
-     * @param ContainerInterface $container
+     * MapNoMap constructor.
+     *
+     * @param \Symfony\Component\Templating\EngineInterface $template
+     * @param \Fhm\FhmBundle\Services\Tools                 $tools
      */
-    public function __construct(ContainerInterface $container)
+    public function __construct(\Symfony\Component\Templating\EngineInterface $template, \Fhm\FhmBundle\Services\Tools $tools)
     {
-        $this->container = $container;
+        $this->fhm_tools = $tools;
+        $this->template  = $template;
     }
 
     /**
@@ -108,7 +114,7 @@ class MediaTagExtension extends \Twig_Extension
      */
     public function getBlocAdmin($tag, $instance)
     {
-        return $this->container->get('templating')->render
+        return $this->template->render
         (
             '::FhmMedia/Template/Bloc/admin.tag.html.twig',
             array
@@ -127,7 +133,7 @@ class MediaTagExtension extends \Twig_Extension
      */
     public function getBlocFront($tag, $instance)
     {
-        return $this->container->get('templating')->render
+        return $this->template->render
         (
             '::FhmMedia/Template/Bloc/front.tag.html.twig',
             array
@@ -146,7 +152,7 @@ class MediaTagExtension extends \Twig_Extension
      */
     public function getBlocSelector($tag, $instance)
     {
-        return $this->container->get('templating')->render
+        return $this->template->render
         (
             '::FhmMedia/Template/Bloc/selector.tag.html.twig',
             array
@@ -165,7 +171,7 @@ class MediaTagExtension extends \Twig_Extension
      */
     public function getBlocEditor($tag, $instance)
     {
-        return $this->container->get('templating')->render
+        return $this->template->render
         (
             '::FhmMedia/Template/Bloc/editor.tag.html.twig',
             array

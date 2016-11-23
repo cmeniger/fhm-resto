@@ -9,15 +9,18 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 /**
- * @Route("/media")
+ * @Route("/media", service="fhm_media_controller_front")
  */
 class FrontController extends FhmController
 {
     /**
-     * Constructor
+     * FrontController constructor.
+     *
+     * @param \Fhm\FhmBundle\Services\Tools $tools
      */
-    public function __construct()
+    public function __construct(\Fhm\FhmBundle\Services\Tools $tools)
     {
+        $this->setFhmTools($tools);
         parent::__construct('Fhm', 'Media', 'media');
     }
 
@@ -55,12 +58,12 @@ class FrontController extends FhmController
     public function createAction(Request $request)
     {
         // ERROR - Unknown route
-        if(!$this->routeExists('fhm_' . $this->route) || !$this->routeExists('fhm_' . $this->route . '_create'))
+        if(!$this->fhm_tools->routeExists('fhm_' . $this->route) || !$this->fhm_tools->routeExists('fhm_' . $this->route . '_create'))
         {
-            throw $this->createNotFoundException($this->get('translator')->trans('fhm.error.route', array(), 'FhmFhmBundle'));
+            throw $this->createNotFoundException($this->fhm_tools->trans('fhm.error.route', array(), 'FhmFhmBundle'));
         }
         $document     = $this->document;
-        $instance     = $this->instanceData();
+        $instance     = $this->fhm_tools->instanceData();
         $classType    = $this->form->type->create;
         $classHandler = $this->form->handler->create;
         $form         = $this->createForm(new $classType($instance, $document), $document);
@@ -72,7 +75,7 @@ class FrontController extends FhmController
             // Tag
             if(isset($data['tag']) && $data['tag'])
             {
-                $tag = $this->dmRepository('FhmMediaBundle:MediaTag')->getByName($data['tag']);
+                $tag = $this->fhm_tools->dmRepository('FhmMediaBundle:MediaTag')->getByName($data['tag']);
                 if($tag == "")
                 {
                     $tag = new \Fhm\MediaBundle\Document\MediaTag();
@@ -81,9 +84,9 @@ class FrontController extends FhmController
                 }
                 if(isset($data['parent']) && $data['parent'])
                 {
-                    $tag->setParent($this->dmRepository('FhmMediaBundle:MediaTag')->find($data['parent']));
+                    $tag->setParent($this->fhm_tools->dmRepository('FhmMediaBundle:MediaTag')->find($data['parent']));
                 }
-                $this->dmPersist($tag);
+                $this->fhm_tools->dmPersist($tag);
                 $document->addTag($tag);
             }
             $fileData = array
@@ -94,34 +97,34 @@ class FrontController extends FhmController
             );
             $file     = new UploadedFile($fileData['tmp_name'], $fileData['name'], $fileData['type']);
             $tab      = explode('.', $fileData['name']);
-            $name     = $data['name'] ? $this->getUnique(null, $data['name'], true) : $tab[0];
+            $name     = $data['name'] ? $this->fhm_tools->getUnique(null, $data['name'], true) : $tab[0];
             // Persist
             $document->setName($name);
             $document->setFile($file);
             $document->setUserCreate($this->getUser());
-            $document->setAlias($this->getAlias($document->getId(), $document->getName()));
+            $document->setAlias($this->fhm_tools->getAlias($document->getId(), $document->getName()));
             $document->setWatermark((array) $request->get('watermark'));
             $document->setActive(true);
-            $this->dmPersist($document);
-            $this->get($this->getParameters('service','fhm_media'))->setDocument($document)->setWatermark($request->get('watermark'))->execute();
+            $this->fhm_tools->dmPersist($document);
+            $this->get($this->fhm_tools->getParameter('service','fhm_media'))->setDocument($document)->setWatermark($request->get('watermark'))->execute();
         }
 
         return array(
             'form'        => $form->createView(),
-            'instance'    => $this->instanceData(),
-            'watermarks'  => $this->getParameters('watermark', 'fhm_media') ? $this->getParameters('files', 'fhm_media') : '',
+            'instance'    => $this->fhm_tools->instanceData(),
+            'watermarks'  => $this->fhm_tools->getParameter('watermark', 'fhm_media') ? $this->fhm_tools->getParameter('files', 'fhm_media') : '',
             'breadcrumbs' => array(
                 array(
-                    'link' => $this->get('router')->generate('project_home'),
-                    'text' => $this->get('translator')->trans('project.home.breadcrumb', array(), 'ProjectDefaultBundle'),
+                    'link' => $this->fhm_tools->getUrl('project_home'),
+                    'text' => $this->fhm_tools->trans('project.home.breadcrumb', array(), 'ProjectDefaultBundle'),
                 ),
                 array(
-                    'link' => $this->get('router')->generate('fhm_' . $this->route),
-                    'text' => $this->get('translator')->trans($this->translation[1] . '.front.index.breadcrumb', array(), $this->translation[0]),
+                    'link' => $this->fhm_tools->getUrl('fhm_' . $this->route),
+                    'text' => $this->fhm_tools->trans('.front.index.breadcrumb'),
                 ),
                 array(
-                    'link'    => $this->get('router')->generate('fhm_' . $this->route . '_create'),
-                    'text'    => $this->get('translator')->trans($this->translation[1] . '.front.create.breadcrumb', array(), $this->translation[0]),
+                    'link'    => $this->fhm_tools->getUrl('fhm_' . $this->route . '_create'),
+                    'text'    => $this->fhm_tools->trans('.front.create.breadcrumb'),
                     'current' => true
                 )
             )
@@ -140,7 +143,7 @@ class FrontController extends FhmController
     public function duplicateAction(Request $request, $id)
     {
         // For activate this route, delete next line
-        throw $this->createNotFoundException($this->get('translator')->trans('fhm.error.route', array(), 'FhmFhmBundle'));
+        throw $this->createNotFoundException($this->fhm_tools->trans('fhm.error.route', array(), 'FhmFhmBundle'));
 
         return parent::duplicateAction($request, $id);
     }
@@ -157,7 +160,7 @@ class FrontController extends FhmController
     public function updateAction(Request $request, $id)
     {
         // For activate this route, delete next line
-        throw $this->createNotFoundException($this->get('translator')->trans('fhm.error.route', array(), 'FhmFhmBundle'));
+        throw $this->createNotFoundException($this->fhm_tools->trans('fhm.error.route', array(), 'FhmFhmBundle'));
 
         return parent::updateAction($request, $id);
     }
@@ -187,7 +190,7 @@ class FrontController extends FhmController
     public function deleteAction($id)
     {
         // For activate this route, delete next line
-        throw $this->createNotFoundException($this->get('translator')->trans('fhm.error.route', array(), 'FhmFhmBundle'));
+        throw $this->createNotFoundException($this->fhm_tools->trans('fhm.error.route', array(), 'FhmFhmBundle'));
 
         return parent::deleteAction($id);
     }

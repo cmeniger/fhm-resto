@@ -5,7 +5,6 @@ use Fhm\FhmBundle\Repository\FhmRepository;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Doctrine\ODM\MongoDB\UnitOfWork;
 use Doctrine\ODM\MongoDB\Mapping\ClassMetadata;
-use MyProject\Proxies\__CG__\stdClass;
 
 /**
  * MenuRepository

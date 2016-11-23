@@ -60,15 +60,15 @@ class AdminController extends FhmController
     {
         $datas = $request->get('FhmAdd');
         if ($datas['module'] != '' && $datas['data'] != '') {
-            $document = $documents = $this->dmRepository()->find($datas['parent']);
+            $document = $documents = $this->fhm_tools->dmRepository()->find($datas['parent']);
             $document->addModule(array($datas['data'] => array('type' => $datas['module'], 'id' => $datas['data'], "create" => new \DateTime("now"), "update" => new \DateTime("now"),  "delete" => false, "active" => true)));
-            $documentUse=$this->dmRepository('Fhm' . ucfirst($datas['module']) . 'Bundle:' . ucfirst($datas['module']))->find($datas['data']);
+            $documentUse=$this->fhm_tools->dmRepository('Fhm' . ucfirst($datas['module']) . 'Bundle:' . ucfirst($datas['module']))->find($datas['data']);
             $currentClass=explode('\\',get_class($document));
             $documentUse->addUse(array($document->getId() => array('id' => $document->getId(),'type' => lcfirst($currentClass[3]),'attr'=>'page' )));
-            $this->dmPersist($document);
-            $this->dmPersist($documentUse);
+            $this->fhm_tools->dmPersist($document);
+            $this->fhm_tools->dmPersist($documentUse);
         }
-        return $this->redirect($this->getLastRoute());
+        return $this->redirect($this->fhm_tools->getLastRoute());
     }
 
     /**
@@ -83,13 +83,13 @@ class AdminController extends FhmController
     {
         $module = $request->get('module');
 
-        $datasRepository = $this->dmRepository('Fhm' . ucfirst($module) . 'Bundle:' . ucfirst($module))->findAll();
+        $datasRepository = $this->fhm_tools->dmRepository('Fhm' . ucfirst($module) . 'Bundle:' . ucfirst($module))->findAll();
         if ($module == 'news') {
-            $datasRepository = $this->dmRepository('Fhm' . ucfirst($module) . 'Bundle:' . ucfirst($module))->findAllParent();
+            $datasRepository = $this->fhm_tools->dmRepository('Fhm' . ucfirst($module) . 'Bundle:' . ucfirst($module))->findAllParent();
         }
 
         return array(
-            'instance' => $this->instanceData(),
+            'instance' => $this->fhm_tools->instanceData(),
             'datas' => $datasRepository,
             'module' => $module
         );
@@ -124,19 +124,19 @@ class AdminController extends FhmController
     {
         $childs = array();
 
-        $document = $this->dmRepository()->find($id);
+        $document = $this->fhm_tools->dmRepository()->find($id);
         $sons = $document->getModule();
 
         // ERROR - son
         if ($document->getParent() != '0') {
-            throw new HttpException(403, $this->get('translator')->trans($this->translation[1] . '.error.forbidden', array(), $this->translation[0]));
+            throw new HttpException(403, $this->fhm_tools->trans('.error.forbidden'));
         }
 
         foreach ($sons as &$son) {
             foreach ($son as &$sonV) {
                 $childs[$sonV['id']]['option'] = $sonV;
 
-                $childs[$sonV['id']]['object'] = $this->dmRepository('Fhm' . ucfirst($sonV['type']) . 'Bundle:' . ucfirst($sonV['type']))->find($sonV['id']);
+                $childs[$sonV['id']]['object'] = $this->fhm_tools->dmRepository('Fhm' . ucfirst($sonV['type']) . 'Bundle:' . ucfirst($sonV['type']))->find($sonV['id']);
             }
         }
         return array_merge
@@ -145,7 +145,7 @@ class AdminController extends FhmController
             array
             (
                 "sons" => $childs,
-                "modules" => $this->getParameters('modules', 'fhm_page')
+                "modules" => $this->fhm_tools->getParameter('modules', 'fhm_page')
             )
         );
     }
@@ -190,7 +190,7 @@ class AdminController extends FhmController
     {
         parent::deleteAction($id);
 
-        return $this->redirect($this->getLastRoute());
+        return $this->redirect($this->fhm_tools->getLastRoute());
     }
 
     /**
@@ -204,10 +204,10 @@ class AdminController extends FhmController
     public function deletechildAction($parent, $id)
     {
         // ERROR - Unknown route
-        if (!$this->routeExists('fhm_admin_' . $this->route)) {
-            throw $this->createNotFoundException($this->get('translator')->trans('fhm.error.route', array(), 'FhmFhmBundle'));
+        if (!$this->fhm_tools->routeExists('fhm_admin_' . $this->route)) {
+            throw $this->createNotFoundException($this->fhm_tools->trans('fhm.error.route', array(), 'FhmFhmBundle'));
         }
-        $document = $this->dmRepository()->find($parent);
+        $document = $this->fhm_tools->dmRepository()->find($parent);
         $modules = $document->getModule();
 
         if (!empty($modules)) {
@@ -216,32 +216,32 @@ class AdminController extends FhmController
 
                     // ERROR - Forbidden
                     if ($module[$id]['delete'] && !$this->getUser()->isSuperAdmin()) {
-                        throw new HttpException(403, $this->get('translator')->trans($this->translation[1] . '.error.forbidden', array(), $this->translation[0]));
+                        throw new HttpException(403, $this->fhm_tools->trans('.error.forbidden'));
                     }
                     // Delete
                     if ($module[$id]['delete']) {
                         unset($modules[$key]);
                         //delete this object in the use attribut of the used document
-                        $documentUse=$this->dmRepository('Fhm' . ucfirst($module[$id]['type']) . 'Bundle:' . ucfirst($module[$id]['type']))->find($id);
+                        $documentUse=$this->fhm_tools->dmRepository('Fhm' . ucfirst($module[$id]['type']) . 'Bundle:' . ucfirst($module[$id]['type']))->find($id);
                         $documentUse->removeUse($parent,'page');
-                        $this->dmPersist($documentUse);
+                        $this->fhm_tools->dmPersist($documentUse);
 
                     } else {
                         $module[$id]['delete'] = true;
                         $module[$id]['update'] = new \DateTime("now");
                     }
                     $document->setModule($modules);
-                    $this->dmPersist($document);
+                    $this->fhm_tools->dmPersist($document);
 
                     // Message
-                    $this->get('session')->getFlashBag()->add('notice', $this->get('translator')->trans($this->translation[1] . '.admin.delete.flash.ok', array(), $this->translation[0]));
+                    $this->get('session')->getFlashBag()->add('notice', $this->fhm_tools->trans('.admin.delete.flash.ok'));
                 }
 
             }
         }
 
 
-        return $this->redirect($this->getLastRoute());
+        return $this->redirect($this->fhm_tools->getLastRoute());
     }
 
     /**
@@ -255,10 +255,10 @@ class AdminController extends FhmController
     public function activatechildAction($parent, $id)
     {
         // ERROR - Unknown route
-        if (!$this->routeExists('fhm_admin_' . $this->route)) {
-            throw $this->createNotFoundException($this->get('translator')->trans('fhm.error.route', array(), 'FhmFhmBundle'));
+        if (!$this->fhm_tools->routeExists('fhm_admin_' . $this->route)) {
+            throw $this->createNotFoundException($this->fhm_tools->trans('fhm.error.route', array(), 'FhmFhmBundle'));
         }
-        $document = $this->dmRepository()->find($parent);
+        $document = $this->fhm_tools->dmRepository()->find($parent);
         $modules = $document->getModule();
 
         if (!empty($modules)) {
@@ -267,7 +267,7 @@ class AdminController extends FhmController
 
                     // ERROR - Forbidden
                     if ($module[$id]['active'] && !$this->getUser()->isSuperAdmin()) {
-                        throw new HttpException(403, $this->get('translator')->trans($this->translation[1] . '.error.forbidden', array(), $this->translation[0]));
+                        throw new HttpException(403, $this->fhm_tools->trans('.error.forbidden'));
                     }
                     // Delete
                     if ($module[$id]['active']) {
@@ -278,17 +278,17 @@ class AdminController extends FhmController
                         $module[$id]['update'] = new \DateTime("now");
                     }
                     $document->setModule($modules);
-                    $this->dmPersist($document);
+                    $this->fhm_tools->dmPersist($document);
 
                     // Message
-                    $this->get('session')->getFlashBag()->add('notice', $this->get('translator')->trans($this->translation[1] . '.admin.delete.flash.ok', array(), $this->translation[0]));
+                    $this->get('session')->getFlashBag()->add('notice', $this->fhm_tools->trans('.admin.delete.flash.ok'));
                 }
 
             }
         }
 
 
-        return $this->redirect($this->getLastRoute());
+        return $this->redirect($this->fhm_tools->getLastRoute());
     }
 
     /**
@@ -302,10 +302,10 @@ class AdminController extends FhmController
     public function undeletechildAction($parent, $id)
     {
         // ERROR - Unknown route
-        if (!$this->routeExists('fhm_admin_' . $this->route)) {
-            throw $this->createNotFoundException($this->get('translator')->trans('fhm.error.route', array(), 'FhmFhmBundle'));
+        if (!$this->fhm_tools->routeExists('fhm_admin_' . $this->route)) {
+            throw $this->createNotFoundException($this->fhm_tools->trans('fhm.error.route', array(), 'FhmFhmBundle'));
         }
-        $document = $this->dmRepository()->find($parent);
+        $document = $this->fhm_tools->dmRepository()->find($parent);
         $modules = $document->getModule();
 
         if (!empty($modules)) {
@@ -314,7 +314,7 @@ class AdminController extends FhmController
 
                     // ERROR - Forbidden
                     if ($module[$id]['delete'] && !$this->getUser()->isSuperAdmin()) {
-                        throw new HttpException(403, $this->get('translator')->trans($this->translation[1] . '.error.forbidden', array(), $this->translation[0]));
+                        throw new HttpException(403, $this->fhm_tools->trans('.error.forbidden'));
                     }
                     // Delete
                     if ($module[$id]['delete']) {
@@ -322,15 +322,15 @@ class AdminController extends FhmController
                         $module[$id]['update'] = new \DateTime("now");
                     }
                     $document->setModule($modules);
-                    $this->dmPersist($document);
+                    $this->fhm_tools->dmPersist($document);
 
                     // Message
-                    $this->get('session')->getFlashBag()->add('notice', $this->get('translator')->trans($this->translation[1] . '.admin.delete.flash.ok', array(), $this->translation[0]));
+                    $this->get('session')->getFlashBag()->add('notice', $this->fhm_tools->trans('.admin.delete.flash.ok'));
                 }
 
             }
         }
-        return $this->redirect($this->getLastRoute());
+        return $this->redirect($this->fhm_tools->getLastRoute());
     }
 
     /**
@@ -346,7 +346,7 @@ class AdminController extends FhmController
     {
         parent::undeleteAction($id);
 
-        return $this->redirect($this->getLastRoute());
+        return $this->redirect($this->fhm_tools->getLastRoute());
     }
 
     /**
@@ -362,7 +362,7 @@ class AdminController extends FhmController
     {
         parent::activateAction($id);
 
-        return $this->redirect($this->getLastRoute());
+        return $this->redirect($this->fhm_tools->getLastRoute());
     }
 
     /**
@@ -378,7 +378,7 @@ class AdminController extends FhmController
     {
         parent::deactivateAction($id);
 
-        return $this->redirect($this->getLastRoute());
+        return $this->redirect($this->fhm_tools->getLastRoute());
     }
 
     /**
@@ -420,7 +420,7 @@ class AdminController extends FhmController
     private
     function _pageSort($parent, $list)
     {
-        $document = $this->dmRepository()->find($parent);
+        $document = $this->fhm_tools->dmRepository()->find($parent);
         $modules=$document->getModule();
         $modulesOrder=array();
 
@@ -434,7 +434,7 @@ class AdminController extends FhmController
             }
         }
         $document->setModule($modulesOrder);
-        $this->dmPersist($document);
+        $this->fhm_tools->dmPersist($document);
         return $this;
     }
 }

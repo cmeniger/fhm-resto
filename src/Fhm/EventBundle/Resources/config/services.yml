@@ -1,4 +1,24 @@
 services:
-    #    fhm_event.example:
-    #        class: Fhm\EventBundle\Example
-    #        arguments: [@service_id, "plain_value", %parameter%]
+    fhm_event_controller_admin:
+        class: Fhm\EventBundle\Controller\AdminController
+        arguments: [@fhm_tools]
+
+    fhm_event_controller_front:
+        class: Fhm\EventBundle\Controller\FrontController
+        arguments: [@fhm_tools]
+
+    fhm_event_controller_api:
+        class: Fhm\EventBundle\Controller\ApiController
+        arguments: [@fhm_tools]
+
+    fhm_event_controller_group_admin:
+        class: Fhm\EventBundle\Controller\Group\AdminController
+        arguments: [@fhm_tools]
+
+    fhm_event_controller_group_front:
+        class: Fhm\EventBundle\Controller\Group\FrontController
+        arguments: [@fhm_tools]
+
+    fhm_event_controller_group_api:
+        class: Fhm\EventBundle\Controller\Group\ApiController
+        arguments: [@fhm_tools]

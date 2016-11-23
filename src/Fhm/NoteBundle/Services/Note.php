@@ -1,7 +1,6 @@
 <?php
 namespace Fhm\NoteBundle\Services;
 
-use Fhm\FhmBundle\Controller\FhmController;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Session\Session;
 
@@ -10,15 +9,18 @@ use Symfony\Component\HttpFoundation\Session\Session;
  *
  * @package Fhm\NoteBundle\Services
  */
-class Note extends FhmController
+class Note
 {
+    private $fhm_tools;
+
     /**
-     * @param ContainerInterface $container
+     * Note constructor.
+     *
+     * @param \Fhm\FhmBundle\Services\Tools $tools
      */
-    public function __construct(ContainerInterface $container)
+    public function __construct(\Fhm\FhmBundle\Services\Tools $tools)
     {
-        $this->container = $container;
-        parent::__construct();
+        $this->fhm_tools = $tools;
     }
 
     /***
@@ -28,8 +30,8 @@ class Note extends FhmController
      */
     public function average($id)
     {
-        $sum   = $this->dmRepository('FhmNoteBundle:Note')->getAverageByObject($id);
-        $count = $this->dmRepository('FhmNoteBundle:Note')->getCountByObject($id);
+        $sum   = $this->fhm_tools->dmRepository('FhmNoteBundle:Note')->getAverageByObject($id);
+        $count = $this->fhm_tools->dmRepository('FhmNoteBundle:Note')->getCountByObject($id);
         if($count > 0)
         {
             return $sum / $count;
@@ -48,6 +50,6 @@ class Note extends FhmController
      */
     public function count($document, $value)
     {
-        return $this->dmRepository('FhmNoteBundle:Note')->getCountByObjectAndValue($document->getId(), $value);
+        return $this->fhm_tools->dmRepository('FhmNoteBundle:Note')->getCountByObjectAndValue($document->getId(), $value);
     }
 }

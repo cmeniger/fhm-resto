@@ -8,20 +8,23 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 /**
- * @Route("/admin/mediatag")
+ * @Route("/admin/mediatag", service="fhm_media_controller_tag_admin")
  */
 class AdminController extends FhmController
 {
     /**
-     * Constructor
+     * AdminController constructor.
+     *
+     * @param \Fhm\FhmBundle\Services\Tools $tools
      */
-    public function __construct()
+    public function __construct(\Fhm\FhmBundle\Services\Tools $tools)
     {
+        $this->setFhmTools($tools);
         parent::__construct('Fhm', 'Media', 'media_tag', 'MediaTag');
         $this->form->type->create = 'Fhm\\MediaBundle\\Form\\Type\\Admin\\Tag\\CreateType';
         $this->form->type->update = 'Fhm\\MediaBundle\\Form\\Type\\Admin\\Tag\\UpdateType';
         $this->translation        = array('FhmMediaBundle', 'media.tag');
-        $this->setSort('route');
+        $this->fhm_tools->setSort('route');
     }
 
     /**
@@ -103,7 +106,7 @@ class AdminController extends FhmController
     public function deleteAction($id)
     {
         $response = parent::deleteAction($id);
-        $document = $this->dmRepository()->find($id);
+        $document = $this->fhm_tools->dmRepository()->find($id);
         $this->_tagDelete($id, $document ? false : true);
 
         return $response;
@@ -202,24 +205,24 @@ class AdminController extends FhmController
      */
     private function _tagDelete($id, $delete)
     {
-        $documents = $this->dmRepository()->getSons($id);
+        $documents = $this->fhm_tools->dmRepository()->getSons($id);
         foreach($documents as $document)
         {
             $this->_tagDelete($document->getId(), $delete);
             if($delete)
             {
-                $medias = $this->dmRepository("FhmMediaBundle:Media")->getByTag($document->getId());
+                $medias = $this->fhm_tools->dmRepository("FhmMediaBundle:Media")->getByTag($document->getId());
                 foreach($medias as $media)
                 {
                     $media->removeTag($document);
-                    $this->dmPersist($media);
+                    $this->fhm_tools->dmPersist($media);
                 }
-                $this->dmRemove($document);
+                $this->fhm_tools->dmRemove($document);
             }
             else
             {
                 $document->setDelete(true);
-                $this->dmPersist($document);
+                $this->fhm_tools->dmPersist($document);
             }
         }
 
@@ -235,12 +238,12 @@ class AdminController extends FhmController
      */
     private function _tagUndelete($id)
     {
-        $documents = $this->dmRepository()->getSons($id);
+        $documents = $this->fhm_tools->dmRepository()->getSons($id);
         foreach($documents as $document)
         {
             $this->_tagUndelete($document->getId());
             $document->setDelete(false);
-            $this->dmPersist($document);
+            $this->fhm_tools->dmPersist($document);
         }
 
         return $this;
@@ -256,12 +259,12 @@ class AdminController extends FhmController
      */
     private function _tagActive($id, $active)
     {
-        $documents = $this->dmRepository()->getSons($id);
+        $documents = $this->fhm_tools->dmRepository()->getSons($id);
         foreach($documents as $document)
         {
             $this->_tagActive($document->getId(), $active);
             $document->setActive($active);
-            $this->dmPersist($document);
+            $this->fhm_tools->dmPersist($document);
         }
 
         return $this;

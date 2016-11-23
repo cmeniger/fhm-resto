@@ -2,21 +2,23 @@
 
 namespace Fhm\GeolocationBundle\Controller;
 
-use Fhm\FhmBundle\Controller\FhmController as FhmController;
-use Fhm\FhmBundle\Services\Tools;
+use Fhm\FhmBundle\Controller\RefApiController as FhmController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 /**
- * @Route("/map")
+ * @Route("/map", service="fhm_map_controller")
  */
-class MapController extends Controller
+class MapController extends FhmController
 {
-    protected $tools;
-
-    public function __construct(Tools $fhm_tools)
+    /**
+     * MapController constructor.
+     *
+     * @param \Fhm\FhmBundle\Services\Tools $tools
+     */
+    public function __construct(\Fhm\FhmBundle\Services\Tools $tools)
     {
-        $this->tools = $fhm_tools;
+        $this->setFhmTools($tools);
+        parent::__construct('Fhm', 'Geolocation', 'geolocation');
     }
 }

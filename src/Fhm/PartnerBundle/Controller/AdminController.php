@@ -9,15 +9,18 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 /**
- * @Route("/admin/partner")
+ * @Route("/admin/partner", service="fhm_partner_controller_admin")
  */
 class AdminController extends FhmController
 {
     /**
-     * Constructor
+     * AdminController constructor.
+     *
+     * @param \Fhm\FhmBundle\Services\Tools $tools
      */
-    public function __construct()
+    public function __construct(\Fhm\FhmBundle\Services\Tools $tools)
     {
+        $this->setFhmTools($tools);
         parent::__construct('Fhm', 'Partner', 'partner');
     }
 
@@ -86,12 +89,12 @@ class AdminController extends FhmController
      */
     public function detailAction($id)
     {
-        $document = $this->dmRepository()->find($id);
-        $instance = $this->instanceData($document);
+        $document = $this->fhm_tools->dmRepository()->find($id);
+        $instance = $this->fhm_tools->instanceData($document);
 
         return array_merge(
             array(
-                'partnergroups1' => $this->dmRepository('FhmPartnerBundle:PartnerGroup')->getListEnable($instance->grouping->current),
+                'partnergroups1' => $this->fhm_tools->dmRepository('FhmPartnerBundle:PartnerGroup')->getListEnable($instance->grouping->current),
                 'partnergroups2' => $this->getList($document->getPartnergroups())
             ),
             parent::detailAction($id)
@@ -213,17 +216,17 @@ class AdminController extends FhmController
     public function partnergroupAction(Request $request)
     {
         $partnergroups = json_decode($request->get('list'));
-        $document   = $this->dmRepository()->find($request->get('id'));
+        $document   = $this->fhm_tools->dmRepository()->find($request->get('id'));
         foreach($document->getPartnergroups() as $partnergroup)
         {
             $document->removePartnergroup($partnergroup);
         }
         foreach($partnergroups as $key => $data)
         {
-            $partnergroup = $this->dmRepository('FhmPartnerBundle:PartnerGroup')->find($data->id);
+            $partnergroup = $this->fhm_tools->dmRepository('FhmPartnerBundle:PartnerGroup')->find($data->id);
             $document->addPartnergroup($partnergroup);
         }
-        $this->dmPersist($document);
+        $this->fhm_tools->dmPersist($document);
 
         return new Response();
     }

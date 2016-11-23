@@ -9,15 +9,18 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 /**
- * @Route("/admin/galleryvideo")
+ * @Route("/admin/galleryvideo", service="fhm_gallery_controller_video_admin")
  */
 class AdminController extends FhmController
 {
     /**
-     * Constructor
+     * AdminController constructor.
+     *
+     * @param \Fhm\FhmBundle\Services\Tools $tools
      */
-    public function __construct()
+    public function __construct(\Fhm\FhmBundle\Services\Tools $tools)
     {
+        $this->setFhmTools($tools);
         parent::__construct('Fhm', 'Gallery', 'gallery_video', 'GalleryVideo');
         $this->form->type->create = 'Fhm\\GalleryBundle\\Form\\Type\\Admin\\Video\\CreateType';
         $this->form->type->update = 'Fhm\\GalleryBundle\\Form\\Type\\Admin\\Video\\UpdateType';
@@ -90,12 +93,12 @@ class AdminController extends FhmController
      */
     public function detailAction($id)
     {
-        $document = $this->dmRepository()->find($id);
-        $instance = $this->instanceData($document);
+        $document = $this->fhm_tools->dmRepository()->find($id);
+        $instance = $this->fhm_tools->instanceData($document);
 
         return array_merge(
             array(
-                'gallery1' => $this->dmRepository('FhmGalleryBundle:Gallery')->getAllEnable($instance->grouping->current),
+                'gallery1' => $this->fhm_tools->dmRepository('FhmGalleryBundle:Gallery')->getAllEnable($instance->grouping->current),
                 'gallery2' => $this->getList($document->getGalleries())
             ),
             parent::detailAction($id)
@@ -203,16 +206,16 @@ class AdminController extends FhmController
     public function listGalleryAction(Request $request)
     {
         $datas    = json_decode($request->get('list'));
-        $document = $this->dmRepository()->find($request->get('id'));
+        $document = $this->fhm_tools->dmRepository()->find($request->get('id'));
         foreach($document->getGalleries() as $gallery)
         {
             $document->removeGallery($gallery);
         }
         foreach($datas as $key => $data)
         {
-            $document->addGallery($this->dmRepository('FhmGalleryBundle:Gallery')->find($data->id));
+            $document->addGallery($this->fhm_tools->dmRepository('FhmGalleryBundle:Gallery')->find($data->id));
         }
-        $this->dmPersist($document);
+        $this->fhm_tools->dmPersist($document);
 
         return new Response();
     }

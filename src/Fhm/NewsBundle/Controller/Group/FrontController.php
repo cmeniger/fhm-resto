@@ -9,15 +9,18 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 /**
- * @Route("/newsgroup")
+ * @Route("/newsgroup", service="fhm_news_controller_group_front")
  */
 class FrontController extends FhmController
 {
     /**
-     * Constructor
+     * FrontController constructor.
+     *
+     * @param \Fhm\FhmBundle\Services\Tools $tools
      */
-    public function __construct()
+    public function __construct(\Fhm\FhmBundle\Services\Tools $tools)
     {
+        $this->setFhmTools($tools);
         parent::__construct('Fhm', 'News', 'news_group', 'NewsGroup');
         $this->form->type->create = 'Fhm\\NewsBundle\\Form\\Type\\Front\\Group\\CreateType';
         $this->form->type->update = 'Fhm\\NewsBundle\\Form\\Type\\Front\\Group\\UpdateType';
@@ -37,7 +40,7 @@ class FrontController extends FhmController
         $response = parent::indexAction();
         foreach($response['documents'] as $key => $document)
         {
-            $response['documents'][$key]->allnews = $this->dmRepository("FhmNewsBundle:News")->getNewsByGroupAll($document);
+            $response['documents'][$key]->allnews = $this->fhm_tools->dmRepository("FhmNewsBundle:News")->getNewsByGroupAll($document);
         }
 
         return $response;
@@ -54,7 +57,7 @@ class FrontController extends FhmController
     public function createAction(Request $request)
     {
         // For activate this route, delete next line
-        throw $this->createNotFoundException($this->get('translator')->trans('fhm.error.route', array(), 'FhmFhmBundle'));
+        throw $this->createNotFoundException($this->fhm_tools->trans('fhm.error.route', array(), 'FhmFhmBundle'));
 
         return parent::createAction($request);
     }
@@ -71,7 +74,7 @@ class FrontController extends FhmController
     public function duplicateAction(Request $request, $id)
     {
         // For activate this route, delete next line
-        throw $this->createNotFoundException($this->get('translator')->trans('fhm.error.route', array(), 'FhmFhmBundle'));
+        throw $this->createNotFoundException($this->fhm_tools->trans('fhm.error.route', array(), 'FhmFhmBundle'));
 
         return parent::duplicateAction($request, $id);
     }
@@ -88,7 +91,7 @@ class FrontController extends FhmController
     public function updateAction(Request $request, $id)
     {
         // For activate this route, delete next line
-        throw $this->createNotFoundException($this->get('translator')->trans('fhm.error.route', array(), 'FhmFhmBundle'));
+        throw $this->createNotFoundException($this->fhm_tools->trans('fhm.error.route', array(), 'FhmFhmBundle'));
 
         return parent::updateAction($request, $id);
     }
@@ -116,25 +119,25 @@ class FrontController extends FhmController
         // Ajax pagination request
         if(isset($dataPagination['pagination']))
         {
-            $documents = $this->dmRepository("FhmNewsBundle:News")->getNewsByGroupIndex($document, $dataSearch['search'], $dataPagination['pagination'], $this->getParameters(array('pagination', 'front', 'page'), 'fhm_fhm'));
+            $documents = $this->fhm_tools->dmRepository("FhmNewsBundle:News")->getNewsByGroupIndex($document, $dataSearch['search'], $dataPagination['pagination'], $this->fhm_tools->getParameter(array('pagination', 'front', 'page'), 'fhm_fhm'));
 
             return array_merge(
                 $response,
                 array(
                     'documents'  => $documents,
-                    'pagination' => $this->getPagination($dataPagination['pagination'], count($documents), $this->dmRepository("FhmNewsBundle:News")->getNewsByGroupCount($document, $dataSearch['search']), 'pagination', $this->formRename($form->getName(), $dataSearch), $this->generateUrl('fhm_news_group_lite', array('id' => $id))),
+                    'pagination' => $this->fhm_tools->getPagination($dataPagination['pagination'], count($documents), $this->fhm_tools->dmRepository("FhmNewsBundle:News")->getNewsByGroupCount($document, $dataSearch['search']), 'pagination', $this->fhm_tools->formRename($form->getName(), $dataSearch), $this->fhm_tools->getUrl('fhm_news_group_lite', array('id' => $id))),
                 ));
         }
         // Router request
         else
         {
-            $documents = $this->dmRepository("FhmNewsBundle:News")->getNewsByGroupIndex($document, $dataSearch['search'], 1, $this->getParameters(array('pagination', 'front', 'page'), 'fhm_fhm'));
+            $documents = $this->fhm_tools->dmRepository("FhmNewsBundle:News")->getNewsByGroupIndex($document, $dataSearch['search'], 1, $this->fhm_tools->getParameter(array('pagination', 'front', 'page'), 'fhm_fhm'));
 
             return array_merge(
                 $response,
                 array(
                     'documents'  => $documents,
-                    'pagination' => $this->getPagination(1, count($documents), $this->dmRepository("FhmNewsBundle:News")->getNewsByGroupCount($document, $dataSearch['search']), 'pagination', $this->formRename($form->getName(), $dataSearch), $this->generateUrl('fhm_news_group_lite', array('id' => $id))),
+                    'pagination' => $this->fhm_tools->getPagination(1, count($documents), $this->fhm_tools->dmRepository("FhmNewsBundle:News")->getNewsByGroupCount($document, $dataSearch['search']), 'pagination', $this->fhm_tools->formRename($form->getName(), $dataSearch), $this->fhm_tools->getUrl('fhm_news_group_lite', array('id' => $id))),
                     'form'       => $form->createView(),
                 ));
         }
@@ -151,7 +154,7 @@ class FrontController extends FhmController
     public function deleteAction($id)
     {
         // For activate this route, delete next line
-        throw $this->createNotFoundException($this->get('translator')->trans('fhm.error.route', array(), 'FhmFhmBundle'));
+        throw $this->createNotFoundException($this->fhm_tools->trans('fhm.error.route', array(), 'FhmFhmBundle'));
 
         return parent::deleteAction($id);
     }

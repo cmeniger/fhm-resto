@@ -10,15 +10,18 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 /**
- * @Route("/api/mail")
+ * @Route("/api/mail", service="fhm_mail_controller_api")
  */
 class ApiController extends FhmController
 {
     /**
-     * Constructor
+     * ApiController constructor.
+     *
+     * @param \Fhm\FhmBundle\Services\Tools $tools
      */
-    public function __construct()
+    public function __construct(\Fhm\FhmBundle\Services\Tools $tools)
     {
+        $this->setFhmTools($tools);
         parent::__construct('Fhm', 'Mail', 'mail');
     }
 
@@ -44,10 +47,10 @@ class ApiController extends FhmController
      */
     public function adminTestAction()
     {
-        $this->get('session')->getFlashBag()->add('notice', $this->get('translator')->trans("mail.test.flash.ok", array("%email%" => $this->getParameters('admin', 'fhm_mailer')), $this->translation[0]));
+        $this->get('session')->getFlashBag()->add('notice', $this->fhm_tools->trans("mail.test.flash.ok", array("%email%" => $this->fhm_tools->getParameter('admin', 'fhm_mailer'))));
         $this->container->get('fhm_mail')->AdminTest();
 
-        return $this->redirect($this->getLastRoute());
+        return $this->redirect($this->fhm_tools->getLastRoute());
     }
 
     /**
@@ -78,7 +81,7 @@ class ApiController extends FhmController
             "user"             => $this->getUser(),
             "urlConfirm"       => $this->container->get('router')->generate('fos_user_registration_confirm', array('token' => md5($this->getUser()->getUsername())), true),
             "version"          => "mail",
-            "server_http_host" => $this->getParameters('host', 'fhm_mailer')
+            "server_http_host" => $this->fhm_tools->getParameter('host', 'fhm_mailer')
         );
     }
 
@@ -97,7 +100,7 @@ class ApiController extends FhmController
             "user"             => $this->getUser(),
             "urlConfirm"       => $this->container->get('router')->generate('fos_user_registration_confirm', array('token' => md5($this->getUser()->getUsername())), true),
             "version"          => "mail",
-            "server_http_host" => $this->getParameters('host', 'fhm_mailer')
+            "server_http_host" => $this->fhm_tools->getParameter('host', 'fhm_mailer')
         );
     }
 
@@ -127,7 +130,7 @@ class ApiController extends FhmController
         (
             "message"          => $message,
             "version"          => "mail",
-            "server_http_host" => $this->getParameters('host', 'fhm_mailer')
+            "server_http_host" => $this->fhm_tools->getParameter('host', 'fhm_mailer')
         );
     }
 }

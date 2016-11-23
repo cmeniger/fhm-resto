@@ -10,7 +10,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 /**
- * @Route("/admin/workflowaction")
+ * @Route("/admin/workflowaction", service="fhm_workflow_controller_action_admin")
  */
 class AdminController extends FhmController
 {

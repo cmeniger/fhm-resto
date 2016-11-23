@@ -1,20 +1,21 @@
 <?php
 namespace Fhm\MailBundle\Services;
 
-use Fhm\FhmBundle\Controller\FhmController;
 use Symfony\Component\Templating\EngineInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 
-class Mailer extends FhmController
+class Mailer
 {
     protected $mailer;
     protected $templating;
+    protected $fhm_tools;
+    protected $container;
 
-    public function __construct(\Swift_Mailer $mailer, EngineInterface $templating, ContainerInterface $container)
+    public function __construct(\Fhm\FhmBundle\Services\Tools $tools, \Swift_Mailer $mailer, EngineInterface $templating)
     {
+        $this->fhm_tools  = $tools;
         $this->mailer     = $mailer;
         $this->templating = $templating;
-        $this->setContainer($container);
+        $this->container  = $tools->getContainer();
     }
 
     /**
@@ -26,7 +27,7 @@ class Mailer extends FhmController
      */
     public function sendMail($fromEmail, $toEmail, $subject, $body, $model)
     {
-        if($this->getParameters('enable', 'fhm_mailer'))
+        if($this->fhm_tools->getParameter('enable', 'fhm_mailer'))
         {
             $transport = \Swift_SmtpTransport::newInstance($this->container->getParameter('mailer_host'), $this->container->getParameter('mailer_port'))
                 ->setUsername($this->container->getParameter('mailer_user'))
@@ -49,7 +50,7 @@ class Mailer extends FhmController
                 ->setTo($toEmail)
                 ->setSubject($subject)
                 ->setBody($body);
-            $this->dmPersist($document);
+            $this->fhm_tools->dmPersist($document);
         }
         else
         {
@@ -83,7 +84,7 @@ class Mailer extends FhmController
             ->setTo($toUser->getEmailCanonical())
             ->setSubject($subject)
             ->setBody($body);
-        $this->dmPersist($document);
+        $this->fhm_tools->dmPersist($document);
     }
 
     /**
@@ -99,7 +100,7 @@ class Mailer extends FhmController
                 $data,
                 array
                 (
-                    'server_http_host' => $this->getParameters('host', 'fhm_mailer'),
+                    'server_http_host' => $this->fhm_tools->getParameter('host', 'fhm_mailer'),
                     'version'          => 'mail'
                 )
             )
@@ -132,13 +133,13 @@ class Mailer extends FhmController
     public function adminTest()
     {
         $dm      = $this->container->get('doctrine.odm.mongodb.document_manager');
-        $noreply = $dm->getRepository("FhmUserBundle:User")->getUserByEmail($this->getParameters('noreply', 'fhm_mailer'));
+        $noreply = $dm->getRepository("FhmUserBundle:User")->getUserByEmail($this->fhm_tools->getParameter('noreply', 'fhm_mailer'));
         // Email - Admin
         $this->sendMail
         (
-            array($noreply->getEmail() => $this->getParameters('sign', 'fhm_mailer')),
-            $this->getParameters('admin', 'fhm_mailer'),
-            $this->getParameters('project', 'fhm_mailer') . " email test",
+            array($noreply->getEmail() => $this->fhm_tools->getParameter('sign', 'fhm_mailer')),
+            $this->fhm_tools->getParameter('admin', 'fhm_mailer'),
+            $this->fhm_tools->getParameter('project', 'fhm_mailer') . " email test",
             $this->renderMail(array('template' => 'test'), 'Admin'),
             'admin > test'
         );
@@ -155,7 +156,7 @@ class Mailer extends FhmController
         // Email
         $this->sendMail
         (
-            array($this->getParameters('contact', 'fhm_mailer') => $this->getParameters('sign', 'fhm_mailer')),
+            array($this->fhm_tools->getParameter('contact', 'fhm_mailer') => $this->fhm_tools->getParameter('sign', 'fhm_mailer')),
             $data['to'],
             $data['object'],
             $this->renderMail($data, 'Admin'),
@@ -169,16 +170,16 @@ class Mailer extends FhmController
     public function userRegister($data)
     {
         $dm                = $this->container->get('doctrine.odm.mongodb.document_manager');
-        $noreply           = $dm->getRepository("FhmUserBundle:User")->getUserByEmail($this->getParameters('noreply', 'fhm_mailer'));
+        $noreply           = $dm->getRepository("FhmUserBundle:User")->getUserByEmail($this->fhm_tools->getParameter('noreply', 'fhm_mailer'));
         $data["send_mail"] = (isset($data["send_mail"])) ? $data["send_mail"] : true;
         // Email - User
         if($data["send_mail"])
         {
             $this->sendMail
             (
-                array($noreply->getEmail() => $this->getParameters('sign', 'fhm_mailer')),
+                array($noreply->getEmail() => $this->fhm_tools->getParameter('sign', 'fhm_mailer')),
                 $data['user']->getEmail(),
-                "Bienvenue sur " . $this->getParameters('project', 'fhm_mailer'),
+                "Bienvenue sur " . $this->fhm_tools->getParameter('project', 'fhm_mailer'),
                 $this->renderMail($data, 'User'),
                 'user > register'
             );
@@ -191,16 +192,16 @@ class Mailer extends FhmController
     public function userReset($data)
     {
         $dm                = $this->container->get('doctrine.odm.mongodb.document_manager');
-        $noreply           = $dm->getRepository("FhmUserBundle:User")->getUserByEmail($this->getParameters('noreply', 'fhm_mailer'));
+        $noreply           = $dm->getRepository("FhmUserBundle:User")->getUserByEmail($this->fhm_tools->getParameter('noreply', 'fhm_mailer'));
         $data["send_mail"] = (isset($data["send_mail"])) ? $data["send_mail"] : true;
         // Email - User
         if($data["send_mail"])
         {
             $this->sendMail
             (
-                array($noreply->getEmail() => $this->getParameters('sign', 'fhm_mailer')),
+                array($noreply->getEmail() => $this->fhm_tools->getParameter('sign', 'fhm_mailer')),
                 $data['user']->getEmail(),
-                "Réinitialiser mon mot de passe " . $this->getParameters('project', 'fhm_mailer'),
+                "Réinitialiser mon mot de passe " . $this->fhm_tools->getParameter('project', 'fhm_mailer'),
                 $this->renderMail($data, 'User'),
                 'user > reset'
             );
@@ -213,195 +214,25 @@ class Mailer extends FhmController
     public function contact($data)
     {
         $dm               = $this->container->get('doctrine.odm.mongodb.document_manager');
-        $noreply          = $dm->getRepository("FhmUserBundle:User")->getUserByEmail($this->getParameters('noreply', 'fhm_mailer'));
+        $noreply          = $dm->getRepository("FhmUserBundle:User")->getUserByEmail($this->fhm_tools->getParameter('noreply', 'fhm_mailer'));
         $data['template'] = isset($data['template']) ? $data['template'] : "default";
         // Email - Contact
         $this->sendMail
         (
-            array($noreply->getEmail() => $this->getParameters('sign', 'fhm_mailer')),
-            $this->getParameters('contact', 'fhm_mailer'),
-            "[CONTACT][" . $data['message']->getContact()->getName() . "] " . $this->getParameters('project', 'fhm_mailer'),
+            array($noreply->getEmail() => $this->fhm_tools->getParameter('sign', 'fhm_mailer')),
+            $this->fhm_tools->getParameter('contact', 'fhm_mailer'),
+            "[CONTACT][" . $data['message']->getContact()->getName() . "] " . $this->fhm_tools->getParameter('project', 'fhm_mailer'),
             $this->renderMail($data, 'Contact'),
             'contact > ' . $data['template']
         );
         // Email - User
         $this->sendMail
         (
-            array($noreply->getEmail() => $this->getParameters('sign', 'fhm_mailer')),
+            array($noreply->getEmail() => $this->fhm_tools->getParameter('sign', 'fhm_mailer')),
             $data['message']->getEmail(),
-            $this->getParameters('project', 'fhm_mailer') . " contact",
+            $this->fhm_tools->getParameter('project', 'fhm_mailer') . " contact",
             $this->renderMail($data, 'Contact'),
             'contact > ' . $data['template']
         );
     }
-
-    /**
-     * Place - Moderation - Create
-     */
-    public function placeModerationCreate($data)
-    {
-        $dm               = $this->container->get('doctrine.odm.mongodb.document_manager');
-        $noreply          = $dm->getRepository("FhmUserBundle:User")->getUserByEmail($this->getParameters('noreply', 'fhm_mailer'));
-        $data['template'] = isset($data['template']) ? $data['template'] : "moderation.create";
-        // Email - Admin
-        $this->sendMail
-        (
-            array($noreply->getEmail() => $this->getParameters('sign', 'fhm_mailer')),
-            $this->getParameters('admin', 'fhm_mailer'),
-            $this->get('translator')->trans('place.email.moderation.create.admin.object', array(), 'ProjectPlaceBundle'),
-            $this->renderMail(array_merge($data, array('type' => 'admin')), 'Place'),
-            'place > moderation > create > admin'
-        );
-        // Email - User
-        $this->sendMail
-        (
-            array($noreply->getEmail() => $this->getParameters('sign', 'fhm_mailer')),
-            $data['user']->getEmail(),
-            $this->get('translator')->trans('place.email.moderation.create.user.object', array(), 'ProjectPlaceBundle'),
-            $this->renderMail(array_merge($data, array('type' => 'user')), 'Place'),
-            'place > moderation > create > user'
-        );
-    }
-
-    /**
-     * Place - Moderation - Create - Accept
-     */
-    public function placeModerationCreateAccept($data)
-    {
-        $dm               = $this->container->get('doctrine.odm.mongodb.document_manager');
-        $noreply          = $dm->getRepository("FhmUserBundle:User")->getUserByEmail($this->getParameters('noreply', 'fhm_mailer'));
-        $data['template'] = isset($data['template']) ? $data['template'] : "moderation.create.accept";
-        // Email - User
-        $this->sendMail
-        (
-            array($noreply->getEmail() => $this->getParameters('sign', 'fhm_mailer')),
-            $data['user']->getEmail(),
-            $this->get('translator')->trans('place.email.moderation.create.accept.object', array(), 'ProjectPlaceBundle'),
-            $this->renderMail($data, 'Place'),
-            'place > moderation > create > accept'
-        );
-    }
-
-    /**
-     * Place - Moderation - Create - Refuse
-     */
-    public function placeModerationCreateRefuse($data)
-    {
-        $dm               = $this->container->get('doctrine.odm.mongodb.document_manager');
-        $noreply          = $dm->getRepository("FhmUserBundle:User")->getUserByEmail($this->getParameters('noreply', 'fhm_mailer'));
-        $data['template'] = isset($data['template']) ? $data['template'] : "moderation.create.refuse";
-        // Email - User
-        $this->sendMail
-        (
-            array($noreply->getEmail() => $this->getParameters('sign', 'fhm_mailer')),
-            $data['user']->getEmail(),
-            $this->get('translator')->trans('place.email.moderation.create.refuse.object', array(), 'ProjectPlaceBundle'),
-            $this->renderMail($data, 'Place'),
-            'place > moderation > create > refuse'
-        );
-    }
-
-    /**
-     * Place - Moderation - Create - Cancel
-     */
-    public function placeModerationCreateCancel($data)
-    {
-        $dm               = $this->container->get('doctrine.odm.mongodb.document_manager');
-        $noreply          = $dm->getRepository("FhmUserBundle:User")->getUserByEmail($this->getParameters('noreply', 'fhm_mailer'));
-        $data['template'] = isset($data['template']) ? $data['template'] : "moderation.create.cancel";
-        // Email - User
-        $this->sendMail
-        (
-            array($noreply->getEmail() => $this->getParameters('sign', 'fhm_mailer')),
-            $data['user']->getEmail(),
-            $this->get('translator')->trans('place.email.moderation.create.cancel.object', array(), 'ProjectPlaceBundle'),
-            $this->renderMail($data, 'Place'),
-            'place > moderation > create > cancel'
-        );
-    }
-
-    /**
-     * Place - Moderation - Moderator
-     */
-    public function placeModerationModerator($data)
-    {
-        $dm               = $this->container->get('doctrine.odm.mongodb.document_manager');
-        $noreply          = $dm->getRepository("FhmUserBundle:User")->getUserByEmail($this->getParameters('noreply', 'fhm_mailer'));
-        $data['template'] = isset($data['template']) ? $data['template'] : "moderation.moderator";
-        // Email - Admin
-        $this->sendMail
-        (
-            array($noreply->getEmail() => $this->getParameters('sign', 'fhm_mailer')),
-            $this->getParameters('admin', 'fhm_mailer'),
-            $this->get('translator')->trans('place.email.moderation.moderator.admin.object', array(), 'ProjectPlaceBundle'),
-            $this->renderMail(array_merge($data, array('type' => 'admin')), 'Place'),
-            'place > moderation > moderator > admin'
-        );
-        // Email - User
-        $this->sendMail
-        (
-            array($noreply->getEmail() => $this->getParameters('sign', 'fhm_mailer')),
-            $data['user']->getEmail(),
-            $this->get('translator')->trans('place.email.moderation.moderator.user.object', array(), 'ProjectPlaceBundle'),
-            $this->renderMail(array_merge($data, array('type' => 'user')), 'Place'),
-            'place > moderation > moderator > user'
-        );
-    }
-
-    /**
-     * Place - Moderation - Moderator - Accept
-     */
-    public function placeModerationModeratorAccept($data)
-    {
-        $dm               = $this->container->get('doctrine.odm.mongodb.document_manager');
-        $noreply          = $dm->getRepository("FhmUserBundle:User")->getUserByEmail($this->getParameters('noreply', 'fhm_mailer'));
-        $data['template'] = isset($data['template']) ? $data['template'] : "moderation.moderator.accept";
-        // Email - User
-        $this->sendMail
-        (
-            array($noreply->getEmail() => $this->getParameters('sign', 'fhm_mailer')),
-            $data['user']->getEmail(),
-            $this->get('translator')->trans('place.email.moderation.moderator.accept.object', array(), 'ProjectPlaceBundle'),
-            $this->renderMail($data, 'Place'),
-            'place > moderation > moderator > accept'
-        );
-    }
-
-    /**
-     * Place - Moderation - Moderator - Refuse
-     */
-    public function placeModerationModeratorRefuse($data)
-    {
-        $dm               = $this->container->get('doctrine.odm.mongodb.document_manager');
-        $noreply          = $dm->getRepository("FhmUserBundle:User")->getUserByEmail($this->getParameters('noreply', 'fhm_mailer'));
-        $data['template'] = isset($data['template']) ? $data['template'] : "moderation.moderator.refuse";
-        // Email - User
-        $this->sendMail
-        (
-            array($noreply->getEmail() => $this->getParameters('sign', 'fhm_mailer')),
-            $data['user']->getEmail(),
-            $this->get('translator')->trans('place.email.moderation.moderator.refuse.object', array(), 'ProjectPlaceBundle'),
-            $this->renderMail($data, 'Place'),
-            'place > moderation > moderator > refuse'
-        );
-    }
-
-    /**
-     * Place - Moderation - Moderator - Cancel
-     */
-    public function placeModerationModeratorCancel($data)
-    {
-        $dm               = $this->container->get('doctrine.odm.mongodb.document_manager');
-        $noreply          = $dm->getRepository("FhmUserBundle:User")->getUserByEmail($this->getParameters('noreply', 'fhm_mailer'));
-        $data['template'] = isset($data['template']) ? $data['template'] : "moderation.moderator.cancel";
-        // Email - User
-        $this->sendMail
-        (
-            array($noreply->getEmail() => $this->getParameters('sign', 'fhm_mailer')),
-            $data['user']->getEmail(),
-            $this->get('translator')->trans('place.email.moderation.moderator.cancel.object', array(), 'ProjectPlaceBundle'),
-            $this->renderMail($data, 'Place'),
-            'place > moderation > moderator > cancel'
-        );
-    }
-} 
+}
