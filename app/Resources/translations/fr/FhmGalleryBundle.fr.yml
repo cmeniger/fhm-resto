@@ -116,9 +116,9 @@ gallery:
                     options:                    Options
 
         detail:
-            title:                              %name%
+            title:                              '%name%'
             link:                               Détail
-            breadcrumb:                         %name%
+            breadcrumb:                         '%name%'
             data:
                 title:                          Informations
                 id:                             ID
@@ -255,9 +255,9 @@ gallery:
                     text:                       La modification d'une galerie nécessite la validation d'un modérateur.
 
         detail:
-            title:                              %name%
+            title:                              '%name%'
             link:                               Détail
-            breadcrumb:                         %name%
+            breadcrumb:                         '%name%'
             data:
                 title:                          Informations
                 create:                         Création
@@ -416,9 +416,9 @@ gallery:
                         options:                Options
 
             detail:
-                title:                          %name%
+                title:                          '%name%'
                 link:                           Détail
-                breadcrumb:                     %name%
+                breadcrumb:                     '%name%'
                 data:
                     title:                      Informations
                     id:                         ID
@@ -541,9 +541,9 @@ gallery:
                         text:                   La modification d'une image nécessite la validation d'un modérateur pour être affichée.
 
             detail:
-                title:                          %name%
+                title:                          '%name%'
                 link:                           Détail
-                breadcrumb:                     %name%
+                breadcrumb:                     '%name%'
                 data:
                     title:                      Informations
                     create:                     Création
@@ -661,9 +661,9 @@ gallery:
                         options:                Options
 
             detail:
-                title:                          %name%
+                title:                          '%name%'
                 link:                           Détail
-                breadcrumb:                     %name%
+                breadcrumb:                     '%name%'
                 data:
                     title:                      Informations
                     id:                         ID
@@ -786,9 +786,9 @@ gallery:
                         text:                   La modification d'une vidéo nécessite la validation d'un modérateur pour être affichée.
 
             detail:
-                title:                          %name%
+                title:                          '%name%'
                 link:                           Détail
-                breadcrumb:                     %name%
+                breadcrumb:                     '%name%'
                 data:
                     title:                      Informations
                     create:                     Création
@@ -911,9 +911,9 @@ gallery:
                         options:                Options
 
             detail:
-                title:                          %name%
+                title:                          '%name%'
                 link:                           Détail
-                breadcrumb:                     %name%
+                breadcrumb:                     '%name%'
                 data:
                     title:                      Informations
                     id:                         ID
@@ -1050,9 +1050,9 @@ gallery:
                         text:                   La modification d'un album nécessite la validation d'un modérateur pour être affichée.
 
             detail:
-                title:                          %name%
+                title:                          '%name%'
                 link:                           Détail
-                breadcrumb:                     %name%
+                breadcrumb:                     '%name%'
                 data:
                     title:                      Informations
                     create:                     Création

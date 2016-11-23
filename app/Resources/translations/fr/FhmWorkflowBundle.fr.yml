@@ -90,9 +90,9 @@ workflow:
                     options:                    Options
 
         detail:
-            title:                              %name%
+            title:                              '%name%'
             link:                               Détail
-            breadcrumb:                         %name%
+            breadcrumb:                         '%name%'
             data:
                 title:                          Informations
                 id:                             ID
@@ -208,9 +208,9 @@ workflow:
                     text:                       La modification d'un workflow nécessite la validation d'un modérateur.
 
         detail:
-            title:                              %name%
+            title:                              '%name%'
             link:                               Détail
-            breadcrumb:                         %name%
+            breadcrumb:                         '%name%'
             data:
                 title:                          Informations
                 create:                         Création
@@ -361,9 +361,9 @@ workflow:
                         options:                Options
 
             detail:
-                title:                          %name%
+                title:                          '%name%'
                 link:                           Détail
-                breadcrumb:                     %name%
+                breadcrumb:                     '%name%'
                 data:
                     title:                      Informations
                     id:                         ID
@@ -479,9 +479,9 @@ workflow:
                         text:                   La modification d'une étape nécessite la validation d'un modérateur.
 
             detail:
-                title:                          %name%
+                title:                          '%name%'
                 link:                           Détail
-                breadcrumb:                     %name%
+                breadcrumb:                     '%name%'
                 data:
                     title:                      Informations
                     create:                     Création
@@ -610,9 +610,9 @@ workflow:
                         tasks:                  Tâches rattachées
 
             detail:
-                title:                          %name%
+                title:                          '%name%'
                 link:                           Détail
-                breadcrumb:                     %name%
+                breadcrumb:                     '%name%'
                 data:
                     title:                      Informations
                     id:                         ID
@@ -728,9 +728,9 @@ workflow:
                         text:                   La modification d'une tâche nécessite la validation d'un modérateur.
 
             detail:
-                title:                          %name%
+                title:                          '%name%'
                 link:                           Détail
-                breadcrumb:                     %name%
+                breadcrumb:                     '%name%'
                 data:
                     title:                      Informations
                     create:                     Création
@@ -882,9 +882,9 @@ workflow:
                         tasks:                  Tâches rattachées
 
             detail:
-                title:                          %name%
+                title:                          '%name%'
                 link:                           Détail
-                breadcrumb:                     %name%
+                breadcrumb:                     '%name%'
                 data:
                     title:                      Informations
                     id:                         ID
@@ -1000,9 +1000,9 @@ workflow:
                         text:                   La modification d'une action nécessite la validation d'un modérateur.
 
             detail:
-                title:                          %name%
+                title:                          '%name%'
                 link:                           Détail
-                breadcrumb:                     %name%
+                breadcrumb:                     '%name%'
                 data:
                     title:                      Informations
                     create:                     Création
@@ -1132,9 +1132,9 @@ workflow:
                         options:                Options
 
             detail:
-                title:                          %name%
+                title:                          '%name%'
                 link:                           Détail
-                breadcrumb:                     %name%
+                breadcrumb:                     '%name%'
                 data:
                     title:                      Informations
                     id:                         ID
@@ -1250,9 +1250,9 @@ workflow:
                         text:                   La modification d'un log nécessite la validation d'un modérateur.
 
             detail:
-                title:                          %name%
+                title:                          '%name%'
                 link:                           Détail
-                breadcrumb:                     %name%
+                breadcrumb:                     '%name%'
                 data:
                     title:                      Informations
                     create:                     Création
@@ -1291,7 +1291,7 @@ workflow:
 
         text:
             status:                             Changement de statut ':' %before% > %after%
-            media:                              Ajout d'un nouveau fichier ':' %name%
+            media:                              Ajout d'un nouveau fichier ':' '%name%'
             filter:                             Filtrer ':'
 
     comment:
@@ -1376,9 +1376,9 @@ workflow:
                         options:                Options
 
             detail:
-                title:                          %name%
+                title:                          '%name%'
                 link:                           Détail
-                breadcrumb:                     %name%
+                breadcrumb:                     '%name%'
                 data:
                     title:                      Informations
                     id:                         ID
@@ -1494,9 +1494,9 @@ workflow:
                         text:                   La modification d'un commentaire nécessite la validation d'un modérateur.
 
             detail:
-                title:                          %name%
+                title:                          '%name%'
                 link:                           Détail
-                breadcrumb:                     %name%
+                breadcrumb:                     '%name%'
                 data:
                     title:                      Informations
                     create:                     Création

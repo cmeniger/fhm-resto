@@ -128,9 +128,9 @@ site:
                     notice:                     Mentions légales
 
         detail:
-            title:                              %name%
+            title:                              '%name%'
             link:                               Détail
-            breadcrumb:                         %name%
+            breadcrumb:                         '%name%'
             data:
                 title:                          Informations
                 id:                             ID
@@ -266,9 +266,9 @@ site:
                     text:                       La modification d'un site nécessite la validation d'un modérateur pour être affiché.
 
         detail:
-            title:                              %name%
+            title:                              '%name%'
             link:                               Détail
-            breadcrumb:                         %name%
+            breadcrumb:                         '%name%'
             data:
                 title:                          Informations
                 create:                         Création
@@ -295,7 +295,7 @@ site:
 
     grouping:
         name:                                   Site(s)
-        add:                                    Ajouter au site "%name%"
+        add:                                    Ajouter au site "'%name%'"
         title:                                  Gestion des sites
         list1:                                  Disponibles
         list2:                                  Sélectionnés

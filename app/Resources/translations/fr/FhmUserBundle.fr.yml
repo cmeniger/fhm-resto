@@ -87,7 +87,7 @@ user:
                     options:                    Options
 
         update:
-            title:                              %name%
+            title:                              '%name%'
             link:                               Modifier
             breadcrumb:                         Modifier
             flash:
@@ -144,9 +144,9 @@ user:
                     options:                    Options
 
         detail:
-            title:                              %name%
+            title:                              '%name%'
             link:                               Détail
-            breadcrumb:                         %name%
+            breadcrumb:                         '%name%'
             data:
                 title:                          Informations
                 id:                             ID

@@ -84,7 +84,7 @@ contact:
                     options:                    Options
 
         update:
-            title:                              %name%
+            title:                              '%name%'
             link:                               Modifier
             breadcrumb:                         Modifier
             flash:
@@ -133,9 +133,9 @@ contact:
                     options:                    Options
 
         detail:
-            title:                              %name%
+            title:                              '%name%'
             link:                               Détail
-            breadcrumb:                         %name%
+            breadcrumb:                         '%name%'
             data:
                 title:                          Informations
                 id:                             ID
@@ -220,7 +220,7 @@ contact:
         detail:
             title:                              Contact
             link:                               Détail
-            breadcrumb:                         %name%
+            breadcrumb:                         '%name%'
 
         form:
             firstname:                          Prénom
@@ -283,9 +283,9 @@ contact:
                         undelete:               Confirmer le déblocage du message ?
 
             detail:
-                title:                          %name%
+                title:                          '%name%'
                 link:                           Détail
-                breadcrumb:                     %name%
+                breadcrumb:                     '%name%'
                 data:
                     title:                      Informations
                     id:                         ID
