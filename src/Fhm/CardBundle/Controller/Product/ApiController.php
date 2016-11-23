@@ -4,6 +4,7 @@ namespace Fhm\CardBundle\Controller\Product;
 use Doctrine\Common\Collections\ArrayCollection;
 use Fhm\FhmBundle\Controller\RefApiController as FhmController;
 use Fhm\CardBundle\Document\CardProduct;
+use Fhm\FhmBundle\Services\Tools;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -12,15 +13,17 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 /**
- * @Route("/api/cardproduct")
+ * @Route("/api/cardproduct", service="fhm_card_controller_product_api")
  */
 class ApiController extends FhmController
 {
     /**
-     * Constructor
+     * ApiController constructor.
+     * @param Tools $tools
      */
-    public function __construct()
+    public function __construct(Tools $tools)
     {
+        $this->setFhmTools($tools);
         parent::__construct('Fhm', 'Card', 'card_product', 'CardProduct');
         $this->form->type->create = 'Fhm\\CardBundle\\Form\\Type\\Api\\Product\\CreateType';
         $this->form->type->update = 'Fhm\\CardBundle\\Form\\Type\\Api\\Product\\UpdateType';
@@ -90,9 +93,9 @@ class ApiController extends FhmController
      */
     public function embedAction(Request $request, $idCard, $idCategory, $template)
     {
-        $card     = $this->dmRepository('FhmCardBundle:Card')->find($idCard);
-        $category = $this->dmRepository('FhmCardBundle:CardCategory')->find($idCategory);
-        $instance = $this->instanceData();
+        $card     = $this->fhm_tools->dmRepository('FhmCardBundle:Card')->find($idCard);
+        $category = $this->fhm_tools->dmRepository('FhmCardBundle:CardCategory')->find($idCategory);
+        $instance = $this->fhm_tools->instanceData();
         // ERROR - unknown
         if($card == "")
         {
@@ -109,7 +112,7 @@ class ApiController extends FhmController
                 array(
                     "card"     => $card,
                     "category" => $category,
-                    "products" => $this->dmRepository()->getByCategory($card, $category, $instance->grouping->filtered),
+                    "products" => $this->fhm_tools->dmRepository()->getByCategory($card, $category, $instance->grouping->filtered),
                     "instance" => $instance,
                 )
             )
@@ -126,10 +129,10 @@ class ApiController extends FhmController
      */
     public function editorAction(Request $request, $id)
     {
-        $card     = $this->dmRepository('FhmCardBundle:Card')->find($id);
-        $instance = $this->instanceData($card);
+        $card     = $this->fhm_tools->dmRepository('FhmCardBundle:Card')->find($id);
+        $instance = $this->fhm_tools->instanceData($card);
         $this->_authorized($card);
-        $categories = $this->dmRepository('FhmCardBundle:CardCategory')->getByCardAll($card, $instance->grouping->filtered);
+        $categories = $this->fhm_tools->dmRepository('FhmCardBundle:CardCategory')->getByCardAll($card, $instance->grouping->filtered);
         $trees      = $this->_tree($card, $categories, $instance);
 
         return new Response(
@@ -137,7 +140,7 @@ class ApiController extends FhmController
                 "::FhmCard/Template/Editor/product.html.twig",
                 array(
                     "card"     => $card,
-                    "products" => $this->dmRepository()->setSort('alias')->getByCardAll($card, $instance->grouping->filtered),
+                    "products" => $this->fhm_tools->dmRepository()->setSort('alias')->getByCardAll($card, $instance->grouping->filtered),
                     "trees"    => $trees,
                     "instance" => $instance,
                 )
@@ -155,8 +158,8 @@ class ApiController extends FhmController
      */
     public function searchAction(Request $request, $id)
     {
-        $card     = $this->dmRepository('FhmCardBundle:Card')->find($id);
-        $instance = $this->instanceData($card);
+        $card     = $this->fhm_tools->dmRepository('FhmCardBundle:Card')->find($id);
+        $instance = $this->fhm_tools->instanceData($card);
         $this->_authorized($card);
 
         return new Response(
@@ -164,7 +167,7 @@ class ApiController extends FhmController
                 "::FhmCard/Template/Editor/product.search.html.twig",
                 array(
                     "card"     => $card,
-                    "products" => $this->dmRepository()->setSort('alias')->getByCardSearch($card, $request->get('search'), $instance->grouping->filtered),
+                    "products" => $this->fhm_tools->dmRepository()->setSort('alias')->getByCardSearch($card, $request->get('search'), $instance->grouping->filtered),
                     "instance" => $instance,
                 )
             )
@@ -181,17 +184,17 @@ class ApiController extends FhmController
      */
     public function sortAction(Request $request, $idCard, $idCategory)
     {
-        $card     = $this->dmRepository('FhmCardBundle:Card')->find($idCard);
-        $category = $this->dmRepository('FhmCardBundle:CardCategory')->find($idCategory);
-        $instance = $this->instanceData();
+        $card     = $this->fhm_tools->dmRepository('FhmCardBundle:Card')->find($idCard);
+        $category = $this->fhm_tools->dmRepository('FhmCardBundle:CardCategory')->find($idCategory);
+        $instance = $this->fhm_tools->instanceData();
         $this->_authorized($card);
         $list  = json_decode($request->get('list'));
         $order = 1;
         foreach($list as $obj)
         {
-            $document = $this->dmRepository()->find($obj->id);
+            $document = $this->fhm_tools->dmRepository()->find($obj->id);
             $document->setOrder($order);
-            $this->dmPersist($document);
+            $this->fhm_tools->dmPersist($document);
             $order++;
         }
 
@@ -210,9 +213,9 @@ class ApiController extends FhmController
      */
     public function createAction(Request $request, $idCard, $idCategory)
     {
-        $card     = $this->dmRepository('FhmCardBundle:Card')->find($idCard);
-        $category = $this->dmRepository('FhmCardBundle:CardCategory')->find($idCategory);
-        $instance = $this->instanceData();
+        $card     = $this->fhm_tools->dmRepository('FhmCardBundle:Card')->find($idCard);
+        $category = $this->fhm_tools->dmRepository('FhmCardBundle:CardCategory')->find($idCategory);
+        $instance = $this->fhm_tools->instanceData();
         $this->_authorized($card);
         $document = $this->document;
         if($category)
@@ -231,7 +234,7 @@ class ApiController extends FhmController
             $document->setUserCreate($this->getUser());
             $document->setAlias($this->getAlias($document->getId(), $document->getName()));
             $document->setCard($card);
-            $this->dmPersist($document);
+            $this->fhm_tools->dmPersist($document);
 
             return $this->_refresh($card, $instance);
         }
@@ -255,9 +258,9 @@ class ApiController extends FhmController
      */
     public function updateAction(Request $request, $idCard, $idProduct)
     {
-        $card     = $this->dmRepository('FhmCardBundle:Card')->find($idCard);
-        $document = $this->dmRepository()->find($idProduct);
-        $instance = $this->instanceData();
+        $card     = $this->fhm_tools->dmRepository('FhmCardBundle:Card')->find($idCard);
+        $document = $this->fhm_tools->dmRepository()->find($idProduct);
+        $instance = $this->fhm_tools->instanceData();
         $this->_authorized($card);
         if($document == "")
         {
@@ -274,7 +277,7 @@ class ApiController extends FhmController
             // Persist
             $document->setUserUpdate($this->getUser());
             $document->setAlias($this->getAlias($document->getId(), $document->getName()));
-            $this->dmPersist($document);
+            $this->fhm_tools->dmPersist($document);
 
             return $this->_refresh($card, $instance);
         }
@@ -297,9 +300,9 @@ class ApiController extends FhmController
      */
     public function activateAction(Request $request, $idCard, $idProduct)
     {
-        $card     = $this->dmRepository('FhmCardBundle:Card')->find($idCard);
-        $document = $this->dmRepository()->find($idProduct);
-        $instance = $this->instanceData();
+        $card     = $this->fhm_tools->dmRepository('FhmCardBundle:Card')->find($idCard);
+        $document = $this->fhm_tools->dmRepository()->find($idProduct);
+        $instance = $this->fhm_tools->instanceData();
         $this->_authorized($card);
         if($document == "")
         {
@@ -307,7 +310,7 @@ class ApiController extends FhmController
         }
         $document->setUserUpdate($this->getUser());
         $document->setActive(true);
-        $this->dmPersist($document);
+        $this->fhm_tools->dmPersist($document);
 
         return $this->_refresh($card, $instance);
     }
@@ -322,9 +325,9 @@ class ApiController extends FhmController
      */
     public function deactivateAction(Request $request, $idCard, $idProduct)
     {
-        $card     = $this->dmRepository('FhmCardBundle:Card')->find($idCard);
-        $document = $this->dmRepository()->find($idProduct);
-        $instance = $this->instanceData();
+        $card     = $this->fhm_tools->dmRepository('FhmCardBundle:Card')->find($idCard);
+        $document = $this->fhm_tools->dmRepository()->find($idProduct);
+        $instance = $this->fhm_tools->instanceData();
         $this->_authorized($card);
         if($document == "")
         {
@@ -332,7 +335,7 @@ class ApiController extends FhmController
         }
         $document->setUserUpdate($this->getUser());
         $document->setActive(false);
-        $this->dmPersist($document);
+        $this->fhm_tools->dmPersist($document);
 
         return $this->_refresh($card, $instance);
     }
@@ -347,9 +350,9 @@ class ApiController extends FhmController
      */
     public function deleteAction(Request $request, $idCard, $idProduct)
     {
-        $card     = $this->dmRepository('FhmCardBundle:Card')->find($idCard);
-        $document = $this->dmRepository()->find($idProduct);
-        $instance = $this->instanceData();
+        $card     = $this->fhm_tools->dmRepository('FhmCardBundle:Card')->find($idCard);
+        $document = $this->fhm_tools->dmRepository()->find($idProduct);
+        $instance = $this->fhm_tools->instanceData();
         $this->_authorized($card);
         if($document == "")
         {
@@ -358,13 +361,13 @@ class ApiController extends FhmController
         // Delete
         if($document->getDelete())
         {
-            $this->dmRemove($document);
+            $this->fhm_tools->dmRemove($document);
         }
         else
         {
             $document->setUserUpdate($this->getUser());
             $document->setDelete(true);
-            $this->dmPersist($document);
+            $this->fhm_tools->dmPersist($document);
         }
 
         return $this->_refresh($card, $instance);
@@ -380,9 +383,9 @@ class ApiController extends FhmController
      */
     public function undeleteAction(Request $request, $idCard, $idProduct)
     {
-        $card     = $this->dmRepository('FhmCardBundle:Card')->find($idCard);
-        $document = $this->dmRepository()->find($idProduct);
-        $instance = $this->instanceData();
+        $card     = $this->fhm_tools->dmRepository('FhmCardBundle:Card')->find($idCard);
+        $document = $this->fhm_tools->dmRepository()->find($idProduct);
+        $instance = $this->fhm_tools->instanceData();
         $this->_authorized($card);
         if($document == "")
         {
@@ -391,7 +394,7 @@ class ApiController extends FhmController
         // Undelete
         $document->setUserUpdate($this->getUser());
         $document->setDelete(false);
-        $this->dmPersist($document);
+        $this->fhm_tools->dmPersist($document);
 
         return $this->_refresh($card, $instance);
     }
@@ -413,10 +416,10 @@ class ApiController extends FhmController
             if(!$use->contains($category))
             {
                 $use->add($category);
-                $sons   = $this->dmRepository('FhmCardBundle:CardCategory')->getSonsAll($card, $category, $instance->grouping->filtered);
+                $sons   = $this->fhm_tools->dmRepository('FhmCardBundle:CardCategory')->getSonsAll($card, $category, $instance->grouping->filtered);
                 $tree[] = array(
                     'category' => $category,
-                    'products' => $this->dmRepository()->getByCategoryAll($card, $category, $instance->grouping->filtered),
+                    'products' => $this->fhm_tools->dmRepository()->getByCategoryAll($card, $category, $instance->grouping->filtered),
                 );
                 if($sons)
                 {
@@ -437,7 +440,7 @@ class ApiController extends FhmController
      */
     private function _refresh($card, $instance)
     {
-        $categories = $this->dmRepository('FhmCardBundle:CardCategory')->getByCardAll($card, $instance->grouping->filtered);
+        $categories = $this->fhm_tools->dmRepository('FhmCardBundle:CardCategory')->getByCardAll($card, $instance->grouping->filtered);
         $trees      = $this->_tree($card, $categories, $instance);
         $response   = new JsonResponse();
         $response->setData(array(
@@ -446,7 +449,7 @@ class ApiController extends FhmController
                 "::FhmCard/Template/Editor/product.html.twig",
                 array(
                     "card"     => $card,
-                    "products" => $this->dmRepository()->setSort('alias')->getByCardAll($card, $instance->grouping->filtered),
+                    "products" => $this->fhm_tools->dmRepository()->setSort('alias')->getByCardAll($card, $instance->grouping->filtered),
                     "trees"    => $trees,
                     "instance" => $instance,
                 ))

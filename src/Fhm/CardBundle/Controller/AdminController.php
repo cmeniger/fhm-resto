@@ -6,22 +6,25 @@ use Fhm\CardBundle\Document\CardCategory;
 use Fhm\FhmBundle\Controller\RefAdminController as FhmController;
 use Fhm\CardBundle\Controller\Category\ApiController as ApiCategory;
 use Fhm\CardBundle\Document\Card;
+use Fhm\FhmBundle\Services\Tools;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\Serializer\Tests\Fixtures\ToBeProxyfiedDummy;
 
 /**
- * @Route("/admin/card")
+ * @Route("/admin/card", service="fhm_card_controller_admin")
  */
 class AdminController extends FhmController
 {
     /**
      * Constructor
      */
-    public function __construct()
+    public function __construct(Tools $tools)
     {
+        $this->setFhmTools($tools);
         parent::__construct('Fhm', 'Card', 'card');
     }
 

@@ -9,6 +9,10 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 
+/**
+ * Class Tools
+ * @package Fhm\FhmBundle\Services
+ */
 class Tools implements ContainerAwareInterface
 {
     use ContainerAwareTrait;

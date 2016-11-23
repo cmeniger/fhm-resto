@@ -3,6 +3,7 @@ namespace Fhm\CardBundle\Controller\Ingredient;
 
 use Fhm\FhmBundle\Controller\RefAdminController as FhmController;
 use Fhm\CardBundle\Document\CardIngredient;
+use Fhm\FhmBundle\Services\Tools;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
@@ -10,15 +11,16 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 /**
- * @Route("/admin/cardingredient")
+ * @Route("/admin/cardingredient", service="fhm_card_controller_ingredient_admin")
  */
 class AdminController extends FhmController
 {
     /**
      * Constructor
      */
-    public function __construct()
+    public function __construct(Tools $tools)
     {
+        $this->setFhmTools($tools);
         parent::__construct('Fhm', 'Card', 'card_ingredient', 'CardIngredient');
         $this->form->type->create = 'Fhm\\CardBundle\\Form\\Type\\Admin\\Ingredient\\CreateType';
         $this->form->type->update = 'Fhm\\CardBundle\\Form\\Type\\Admin\\Ingredient\\UpdateType';

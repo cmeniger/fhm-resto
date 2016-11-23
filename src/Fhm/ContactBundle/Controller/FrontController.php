@@ -47,7 +47,7 @@ class FrontController extends FhmController
         // Ajax pagination request
         if(isset($dataPagination['pagination']))
         {
-            $documents = $this->fhm_tools->dmRepository()->getFrontIndex($dataSearch['search'], $dataPagination['pagination'], $this->fhm_tools->getParameter(array('pagination', 'front', 'page'), 'fhm_fhm'), $instance->grouping->current);
+            $documents = $this->fhm_tools->dmRepository()->getFrontIndex($dataSearch['search'], $dataPagination['pagination'], $this->fhm_tools->getParameters(array('pagination', 'front', 'page'), 'fhm_fhm'), $instance->grouping->current);
 
             return array(
                 'documents'  => $documents,
@@ -58,7 +58,7 @@ class FrontController extends FhmController
         // Router request
         else
         {
-            $documents = $this->fhm_tools->dmRepository()->getFrontIndex($dataSearch['search'], 1, $this->fhm_tools->getParameter(array('pagination', 'front', 'page'), 'fhm_fhm'), $instance->grouping->current);
+            $documents = $this->fhm_tools->dmRepository()->getFrontIndex($dataSearch['search'], 1, $this->fhm_tools->getParameters(array('pagination', 'front', 'page'), 'fhm_fhm'), $instance->grouping->current);
 
             return array(
                 'documents'   => $documents,
@@ -107,7 +107,7 @@ class FrontController extends FhmController
         // For activate this route, delete next line
         throw $this->createNotFoundException($this->fhm_tools->trans('fhm.error.route', array(), 'FhmFhmBundle'));
 
-        return parent::createAction($request);
+        //return parent::createAction($request);
     }
 
     /**
@@ -124,7 +124,7 @@ class FrontController extends FhmController
         // For activate this route, delete next line
         throw $this->createNotFoundException($this->fhm_tools->trans('fhm.error.route', array(), 'FhmFhmBundle'));
 
-        return parent::updateAction($request, $id);
+       // return parent::updateAction($request, $id);
     }
 
     /**
@@ -140,7 +140,7 @@ class FrontController extends FhmController
         // For activate this route, delete next line
         throw $this->createNotFoundException($this->fhm_tools->trans('fhm.error.route', array(), 'FhmFhmBundle'));
 
-        return parent::deleteAction($id);
+       // return parent::deleteAction($id);
     }
 
     /**
