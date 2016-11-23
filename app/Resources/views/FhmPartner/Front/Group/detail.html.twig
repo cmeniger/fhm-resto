@@ -15,7 +15,7 @@
             </ul>
         </div>
         {# Search #}
-        <form action="{{ path('fhm_partner_group_lite',{id:document.getAlias()}) }}" method="POST" {{ form_enctype(form) }} >
+        <form action="{{ path('fhm_partner_group_lite',{id:document.getAlias()}) }}" method="POST" {{ form_start(form) }} >
             <div class="row collapse">
                 <div class="small-6 columns">
                     {{ form_widget(form.search) }}

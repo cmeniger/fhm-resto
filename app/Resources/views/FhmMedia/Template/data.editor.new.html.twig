@@ -4,7 +4,7 @@
         <a href="#" class="button success" media-selector="">{{ (instance.translation ~ '.admin.index.form.selector')|trans }}</a>
     </div>
     <div class="content">
-        <form action="{{ path('fhm_api_media_data_editor_new') }}" method="POST" class="dropzone" id="media-dropzone-{{ selector['id'] }}" {{ form_enctype(form) }}>
+        <form action="{{ path('fhm_api_media_data_editor_new') }}" method="POST" class="dropzone" id="media-dropzone-{{ selector['id'] }}" {{ form_start(form) }}>
             {% if form.vars.errors|length > 0 %}
                 <div class="form-bloc form-error">
                     <div class="row">

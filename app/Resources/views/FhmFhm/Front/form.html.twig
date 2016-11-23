@@ -11,7 +11,7 @@
     {# Form #}
     {% block content_data %}
         {% block content_data_form %}
-            <form action="{{ path(instance.route) }}" method="POST" {{ form_enctype(form) }} >
+            <form action="{{ path(instance.route) }}" method="POST" {{ form_start(form) }} >
         {% endblock %}
         {% block content_data_fields_data %}{% endblock %}
         {% block content_data_rest %}

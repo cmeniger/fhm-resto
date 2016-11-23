@@ -14,7 +14,7 @@
 {% endblock form_errors %}
 
 <div class="form form-create">
-    <form action="{{ path('fhm_api_newsletter_embed') }}" method="POST" {{ form_enctype(form) }} data-type="ajax" data-content="#content-newsletter">
+    <form action="{{ path('fhm_api_newsletter_embed') }}" method="POST" {{ form_start(form) }} data-type="ajax" data-content="#content-newsletter">
         <div class="form-bloc form-fields">
             <div class="row collapse" id="content-newsletter">
                 {% if process %}
