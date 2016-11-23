@@ -1,7 +1,7 @@
 services:
     fhm_grouping_site:
         class: Fhm\SiteBundle\Services\Grouping
-        arguments: ["@fhm_tools", "@twig"]
+        arguments: ["@fhm_tools"]
 
     fhm_site_controller_admin:
         class: Fhm\SiteBundle\Controller\AdminController
