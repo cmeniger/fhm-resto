@@ -8,7 +8,7 @@
         <li><a href="#" id="tab-preview" data-url="{{ path('fhm_api_card_editor_preview',{id:document.getId()}) }}">{{ ('card.api.tabs.preview')|trans }}</a></li>
     </ul>
     <div class="editor-content" id="editor-content">
-        {% render(path('fhm_api_card_category_editor',{id:document.getId()})) %}
+        {{ render(path('fhm_api_card_category_editor',{id:document.getId()})) }}
     </div>
 </div>
 

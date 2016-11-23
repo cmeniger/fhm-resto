@@ -22,7 +22,7 @@
     <div id="content_data">
         <div class="row gutter-margin-top">
             <div class="column">
-                {% render(path('fhm_api_card_embed', {id:document.getId(), template:'tabs'})) %}
+                {{ render(path('fhm_api_card_embed', {id:document.getId(), template:'tabs'})) }}
             </div>
         </div>
     </div>

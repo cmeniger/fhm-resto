@@ -34,7 +34,7 @@
         {% endif %}
         <div class="separator"><span>{{ 'workflow.modal.comments'|trans }}</span></div>
         {% if document.getComments()|length > 0 %}
-            {% render(path('fhm_api_workflow_comment_task',{id:document.getId()})) %}
+            {{ render(path('fhm_api_workflow_comment_task',{id:document.getId()})) }}
         {% else %}
             <div class="nodata">{{ 'workflow.modal.nodata'|trans }}</div>
         {% endif %}

@@ -11,7 +11,7 @@
     {% if documents %}
         {% for document in documents %}
             <div class="item {{ document.getNew() ? 'new' : '' }}">
-                {% render(path('fhm_api_notification_detail', {id:document.getId()})) %}
+                {{ render(path('fhm_api_notification_detail', {id:document.getId()})) }}
             </div>
         {% endfor %}
     {% else %}

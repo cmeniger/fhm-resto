@@ -78,7 +78,7 @@
                 </div>
                 <div class="column medium-6 contact-form-fields" data-id="{{ document.getId() }}">
                     {% if document.getForm() %}
-                        {% render(path('fhm_api_contact_form',{id:document.getId()})) %}
+                        {{ render(path('fhm_api_contact_form',{id:document.getId()})) }}
                     {% endif %}
                 </div>
             </div>
