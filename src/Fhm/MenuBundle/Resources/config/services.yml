@@ -4,3 +4,6 @@ services:
         tags:
              - { name: link.type, alias: link }
 
+    fhm_menu_controller_api:
+        class: Fhm\MenuBundle\Controller\ApiController
+        arguments: ["@fhm_tools"]
