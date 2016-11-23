@@ -54,8 +54,7 @@ class RefApiController extends Controller
     public function indexAction()
     {
         // ERROR - Unknown route
-        if(!$this->fhm_tools->routeExists($this->source . '_admin_' . $this->route))
-        {
+        if (!$this->fhm_tools->routeExists($this->source . '_admin_' . $this->route)) {
             throw $this->createNotFoundException($this->fhm_tools->trans('fhm.error.route', array(), 'FhmFhmBundle'));
         }
 
@@ -74,13 +73,26 @@ class RefApiController extends Controller
         $instance       = $this->fhm_tools->instanceData();
         $dataSearch     = $request->get('text');
         $dataPagination = $request->get('pagination');
-        $documents      = $this->fhm_tools->dmRepository()->getFrontIndex($dataSearch, $dataPagination, $this->fhm_tools->getParameter(array('autocomplete', 'page'), 'fhm_fhm'), $instance->grouping->current);
+        $documents      = $this->fhm_tools->dmRepository()->getFrontIndex(
+            $dataSearch,
+            $dataPagination,
+            $this->fhm_tools->getParameters(array('autocomplete', 'page'), 'fhm_fhm'),
+            $instance->grouping->current
+        );
 
         return array(
             'text'       => $dataSearch,
             'field'      => $request->get('field'),
             'documents'  => $documents,
-            'pagination' => $this->fhm_tools->setPagination($this->fhm_tools->getParameter(array('autocomplete', 'page'), 'fhm_fhm'), $this->fhm_tools->getParameter(array('autocomplete', 'left'), 'fhm_fhm'), $this->fhm_tools->getParameter(array('autocomplete', 'right'), 'fhm_fhm'))->getPagination($dataPagination, count($documents), $this->fhm_tools->dmRepository()->getFrontCount($dataSearch, $instance->grouping->current)),
+            'pagination' => $this->fhm_tools->setPagination(
+                $this->fhm_tools->getParameters(array('autocomplete', 'page'), 'fhm_fhm'),
+                $this->fhm_tools->getParameters(array('autocomplete', 'left'), 'fhm_fhm'),
+                $this->fhm_tools->getParameters(array('autocomplete', 'right'), 'fhm_fhm')
+            )->getPagination(
+                $dataPagination,
+                count($documents),
+                $this->fhm_tools->dmRepository()->getFrontCount($dataSearch, $instance->grouping->current)
+            ),
             'instance'   => $instance,
         );
     }
@@ -93,13 +105,13 @@ class RefApiController extends Controller
     public function historicAction(Request $request)
     {
         $class = $this->class . 'Historic';
-        if(!class_exists($class))
-        {
+        if (!class_exists($class)) {
             throw $this->createNotFoundException($this->fhm_tools->trans('fhm.error.route', array(), 'FhmFhmBundle'));
         }
 
         return array(
-            'document' => $this->fhm_tools->dmRepository($this->repository . 'Historic')->find($request->get('id')),
+            'document' => $this->fhm_tools->dmRepository($this->fhm_tools->repository . 'Historic')
+                ->find($request->get('id')),
             'instance' => $this->fhm_tools->instanceData()
         );
     }
@@ -113,11 +125,10 @@ class RefApiController extends Controller
     public function historicCopyAction(Request $request, $id)
     {
         $class = $this->class . 'Historic';
-        if(!class_exists($class))
-        {
+        if (!class_exists($class)) {
             throw $this->createNotFoundException($this->fhm_tools->trans('fhm.error.route', array(), 'FhmFhmBundle'));
         }
-        $historic = $this->fhm_tools->dmRepository($this->repository . 'Historic')->find($request->get('id'));
+        $historic = $this->fhm_tools->dmRepository($this->fhm_tools->repository.'Historic')->find($request->get('id'));
         $document = $historic->getHistoricParent();
         // Add
         $this->fhm_tools->historicAdd($document, true);

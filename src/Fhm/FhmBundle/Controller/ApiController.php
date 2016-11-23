@@ -37,7 +37,7 @@ class ApiController extends RefApiController
             $this->get('session')->set('_locale', $locale);
         }
 
-        if ($this->get('security.')->isGranted('ROLE_ADMIN')) {
+        if ($this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
             $this->get('session')->set('_localeAdmin', $locale);
         }
 

@@ -54,8 +54,7 @@ class RefFrontController extends Controller
     public function indexAction()
     {
         // ERROR - Unknown route
-        if(!$this->fhm_tools->routeExists($this->source . '_' . $this->route))
-        {
+        if (!$this->fhm_tools->routeExists($this->source . '_' . $this->route)) {
             throw $this->createNotFoundException($this->fhm_tools->trans('fhm.error.route', array(), 'FhmFhmBundle'));
         }
         $instance  = $this->fhm_tools->instanceData();
@@ -65,24 +64,48 @@ class RefFrontController extends Controller
         $dataSearch     = $form->getData();
         $dataPagination = $this->get('request')->get('FhmPagination');
         // Ajax pagination request
-        if(isset($dataPagination['pagination']))
-        {
-            $documents = $this->fhm_tools->dmRepository()->getFrontIndex($dataSearch['search'], $dataPagination['pagination'], $this->fhm_tools->getParameter(array('pagination', 'front', 'page'), 'fhm_fhm'), $instance->grouping->current);
+        if (isset($dataPagination['pagination'])) {
+            $documents = $this->fhm_tools->dmRepository()->getFrontIndex(
+                $dataSearch['search'],
+                $dataPagination['pagination'],
+                $this->fhm_tools->getParameters(array('pagination', 'front', 'page'), 'fhm_fhm'),
+                $instance->grouping->current
+            );
 
             return array(
                 'documents'  => $documents,
-                'pagination' => $this->fhm_tools->getPagination($dataPagination['pagination'], count($documents), $this->fhm_tools->dmRepository()->getFrontCount($dataSearch['search'], $instance->grouping->current), 'pagination', $this->fhm_tools->formRename($form->getName(), $dataSearch)),
+                'pagination' => $this->fhm_tools->getPagination(
+                    $dataPagination['pagination'],
+                    count($documents),
+                    $this->fhm_tools->dmRepository()->getFrontCount(
+                        $dataSearch['search'],
+                        $instance->grouping->current
+                    ),
+                    'pagination',
+                    $this->fhm_tools->formRename($form->getName(), $dataSearch)
+                ),
                 'instance'   => $instance,
             );
-        }
-        // Router request
-        else
-        {
-            $documents = $this->fhm_tools->dmRepository()->getFrontIndex($dataSearch['search'], 1, $this->fhm_tools->getParameter(array('pagination', 'front', 'page'), 'fhm_fhm'), $instance->grouping->current);
+        } else {
+            $documents = $this->fhm_tools->dmRepository()->getFrontIndex(
+                $dataSearch['search'],
+                1,
+                $this->fhm_tools->getParameters(array('pagination', 'front', 'page'), 'fhm_fhm'),
+                $instance->grouping->current
+            );
 
             return array(
                 'documents'   => $documents,
-                'pagination'  => $this->fhm_tools->getPagination(1, count($documents), $this->fhm_tools->dmRepository()->getFrontCount($dataSearch['search'], $instance->grouping->current), 'pagination', $this->fhm_tools->formRename($form->getName(), $dataSearch)),
+                'pagination'  => $this->fhm_tools->getPagination(
+                    1,
+                    count($documents),
+                    $this->fhm_tools->dmRepository()->getFrontCount(
+                        $dataSearch['search'],
+                        $instance->grouping->current
+                    ),
+                    'pagination',
+                    $this->fhm_tools->formRename($form->getName(), $dataSearch)
+                ),
                 'form'        => $form->createView(),
                 'instance'    => $instance,
                 'breadcrumbs' => array(
@@ -108,8 +131,9 @@ class RefFrontController extends Controller
     public function createAction(Request $request)
     {
         // ERROR - Unknown route
-        if(!$this->fhm_tools->routeExists($this->source . '_' . $this->route) || !$this->fhm_tools->routeExists($this->source . '_' . $this->route . '_create'))
-        {
+        if (!$this->fhm_tools->routeExists($this->source . '_' . $this->route) ||
+            !$this->fhm_tools->routeExists($this->source . '_' . $this->route . '_create')
+        ) {
             throw $this->createNotFoundException($this->fhm_tools->trans('fhm.error.route', array(), 'FhmFhmBundle'));
         }
         $document     = $this->document;
@@ -119,8 +143,7 @@ class RefFrontController extends Controller
         $form         = $this->createForm(new $classType($instance, $document), $document);
         $handler      = new $classHandler($form, $request);
         $process      = $handler->process();
-        if($process)
-        {
+        if ($process) {
             $data = $request->get($form->getName());
             // Persist
             $document->setUserCreate($this->getUser());
@@ -131,8 +154,17 @@ class RefFrontController extends Controller
             $this->get('session')->getFlashBag()->add('notice', $this->fhm_tools->trans('.front.create.flash.ok'));
             // Redirect
             $redirect = $this->redirect($this->fhm_tools->getUrl($this->source . '_' . $this->route));
-            $redirect = isset($data['submitDuplicate']) ? $this->redirect($this->fhm_tools->getUrl($this->source . '_' . $this->route . '_duplicate', array('id' => $document->getId()))) : $redirect;
-            $redirect = isset($data['submitNew']) ? $this->redirect($this->fhm_tools->getUrl($this->source . '_' . $this->route . '_create')) : $redirect;
+            $redirect = isset($data['submitDuplicate']) ?
+                $this->redirect(
+                    $this->fhm_tools->getUrl(
+                        $this->source . '_' . $this->route . '_duplicate',
+                        array('id' => $document->getId())
+                    )
+                ) :
+                $redirect;
+            $redirect = isset($data['submitNew']) ?
+                $this->redirect($this->fhm_tools->getUrl($this->source . '_' . $this->route . '_create')) :
+                $redirect;
 
             return $redirect;
         }
@@ -167,14 +199,14 @@ class RefFrontController extends Controller
     public function duplicateAction(Request $request, $id)
     {
         // ERROR - Unknown route
-        if(!$this->fhm_tools->routeExists($this->source . '_' . $this->route) || !$this->fhm_tools->routeExists($this->source . '_' . $this->route . '_duplicate'))
-        {
+        if (!$this->fhm_tools->routeExists($this->source . '_' . $this->route) ||
+            !$this->fhm_tools->routeExists($this->source . '_' . $this->route . '_duplicate')
+        ) {
             throw $this->createNotFoundException($this->fhm_tools->trans('fhm.error.route', array(), 'FhmFhmBundle'));
         }
         $document = $this->fhm_tools->dmRepository()->find($id);
         // ERROR - unknown
-        if($document == "")
-        {
+        if ($document == "") {
             throw $this->createNotFoundException($this->fhm_tools->trans('.error.unknown'));
         }
         $this->document = $document;
@@ -192,8 +224,9 @@ class RefFrontController extends Controller
     public function updateAction(Request $request, $id)
     {
         // ERROR - Unknown route
-        if(!$this->fhm_tools->routeExists($this->source . '_' . $this->route) || !$this->fhm_tools->routeExists($this->source . '_' . $this->route . '_update'))
-        {
+        if(!$this->fhm_tools->routeExists($this->source . '_' . $this->route) ||
+           !$this->fhm_tools->routeExists($this->source . '_' . $this->route . '_update')
+        ) {
             throw $this->createNotFoundException($this->fhm_tools->trans('fhm.error.route', array(), 'FhmFhmBundle'));
         }
         $document     = $this->fhm_tools->dmRepository()->find($id);
@@ -201,23 +234,19 @@ class RefFrontController extends Controller
         $classType    = $this->form->type->update;
         $classHandler = $this->form->handler->update;
         // ERROR - unknown
-        if($document == "")
-        {
+        if ($document == "") {
             throw $this->createNotFoundException($this->fhm_tools->trans('.error.unknown'));
         }
-        if(!$instance->user->admin && $instance->grouping->different)
-        {
+        if (!$instance->user->admin && $instance->grouping->different) {
             throw new HttpException(403, $this->fhm_tools->trans('.error.forbidden'));
         }
-        if(!$instance->user->super && $document->getDelete())
-        {
+        if (!$instance->user->super && $document->getDelete()) {
             throw new HttpException(403, $this->fhm_tools->trans('.error.forbidden'));
         }
         $form    = $this->createForm(new $classType($instance, $document), $document);
         $handler = new $classHandler($form, $request);
         $process = $handler->process($document, $this->fhm_tools->dm(), $this->bundle);
-        if($process)
-        {
+        if ($process) {
             // Persist
             $document->setUserUpdate($this->getUser());
             $document->setAlias($this->getAlias($document->getId(), $document->getName()));
@@ -227,8 +256,18 @@ class RefFrontController extends Controller
             $this->get('session')->getFlashBag()->add('notice', $this->fhm_tools->trans('.front.update.flash.ok'));
             // Redirect
             $redirect = $this->redirect($this->fhm_tools->getUrl($this->source . '_' . $this->route));
-            $redirect = isset($data['submitDuplicate']) ? $this->redirect($this->fhm_tools->getUrl($this->source . '_' . $this->route . '_duplicate', array('id' => $document->getId()))) : $redirect;
-            $redirect = isset($data['submitNew']) ? $this->redirect($this->fhm_tools->getUrl($this->source . '_' . $this->route . '_create')) : $redirect;
+            $redirect = isset($data['submitDuplicate']) ?
+                $this->redirect(
+                    $this->fhm_tools->getUrl(
+                        $this->source . '_' . $this->route . '_duplicate',
+                        array('id' => $document->getId())
+                    )
+                ) :
+                $redirect;
+
+            $redirect = isset($data['submitNew']) ?
+                $this->redirect($this->fhm_tools->getUrl($this->source . '_' . $this->route . '_create')) :
+                $redirect;
 
             return $redirect;
         }
@@ -247,11 +286,20 @@ class RefFrontController extends Controller
                     'text' => $this->fhm_tools->trans('.front.index.breadcrumb'),
                 ),
                 array(
-                    'link' => $this->fhm_tools->getUrl($this->source . '_' . $this->route . '_detail', array('id' => $id)),
-                    'text' => $this->fhm_tools->trans('.front.detail.breadcrumb', array('%name%' => $document->getName())),
+                    'link' => $this->fhm_tools->getUrl(
+                        $this->source . '_' . $this->route . '_detail',
+                        array('id' => $id)
+                    ),
+                    'text' => $this->fhm_tools->trans(
+                        '.front.detail.breadcrumb',
+                        array('%name%' => $document->getName())
+                    ),
                 ),
                 array(
-                    'link'    => $this->fhm_tools->getUrl($this->source . '_' . $this->route . '_update', array('id' => $id)),
+                    'link'    => $this->fhm_tools->getUrl(
+                        $this->source . '_' . $this->route . '_update',
+                        array('id' => $id)
+                    ),
                     'text'    => $this->fhm_tools->trans('.front.update.breadcrumb'),
                     'current' => true
                 )
@@ -267,8 +315,9 @@ class RefFrontController extends Controller
     public function detailAction($id)
     {
         // ERROR - Unknown route
-        if(!$this->fhm_tools->routeExists($this->source . '_' . $this->route) || !$this->fhm_tools->routeExists($this->source . '_' . $this->route . '_detail'))
-        {
+        if (!$this->fhm_tools->routeExists($this->source . '_' . $this->route) ||
+           !$this->fhm_tools->routeExists($this->source . '_' . $this->route . '_detail')
+        ) {
             throw $this->createNotFoundException($this->fhm_tools->trans('fhm.error.route', array(), 'FhmFhmBundle'));
         }
         $document = $this->fhm_tools->dmRepository()->getById($id);
@@ -276,19 +325,15 @@ class RefFrontController extends Controller
         $document = ($document) ? $document : $this->fhm_tools->dmRepository()->getByName($id);
         $instance = $this->fhm_tools->instanceData($document);
         // ERROR - unknown
-        if($document == "")
-        {
+        if ($document == "") {
             throw $this->createNotFoundException($this->fhm_tools->trans('.error.unknown'));
-        }
-        // ERROR - Forbidden
-        elseif(!$instance->user->admin && ($document->getDelete() || !$document->getActive()))
-        {
+        } elseif (!$instance->user->admin && ($document->getDelete() || !$document->getActive())) {
             throw new HttpException(403, $this->fhm_tools->trans('.error.forbidden'));
         }
         // Change grouping
-        if($instance->grouping->different && $document->getGrouping())
-        {
-            $this->get($this->fhm_tools->getParameter("grouping", "fhm_fhm"))->setGrouping($document->getFirstGrouping());
+        if ($instance->grouping->different && $document->getGrouping()) {
+            $this->get($this->fhm_tools->getParameters("grouping", "fhm_fhm"))
+                ->setGrouping($document->getFirstGrouping());
         }
 
         return array(
@@ -304,8 +349,14 @@ class RefFrontController extends Controller
                     'text' => $this->fhm_tools->trans('.front.index.breadcrumb'),
                 ),
                 array(
-                    'link'    => $this->fhm_tools->getUrl($this->source . '_' . $this->route . '_detail', array('id' => $id)),
-                    'text'    => $this->fhm_tools->trans('.front.detail.breadcrumb', array('%name%' => $document->getName())),
+                    'link'    => $this->fhm_tools->getUrl(
+                        $this->source . '_' . $this->route . '_detail',
+                        array('id' => $id)
+                    ),
+                    'text'    => $this->fhm_tools->trans(
+                        '.front.detail.breadcrumb',
+                        array('%name%' => $document->getName())
+                    ),
                     'current' => true
                 )
             )
@@ -320,20 +371,15 @@ class RefFrontController extends Controller
     public function deleteAction($id)
     {
         // ERROR - Unknown route
-        if(!$this->fhm_tools->routeExists($this->source . '_' . $this->route))
-        {
+        if (!$this->fhm_tools->routeExists($this->source . '_' . $this->route)) {
             throw $this->createNotFoundException($this->fhm_tools->trans('fhm.error.route', array(), 'FhmFhmBundle'));
         }
         $document = $this->fhm_tools->dmRepository()->find($id);
         $instance = $this->fhm_tools->instanceData($document);
         // ERROR - Unknown
-        if($document == "")
-        {
+        if ($document == "") {
             throw $this->createNotFoundException($this->fhm_tools->trans('.error.unknown'));
-        }
-        // ERROR - Forbidden
-        elseif(!$instance->user->admin)
-        {
+        } elseif (!$instance->user->admin) {
             throw new HttpException(403, $this->fhm_tools->trans('.error.forbidden'));
         }
         // Delete
