@@ -198,7 +198,7 @@ class CreateType extends FhmType
         $resolver->setDefaults(
             array(
                 'data_class' => null,
-                'translation_domain' => 'Site',
+                'translation_domain' => 'FhmSiteBundle',
                 'cascade_validation' => true,
             )
         );

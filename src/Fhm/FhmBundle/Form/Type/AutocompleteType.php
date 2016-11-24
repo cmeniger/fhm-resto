@@ -8,6 +8,10 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
+/**
+ * Class AutocompleteType
+ * @package Fhm\FhmBundle\Form\Type
+ */
 class AutocompleteType extends AbstractType
 {
     protected $container;
@@ -22,30 +26,32 @@ class AutocompleteType extends AbstractType
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
-            'choice_label'           => 'name',
-            'cascade_validation' => true,
-            'url'                => '',
-            'attr'               => array(
-                'placeholder' => $this->container->get('translator')->trans(
-                    'fhm.autocomplete.placeholder',
-                    array(),
-                    'FhmFhmBundle'
-                )
+        $resolver->setDefaults(
+            array(
+                'choice_label' => 'name',
+                'cascade_validation' => true,
+                'url' => '',
+                'attr' => array(
+                    'placeholder' => $this->container->get('translator')->trans(
+                        'fhm.autocomplete.placeholder',
+                        array(),
+                        'FhmFhmBundle'
+                    ),
+                ),
             )
-        ));
+        );
     }
 
     /**
-     * @param \Symfony\Component\Form\FormView      $view
+     * @param \Symfony\Component\Form\FormView $view
      * @param \Symfony\Component\Form\FormInterface $form
-     * @param array                                 $options
+     * @param array $options
      */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
         if (array_key_exists('url', $options)) {
-            $route             = is_array($options['url']) ? $options['url'][0] : $options['url'];
-            $parameters        = is_array($options['url']) ? $options['url'][1] : array();
+            $route = is_array($options['url']) ? $options['url'][0] : $options['url'];
+            $parameters = is_array($options['url']) ? $options['url'][1] : array();
             $view->vars['url'] = $this->container->get('router')->generate($route, $parameters);
         }
     }

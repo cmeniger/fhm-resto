@@ -8,20 +8,29 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/**
+ * Class ImportType
+ * @package Fhm\FhmBundle\Form\Type\Admin
+ */
 class ImportType extends AbstractType
 {
     protected $instance;
 
-    public function __construct($instance)
-    {
-        $this->instance = $instance;
-    }
-
+    /**
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $data = $builder->getData();
+        $this->instance = $data['instance'];
         $builder
-            ->add('file', FileType::class, array('label' => $this->instance->translation . '.admin.import.form.file'))
-            ->add('submit', SubmitType::class, array('label' => $this->instance->translation . '.admin.import.form.submit'));
+            ->add('file', FileType::class, array('label' => $this->instance->translation.'.admin.import.form.file'))
+            ->add(
+                'submit',
+                SubmitType::class,
+                array('label' => $this->instance->translation.'.admin.import.form.submit')
+            );
     }
 
     /**
@@ -32,15 +41,17 @@ class ImportType extends AbstractType
         return 'FhmImport';
     }
 
+    /**
+     * @param OptionsResolver $resolver
+     */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults
-            (
-                array(
-                    'data_class'         => null,
-                    'translation_domain' => $this->instance->domain,
-                    'cascade_validation' => true
-                )
-            );
+        $resolver->setDefaults(
+            array(
+                'data_class' => null,
+                'translation_domain' => $this->instance->domain,
+                'cascade_validation' => true,
+            )
+        );
     }
 }

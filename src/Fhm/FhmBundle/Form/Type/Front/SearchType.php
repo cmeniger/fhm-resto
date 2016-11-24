@@ -8,18 +8,29 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/**
+ * Class SearchType
+ * @package Fhm\FhmBundle\Form\Type\Front
+ */
 class SearchType extends AbstractType
 {
     protected $instance;
 
-    public function __construct($instance)
-    {
-        $this->instance = $instance;
-    }
-
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('search', TextType::class, array('required' => false, 'attr' => array('placeholder' => $this->instance->translation . '.front.index.form.search', 'data-type' => 'list')));
+        $data = $builder->getData();
+        $this->instance = $data['instance'];
+        $builder->add(
+            'search',
+            TextType::class,
+            array(
+                'required' => false,
+                'attr' => array(
+                    'placeholder' => $this->instance->translation.'.front.index.form.search',
+                    'data-type' => 'list',
+                ),
+            )
+        );
     }
 
     /**
@@ -30,13 +41,18 @@ class SearchType extends AbstractType
         return 'FhmSearch';
     }
 
+    /**
+     * @param OptionsResolver $resolver
+     */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
-            'data_class'         => null,
-            'translation_domain' => $this->instance->domain,
-            'cascade_validation' => true
-        ));
+        $resolver->setDefaults(
+            array(
+                'data_class' => null,
+                'translation_domain' => $this->instance->domain,
+                'cascade_validation' => true,
+            )
+        );
     }
 
 }

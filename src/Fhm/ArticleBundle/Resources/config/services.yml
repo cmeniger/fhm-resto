@@ -1,4 +1,12 @@
 services:
-    #    fhm_article.example:
-    #        class: Fhm\ArticleBundle\Example
-    #        arguments: [@service_id, "plain_value", %parameter%]
+    fhm_article_controller_admin:
+        class: Fhm\ArticleBundle\Controller\AdminController
+        arguments: ["@fhm_tools"]
+
+    fhm_article_controller_api:
+        class: Fhm\ArticleBundle\Controller\ApiController
+        arguments: ["@fhm_tools"]
+
+    fhm_article_controller_front:
+        class: Fhm\ArticleBundle\Controller\FrontController
+        arguments: ["@fhm_tools"]

@@ -59,7 +59,7 @@ class RefFrontController extends Controller
         }
         $instance  = $this->fhm_tools->instanceData();
         $classType = $this->form->type->search;
-        $form      = $this->createForm(new $classType($instance), null);
+        $form      = $this->createForm($classType, array('instance'=>$instance));
         $form->setData($this->get('request_stack')->get($form->getName()));
         $dataSearch     = $form->getData();
         $dataPagination = $this->get('request_stack')->get('FhmPagination');
@@ -140,7 +140,7 @@ class RefFrontController extends Controller
         $instance     = $this->fhm_tools->instanceData();
         $classType    = $this->form->type->create;
         $classHandler = $this->form->handler->create;
-        $form         = $this->createForm(new $classType($instance, $document), $document);
+        $form           = $this->createForm($classType, array('document'=>$document, 'instance'=>$instance));
         $handler      = new $classHandler($form, $request);
         $process      = $handler->process();
         if ($process) {
@@ -243,7 +243,8 @@ class RefFrontController extends Controller
         if (!$instance->user->super && $document->getDelete()) {
             throw new HttpException(403, $this->fhm_tools->trans('.error.forbidden'));
         }
-        $form    = $this->createForm(new $classType($instance, $document), $document);
+        $form    = $this->createForm($classType, array('document'=>$document, 'instance'=>$instance));
+
         $handler = new $classHandler($form, $request);
         $process = $handler->process($document, $this->fhm_tools->dm(), $this->bundle);
         if ($process) {
