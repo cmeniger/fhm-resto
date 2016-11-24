@@ -3,6 +3,7 @@ namespace Fhm\CardBundle\Form\Type\Api\Ingredient;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class UpdateType extends AbstractType
@@ -49,14 +50,16 @@ class UpdateType extends AbstractType
         return 'FhmUpdate';
     }
 
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    /**
+     * @param OptionsResolver $resolver
+     */
+    public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults
-        (
+        $resolver->setDefaults(
             array(
-                'data_class'         => $this->instance->class,
-                'translation_domain' => $this->instance->domain,
-                'cascade_validation' => true
+                'data_class' => null,
+                'translation_domain' => 'FhmCardBundle',
+                'cascade_validation' => true,
             )
         );
     }

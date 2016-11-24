@@ -9,6 +9,7 @@ use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class CreateType extends FhmType
 {
@@ -72,5 +73,19 @@ class CreateType extends FhmType
                 'by_reference'  => false,
                 'required'      => false
             ));
+    }
+
+    /**
+     * @param OptionsResolver $resolver
+     */
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults(
+            array(
+                'data_class' => null,
+                'translation_domain' => 'FhmCardBundle',
+                'cascade_validation' => true,
+            )
+        );
     }
 }

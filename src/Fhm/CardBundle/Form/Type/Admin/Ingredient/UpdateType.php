@@ -7,6 +7,7 @@ use Fhm\MediaBundle\Form\Type\MediaType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class UpdateType extends FhmType
 {
@@ -43,5 +44,19 @@ class UpdateType extends FhmType
                 'required'      => false,
                 'by_reference'  => false
             ));
+    }
+
+    /**
+     * @param OptionsResolver $resolver
+     */
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults(
+            array(
+                'data_class' => null,
+                'translation_domain' => 'FhmCardBundle',
+                'cascade_validation' => true,
+            )
+        );
     }
 }
