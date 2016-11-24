@@ -14,6 +14,9 @@ security:
             id:                             fhm_user.security.user_provider
 
     firewalls:
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
         main:
             pattern:                        ^/
             form_login:

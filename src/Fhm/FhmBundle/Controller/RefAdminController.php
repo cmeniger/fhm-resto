@@ -59,7 +59,8 @@ class RefAdminController extends Controller
         }
         $instance       = $this->fhm_tools->instanceData();
         $classType      = $this->form->type->search;
-        $form           = $this->createForm(new $classType($instance), null);
+        //$type, $data = null, array $options = array()
+        $form           = $this->createForm($classType, null, array('instance'=>$instance));
         $request        = $this->get('request');
         $dataSearch     = $request->get('FhmSearch');
         $dataPagination = $request->get('FhmPagination');
@@ -155,7 +156,7 @@ class RefAdminController extends Controller
         $instance     = $this->fhm_tools->instanceData();
         $classType    = $this->form->type->create;
         $classHandler = $this->form->handler->create;
-        $form         = $this->createForm(new $classType($instance, $document), $document);
+        $form         = $this->createForm($classType, $document, array('document'=>$document,'instance'=>$instance));
         $handler      = new $classHandler($form, $request);
         $process      = $handler->process();
         if ($process) {

@@ -47,9 +47,13 @@ class FhmEventListener implements ContainerAwareInterface
         $route       = $event->getRequest()->attributes->get('_route');
         $authorized  = false;
         $authorized  = in_array($route, $firewall) ? true : $authorized;
-        $authorized  = $this->container->get('security.authorization_checker')->isGranted('ROLE_ADMIN') ?
-            true :
-            $authorized;
+
+        if ($this->container->get('security.token_storage')->getToken()) {
+            $authorized  = $this->container->get('security.authorization_checker')->isGranted('ROLE_ADMIN') ?
+                true :
+                $authorized;
+        }
+
         $authorized  = in_array($this->container->get('kernel')->getEnvironment(), array('test', 'dev')) ?
             true :
             $authorized;

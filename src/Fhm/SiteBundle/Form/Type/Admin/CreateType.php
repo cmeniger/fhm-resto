@@ -1,99 +1,196 @@
 <?php
 namespace Fhm\SiteBundle\Form\Type\Admin;
 
+use Doctrine\Bundle\MongoDBBundle\Tests\Fixtures\Form\Document;
 use Fhm\FhmBundle\Form\Type\Admin\CreateType as FhmType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Fhm\MediaBundle\Form\Type\MediaType;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
+/**
+ * Class CreateType
+ * @package Fhm\SiteBundle\Form\Type\Admin
+ */
 class CreateType extends FhmType
 {
+    /**
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         parent::buildForm($builder, $options);
         $builder
-            ->add('title', 'text', array('label' => $this->instance->translation . '.admin.create.form.title', 'required' => false))
-            ->add('subtitle', 'text', array('label' => $this->instance->translation . '.admin.create.form.subtitle', 'required' => false))
-            ->add('legal_notice', 'text', array('label' => $this->instance->translation . '.admin.create.form.legalnotice', 'required' => false,'attr' => array('class' => 'editor')))
-            ->add('menu', 'document', array(
-                'label'         => $this->instance->translation . '.admin.create.form.menu',
-                'class'         => 'FhmMenuBundle:Menu',
-                'property'      => 'name',
-                'query_builder' => function (\Fhm\MenuBundle\Repository\MenuRepository $dr)
-                    {
+            ->add(
+                'title',
+                TextType::class,
+                array('label' => $this->instance->translation.'.admin.create.form.title', 'required' => false)
+            )
+            ->add(
+                'subtitle',
+                TextType::class,
+                array('label' => $this->instance->translation.'.admin.create.form.subtitle', 'required' => false)
+            )
+            ->add(
+                'legal_notice',
+                TextType::class,
+                array(
+                    'label' => $this->instance->translation.'.admin.create.form.legalnotice',
+                    'required' => false,
+                    'attr' => array('class' => 'editor'),
+                )
+            )
+            ->add(
+                'menu',
+                Document::class,
+                array(
+                    'label' => $this->instance->translation.'.admin.create.form.menu',
+                    'class' => 'FhmMenuBundle:Menu',
+                    'property' => 'name',
+                    'query_builder' => function (\Fhm\MenuBundle\Repository\MenuRepository $dr) {
                         return $dr->getFormEnable($this->instance->grouping->filtered);
                     },
-                'required'      => false
-            ))
-            ->add('news', 'document', array(
-                'label'         => $this->instance->translation . '.admin.create.form.news',
-                'class'         => 'FhmNewsBundle:NewsGroup',
-                'property'      => 'name',
-                'query_builder' => function (\Fhm\NewsBundle\Repository\NewsGroupRepository $dr)
-                    {
+                    'required' => false,
+                )
+            )
+            ->add(
+                'news',
+                Document::class,
+                array(
+                    'label' => $this->instance->translation.'.admin.create.form.news',
+                    'class' => 'FhmNewsBundle:NewsGroup',
+                    'property' => 'name',
+                    'query_builder' => function (\Fhm\NewsBundle\Repository\NewsGroupRepository $dr) {
                         return $dr->getFormEnable($this->instance->grouping->filtered);
                     },
-                'required'      => false
-            ))
-            ->add('partner', 'document', array(
-                'label'         => $this->instance->translation . '.admin.create.form.partner',
-                'class'         => 'FhmPartnerBundle:PartnerGroup',
-                'property'      => 'name',
-                'query_builder' => function (\Fhm\PartnerBundle\Repository\PartnerGroupRepository $dr)
-                    {
+                    'required' => false,
+                )
+            )
+            ->add(
+                'partner',
+                Document::class,
+                array(
+                    'label' => $this->instance->translation.'.admin.create.form.partner',
+                    'class' => 'FhmPartnerBundle:PartnerGroup',
+                    'property' => 'name',
+                    'query_builder' => function (\Fhm\PartnerBundle\Repository\PartnerGroupRepository $dr) {
                         return $dr->getFormEnable($this->instance->grouping->filtered);
                     },
-                'required'      => false
-            ))
-            ->add('slider', 'document', array(
-                'label'         => $this->instance->translation . '.admin.create.form.slider',
-                'class'         => 'FhmSliderBundle:Slider',
-                'property'      => 'name',
-                'query_builder' => function (\Fhm\SliderBundle\Repository\SliderRepository $dr)
-                    {
+                    'required' => false,
+                )
+            )
+            ->add(
+                'slider',
+                Document::class,
+                array(
+                    'label' => $this->instance->translation.'.admin.create.form.slider',
+                    'class' => 'FhmSliderBundle:Slider',
+                    'property' => 'name',
+                    'query_builder' => function (\Fhm\SliderBundle\Repository\SliderRepository $dr) {
                         return $dr->getFormEnable($this->instance->grouping->filtered);
                     },
-                'required'      => false
-            ))
-            ->add('gallery', 'document', array(
-                'label'         => $this->instance->translation . '.admin.create.form.gallery',
-                'class'         => 'FhmGalleryBundle:Gallery',
-                'property'      => 'name',
-                'query_builder' => function (\Fhm\GalleryBundle\Repository\GalleryRepository $dr)
-                    {
+                    'required' => false,
+                )
+            )
+            ->add(
+                'gallery',
+                Document::class,
+                array(
+                    'label' => $this->instance->translation.'.admin.create.form.gallery',
+                    'class' => 'FhmGalleryBundle:Gallery',
+                    'property' => 'name',
+                    'query_builder' => function (\Fhm\GalleryBundle\Repository\GalleryRepository $dr) {
                         return $dr->getFormEnable($this->instance->grouping->filtered);
                     },
-                'required'      => false
-            ))
-            ->add('background', 'media', array(
-                'label'    => $this->instance->translation . '.admin.create.form.background',
-                'filter'   => 'image/*',
-                'required' => false
-            ))
-            ->add('logo', 'media', array(
-                'label'    => $this->instance->translation . '.admin.create.form.logo',
-                'filter'   => 'image/*',
-                'required' => false
-            ))
-            ->add('contact', 'document', array(
-                'label'         => $this->instance->translation . '.admin.create.form.contact',
-                'class'         => 'FhmContactBundle:Contact',
-                'property'      => 'name',
-                'query_builder' => function (\Fhm\ContactBundle\Repository\ContactRepository $dr)
-                {
-                    return $dr->getFormEnable($this->instance->grouping->filtered);
-                },
-                'required'      => false
-            ))
-            ->add('social_facebook', 'text', array('label' => $this->instance->translation . '.admin.create.form.social.facebook', 'required' => false))
-            ->add('social_facebook_id', 'text', array('label' => $this->instance->translation . '.admin.create.form.social.facebookId', 'required' => false))
-            ->add('social_twitter', 'text', array('label' => $this->instance->translation . '.admin.create.form.social.twitter', 'required' => false))
-            ->add('social_twitter_id', 'text', array('label' => $this->instance->translation . '.admin.create.form.social.twitterId', 'required' => false))
-            ->add('social_google', 'text', array('label' => $this->instance->translation . '.admin.create.form.social.google', 'required' => false))
-            ->add('social_google_id', 'text', array('label' => $this->instance->translation . '.admin.create.form.social.googleId', 'required' => false))
-            ->add('social_instagram', 'text', array('label' => $this->instance->translation . '.admin.create.form.social.instagram', 'required' => false))
-            ->add('social_youtube', 'text', array('label' => $this->instance->translation . '.admin.create.form.social.youtube', 'required' => false))
-            ->add('social_flux', 'text', array('label' => $this->instance->translation . '.admin.create.form.social.flux', 'required' => false))
+                    'required' => false,
+                )
+            )
+            ->add(
+                'background',
+                MediaType::class,
+                array(
+                    'label' => $this->instance->translation.'.admin.create.form.background',
+                    'filter' => 'image/*',
+                    'required' => false,
+                )
+            )
+            ->add(
+                'logo',
+                MediaType::class,
+                array(
+                    'label' => $this->instance->translation.'.admin.create.form.logo',
+                    'filter' => 'image/*',
+                    'required' => false,
+                )
+            )
+            ->add(
+                'contact',
+                Document::class,
+                array(
+                    'label' => $this->instance->translation.'.admin.create.form.contact',
+                    'class' => 'FhmContactBundle:Contact',
+                    'property' => 'name',
+                    'query_builder' => function (\Fhm\ContactBundle\Repository\ContactRepository $dr) {
+                        return $dr->getFormEnable($this->instance->grouping->filtered);
+                    },
+                    'required' => false,
+                )
+            )
+            ->add(
+                'social_facebook',
+                TextType::class,
+                array('label' => $this->instance->translation.'.admin.create.form.social.facebook', 'required' => false)
+            )
+            ->add(
+                'social_facebook_id',
+                TextType::class,
+                array(
+                    'label' => $this->instance->translation.'.admin.create.form.social.facebookId',
+                    'required' => false,
+                )
+            )
+            ->add(
+                'social_twitter',
+                TextType::class,
+                array('label' => $this->instance->translation.'.admin.create.form.social.twitter', 'required' => false)
+            )
+            ->add(
+                'social_twitter_id',
+                TextType::class,
+                array(
+                    'label' => $this->instance->translation.'.admin.create.form.social.twitterId',
+                    'required' => false,
+                )
+            )
+            ->add(
+                'social_google',
+                TextType::class,
+                array('label' => $this->instance->translation.'.admin.create.form.social.google', 'required' => false)
+            )
+            ->add(
+                'social_google_id',
+                'text',
+                array('label' => $this->instance->translation.'.admin.create.form.social.googleId', 'required' => false)
+            )
+            ->add(
+                'social_instagram',
+                TextType::class,
+                array(
+                    'label' => $this->instance->translation.'.admin.create.form.social.instagram',
+                    'required' => false,
+                )
+            )
+            ->add(
+                'social_youtube',
+                TextType::class,
+                array('label' => $this->instance->translation.'.admin.create.form.social.youtube', 'required' => false)
+            )
+            ->add(
+                'social_flux',
+                TextType::class,
+                array('label' => $this->instance->translation.'.admin.create.form.social.flux', 'required' => false)
+            )
             ->remove('global')
             ->remove('share');
     }
