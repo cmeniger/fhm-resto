@@ -16,8 +16,9 @@ class Geocoder
     public function __construct(ContainerInterface $container)
     {
         $this->container = $container;
-        $this->geocoder  = $this->container->get('ivory_google_map.geocoder');
-        $this->request   = $this->container->get('ivory_google_map.geocoder_request');
+        $this->geocoder  = $this->container->get('ivory.google_map.geocoder');
+        $this->request   = $this->container->get('ivory.google_map.geocoder');
+       // $this->request   = $this->container->get('ivory_google_map.geocoder_request');
     }
 
     /**
