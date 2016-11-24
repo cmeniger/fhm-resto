@@ -21,7 +21,7 @@ class MultipleType extends FhmType
             ->add('galleries', DocumentType::class, array(
                 'label'         => $this->instance->translation . '.admin.multiple.form.galleries',
                 'class'         => 'FhmGalleryBundle:Gallery',
-                'property'      => 'name',
+                'choice_label'      => 'name',
                 'query_builder' => function (\Fhm\GalleryBundle\Repository\GalleryRepository $dr)
                 {
                     return $dr->getFormEnable($this->instance->grouping->filtered);
@@ -35,7 +35,7 @@ class MultipleType extends FhmType
             ->add('parent',DocumentType::class, array(
                 'label'              => $this->instance->translation . '.admin.multiple.form.parent',
                 'class'              => 'FhmMediaBundle:MediaTag',
-                'property'           => 'route',
+                'choice_label'           => 'route',
                 'query_builder'      => function (\Fhm\MediaBundle\Repository\MediaTagRepository $dr)
                 {
                     return $dr->getFormEnable();
@@ -46,7 +46,7 @@ class MultipleType extends FhmType
             ->add('tags', DocumentType::class, array(
                 'label'              => $this->instance->translation . '.admin.multiple.form.tags',
                 'class'              => 'FhmMediaBundle:MediaTag',
-                'property'           => 'route',
+                'choice_label'           => 'route',
                 'query_builder'      => function (\Fhm\MediaBundle\Repository\MediaTagRepository $dr)
                 {
                     return $dr->getFormEnable();

@@ -1,9 +1,11 @@
 <?php
 namespace Fhm\MediaBundle\Form\Type;
 
+use Doctrine\Bundle\MongoDBBundle\Form\Type\DocumentType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -22,13 +24,13 @@ class MediaType extends AbstractType
     }
 
     /**
-     * @param OptionsResolverInterface $resolver
+     * @param OptionsResolver $resolver
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
             'class'              => 'FhmMediaBundle:Media',
-            'property'           => 'name',
+            'choice_label'           => 'name',
             'cascade_validation' => true,
             'filter'             => '',
             'root'               => '',
@@ -54,16 +56,16 @@ class MediaType extends AbstractType
     /**
      * @return string
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'media';
     }
 
     /**
-     * @return string
+     * @return mixed
      */
     public function getParent()
     {
-        return 'document';
+        return DocumentType::class;
     }
 }

@@ -2,7 +2,10 @@
 namespace Fhm\UserBundle\Form\Type\Admin;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class PasswordType extends AbstractType
@@ -17,23 +20,26 @@ class PasswordType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('plainPassword', 'repeated', array
+            ->add('plainPassword', RepeatedType::class, array
             (
-                'type'            => 'password',
+                'type'            => \Symfony\Component\Form\Extension\Core\Type\PasswordType::class,
                 'first_options'   => array('label' => $this->instance->translation . '.admin.detail.password.password'),
                 'second_options'  => array('label' => $this->instance->translation . '.admin.detail.password.password_confirmation'),
                 'invalid_message' => 'fos_user.password.mismatch'
             ))
-            ->add('submit', 'submit', array('label' => $this->instance->translation . '.admin.detail.password.submit'));
+            ->add('submit', SubmitType::class, array('label' => $this->instance->translation . '.admin.detail.password.submit'));
     }
 
-    public function getName()
+    /**
+     * @return string
+     */
+    public function getBlockPrefix()
     {
         return 'FhmPassword';
     }
 
 
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults
         (

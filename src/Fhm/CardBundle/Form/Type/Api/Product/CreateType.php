@@ -35,7 +35,7 @@ class CreateType extends AbstractType
             ->add('categories', 'document', array(
                 'label'         => $this->instance->translation . '.api.create.form.categories',
                 'class'         => 'FhmCardBundle:CardCategory',
-                'property'      => 'route',
+                'choice_label'      => 'route',
                 'query_builder' => function (\Fhm\CardBundle\Repository\CardCategoryRepository $dr)
                 {
                     return $dr->setSort('route')->getFormCard($this->card, $this->instance->grouping->filtered);
@@ -47,7 +47,7 @@ class CreateType extends AbstractType
             ->add('ingredients', 'document', array(
                 'label'         => $this->instance->translation . '.api.create.form.ingredients',
                 'class'         => 'FhmCardBundle:CardIngredient',
-                'property'      => 'name',
+                'choice_label'      => 'name',
                 'query_builder' => function (\Fhm\CardBundle\Repository\CardIngredientRepository $dr)
                 {
                     return $dr->getFormCard($this->card, $this->instance->grouping->filtered);

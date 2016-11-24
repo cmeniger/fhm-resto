@@ -32,7 +32,7 @@ class CreateType extends AbstractType
             ->add('products', 'document', array(
                 'label'         => $this->instance->translation . '.api.create.form.products',
                 'class'         => 'FhmCardBundle:CardProduct',
-                'property'      => 'name',
+                'choice_label'      => 'name',
                 'query_builder' => function (\Fhm\CardBundle\Repository\CardProductRepository $dr)
                 {
                     return $dr->setSort('alias')->getFormCard($this->card, $this->instance->grouping->filtered);

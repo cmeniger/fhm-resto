@@ -1,6 +1,7 @@
 <?php
 namespace Fhm\WorkflowBundle\Form\Type\Admin\Task;
 
+use Doctrine\Bundle\MongoDBBundle\Form\Type\DocumentType;
 use Fhm\FhmBundle\Form\Type\Admin\UpdateType as FhmType;
 use Symfony\Component\Form\FormBuilderInterface;
 
@@ -10,29 +11,29 @@ class UpdateType extends FhmType
     {
         parent::buildForm($builder, $options);
         $builder
-            ->add('step', 'document', array(
+            ->add('step', DocumentType::class, array(
                 'label'         => $this->instance->translation . '.admin.update.form.step',
                 'class'         => 'FhmWorkflowBundle:WorkflowStep',
-                'property'      => 'name',
+                'choice_label'      => 'name',
                 'query_builder' => function (\Fhm\WorkflowBundle\Repository\WorkflowStepRepository $dr)
                 {
                     return $dr->getFormEnable($this->instance->grouping->filtered);
                 },
                 'required'      => false
             ))
-            ->add('action', 'document', array(
+            ->add('action', DocumentType::class, array(
                 'label'         => $this->instance->translation . '.admin.update.form.action',
                 'class'         => 'FhmWorkflowBundle:WorkflowAction',
-                'property'      => 'name',
+                'choice_label'      => 'name',
                 'query_builder' => function (\Fhm\WorkflowBundle\Repository\WorkflowActionRepository $dr)
                 {
                     return $dr->getFormEnable($this->instance->grouping->filtered);
                 }
             ))
-            ->add('parents', 'document', array(
+            ->add('parents', DocumentType::class, array(
                 'label'         => $this->instance->translation . '.admin.update.form.parents',
                 'class'         => 'FhmWorkflowBundle:WorkflowTask',
-                'property'      => 'name',
+                'choice_label'      => 'name',
                 'query_builder' => function (\Fhm\WorkflowBundle\Repository\WorkflowTaskRepository $dr)
                 {
                     return $dr->getFormEnable($this->instance->grouping->filtered);
@@ -41,10 +42,10 @@ class UpdateType extends FhmType
                 'required'      => false,
                 'by_reference'  => false
             ))
-            ->add('sons', 'document', array(
+            ->add('sons', DocumentType::class, array(
                 'label'         => $this->instance->translation . '.admin.update.form.sons',
                 'class'         => 'FhmWorkflowBundle:WorkflowTask',
-                'property'      => 'name',
+                'choice_label'      => 'name',
                 'query_builder' => function (\Fhm\WorkflowBundle\Repository\WorkflowTaskRepository $dr)
                 {
                     return $dr->getFormEnable($this->instance->grouping->filtered);

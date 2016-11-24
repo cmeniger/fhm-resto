@@ -15,7 +15,7 @@ class UpdateType extends FhmType
             ->add('parent', 'document', array(
                 'label'         => $this->instance->translation . '.admin.update.form.parent',
                 'class'         => 'FhmMediaBundle:MediaTag',
-                'property'      => 'route',
+                'choice_label'      => 'route',
                 'query_builder' => function (\Fhm\MediaBundle\Repository\MediaTagRepository $dr)
                     {
                         return $dr->getFormFiltered($this->instance->grouping->filtered);

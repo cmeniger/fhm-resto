@@ -2,6 +2,8 @@
 namespace Fhm\UserBundle\Form\Type\Front;
 
 use Fhm\FhmBundle\Form\Type\Front\UpdateType as FhmType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Security\Core\Validator\Constraints\UserPassword;
 
@@ -20,9 +22,9 @@ class ResettingType extends FhmType
     {
         parent::buildForm($builder, $options);
         $builder
-            ->add('plainPassword', 'repeated', array
+            ->add('plainPassword', RepeatedType::class, array
             (
-                'type'            => 'password',
+                'type'            => PasswordType::class,
                 'first_options'   => array('label' => $this->instance->translation . '.front.resetting.reset.form.password_new'),
                 'second_options'  => array('label' => $this->instance->translation . '.front.resetting.reset.form.password_confirmation'),
                 'invalid_message' => 'fos_user.password.mismatch',

@@ -20,7 +20,7 @@ class UpdateType extends FhmType
             ->add('categories', DocumentType::class, array(
                 'label'         => $this->instance->translation . '.admin.update.form.categories',
                 'class'         => 'FhmCardBundle:CardCategory',
-                'property'      => 'name',
+                'choice_label'      => 'name',
                 'query_builder' => function (\Fhm\CardBundle\Repository\CardCategoryRepository $dr)
                 {
                     return $dr->getFormEnable($this->instance->grouping->filtered);
@@ -32,7 +32,7 @@ class UpdateType extends FhmType
             ->add('products', DocumentType::class, array(
                 'label'         => $this->instance->translation . '.admin.update.form.products',
                 'class'         => 'FhmCardBundle:CardProduct',
-                'property'      => 'name',
+                'choice_label'      => 'name',
                 'query_builder' => function (\Fhm\CardBundle\Repository\CardProductRepository $dr)
                 {
                     return $dr->getFormEnable($this->instance->grouping->filtered);
@@ -44,7 +44,7 @@ class UpdateType extends FhmType
             ->add('ingredients', DocumentType::class, array(
                 'label'         => $this->instance->translation . '.admin.update.form.ingredients',
                 'class'         => 'FhmCardBundle:CardIngredient',
-                'property'      => 'name',
+                'choice_label'      => 'name',
                 'query_builder' => function (\Fhm\CardBundle\Repository\CardIngredientRepository $dr)
                 {
                     return $dr->getFormEnable($this->instance->grouping->filtered);

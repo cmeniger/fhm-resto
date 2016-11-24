@@ -14,7 +14,7 @@ class CreateType extends FhmType
             ->add('events', 'document', array(
                 'label'         => $this->instance->translation . '.admin.create.form.events',
                 'class'         => 'FhmEventBundle:Event',
-                'property'      => 'name',
+                'choice_label'      => 'name',
                 'query_builder' => function (\Fhm\EventBundle\Repository\EventRepository $dr)
                     {
                         return $dr->getFormEnable($this->instance->grouping->filtered);

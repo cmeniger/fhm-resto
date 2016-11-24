@@ -1,8 +1,10 @@
 <?php
 namespace Fhm\ArticleBundle\Form\Type\Admin;
 
+use Doctrine\Bundle\MongoDBBundle\Form\Type\DocumentType;
 use Fhm\FhmBundle\Form\Type\Admin\UpdateType as FhmType;
 use Doctrine\Bundle\MongoDBBundle\Tests\Fixtures\Form\Document;
+use Fhm\MediaBundle\Form\Type\MediaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Fhm\FhmBundle\Form\Type\AutocompleteType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -14,21 +16,21 @@ class UpdateType extends FhmType
     {
         parent::buildForm($builder, $options);
         $builder
-            ->add('title', 'text', array('label' => $this->instance->translation . '.admin.update.form.title'))
+            ->add('title', TextType::class, array('label' => $this->instance->translation . '.admin.update.form.title'))
             ->add('title', TextType::class, array('label' => $this->instance->translation . '.admin.update.form.title'))
             ->add('subtitle', TextType::class, array('label' => $this->instance->translation . '.admin.update.form.subtitle', 'required' => false))
             ->add('resume', TextareaType::class, array('label' => $this->instance->translation . '.admin.update.form.resume', 'attr' => array('class' => 'editor')))
             ->add('content',TextareaType::class, array('label' => $this->instance->translation . '.admin.update.form.content', 'attr' => array('class' => 'editor')))
-            ->add('image', 'media', array(
+            ->add('image', MediaType::class, array(
                     'label'    => $this->instance->translation . '.admin.update.form.image',
                     'filter'   => 'image/*',
                     'required' => false
                 )
             )
-            ->add('gallery', Document::class, array(
+            ->add('gallery', DocumentType::class, array(
                 'label'         => $this->instance->translation . '.admin.update.form.gallery',
                 'class'         => 'FhmGalleryBundle:Gallery',
-                'property'      => 'name',
+                'choice_label'      => 'name',
                 'query_builder' => function (\Fhm\GalleryBundle\Repository\GalleryRepository $dr)
                 {
                     return $dr->getFormEnable($this->instance->grouping->filtered);

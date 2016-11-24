@@ -29,7 +29,7 @@ class CreateType extends FhmType
             ->add('galleries', DocumentType::class, array(
                 'label'         => $this->instance->translation . '.admin.create.form.galleries',
                 'class'         => 'FhmGalleryBundle:Gallery',
-                'property'      => 'name',
+                'choice_label'      => 'name',
                 'query_builder' => function (\Fhm\GalleryBundle\Repository\GalleryRepository $dr)
                 {
                     return $dr->getFormEnable($this->instance->grouping->filtered);

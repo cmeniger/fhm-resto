@@ -1,7 +1,10 @@
 <?php
 namespace Fhm\NewsBundle\Form\Type\Admin\Group;
 
+use Doctrine\Bundle\MongoDBBundle\Form\Type\DocumentType;
 use Fhm\FhmBundle\Form\Type\Admin\CreateType as FhmType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 class CreateType extends FhmType
@@ -10,12 +13,12 @@ class CreateType extends FhmType
     {
         parent::buildForm($builder, $options);
         $builder
-            ->add('add_global', 'checkbox', array('label' => $this->instance->translation . '.admin.create.form.add_global', 'required' => false))
-            ->add('sort', 'choice', array('label' => $this->instance->translation . '.admin.create.form.sort', 'choices' => $this->_sortChoices()))
-            ->add('news', 'document', array(
+            ->add('add_global', CheckboxType::class, array('label' => $this->instance->translation . '.admin.create.form.add_global', 'required' => false))
+            ->add('sort', ChoiceType::class, array('label' => $this->instance->translation . '.admin.create.form.sort', 'choices' => $this->_sortChoices()))
+            ->add('news', DocumentType::class, array(
                 'label'         => $this->instance->translation . '.admin.create.form.news',
                 'class'         => 'FhmNewsBundle:News',
-                'property'      => 'name',
+                'choice_label'      => 'name',
                 'query_builder' => function (\Fhm\NewsBundle\Repository\NewsRepository $dr)
                     {
                         return $dr->getFormEnable($this->instance->grouping->filtered);
