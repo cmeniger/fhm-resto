@@ -1,12 +1,13 @@
 <?php
 namespace Fhm\SiteBundle\Form\Type\Admin;
 
-use Doctrine\Bundle\MongoDBBundle\Tests\Fixtures\Form\Document;
+use Doctrine\Bundle\MongoDBBundle\Form\Type\DocumentType;
 use Fhm\FhmBundle\Form\Type\Admin\CreateType as FhmType;
+use Fhm\SiteBundle\Document\Site;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Fhm\MediaBundle\Form\Type\MediaType;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Class CreateType
@@ -43,11 +44,10 @@ class CreateType extends FhmType
             )
             ->add(
                 'menu',
-                Document::class,
+                DocumentType::class,
                 array(
                     'label' => $this->instance->translation.'.admin.create.form.menu',
                     'class' => 'FhmMenuBundle:Menu',
-                    'property' => 'name',
                     'query_builder' => function (\Fhm\MenuBundle\Repository\MenuRepository $dr) {
                         return $dr->getFormEnable($this->instance->grouping->filtered);
                     },
@@ -56,11 +56,10 @@ class CreateType extends FhmType
             )
             ->add(
                 'news',
-                Document::class,
+                DocumentType::class,
                 array(
                     'label' => $this->instance->translation.'.admin.create.form.news',
                     'class' => 'FhmNewsBundle:NewsGroup',
-                    'property' => 'name',
                     'query_builder' => function (\Fhm\NewsBundle\Repository\NewsGroupRepository $dr) {
                         return $dr->getFormEnable($this->instance->grouping->filtered);
                     },
@@ -69,11 +68,10 @@ class CreateType extends FhmType
             )
             ->add(
                 'partner',
-                Document::class,
+                DocumentType::class,
                 array(
                     'label' => $this->instance->translation.'.admin.create.form.partner',
                     'class' => 'FhmPartnerBundle:PartnerGroup',
-                    'property' => 'name',
                     'query_builder' => function (\Fhm\PartnerBundle\Repository\PartnerGroupRepository $dr) {
                         return $dr->getFormEnable($this->instance->grouping->filtered);
                     },
@@ -82,11 +80,10 @@ class CreateType extends FhmType
             )
             ->add(
                 'slider',
-                Document::class,
+                DocumentType::class,
                 array(
                     'label' => $this->instance->translation.'.admin.create.form.slider',
                     'class' => 'FhmSliderBundle:Slider',
-                    'property' => 'name',
                     'query_builder' => function (\Fhm\SliderBundle\Repository\SliderRepository $dr) {
                         return $dr->getFormEnable($this->instance->grouping->filtered);
                     },
@@ -95,11 +92,10 @@ class CreateType extends FhmType
             )
             ->add(
                 'gallery',
-                Document::class,
+                DocumentType::class,
                 array(
                     'label' => $this->instance->translation.'.admin.create.form.gallery',
                     'class' => 'FhmGalleryBundle:Gallery',
-                    'property' => 'name',
                     'query_builder' => function (\Fhm\GalleryBundle\Repository\GalleryRepository $dr) {
                         return $dr->getFormEnable($this->instance->grouping->filtered);
                     },
@@ -126,11 +122,10 @@ class CreateType extends FhmType
             )
             ->add(
                 'contact',
-                Document::class,
+                DocumentType::class,
                 array(
                     'label' => $this->instance->translation.'.admin.create.form.contact',
                     'class' => 'FhmContactBundle:Contact',
-                    'property' => 'name',
                     'query_builder' => function (\Fhm\ContactBundle\Repository\ContactRepository $dr) {
                         return $dr->getFormEnable($this->instance->grouping->filtered);
                     },
@@ -193,5 +188,19 @@ class CreateType extends FhmType
             )
             ->remove('global')
             ->remove('share');
+    }
+
+    /**
+     * @param OptionsResolver $resolver
+     */
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults(
+            array(
+                'data_class' => Site::class,
+                'translation_domain' => 'Site',
+                'cascade_validation' => true,
+            )
+        );
     }
 }

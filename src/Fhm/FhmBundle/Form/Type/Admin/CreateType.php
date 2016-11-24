@@ -11,19 +11,24 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/**
+ * Class CreateType
+ * @package Fhm\FhmBundle\Form\Type\Admin
+ */
 class CreateType extends AbstractType
 {
     protected $instance;
     protected $document;
 
-//    public function __construct($instance, $document)
-//    {
-//        $this->instance = $instance;
-//        $this->document = $document;
-//    }
-
+    /**
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $data = $builder->getData();
+        $this->instance = $data['instance'];
+        $this->document = $data['document'];
         $builder
             ->add('name', TextType::class, array('label' => $this->instance->translation.'.admin.create.form.name'))
             ->add(
@@ -119,10 +124,12 @@ class CreateType extends AbstractType
         return 'FhmCreate';
     }
 
+    /**
+     * @param OptionsResolver $resolver
+     */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults
-        (
+        $resolver->setDefaults(
             array(
                 'data_class' => $this->instance->class,
                 'translation_domain' => $this->instance->domain,
