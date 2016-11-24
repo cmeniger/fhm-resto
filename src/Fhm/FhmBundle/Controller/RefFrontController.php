@@ -60,9 +60,9 @@ class RefFrontController extends Controller
         $instance  = $this->fhm_tools->instanceData();
         $classType = $this->form->type->search;
         $form      = $this->createForm(new $classType($instance), null);
-        $form->setData($this->get('request')->get($form->getName()));
+        $form->setData($this->get('request_stack')->get($form->getName()));
         $dataSearch     = $form->getData();
-        $dataPagination = $this->get('request')->get('FhmPagination');
+        $dataPagination = $this->get('request_stack')->get('FhmPagination');
         // Ajax pagination request
         if (isset($dataPagination['pagination'])) {
             $documents = $this->fhm_tools->dmRepository()->getFrontIndex(

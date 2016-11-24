@@ -1,7 +1,10 @@
 <?php
 namespace Fhm\MediaBundle\Form\Type\Front;
 
+use Doctrine\Bundle\MongoDBBundle\Form\Type\DocumentType;
 use Fhm\FhmBundle\Form\Type\Front\CreateType as FhmType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 class CreateType extends FhmType
@@ -10,13 +13,13 @@ class CreateType extends FhmType
     {
         parent::buildForm($builder, $options);
         $builder
-            ->add('name', 'text', array('label' => $this->instance->translation . '.front.create.form.name', 'required' => false))
-            ->add('file', 'file', array('label' => $this->instance->translation . '.front.create.form.file'))
-            ->add('tag', 'text', array('label' => $this->instance->translation . '.front.create.form.tag', 'mapped' => false, 'required' => false))
-            ->add('parent', 'document', array(
+            ->add('name', TextType::class, array('label' => $this->instance->translation . '.front.create.form.name', 'required' => false))
+            ->add('file', FileType::class, array('label' => $this->instance->translation . '.front.create.form.file'))
+            ->add('tag', TextType::class, array('label' => $this->instance->translation . '.front.create.form.tag', 'mapped' => false, 'required' => false))
+            ->add('parent',DocumentType::class, array(
                 'label'         => $this->instance->translation . '.front.create.form.parent',
                 'class'         => 'FhmMediaBundle:MediaTag',
-                'property'      => 'route',
+                'choice_label'      => 'route',
                 'query_builder' => function (\Fhm\MediaBundle\Repository\MediaTagRepository $dr)
                 {
                     return $dr->getFormEnable($this->instance->grouping->filtered);
@@ -24,10 +27,10 @@ class CreateType extends FhmType
                 'mapped'        => false,
                 'required'      => false
             ))
-            ->add('tags', 'document', array(
+            ->add('tags', DocumentType::class, array(
                 'label'         => $this->instance->translation . '.front.create.form.tags',
                 'class'         => 'FhmMediaBundle:MediaTag',
-                'property'      => 'route',
+                'choice_label'      => 'route',
                 'query_builder' => function (\Fhm\MediaBundle\Repository\MediaTagRepository $dr)
                 {
                     return $dr->getFormEnable($this->instance->grouping->filtered);

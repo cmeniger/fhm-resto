@@ -30,7 +30,7 @@ class UpdateType extends FhmType
             ->add('eventgroups',DocumentType::class, array(
                 'label'         => $this->instance->translation . '.admin.update.form.eventgroups',
                 'class'         => 'FhmEventBundle:EventGroup',
-                'property'      => 'name',
+                'choice_label'      => 'name',
                 'query_builder' => function (\Fhm\EventBundle\Repository\EventGroupRepository $dr)
                 {
                     return $dr->getFormEnable($this->instance->grouping->filtered);

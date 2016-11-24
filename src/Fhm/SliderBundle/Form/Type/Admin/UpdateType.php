@@ -1,7 +1,13 @@
 <?php
 namespace Fhm\SliderBundle\Form\Type\Admin;
 
+use Doctrine\Bundle\MongoDBBundle\Form\Type\DocumentType;
 use Fhm\FhmBundle\Form\Type\Admin\UpdateType as FhmType;
+use Fhm\MediaBundle\Form\Type\MediaType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 class UpdateType extends FhmType
@@ -10,21 +16,21 @@ class UpdateType extends FhmType
     {
         parent::buildForm($builder, $options);
         $builder
-            ->add('title', 'text', array('label' => $this->instance->translation . '.admin.update.form.title'))
-            ->add('subtitle', 'text', array('label' => $this->instance->translation . '.admin.update.form.subtitle', 'required' => false))
-            ->add('resume', 'textarea', array('label' => $this->instance->translation . '.admin.update.form.resume', 'attr' => array('class' => 'editor'), 'required' => false))
-            ->add('content', 'textarea', array('label' => $this->instance->translation . '.admin.update.form.content', 'attr' => array('class' => 'editor'), 'required' => false))
-            ->add('add_global', 'checkbox', array('label' => $this->instance->translation . '.admin.update.form.add_global', 'required' => false))
-            ->add('sort', 'choice', array('label' => $this->instance->translation . '.admin.update.form.sort', 'choices' => $this->_sortChoices()))
-            ->add('image', 'media', array(
+            ->add('title', TextType::class, array('label' => $this->instance->translation . '.admin.update.form.title'))
+            ->add('subtitle', TextType::class, array('label' => $this->instance->translation . '.admin.update.form.subtitle', 'required' => false))
+            ->add('resume', TextareaType::class, array('label' => $this->instance->translation . '.admin.update.form.resume', 'attr' => array('class' => 'editor'), 'required' => false))
+            ->add('content', TextareaType::class, array('label' => $this->instance->translation . '.admin.update.form.content', 'attr' => array('class' => 'editor'), 'required' => false))
+            ->add('add_global', CheckboxType::class, array('label' => $this->instance->translation . '.admin.update.form.add_global', 'required' => false))
+            ->add('sort', ChoiceType::class, array('label' => $this->instance->translation . '.admin.update.form.sort', 'choices' => $this->_sortChoices()))
+            ->add('image', MediaType::class, array(
                 'label'    => $this->instance->translation . '.admin.update.form.image',
                 'filter'   => 'image/*',
                 'required' => false
             ))
-            ->add('items', 'document', array(
+            ->add('items', DocumentType::class, array(
                 'label'         => $this->instance->translation . '.admin.update.form.items',
                 'class'         => 'FhmSliderBundle:SliderItem',
-                'property'      => 'name',
+                'choice_label'      => 'name',
                 'query_builder' => function (\Fhm\SliderBundle\Repository\SliderItemRepository $dr)
                 {
                     return $dr->getFormEnable($this->instance->grouping->filtered);

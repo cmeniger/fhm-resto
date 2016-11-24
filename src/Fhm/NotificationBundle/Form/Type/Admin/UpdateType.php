@@ -1,7 +1,9 @@
 <?php
 namespace Fhm\NotificationBundle\Form\Type\Admin;
 
+use Doctrine\Bundle\MongoDBBundle\Form\Type\DocumentType;
 use Fhm\FhmBundle\Form\Type\Admin\UpdateType as FhmType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 class UpdateType extends FhmType
@@ -10,11 +12,11 @@ class UpdateType extends FhmType
     {
         parent::buildForm($builder, $options);
         $builder
-            ->add('content', 'textarea', array('label' => $this->instance->translation . '.admin.update.form.content', 'attr' => array('class' => 'editor')))
-            ->add('user', 'document', array(
+            ->add('content', TextareaType::class, array('label' => $this->instance->translation . '.admin.update.form.content', 'attr' => array('class' => 'editor')))
+            ->add('user', DocumentType::class, array(
                 'label'         => $this->instance->translation . '.admin.update.form.user',
                 'class'         => 'FhmUserBundle:User',
-                'property'      => 'name',
+                'choice_label'      => 'name',
                 'query_builder' => function (\Fhm\UserBundle\Repository\UserRepository $dr)
                 {
                     return $dr->getFormEnable($this->instance->grouping->filtered);

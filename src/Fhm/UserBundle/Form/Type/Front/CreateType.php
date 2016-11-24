@@ -2,6 +2,10 @@
 namespace Fhm\UserBundle\Form\Type\Front;
 
 use Fhm\FhmBundle\Form\Type\Front\CreateType as FhmType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 class CreateType extends FhmType
@@ -19,17 +23,17 @@ class CreateType extends FhmType
     {
         parent::buildForm($builder, $options);
         $builder
-            ->add('username', 'text', array('label' => $this->instance->translation . '.front.create.form.username'))
-            ->add('email', 'repeated', array
+            ->add('username', TextType::class, array('label' => $this->instance->translation . '.front.create.form.username'))
+            ->add('email', RepeatedType::class, array
             (
-                'type'            => 'email',
+                'type'            => EmailType::class,
                 'first_options'   => array('label' => $this->instance->translation . '.front.create.form.email'),
                 'second_options'  => array('label' => $this->instance->translation . '.front.create.form.email_confirmation'),
                 'invalid_message' => 'user.email.mismatch',
             ))
-            ->add('plainPassword', 'repeated', array
+            ->add('plainPassword', RepeatedType::class, array
             (
-                'type'            => 'password',
+                'type'            => PasswordType::class,
                 'first_options'   => array('label' => $this->instance->translation . '.front.create.form.password'),
                 'second_options'  => array('label' => $this->instance->translation . '.front.create.form.password_confirmation'),
                 'invalid_message' => 'user.password.mismatch',

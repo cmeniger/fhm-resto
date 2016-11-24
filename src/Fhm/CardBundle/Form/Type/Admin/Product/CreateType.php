@@ -29,7 +29,7 @@ class CreateType extends FhmType
             ->add('card', DocumentType::class, array(
                 'label'         => $this->instance->translation . '.admin.create.form.card',
                 'class'         => 'FhmCardBundle:Card',
-                'property'      => 'name',
+                'choice_label'      => 'name',
                 'query_builder' => function (\Fhm\CardBundle\Repository\CardRepository $dr)
                 {
                     return $dr->getFormEnable($this->instance->grouping->filtered);
@@ -39,7 +39,7 @@ class CreateType extends FhmType
             ->add('categories',DocumentType::class, array(
                 'label'         => $this->instance->translation . '.admin.create.form.categories',
                 'class'         => 'FhmCardBundle:CardCategory',
-                'property'      => 'name',
+                'choice_label'      => 'name',
                 'query_builder' => function (\Fhm\CardBundle\Repository\CardCategoryRepository $dr)
                 {
                     return $dr->getFormEnable($this->instance->grouping->filtered);
@@ -51,7 +51,7 @@ class CreateType extends FhmType
             ->add('ingredients', DocumentType::class, array(
                 'label'         => $this->instance->translation . '.admin.create.form.ingredients',
                 'class'         => 'FhmCardBundle:CardIngredient',
-                'property'      => 'name',
+                'choice_label'      => 'name',
                 'query_builder' => function (\Fhm\CardBundle\Repository\CardIngredientRepository $dr)
                 {
                     return $dr->getFormEnable($this->instance->grouping->filtered);

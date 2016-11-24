@@ -48,6 +48,7 @@ class CreateType extends FhmType
                 array(
                     'label' => $this->instance->translation.'.admin.create.form.menu',
                     'class' => 'FhmMenuBundle:Menu',
+                    'property' => 'name',
                     'query_builder' => function (\Fhm\MenuBundle\Repository\MenuRepository $dr) {
                         return $dr->getFormEnable($this->instance->grouping->filtered);
                     },

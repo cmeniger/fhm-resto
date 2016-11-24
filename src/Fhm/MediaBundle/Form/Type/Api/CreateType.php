@@ -1,6 +1,7 @@
 <?php
 namespace Fhm\MediaBundle\Form\Type\Api;
 
+use Doctrine\Bundle\MongoDBBundle\Form\Type\DocumentType;
 use Fhm\MediaBundle\Form\Type\Admin\CreateType as FhmType;
 use Symfony\Component\Form\FormBuilderInterface;
 
@@ -18,10 +19,10 @@ class CreateType extends FhmType
     {
         parent::buildForm($builder, $options);
         $builder
-            ->add('parent', 'document', array(
+            ->add('parent',DocumentType::class, array(
                 'label'         => $this->instance->translation . '.admin.create.form.parent',
                 'class'         => 'FhmMediaBundle:MediaTag',
-                'property'      => 'route',
+                'choice_label'      => 'route',
                 'query_builder' => function (\Fhm\MediaBundle\Repository\MediaTagRepository $dr)
                 {
                     return $dr->setRoot($this->root)->getFormFiltered($this->instance->grouping->filtered);
@@ -29,10 +30,10 @@ class CreateType extends FhmType
                 'mapped'        => false,
                 'required'      => false
             ))
-            ->add('tags', 'document', array(
+            ->add('tags',DocumentType::class, array(
                 'label'         => $this->instance->translation . '.admin.create.form.tags',
                 'class'         => 'FhmMediaBundle:MediaTag',
-                'property'      => 'route',
+                'choice_label'      => 'route',
                 'query_builder' => function (\Fhm\MediaBundle\Repository\MediaTagRepository $dr)
                 {
                     return $dr->setRoot($this->root)->getFormFiltered($this->instance->grouping->filtered);

@@ -23,7 +23,7 @@ class AutocompleteType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'property'           => 'name',
+            'choice_label'           => 'name',
             'cascade_validation' => true,
             'url'                => '',
             'attr'               => array(

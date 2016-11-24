@@ -2,6 +2,8 @@
 namespace Fhm\MapPickerBundle\Form\Type\Admin;
 
 use Fhm\FhmBundle\Form\Type\Admin\CreateType as FhmType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 class CreateType extends FhmType
@@ -23,8 +25,8 @@ class CreateType extends FhmType
     {
         parent::buildForm($builder, $options);
         $builder
-            ->add('order', 'number', array('label' => $this->instance->translation . '.admin.create.form.order', 'required' => false))
-            ->add('map', 'choice', array('choices' => $this->maps, 'label' => $this->instance->translation . '.admin.create.form.map'))
+            ->add('order', NumberType::class, array('label' => $this->instance->translation . '.admin.create.form.order', 'required' => false))
+            ->add('map', ChoiceType::class, array('choices' => $this->maps, 'label' => $this->instance->translation . '.admin.create.form.map'))
             ->remove('global');
     }
 }

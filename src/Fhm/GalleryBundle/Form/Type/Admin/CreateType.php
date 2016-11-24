@@ -34,7 +34,7 @@ class CreateType extends FhmType
             ->add('albums', DocumentType::class, array(
                 'label'         => $this->instance->translation . '.admin.create.form.albums',
                 'class'         => 'FhmGalleryBundle:GalleryAlbum',
-                'property'      => 'name',
+                'choice_label'      => 'name',
                 'query_builder' => function (\Fhm\GalleryBundle\Repository\GalleryAlbumRepository $dr)
                 {
                     return $dr->getFormEnable($this->instance->grouping->filtered);
@@ -46,7 +46,7 @@ class CreateType extends FhmType
             ->add('items', DocumentType::class, array(
                 'label'         => $this->instance->translation . '.admin.create.form.items',
                 'class'         => 'FhmGalleryBundle:GalleryItem',
-                'property'      => 'name',
+                'choice_label'      => 'name',
                 'query_builder' => function (\Fhm\GalleryBundle\Repository\GalleryItemRepository $dr)
                 {
                     return $dr->getFormEnable($this->instance->grouping->filtered);
@@ -58,7 +58,7 @@ class CreateType extends FhmType
             ->add('videos', DocumentType::class, array(
                 'label'         => $this->instance->translation . '.admin.create.form.videos',
                 'class'         => 'FhmGalleryBundle:GalleryVideo',
-                'property'      => 'name',
+                'choice_label'      => 'name',
                 'query_builder' => function (\Fhm\GalleryBundle\Repository\GalleryVideoRepository $dr)
                 {
                     return $dr->getFormEnable($this->instance->grouping->filtered);

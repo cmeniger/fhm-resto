@@ -2,6 +2,7 @@
 namespace Fhm\TestimonyBundle\Form\Type\Admin;
 
 use Fhm\FhmBundle\Form\Type\Admin\CreateType as FhmType;
+use Fhm\MediaBundle\Form\Type\MediaType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 class CreateType extends FhmType
@@ -15,7 +16,7 @@ class CreateType extends FhmType
     {
         parent::buildForm($builder, $options);
         $builder
-            ->add('image', 'media', array(
+            ->add('image', MediaType::class, array(
                 'label'    => $this->instance->translation . '.admin.create.form.image',
                 'filter'   => 'image/*',
                 'required' => false

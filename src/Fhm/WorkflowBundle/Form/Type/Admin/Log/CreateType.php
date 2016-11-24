@@ -1,7 +1,9 @@
 <?php
 namespace Fhm\WorkflowBundle\Form\Type\Admin\Log;
 
+use Doctrine\Bundle\MongoDBBundle\Form\Type\DocumentType;
 use Fhm\FhmBundle\Form\Type\Admin\CreateType as FhmType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 class CreateType extends FhmType
@@ -10,17 +12,17 @@ class CreateType extends FhmType
     {
         parent::buildForm($builder, $options);
         $builder
-            ->add('task', 'document', array(
+            ->add('task', DocumentType::class, array(
                 'label'         => $this->instance->translation . '.admin.create.form.task',
                 'class'         => 'FhmWorkflowBundle:WorkflowTask',
-                'property'      => 'name',
+                'choice_label'      => 'name',
                 'query_builder' => function (\Fhm\WorkflowBundle\Repository\WorkflowTaskRepository $dr)
                 {
                     return $dr->getFormEnable($this->instance->grouping->filtered);
                 },
                 'required'      => false
             ))
-            ->add('type', 'choice', array(
+            ->add('type', ChoiceType::class, array(
                 'label'   => $this->instance->translation . '.admin.create.form.type',
                 'choices' => array(
                     '0' => $this->instance->translation . '.type.0',

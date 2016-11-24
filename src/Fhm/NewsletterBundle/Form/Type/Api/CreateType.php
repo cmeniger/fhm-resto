@@ -2,6 +2,7 @@
 namespace Fhm\NewsletterBundle\Form\Type\Api;
 
 use Fhm\FhmBundle\Form\Type\Api\CreateType as FhmType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 class CreateType extends FhmType
@@ -10,7 +11,7 @@ class CreateType extends FhmType
     {
         parent::buildForm($builder, $options);
         $builder
-            ->add('email', 'email', array('label' => $this->instance->translation . '.admin.create.form.email'))
+            ->add('email', EmailType::class, array('label' => $this->instance->translation . '.admin.create.form.email'))
             ->remove('name')
             ->remove('description')
             ->remove('submitSave')

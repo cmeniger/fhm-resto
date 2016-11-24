@@ -2,6 +2,7 @@
 namespace Fhm\NewsletterBundle\Form\Type\Admin;
 
 use Fhm\FhmBundle\Form\Type\Admin\UpdateType as FhmType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 class UpdateType extends FhmType
@@ -10,7 +11,7 @@ class UpdateType extends FhmType
     {
         parent::buildForm($builder, $options);
         $builder
-            ->add('email', 'email', array('label' => $this->instance->translation . '.admin.update.form.email'))
+            ->add('email', EmailType::class, array('label' => $this->instance->translation . '.admin.update.form.email'))
             ->remove('name')
             ->remove('description')
             ->remove('seo_title')

@@ -1,7 +1,12 @@
 <?php
 namespace Fhm\SliderBundle\Form\Type\Admin\Item;
 
+use Doctrine\Bundle\MongoDBBundle\Form\Type\DocumentType;
 use Fhm\FhmBundle\Form\Type\Admin\CreateType as FhmType;
+use Fhm\MediaBundle\Form\Type\MediaType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 class CreateType extends FhmType
@@ -10,19 +15,19 @@ class CreateType extends FhmType
     {
         parent::buildForm($builder, $options);
         $builder
-            ->add('title', 'text', array('label' => $this->instance->translation . '.admin.create.form.title'))
-            ->add('subtitle', 'text', array('label' => $this->instance->translation . '.admin.create.form.subtitle', 'required' => false))
-            ->add('content', 'textarea', array('label' => $this->instance->translation . '.admin.create.form.content', 'attr' => array('class' => 'editor'), 'required' => false))
-            ->add('link', 'text', array('label' => $this->instance->translation . '.admin.create.form.link', 'required' => false))
-            ->add('order', 'number', array('label' => $this->instance->translation . '.admin.create.form.order', 'required' => false))
-            ->add('image', 'media', array(
+            ->add('title', TextType::class, array('label' => $this->instance->translation . '.admin.create.form.title'))
+            ->add('subtitle', TextType::class, array('label' => $this->instance->translation . '.admin.create.form.subtitle', 'required' => false))
+            ->add('content', TextareaType::class, array('label' => $this->instance->translation . '.admin.create.form.content', 'attr' => array('class' => 'editor'), 'required' => false))
+            ->add('link', TextType::class, array('label' => $this->instance->translation . '.admin.create.form.link', 'required' => false))
+            ->add('order', NumberType::class, array('label' => $this->instance->translation . '.admin.create.form.order', 'required' => false))
+            ->add('image', MediaType::class, array(
                 'label'  => $this->instance->translation . '.admin.create.form.image',
                 'filter' => 'image/*'
             ))
-            ->add('sliders', 'document', array(
+            ->add('sliders', DocumentType::class, array(
                 'label'         => $this->instance->translation . '.admin.create.form.sliders',
                 'class'         => 'FhmSliderBundle:Slider',
-                'property'      => 'name',
+                'choice_label'      => 'name',
                 'query_builder' => function (\Fhm\SliderBundle\Repository\SliderRepository $dr)
                 {
                     return $dr->getFormEnable($this->instance->grouping->filtered);
