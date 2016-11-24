@@ -3,6 +3,7 @@ namespace Fhm\CardBundle\Controller\Product;
 
 use Fhm\FhmBundle\Controller\RefAdminController as FhmController;
 use Fhm\CardBundle\Document\CardProduct;
+use Fhm\FhmBundle\Services\Tools;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
@@ -10,15 +11,16 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 /**
- * @Route("/admin/cardproduct")
+ * @Route("/admin/cardproduct", service="fhm_card_controller_product_admin")
  */
 class AdminController extends FhmController
 {
     /**
      * Constructor
      */
-    public function __construct()
+    public function __construct(Tools $tools)
     {
+        $this->setFhmTools($tools);
         parent::__construct('Fhm', 'Card', 'card_product', 'CardProduct');
         $this->form->type->create = 'Fhm\\CardBundle\\Form\\Type\\Admin\\Product\\CreateType';
         $this->form->type->update = 'Fhm\\CardBundle\\Form\\Type\\Admin\\Product\\UpdateType';
@@ -194,7 +196,7 @@ class AdminController extends FhmController
     {
         $id   = $request->get('master');
         $list = json_decode($request->get('list'));
-        $this->_treeSort($id, $list);
+       // $this->_treeSort($id, $list);
 
         return new Response();
     }

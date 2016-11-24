@@ -3,6 +3,7 @@
 namespace Fhm\UserBundle\Controller;
 
 use Fhm\FhmBundle\Controller\RefApiController as FhmController;
+use Fhm\FhmBundle\Services\Tools;
 use Fhm\UserBundle\Document\User;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -11,15 +12,16 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 /**
- * @Route("/api/user")
+ * @Route("/api/user", service ="fhm_user_controller_api")
  */
 class ApiController extends FhmController
 {
     /**
      * Constructor
      */
-    public function __construct()
+    public function __construct(Tools $tools)
     {
+        $this->setFhmTools($tools);
         parent::__construct('Fhm', 'User', 'user');
     }
 

@@ -4,6 +4,7 @@ namespace Fhm\CardBundle\Controller\Category;
 use Doctrine\Common\Collections\ArrayCollection;
 use Fhm\FhmBundle\Controller\RefAdminController as FhmController;
 use Fhm\CardBundle\Document\CardCategory;
+use Fhm\FhmBundle\Services\Tools;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
@@ -11,15 +12,17 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 /**
- * @Route("/admin/cardcategory")
+ * @Route("/admin/cardcategory", service="fhm_card_controller_category_admin")
  */
 class AdminController extends FhmController
 {
     /**
-     * Constructor
+     * AdminController constructor.
+     * @param Tools $tools
      */
-    public function __construct()
+    public function __construct(Tools $tools)
     {
+        $this->setFhmTools($tools);
         parent::__construct('Fhm', 'Card', 'card_category', 'CardCategory');
         $this->form->type->create = 'Fhm\\CardBundle\\Form\\Type\\Admin\\Category\\CreateType';
         $this->form->type->update = 'Fhm\\CardBundle\\Form\\Type\\Admin\\Category\\UpdateType';

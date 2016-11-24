@@ -9,6 +9,10 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 
+/**
+ * Class Tools
+ * @package Fhm\FhmBundle\Services
+ */
 class Tools implements ContainerAwareInterface
 {
     use ContainerAwareTrait;
@@ -40,16 +44,16 @@ class Tools implements ContainerAwareInterface
     public function __construct(ContainerInterface $container)
     {
         $this->setContainer($container);
-        $this->repository       = 'FhmFhmBundle:Fhm';
-        $this->csvDelimiter     = ';';
-        $this->grouping         = '';
-        $this->section          = 'Front';
-        $this->parent           = false;
-        $this->language         = false;
+        $this->repository = 'FhmFhmBundle:Fhm';
+        $this->csvDelimiter = ';';
+        $this->grouping = '';
+        $this->section = 'Front';
+        $this->parent = false;
+        $this->language = false;
         $this->language_disable = false;
-        $this->pagination       = null;
-        $this->sort             = array('order', 'asc');
-        $this->instance         = '';
+        $this->pagination = null;
+        $this->sort = array('order', 'asc');
+        $this->instance = '';
     }
 
     /**
@@ -63,24 +67,24 @@ class Tools implements ContainerAwareInterface
      */
     public function initData($src = 'Fhm', $bundle = 'Fhm', $route = '', $document = '', $section = '')
     {
-        $this->source      = strtolower($src);
-        $this->repository  = $src . $bundle . 'Bundle:' . ($document ? $document : $bundle);
-        $this->class       = $src . '\\' . $bundle . 'Bundle' . '\\Document\\' . ($document ? $document : $bundle);
-        $this->document    = new $this->class();
-        $this->translation = array($src . $bundle . 'Bundle', strtolower($bundle));
-        $this->view        = $src . $bundle;
-        $this->route       = $route;
-        $this->bundle      = strtolower($bundle);
-        $this->section     = ucfirst(strtolower($section));
-        $this->initForm($src . '\\' . $bundle . 'Bundle');
+        $this->source = strtolower($src);
+        $this->repository = $src.$bundle.'Bundle:'.($document ? $document : $bundle);
+        $this->class = $src.'\\'.$bundle.'Bundle'.'\\Document\\'.($document ? $document : $bundle);
+        $this->document = new $this->class();
+        $this->translation = array($src.$bundle.'Bundle', strtolower($bundle));
+        $this->view = $src.$bundle;
+        $this->route = $route;
+        $this->bundle = strtolower($bundle);
+        $this->section = ucfirst(strtolower($section));
+        $this->initForm($src.'\\'.$bundle.'Bundle');
 
         return array(
-            'source'      => $this->source,
-            'class'       => $this->class,
-            'document'    => $this->document,
+            'source' => $this->source,
+            'class' => $this->class,
+            'document' => $this->document,
             'translation' => $this->translation,
-            'route'       => $this->route,
-            'form'        => $this->form
+            'route' => $this->route,
+            'form' => $this->form,
         );
     }
 
@@ -91,38 +95,38 @@ class Tools implements ContainerAwareInterface
      */
     public function initForm($bundle)
     {
-        $folder                      = ($this->section == '') ? '' : $this->section . '\\';
-        $this->form                  = new \stdClass();
-        $this->form->type            = new \stdClass();
+        $folder = ($this->section == '') ? '' : $this->section.'\\';
+        $this->form = new \stdClass();
+        $this->form->type = new \stdClass();
 
-        $this->form->type->search    = (class_exists($bundle . '\\Form\\Type\\' . $folder . 'SearchType')) ?
-            '\\' . $bundle . '\\Form\\Type\\' . $folder . 'SearchType' :
-            '\\Fhm\\FhmBundle\\Form\\Type\\' . $folder . 'SearchType';
-        $this->form->type->create    = (class_exists($bundle . '\\Form\\Type\\' . $folder . 'CreateType')) ?
-            '\\' . $bundle . '\\Form\\Type\\' . $folder . 'CreateType' :
-            '\\Fhm\\FhmBundle\\Form\\Type\\' . $folder . 'CreateType';
-        $this->form->type->update    = (class_exists($bundle . '\\Form\\Type\\' . $folder . 'UpdateType')) ?
-            '\\' . $bundle . '\\Form\\Type\\' . $folder . 'UpdateType' :
-            '\\Fhm\\FhmBundle\\Form\\Type\\' . $folder . 'UpdateType';
-        $this->form->type->export    = (class_exists($bundle . '\\Form\\Type\\' . $folder . 'ExportType')) ?
-            '\\' . $bundle . '\\Form\\Type\\' . $folder . 'ExportType' :
-            '\\Fhm\\FhmBundle\\Form\\Type\\' . $folder . 'ExportType';
-        $this->form->type->import    = (class_exists($bundle . '\\Form\\Type\\' . $folder . 'ImportType')) ?
-            '\\' . $bundle . '\\Form\\Type\\' . $folder . 'ImportType' :
-            '\\Fhm\\FhmBundle\\Form\\Type\\' . $folder . 'ImportType';
-        $this->form->handler         = new \stdClass();
-        $this->form->handler->create = (class_exists($bundle . '\\Form\\Handler\\' . $folder . 'CreateHandler')) ?
-            '\\' . $bundle . '\\Form\\Handler\\' . $folder . 'CreateHandler' :
-            '\\Fhm\\FhmBundle\\Form\\Handler\\' . $folder . 'CreateHandler';
-        $this->form->handler->update = (class_exists($bundle . '\\Form\\Handler\\' . $folder . 'UpdateHandler')) ?
-            '\\' . $bundle . '\\Form\\Handler\\' . $folder . 'UpdateHandler' :
-            '\\Fhm\\FhmBundle\\Form\\Handler\\' . $folder . 'UpdateHandler';
-        $this->form->handler->export = (class_exists($bundle . '\\Form\\Handler\\' . $folder . 'ExportHandler')) ?
-            '\\' . $bundle . '\\Form\\Handler\\' . $folder . 'ExportHandler' :
-            '\\Fhm\\FhmBundle\\Form\\Handler\\' . $folder . 'ExportHandler';
-        $this->form->handler->import = (class_exists($bundle . '\\Form\\Handler\\' . $folder . 'ImportHandler')) ?
-            '\\' . $bundle . '\\Form\\Handler\\' . $folder . 'ImportHandler' :
-            '\\Fhm\\FhmBundle\\Form\\Handler\\' . $folder . 'ImportHandler';
+        $this->form->type->search = (class_exists($bundle.'\\Form\\Type\\'.$folder.'SearchType')) ?
+            '\\'.$bundle.'\\Form\\Type\\'.$folder.'SearchType' :
+            '\\Fhm\\FhmBundle\\Form\\Type\\'.$folder.'SearchType';
+        $this->form->type->create = (class_exists($bundle.'\\Form\\Type\\'.$folder.'CreateType')) ?
+            '\\'.$bundle.'\\Form\\Type\\'.$folder.'CreateType' :
+            '\\Fhm\\FhmBundle\\Form\\Type\\'.$folder.'CreateType';
+        $this->form->type->update = (class_exists($bundle.'\\Form\\Type\\'.$folder.'UpdateType')) ?
+            '\\'.$bundle.'\\Form\\Type\\'.$folder.'UpdateType' :
+            '\\Fhm\\FhmBundle\\Form\\Type\\'.$folder.'UpdateType';
+        $this->form->type->export = (class_exists($bundle.'\\Form\\Type\\'.$folder.'ExportType')) ?
+            '\\'.$bundle.'\\Form\\Type\\'.$folder.'ExportType' :
+            '\\Fhm\\FhmBundle\\Form\\Type\\'.$folder.'ExportType';
+        $this->form->type->import = (class_exists($bundle.'\\Form\\Type\\'.$folder.'ImportType')) ?
+            '\\'.$bundle.'\\Form\\Type\\'.$folder.'ImportType' :
+            '\\Fhm\\FhmBundle\\Form\\Type\\'.$folder.'ImportType';
+        $this->form->handler = new \stdClass();
+        $this->form->handler->create = (class_exists($bundle.'\\Form\\Handler\\'.$folder.'CreateHandler')) ?
+            '\\'.$bundle.'\\Form\\Handler\\'.$folder.'CreateHandler' :
+            '\\Fhm\\FhmBundle\\Form\\Handler\\'.$folder.'CreateHandler';
+        $this->form->handler->update = (class_exists($bundle.'\\Form\\Handler\\'.$folder.'UpdateHandler')) ?
+            '\\'.$bundle.'\\Form\\Handler\\'.$folder.'UpdateHandler' :
+            '\\Fhm\\FhmBundle\\Form\\Handler\\'.$folder.'UpdateHandler';
+        $this->form->handler->export = (class_exists($bundle.'\\Form\\Handler\\'.$folder.'ExportHandler')) ?
+            '\\'.$bundle.'\\Form\\Handler\\'.$folder.'ExportHandler' :
+            '\\Fhm\\FhmBundle\\Form\\Handler\\'.$folder.'ExportHandler';
+        $this->form->handler->import = (class_exists($bundle.'\\Form\\Handler\\'.$folder.'ImportHandler')) ?
+            '\\'.$bundle.'\\Form\\Handler\\'.$folder.'ImportHandler' :
+            '\\Fhm\\FhmBundle\\Form\\Handler\\'.$folder.'ImportHandler';
 
         return $this;
     }
@@ -134,13 +138,13 @@ class Tools implements ContainerAwareInterface
     {
         $this->initLanguageDisable();
         if (!$this->language_disable && $this->getParameters(array('languages', 'codes'), 'fhm_fhm')) {
-            $locale   = $this->getParameters(array(), 'locale');
-            $session  = $this->getSession()->get('_locale');
-            $used     = $session ? $session : $locale;
-            $used     = $this->getContainer()->get('security.authorization_checker')->isGranted('ROLE_MODERATOR') ?
+            $locale = $this->getParameters(array(), 'locale');
+            $session = $this->getSession()->get('_locale');
+            $used = $session ? $session : $locale;
+            $used = $this->getContainer()->get('security.authorization_checker')->isGranted('ROLE_MODERATOR') ?
                 $this->getUser()->getLanguages() :
                 $used;
-            $used     = $this->getContainer()->get('security.authorization_checker')->isGranted('ROLE_ADMIN') ?
+            $used = $this->getContainer()->get('security.authorization_checker')->isGranted('ROLE_ADMIN') ?
                 $this->getSession()->get('_localeAdmin') :
                 $used;
 
@@ -156,7 +160,7 @@ class Tools implements ContainerAwareInterface
     public function initLanguageDisable()
     {
         $exceptions = $this->getParameters(array('languages', 'exceptions'), 'fhm_fhm');
-        if (in_array($this->view, (array) $exceptions)) {
+        if (in_array($this->view, (array)$exceptions)) {
             $this->setLanguageDisable(true);
         }
 
@@ -170,12 +174,12 @@ class Tools implements ContainerAwareInterface
      */
     public function historic($document)
     {
-        $class = $this->class . 'Historic';
+        $class = $this->class.'Historic';
         if (class_exists($class)) {
             $session = $this->getSession();
-            $obj     = clone($document);
-            if (!$session->get('historic_' . $document->getId())) {
-                $session->set('historic_' . $document->getId(), $obj);
+            $obj = clone($document);
+            if (!$session->get('historic_'.$document->getId())) {
+                $session->set('historic_'.$document->getId(), $obj);
             }
         }
 
@@ -190,17 +194,17 @@ class Tools implements ContainerAwareInterface
      */
     public function historicAdd($document, $object = false)
     {
-        $class = $this->class . 'Historic';
+        $class = $this->class.'Historic';
         if (class_exists($class)) {
-            $session  = $this->getSession();
-            $obj      = $object ? $document : $session->get('historic_' . $document->getId());
+            $session = $this->getSession();
+            $obj = $object ? $document : $session->get('historic_'.$document->getId());
             $historic = new $class;
             $historic->historicMerge($this->dm(), $obj);
             $historic->setHistoricParent($document);
             $this->dmPersist($historic);
             $document->addHistoricSon($historic);
             $this->dmPersist($document);
-            $session->remove('historic_' . $document->getId());
+            $session->remove('historic_'.$document->getId());
         }
 
         return $this;
@@ -213,13 +217,13 @@ class Tools implements ContainerAwareInterface
      */
     public function historicData($document)
     {
-        $class = $this->class . 'Historic';
+        $class = $this->class.'Historic';
         if (class_exists($class)) {
-            $request        = $this->getContainer()->get('request');
-            $instance       = $this->instanceData();
+            $request = $this->getContainer()->get('request');
+            $instance = $this->instanceData();
             $dataPagination = $request->get('FhmPagination');
 
-            return $this->dmRepository($this->repository . 'Historic')->getHistoricIndex(
+            return $this->dmRepository($this->repository.'Historic')->getHistoricIndex(
                 $document,
                 $request->isXmlHttpRequest() ? $dataPagination['pagination'] : 1,
                 $this->getParameters(array('historic', 'page'), 'fhm_fhm'),
@@ -238,19 +242,19 @@ class Tools implements ContainerAwareInterface
      */
     public function historicPagination($document)
     {
-        $class = $this->class . 'Historic';
+        $class = $this->class.'Historic';
         if (class_exists($class)) {
-            $request                  = $this->getContainer()->get('request');
-            $dataPagination           = $request->get('FhmPagination');
-            $instance                 = $this->instanceData();
-            $pagination               = $this->setPagination(
+            $request = $this->getContainer()->get('request');
+            $dataPagination = $request->get('FhmPagination');
+            $instance = $this->instanceData();
+            $pagination = $this->setPagination(
                 $this->getParameters(array('historic', 'page'), 'fhm_fhm'),
                 $this->getParameters(array('historic', 'left'), 'fhm_fhm'),
                 $this->getParameters(array('historic', 'right'), 'fhm_fhm')
             )->getPagination(
                 $request->isXmlHttpRequest() ? $dataPagination['pagination'] : 1,
-                count((array) $this->historicData($document)),
-                $this->dmRepository($this->repository . 'Historic')->getHistoricCount(
+                count((array)$this->historicData($document)),
+                $this->dmRepository($this->repository.'Historic')->getHistoricCount(
                     $document,
                     $instance->grouping->filtered,
                     $instance->user->super
@@ -259,9 +263,9 @@ class Tools implements ContainerAwareInterface
                 array(),
                 $this->getUrl(null, array('id' => $document->getId()))
             );
-            $pagination->idData       = "content_data_historic";
+            $pagination->idData = "content_data_historic";
             $pagination->idPagination = "content_pagination_historic";
-            $pagination->counter      = $this->getContainer()->get('translator')->trans(
+            $pagination->counter = $this->getContainer()->get('translator')->trans(
                 'fhm.historic.pagination.counter',
                 array('%count%' => $pagination->page, '%all%' => $pagination->count),
                 'FhmFhmBundle'
@@ -287,85 +291,112 @@ class Tools implements ContainerAwareInterface
 
     /**
      * @param string $document
-     *
      * @return \stdClass
-     * @throws \Symfony\Component\HttpKernel\Exception\HttpException
      */
     public function instanceData($document = "")
     {
         $this->initLanguage();
-        $fhmExtension    = new \Fhm\FhmBundle\Twig\FhmExtension($this->getContainer());
-//        if (! $this->getContainer()->get('security.token_storage')->getToken()) {
-//            return null;
-//        }
-        $roleSuperAdmin  = $this->getContainer()->get('security.authorization_checker')->isGranted('ROLE_SUPER_ADMIN');
-        $roleAdmin       = $this->getContainer()->get('security.authorization_checker')->isGranted('ROLE_ADMIN');
-        $roleModerator   = $this->getContainer()->get('security.authorization_checker')->isGranted('ROLE_MODERATOR');
+
+        /**initialisation.....*/
+
+        $languageAvailable = $this->getParameters(array("languages", "codes"), "fhm_fhm");
+        $fhmExtension = new \Fhm\FhmBundle\Twig\FhmExtension($this->getContainer());
+        $data = new \stdClass();
+
+        /** @var  $groupingCurrent */
         $groupingCurrent = $this->grouping ?
             $this->grouping :
             $this->getContainer()->get($this->getParameters("grouping", "fhm_fhm"))->getGrouping();
 
-        $groupingUsed      = $groupingCurrent;
-        $groupingUsed      = $roleModerator ? $this->getUser()->getFirstGrouping() : $groupingUsed;
-        $groupingUsed      = $roleAdmin ? "" : $groupingUsed;
-        $groupingFiltered  = $groupingCurrent;
-        $groupingFiltered  = $roleModerator ? $this->getUser()->getGrouping() : $groupingFiltered;
-        $groupingFiltered  = $roleAdmin ? "" : $groupingFiltered;
+        /** @var  $groupingAvailable */
         $groupingAvailable = $this->getContainer()
             ->get($this->getParameters("grouping", "fhm_fhm"))
             ->getGroupingAvailable();
+
+        /** settings */
+        $languageFiltered = $languageCurrent = $this->language_disable ? false : $this->language;
+        $groupingUsed = $groupingFiltered = $groupingCurrent;
+
+        /** check if token exist before checking granted */
+
+        $roleAdmin = null;
+        $roleModerator = null;
+        $roleSuperAdmin = null;
+
+        if ($this->getContainer()->get('security.token_storage')->getToken()) {
+
+            /** @var  $roleSuperAdmin */
+            $roleSuperAdmin = $this->getContainer()->get('security.authorization_checker')
+                ->isGranted('ROLE_SUPER_ADMIN');
+
+            /** @var  $roleAdmin */
+            $roleAdmin = $this->getContainer()->get('security.authorization_checker')
+                ->isGranted('ROLE_ADMIN');
+
+            /** @var  $roleModerator */
+            $roleModerator = $this->getContainer()->get('security.authorization_checker')
+                ->isGranted('ROLE_MODERATOR');
+        }
+
+        $groupingUsed = $roleModerator ? $this->getUser()->getFirstGrouping() : $groupingUsed;
+        $groupingUsed = $roleAdmin ? "" : $groupingUsed;
+
+        $groupingFiltered = $roleModerator ? $this->getUser()->getGrouping() : $groupingFiltered;
+        $groupingFiltered = $roleAdmin ? "" : $groupingFiltered;
+
         $groupingAvailable = $roleModerator ? $this->getUser()->getGrouping() : $groupingAvailable;
         $groupingAvailable = $roleAdmin ?
             $this->getContainer()->get($this->getParameters("grouping", "fhm_fhm"))->getGroupingAvailable() :
             $groupingAvailable;
 
-        $languageCurrent   = $this->language_disable ? false : $this->language;
-        $languageFiltered  = $languageCurrent;
-        $languageFiltered  = $roleModerator ? $this->getUser()->getLanguages() : $languageFiltered;
-        $languageFiltered  = $roleAdmin ? "" : $languageFiltered;
-        $languageAvailable = $this->getParameters(array("languages", "codes"), "fhm_fhm");
+        $languageFiltered = $roleModerator ? $this->getUser()->getLanguages() : $languageFiltered;
+        $languageFiltered = $roleAdmin ? "" : $languageFiltered;
+
         $languageAvailable = $roleModerator ? $this->getUser()->getLanguages() : $languageAvailable;
         $languageAvailable = $roleAdmin ?
             $this->getParameters(array("languages", "codes"), "fhm_fhm") :
             $languageAvailable;
-        foreach ((array) $languageAvailable as $key => $value) {
+
+        $data->user = new \stdClass();
+        $data->user->document = $this->getUser();
+        $data->user->super = $roleSuperAdmin;
+        $data->user->admin = $roleAdmin;
+        $data->user->moderator = $roleModerator;
+
+
+        foreach ((array)$languageAvailable as $key => $value) {
             unset($languageAvailable[$key]);
             $languageAvailable[$value] = $fhmExtension->getCountry($value);
         }
-        // Data
-        $data                      = new \stdClass();
-        $data->source              = $this->source;
-        $data->section             = $this->section;
-        $data->class               = $this->class;
-        $data->route               = $this->route;
-        $data->lastroute           = $this->getLastRoute();
-        $data->domain              = $this->translation[0];
-        $data->translation         = $this->translation[1];
-        $data->language            = new \stdClass();
+
+        $data->source  = $this->source;
+        $data->section = $this->section;
+        $data->class   = $this->class;
+        $data->route   = $this->route;
+        $data->lastroute = $this->getLastRoute();
+        $data->domain    = $this->translation[0];
+        $data->translation = $this->translation[1];
+        $data->language    = new \stdClass();
         $data->language->current   = $languageCurrent;
         $data->language->used      = $languageCurrent;
         $data->language->filtered  = $languageFiltered;
         $data->language->different = $document ? !$document->hasLanguage($languageCurrent) : false;
         $data->language->available = $languageAvailable;
-        $data->language->visible   = $this->language_disable ?
-            false :
+        $data->language->visible   = $this->language_disable?
+            false:
             $this->getParameters(array("languages", "codes"), "fhm_fhm");
-        $data->grouping            = new \stdClass();
-        $data->grouping->current   = $groupingCurrent;
-        $data->grouping->used      = $groupingUsed;
+        $data->grouping = new \stdClass();
+        $data->grouping->current = $groupingCurrent;
+        $data->grouping->used    = $groupingUsed;
         $data->grouping->filtered  = $groupingFiltered;
         $data->grouping->different = $groupingUsed != '' && $document ? !$document->hasGrouping($groupingUsed) : false;
         $data->grouping->available = $groupingAvailable;
         $data->grouping->visible   = $this->getContainer()
             ->get($this->getParameters("grouping", "fhm_fhm"))
             ->getVisible();
-        $data->user                = new \stdClass();
-        $data->user->document      = $this->getUser();
-        $data->user->super         = $roleSuperAdmin;
-        $data->user->admin         = $roleAdmin;
-        $data->user->moderator     = $roleModerator;
-        $data->user->grouping      = ($this->getUser() instanceof User) ? $this->getUser()->getGrouping() : '';
-        // Error
+
+        $data->user->grouping = ($this->getUser() instanceof User) ? $this->getUser()->getGrouping() : '';
+
         if ($this->section == "Admin" &&
             !$data->user->admin &&
             !$data->user->moderator &&
@@ -377,6 +408,7 @@ class Tools implements ContainerAwareInterface
                 $this->getContainer()->get('translator')->trans('fhm.error.forbidden', array(), 'FhmFhmBundle')
             );
         }
+
         return $data;
     }
 
@@ -386,8 +418,10 @@ class Tools implements ContainerAwareInterface
      *
      * @return Response
      */
-    public function csvExport($datas, $filename = '')
-    {
+    public function csvExport(
+        $datas,
+        $filename = ''
+    ) {
         // Open file
         $flp = fopen('php://output', 'w');
         ob_start();
@@ -403,7 +437,7 @@ class Tools implements ContainerAwareInterface
         $response->headers->set('Content-Type', 'text/csv');
         $response->headers->set(
             'Content-Disposition',
-            'attachment;filename=' . (($filename == '') ? date('YmdHis') . '_export.csv' : $filename)
+            'attachment;filename='.(($filename == '') ? date('YmdHis').'_export.csv' : $filename)
         );
         $response->setContent($csv);
 
@@ -416,11 +450,14 @@ class Tools implements ContainerAwareInterface
      *
      * @return array
      */
-    public function formRename($name, $datas)
-    {
+    public
+    function formRename(
+        $name,
+        $datas
+    ) {
         $post = array();
-        foreach ((array) $datas as $key => $value) {
-            $post[$name . "[" . $key . "]"] = $value;
+        foreach ((array)$datas as $key => $value) {
+            $post[$name."[".$key."]"] = $value;
         }
 
         return $post;
@@ -431,8 +468,10 @@ class Tools implements ContainerAwareInterface
      *
      * @return $this
      */
-    public function setGrouping($grouping)
-    {
+    public
+    function setGrouping(
+        $grouping
+    ) {
         $this->grouping = $grouping;
 
         return $this;
@@ -443,8 +482,10 @@ class Tools implements ContainerAwareInterface
      *
      * @return $this
      */
-    public function setParent($parent)
-    {
+    public
+    function setParent(
+        $parent
+    ) {
         $this->parent = $parent;
 
         return $this;
@@ -455,8 +496,10 @@ class Tools implements ContainerAwareInterface
      *
      * @return $this
      */
-    public function setLanguage($language)
-    {
+    public
+    function setLanguage(
+        $language
+    ) {
         $this->language = $language;
 
         return $this;
@@ -467,8 +510,10 @@ class Tools implements ContainerAwareInterface
      *
      * @return $this
      */
-    public function setLanguageDisable($data)
-    {
+    public
+    function setLanguageDisable(
+        $data
+    ) {
         $this->language_disable = $data;
 
         return $this;
@@ -479,8 +524,10 @@ class Tools implements ContainerAwareInterface
      *
      * @return $this
      */
-    public function setSection($section)
-    {
+    public
+    function setSection(
+        $section
+    ) {
         $this->section = $section;
 
         return $this;
@@ -495,20 +542,26 @@ class Tools implements ContainerAwareInterface
      *
      * @return \stdClass
      */
-    public function getSort($field = "", $order = "", $post = "", $pagination = 'pagination', $path = "")
-    {
-        $post               = array_merge(
-            (array) $post,
+    public
+    function getSort(
+        $field = "",
+        $order = "",
+        $post = "",
+        $pagination = 'pagination',
+        $path = ""
+    ) {
+        $post = array_merge(
+            (array)$post,
             array(
-                "FhmPagination[" . $pagination . "]" => 1
+                "FhmPagination[".$pagination."]" => 1,
             )
         );
-        $sort               = new \stdClass();
-        $sort->path         = $path ? $path : $this->getUrl();
-        $sort->field        = $field ? $field : $this->sort[0];
-        $sort->order        = $order ? $order : $this->sort[1];
-        $sort->post         = json_encode($post);
-        $sort->idData       = "content_data";
+        $sort = new \stdClass();
+        $sort->path = $path ? $path : $this->getUrl();
+        $sort->field = $field ? $field : $this->sort[0];
+        $sort->order = $order ? $order : $this->sort[1];
+        $sort->post = json_encode($post);
+        $sort->idData = "content_data";
         $sort->idPagination = "content_pagination";
 
         return $sort;
@@ -520,8 +573,11 @@ class Tools implements ContainerAwareInterface
      *
      * @return $this
      */
-    public function setSort($field, $order = 'asc')
-    {
+    public
+    function setSort(
+        $field,
+        $order = 'asc'
+    ) {
         if ($field) {
             $this->sort = array($field, $order);
         }
@@ -536,26 +592,30 @@ class Tools implements ContainerAwareInterface
      *
      * @return $this
      */
-    public function setPagination($page = null, $left = null, $right = null)
-    {
+    public
+    function setPagination(
+        $page = null,
+        $left = null,
+        $right = null
+    ) {
         if (!$this->pagination) {
             if ($this->section == "Front" || $this->section == "Api") {
-                $this->pagination        = new \stdClass();
-                $this->pagination->page  = !is_null($page) ?
+                $this->pagination = new \stdClass();
+                $this->pagination->page = !is_null($page) ?
                     $page :
                     $this->getParameters(array('pagination', 'front', 'page'), 'fhm_fhm');
-                $this->pagination->left  = !is_null($left) ?
+                $this->pagination->left = !is_null($left) ?
                     $left :
                     $this->getParameters(array('pagination', 'front', 'left'), 'fhm_fhm');
                 $this->pagination->right = !is_null($right) ?
                     $right :
                     $this->getParameters(array('pagination', 'front', 'right'), 'fhm_fhm');
             } else {
-                $this->pagination        = new \stdClass();
-                $this->pagination->page  = !is_null($page) ?
+                $this->pagination = new \stdClass();
+                $this->pagination->page = !is_null($page) ?
                     $page :
                     $this->getParameters(array('pagination', 'admin', 'page'), 'fhm_fhm');
-                $this->pagination->left  = !is_null($left) ?
+                $this->pagination->left = !is_null($left) ?
                     $left :
                     $this->getParameters(array('pagination', 'admin', 'left'), 'fhm_fhm');
                 $this->pagination->right = !is_null($right) ?
@@ -568,95 +628,95 @@ class Tools implements ContainerAwareInterface
     }
 
     /**
-     * @param int    $page
-     * @param int    $countPage
-     * @param int    $countAll
+     * @param int $page
+     * @param int $countPage
+     * @param int $countAll
      * @param string $tag
-     * @param array  $post
+     * @param array $post
      * @param string $path
      *
      * @return \stdClass
      */
-    public function getPagination(
+    public
+    function getPagination(
         $page = 1,
         $countPage = 1,
         $countAll = 1,
         $tag = 'pagination',
         $post = array(),
         $path = ""
-    )
-    {
+    ) {
         $this->setPagination();
         // Object
-        $post                     = array_merge(
-            (array) $post,
+        $post = array_merge(
+            (array)$post,
             array(
                 "FhmSort[field]" => $this->sort[0],
-                "FhmSort[order]" => $this->sort[1]
+                "FhmSort[order]" => $this->sort[1],
             )
         );
-        $pagination               = new \stdClass();
-        $pagination->path         = $path ? $path : $this->getUrl();
-        $pagination->current      = $page;
-        $pagination->post         = json_encode($post);
-        $pagination->page         = $countPage;
-        $pagination->count        = $countAll;
-        $pagination->counter      = $this->getContainer()->get('translator')->trans(
-            $this->translation[1] . '.pagination.counter',
+        $pagination = new \stdClass();
+        $pagination->path = $path ? $path : $this->getUrl();
+        $pagination->current = $page;
+        $pagination->post = json_encode($post);
+        $pagination->page = $countPage;
+        $pagination->count = $countAll;
+        $pagination->counter = $this->getContainer()->get('translator')->trans(
+            $this->translation[1].'.pagination.counter',
             array('%count%' => $countPage, '%all%' => $pagination->count),
             $this->translation[0]
         );
-        $pagination->tag          = "FhmPagination[" . $tag . "]";
-        $pagination->max          = $this->pagination->page > 0 ?
+        $pagination->tag = "FhmPagination[".$tag."]";
+        $pagination->max = $this->pagination->page > 0 ?
             ceil($pagination->count / $this->pagination->page) :
             0;
-        $pagination->section      = $this->section;
-        $pagination->idData       = "content_data";
+        $pagination->section = $this->section;
+        $pagination->idData = "content_data";
         $pagination->idPagination = "content_pagination";
         // Pagination
         $datas = array();
-        $left  = $this->pagination->left;
+        $left = $this->pagination->left;
         $right = $this->pagination->right;
         // Pagination - Page 1
-        $obj          = new \stdClass();
-        $obj->page    = 1;
+        $obj = new \stdClass();
+        $obj->page = 1;
         $obj->current = ($pagination->current == 1) ? true : false;
-        $obj->text    = 1;
-        $datas[]      = $obj;
+        $obj->text = 1;
+        $datas[] = $obj;
         // Pagination - Separator
         if (($pagination->current - $left) > 2) {
-            $obj          = new \stdClass();
-            $obj->page    = ceil(($pagination->current - $left) / 2);
+            $obj = new \stdClass();
+            $obj->page = ceil(($pagination->current - $left) / 2);
             $obj->current = false;
-            $obj->text    = '...';
-            $datas[]      = $obj;
+            $obj->text = '...';
+            $datas[] = $obj;
         }
         // Pagination - Bloc current
         for ($i = ($pagination->current - $left); $i <= ($pagination->current + $right); $i++) {
             if ($i > 1 && $i < $pagination->max) {
-                $obj          = new \stdClass();
-                $obj->page    = $i;
+                $obj = new \stdClass();
+                $obj->page = $i;
                 $obj->current = ($i == $pagination->current) ? true : false;
-                $obj->text    = $i;
-                $datas[]      = $obj;
+                $obj->text = $i;
+                $datas[] = $obj;
             }
         }
         // Pagination - Separator
         if (($pagination->current + $right) < ($pagination->max - 1)) {
-            $obj          = new \stdClass();
-            $obj->page    = floor(($pagination->max - ($pagination->current + $right)) / 2) +
+            $obj = new \stdClass();
+            $obj->page = floor(($pagination->max - ($pagination->current + $right)) / 2) +
                 $pagination->current + $right;
             $obj->current = false;
-            $obj->text    = '...';
-            $datas[]      = $obj;
+            $obj->text = '...';
+            $datas[] = $obj;
         }
         // Pagination - Page max
         if ($pagination->max > 1) {
-            $obj          = new \stdClass();
-            $obj->page    = $pagination->max;
+            $obj = new \stdClass();
+            $obj->page = $pagination->max;
             $obj->current = ($pagination->current == $pagination->max);
             $obj->text = $pagination->max;
-            $datas[]   = $obj;
+            $datas[] = $obj;
         }
         // Pagination - data
         $pagination->datas = $datas;
@@ -667,13 +727,14 @@ class Tools implements ContainerAwareInterface
     /**
      * @return mixed
      */
-    public function getLastRoute()
+    public
+    function getLastRoute()
     {
         $request = $this->getContainer()->get('request_stack')->getCurrentRequest();
         $referer = $request->headers->get('referer');
-        $route   = ($referer && $request->getBaseUrl() == '') ? $referer : '';
-        $route   = ($referer == '' && $request->getBaseUrl()) ? $request->getBaseUrl() : $route;
-        $route   = ($referer && $request->getBaseUrl()) ?
+        $route = ($referer && $request->getBaseUrl() == '') ? $referer : '';
+        $route = ($referer == '' && $request->getBaseUrl()) ? $request->getBaseUrl() : $route;
+        $route = ($referer && $request->getBaseUrl()) ?
             str_replace($request->getBaseUrl(), '', substr($referer, strpos($referer, $request->getBaseUrl()))) :
             $route;
 
@@ -687,27 +748,70 @@ class Tools implements ContainerAwareInterface
      *
      * @return mixed|string
      */
-    public function getAlias($id, $name, $repository = null)
-    {
-        $alias   = "";
-        $unique  = false;
-        $code    = 0;
+    public
+    function getAlias(
+        $id,
+        $name,
+        $repository = null
+    ) {
+        $alias = "";
+        $unique = false;
+        $code = 0;
         $replace = array(
-            'À' => 'a', 'Á' => 'a', 'Â' => 'a', 'Ä' => 'a', 'à' => 'a', 'á' => 'a', 'â' => 'a', 'ä' => 'a', '@' => 'a',
-            'È' => 'e', 'É' => 'e', 'Ê' => 'e', 'Ë' => 'e', 'è' => 'e', 'é' => 'e', 'ê' => 'e', 'ë' => 'e', '€' => 'e',
-            'Ì' => 'i', 'Í' => 'i', 'Î' => 'i', 'Ï' => 'i', 'ì' => 'i', 'í' => 'i', 'î' => 'i', 'ï' => 'i',
-            'Ò' => 'o', 'Ó' => 'o', 'Ô' => 'o', 'Ö' => 'o', 'ò' => 'o', 'ó' => 'o', 'ô' => 'o', 'ö' => 'o',
-            'Ù' => 'u', 'Ú' => 'u', 'Û' => 'u', 'Ü' => 'u', 'ù' => 'u', 'ú' => 'u', 'û' => 'u', 'ü' => 'u', 'µ' => 'u',
-            'Œ' => 'oe', 'œ' => 'oe',
-            '$' => 's'
+            'À' => 'a',
+            'Á' => 'a',
+            'Â' => 'a',
+            'Ä' => 'a',
+            'à' => 'a',
+            'á' => 'a',
+            'â' => 'a',
+            'ä' => 'a',
+            '@' => 'a',
+            'È' => 'e',
+            'É' => 'e',
+            'Ê' => 'e',
+            'Ë' => 'e',
+            'è' => 'e',
+            'é' => 'e',
+            'ê' => 'e',
+            'ë' => 'e',
+            '€' => 'e',
+            'Ì' => 'i',
+            'Í' => 'i',
+            'Î' => 'i',
+            'Ï' => 'i',
+            'ì' => 'i',
+            'í' => 'i',
+            'î' => 'i',
+            'ï' => 'i',
+            'Ò' => 'o',
+            'Ó' => 'o',
+            'Ô' => 'o',
+            'Ö' => 'o',
+            'ò' => 'o',
+            'ó' => 'o',
+            'ô' => 'o',
+            'ö' => 'o',
+            'Ù' => 'u',
+            'Ú' => 'u',
+            'Û' => 'u',
+            'Ü' => 'u',
+            'ù' => 'u',
+            'ú' => 'u',
+            'û' => 'u',
+            'ü' => 'u',
+            'µ' => 'u',
+            'Œ' => 'oe',
+            'œ' => 'oe',
+            '$' => 's',
         );
         while ($alias == "" || !$unique) {
-            $alias  = $name;
-            $alias  = strtr($alias, $replace);
-            $alias  = preg_replace('#[^A-Za-z0-9]+#', '-', $alias);
-            $alias  = trim($alias, '-');
-            $alias  = strtolower($alias);
-            $alias  = ($code > 0) ? $alias . '-' . $code : $alias;
+            $alias = $name;
+            $alias = strtr($alias, $replace);
+            $alias = preg_replace('#[^A-Za-z0-9]+#', '-', $alias);
+            $alias = trim($alias, '-');
+            $alias = strtolower($alias);
+            $alias = ($code > 0) ? $alias.'-'.$code : $alias;
             $unique = $this->dmRepository($repository)->isUnique($id, $alias);
             $code++;
         }
@@ -719,19 +823,25 @@ class Tools implements ContainerAwareInterface
      * @param            $id
      * @param            $name
      * @param bool|false $multiple
-     * @param null       $repository
-     * @param int        $length
+     * @param null $repository
+     * @param int $length
      *
      * @return string
      */
-    public function getUnique($id, $name, $multiple = false, $repository = null, $length = 4)
-    {
-        $alias  = "";
+    public
+    function getUnique(
+        $id,
+        $name,
+        $multiple = false,
+        $repository = null,
+        $length = 4
+    ) {
+        $alias = "";
         $unique = false;
-        $code   = $multiple ? 1 : 0;
+        $code = $multiple ? 1 : 0;
         while ($alias == "" || !$unique) {
-            $alias  = $name;
-            $alias  = ($code > 0) ? $alias . '_' . str_pad($code, $length, '0', STR_PAD_LEFT) : $alias;
+            $alias = $name;
+            $alias = ($code > 0) ? $alias.'_'.str_pad($code, $length, '0', STR_PAD_LEFT) : $alias;
             $unique = $this->dmRepository($repository)->isUnique($id, $alias);
             $code++;
         }
@@ -744,8 +854,10 @@ class Tools implements ContainerAwareInterface
      *
      * @return ArrayCollection
      */
-    public function getCollection($datas)
-    {
+    public
+    function getCollection(
+        $datas
+    ) {
         $collection = new ArrayCollection();
         foreach ($datas as $data) {
             $collection->add($data);
@@ -759,8 +871,10 @@ class Tools implements ContainerAwareInterface
      *
      * @return array
      */
-    public function getList($datas)
-    {
+    public
+    function getList(
+        $datas
+    ) {
         $list = array();
         foreach ($datas as $data) {
             if ($data->getActive() && !$data->getDelete()) {
@@ -777,11 +891,10 @@ class Tools implements ContainerAwareInterface
      *
      * @return mixed
      */
-    public function getParameters($route, $parent)
-    {
+    public function getParameters($route, $parent) {
         $parameters = $this->getContainer()->getParameter($parent);
-        $value      = $parameters;
-        foreach ((array) $route as $sub) {
+        $value = $parameters;
+        foreach ((array)$route as $sub) {
             $value = $value[$sub];
         }
 
@@ -790,13 +903,12 @@ class Tools implements ContainerAwareInterface
 
     /**
      * @param array $parameters
-     * @param null  $route
-     * @param null  $referenceType
+     * @param null $route
+     * @param null $referenceType
      *
      * @return string
      */
-    public function getUrl($route = null, $parameters = array(), $referenceType = null)
-    {
+    public function getUrl($route = null, $parameters = array(), $referenceType = null) {
         $route = $route == null ? $this->getContainer()->get('request')->get('_route') : $route;
 
         return $this->getContainer()->get('router')->generate($route, $parameters, $referenceType);
@@ -807,7 +919,11 @@ class Tools implements ContainerAwareInterface
      */
     public function getUser()
     {
-        return $this->getContainer()->get('security.token_storage')->getToken()->getUser();
+        if ($this->getContainer()->get('security.token_storage')->getToken()){
+            return $this->getContainer()->get('security.token_storage')->getToken()->getUser();
+        }
+
+        return null;
     }
 
     /**
@@ -829,13 +945,12 @@ class Tools implements ContainerAwareInterface
     /**
      * @param       $key
      * @param array $parameters
-     * @param null  $domain
+     * @param null $domain
      *
      * @return string
      */
-    public function trans($key, $parameters = array(), $domain = null)
-    {
-        $key    = $key[0] == '.' ? $this->translation[1] . $key : $key;
+    public function trans($key, $parameters = array(), $domain = null) {
+        $key = $key[0] == '.' ? $this->translation[1].$key : $key;
         $domain = $domain == null ? $this->translation[0] : $domain;
 
         return $this->getContainer()->get('translator')->trans($key, $parameters, $domain);
@@ -854,11 +969,12 @@ class Tools implements ContainerAwareInterface
      *
      * @return mixed
      */
-    public function dmRepository($repository = null)
-    {
+    public function dmRepository($repository = null) {
         $this->initLanguage();
 
-        return $this->dm()->getRepository(($repository == null) ? $this->repository : $repository)->setParent($this->parent)->setLanguage($this->language);
+        return $this->dm()->getRepository(($repository == null) ? $this->repository : $repository)->setParent(
+            $this->parent
+        )->setLanguage($this->language);
     }
 
     /**
@@ -866,8 +982,7 @@ class Tools implements ContainerAwareInterface
      *
      * @return $this
      */
-    public function dmDetach(&$obj)
-    {
+    public function dmDetach(&$obj) {
         if ($obj != "") {
             $this->dm()->detach($obj);
         }
@@ -880,8 +995,8 @@ class Tools implements ContainerAwareInterface
      *
      * @return $this
      */
-    public function dmPersist(&$obj)
-    {
+    public
+    function dmPersist(&$obj) {
         if ($obj != "") {
             $this->dm()->persist($obj);
             $this->dm()->flush();
@@ -895,8 +1010,8 @@ class Tools implements ContainerAwareInterface
      *
      * @return $this
      */
-    public function dmRemove(&$obj)
-    {
+    public
+    function dmRemove(&$obj) {
         if ($obj != "") {
             $this->dm()->remove($obj);
             $this->dm()->flush();

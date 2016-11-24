@@ -63,9 +63,9 @@ fhm:
             start:                              Début
             end:                                Fin
             close:                              Fermé
-            hour:                               %start% à %end%
+            hour:                               "%start% à %end%"
             closed:                             Fermé
-            reopen:                             Réouverture prévue le %date%
+            reopen:                             Réouverture prévue le "%date%"
         close:
             check:                              Fermé
             reason:                             Raison

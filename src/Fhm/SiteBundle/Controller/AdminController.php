@@ -50,8 +50,7 @@ class AdminController extends FhmController
     {
         $response  = parent::createAction($request);
         $documents = $this->fhm_tools->dmRepository()->findAll();
-        if(count($documents) == 1)
-        {
+        if (count($documents) == 1) {
             $document = $documents[0];
             $document->setDefault(true);
             $document->setActive(true);

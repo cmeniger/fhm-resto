@@ -4,6 +4,7 @@ namespace Fhm\CardBundle\Controller;
 use Doctrine\Common\Collections\ArrayCollection;
 use Fhm\FhmBundle\Controller\RefApiController as FhmController;
 use Fhm\CardBundle\Document\Card;
+use Fhm\FhmBundle\Services\Tools;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -12,15 +13,16 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 /**
- * @Route("/api/card")
+ * @Route("/api/card", service="fhm_card_controller_api")
  */
 class ApiController extends FhmController
 {
     /**
      * Constructor
      */
-    public function __construct()
+    public function __construct(Tools $tools)
     {
+        $this->setFhmTools($tools);
         parent::__construct('Fhm', 'Card', 'card');
     }
 
@@ -88,8 +90,8 @@ class ApiController extends FhmController
      */
     public function embedAction(Request $request, $id, $template)
     {
-        $document = $this->dmRepository()->find($id);
-        $instance = $this->instanceData($document);
+        $document = $this->fhm_tools->dmRepository()->find($id);
+        $instance = $this->fhm_tools->instanceData($document);
         // ERROR - unknown
         if($document == "")
         {
@@ -101,7 +103,7 @@ class ApiController extends FhmController
                 "::FhmCard/Template/" . ucfirst(strtolower($template)) . "/index.html.twig",
                 array(
                     "document"  => $document,
-                    "documents" => $this->dmRepository('FhmCardBundle:CardCategory')->getByCard($document, $instance->grouping->filtered),
+                    "documents" => $this->fhm_tools->dmRepository('FhmCardBundle:CardCategory')->getByCard($document, $instance->grouping->filtered),
                     "instance"  => $instance,
                 )
             )
@@ -118,8 +120,8 @@ class ApiController extends FhmController
      */
     public function editorAction(Request $request, $id)
     {
-        $document = $this->dmRepository()->find($id);
-        $instance = $this->instanceData($document);
+        $document = $this->fhm_tools->dmRepository()->find($id);
+        $instance = $this->fhm_tools->instanceData($document);
         $this->_authorized($document);
 
         return new Response(
@@ -143,8 +145,8 @@ class ApiController extends FhmController
      */
     public function editorPreviewAction(Request $request, $id)
     {
-        $document = $this->dmRepository()->find($id);
-        $instance = $this->instanceData($document);
+        $document = $this->fhm_tools->dmRepository()->find($id);
+        $instance = $this->fhm_tools->instanceData($document);
         $this->_authorized($document);
 
         return new Response(

@@ -1,4 +1,15 @@
 services:
+    fhm_user_controller_admin:
+        class: Fhm\UserBundle\Controller\AdminController
+        arguments: ["@fhm_tools"]
+
+    fhm_user_controller_api:
+        class: Fhm\UserBundle\Controller\ApiController
+        arguments: ["@fhm_tools"]
+
+    fhm_user_controller_front:
+        class: Fhm\UserBundle\Controller\FrontController
+        arguments: ["@fhm_tools"]
 
     fhm_user.profile.form.type:
         class: Fhm\UserBundle\Form\Type\Front\UpdateType

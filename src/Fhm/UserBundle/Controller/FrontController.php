@@ -2,6 +2,7 @@
 
 namespace Fhm\UserBundle\Controller;
 
+use Fhm\FhmBundle\Services\Tools;
 use Fhm\UserBundle\Document\User;
 use Fhm\FhmBundle\Controller\RefFrontController as FhmController;
 use Symfony\Component\HttpFoundation\Request;
@@ -9,15 +10,16 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 /**
- * @Route("/user")
+ * @Route("/user", service ="fhm_user_controller_front")
  */
 class FrontController extends FhmController
 {
     /**
      * Constructor
      */
-    public function __construct()
+    public function __construct(Tools $tools)
     {
+        $this->setFhmTools($tools);
         parent::__construct('Fhm', 'User', 'user');
     }
 

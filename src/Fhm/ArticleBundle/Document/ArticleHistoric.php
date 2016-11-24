@@ -25,9 +25,15 @@ class ArticleHistoric extends Article
     public function historicMerge($dm, $document)
     {
         // ReferenceOne
-        $this->image   = $document->getImage() ? $dm->getRepository('FhmMediaBundle:Media')->find($document->getImage()->getId()) : null;
-        $this->gallery = $document->getGallery() ? $dm->getRepository('FhmGalleryBundle:Gallery')->find($document->getGallery()->getId()) : null;
-        $this->author  = $document->getAuthor() ? $dm->getRepository('FhmUserBundle:User')->find($document->getAuthor()->getId()) : null;
+        $this->image   = $document->getImage() ?
+            $dm->getRepository('FhmMediaBundle:Media')->find($document->getImage()->getId()) :
+            null;
+        $this->gallery = $document->getGallery() ?
+            $dm->getRepository('FhmGalleryBundle:Gallery')->find($document->getGallery()->getId()):
+            null;
+        $this->author  = $document->getAuthor() ?
+            $dm->getRepository('FhmUserBundle:User')->find($document->getAuthor()->getId()) :
+            null;
         // Rest
         $this->title      = $document->getTitle();
         $this->subtitle   = $document->getSubtitle();
@@ -43,8 +49,7 @@ class ArticleHistoric extends Article
     public function historicDifference()
     {
         $count = 0;
-        if($this->historic_parent)
-        {
+        if ($this->historic_parent) {
             $count += $this->getTitle() != $this->getHistoricParent()->getTitle() ? 1 : 0;
             $count += $this->getSubtitle() != $this->getHistoricParent()->getSubtitle() ? 1 : 0;
             $count += $this->getResume() != $this->getHistoricParent()->getResume() ? 1 : 0;

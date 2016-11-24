@@ -118,7 +118,7 @@ class FrontController extends FhmController
         // Ajax pagination request
         if(isset($dataPagination['pagination']))
         {
-            $documents = $this->fhm_tools->dmRepository("FhmPartnerBundle:Partner")->getPartnerByGroupIndex($document, $dataSearch['search'], $dataPagination['pagination'], $this->fhm_tools->getParameter(array('pagination', 'front', 'page'), 'fhm_fhm'));
+            $documents = $this->fhm_tools->dmRepository("FhmPartnerBundle:Partner")->getPartnerByGroupIndex($document, $dataSearch['search'], $dataPagination['pagination'], $this->fhm_tools->getParameters(array('pagination', 'front', 'page'), 'fhm_fhm'));
 
             return array_merge(
                 $response,
@@ -130,7 +130,7 @@ class FrontController extends FhmController
         // Router request
         else
         {
-            $documents = $this->fhm_tools->dmRepository("FhmPartnerBundle:Partner")->getPartnerByGroupIndex($document, $dataSearch['search'], 1, $this->fhm_tools->getParameter(array('pagination', 'front', 'page'), 'fhm_fhm'));
+            $documents = $this->fhm_tools->dmRepository("FhmPartnerBundle:Partner")->getPartnerByGroupIndex($document, $dataSearch['search'], 1, $this->fhm_tools->getParameters(array('pagination', 'front', 'page'), 'fhm_fhm'));
 
             return array_merge(
                 $response,
@@ -176,7 +176,7 @@ class FrontController extends FhmController
         // Ajax pagination request
         if(isset($dataPagination['pagination']))
         {
-            $documents = $this->fhm_tools->dmRepository("FhmPartnerBundle:Partner")->getPartnerByGroupIndex($document, '', $dataPagination['pagination'], $this->fhm_tools->getParameter(array('pagination', 'front', 'page'), 'fhm_fhm'));
+            $documents = $this->fhm_tools->dmRepository("FhmPartnerBundle:Partner")->getPartnerByGroupIndex($document, '', $dataPagination['pagination'], $this->fhm_tools->getParameters(array('pagination', 'front', 'page'), 'fhm_fhm'));
 
             return array_merge(
                 $response,
@@ -188,7 +188,7 @@ class FrontController extends FhmController
         // Router request
         else
         {
-            $documents = $this->fhm_tools->dmRepository("FhmPartnerBundle:Partner")->getPartnerByGroupIndex($document, '', 1, $this->fhm_tools->getParameter(array('pagination', 'front', 'page'), 'fhm_fhm'));
+            $documents = $this->fhm_tools->dmRepository("FhmPartnerBundle:Partner")->getPartnerByGroupIndex($document, '', 1, $this->fhm_tools->getParameters(array('pagination', 'front', 'page'), 'fhm_fhm'));
 
             return array_merge(
                 $response,

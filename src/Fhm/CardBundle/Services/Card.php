@@ -1,8 +1,8 @@
 <?php
 namespace Fhm\CardBundle\Services;
 
-use Fhm\FhmBundle\Controller\FhmController;
 use Doctrine\Common\Collections\ArrayCollection;
+use Fhm\FhmBundle\Services\Tools;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Session\Session;
 
@@ -11,20 +11,21 @@ use Symfony\Component\HttpFoundation\Session\Session;
  *
  * @package Fhm\CardBundle\Services
  */
-class Card extends FhmController
+class Card
 {
     private $categories;
     private $products;
     private $ingredients;
+    private $tools;
 
     /**
-     * @param ContainerInterface $container
+     * Card constructor.
+     * @param Tools $tools
      */
-    public function __construct(ContainerInterface $container)
+    public function __construct(Tools $tools)
     {
-        $this->container = $container;
+        $this->tools = $tools;
         $this->_initialization();
-        parent::__construct();
     }
 
     /**
@@ -43,9 +44,9 @@ class Card extends FhmController
         $card->setLanguages($parent->getLanguages());
         $card->setActive(true);
         $card->setParent($parent);
-        $this->dmPersist($card);
+        $this->tools->dmPersist($card);
         // Categories
-        $categories = $this->dmRepository('FhmCardBundle:CardCategory')->getDefault();
+        $categories = $this->tools->dmRepository('FhmCardBundle:CardCategory')->getDefault();
         foreach($categories as $category)
         {
             if($category->getParents()->count() == 0)
@@ -54,13 +55,13 @@ class Card extends FhmController
             }
         }
         // Products
-        $products = $this->dmRepository('FhmCardBundle:CardProduct')->getDefault();
+        $products = $this->tools->dmRepository('FhmCardBundle:CardProduct')->getDefault();
         foreach($products as $product)
         {
             $this->_duplicateProduct($card, $product);
         }
         // Ingredients
-        $ingredients = $this->dmRepository('FhmCardBundle:CardIngredient')->getDefault();
+        $ingredients = $this->tools->dmRepository('FhmCardBundle:CardIngredient')->getDefault();
         foreach($ingredients as $ingredient)
         {
             $this->_duplicateIngredient($card, $ingredient);
@@ -108,10 +109,10 @@ class Card extends FhmController
         {
             $data->addParent($parent);
         }
-        $this->dmPersist($data);
+        $this->tools->dmPersist($data);
         // Card
         $card->addCategory($data, false);
-        $this->dmPersist($card);
+        $this->tools->dmPersist($card);
         // Sons
         foreach($category->getSons() as $son)
         {
@@ -165,7 +166,7 @@ class Card extends FhmController
         {
             $data->addCategory($parent);
         }
-        $this->dmPersist($data);
+        $this->tools->dmPersist($data);
         // Ingredients
         foreach($product->getIngredients() as $ingredient)
         {
@@ -211,7 +212,7 @@ class Card extends FhmController
         {
             $data->addProduct($parent);
         }
-        $this->dmPersist($data);
+        $this->tools->dmPersist($data);
 
         return $this;
     }

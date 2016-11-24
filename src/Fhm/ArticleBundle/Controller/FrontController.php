@@ -3,20 +3,23 @@ namespace Fhm\ArticleBundle\Controller;
 
 use Fhm\FhmBundle\Controller\RefFrontController as FhmController;
 use Fhm\ArticleBundle\Document\Article;
+use Fhm\FhmBundle\Services\Tools;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 /**
- * @Route("/article")
+ * @Route("/article", service="fhm_article_controller_front")
  */
 class FrontController extends FhmController
 {
     /**
-     * Constructor
+     * FrontController constructor.
+     * @param Tools $tools
      */
-    public function __construct()
+    public function __construct(Tools $tools)
     {
+        $this->setFhmTools($tools);
         parent::__construct('Fhm', 'Article', 'article');
     }
 
@@ -44,9 +47,12 @@ class FrontController extends FhmController
     public function createAction(Request $request)
     {
         // For activate this route, delete next line
-        throw $this->createNotFoundException($this->get('translator')->trans('fhm.error.route', array(), 'FhmFhmBundle'));
+        throw $this->createNotFoundException(
+            $this->get('translator')->trans('fhm.error.route', array(), 'FhmFhmBundle')
+        );
 
-        return parent::createAction($request);
+        /** to uncomment */
+        //return parent::createAction($request);
     }
 
     /**
@@ -61,9 +67,12 @@ class FrontController extends FhmController
     public function duplicateAction(Request $request, $id)
     {
         // For activate this route, delete next line
-        throw $this->createNotFoundException($this->get('translator')->trans('fhm.error.route', array(), 'FhmFhmBundle'));
+        throw $this->createNotFoundException(
+            $this->get('translator')->trans('fhm.error.route', array(), 'FhmFhmBundle')
+        );
 
-        return parent::duplicateAction($request, $id);
+        /** to uncomment */
+        //return parent::duplicateAction($request, $id);
     }
 
     /**
@@ -78,9 +87,12 @@ class FrontController extends FhmController
     public function updateAction(Request $request, $id)
     {
         // For activate this route, delete next line
-        throw $this->createNotFoundException($this->get('translator')->trans('fhm.error.route', array(), 'FhmFhmBundle'));
+        throw $this->createNotFoundException(
+            $this->get('translator')->trans('fhm.error.route', array(), 'FhmFhmBundle')
+        );
 
-        return parent::updateAction($request, $id);
+        /**to uncomment**/
+        //return parent::updateAction($request, $id);
     }
 
     /**
@@ -108,9 +120,12 @@ class FrontController extends FhmController
     public function deleteAction($id)
     {
         // For activate this route, delete next line
-        throw $this->createNotFoundException($this->get('translator')->trans('fhm.error.route', array(), 'FhmFhmBundle'));
+        throw $this->createNotFoundException(
+            $this->get('translator')->trans('fhm.error.route', array(), 'FhmFhmBundle')
+        );
 
-        return parent::deleteAction($id);
+        /** to uncomment */
+        //return parent::deleteAction($id);
     }
 
     /**

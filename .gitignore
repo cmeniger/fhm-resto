@@ -15,4 +15,6 @@
 /vendor/
 /web/bundles/
 /web/rockmongo
-/.idea
+**/.idea/*
+**/.idea/workspace.xml
+**/.idea/tasks.xml

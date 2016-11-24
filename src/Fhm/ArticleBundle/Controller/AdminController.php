@@ -3,20 +3,23 @@ namespace Fhm\ArticleBundle\Controller;
 
 use Fhm\FhmBundle\Controller\RefAdminController as FhmController;
 use Fhm\ArticleBundle\Document\Article;
+use Fhm\FhmBundle\Services\Tools;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 /**
- * @Route("/admin/article")
+ * @Route("/admin/article", service="fhm_article_controller_admin")
  */
 class AdminController extends FhmController
 {
     /**
-     * Constructor
+     * AdminController constructor.
+     * @param Tools $tools
      */
-    public function __construct()
+    public function __construct(Tools $tools)
     {
+        $this->setFhmTools($tools);
         parent::__construct('Fhm', 'Article', 'article');
     }
 
