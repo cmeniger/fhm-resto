@@ -61,7 +61,7 @@ class RefAdminController extends Controller
         $classType      = $this->form->type->search;
         //$type, $data = null, array $options = array()
         $form           = $this->createForm($classType, null, array('instance'=>$instance));
-        $request        = $this->get('request');
+        $request        = $this->get('request_stack');
         $dataSearch     = $request->get('FhmSearch');
         $dataPagination = $request->get('FhmPagination');
         $dataSort       = $request->get('FhmSort') ? $request->get('FhmSort') : $this->fhm_tools->getSort();
