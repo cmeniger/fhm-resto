@@ -297,14 +297,8 @@ class RefAdminController extends Controller
             throw new HttpException(403, $this->fhm_tools->trans('.error.forbidden'));
         }
         $this->fhm_tools->historic($document);
-        $form = $this->createForm(
-            $classType,
-            $document,
-            array(
-                'data_class' => $instance->class,
-                'translation_domain' => $instance->translation
-            )
-        );        $handler = new $classHandler($form, $request);
+        $form = $this->createForm($classType, $document);
+        $handler = new $classHandler($form, $request);
         $process = $handler->process();
         if ($process) {
             $data = $request->get($form->getName());

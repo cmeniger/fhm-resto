@@ -1,0 +1,562 @@
+.mce-fhmmedia{
+    padding: 1em;
+}
+
+.mce-fhmmedia i{
+    font-family: 'FontAwesome';
+}
+
+.mce-fhmmedia .top{
+    clear:         both;
+    margin-bottom: 1rem;
+    width:         100%;
+}
+
+.mce-fhmmedia .top input{
+    float:  left;
+    width:  50%;
+    height: 3em;
+}
+
+.mce-fhmmedia .top button{
+    float:            left;
+    width:            3em;
+    height:           3em;
+    text-align:       center;
+    cursor:           pointer;
+    background-color: #008CBA;
+    border-color:     #007095;
+    transition:       background-color .3s ease-out;
+}
+
+.mce-fhmmedia .top button[type=submit]{
+    background-color: #008CBA;
+    border-color:     #007095;
+}
+
+.mce-fhmmedia .top button[type=submit]:hover{
+    background-color: #007095;
+}
+
+.mce-fhmmedia .top button[type=reset]{
+    background-color: #F08A24;
+    border-color:     #CF6E0E;
+}
+
+.mce-fhmmedia .top button[type=reset]:hover{
+    background-color: #CF6E0E;
+}
+
+.mce-fhmmedia .top button i{
+    color: #FFF;
+}
+
+.mce-fhmmedia .top a{
+    float:            right;
+    height:           3em;
+    line-height:      3em;
+    text-align:       center;
+    cursor:           pointer;
+    padding:          0 1em;
+    background-color: #43AC6A;
+    border-color:     #368A55;
+    transition:       background-color .3s ease-out;
+}
+
+.mce-fhmmedia .top a:hover{
+    background-color: #368A55;
+}
+
+.mce-fhmmedia .top a[media-new]:before{
+    padding:     0 10px 0 0;
+    font-family: 'FontAwesome';
+    content:     '\f067';
+}
+
+.mce-fhmmedia .top a[media-selector]:before{
+    padding:     0 10px 0 0;
+    font-family: 'FontAwesome';
+    content:     '\f00a';
+}
+
+.mce-fhmmedia .content{
+    clear:         both;
+    margin-bottom: 1rem;
+    width:         100%;
+    height:        570px;
+    overflow-y:    auto;
+}
+
+.mce-fhmmedia .content .tags{
+    box-sizing: border-box;
+    float:      left;
+    width:      15%;
+    height:     100%;
+    overflow:   auto;
+    padding:    0.5em;
+}
+
+.mce-fhmmedia .content .tags .label{
+    position:         relative;
+    display:          inline-block;
+    line-height:      1;
+    margin-bottom:    auto;
+    white-space:      nowrap;
+    padding:          .25rem .5rem;
+    font-size:        .6875rem;
+    background-color: #008CBA;
+    color:            #FFF;
+    width:            90%;
+    overflow:         hidden;
+}
+
+.mce-fhmmedia .content .tags .label i{
+    position:         absolute;
+    right:            0;
+    top:              0;
+    height:           100%;
+    padding:          4px 5px;
+    color:            inherit;
+    background-color: inherit;
+    border-radius:    inherit;
+    font-size:        inherit;
+}
+
+.mce-fhmmedia .content .tags ul li a{
+    padding: 0;
+}
+
+.mce-fhmmedia .content .tags ul li:first-child{
+    padding-bottom: 1em;
+    margin-bottom:  1em;
+    border-bottom:  1px solid #EEE;
+}
+
+.mce-fhmmedia .content .datas{
+    box-sizing: border-box;
+    float:      right;
+    width:      80%;
+    height:     100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+    padding:    0.5em;
+}
+
+.mce-fhmmedia .content .datas .breadcrumbs{
+    display:          block;
+    list-style:       none;
+    margin-left:      0;
+    padding:          0.5em 0.8em;
+    background-color: #F4F4F4;
+    border-color:     #DCDCDC;
+    border-radius:    3px;
+}
+
+.mce-fhmmedia .content .datas .breadcrumbs li{
+    font-size: 0.8em;
+}
+
+.mce-fhmmedia .content .datas .breadcrumbs li a{
+    font-size: 1em;
+}
+
+.mce-fhmmedia .content .datas .subtags{
+    width:      100%;
+    margin-top: 1em;
+    overflow:   auto;
+}
+
+.mce-fhmmedia .content .datas .subtags .data{
+    float:      left;
+    padding:    0 1em;
+    width:      25%;
+    box-sizing: border-box;
+}
+
+.mce-fhmmedia .content .datas .subtags .data a{
+    position:        relative;
+    display:         block;
+    margin:          10px 0;
+    width:           100%;
+    height:          30px;
+    line-height:     30px;
+    cursor:          pointer;
+    font-size:       14px;
+    color:           #000;
+    background:      #FFF;
+    background-size: cover !important;
+    box-shadow:      0 1px 1px 0 rgba(0, 0, 0, .2);
+}
+
+.mce-fhmmedia .content .datas .subtags .data a .name{
+    display:      block;
+    width:        100%;
+    line-height:  30px;
+    padding-left: 35px;
+    text-align:   center;
+    color:        #999;
+    box-sizing:   border-box;
+    overflow:     hidden;
+}
+
+.mce-fhmmedia .content .datas .subtags .data a .icon{
+    display:          block;
+    position:         absolute;
+    top:              0;
+    left:             0;
+    height:           30px;
+    width:            30px;
+    line-height:      30px;
+    color:            #FFF;
+    background-color: #EEE;
+    font-size:        18px;
+    text-align:       center;
+}
+
+.mce-fhmmedia .content .datas .subtags .data a .icon i{
+    vertical-align: middle;
+    color:          #FFF;
+    font-size:      18px;
+}
+
+.mce-fhmmedia .content .datas .medias{
+    width:    100%;
+    overflow: auto;
+}
+
+.mce-fhmmedia .content .datas .medias .data{
+    float:      left;
+    padding:    0 1em;
+    width:      25%;
+    box-sizing: border-box;
+}
+
+.mce-fhmmedia .content .datas .medias .data .item{
+    position:        relative;
+    display:         block;
+    margin-top:      20px;
+    height:          110px;
+    background-size: cover;
+    box-shadow:      0 1px 1px 0 rgba(0, 0, 0, .2);
+    background-size: cover !important;
+}
+
+.mce-fhmmedia .content .datas .medias .data .item:hover{
+    color:      #FFF !important;
+    background: #008CBA !important;
+}
+
+.mce-fhmmedia .content .datas .medias .data .item.file:before{
+    display:     block;
+    padding-top: 20px;
+    color:       #EEE;
+    text-align:  center;
+    font-family: 'FontAwesome';
+    font-size:   50px;
+    content:     '\f016';
+}
+
+.mce-fhmmedia .content .datas .medias .data .item.file.pdf:before{
+    content: '\f1c1';
+}
+
+.mce-fhmmedia .content .datas .medias .data .item.file.csv:before,
+.mce-fhmmedia .content .datas .medias .data .item.file.xls:before,
+.mce-fhmmedia .content .datas .medias .data .item.file.xlsx:before{
+    content: '\f1c3';
+}
+
+.mce-fhmmedia .content .datas .medias .data .item.file.doc:before,
+.mce-fhmmedia .content .datas .medias .data .item.file.docx:before,
+.mce-fhmmedia .content .datas .medias .data .item.file.msword:before{
+    content: '\f1c2';
+}
+
+.mce-fhmmedia .content .datas .medias .data .item.file.ppt:before,
+.mce-fhmmedia .content .datas .medias .data .item.file.pptx:before{
+    content: '\f1c4';
+}
+
+.mce-fhmmedia .content .datas .medias .data .item.file.zip:before,
+.mce-fhmmedia .content .datas .medias .data .item.file.rar:before{
+    content: '\f1c6';
+}
+
+.mce-fhmmedia .content .datas .medias .data .item.file.avi:before,
+.mce-fhmmedia .content .datas .medias .data .item.file.mov:before,
+.mce-fhmmedia .content .datas .medias .data .item.file.mp4:before,
+.mce-fhmmedia .content .datas .medias .data .item.file.mpeg:before{
+    content: '\f1c8';
+}
+
+.mce-fhmmedia .content .datas .medias .data .item.file.txt:before{
+    content: '\f0f6';
+}
+
+.mce-fhmmedia .content .datas .medias .data .item.file.mp3:before{
+    content: '\f1c7';
+}
+
+.mce-fhmmedia .content .datas .medias .data .item.file.html:before,
+.mce-fhmmedia .content .datas .medias .data .item.file.php:before,
+.mce-fhmmedia .content .datas .medias .data .item.file.js:before,
+.mce-fhmmedia .content .datas .medias .data .item.file.twig:before,
+.mce-fhmmedia .content .datas .medias .data .item.file.css:before{
+    content: '\f1c9';
+}
+
+.mce-fhmmedia .content .datas .medias .data .item.file:hover:before{
+    content: '';
+}
+
+.mce-fhmmedia .content .datas .medias .data .item:hover .actions{
+    display: block !important;
+}
+
+.mce-fhmmedia .content .datas .medias .data .item .name{
+    position:         absolute;
+    z-index:          2;
+    padding:          0 5px;
+    bottom:           0;
+    left:             0;
+    width:            100%;
+    height:           20px;
+    line-height:      20px;
+    color:            #999;
+    background-color: #EEE;
+    font-size:        9pt;
+    text-align:       center;
+    box-sizing:       border-box;
+    overflow:         hidden;
+}
+
+.mce-fhmmedia .content .datas .medias .data .item .extension{
+    position: absolute;
+    right:    3px;
+    top:      3px;
+    z-index:  2;
+}
+
+.mce-fhmmedia .content .datas .medias .data .item .extension span{
+    padding:          3px;
+    font-size:        0.8em;
+    background-color: #EEE;
+    color:            #999;
+    line-height:      1;
+}
+
+.mce-fhmmedia .content .datas .medias .data .item .extension span small{
+    font-size:   60%;
+    line-height: 1.6;
+}
+
+.mce-fhmmedia .content .datas .medias .data .item .actions{
+    display:    none;
+    position:   absolute;
+    z-index:    1;
+    top:        0;
+    left:       0;
+    padding:    40px 0 0 0;
+    margin:     0;
+    width:      100%;
+    height:     100%;
+    text-align: center;
+    box-sizing: border-box;
+}
+
+.mce-fhmmedia .content .datas .medias .data .item .actions i{
+    color:     #FFF;
+    font-size: 2em;
+}
+
+.mce-fhmmedia .content .datas .nodata{
+    text-align: center;
+    font-size:  3em;
+    color:      #EEE;
+    padding:    3em;
+    margin-top: 1em;
+}
+
+.mce-fhmmedia .content .column{
+    float:      left;
+    padding:    0 2em;
+    width:      50%;
+    box-sizing: border-box;
+}
+
+.mce-fhmmedia .content .column fieldset{
+    border:     1px solid #DDD;
+    margin:     1.125rem 0;
+    padding:    1.25rem;
+    box-sizing: border-box;
+}
+
+.mce-fhmmedia .content .column input:not([type]), .mce-fhmmedia .content .column input[type=text], .mce-fhmmedia .content .column textarea{
+    border-radius:    0;
+    background-color: #FFF;
+    border:           solid 1px #CCC;
+    color:            rgba(0, 0, 0, .75);
+    display:          block;
+    font-family:      inherit;
+    font-size:        .875rem;
+    height:           2.3125rem;
+    margin:           0 0 1rem;
+    padding:          .5rem;
+    width:            100%;
+    box-shadow:       inset 0 1px 2px rgba(0, 0, 0, .1);
+    box-sizing:       border-box;
+    transition:       border-color .15s linear, background .15s linear;
+}
+
+.mce-fhmmedia .content .column textarea{
+    min-height: 50px;
+}
+
+.mce-fhmmedia .content .column select{
+    -webkit-appearance:  none !important;
+    -moz-appearance:     none !important;
+    background-color:    #FAFAFA;
+    background-image:    url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEuMSIgeD0iMTJweCIgeT0iMHB4IiB3aWR0aD0iMjRweCIgaGVpZ2h0PSIzcHgiIHZpZXdCb3g9IjAgMCA2IDMiIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDYgMyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+PHBvbHlnb24gcG9pbnRzPSI1Ljk5MiwwIDIuOTkyLDMgLTAuMDA4LDAgIi8+PC9zdmc+);
+    background-position: 100% center;
+    background-repeat:   no-repeat;
+    border-style:        solid;
+    border-width:        1px;
+    border-color:        #CCC;
+    color:               rgba(0, 0, 0, .75);
+    font-family:         inherit;
+    line-height:         normal;
+    padding:             .5rem;
+    border-radius:       0;
+    margin:              0 0 1rem;
+    font-size:           .875rem;
+    height:              2.3125rem;
+    width:               100%;
+    box-sizing:          border-box;
+}
+
+.mce-fhmmedia .content .column select[multiple]{
+    height: 250px;
+}
+
+.mce-fhmmedia .content .column .dropzone-preview{
+    cursor:        pointer;
+    height:        200px;
+    background:    #FFF;
+    color:         #EEE;
+    border:        2px dashed #CCC;
+    border-radius: 5px;
+    margin:        0;
+    overflow-y:    auto;
+    overflow-x:    hidden;
+}
+
+.mce-fhmmedia .content .column .dz-message{
+    position:   relative;
+    text-align: center;
+}
+
+.mce-fhmmedia .content .column .dz-message:before{
+    position:   absolute;
+    left:       0;
+    top:        30px;
+    width:      100%;
+    font-size:  90px;
+    content:    '\f093';
+    color:      #EEE;
+    z-index:    1;
+    box-sizing: border-box;
+}
+
+.mce-fhmmedia .content .column .dz-message:hover{
+    background: #EEE;
+}
+
+.mce-fhmmedia .content .column .dz-message:hover:before, .mce-fhmmedia .content .column .dz-message:hover span{
+    color: #FFF;
+}
+
+.mce-fhmmedia .content .column .dz-message span{
+    position:   absolute;
+    left:       0;
+    bottom:     40px;
+    width:      100%;
+    z-index:    2;
+    color:      #EEE;
+    text-align: center;
+    font-size:  16px;
+}
+
+.mce-fhmmedia .content .column .watermark .left{
+    float:      left;
+    padding:    0;
+    width:      25%;
+    box-sizing: border-box;
+}
+
+.mce-fhmmedia .content .column .watermark .right{
+    float:      left;
+    padding:    0;
+    width:      75%;
+    box-sizing: border-box;
+}
+
+.mce-fhmmedia .content button[type=submit]{
+    float:              right;
+    -webkit-appearance: none;
+    -moz-appearance:    none;
+    border-radius:      0;
+    border-style:       solid;
+    border-width:       0;
+    cursor:             pointer;
+    line-height:        normal;
+    margin:             0;
+    position:           relative;
+    text-align:         center;
+    display:            inline-block;
+    padding:            .875rem 1.75rem .9375rem;
+    font-size:          .8125rem;
+    background-color:   #008CBA;
+    border-color:       #007095;
+    color:              #FFF;
+    transition:         background-color .3s ease-out;
+}
+
+.mce-fhmmedia .content button[type=submit]:before{
+    font-family:  'FontAwesome';
+    content:      "\f067";
+    margin-right: 10px;
+}
+
+.mce-fhmmedia .pagination{
+    clear:       both;
+    margin-left: 11%;
+}
+
+.mce-fhmmedia-load{
+    text-align: center;
+    margin:     1em;
+}
+
+.mce-fhmmedia-load i{
+    font-family: 'FontAwesome';
+    font-size:   3em;
+    color:       #EEE;
+}
+
+/* Toolbar icon */
+.mce-i-fhmfile{
+    display:                 inline-block;
+    font-family:             FontAwesome;
+    font-style:              normal;
+    font-weight:             normal;
+    line-height:             1;
+    -webkit-font-smoothing:  antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    margin-right:            1px;
+    position:                relative;
+    top:                     1px;
+}
+
+.mce-i-fhmfile:before{
+    content: '\f00a';
+}

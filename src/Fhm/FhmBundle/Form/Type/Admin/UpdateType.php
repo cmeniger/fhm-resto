@@ -17,7 +17,15 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class UpdateType extends AbstractType
 {
-    protected $instance;
+    protected $translation;
+
+    /**
+     * @param $domaine
+     */
+    public function setTranslation($domaine)
+    {
+        $this->translation = $domaine;
+    }
 
     /**
      * @param FormBuilderInterface $builder
@@ -25,14 +33,12 @@ class UpdateType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $this->instance = $options['translation_domain'];
-
         $builder
-            ->add('name', TextType::class, array('label' => $this->instance.'.admin.update.form.name'))
+            ->add('name', TextType::class, array('label' => $this->translation.'.admin.update.form.name'))
             ->add(
                 'description',
                 TextareaType::class,
-                array('label' => $this->instance.'.admin.update.form.description', 'required' => false)
+                array('label' => $this->translation.'.admin.update.form.description', 'required' => false)
             )
             ->add(
                 'seo_title',
@@ -52,32 +58,32 @@ class UpdateType extends AbstractType
             ->add(
                 'active',
                 CheckboxType::class,
-                array('label' => $this->instance.'.admin.update.form.active', 'required' => false)
+                array('label' => $this->translation.'.admin.update.form.active', 'required' => false)
             )
             ->add(
                 'submitSave',
                 SubmitType::class,
-                array('label' => $this->instance.'.admin.update.form.submit.save')
+                array('label' => $this->translation.'.admin.update.form.submit.save')
             )
             ->add(
                 'submitNew',
                 SubmitType::class,
-                array('label' => $this->instance.'.admin.update.form.submit.new')
+                array('label' => $this->translation.'.admin.update.form.submit.new')
             )
             ->add(
                 'submitDuplicate',
                 SubmitType::class,
-                array('label' => $this->instance.'.admin.update.form.submit.duplicate')
+                array('label' => $this->translation.'.admin.update.form.submit.duplicate')
             )
             ->add(
                 'submitQuit',
                 SubmitType::class,
-                array('label' => $this->instance.'.admin.update.form.submit.quit')
+                array('label' => $this->translation.'.admin.update.form.submit.quit')
             )
             ->add(
                 'submitConfig',
                 SubmitType::class,
-                array('label' => $this->instance.'.admin.update.form.submit.config')
+                array('label' => $this->translation.'.admin.update.form.submit.config')
             );
 //        if ($this->instance->language->visible) {
 //            $builder->add(
@@ -129,8 +135,8 @@ class UpdateType extends AbstractType
     {
         $resolver->setDefaults(
             array(
-                'data_class' => '',
-                'translation_domain' => '',
+                'data_class' => 'Fhm\FhmBundle\Document\Fhm',
+                'translation_domain' => 'FhmFhmBundle',
                 'cascade_validation' => true,
             )
         );
