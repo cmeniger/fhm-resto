@@ -9,10 +9,20 @@ use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/**
+ * Class CreateType
+ *
+ * @package Fhm\CardBundle\Form\Type\Admin\Ingredient
+ */
 class CreateType extends FhmType
 {
+    /**
+     * @param FormBuilderInterface $builder
+     * @param array                $options
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $this->setTranslation('card.ingredient');
         parent::buildForm($builder, $options);
         $builder
             ->add('order', IntegerType::class, array('label' => $this->instance->translation . '.admin.create.form.order', 'required' => false))
@@ -53,7 +63,7 @@ class CreateType extends FhmType
     {
         $resolver->setDefaults(
             array(
-                'data_class' => null,
+                'data_class' => 'Fhm\FhmCardBundle\Document\CardIngredient',
                 'translation_domain' => 'FhmCardBundle',
                 'cascade_validation' => true,
             )

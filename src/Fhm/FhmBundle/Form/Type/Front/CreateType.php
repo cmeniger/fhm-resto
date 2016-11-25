@@ -17,6 +17,15 @@ class CreateType extends AbstractType
 {
     protected $instance;
     protected $document;
+    protected $translation;
+
+    /**
+     * @param $domaine
+     */
+    public function setTranslation($domaine)
+    {
+        $this->translation = $domaine;
+    }
 
     /**
      * @param FormBuilderInterface $builder
