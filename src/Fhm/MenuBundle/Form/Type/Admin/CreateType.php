@@ -14,8 +14,8 @@ class CreateType extends FhmType
         $this->setTranslation('menu');
         parent::buildForm($builder, $options);
         $builder
-            ->add('icon', TextType::class, array('label' => $this->instance->translation . '.admin.create.form.icon', 'required' => false))
-            ->add('route', new LinkType(), array('label' => $this->instance->translation . '.admin.create.form.route', 'required' => false))
+            ->add('icon', TextType::class, array('label' => $this->translation . '.admin.create.form.icon', 'required' => false))
+            ->add('route', new LinkType(), array('label' => $this->translation . '.admin.create.form.route', 'required' => false))
             ->add('id', HiddenType::class, array('mapped' => false, 'attr' => array('value' => $this->document->getId())))
             ->remove('share')
             ->remove('global');

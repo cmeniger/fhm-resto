@@ -14,10 +14,10 @@ class CreateType extends FhmType
     {
         parent::__construct($instance, $document);
 
-        $this->maps['nomap'] = $this->instance->translation . '.nomap.choice';
+        $this->maps['nomap'] = $this->translation . '.nomap.choice';
         foreach($maps as $map)
         {
-            $this->maps[$map] = $this->instance->translation . '.' . $map . '.choice';
+            $this->maps[$map] = $this->translation . '.' . $map . '.choice';
         }
     }
 
@@ -26,8 +26,8 @@ class CreateType extends FhmType
         $this->setTranslation('mappicker');
         parent::buildForm($builder, $options);
         $builder
-            ->add('order', NumberType::class, array('label' => $this->instance->translation . '.admin.create.form.order', 'required' => false))
-            ->add('map', ChoiceType::class, array('choices' => $this->maps, 'label' => $this->instance->translation . '.admin.create.form.map'))
+            ->add('order', NumberType::class, array('label' => $this->translation . '.admin.create.form.order', 'required' => false))
+            ->add('map', ChoiceType::class, array('choices' => $this->maps, 'label' => $this->translation . '.admin.create.form.map'))
             ->remove('global');
     }
 }

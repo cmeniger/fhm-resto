@@ -11,15 +11,15 @@ class UpdateType extends FhmType
         $this->setTranslation('media');
         parent::buildForm($builder, $options);
         $builder
-            ->add('color', 'text', array('label' => $this->instance->translation . '.admin.update.form.color', 'attr' => array('class' => 'colorpicker'), 'required' => false))
-            ->add('private', 'checkbox', array('label' => $this->instance->translation . '.admin.update.form.private', 'required' => false))
+            ->add('color', 'text', array('label' => $this->translation . '.admin.update.form.color', 'attr' => array('class' => 'colorpicker'), 'required' => false))
+            ->add('private', 'checkbox', array('label' => $this->translation . '.admin.update.form.private', 'required' => false))
             ->add('parent', 'document', array(
-                'label'         => $this->instance->translation . '.admin.update.form.parent',
+                'label'         => $this->translation . '.admin.update.form.parent',
                 'class'         => 'FhmMediaBundle:MediaTag',
                 'choice_label'      => 'route',
                 'query_builder' => function (\Fhm\MediaBundle\Repository\MediaTagRepository $dr)
                     {
-                        return $dr->getFormFiltered($this->instance->grouping->filtered);
+                        return $dr->getFormFiltered();
                     },
                 'required'      => false
             ))
