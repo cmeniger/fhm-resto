@@ -4,6 +4,7 @@ namespace Fhm\UserBundle\Form\Type\Front;
 use Fhm\FhmBundle\Form\Type\Front\UpdateType as FhmType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Core\Validator\Constraints\UserPassword;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType as PasswordTypeBase;
 
@@ -41,5 +42,19 @@ class PasswordType extends FhmType
     public function getName()
     {
         return 'FhmPassword';
+    }
+
+    /**
+     * @param OptionsResolver $resolver
+     */
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults(
+            array(
+                'data_class' => 'Fhm\UserBundle\Document\User',
+                'translation_domain' => 'FhmUserBundle',
+                'cascade_validation' => true,
+            )
+        );
     }
 }

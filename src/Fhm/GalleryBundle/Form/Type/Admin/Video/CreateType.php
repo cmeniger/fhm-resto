@@ -8,26 +8,28 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class CreateType extends FhmType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $this->setTranslation('gallery.video');
         parent::buildForm($builder, $options);
         $builder
-            ->add('title',TextType::class, array('label' => $this->instance->translation . '.admin.create.form.title'))
-            ->add('subtitle', TextType::class, array('label' => $this->instance->translation . '.admin.create.form.subtitle', 'required' => false))
-            ->add('content', TextareaType::class, array('label' => $this->instance->translation . '.admin.create.form.content', 'attr' => array('class' => 'editor'), 'required' => false))
-            ->add('link',TextType::class, array('label' => $this->instance->translation . '.admin.create.form.link', 'required' => false))
-            ->add('order', IntegerType::class, array('label' => $this->instance->translation . '.admin.create.form.order', 'required' => false))
-            ->add('video', UrlType::class, array('label' => $this->instance->translation . '.admin.create.form.video'))
+            ->add('title',TextType::class, array('label' => $this->translation . '.admin.create.form.title'))
+            ->add('subtitle', TextType::class, array('label' => $this->translation . '.admin.create.form.subtitle', 'required' => false))
+            ->add('content', TextareaType::class, array('label' => $this->translation . '.admin.create.form.content', 'attr' => array('class' => 'editor'), 'required' => false))
+            ->add('link',TextType::class, array('label' => $this->translation . '.admin.create.form.link', 'required' => false))
+            ->add('order', IntegerType::class, array('label' => $this->translation . '.admin.create.form.order', 'required' => false))
+            ->add('video', UrlType::class, array('label' => $this->translation . '.admin.create.form.video'))
             ->add('galleries',DocumentType::class, array(
-                'label'         => $this->instance->translation . '.admin.create.form.galleries',
+                'label'         => $this->translation . '.admin.create.form.galleries',
                 'class'         => 'FhmGalleryBundle:Gallery',
                 'choice_label'      => 'name',
                 'query_builder' => function (\Fhm\GalleryBundle\Repository\GalleryRepository $dr)
                 {
-                    return $dr->getFormEnable($this->instance->grouping->filtered);
+                    return $dr->getFormEnable();
                 },
                 'required'      => false,
                 'multiple'      => true,
@@ -35,5 +37,19 @@ class CreateType extends FhmType
             ))
             ->remove('name')
             ->remove('description');
+    }
+
+    /**
+     * @param OptionsResolver $resolver
+     */
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults(
+            array(
+                'data_class' => 'Fhm\GalleryBundle\Document\GalleryVideo',
+                'translation_domain' => 'FhmGalleryBundle',
+                'cascade_validation' => true,
+            )
+        );
     }
 }

@@ -5,6 +5,7 @@ use Doctrine\Bundle\MongoDBBundle\Form\Type\DocumentType;
 use Fhm\FhmBundle\Form\Type\Admin\UpdateType as FhmType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class UpdateType extends FhmType
 {
@@ -110,5 +111,19 @@ class UpdateType extends FhmType
             ->remove('grouping')
             ->remove('share')
             ->remove('global');
+    }
+
+    /**
+     * @param OptionsResolver $resolver
+     */
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults(
+            array(
+                'data_class' => 'Fhm\WorkflowBundle\Document\WorkflowAction',
+                'translation_domain' => 'FhmWorkflowBundle',
+                'cascade_validation' => true,
+            )
+        );
     }
 }

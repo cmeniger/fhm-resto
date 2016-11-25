@@ -4,6 +4,7 @@ namespace Fhm\TestimonyBundle\Form\Type\Admin;
 use Fhm\FhmBundle\Form\Type\Admin\UpdateType as FhmType;
 use Fhm\MediaBundle\Form\Type\MediaType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class UpdateType extends FhmType
 {
@@ -22,5 +23,19 @@ class UpdateType extends FhmType
                 'filter'   => 'image/*',
                 'required' => false
             ));
+    }
+
+    /**
+     * @param OptionsResolver $resolver
+     */
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults(
+            array(
+                'data_class' => 'Fhm\TestimonyBundle\Document\Testimony',
+                'translation_domain' => 'FhmTestimonyBundle',
+                'cascade_validation' => true,
+            )
+        );
     }
 }
