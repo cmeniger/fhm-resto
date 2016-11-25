@@ -148,7 +148,7 @@ class ApiController extends FhmController
     private function getRoute($module, $document)
     {
         if ($module === "media") {
-            $route = $this->get($this->getParameter('fhm_media')['service'])
+            $route = $this->get($this->getParameters('fhm_media')['service'])
                 ->setDocument($document)
                 ->getPathWeb();
         } else {

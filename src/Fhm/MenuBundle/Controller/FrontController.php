@@ -38,9 +38,6 @@ class FrontController extends FhmController
         throw $this->createNotFoundException(
             $this->get('translator')->trans('fhm.error.route', array(), 'FhmFhmBundle')
         );
-
-        /** To uncomment when authorized */
-       // return parent::indexAction();
     }
 
     /**
@@ -97,8 +94,6 @@ class FrontController extends FhmController
         throw $this->createNotFoundException(
             $this->get('translator')->trans('fhm.error.route', array(), 'FhmFhmBundle')
         );
-        /** To uncomment when authorized */
-        //return parent::createAction($request);
     }
 
     /**
@@ -116,8 +111,6 @@ class FrontController extends FhmController
         throw $this->createNotFoundException(
             $this->get('translator')->trans('fhm.error.route', array(), 'FhmFhmBundle')
         );
-        /** To uncomment when authorized */
-        //return parent::updateAction($request, $id);
     }
 
     /**
@@ -134,8 +127,6 @@ class FrontController extends FhmController
         throw $this->createNotFoundException(
             $this->get('translator')->trans('fhm.error.route', array(), 'FhmFhmBundle')
         );
-        /** To uncomment when authorized */
-        //return parent::deleteAction($id);
     }
 
     /**
