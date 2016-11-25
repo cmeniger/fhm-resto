@@ -17,6 +17,7 @@ class UpdateType extends FhmType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $this->setTranslation('site');
         parent::buildForm($builder, $options);
     }
 }

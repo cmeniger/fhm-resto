@@ -20,13 +20,14 @@ class ResettingType extends FhmType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $this->setTranslation('user');
         parent::buildForm($builder, $options);
         $builder
             ->add('plainPassword', RepeatedType::class, array
             (
                 'type'            => PasswordType::class,
-                'first_options'   => array('label' => $this->instance->translation . '.front.resetting.reset.form.password_new'),
-                'second_options'  => array('label' => $this->instance->translation . '.front.resetting.reset.form.password_confirmation'),
+                'first_options'   => array('label' => $this->translation . '.front.resetting.reset.form.password_new'),
+                'second_options'  => array('label' => $this->translation . '.front.resetting.reset.form.password_confirmation'),
                 'invalid_message' => 'fos_user.password.mismatch',
             ))
             ->remove('name')
