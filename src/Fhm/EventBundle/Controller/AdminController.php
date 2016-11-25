@@ -94,8 +94,10 @@ class AdminController extends FhmController
 
         return array_merge(
             array(
-                'eventgroups1' => $this->fhm_tools->dmRepository('FhmEventBundle:EventGroup')->getListEnable($instance->grouping->current),
-                'eventgroups2' => $this->fhm_tools->getList($document->getEventgroups())
+                'eventgroups1' => $this->fhm_tools->dmRepository('FhmEventBundle:EventGroup')->getListEnable(
+                    $instance->grouping->current
+                ),
+                'eventgroups2' => $this->fhm_tools->getList($document->getEventgroups()),
             ),
             parent::detailAction($id)
         );
@@ -216,13 +218,11 @@ class AdminController extends FhmController
     public function eventgroupAction(Request $request)
     {
         $eventgroups = json_decode($request->get('list'));
-        $document   = $this->fhm_tools->dmRepository()->find($request->get('id'));
-        foreach($document->getEventgroups() as $eventgroup)
-        {
+        $document = $this->fhm_tools->dmRepository()->find($request->get('id'));
+        foreach ($document->getEventgroups() as $eventgroup) {
             $document->removeEventgroup($eventgroup);
         }
-        foreach($eventgroups as $key => $data)
-        {
+        foreach ($eventgroups as $key => $data) {
             $eventgroup = $this->fhm_tools->dmRepository('FhmEventBundle:EventGroup')->find($data->id);
             $document->addEventgroup($eventgroup);
         }

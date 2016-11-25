@@ -2,6 +2,8 @@
 namespace Fhm\CardBundle\Controller\Category;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Fhm\CardBundle\Form\Type\Admin\Category\CreateType;
+use Fhm\CardBundle\Form\Type\Admin\Category\UpdateType;
 use Fhm\FhmBundle\Controller\RefAdminController as FhmController;
 use Fhm\CardBundle\Document\CardCategory;
 use Fhm\FhmBundle\Services\Tools;
@@ -24,8 +26,8 @@ class AdminController extends FhmController
     {
         $this->setFhmTools($tools);
         parent::__construct('Fhm', 'Card', 'card_category', 'CardCategory');
-        $this->form->type->create = 'Fhm\\CardBundle\\Form\\Type\\Admin\\Category\\CreateType';
-        $this->form->type->update = 'Fhm\\CardBundle\\Form\\Type\\Admin\\Category\\UpdateType';
+        $this->form->type->create = CreateType::class;
+        $this->form->type->update = UpdateType::class;
         $this->translation        = array('FhmCardBundle', 'card.category');
     }
 
@@ -198,7 +200,7 @@ class AdminController extends FhmController
     {
         $id   = $request->get('master');
         $list = json_decode($request->get('list'));
-        $this->_treeSort($id, $list);
+        $this->fhm_tools->_treeSort($id, $list);
 
         return new Response();
     }

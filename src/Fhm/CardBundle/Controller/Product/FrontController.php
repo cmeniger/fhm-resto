@@ -2,6 +2,8 @@
 namespace Fhm\CardBundle\Controller\Product;
 
 use Fhm\FhmBundle\Controller\RefFrontController as FhmController;
+use Fhm\CardBundle\Form\Type\Front\Product\UpdateType;
+use Fhm\CardBundle\Form\Type\Front\Product\CreateType;
 use Fhm\CardBundle\Document\CardProduct;
 use Fhm\FhmBundle\Services\Tools;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,9 +23,9 @@ class FrontController extends FhmController
     {
         $this->setFhmTools($tools);
         parent::__construct('Fhm', 'Card', 'card_product', 'CardProduct');
-        $this->form->type->create = 'Fhm\\CardBundle\\Form\\Type\\Front\\Product\\CreateType';
-        $this->form->type->update = 'Fhm\\CardBundle\\Form\\Type\\Front\\Product\\UpdateType';
-        $this->translation        = array('FhmCardBundle', 'card.product');
+        $this->form->type->create = CreateType::class;
+        $this->form->type->update = UpdateType::class;
+        $this->translation = array('FhmCardBundle', 'card.product');
     }
 
     /**
@@ -50,9 +52,9 @@ class FrontController extends FhmController
     public function createAction(Request $request)
     {
         // For activate this route, delete next line
-        throw $this->createNotFoundException($this->get('translator')->trans('fhm.error.route', array(), 'FhmFhmBundle'));
-
-        //return parent::createAction($request);
+        throw $this->createNotFoundException(
+            $this->get('translator')->trans('fhm.error.route', array(), 'FhmFhmBundle')
+        );
     }
 
     /**
@@ -67,9 +69,10 @@ class FrontController extends FhmController
     public function duplicateAction(Request $request, $id)
     {
         // For activate this route, delete next line
-        throw $this->createNotFoundException($this->get('translator')->trans('fhm.error.route', array(), 'FhmFhmBundle'));
+        throw $this->createNotFoundException(
+            $this->get('translator')->trans('fhm.error.route', array(), 'FhmFhmBundle')
+        );
 
-        //return parent::duplicateAction($request, $id);
     }
 
     /**
@@ -84,9 +87,10 @@ class FrontController extends FhmController
     public function updateAction(Request $request, $id)
     {
         // For activate this route, delete next line
-        throw $this->createNotFoundException($this->get('translator')->trans('fhm.error.route', array(), 'FhmFhmBundle'));
+        throw $this->createNotFoundException(
+            $this->get('translator')->trans('fhm.error.route', array(), 'FhmFhmBundle')
+        );
 
-        //return parent::updateAction($request, $id);
     }
 
     /**
@@ -115,15 +119,23 @@ class FrontController extends FhmController
     {
         $document = $this->dmRepository()->find($id);
         // ERROR - Unknown
-        if($document == "")
-        {
-            throw $this->createNotFoundException($this->get('translator')->trans($this->translation[1] . '.error.unknown', array(), $this->translation[0]));
+        if ($document == "") {
+            throw $this->createNotFoundException(
+                $this->get('translator')->trans($this->translation[1].'.error.unknown', array(), $this->translation[0])
+            );
         }
         // Deactivate
         $document->setDelete(true);
         $this->fhm_tools->dmPersist($document);
         // Message
-        $this->get('session')->getFlashBag()->add('notice', $this->get('translator')->trans($this->translation[1] . '.admin.activate.flash.ok', array(), $this->translation[0]));
+        $this->get('session')->getFlashBag()->add(
+            'notice',
+            $this->get('translator')->trans(
+                $this->translation[1].'.admin.activate.flash.ok',
+                array(),
+                $this->translation[0]
+            )
+        );
 
         return $this->redirect($this->fhm_tools->getLastRoute());
     }
@@ -140,15 +152,23 @@ class FrontController extends FhmController
     {
         $document = $this->fhm_tools->dmRepository()->find($id);
         // ERROR - Unknown
-        if($document == "")
-        {
-            throw $this->createNotFoundException($this->get('translator')->trans($this->translation[1] . '.error.unknown', array(), $this->translation[0]));
+        if ($document == "") {
+            throw $this->createNotFoundException(
+                $this->get('translator')->trans($this->translation[1].'.error.unknown', array(), $this->translation[0])
+            );
         }
         // Undelete
         $document->setDelete(false);
         $this->fhm_tools->dmPersist($document);
         // Message
-        $this->get('session')->getFlashBag()->add('notice', $this->get('translator')->trans($this->translation[1] . '.admin.undelete.flash.ok', array(), $this->translation[0]));
+        $this->get('session')->getFlashBag()->add(
+            'notice',
+            $this->get('translator')->trans(
+                $this->translation[1].'.admin.undelete.flash.ok',
+                array(),
+                $this->translation[0]
+            )
+        );
 
         return $this->redirect($this->fhm_tools->getLastRoute());
     }
@@ -166,15 +186,23 @@ class FrontController extends FhmController
     {
         $document = $this->fhm_tools->dmRepository()->find($id);
         // ERROR - Unknown
-        if($document == "")
-        {
-            throw $this->createNotFoundException($this->get('translator')->trans($this->translation[1] . '.error.unknown', array(), $this->translation[0]));
+        if ($document == "") {
+            throw $this->createNotFoundException(
+                $this->get('translator')->trans($this->translation[1].'.error.unknown', array(), $this->translation[0])
+            );
         }
         // activate
         $document->setActive(true);
         $this->fhm_tools->dmPersist($document);
         // Message
-        $this->get('session')->getFlashBag()->add('notice', $this->get('translator')->trans($this->translation[1] . '.admin.activate.flash.ok', array(), $this->translation[0]));
+        $this->get('session')->getFlashBag()->add(
+            'notice',
+            $this->get('translator')->trans(
+                $this->translation[1].'.admin.activate.flash.ok',
+                array(),
+                $this->translation[0]
+            )
+        );
 
         return $this->redirect($this->fhm_tools->getLastRoute());
     }
@@ -191,15 +219,23 @@ class FrontController extends FhmController
     {
         $document = $this->fhm_tools->dmRepository()->find($id);
         // ERROR - Unknown
-        if($document == "")
-        {
-            throw $this->createNotFoundException($this->get('translator')->trans($this->translation[1] . '.error.unknown', array(), $this->translation[0]));
+        if ($document == "") {
+            throw $this->createNotFoundException(
+                $this->get('translator')->trans($this->translation[1].'.error.unknown', array(), $this->translation[0])
+            );
         }
         // Deactivate
         $document->setActive(false);
         $this->fhm_tools->dmPersist($document);
         // Message
-        $this->get('session')->getFlashBag()->add('notice', $this->get('translator')->trans($this->translation[1] . '.admin.activate.flash.ok', array(), $this->translation[0]));
+        $this->get('session')->getFlashBag()->add(
+            'notice',
+            $this->get('translator')->trans(
+                $this->translation[1].'.admin.activate.flash.ok',
+                array(),
+                $this->translation[0]
+            )
+        );
 
         return $this->redirect($this->fhm_tools->getLastRoute());
     }

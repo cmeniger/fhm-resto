@@ -1,6 +1,8 @@
 <?php
 namespace Fhm\CardBundle\Controller\Category;
 
+use Fhm\CardBundle\Form\Type\Api\Category\CreateType;
+use Fhm\CardBundle\Form\Type\Api\Category\UpdateType;
 use Fhm\FhmBundle\Controller\RefApiController as FhmController;
 use Fhm\CardBundle\Document\CardCategory;
 use Fhm\FhmBundle\Services\Tools;
@@ -25,8 +27,8 @@ class ApiController extends FhmController
     {
         $this->setFhmTools($tools);
         parent::__construct('Fhm', 'Card', 'card_category', 'CardCategory');
-        $this->form->type->create = 'Fhm\\CardBundle\\Form\\Type\\Api\\Category\\CreateType';
-        $this->form->type->update = 'Fhm\\CardBundle\\Form\\Type\\Api\\Category\\UpdateType';
+        $this->form->type->create = CreateType::class;
+        $this->form->type->update = UpdateType::class;
         $this->translation        = array('FhmCardBundle', 'card.category');
     }
 

@@ -1,6 +1,8 @@
 <?php
 namespace Fhm\CardBundle\Controller\Ingredient;
 
+use Fhm\CardBundle\Form\Type\Api\Ingredient\CreateType;
+use Fhm\CardBundle\Form\Type\Api\Ingredient\UpdateType;
 use Fhm\FhmBundle\Controller\RefApiController as FhmController;
 use Fhm\CardBundle\Document\CardIngredient;
 use Fhm\FhmBundle\Services\Tools;
@@ -23,9 +25,9 @@ class ApiController extends FhmController
     {
         $this->setFhmTools($tools);
         parent::__construct('Fhm', 'Card', 'card_ingredient', 'CardIngredient');
-        $this->form->type->create = 'Fhm\\CardBundle\\Form\\Type\\Api\\Ingredient\\CreateType';
-        $this->form->type->update = 'Fhm\\CardBundle\\Form\\Type\\Api\\Ingredient\\UpdateType';
-        $this->translation        = array('FhmCardBundle', 'card.ingredient');
+        $this->form->type->create = CreateType::class;
+        $this->form->type->update = UpdateType::class;
+        $this->translation = array('FhmCardBundle', 'card.ingredient');
     }
 
     /**
@@ -91,34 +93,35 @@ class ApiController extends FhmController
      */
     public function embedAction(Request $request, $idCard, $idProduct, $template)
     {
-        $card     = $this->fhm_tools->dmRepository('FhmCardBundle:Card')->find($idCard);
-        $product  = $this->fhm_tools->dmRepository('FhmCardBundle:CardProduct')->find($idProduct);
+        $card = $this->fhm_tools->dmRepository('FhmCardBundle:Card')->find($idCard);
+        $product = $this->fhm_tools->dmRepository('FhmCardBundle:CardProduct')->find($idProduct);
         $instance = $this->fhm_tools->instanceData();
         // ERROR - unknown
-        if($card == "")
-        {
-            throw $this->createNotFoundException($this->get('translator')->trans('card.error.unknown', array(), $this->translation[0]));
+        if ($card == "") {
+            throw $this->createNotFoundException(
+                $this->get('translator')->trans('card.error.unknown', array(), $this->translation[0])
+            );
         }
-        if($product == "")
-        {
-            throw $this->createNotFoundException($this->get('translator')->trans('card.product.error.unknown', array(), $this->translation[0]));
+        if ($product == "") {
+            throw $this->createNotFoundException(
+                $this->get('translator')->trans('card.product.error.unknown', array(), $this->translation[0])
+            );
         }
         $documents = $this->fhm_tools->dmRepository()->getByProduct($card, $product, $instance->grouping->filtered);
-        $inline    = array();
-        foreach($documents as $ingredient)
-        {
+        $inline = array();
+        foreach ($documents as $ingredient) {
             $inline[] = $ingredient->getName();
         }
 
         return new Response(
             $this->renderView(
-                "::FhmCard/Template/Ingredient/" . $template . ".html.twig",
+                "::FhmCard/Template/Ingredient/".$template.".html.twig",
                 array(
-                    "card"        => $card,
-                    "product"     => $product,
+                    "card" => $card,
+                    "product" => $product,
                     "ingredients" => $documents,
-                    "inline"      => implode(', ', $inline),
-                    "instance"    => $instance,
+                    "inline" => implode(', ', $inline),
+                    "instance" => $instance,
                 )
             )
         );
@@ -134,16 +137,16 @@ class ApiController extends FhmController
      */
     public function editorAction(Request $request, $id)
     {
-        $card     = $this->fhm_tools->dmRepository('FhmCardBundle:Card')->find($id);
+        $card = $this->fhm_tools->dmRepository('FhmCardBundle:Card')->find($id);
         $instance = $this->fhm_tools->instanceData($card);
-        $this->_authorized($card);
+        $this->authorized($card);
 
         return new Response(
             $this->renderView(
                 "::FhmCard/Template/Editor/ingredient.html.twig",
                 array(
-                    "card"     => $card,
-                    "tree"     => $this->fhm_tools->dmRepository()->getByCardAll($card, $instance->grouping->filtered),
+                    "card" => $card,
+                    "tree" => $this->fhm_tools->dmRepository()->getByCardAll($card, $instance->grouping->filtered),
                     "instance" => $instance,
                 )
             )
@@ -160,13 +163,12 @@ class ApiController extends FhmController
      */
     public function sortAction(Request $request, $idCard)
     {
-        $card     = $this->fhm_tools->dmRepository('FhmCardBundle:Card')->find($idCard);
+        $card = $this->fhm_tools->dmRepository('FhmCardBundle:Card')->find($idCard);
         $instance = $this->fhm_tools->instanceData();
-        $this->_authorized($card);
-        $list  = json_decode($request->get('list'));
+        $this->authorized($card);
+        $list = json_decode($request->get('list'));
         $order = 1;
-        foreach($list as $obj)
-        {
+        foreach ($list as $obj) {
             $document = $this->fhm_tools->dmRepository()->find($obj->id);
             $document->setOrder($order);
             $this->fhm_tools->dmPersist($document);
@@ -187,18 +189,16 @@ class ApiController extends FhmController
      */
     public function createAction(Request $request, $idCard)
     {
-        $card     = $this->fhm_tools->dmRepository('FhmCardBundle:Card')->find($idCard);
+        $card = $this->fhm_tools->dmRepository('FhmCardBundle:Card')->find($idCard);
         $instance = $this->fhm_tools->instanceData();
-        $this->_authorized($card);
-        $document     = $this->document;
-        $classType    = $this->form->type->create;
+        $this->authorized($card);
+        $document = $this->document;
+        $classType = $this->form->type->create;
         $classHandler = $this->form->handler->create;
-        $form         = $this->createForm(new $classType($instance, $document, $card), $document);
-        $handler      = new $classHandler($form, $request);
-        $process      = $handler->process();
-        if($process)
-        {
-            $data = $request->get($form->getName());
+        $form = $this->createForm($classType, $document);
+        $handler = new $classHandler($form, $request);
+        $process = $handler->process();
+        if ($process) {
             // Persist
             $document->setUserCreate($this->getUser());
             $document->setAlias($this->getAlias($document->getId(), $document->getName()));
@@ -209,9 +209,9 @@ class ApiController extends FhmController
         }
 
         return array(
-            'card'     => $card,
-            'form'     => $form->createView(),
-            'instance' => $instance
+            'card' => $card,
+            'form' => $form->createView(),
+            'instance' => $instance,
         );
     }
 
@@ -226,23 +226,22 @@ class ApiController extends FhmController
      */
     public function updateAction(Request $request, $idCard, $idIngredient)
     {
-        $card     = $this->fhm_tools->dmRepository('FhmCardBundle:Card')->find($idCard);
+        $card = $this->fhm_tools->dmRepository('FhmCardBundle:Card')->find($idCard);
         $document = $this->fhm_tools->dmRepository()->find($idIngredient);
         $instance = $this->fhm_tools->instanceData();
-        $this->_authorized($card);
-        if($document == "")
-        {
-            throw $this->createNotFoundException($this->get('translator')->trans($this->translation[1] . '.error.unknown', array(), $this->translation[0]));
+        $this->authorized($card);
+        if ($document == "") {
+            throw $this->createNotFoundException(
+                $this->get('translator')->trans($this->translation[1].'.error.unknown', array(), $this->translation[0])
+            );
         }
-        $classType    = $this->form->type->update;
+        $classType = $this->form->type->update;
         $classHandler = $this->form->handler->update;
-        $form         = $this->createForm(new $classType($instance, $document, $card), $document);
-        $handler      = new $classHandler($form, $request);
-        $process      = $handler->process();
-        if($process)
-        {
-            $data = $request->get($form->getName());
-            // Persist
+        $form = $this->createForm($classType, $document);
+        $handler = new $classHandler($form, $request);
+        $process = $handler->process();
+        if ($process) {
+           // Persist
             $document->setUserUpdate($this->getUser());
             $document->setAlias($this->getAlias($document->getId(), $document->getName()));
             $this->fhm_tools->dmPersist($document);
@@ -251,10 +250,10 @@ class ApiController extends FhmController
         }
 
         return array(
-            'card'     => $card,
+            'card' => $card,
             'document' => $document,
-            'form'     => $form->createView(),
-            'instance' => $instance
+            'form' => $form->createView(),
+            'instance' => $instance,
         );
     }
 
@@ -268,13 +267,14 @@ class ApiController extends FhmController
      */
     public function activateAction(Request $request, $idCard, $idIngredient)
     {
-        $card     = $this->fhm_tools->dmRepository('FhmCardBundle:Card')->find($idCard);
+        $card = $this->fhm_tools->dmRepository('FhmCardBundle:Card')->find($idCard);
         $document = $this->fhm_tools->dmRepository()->find($idIngredient);
         $instance = $this->fhm_tools->instanceData();
-        $this->_authorized($card);
-        if($document == "")
-        {
-            throw $this->createNotFoundException($this->get('translator')->trans($this->translation[1] . '.error.unknown', array(), $this->translation[0]));
+        $this->authorized($card);
+        if ($document == "") {
+            throw $this->createNotFoundException(
+                $this->get('translator')->trans($this->translation[1].'.error.unknown', array(), $this->translation[0])
+            );
         }
         $document->setUserUpdate($this->getUser());
         $document->setActive(true);
@@ -293,13 +293,14 @@ class ApiController extends FhmController
      */
     public function deactivateAction(Request $request, $idCard, $idIngredient)
     {
-        $card     = $this->fhm_tools->dmRepository('FhmCardBundle:Card')->find($idCard);
+        $card = $this->fhm_tools->dmRepository('FhmCardBundle:Card')->find($idCard);
         $document = $this->fhm_tools->dmRepository()->find($idIngredient);
         $instance = $this->fhm_tools->instanceData();
-        $this->_authorized($card);
-        if($document == "")
-        {
-            throw $this->createNotFoundException($this->get('translator')->trans($this->translation[1] . '.error.unknown', array(), $this->translation[0]));
+        $this->authorized($card);
+        if ($document == "") {
+            throw $this->createNotFoundException(
+                $this->get('translator')->trans($this->translation[1].'.error.unknown', array(), $this->translation[0])
+            );
         }
         $document->setUserUpdate($this->getUser());
         $document->setActive(false);
@@ -318,21 +319,19 @@ class ApiController extends FhmController
      */
     public function deleteAction(Request $request, $idCard, $idIngredient)
     {
-        $card     = $this->fhm_tools->dmRepository('FhmCardBundle:Card')->find($idCard);
+        $card = $this->fhm_tools->dmRepository('FhmCardBundle:Card')->find($idCard);
         $document = $this->fhm_tools->dmRepository()->find($idIngredient);
         $instance = $this->fhm_tools->instanceData();
-        $this->_authorized($card);
-        if($document == "")
-        {
-            throw $this->createNotFoundException($this->get('translator')->trans($this->translation[1] . '.error.unknown', array(), $this->translation[0]));
+        $this->authorized($card);
+        if ($document == "") {
+            throw $this->createNotFoundException(
+                $this->get('translator')->trans($this->translation[1].'.error.unknown', array(), $this->translation[0])
+            );
         }
         // Delete
-        if($document->getDelete())
-        {
+        if ($document->getDelete()) {
             $this->fhm_tools->dmRemove($document);
-        }
-        else
-        {
+        } else {
             $document->setUserUpdate($this->getUser());
             $document->setDelete(true);
             $this->fhm_tools->dmPersist($document);
@@ -351,13 +350,14 @@ class ApiController extends FhmController
      */
     public function undeleteAction(Request $request, $idCard, $idIngredient)
     {
-        $card     = $this->fhm_tools->dmRepository('FhmCardBundle:Card')->find($idCard);
+        $card = $this->fhm_tools->dmRepository('FhmCardBundle:Card')->find($idCard);
         $document = $this->fhm_tools->dmRepository()->find($idIngredient);
         $instance = $this->fhm_tools->instanceData();
-        $this->_authorized($card);
-        if($document == "")
-        {
-            throw $this->createNotFoundException($this->get('translator')->trans($this->translation[1] . '.error.unknown', array(), $this->translation[0]));
+        $this->authorized($card);
+        if ($document == "") {
+            throw $this->createNotFoundException(
+                $this->get('translator')->trans($this->translation[1].'.error.unknown', array(), $this->translation[0])
+            );
         }
         // Undelete
         $document->setUserUpdate($this->getUser());
@@ -377,16 +377,19 @@ class ApiController extends FhmController
     private function _refresh($card, $instance)
     {
         $response = new JsonResponse();
-        $response->setData(array(
-            'status' => 200,
-            'html'   => $this->renderView(
-                "::FhmCard/Template/Editor/ingredient.html.twig",
-                array(
-                    "card"     => $card,
-                    "tree"     => $this->fhm_tools->dmRepository()->getByCardAll($card, $instance->grouping->filtered),
-                    "instance" => $instance,
-                ))
-        ));
+        $response->setData(
+            array(
+                'status' => 200,
+                'html' => $this->renderView(
+                    "::FhmCard/Template/Editor/ingredient.html.twig",
+                    array(
+                        "card" => $card,
+                        "tree" => $this->fhm_tools->dmRepository()->getByCardAll($card, $instance->grouping->filtered),
+                        "instance" => $instance,
+                    )
+                ),
+            )
+        );
 
         return $response;
     }
@@ -398,17 +401,25 @@ class ApiController extends FhmController
      *
      * @return $this
      */
-    protected function _authorized($card)
+    protected function authorized($card)
     {
-        if($card == "")
-        {
-            throw $this->createNotFoundException($this->get('translator')->trans('card.error.unknown', array(), $this->translation[0]));
+        if ($card == "") {
+            throw $this->createNotFoundException(
+                $this->get('translator')->trans('card.error.unknown', array(), $this->translation[0])
+            );
         }
-        if($card->getParent() && method_exists($card->getParent(), 'hasModerator'))
-        {
-            if(!$this->getUser()->isSuperAdmin() && !$this->getUser()->hasRole('ROLE_ADMIN') && !$card->getParent()->hasModerator($this->getUser()))
-            {
-                throw new HttpException(403, $this->get('translator')->trans($this->translation[1] . '.error.forbidden', array(), $this->translation[0]));
+        if ($card->getParent() && method_exists($card->getParent(), 'hasModerator')) {
+            if (!$this->getUser()->isSuperAdmin() && !$this->getUser()->hasRole('ROLE_ADMIN') && !$card->getParent(
+                )->hasModerator($this->getUser())
+            ) {
+                throw new HttpException(
+                    403,
+                    $this->get('translator')->trans(
+                        $this->translation[1].'.error.forbidden',
+                        array(),
+                        $this->translation[0]
+                    )
+                );
             }
         }
 

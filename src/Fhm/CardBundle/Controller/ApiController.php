@@ -93,18 +93,22 @@ class ApiController extends FhmController
         $document = $this->fhm_tools->dmRepository()->find($id);
         $instance = $this->fhm_tools->instanceData($document);
         // ERROR - unknown
-        if($document == "")
-        {
-            throw $this->createNotFoundException($this->get('translator')->trans($this->translation[1] . '.error.unknown', array(), $this->translation[0]));
+        if ($document == "") {
+            throw $this->createNotFoundException(
+                $this->get('translator')->trans($this->translation[1].'.error.unknown', array(), $this->translation[0])
+            );
         }
 
         return new Response(
             $this->renderView(
-                "::FhmCard/Template/" . ucfirst(strtolower($template)) . "/index.html.twig",
+                "::FhmCard/Template/".ucfirst(strtolower($template))."/index.html.twig",
                 array(
-                    "document"  => $document,
-                    "documents" => $this->fhm_tools->dmRepository('FhmCardBundle:CardCategory')->getByCard($document, $instance->grouping->filtered),
-                    "instance"  => $instance,
+                    "document" => $document,
+                    "documents" => $this->fhm_tools->dmRepository('FhmCardBundle:CardCategory')->getByCard(
+                        $document,
+                        $instance->grouping->filtered
+                    ),
+                    "instance" => $instance,
                 )
             )
         );
@@ -169,15 +173,23 @@ class ApiController extends FhmController
      */
     protected function _authorized($card)
     {
-        if($card == "")
-        {
-            throw $this->createNotFoundException($this->get('translator')->trans('card.error.unknown', array(), $this->translation[0]));
+        if ($card == "") {
+            throw $this->createNotFoundException(
+                $this->get('translator')->trans('card.error.unknown', array(), $this->translation[0])
+            );
         }
-        if($card->getParent() && method_exists($card->getParent(), 'hasModerator'))
-        {
-            if(!$this->getUser()->isSuperAdmin() && !$this->getUser()->hasRole('ROLE_ADMIN') && !$card->getParent()->hasModerator($this->getUser()))
-            {
-                throw new HttpException(403, $this->get('translator')->trans($this->translation[1] . '.error.forbidden', array(), $this->translation[0]));
+        if ($card->getParent() && method_exists($card->getParent(), 'hasModerator')) {
+            if (!$this->getUser()->isSuperAdmin() && !$this->getUser()->hasRole('ROLE_ADMIN') && !$card->getParent(
+                )->hasModerator($this->getUser())
+            ) {
+                throw new HttpException(
+                    403,
+                    $this->get('translator')->trans(
+                        $this->translation[1].'.error.forbidden',
+                        array(),
+                        $this->translation[0]
+                    )
+                );
             }
         }
 

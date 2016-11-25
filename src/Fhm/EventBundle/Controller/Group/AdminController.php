@@ -1,6 +1,8 @@
 <?php
 namespace Fhm\EventBundle\Controller\Group;
 
+use Fhm\EventBundle\Form\Type\Admin\Group\CreateType;
+use Fhm\EventBundle\Form\Type\Admin\Group\UpdateType;
 use Fhm\FhmBundle\Controller\RefAdminController as FhmController;
 use Fhm\EventBundle\Document\EventGroup;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,8 +24,8 @@ class AdminController extends FhmController
     {
         $this->setFhmTools($tools);
         parent::__construct('Fhm', 'Event', 'event_group', 'EventGroup');
-        $this->form->type->create = 'Fhm\\EventBundle\\Form\\Type\\Admin\\Group\\CreateType';
-        $this->form->type->update = 'Fhm\\EventBundle\\Form\\Type\\Admin\\Group\\UpdateType';
+        $this->form->type->create = CreateType::class;
+        $this->form->type->update = UpdateType::class;
         $this->translation = array('FhmEventBundle', 'event.group');
     }
 

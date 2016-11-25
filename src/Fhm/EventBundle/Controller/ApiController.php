@@ -315,7 +315,7 @@ class ApiController extends FhmController
                 $date,
                 $dataSearch['search'],
                 $dataPagination['pagination'],
-                $this->fhm_tools->getParameter(array('pagination', 'front', 'page'), 'fhm_fhm'),
+                $this->fhm_tools->getParameters(array('pagination', 'front', 'page'), 'fhm_fhm'),
                 $instance->grouping->current
             );
 
@@ -341,7 +341,7 @@ class ApiController extends FhmController
                 $date,
                 $dataSearch['search'],
                 1,
-                $this->fhm_tools->getParameter(array('pagination', 'front', 'page'), 'fhm_fhm'),
+                $this->fhm_tools->getParameters(array('pagination', 'front', 'page'), 'fhm_fhm'),
                 $instance->grouping->current
             );
 

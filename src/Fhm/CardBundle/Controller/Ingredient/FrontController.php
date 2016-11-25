@@ -1,6 +1,8 @@
 <?php
 namespace Fhm\CardBundle\Controller\Ingredient;
 
+use Fhm\CardBundle\Form\Type\Front\Ingredient\CreateType;
+use Fhm\CardBundle\Form\Type\Front\Ingredient\UpdateType;
 use Fhm\FhmBundle\Controller\RefFrontController as FhmController;
 use Fhm\CardBundle\Document\CardIngredient;
 use Fhm\FhmBundle\Services\Tools;
@@ -21,9 +23,9 @@ class FrontController extends FhmController
     {
         $this->setFhmTools($tools);
         parent::__construct('Fhm', 'Card', 'card_ingredient', 'CardIngredient');
-        $this->form->type->create = 'Fhm\\CardBundle\\Form\\Type\\Front\\Ingredient\\CreateType';
-        $this->form->type->update = 'Fhm\\CardBundle\\Form\\Type\\Front\\Ingredient\\UpdateType';
-        $this->translation        = array('FhmCardBundle', 'card.ingredient');
+        $this->form->type->create = CreateType::class;
+        $this->form->type->update = UpdateType::class;
+        $this->translation = array('FhmCardBundle', 'card.ingredient');
     }
 
     /**
@@ -50,9 +52,9 @@ class FrontController extends FhmController
     public function createAction(Request $request)
     {
         // For activate this route, delete next line
-        throw $this->createNotFoundException($this->get('translator')->trans('fhm.error.route', array(), 'FhmFhmBundle'));
-
-        //return parent::createAction($request);
+        throw $this->createNotFoundException(
+            $this->get('translator')->trans('fhm.error.route', array(), 'FhmFhmBundle')
+        );
     }
 
     /**
@@ -67,9 +69,9 @@ class FrontController extends FhmController
     public function duplicateAction(Request $request, $id)
     {
         // For activate this route, delete next line
-        throw $this->createNotFoundException($this->get('translator')->trans('fhm.error.route', array(), 'FhmFhmBundle'));
-
-        //return parent::duplicateAction($request, $id);
+        throw $this->createNotFoundException(
+            $this->get('translator')->trans('fhm.error.route', array(), 'FhmFhmBundle')
+        );
     }
 
     /**
@@ -84,9 +86,9 @@ class FrontController extends FhmController
     public function updateAction(Request $request, $id)
     {
         // For activate this route, delete next line
-        throw $this->createNotFoundException($this->get('translator')->trans('fhm.error.route', array(), 'FhmFhmBundle'));
-
-        //return parent::updateAction($request, $id);
+        throw $this->createNotFoundException(
+            $this->get('translator')->trans('fhm.error.route', array(), 'FhmFhmBundle')
+        );
     }
 
     /**
@@ -114,9 +116,9 @@ class FrontController extends FhmController
     public function deleteAction($id)
     {
         // For activate this route, delete next line
-        throw $this->createNotFoundException($this->get('translator')->trans('fhm.error.route', array(), 'FhmFhmBundle'));
-
-        //return parent::deleteAction($id);
+        throw $this->createNotFoundException(
+            $this->get('translator')->trans('fhm.error.route', array(), 'FhmFhmBundle')
+        );
     }
 
     /**

@@ -1,6 +1,8 @@
 <?php
 namespace Fhm\CardBundle\Controller\Product;
 
+use Fhm\CardBundle\Form\Type\Admin\Product\CreateType;
+use Fhm\CardBundle\Form\Type\Admin\Product\UpdateType;
 use Fhm\FhmBundle\Controller\RefAdminController as FhmController;
 use Fhm\CardBundle\Document\CardProduct;
 use Fhm\FhmBundle\Services\Tools;
@@ -22,8 +24,8 @@ class AdminController extends FhmController
     {
         $this->setFhmTools($tools);
         parent::__construct('Fhm', 'Card', 'card_product', 'CardProduct');
-        $this->form->type->create = 'Fhm\\CardBundle\\Form\\Type\\Admin\\Product\\CreateType';
-        $this->form->type->update = 'Fhm\\CardBundle\\Form\\Type\\Admin\\Product\\UpdateType';
+        $this->form->type->create = CreateType::class;
+        $this->form->type->update = UpdateType::class;
         $this->translation        = array('FhmCardBundle', 'card.product');
     }
 

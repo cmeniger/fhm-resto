@@ -1,6 +1,8 @@
 <?php
 namespace Fhm\EventBundle\Controller\Group;
 
+use Fhm\EventBundle\Form\Type\Front\Group\CreateType;
+use Fhm\EventBundle\Form\Type\Front\Group\UpdateType;
 use Fhm\FhmBundle\Controller\RefFrontController as FhmController;
 use Fhm\EventBundle\Document\Event;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,8 +24,8 @@ class FrontController extends FhmController
     {
         $this->setFhmTools($tools);
         parent::__construct('Fhm', 'Event', 'event_group', 'EventGroup');
-        $this->form->type->create = 'Fhm\\EventBundle\\Form\\Type\\Front\\Group\\CreateType';
-        $this->form->type->update = 'Fhm\\EventBundle\\Form\\Type\\Front\\Group\\UpdateType';
+        $this->form->type->create = CreateType::class;
+        $this->form->type->update = UpdateType::class;
         $this->translation = array('FhmEventBundle', 'event.group');
     }
 
@@ -106,7 +108,7 @@ class FrontController extends FhmController
         $document = $response['document'];
         $instance = $response['instance'];
         $classType = $this->form->type->search;
-        $form = $this->createForm(new $classType($instance), null);
+        $form = $this->createForm($classType);
         $form->setData($this->get('request_stack')->get($form->getName()));
         $dataSearch = $form->getData();
         $dataPagination = $this->get('request_stack')->get('FhmPagination');
@@ -117,7 +119,7 @@ class FrontController extends FhmController
                 $document,
                 $dataSearch['search'],
                 $dataPagination['pagination'],
-                $this->fhm_tools->getParameter(array('pagination', 'front', 'page'), 'fhm_fhm')
+                $this->fhm_tools->getParameters(array('pagination', 'front', 'page'), 'fhm_fhm')
             );
 
             return array_merge(
@@ -143,7 +145,7 @@ class FrontController extends FhmController
                 $document,
                 $dataSearch['search'],
                 1,
-                $this->fhm_tools->getParameter(array('pagination', 'front', 'page'), 'fhm_fhm')
+                $this->fhm_tools->getParameters(array('pagination', 'front', 'page'), 'fhm_fhm')
             );
 
             return array_merge(

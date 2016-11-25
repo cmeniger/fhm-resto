@@ -47,23 +47,19 @@ class Card
         $this->tools->dmPersist($card);
         // Categories
         $categories = $this->tools->dmRepository('FhmCardBundle:CardCategory')->getDefault();
-        foreach($categories as $category)
-        {
-            if($category->getParents()->count() == 0)
-            {
+        foreach ($categories as $category) {
+            if ($category->getParents()->count() == 0) {
                 $this->_duplicateCategory($card, $category);
             }
         }
         // Products
         $products = $this->tools->dmRepository('FhmCardBundle:CardProduct')->getDefault();
-        foreach($products as $product)
-        {
+        foreach ($products as $product) {
             $this->_duplicateProduct($card, $product);
         }
         // Ingredients
         $ingredients = $this->tools->dmRepository('FhmCardBundle:CardIngredient')->getDefault();
-        foreach($ingredients as $ingredient)
-        {
+        foreach ($ingredients as $ingredient) {
             $this->_duplicateIngredient($card, $ingredient);
         }
 
@@ -71,20 +67,20 @@ class Card
     }
 
     /**
-     * @param \Fhm\CardBundle\Document\Card         $card
+     * @param \Fhm\CardBundle\Document\Card $card
      * @param \Fhm\CardBundle\Document\CardCategory $category
-     * @param null                                  $parent
+     * @param null $parent
      *
      * @return $this
      */
-    private function _duplicateCategory(\Fhm\CardBundle\Document\Card $card, \Fhm\CardBundle\Document\CardCategory $category, $parent = null)
-    {
-        if($this->categories->contains($category))
-        {
+    private function _duplicateCategory(
+        \Fhm\CardBundle\Document\Card $card,
+        \Fhm\CardBundle\Document\CardCategory $category,
+        $parent = null
+    ) {
+        if ($this->categories->contains($category)) {
             return $this;
-        }
-        else
-        {
+        } else {
             $this->categories->add($category);
         }
         // Category
@@ -105,8 +101,7 @@ class Card
         $data->setActive(true);
         $data->setDelete(false);
         $data->setCard($card);
-        if($parent)
-        {
+        if ($parent) {
             $data->addParent($parent);
         }
         $this->tools->dmPersist($data);
@@ -114,13 +109,11 @@ class Card
         $card->addCategory($data, false);
         $this->tools->dmPersist($card);
         // Sons
-        foreach($category->getSons() as $son)
-        {
+        foreach ($category->getSons() as $son) {
             $this->_duplicateCategory($card, $son, $data);
         }
         // Products
-        foreach($category->getProducts() as $product)
-        {
+        foreach ($category->getProducts() as $product) {
             $this->_duplicateProduct($card, $product, $data);
         }
 
@@ -128,20 +121,20 @@ class Card
     }
 
     /**
-     * @param \Fhm\CardBundle\Document\Card        $card
+     * @param \Fhm\CardBundle\Document\Card $card
      * @param \Fhm\CardBundle\Document\CardProduct $product
-     * @param null                                 $parent
+     * @param null $parent
      *
      * @return $this
      */
-    private function _duplicateProduct(\Fhm\CardBundle\Document\Card $card, \Fhm\CardBundle\Document\CardProduct $product, $parent = null)
-    {
-        if($this->products->contains($product))
-        {
+    private function _duplicateProduct(
+        \Fhm\CardBundle\Document\Card $card,
+        \Fhm\CardBundle\Document\CardProduct $product,
+        $parent = null
+    ) {
+        if ($this->products->contains($product)) {
             return $this;
-        }
-        else
-        {
+        } else {
             $this->products->add($product);
         }
         // Product
@@ -162,14 +155,12 @@ class Card
         $data->setActive(true);
         $data->setDelete(false);
         $data->setCard($card);
-        if($parent)
-        {
+        if ($parent) {
             $data->addCategory($parent);
         }
         $this->tools->dmPersist($data);
         // Ingredients
-        foreach($product->getIngredients() as $ingredient)
-        {
+        foreach ($product->getIngredients() as $ingredient) {
             $this->_duplicateIngredient($card, $ingredient, $data);
         }
 
@@ -177,20 +168,20 @@ class Card
     }
 
     /**
-     * @param \Fhm\CardBundle\Document\Card           $card
+     * @param \Fhm\CardBundle\Document\Card $card
      * @param \Fhm\CardBundle\Document\CardIngredient $ingredient
-     * @param null                                    $parent
+     * @param null $parent
      *
      * @return $this
      */
-    private function _duplicateIngredient(\Fhm\CardBundle\Document\Card $card, \Fhm\CardBundle\Document\CardIngredient $ingredient, $parent = null)
-    {
-        if($this->ingredients->contains($ingredient))
-        {
+    private function _duplicateIngredient(
+        \Fhm\CardBundle\Document\Card $card,
+        \Fhm\CardBundle\Document\CardIngredient $ingredient,
+        $parent = null
+    ) {
+        if ($this->ingredients->contains($ingredient)) {
             return $this;
-        }
-        else
-        {
+        } else {
             $this->ingredients->add($ingredient);
         }
         // Category
@@ -208,8 +199,7 @@ class Card
         $data->setActive(true);
         $data->setDelete(false);
         $data->setCard($card);
-        if($parent)
-        {
+        if ($parent) {
             $data->addProduct($parent);
         }
         $this->tools->dmPersist($data);
@@ -222,8 +212,8 @@ class Card
      */
     private function _initialization()
     {
-        $this->categories  = new ArrayCollection();
-        $this->products    = new ArrayCollection();
+        $this->categories = new ArrayCollection();
+        $this->products = new ArrayCollection();
         $this->ingredients = new ArrayCollection();
 
         return $this;
