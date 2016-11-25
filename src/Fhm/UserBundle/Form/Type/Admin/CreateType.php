@@ -3,8 +3,10 @@ namespace Fhm\UserBundle\Form\Type\Admin;
 
 use Fhm\GeolocationBundle\Form\Type\Admin\CreateType as GeolocationType;
 use Fhm\MediaBundle\Form\Type\MediaType;
+use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -18,10 +20,10 @@ class CreateType extends GeolocationType
         parent::buildForm($builder, $options);
         $builder
             ->add('username', TextType::class, array('label' => $this->translation . '.admin.create.form.username'))
-            ->add('email', 'email', array('label' => $this->translation . '.admin.create.form.email'))
+            ->add('email', EmailType::class, array('label' => $this->translation . '.admin.create.form.email'))
             ->add('first_name', TextType::class, array('label' => $this->translation . '.admin.create.form.first_name', 'required' => false))
             ->add('last_name', TextType::class, array('label' => $this->translation . '.admin.create.form.last_name', 'required' => false))
-            ->add('birth_date', 'birthday', array('label' => $this->translation . '.admin.create.form.birth_date', 'required' => false))
+            ->add('birth_date', BirthdayType::class, array('label' => $this->translation . '.admin.create.form.birth_date', 'required' => false))
             ->add('tel1', TextType::class, array('label' => $this->translation . '.admin.create.form.tel1', 'required' => false))
             ->add('tel2', TextType::class, array('label' => $this->translation . '.admin.create.form.tel2', 'required' => false))
             ->add('enabled', CheckboxType::class, array('label' => $this->translation . '.admin.create.form.enabled', 'required' => false))

@@ -6,6 +6,7 @@ use Fhm\MenuBundle\Form\Type\Extension\LinkType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class CreateType extends FhmType
 {
@@ -19,5 +20,19 @@ class CreateType extends FhmType
             ->add('id', HiddenType::class, array('mapped' => false, 'attr' => array('value' => $this->document->getId())))
             ->remove('share')
             ->remove('global');
+    }
+
+    /**
+     * @param OptionsResolver $resolver
+     */
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults(
+            array(
+                'data_class' => 'Fhm\MenuBundle\Document\Menu',
+                'translation_domain' => 'FhmMenuBundle',
+                'cascade_validation' => true,
+            )
+        );
     }
 }
