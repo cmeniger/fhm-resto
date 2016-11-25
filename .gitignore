@@ -14,8 +14,6 @@
 !var/SymfonyRequirements.php
 /vendor/
 /web/rockmongo
-**/.idea/*
-**/.idea/workspace.xml
-**/.idea/tasks.xml
 /bower_components/
-/node_modules
+/node_modules/
+/.idea
