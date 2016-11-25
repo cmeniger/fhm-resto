@@ -19,7 +19,7 @@ class CreateType extends FhmType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $this->setTranslation('geolocation');
+//        $this->setTranslation('geolocation');
         parent::buildForm($builder, $options);
         $builder
             ->add(
