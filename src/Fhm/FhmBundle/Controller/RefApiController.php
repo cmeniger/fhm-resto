@@ -118,9 +118,8 @@ class RefApiController extends Controller
 
     /**
      * @param Request $request
-     * @param         $id
-     *
-     * @return array
+     * @param $id
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function historicCopyAction(Request $request, $id)
     {

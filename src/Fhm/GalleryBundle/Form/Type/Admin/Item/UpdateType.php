@@ -17,27 +17,54 @@ class UpdateType extends FhmType
         $this->setTranslation('gallery.item');
         parent::buildForm($builder, $options);
         $builder
-            ->add('title', TextType::class, array('label' => $this->translation . '.admin.update.form.title'))
-            ->add('subtitle', TextType::class, array('label' => $this->translation . '.admin.update.form.subtitle', 'required' => false))
-            ->add('content', TextareaType::class, array('label' => $this->translation . '.admin.update.form.content', 'attr' => array('class' => 'editor'), 'required' => false))
-            ->add('link', TextType::class, array('label' => $this->translation . '.admin.update.form.link', 'required' => false))
-            ->add('order', IntegerType::class, array('label' => $this->translation . '.admin.update.form.order', 'required' => false))
-            ->add('image', MediaType::class, array(
-                'label'  => $this->translation . '.admin.update.form.image',
-                'filter' => 'image/*'
-            ))
-            ->add('galleries', DocumentType::class, array(
-                'label'         => $this->translation . '.admin.update.form.galleries',
-                'class'         => 'FhmGalleryBundle:Gallery',
-                'choice_label'      => 'name',
-                'query_builder' => function (\Fhm\GalleryBundle\Repository\GalleryRepository $dr)
-                {
-                    return $dr->getFormEnable();
-                },
-                'required'      => false,
-                'multiple'      => true,
-                'by_reference'  => false
-            ))
+            ->add('title', TextType::class, array('label' => $this->translation.'.admin.update.form.title'))
+            ->add(
+                'subtitle',
+                TextType::class,
+                array('label' => $this->translation.'.admin.update.form.subtitle', 'required' => false)
+            )
+            ->add(
+                'content',
+                TextareaType::class,
+                array(
+                    'label' => $this->translation.'.admin.update.form.content',
+                    'attr' => array('class' => 'editor'),
+                    'required' => false,
+                )
+            )
+            ->add(
+                'link',
+                TextType::class,
+                array('label' => $this->translation.'.admin.update.form.link', 'required' => false)
+            )
+            ->add(
+                'order',
+                IntegerType::class,
+                array('label' => $this->translation.'.admin.update.form.order', 'required' => false)
+            )
+            ->add(
+                'image',
+                MediaType::class,
+                array(
+                    'label' => $this->translation.'.admin.update.form.image',
+                    'filter' => 'image/*',
+                )
+            )
+            ->add(
+                'galleries',
+                DocumentType::class,
+                array(
+                    'label' => $this->translation.'.admin.update.form.galleries',
+                    'class' => 'FhmGalleryBundle:Gallery',
+                    'choice_label' => 'name',
+                    'query_builder' => function (\Fhm\GalleryBundle\Repository\GalleryRepository $dr) {
+                        return $dr->getFormEnable();
+                    },
+                    'required' => false,
+                    'multiple' => true,
+                    'by_reference' => false,
+                )
+            )
             ->remove('name')
             ->remove('description');
     }

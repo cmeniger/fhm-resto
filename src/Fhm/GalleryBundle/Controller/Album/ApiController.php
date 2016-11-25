@@ -68,23 +68,25 @@ class ApiController extends FhmController
         $document = ($document) ? $document : $this->fhm_tools->dmRepository()->getByName($id);
         $instance = $this->fhm_tools->instanceData($document);
         // ERROR - unknown
-        if($document == "")
-        {
-            throw $this->createNotFoundException($this->fhm_tools->trans('gallery.album.error.unknown', array(), 'FhmGalleryBundle'));
-        }
-        // ERROR - Forbidden
-        elseif(!$instance->user->admin && ($document->getDelete() || !$document->getActive()))
-        {
-            throw new HttpException(403, $this->fhm_tools->trans('gallery.album.error.forbidden', array(), 'FhmGalleryBundle'));
+        if ($document == "") {
+            throw $this->createNotFoundException(
+                $this->fhm_tools->trans('gallery.album.error.unknown', array(), 'FhmGalleryBundle')
+            );
+        } // ERROR - Forbidden
+        elseif (!$instance->user->admin && ($document->getDelete() || !$document->getActive())) {
+            throw new HttpException(
+                403,
+                $this->fhm_tools->trans('gallery.album.error.forbidden', array(), 'FhmGalleryBundle')
+            );
         }
 
         return new Response(
             $this->renderView(
-                "::FhmGallery/Template/" . $template . ".html.twig",
+                "::FhmGallery/Template/".$template.".html.twig",
                 array(
-                    'document'  => $document,
+                    'document' => $document,
                     'galleries' => $this->fhm_tools->dmRepository("FhmGalleryBundle:Gallery")->getByGroupAll($document),
-                    'instance'  => $instance
+                    'instance' => $instance,
                 )
             )
         );

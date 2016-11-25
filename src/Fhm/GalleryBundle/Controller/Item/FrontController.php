@@ -3,6 +3,8 @@ namespace Fhm\GalleryBundle\Controller\Item;
 
 use Fhm\FhmBundle\Controller\RefFrontController as FhmController;
 use Fhm\GalleryBundle\Document\Gallery;
+use Fhm\GalleryBundle\Form\Type\Admin\Item\CreateType;
+use Fhm\GalleryBundle\Form\Type\Admin\Item\UpdateType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -22,9 +24,9 @@ class FrontController extends FhmController
     {
         $this->setFhmTools($tools);
         parent::__construct('Fhm', 'Gallery', 'gallery_item', 'GalleryItem');
-        $this->form->type->create = 'Fhm\\GalleryBundle\\Form\\Type\\Front\\Item\\CreateType';
-        $this->form->type->update = 'Fhm\\GalleryBundle\\Form\\Type\\Front\\Item\\UpdateType';
-        $this->translation        = array('FhmGalleryBundle', 'gallery.item');
+        $this->form->type->create = CreateType::class;
+        $this->form->type->update = UpdateType::class;
+        $this->translation = array('FhmGalleryBundle', 'gallery.item');
     }
 
     /**
@@ -39,8 +41,6 @@ class FrontController extends FhmController
     {
         // For activate this route, delete next line
         throw $this->createNotFoundException($this->fhm_tools->trans('fhm.error.route', array(), 'FhmFhmBundle'));
-
-        return parent::indexAction();
     }
 
     /**
@@ -55,8 +55,6 @@ class FrontController extends FhmController
     {
         // For activate this route, delete next line
         throw $this->createNotFoundException($this->fhm_tools->trans('fhm.error.route', array(), 'FhmFhmBundle'));
-
-        return parent::createAction($request);
     }
 
     /**
@@ -72,8 +70,6 @@ class FrontController extends FhmController
     {
         // For activate this route, delete next line
         throw $this->createNotFoundException($this->fhm_tools->trans('fhm.error.route', array(), 'FhmFhmBundle'));
-
-        return parent::duplicateAction($request, $id);
     }
 
     /**
@@ -89,8 +85,6 @@ class FrontController extends FhmController
     {
         // For activate this route, delete next line
         throw $this->createNotFoundException($this->fhm_tools->trans('fhm.error.route', array(), 'FhmFhmBundle'));
-
-        return parent::updateAction($request, $id);
     }
 
     /**
@@ -106,8 +100,6 @@ class FrontController extends FhmController
     {
         // For activate this route, delete next line
         throw $this->createNotFoundException($this->fhm_tools->trans('fhm.error.route', array(), 'FhmFhmBundle'));
-
-        return parent::detailAction($id);
     }
 
     /**
@@ -122,8 +114,6 @@ class FrontController extends FhmController
     {
         // For activate this route, delete next line
         throw $this->createNotFoundException($this->fhm_tools->trans('fhm.error.route', array(), 'FhmFhmBundle'));
-
-        return parent::deleteAction($id);
     }
 
     /**

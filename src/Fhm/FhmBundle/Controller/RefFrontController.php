@@ -7,6 +7,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
+/**
+ * Class RefFrontController
+ * @package Fhm\FhmBundle\Controller
+ */
 class RefFrontController extends Controller
 {
     protected $fhm_tools;
@@ -59,7 +63,7 @@ class RefFrontController extends Controller
         }
         $instance  = $this->fhm_tools->instanceData();
         $classType = $this->form->type->search;
-        $form      = $this->createForm($classType, array('instance'=>$instance));
+        $form      = $this->createForm($classType);
         $form->setData($this->get('request_stack')->get($form->getName()));
         $dataSearch     = $form->getData();
         $dataPagination = $this->get('request_stack')->get('FhmPagination');
@@ -140,7 +144,7 @@ class RefFrontController extends Controller
         $instance     = $this->fhm_tools->instanceData();
         $classType    = $this->form->type->create;
         $classHandler = $this->form->handler->create;
-        $form           = $this->createForm($classType, array('document'=>$document, 'instance'=>$instance));
+        $form           = $this->createForm($classType, $document);
         $handler      = new $classHandler($form, $request);
         $process      = $handler->process();
         if ($process) {
@@ -243,7 +247,7 @@ class RefFrontController extends Controller
         if (!$instance->user->super && $document->getDelete()) {
             throw new HttpException(403, $this->fhm_tools->trans('.error.forbidden'));
         }
-        $form    = $this->createForm($classType, array('document'=>$document, 'instance'=>$instance));
+        $form    = $this->createForm($classType, $document);
 
         $handler = new $classHandler($form, $request);
         $process = $handler->process($document, $this->fhm_tools->dm(), $this->bundle);

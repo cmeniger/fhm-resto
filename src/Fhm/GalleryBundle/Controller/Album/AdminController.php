@@ -3,6 +3,8 @@ namespace Fhm\GalleryBundle\Controller\Album;
 
 use Fhm\FhmBundle\Controller\RefAdminController as FhmController;
 use Fhm\GalleryBundle\Document\GalleryAlbum;
+use Fhm\GalleryBundle\Form\Type\Admin\Album\CreateType;
+use Fhm\GalleryBundle\Form\Type\Admin\Album\UpdateType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -22,9 +24,9 @@ class AdminController extends FhmController
     {
         $this->setFhmTools($tools);
         parent::__construct('Fhm', 'Gallery', 'gallery_album', 'GalleryAlbum');
-        $this->form->type->create = 'Fhm\\GalleryBundle\\Form\\Type\\Admin\\Album\\CreateType';
-        $this->form->type->update = 'Fhm\\GalleryBundle\\Form\\Type\\Admin\\Album\\UpdateType';
-        $this->translation        = array('FhmGalleryBundle', 'gallery.album');
+        $this->form->type->create = CreateType::class;
+        $this->form->type->update = UpdateType::class;
+        $this->translation = array('FhmGalleryBundle', 'gallery.album');
     }
 
     /**
@@ -97,8 +99,10 @@ class AdminController extends FhmController
 
         return array_merge(
             array(
-                'gallery1' => $this->fhm_tools->dmRepository('FhmGalleryBundle:Gallery')->getAllEnable($instance->grouping->current),
-                'gallery2' => $this->getList($document->getGalleries())
+                'gallery1' => $this->fhm_tools->dmRepository('FhmGalleryBundle:Gallery')->getAllEnable(
+                    $instance->grouping->current
+                ),
+                'gallery2' => $this->getList($document->getGalleries()),
             ),
             parent::detailAction($id)
         );
@@ -218,14 +222,12 @@ class AdminController extends FhmController
      */
     public function listGalleryAction(Request $request)
     {
-        $datas    = json_decode($request->get('list'));
+        $datas = json_decode($request->get('list'));
         $document = $this->fhm_tools->dmRepository()->find($request->get('id'));
-        foreach($document->getGalleries() as $gallery)
-        {
+        foreach ($document->getGalleries() as $gallery) {
             $document->removeGallery($gallery);
         }
-        foreach($datas as $key => $data)
-        {
+        foreach ($datas as $key => $data) {
             $document->addGallery($this->fhm_tools->dmRepository('FhmGalleryBundle:Gallery')->find($data->id));
         }
         $this->fhm_tools->dmPersist($document);

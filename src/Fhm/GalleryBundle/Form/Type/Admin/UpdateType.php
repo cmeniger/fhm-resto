@@ -24,56 +24,112 @@ class UpdateType extends FhmType
         $this->setTranslation('gallery');
         parent::buildForm($builder, $options);
         $builder
-            ->add('title', TextType::class, array('label' => $this->translation . '.admin.update.form.title'))
-            ->add('subtitle', TextType::class, array('label' => $this->translation . '.admin.update.form.subtitle', 'required' => false))
-            ->add('resume', TextareaType::class, array('label' => $this->translation . '.admin.update.form.resume', 'attr' => array('class' => 'editor'), 'required' => false))
-            ->add('content', TextareaType::class, array('label' => $this->translation . '.admin.update.form.content', 'attr' => array('class' => 'editor'), 'required' => false))
-            ->add('add_global_item', CheckboxType::class, array('label' => $this->translation . '.admin.update.form.add_global_item', 'required' => false))
-            ->add('add_global_video', CheckboxType::class, array('label' => $this->translation . '.admin.update.form.add_global_video', 'required' => false))
-            ->add('order_item', ChoiceType::class, array('label' => $this->translation . '.admin.update.form.order_item', 'choices' => $this->_sortChoices()))
-            ->add('order_video', ChoiceType::class, array('label' => $this->translation . '.admin.update.form.order_video', 'choices' => $this->_sortChoices()))
-            ->add('order', IntegerType::class, array('label' => $this->translation . '.admin.update.form.order', 'required' => false))
-            ->add('image', MediaType::class, array(
-                'label'    => $this->translation . '.admin.update.form.image',
-                'filter'   => 'image/*',
-                'required' => false
-            ))
-            ->add('albums', DocumentType::class, array(
-                'label'         => $this->translation . '.admin.update.form.albums',
-                'class'         => 'FhmGalleryBundle:GalleryAlbum',
-                'choice_label'      => 'name',
-                'query_builder' => function (\Fhm\GalleryBundle\Repository\GalleryAlbumRepository $dr)
-                {
-                    return $dr->getFormEnable();
-                },
-                'required'      => false,
-                'multiple'      => true,
-                'by_reference'  => false
-            ))
-            ->add('items', DocumentType::class, array(
-                'label'         => $this->translation . '.admin.update.form.items',
-                'class'         => 'FhmGalleryBundle:GalleryItem',
-                'choice_label'      => 'name',
-                'query_builder' => function (\Fhm\GalleryBundle\Repository\GalleryItemRepository $dr)
-                {
-                    return $dr->getFormEnable();
-                },
-                'required'      => false,
-                'multiple'      => true,
-                'by_reference'  => false
-            ))
-            ->add('videos', DocumentType::class, array(
-                'label'         => $this->translation . '.admin.update.form.videos',
-                'class'         => 'FhmGalleryBundle:GalleryVideo',
-                'choice_label'      => 'name',
-                'query_builder' => function (\Fhm\GalleryBundle\Repository\GalleryVideoRepository $dr)
-                {
-                    return $dr->getFormEnable();
-                },
-                'required'      => false,
-                'multiple'      => true,
-                'by_reference'  => false
-            ))
+            ->add('title', TextType::class, array('label' => $this->translation.'.admin.update.form.title'))
+            ->add(
+                'subtitle',
+                TextType::class,
+                array('label' => $this->translation.'.admin.update.form.subtitle', 'required' => false)
+            )
+            ->add(
+                'resume',
+                TextareaType::class,
+                array(
+                    'label' => $this->translation.'.admin.update.form.resume',
+                    'attr' => array('class' => 'editor'),
+                    'required' => false,
+                )
+            )
+            ->add(
+                'content',
+                TextareaType::class,
+                array(
+                    'label' => $this->translation.'.admin.update.form.content',
+                    'attr' => array('class' => 'editor'),
+                    'required' => false,
+                )
+            )
+            ->add(
+                'add_global_item',
+                CheckboxType::class,
+                array('label' => $this->translation.'.admin.update.form.add_global_item', 'required' => false)
+            )
+            ->add(
+                'add_global_video',
+                CheckboxType::class,
+                array('label' => $this->translation.'.admin.update.form.add_global_video', 'required' => false)
+            )
+            ->add(
+                'order_item',
+                ChoiceType::class,
+                array('label' => $this->translation.'.admin.update.form.order_item', 'choices' => $this->_sortChoices())
+            )
+            ->add(
+                'order_video',
+                ChoiceType::class,
+                array(
+                    'label' => $this->translation.'.admin.update.form.order_video',
+                    'choices' => $this->_sortChoices(),
+                )
+            )
+            ->add(
+                'order',
+                IntegerType::class,
+                array('label' => $this->translation.'.admin.update.form.order', 'required' => false)
+            )
+            ->add(
+                'image',
+                MediaType::class,
+                array(
+                    'label' => $this->translation.'.admin.update.form.image',
+                    'filter' => 'image/*',
+                    'required' => false,
+                )
+            )
+            ->add(
+                'albums',
+                DocumentType::class,
+                array(
+                    'label' => $this->translation.'.admin.update.form.albums',
+                    'class' => 'FhmGalleryBundle:GalleryAlbum',
+                    'choice_label' => 'name',
+                    'query_builder' => function (\Fhm\GalleryBundle\Repository\GalleryAlbumRepository $dr) {
+                        return $dr->getFormEnable();
+                    },
+                    'required' => false,
+                    'multiple' => true,
+                    'by_reference' => false,
+                )
+            )
+            ->add(
+                'items',
+                DocumentType::class,
+                array(
+                    'label' => $this->translation.'.admin.update.form.items',
+                    'class' => 'FhmGalleryBundle:GalleryItem',
+                    'choice_label' => 'name',
+                    'query_builder' => function (\Fhm\GalleryBundle\Repository\GalleryItemRepository $dr) {
+                        return $dr->getFormEnable();
+                    },
+                    'required' => false,
+                    'multiple' => true,
+                    'by_reference' => false,
+                )
+            )
+            ->add(
+                'videos',
+                DocumentType::class,
+                array(
+                    'label' => $this->translation.'.admin.update.form.videos',
+                    'class' => 'FhmGalleryBundle:GalleryVideo',
+                    'choice_label' => 'name',
+                    'query_builder' => function (\Fhm\GalleryBundle\Repository\GalleryVideoRepository $dr) {
+                        return $dr->getFormEnable();
+                    },
+                    'required' => false,
+                    'multiple' => true,
+                    'by_reference' => false,
+                )
+            )
             ->remove('name')
             ->remove('description');
     }
@@ -85,14 +141,14 @@ class UpdateType extends FhmType
     {
         return array
         (
-            "title"            => $this->translation . '.admin.sort.title.asc',
-            "title desc"       => $this->translation . '.admin.sort.title.desc',
-            "order"            => $this->translation . '.admin.sort.order.asc',
-            "order desc"       => $this->translation . '.admin.sort.order.desc',
-            "date_update"      => $this->translation . '.admin.sort.update.asc',
-            "date_update desc" => $this->translation . '.admin.sort.update.desc',
-            "date_update"      => $this->translation . '.admin.sort.update.asc',
-            "date_update desc" => $this->translation . '.admin.sort.update.desc'
+            "title" => $this->translation.'.admin.sort.title.asc',
+            "title desc" => $this->translation.'.admin.sort.title.desc',
+            "order" => $this->translation.'.admin.sort.order.asc',
+            "order desc" => $this->translation.'.admin.sort.order.desc',
+            "date_update" => $this->translation.'.admin.sort.update.asc',
+            "date_update desc" => $this->translation.'.admin.sort.update.desc',
+            "date_update" => $this->translation.'.admin.sort.update.asc',
+            "date_update desc" => $this->translation.'.admin.sort.update.desc',
         );
     }
 

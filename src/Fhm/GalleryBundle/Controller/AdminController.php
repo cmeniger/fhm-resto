@@ -94,12 +94,18 @@ class AdminController extends FhmController
 
         return array_merge(
             array(
-                'item1'  => $this->fhm_tools->dmRepository('FhmGalleryBundle:GalleryItem')->getAllEnable($instance->grouping->current),
-                'item2'  => $this->getList($document->getItems()),
-                'video1' => $this->fhm_tools->dmRepository('FhmGalleryBundle:GalleryVideo')->getAllEnable($instance->grouping->current),
+                'item1' => $this->fhm_tools->dmRepository('FhmGalleryBundle:GalleryItem')->getAllEnable(
+                    $instance->grouping->current
+                ),
+                'item2' => $this->getList($document->getItems()),
+                'video1' => $this->fhm_tools->dmRepository('FhmGalleryBundle:GalleryVideo')->getAllEnable(
+                    $instance->grouping->current
+                ),
                 'video2' => $this->getList($document->getVideos()),
-                'album1' => $this->fhm_tools->dmRepository('FhmGalleryBundle:GalleryAlbum')->getAllEnable($instance->grouping->current),
-                'album2' => $this->getList($document->getAlbums())
+                'album1' => $this->fhm_tools->dmRepository('FhmGalleryBundle:GalleryAlbum')->getAllEnable(
+                    $instance->grouping->current
+                ),
+                'album2' => $this->getList($document->getAlbums()),
             ),
             parent::detailAction($id)
         );
@@ -219,14 +225,12 @@ class AdminController extends FhmController
      */
     public function listItemAction(Request $request)
     {
-        $datas    = json_decode($request->get('list'));
+        $datas = json_decode($request->get('list'));
         $document = $this->fhm_tools->dmRepository()->find($request->get('id'));
-        foreach($document->getItems() as $item)
-        {
+        foreach ($document->getItems() as $item) {
             $document->removeItem($item);
         }
-        foreach($datas as $key => $data)
-        {
+        foreach ($datas as $key => $data) {
             $document->addItem($this->fhm_tools->dmRepository('FhmGalleryBundle:GalleryItem')->find($data->id));
         }
         $this->fhm_tools->dmPersist($document);
@@ -244,14 +248,12 @@ class AdminController extends FhmController
      */
     public function listVideoAction(Request $request)
     {
-        $datas    = json_decode($request->get('list'));
+        $datas = json_decode($request->get('list'));
         $document = $this->fhm_tools->dmRepository()->find($request->get('id'));
-        foreach($document->getVideos() as $video)
-        {
+        foreach ($document->getVideos() as $video) {
             $document->removeVideo($video);
         }
-        foreach($datas as $key => $data)
-        {
+        foreach ($datas as $key => $data) {
             $document->addVideo($this->fhm_tools->dmRepository('FhmGalleryBundle:GalleryVideo')->find($data->id));
         }
         $this->fhm_tools->dmPersist($document);
@@ -269,14 +271,12 @@ class AdminController extends FhmController
      */
     public function listAlbumAction(Request $request)
     {
-        $datas    = json_decode($request->get('list'));
+        $datas = json_decode($request->get('list'));
         $document = $this->fhm_tools->dmRepository()->find($request->get('id'));
-        foreach($document->getAlbums() as $album)
-        {
+        foreach ($document->getAlbums() as $album) {
             $document->removeAlbum($album);
         }
-        foreach($datas as $key => $data)
-        {
+        foreach ($datas as $key => $data) {
             $document->addAlbum($this->fhm_tools->dmRepository('FhmGalleryBundle:GalleryAlbum')->find($data->id));
         }
         $this->fhm_tools->dmPersist($document);

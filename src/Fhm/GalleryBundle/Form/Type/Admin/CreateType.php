@@ -21,63 +21,119 @@ class CreateType extends FhmType
 {
     /**
      * @param FormBuilderInterface $builder
-     * @param array                $options
+     * @param array $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $this->setTranslation('gallery');
         parent::buildForm($builder, $options);
         $builder
-            ->add('title', TextType::class, array('label' => $this->translation . '.admin.create.form.title'))
-            ->add('subtitle', TextType::class, array('label' => $this->translation . '.admin.create.form.subtitle', 'required' => false))
-            ->add('resume', TextareaType::class, array('label' => $this->translation . '.admin.create.form.resume', 'attr' => array('class' => 'editor'), 'required' => false))
-            ->add('content', TextareaType::class, array('label' => $this->translation . '.admin.create.form.content', 'attr' => array('class' => 'editor'), 'required' => false))
-            ->add('add_global_item', CheckboxType::class, array('label' => $this->translation . '.admin.create.form.add_global_item', 'required' => false))
-            ->add('add_global_video', CheckboxType::class, array('label' => $this->translation . '.admin.create.form.add_global_video', 'required' => false))
-            ->add('order_item', ChoiceType::class, array('label' => $this->translation . '.admin.create.form.order_item', 'choices' => $this->_sortChoices()))
-            ->add('order_video', ChoiceType::class, array('label' => $this->translation . '.admin.create.form.order_video', 'choices' => $this->_sortChoices()))
-            ->add('order', IntegerType::class, array('label' => $this->translation . '.admin.create.form.order', 'required' => false))
-            ->add('image', MediaType::class, array(
-                'label'    => $this->translation . '.admin.create.form.image',
-                'filter'   => 'image/*',
-                'required' => false
-            ))
-            ->add('albums', DocumentType::class, array( 
-                'label'         => $this->translation . '.admin.create.form.albums',
-                'class'         => 'FhmGalleryBundle:GalleryAlbum',
-                'choice_label'      => 'name',
-                'query_builder' => function (\Fhm\GalleryBundle\Repository\GalleryAlbumRepository $dr)
-                {
-                    return $dr->getFormEnable();
-                },
-                'required'      => false,
-                'multiple'      => true,
-                'by_reference'  => false
-            ))
-            ->add('items', DocumentType::class, array(
-                'label'         => $this->translation . '.admin.create.form.items',
-                'class'         => 'FhmGalleryBundle:GalleryItem',
-                'choice_label'      => 'name',
-                'query_builder' => function (\Fhm\GalleryBundle\Repository\GalleryItemRepository $dr)
-                {
-                    return $dr->getFormEnable();
-                },
-                'required'      => false,
-                'multiple'      => true,
-                'by_reference'  => false
-            ))
-            ->add('videos', DocumentType::class, array(
-                'label'         => $this->translation . '.admin.create.form.videos',
-                'class'         => 'FhmGalleryBundle:GalleryVideo',
-                'choice_label'      => 'name',
-                'query_builder' => function (\Fhm\GalleryBundle\Repository\GalleryVideoRepository $dr)
-                {
-                    return $dr->getFormEnable();
-                },
-                'required'      => false,
-                'multiple'      => true,
-                'by_reference'  => false
-            ))
+            ->add('title', TextType::class, array('label' => $this->translation.'.admin.create.form.title'))
+            ->add(
+                'subtitle',
+                TextType::class,
+                array('label' => $this->translation.'.admin.create.form.subtitle', 'required' => false)
+            )
+            ->add(
+                'resume',
+                TextareaType::class,
+                array(
+                    'label' => $this->translation.'.admin.create.form.resume',
+                    'attr' => array('class' => 'editor'),
+                    'required' => false,
+                )
+            )
+            ->add(
+                'content',
+                TextareaType::class,
+                array(
+                    'label' => $this->translation.'.admin.create.form.content',
+                    'attr' => array('class' => 'editor'),
+                    'required' => false,
+                )
+            )
+            ->add(
+                'add_global_item',
+                CheckboxType::class,
+                array('label' => $this->translation.'.admin.create.form.add_global_item', 'required' => false)
+            )
+            ->add(
+                'add_global_video',
+                CheckboxType::class,
+                array('label' => $this->translation.'.admin.create.form.add_global_video', 'required' => false)
+            )
+            ->add(
+                'order_item',
+                ChoiceType::class,
+                array('label' => $this->translation.'.admin.create.form.order_item', 'choices' => $this->_sortChoices())
+            )
+            ->add(
+                'order_video',
+                ChoiceType::class,
+                array(
+                    'label' => $this->translation.'.admin.create.form.order_video',
+                    'choices' => $this->_sortChoices(),
+                )
+            )
+            ->add(
+                'order',
+                IntegerType::class,
+                array('label' => $this->translation.'.admin.create.form.order', 'required' => false)
+            )
+            ->add(
+                'image',
+                MediaType::class,
+                array(
+                    'label' => $this->translation.'.admin.create.form.image',
+                    'filter' => 'image/*',
+                    'required' => false,
+                )
+            )
+            ->add(
+                'albums',
+                DocumentType::class,
+                array(
+                    'label' => $this->translation.'.admin.create.form.albums',
+                    'class' => 'FhmGalleryBundle:GalleryAlbum',
+                    'choice_label' => 'name',
+                    'query_builder' => function (\Fhm\GalleryBundle\Repository\GalleryAlbumRepository $dr) {
+                        return $dr->getFormEnable();
+                    },
+                    'required' => false,
+                    'multiple' => true,
+                    'by_reference' => false,
+                )
+            )
+            ->add(
+                'items',
+                DocumentType::class,
+                array(
+                    'label' => $this->translation.'.admin.create.form.items',
+                    'class' => 'FhmGalleryBundle:GalleryItem',
+                    'choice_label' => 'name',
+                    'query_builder' => function (\Fhm\GalleryBundle\Repository\GalleryItemRepository $dr) {
+                        return $dr->getFormEnable();
+                    },
+                    'required' => false,
+                    'multiple' => true,
+                    'by_reference' => false,
+                )
+            )
+            ->add(
+                'videos',
+                DocumentType::class,
+                array(
+                    'label' => $this->translation.'.admin.create.form.videos',
+                    'class' => 'FhmGalleryBundle:GalleryVideo',
+                    'choice_label' => 'name',
+                    'query_builder' => function (\Fhm\GalleryBundle\Repository\GalleryVideoRepository $dr) {
+                        return $dr->getFormEnable();
+                    },
+                    'required' => false,
+                    'multiple' => true,
+                    'by_reference' => false,
+                )
+            )
             ->remove('name')
             ->remove('description');
     }
@@ -89,14 +145,14 @@ class CreateType extends FhmType
     {
         return array
         (
-            "title"            => $this->translation . '.admin.sort.title.asc',
-            "title desc"       => $this->translation . '.admin.sort.title.desc',
-            "order"            => $this->translation . '.admin.sort.order.asc',
-            "order desc"       => $this->translation . '.admin.sort.order.desc',
-            "date_create"      => $this->translation . '.admin.sort.create.asc',
-            "date_create desc" => $this->translation . '.admin.sort.create.desc',
-            "date_update"      => $this->translation . '.admin.sort.update.asc',
-            "date_update desc" => $this->translation . '.admin.sort.update.desc'
+            "title" => $this->translation.'.admin.sort.title.asc',
+            "title desc" => $this->translation.'.admin.sort.title.desc',
+            "order" => $this->translation.'.admin.sort.order.asc',
+            "order desc" => $this->translation.'.admin.sort.order.desc',
+            "date_create" => $this->translation.'.admin.sort.create.asc',
+            "date_create desc" => $this->translation.'.admin.sort.create.desc',
+            "date_update" => $this->translation.'.admin.sort.update.asc',
+            "date_update desc" => $this->translation.'.admin.sort.update.desc',
         );
     }
 

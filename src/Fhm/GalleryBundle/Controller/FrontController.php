@@ -35,8 +35,6 @@ class FrontController extends FhmController
     {
         // For activate this route, delete next line
         throw $this->createNotFoundException($this->fhm_tools->trans('fhm.error.route', array(), 'FhmFhmBundle'));
-
-        return parent::indexAction();
     }
 
     /**
@@ -51,8 +49,6 @@ class FrontController extends FhmController
     {
         // For activate this route, delete next line
         throw $this->createNotFoundException($this->fhm_tools->trans('fhm.error.route', array(), 'FhmFhmBundle'));
-
-        return parent::createAction($request);
     }
 
     /**
@@ -68,8 +64,6 @@ class FrontController extends FhmController
     {
         // For activate this route, delete next line
         throw $this->createNotFoundException($this->fhm_tools->trans('fhm.error.route', array(), 'FhmFhmBundle'));
-
-        return parent::duplicateAction($request, $id);
     }
 
     /**
@@ -85,8 +79,6 @@ class FrontController extends FhmController
     {
         // For activate this route, delete next line
         throw $this->createNotFoundException($this->fhm_tools->trans('fhm.error.route', array(), 'FhmFhmBundle'));
-
-        return parent::updateAction($request, $id);
     }
 
     /**
@@ -115,8 +107,6 @@ class FrontController extends FhmController
     {
         // For activate this route, delete next line
         throw $this->createNotFoundException($this->fhm_tools->trans('fhm.error.route', array(), 'FhmFhmBundle'));
-
-        return parent::deleteAction($id);
     }
 
     /**
