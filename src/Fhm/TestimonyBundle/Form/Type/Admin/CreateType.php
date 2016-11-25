@@ -18,7 +18,7 @@ class CreateType extends FhmType
         parent::buildForm($builder, $options);
         $builder
             ->add('image', MediaType::class, array(
-                'label'    => $this->instance->translation . '.admin.create.form.image',
+                'label'    => $this->translation . '.admin.create.form.image',
                 'filter'   => 'image/*',
                 'required' => false
             ));

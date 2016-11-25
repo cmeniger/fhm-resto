@@ -23,6 +23,7 @@ class CreateType extends FhmType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $this->setTranslation('mappicker');
         parent::buildForm($builder, $options);
         $builder
             ->add('order', NumberType::class, array('label' => $this->instance->translation . '.admin.create.form.order', 'required' => false))
