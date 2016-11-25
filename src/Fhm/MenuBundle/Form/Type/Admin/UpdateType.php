@@ -5,6 +5,7 @@ use Fhm\FhmBundle\Form\Type\Admin\UpdateType as FhmType;
 use Fhm\MenuBundle\Form\Type\Extension\LinkType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class UpdateType extends FhmType
 {
@@ -17,5 +18,19 @@ class UpdateType extends FhmType
             ->add('route', new LinkType(), array('label' => $this->translation . '.admin.update.form.route', 'required' => false))
             ->remove('share')
             ->remove('global');
+    }
+
+    /**
+     * @param OptionsResolver $resolver
+     */
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults(
+            array(
+                'data_class' => 'Fhm\MenuBundle\Document\Menu',
+                'translation_domain' => 'FhmMenuBundle',
+                'cascade_validation' => true,
+            )
+        );
     }
 }
