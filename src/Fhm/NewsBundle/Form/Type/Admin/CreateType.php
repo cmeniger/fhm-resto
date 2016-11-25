@@ -23,6 +23,7 @@ class CreateType extends FhmType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $this->setTranslation('news');
         parent::buildForm($builder, $options);
         $builder
             ->add('title', TextType::class, array('label' => $this->instance->translation . '.admin.create.form.title'))

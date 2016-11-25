@@ -9,6 +9,7 @@ class CreateType extends FhmType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $this->setTranslation('newsletter');
         parent::buildForm($builder, $options);
         $builder
             ->add('email', EmailType::class, array('label' => $this->instance->translation . '.admin.update.form.email'))

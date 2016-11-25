@@ -10,6 +10,7 @@ class CreateType extends FhmType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $this->setTranslation('partner');
         parent::buildForm($builder, $options);
         $builder
             ->add('add_global', CheckboxType::class, array('label' => $this->instance->translation . '.admin.create.form.add_global', 'required' => false))
