@@ -1,16 +1,30 @@
 <?php
 namespace Fhm\CardBundle\Form\Type\Api\Product;
 
+use Doctrine\Bundle\MongoDBBundle\Form\Type\DocumentType;
+use Fhm\MediaBundle\Form\Type\MediaType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\MoneyType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
+
+/**
+ * Class UpdateType
+ *
+ * @package Fhm\CardBundle\Form\Type\Api\Product
+ */
 class UpdateType extends AbstractType
 {
     protected $instance;
     protected $document;
     protected $card;
+    protected $translation;
 
     public function __construct($instance, $document, $card)
     {
@@ -19,48 +33,56 @@ class UpdateType extends AbstractType
         $this->card     = $card;
     }
 
+    /**
+     * @param FormBuilderInterface $builder
+     * @param array                $options
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $this->translation='card.product';
         $builder
-            ->add('name', 'text', array('label' => $this->instance->translation . '.api.update.form.name'))
-            ->add('description', 'textarea', array('label' => $this->instance->translation . '.api.update.form.description', 'required' => false))
-            ->add('price', 'money', array('label' => $this->instance->translation . '.api.update.form.price', 'currency' => '', 'required' => false))
-            ->add('currency', 'text', array('label' => $this->instance->translation . '.api.update.form.currency', 'required' => false))
-            ->add('order', 'integer', array('label' => $this->instance->translation . '.api.update.form.order', 'required' => false))
-            ->add('forward', 'checkbox', array('label' => $this->instance->translation . '.api.update.form.forward', 'required' => false))
-            ->add('image', 'media', array(
-                'label'    => $this->instance->translation . '.api.update.form.image',
+            ->add('name', TextType::class, array('label' => $this->translation . '.api.update.form.name'))
+            ->add('description', TextareaType::class, array('label' => $this->translation . '.api.update.form.description', 'required' => false))
+            ->add('price', MoneyType::class, array('label' => $this->translation . '.api.update.form.price', 'currency' => '', 'required' => false))
+            ->add('currency', TextType::class, array('label' => $this->translation . '.api.update.form.currency', 'required' => false))
+            ->add('order', IntegerType::class, array('label' => $this->translation . '.api.update.form.order', 'required' => false))
+            ->add('forward', CheckboxType::class, array('label' => $this->translation . '.api.update.form.forward', 'required' => false))
+            ->add('image', MediaType::class, array(
+                'label'    => $this->translation . '.api.update.form.image',
                 'filter'   => 'image/*',
                 'required' => false
             ))
-            ->add('categories', 'document', array(
-                'label'         => $this->instance->translation . '.api.update.form.categories',
+            ->add('categories', DocumentType::class, array(
+                'label'         => $this->translation . '.api.update.form.categories',
                 'class'         => 'FhmCardBundle:CardCategory',
                 'choice_label'      => 'route',
                 'query_builder' => function (\Fhm\CardBundle\Repository\CardCategoryRepository $dr)
                 {
-                    return $dr->setSort('route')->getFormCard($this->card, $this->instance->grouping->filtered);
+                    //                    return $dr->setSort('route')->getFormCard($this->card, $this->instance->grouping->filtered);
                 },
                 'multiple'      => true,
                 'by_reference'  => false,
                 'required'      => false
             ))
-            ->add('ingredients', 'document', array(
-                'label'         => $this->instance->translation . '.api.update.form.ingredients',
+            ->add('ingredients', DocumentType::class, array(
+                'label'         => $this->translation . '.api.update.form.ingredients',
                 'class'         => 'FhmCardBundle:CardIngredient',
                 'choice_label'      => 'name',
                 'query_builder' => function (\Fhm\CardBundle\Repository\CardIngredientRepository $dr)
                 {
-                    return $dr->getFormCard($this->card, $this->instance->grouping->filtered);
+                    //                    return $dr->getFormCard($this->card, $this->instance->grouping->filtered);
                 },
                 'multiple'      => true,
                 'required'      => false,
                 'by_reference'  => false
             ))
-            ->add('submitSave', 'submit', array('label' => $this->instance->translation . '.api.update.form.submit.save'));
+            ->add('submitSave', SubmitType::class, array('label' => $this->translation . '.api.update.form.submit.save'));
     }
 
-    public function getName()
+    /**
+     * @return string
+     */
+    public function getBlockPrefix()
     {
         return 'FhmUpdate';
     }
@@ -72,7 +94,7 @@ class UpdateType extends AbstractType
     {
         $resolver->setDefaults(
             array(
-                'data_class' => null,
+                'data_class' => 'Fhm\FhmCardBundle\Document\CardProduct',
                 'translation_domain' => 'FhmCardBundle',
                 'cascade_validation' => true,
             )

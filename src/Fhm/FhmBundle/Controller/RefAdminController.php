@@ -166,14 +166,7 @@ class RefAdminController extends Controller
         $instance = $this->fhm_tools->instanceData();
         $classType = $this->form->type->create;
         $classHandler = $this->form->handler->create;
-        $form = $this->createForm(
-            $classType,
-            $document,
-            array(
-                'data_class' => $instance->class,
-                'translation_domain' => $instance->translation
-            )
-        );
+        $form = $this->createForm($classType, $document);
         $handler = new $classHandler($form, $request);
         $process = $handler->process();
         if ($process) {

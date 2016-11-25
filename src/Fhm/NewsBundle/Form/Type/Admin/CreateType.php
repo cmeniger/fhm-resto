@@ -2,25 +2,16 @@
 namespace Fhm\NewsBundle\Form\Type\Admin;
 
 use Doctrine\Bundle\MongoDBBundle\Form\Type\DocumentType;
-use Fhm\FhmBundle\Form\Type\Admin\CreateType as FhmType;
 use Fhm\FhmBundle\Form\Type\AutocompleteType;
 use Fhm\NewsBundle\Form\Type\Admin\Group\AddType;
+use Fhm\FhmBundle\Form\Type\Admin\CreateType as FhmType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 
-/**
- * Class CreateType
- *
- * @package Fhm\NewsBundle\Form\Type\Admin
- */
 class CreateType extends FhmType
 {
-    /**
-     * @param FormBuilderInterface $builder
-     * @param array                $options
-     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         parent::buildForm($builder, $options);
@@ -31,10 +22,7 @@ class CreateType extends FhmType
             ->add('content', TextareaType::class, array('label' => $this->instance->translation . '.admin.create.form.content', 'attr' => array('class' => 'editor')))
             ->add('date_start', DateTimeType::class, array('label' => $this->instance->translation . '.admin.create.form.start', 'widget' => 'single_text', 'input' => 'datetime', 'format' => 'dd/MM/yyyy HH:mm', 'attr' => array('class' => 'datetimepicker'), 'required' => false))
             ->add('date_end', DateTimeType::class, array('label' => $this->instance->translation . '.admin.create.form.end', 'widget' => 'single_text', 'input' => 'datetime', 'format' => 'dd/MM/yyyy HH:mm', 'attr' => array('class' => 'datetimepicker'), 'required' => false))
-            ->add(
-                'image',
-                'media',
-                array(
+            ->add('image', 'media', array(
                     'label'    => $this->instance->translation . '.admin.create.form.image',
                     'filter'   => 'image/*',
                     'required' => false

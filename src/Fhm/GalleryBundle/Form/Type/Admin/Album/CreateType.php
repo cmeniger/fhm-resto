@@ -9,30 +9,41 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/**
+ * Class CreateType
+ *
+ * @package Fhm\GalleryBundle\Form\Type\Admin\Album
+ */
 class CreateType extends FhmType
 {
+    /**
+     * @param FormBuilderInterface $builder
+     * @param array                $options
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $this->setTranslation('gallery.album');
         parent::buildForm($builder, $options);
         $builder
-            ->add('title', TextType::class, array('label' => $this->instance->translation . '.admin.create.form.title'))
-            ->add('subtitle', TextType::class, array('label' => $this->instance->translation . '.admin.create.form.subtitle', 'required' => false))
-            ->add('content', TextareaType::class, array('label' => $this->instance->translation . '.admin.create.form.content', 'attr' => array('class' => 'editor'), 'required' => false))
-            ->add('add_global', CheckboxType::class, array('label' => $this->instance->translation . '.admin.create.form.add_global', 'required' => false))
-            ->add('sort', ChoiceType::class, array('label' => $this->instance->translation . '.admin.create.form.sort', 'choices' => $this->_sortChoices()))
+            ->add('title', TextType::class, array('label' => $this->translation . '.admin.create.form.title'))
+            ->add('subtitle', TextType::class, array('label' => $this->translation . '.admin.create.form.subtitle', 'required' => false))
+            ->add('content', TextareaType::class, array('label' => $this->translation . '.admin.create.form.content', 'attr' => array('class' => 'editor'), 'required' => false))
+            ->add('add_global', CheckboxType::class, array('label' => $this->translation . '.admin.create.form.add_global', 'required' => false))
+            ->add('sort', ChoiceType::class, array('label' => $this->translation . '.admin.create.form.sort', 'choices' => $this->_sortChoices()))
             ->add('image', MediaType::class, array(
-                'label'    => $this->instance->translation . '.admin.create.form.image',
+                'label'    => $this->translation . '.admin.create.form.image',
                 'filter'   => 'image/*',
                 'required' => false
             ))
             ->add('galleries', DocumentType::class, array(
-                'label'         => $this->instance->translation . '.admin.create.form.galleries',
+                'label'         => $this->translation . '.admin.create.form.galleries',
                 'class'         => 'FhmGalleryBundle:Gallery',
                 'choice_label'      => 'name',
                 'query_builder' => function (\Fhm\GalleryBundle\Repository\GalleryRepository $dr)
                 {
-                    return $dr->getFormEnable($this->instance->grouping->filtered);
+                    return $dr->getFormEnable();
                 },
                 'required'      => false,
                 'multiple'      => true,
@@ -42,18 +53,35 @@ class CreateType extends FhmType
             ->remove('description');
     }
 
+    /**
+     * @return array
+     */
     private function _sortChoices()
     {
         return array
         (
-            "title"            => $this->instance->translation . '.admin.sort.title.asc',
-            "title desc"       => $this->instance->translation . '.admin.sort.title.desc',
-            "order"            => $this->instance->translation . '.admin.sort.order.asc',
-            "order desc"       => $this->instance->translation . '.admin.sort.order.desc',
-            "date_create"      => $this->instance->translation . '.admin.sort.create.asc',
-            "date_create desc" => $this->instance->translation . '.admin.sort.create.desc',
-            "date_update"      => $this->instance->translation . '.admin.sort.update.asc',
-            "date_update desc" => $this->instance->translation . '.admin.sort.update.desc'
+            "title"            => $this->translation . '.admin.sort.title.asc',
+            "title desc"       => $this->translation . '.admin.sort.title.desc',
+            "order"            => $this->translation . '.admin.sort.order.asc',
+            "order desc"       => $this->translation . '.admin.sort.order.desc',
+            "date_create"      => $this->translation . '.admin.sort.create.asc',
+            "date_create desc" => $this->translation . '.admin.sort.create.desc',
+            "date_update"      => $this->translation . '.admin.sort.update.asc',
+            "date_update desc" => $this->translation . '.admin.sort.update.desc'
+        );
+    }
+
+    /**
+     * @param OptionsResolver $resolver
+     */
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults(
+            array(
+                'data_class' => 'Fhm\GalleryBundle\Document\GalleryAlbum',
+                'translation_domain' => 'FhmGalleryBundle',
+                'cascade_validation' => true,
+            )
         );
     }
 }

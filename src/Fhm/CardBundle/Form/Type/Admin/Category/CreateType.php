@@ -27,12 +27,23 @@ class CreateType extends FhmType
         $this->setTranslation('card.category');
         parent::buildForm($builder, $options);
         $builder
-            ->add('price', MoneyType::class, array('label' => $this->translation . '.admin.create.form.price', 'currency' => '', 'required' => false))
-            ->add('currency', TextType::class, array('label' => $this->translation . '.admin.create.form.currency', 'required' => false))
-            ->add('order', IntegerType::class, array('label' => $this->translation . '.admin.create.form.order', 'required' => false))
-            ->add('menu', CheckboxType::class , array('label' => $this->translation . '.admin.create.form.menu', 'required' => false))
-            ->add('default', CheckboxType::class, array('label' => $this->translation . '.admin.create.form.default', 'required' => false))
-            ->add('image',MediaType::class, array(
+            ->add('price', MoneyType::class, array(
+                'label'    => $this->translation . '.admin.create.form.price', 
+                'currency' => '', 'required' => false
+            ))
+            ->add('currency', TextType::class, array(
+                'label' => $this->translation . '.admin.create.form.currency',
+                'required' => false))
+            ->add('order', IntegerType::class, array(
+                'label' => $this->translation . '.admin.create.form.order', 
+                'required' => false))
+            ->add('menu', CheckboxType::class, array(
+                'label' => $this->translation . '.admin.create.form.menu', 
+                'required' => false))
+            ->add('default', CheckboxType::class, array(
+                'label' => $this->translation . '.admin.create.form.default', 
+                'required' => false))
+            ->add('image', MediaType::class, array(
                 'label'    => $this->translation . '.admin.create.form.image',
                 'filter'   => 'image/*',
                 'required' => false
@@ -40,7 +51,7 @@ class CreateType extends FhmType
             ->add('card', DocumentType::class, array(
                 'label'         => $this->translation . '.admin.create.form.card',
                 'class'         => 'FhmCardBundle:Card',
-                'choice_label'      => 'name',
+                'choice_label'  => 'name',
                 'query_builder' => function (\Fhm\CardBundle\Repository\CardRepository $dr)
                 {
                     return $dr->getFormEnable();
@@ -50,7 +61,7 @@ class CreateType extends FhmType
             ->add('products', DocumentType::class, array(
                 'label'         => $this->translation . '.admin.create.form.products',
                 'class'         => 'FhmCardBundle:CardProduct',
-                'choice_label'      => 'name',
+                'choice_label'  => 'name',
                 'query_builder' => function (\Fhm\CardBundle\Repository\CardProductRepository $dr)
                 {
                     return $dr->getFormEnable();
@@ -62,7 +73,7 @@ class CreateType extends FhmType
             ->add('parents', DocumentType::class, array(
                 'label'         => $this->translation . '.admin.create.form.parents',
                 'class'         => 'FhmCardBundle:CardCategory',
-                'choice_label'      => 'name',
+                'choice_label'  => 'name',
                 'query_builder' => function (\Fhm\CardBundle\Repository\CardCategoryRepository $dr)
                 {
                     return $dr->getFormEnable();
@@ -74,7 +85,7 @@ class CreateType extends FhmType
             ->add('sons', DocumentType::class, array(
                 'label'         => $this->translation . '.admin.create.form.sons',
                 'class'         => 'FhmCardBundle:CardCategory',
-                'choice_label'      => 'name',
+                'choice_label'  => 'name',
                 'query_builder' => function (\Fhm\CardBundle\Repository\CardCategoryRepository $dr)
                 {
                     return $dr->getFormEnable();
@@ -92,7 +103,7 @@ class CreateType extends FhmType
     {
         $resolver->setDefaults(
             array(
-                'data_class' =>'Fhm\FhmCardBundle\Document\CardCategory',
+                'data_class'         => 'Fhm\FhmCardBundle\Document\CardCategory',
                 'translation_domain' => 'FhmCardBundle',
                 'cascade_validation' => true,
             )

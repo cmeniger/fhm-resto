@@ -11,7 +11,7 @@
     {% block content_data %}
         <div class="form form-update">
             {% block content_data_form %}
-            <form action="{% block content_data_form_action %}{{ path(instance.source ~ '_' ~ instance.route ~ '_update', {'id':document.getId()}) }}{% endblock %}" {% block content_data_form_attribut %}{% endblock %} method="POST" {{ form_start(form) }} >
+            <form action="{% block content_data_form_action %}{{ path(instance.source ~ '_' ~ instance.route ~ '_update', {'id':document.getId()}) }}{% endblock %}" {% block content_data_form_attribut %}{% endblock %} method="POST"  >
                 {% endblock %}
                 {% block content_data_alert %}
                     <div class="row panel callout radius form-alert">

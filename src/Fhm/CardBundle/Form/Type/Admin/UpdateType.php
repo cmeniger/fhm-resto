@@ -19,7 +19,8 @@ class UpdateType extends FhmType
      * @param array                $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
-    {
+    {   
+        $this->setTranslation('card');
         parent::buildForm($builder, $options);
         $builder
             ->add('image', MediaType::class, array(

@@ -7,48 +7,58 @@ use Fhm\MediaBundle\Form\Type\MediaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/**
+ * Class CreateType
+ *
+ * @package Fhm\CardBundle\Form\Type\Admin
+ */
 class CreateType extends FhmType
 {
+    /**
+     * @param FormBuilderInterface $builder
+     * @param array                $options
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $this->setTranslation('card');
         parent::buildForm($builder, $options);
         $builder
             ->add('image', MediaType::class, array(
-                'label'    => $this->instance->translation . '.admin.create.form.image',
+                'label'    => $this->translation . '.admin.create.form.image',
                 'filter'   => 'image/*',
                 'required' => false
             ))
             ->add('categories', DocumentType::class, array(
-                'label'         => $this->instance->translation . '.admin.create.form.categories',
+                'label'         => $this->translation . '.admin.create.form.categories',
                 'class'         => 'FhmCardBundle:CardCategory',
                 'choice_label'      => 'name',
                 'query_builder' => function (\Fhm\CardBundle\Repository\CardCategoryRepository $dr)
                 {
-                    return $dr->getFormEnable($this->instance->grouping->filtered);
+                    return $dr->getFormEnable();
                 },
                 'multiple'      => true,
                 'by_reference'  => false,
                 'required'      => false
             ))
             ->add('products', DocumentType::class, array(
-                'label'         => $this->instance->translation . '.admin.create.form.products',
+                'label'         => $this->translation . '.admin.create.form.products',
                 'class'         => 'FhmCardBundle:CardProduct',
                 'choice_label'      => 'name',
                 'query_builder' => function (\Fhm\CardBundle\Repository\CardProductRepository $dr)
                 {
-                    return $dr->getFormEnable($this->instance->grouping->filtered);
+                    return $dr->getFormEnable();
                 },
                 'multiple'      => true,
                 'by_reference'  => false,
                 'required'      => false
             ))
             ->add('ingredients', DocumentType::class, array(
-                'label'         => $this->instance->translation . '.admin.create.form.ingredients',
+                'label'         => $this->translation . '.admin.create.form.ingredients',
                 'class'         => 'FhmCardBundle:CardIngredient',
                 'choice_label'      => 'name',
                 'query_builder' => function (\Fhm\CardBundle\Repository\CardIngredientRepository $dr)
                 {
-                    return $dr->getFormEnable($this->instance->grouping->filtered);
+                    return $dr->getFormEnable();
                 },
                 'multiple'      => true,
                 'by_reference'  => false,
