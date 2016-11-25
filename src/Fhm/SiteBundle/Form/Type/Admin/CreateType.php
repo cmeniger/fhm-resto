@@ -48,9 +48,9 @@ class CreateType extends FhmType
                 array(
                     'label' => $this->instance.'.admin.create.form.menu',
                     'class' => 'FhmMenuBundle:Menu',
-//                    'query_builder' => function (\Fhm\MenuBundle\Repository\MenuRepository $dr) {
-//                        return $dr->getFormEnable($this->instance->grouping->filtered);
-//                    },
+                    'query_builder' => function (\Fhm\MenuBundle\Repository\MenuRepository $dr) {
+                        return $dr->getFormEnable();
+                    },
                     'required' => false,
                 )
             )
@@ -60,9 +60,9 @@ class CreateType extends FhmType
                 array(
                     'label' => $this->instance.'.admin.create.form.news',
                     'class' => 'FhmNewsBundle:NewsGroup',
-//                    'query_builder' => function (\Fhm\NewsBundle\Repository\NewsGroupRepository $dr) {
-//                        return $dr->getFormEnable($this->instance->grouping->filtered);
-//                    },
+                    'query_builder' => function (\Fhm\NewsBundle\Repository\NewsGroupRepository $dr) {
+                        return $dr->getFormEnable();
+                    },
                     'required' => false,
                 )
             )
@@ -72,9 +72,9 @@ class CreateType extends FhmType
                 array(
                     'label' => $this->instance.'.admin.create.form.partner',
                     'class' => 'FhmPartnerBundle:PartnerGroup',
-//                    'query_builder' => function (\Fhm\PartnerBundle\Repository\PartnerGroupRepository $dr) {
-//                        return $dr->getFormEnable($this->instance->grouping->filtered);
-//                    },
+                    'query_builder' => function (\Fhm\PartnerBundle\Repository\PartnerGroupRepository $dr) {
+                        return $dr->getFormEnable();
+                    },
                     'required' => false,
                 )
             )
@@ -84,9 +84,9 @@ class CreateType extends FhmType
                 array(
                     'label' => $this->instance.'.admin.create.form.slider',
                     'class' => 'FhmSliderBundle:Slider',
-//                    'query_builder' => function (\Fhm\SliderBundle\Repository\SliderRepository $dr) {
-//                        return $dr->getFormEnable($this->instance->grouping->filtered);
-//                    },
+                    'query_builder' => function (\Fhm\SliderBundle\Repository\SliderRepository $dr) {
+                        return $dr->getFormEnable();
+                    },
                     'required' => false,
                 )
             )
@@ -96,9 +96,9 @@ class CreateType extends FhmType
                 array(
                     'label' => $this->instance.'.admin.create.form.gallery',
                     'class' => 'FhmGalleryBundle:Gallery',
-//                    'query_builder' => function (\Fhm\GalleryBundle\Repository\GalleryRepository $dr) {
-//                        return $dr->getFormEnable($this->instance->grouping->filtered);
-//                    },
+                    'query_builder' => function (\Fhm\GalleryBundle\Repository\GalleryRepository $dr) {
+                        return $dr->getFormEnable();
+                    },
                     'required' => false,
                 )
             )
@@ -126,9 +126,9 @@ class CreateType extends FhmType
                 array(
                     'label' => $this->instance.'.admin.create.form.contact',
                     'class' => 'FhmContactBundle:Contact',
-//                    'query_builder' => function (\Fhm\ContactBundle\Repository\ContactRepository $dr) {
-//                        return $dr->getFormEnable($this->instance->grouping->filtered);
-//                    },
+                    'query_builder' => function (\Fhm\ContactBundle\Repository\ContactRepository $dr) {
+                        return $dr->getFormEnable();
+                    },
                     'required' => false,
                 )
             )
