@@ -23,7 +23,7 @@ class AdminController extends FhmController
     {
         $this->setFhmTools($tools);
         parent::__construct('Fhm', 'Menu', 'menu');
-        $this->setParent(true);
+//        $this->setParent(true);
     }
 
     /**
@@ -62,7 +62,7 @@ class AdminController extends FhmController
         $instance     = $this->fhm_tools->instanceData();
         $classType    = $this->form->type->create;
         $classHandler = $this->form->handler->create;
-        $form         = $this->createForm(new $classType($instance, $document), $document);
+        $form         = $this->createForm($classType, $document);
         $handler      = new $classHandler($form, $request);
         $process      = $handler->process();
         if ($process) {
