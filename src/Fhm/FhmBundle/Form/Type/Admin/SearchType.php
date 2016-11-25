@@ -21,15 +21,14 @@ class SearchType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $data = $builder->getData();
-        $this->instance = $data['instance'];
+        $this->instance = $options['translation_domain'];
         $builder->add(
             'search',
             TextType::class,
             array(
                 'required' => false,
                 'attr' => array(
-                    'placeholder' => $this->instance->translation.'.admin.index.form.search',
+                    'placeholder' => $this->instance.'.admin.index.form.search',
                     'data-type' => 'list',
                 ),
             )

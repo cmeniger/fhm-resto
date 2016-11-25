@@ -64,7 +64,13 @@ class RefAdminController extends Controller
         }
         $instance = $this->fhm_tools->instanceData();
         $classType = $this->form->type->search;
-        $form = $this->createForm($classType, null, array('instance' => $instance));
+        $form = $this->createForm(
+            $classType,
+            null,
+            array(
+                'translation_domain' => $instance->translation
+            )
+        );
         $request = $this->get('request_stack')->getCurrentRequest();
         $dataSearch = $request->get('FhmSearch');
         $dataPagination = $request->get('FhmPagination');
