@@ -3,6 +3,8 @@ namespace Fhm\NewsBundle\Controller\Tag;
 
 use Fhm\FhmBundle\Controller\RefFrontController as FhmController;
 use Fhm\NewsBundle\Document\NewsTag;
+use Fhm\NewsBundle\Form\Type\Front\Tag\CreateType;
+use Fhm\NewsBundle\Form\Type\Front\Tag\UpdateType;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -21,8 +23,8 @@ class FrontController extends FhmController
     {
         $this->setFhmTools($tools);
         parent::__construct('Fhm', 'News', 'news_tag', 'NewsTag');
-        $this->form->type->create = 'Fhm\\NewsBundle\\Form\\Type\\Front\\Tag\\CreateType';
-        $this->form->type->update = 'Fhm\\NewsBundle\\Form\\Type\\Front\\Tag\\UpdateType';
+        $this->form->type->create = CreateType::class;
+        $this->form->type->update = UpdateType::class;
         $this->translation        = array('FhmNewsBundle', 'news.tag');
     }
 
@@ -51,8 +53,6 @@ class FrontController extends FhmController
     {
         // For activate this route, delete next line
         throw $this->createNotFoundException($this->fhm_tools->trans('fhm.error.route', array(), 'FhmFhmBundle'));
-
-        return parent::createAction($request);
     }
 
     /**
@@ -68,8 +68,6 @@ class FrontController extends FhmController
     {
         // For activate this route, delete next line
         throw $this->createNotFoundException($this->fhm_tools->trans('fhm.error.route', array(), 'FhmFhmBundle'));
-
-        return parent::duplicateAction($request, $id);
     }
 
     /**
@@ -85,8 +83,6 @@ class FrontController extends FhmController
     {
         // For activate this route, delete next line
         throw $this->createNotFoundException($this->fhm_tools->trans('fhm.error.route', array(), 'FhmFhmBundle'));
-
-        return parent::updateAction($request, $id);
     }
 
     /**
@@ -115,8 +111,6 @@ class FrontController extends FhmController
     {
         // For activate this route, delete next line
         throw $this->createNotFoundException($this->fhm_tools->trans('fhm.error.route', array(), 'FhmFhmBundle'));
-
-        return parent::deleteAction($id);
     }
 
     /**

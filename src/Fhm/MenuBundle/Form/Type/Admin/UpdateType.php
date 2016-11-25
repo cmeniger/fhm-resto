@@ -14,8 +14,16 @@ class UpdateType extends FhmType
         $this->setTranslation('menu');
         parent::buildForm($builder, $options);
         $builder
-            ->add('icon', TextType::class, array('label' => $this->translation . '.admin.update.form.icon', 'required' => false))
-            ->add('route', LinkType::class, array('label' => $this->translation . '.admin.update.form.route', 'required' => false))
+            ->add(
+                'icon',
+                TextType::class,
+                array('label' => $this->translation.'.admin.update.form.icon', 'required' => false)
+            )
+            ->add(
+                'route',
+                LinkType::class,
+                array('label' => $this->translation.'.admin.update.form.route', 'required' => false)
+            )
             ->remove('share')
             ->remove('global');
     }

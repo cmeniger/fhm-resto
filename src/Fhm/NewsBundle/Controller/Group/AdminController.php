@@ -3,6 +3,8 @@ namespace Fhm\NewsBundle\Controller\Group;
 
 use Fhm\FhmBundle\Controller\RefAdminController as FhmController;
 use Fhm\NewsBundle\Document\NewsGroup;
+use Fhm\NewsBundle\Form\Type\Admin\Group\CreateType;
+use Fhm\NewsBundle\Form\Type\Admin\Group\UpdateType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -22,9 +24,9 @@ class AdminController extends FhmController
     {
         $this->setFhmTools($tools);
         parent::__construct('Fhm', 'News', 'news_group', 'NewsGroup');
-        $this->form->type->create = 'Fhm\\NewsBundle\\Form\\Type\\Admin\\Group\\CreateType';
-        $this->form->type->update = 'Fhm\\NewsBundle\\Form\\Type\\Admin\\Group\\UpdateType';
-        $this->translation        = array('FhmNewsBundle', 'news.group');
+        $this->form->type->create = CreateType::class;
+        $this->form->type->update = UpdateType::class;
+        $this->translation = array('FhmNewsBundle', 'news.group');
     }
 
     /**
@@ -97,8 +99,10 @@ class AdminController extends FhmController
 
         return array_merge(
             array(
-                'news1' => $this->fhm_tools->dmRepository('FhmNewsBundle:News')->getAllEnable($instance->grouping->current),
-                'news2' => $this->getList($document->getNews())
+                'news1' => $this->fhm_tools->dmRepository('FhmNewsBundle:News')->getAllEnable(
+                    $instance->grouping->current
+                ),
+                'news2' => $this->getList($document->getNews()),
             ),
             parent::detailAction($id)
         );
@@ -218,14 +222,12 @@ class AdminController extends FhmController
      */
     public function newsAction(Request $request)
     {
-        $news     = json_decode($request->get('list'));
+        $news = json_decode($request->get('list'));
         $document = $this->fhm_tools->dmRepository()->find($request->get('id'));
-        foreach($document->getNews() as $new)
-        {
+        foreach ($document->getNews() as $new) {
             $document->removeNews($new);
         }
-        foreach($news as $key => $data)
-        {
+        foreach ($news as $key => $data) {
             $new = $this->fhm_tools->dmRepository('FhmNewsBundle:News')->find($data->id);
             $document->addNews($new);
         }

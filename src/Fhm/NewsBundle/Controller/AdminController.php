@@ -94,8 +94,10 @@ class AdminController extends FhmController
 
         return array_merge(
             array(
-                'newsgroups1' => $this->fhm_tools->dmRepository('FhmNewsBundle:NewsGroup')->getListEnable($instance->grouping->current),
-                'newsgroups2' => $this->getList($document->getNewsgroups())
+                'newsgroups1' => $this->fhm_tools->dmRepository('FhmNewsBundle:NewsGroup')->getListEnable(
+                    $instance->grouping->current
+                ),
+                'newsgroups2' => $this->getList($document->getNewsgroups()),
             ),
             parent::detailAction($id)
         );
@@ -216,13 +218,11 @@ class AdminController extends FhmController
     public function newsgroupAction(Request $request)
     {
         $newsgroups = json_decode($request->get('list'));
-        $document   = $this->fhm_tools->dmRepository()->find($request->get('id'));
-        foreach($document->getNewsgroups() as $newsgroup)
-        {
+        $document = $this->fhm_tools->dmRepository()->find($request->get('id'));
+        foreach ($document->getNewsgroups() as $newsgroup) {
             $document->removeNewsgroup($newsgroup);
         }
-        foreach($newsgroups as $key => $data)
-        {
+        foreach ($newsgroups as $key => $data) {
             $newsgroup = $this->fhm_tools->dmRepository('FhmNewsBundle:NewsGroup')->find($data->id);
             $document->addNewsgroup($newsgroup);
         }

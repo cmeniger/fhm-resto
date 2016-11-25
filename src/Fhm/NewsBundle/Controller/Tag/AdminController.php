@@ -3,6 +3,8 @@ namespace Fhm\NewsBundle\Controller\Tag;
 
 use Fhm\FhmBundle\Controller\RefAdminController as FhmController;
 use Fhm\NewsBundle\Document\NewsTag;
+use Fhm\NewsBundle\Form\Type\Admin\Tag\CreateType;
+use Fhm\NewsBundle\Form\Type\Admin\Tag\UpdateType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
@@ -23,8 +25,8 @@ class AdminController extends FhmController
     {
         $this->setFhmTools($tools);
         parent::__construct('Fhm', 'News', 'news_tag', 'NewsTag');
-        $this->form->type->create = 'Fhm\\NewsBundle\\Form\\Type\\Admin\\Tag\\CreateType';
-        $this->form->type->update = 'Fhm\\NewsBundle\\Form\\Type\\Admin\\Tag\\UpdateType';
+        $this->form->type->create = CreateType::class;
+        $this->form->type->update = UpdateType::class;
         $this->translation        = array('FhmNewsBundle', 'news.tag');
     }
 

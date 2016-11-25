@@ -92,96 +92,180 @@ class ApiController extends FhmController
         $document = "";
         $instance = $this->fhm_tools->instanceData();
         // News
-        if($id && $template == 'full')
-        {
-            $document  = $this->fhm_tools->dmRepository()->getById($id);
-            $document  = ($document) ? $document : $this->fhm_tools->dmRepository()->getByAlias($id);
-            $document  = ($document) ? $document : $this->fhm_tools->dmRepository()->getByName($id);
-            $instance  = $this->fhm_tools->instanceData($document);
+        if ($id && $template == 'full') {
+            $document = $this->fhm_tools->dmRepository()->getById($id);
+            $document = ($document) ? $document : $this->fhm_tools->dmRepository()->getByAlias($id);
+            $document = ($document) ? $document : $this->fhm_tools->dmRepository()->getByName($id);
+            $instance = $this->fhm_tools->instanceData($document);
             $documents = '';
-            $form      = '';
+            $form = '';
             // ERROR - unknown
-            if($document == "")
-            {
-                throw $this->createNotFoundException($this->fhm_tools->trans('news.group.error.unknown', array(), 'FhmNewsBundle'));
-            }
-            // ERROR - Forbidden
-            elseif(!$instance->user->admin && ($document->getDelete() || !$document->getActive()))
-            {
-                throw new HttpException(403, $this->fhm_tools->trans('news.group.error.forbidden', array(), 'FhmNewsBundle'));
+            if ($document == "") {
+                throw $this->createNotFoundException(
+                    $this->fhm_tools->trans('news.group.error.unknown', array(), 'FhmNewsBundle')
+                );
+            } // ERROR - Forbidden
+            elseif (!$instance->user->admin && ($document->getDelete() || !$document->getActive())) {
+                throw new HttpException(
+                    403,
+                    $this->fhm_tools->trans('news.group.error.forbidden', array(), 'FhmNewsBundle')
+                );
             }
             // Change grouping
-            if($instance->grouping->different && $document->getGrouping())
-            {
-                $this->get($this->fhm_tools->getParameter("grouping", "fhm_fhm"))->setGrouping($document->getFirstGrouping());
+            if ($instance->grouping->different && $document->getGrouping()) {
+                $this->get($this->fhm_tools->getParameters("grouping", "fhm_fhm"))->setGrouping(
+                    $document->getFirstGrouping()
+                );
             }
-        }
-        else
-        {
+        } else {
             // Group
-            if($id)
-            {
+            if ($id) {
                 $document = $this->fhm_tools->dmRepository("FhmNewsBundle:NewsGroup")->getById($id);
-                $document = ($document) ? $document : $this->fhm_tools->dmRepository("FhmNewsBundle:NewsGroup")->getByAlias($id);
-                $document = ($document) ? $document : $this->fhm_tools->dmRepository("FhmNewsBundle:NewsGroup")->getByName($id);
+                $document = ($document) ? $document : $this->fhm_tools->dmRepository(
+                    "FhmNewsBundle:NewsGroup"
+                )->getByAlias($id);
+                $document = ($document) ? $document : $this->fhm_tools->dmRepository(
+                    "FhmNewsBundle:NewsGroup"
+                )->getByName($id);
                 $instance = $this->fhm_tools->instanceData($document);
                 // ERROR - unknown
-                if($document == "")
-                {
-                    throw $this->createNotFoundException($this->fhm_tools->trans('news.group.error.unknown', array(), 'FhmNewsBundle'));
-                }
-                // ERROR - Forbidden
-                elseif(!$instance->user->admin && ($document->getDelete() || !$document->getActive()))
-                {
-                    throw new HttpException(403, $this->fhm_tools->trans('news.group.error.forbidden', array(), 'FhmNewsBundle'));
+                if ($document == "") {
+                    throw $this->createNotFoundException(
+                        $this->fhm_tools->trans('news.group.error.unknown', array(), 'FhmNewsBundle')
+                    );
+                } // ERROR - Forbidden
+                elseif (!$instance->user->admin && ($document->getDelete() || !$document->getActive())) {
+                    throw new HttpException(
+                        403,
+                        $this->fhm_tools->trans('news.group.error.forbidden', array(), 'FhmNewsBundle')
+                    );
                 }
                 // Change grouping
-                if($instance->grouping->different && $document->getGrouping())
-                {
-                    $this->get($this->fhm_tools->getParameter("grouping", "fhm_fhm"))->setGrouping($document->getFirstGrouping());
+                if ($instance->grouping->different && $document->getGrouping()) {
+                    $this->get($this->fhm_tools->getParameters("grouping", "fhm_fhm"))->setGrouping(
+                        $document->getFirstGrouping()
+                    );
                 }
             }
             // News
             $classType = '\Fhm\FhmBundle\Form\Type\Front\SearchType';
-            $form      = $this->createForm(new $classType($instance), null);
-            $form->setData($this->get('request')->get($form->getName()));
-            $dataSearch     = $form->getData();
-            $dataPagination = $this->get('request')->get('FhmPagination');
+            $form = $this->createForm($classType);
+            $form->setData($this->get('request_stack')->get($form->getName()));
+            $dataSearch = $form->getData();
+            $dataPagination = $this->get('request_stack')->get('FhmPagination');
             $this->fhm_tools->setPagination($rows);
             // Ajax pagination request
-            if($pagination && isset($dataPagination['pagination']))
-            {
-                $documents  = $document ?
-                    $this->fhm_tools->dmRepository()->getNewsByGroupIndex($document, $dataSearch['search'], $dataPagination['pagination'], $this->pagination->page) :
-                    $this->fhm_tools->dmRepository()->getFrontIndex($dataSearch['search'], $dataPagination['pagination'], $this->pagination->page, $instance->grouping->current);
-                $pagination = $document ?
-                    $this->fhm_tools->getPagination($dataPagination['pagination'], count($documents), $this->fhm_tools->dmRepository("FhmNewsBundle:News")->getNewsByGroupCount($document, $dataSearch['search']), 'pagination', $this->fhm_tools->formRename($form->getName(), $dataSearch), $this->fhm_tools->getUrl('fhm_api_news_detail', array('template' => $template, 'id' => $id, 'rows' => $rows, 'pagination' => $pagination))) :
-                    $this->fhm_tools->getPagination($dataPagination['pagination'], count($documents), $this->fhm_tools->dmRepository("FhmNewsBundle:News")->getFrontCount($dataSearch['search'], $instance->grouping->current), 'pagination', $this->fhm_tools->formRename($form->getName(), $dataSearch), $this->fhm_tools->getUrl('fhm_api_news_detail', array('template' => $template, 'id' => $id, 'rows' => $rows, 'pagination' => $pagination)));
-            }
-            // Router request
-            else
-            {
+            if ($pagination && isset($dataPagination['pagination'])) {
                 $documents = $document ?
-                    $this->fhm_tools->dmRepository()->getNewsByGroupIndex($document, $dataSearch['search'], 1, $this->pagination->page) :
-                    $this->fhm_tools->dmRepository()->getFrontIndex($dataSearch['search'], 1, $this->pagination->page, $instance->grouping->current);
-                if($pagination)
-                {
+                    $this->fhm_tools->dmRepository()->getNewsByGroupIndex(
+                        $document,
+                        $dataSearch['search'],
+                        $dataPagination['pagination'],
+                        $this->pagination->page
+                    ) :
+                    $this->fhm_tools->dmRepository()->getFrontIndex(
+                        $dataSearch['search'],
+                        $dataPagination['pagination'],
+                        $this->pagination->page,
+                        $instance->grouping->current
+                    );
+                $pagination = $document ?
+                    $this->fhm_tools->getPagination(
+                        $dataPagination['pagination'],
+                        count($documents),
+                        $this->fhm_tools->dmRepository("FhmNewsBundle:News")->getNewsByGroupCount(
+                            $document,
+                            $dataSearch['search']
+                        ),
+                        'pagination',
+                        $this->fhm_tools->formRename($form->getName(), $dataSearch),
+                        $this->fhm_tools->getUrl(
+                            'fhm_api_news_detail',
+                            array('template' => $template, 'id' => $id, 'rows' => $rows, 'pagination' => $pagination)
+                        )
+                    ) :
+                    $this->fhm_tools->getPagination(
+                        $dataPagination['pagination'],
+                        count($documents),
+                        $this->fhm_tools->dmRepository("FhmNewsBundle:News")->getFrontCount(
+                            $dataSearch['search'],
+                            $instance->grouping->current
+                        ),
+                        'pagination',
+                        $this->fhm_tools->formRename($form->getName(), $dataSearch),
+                        $this->fhm_tools->getUrl(
+                            'fhm_api_news_detail',
+                            array('template' => $template, 'id' => $id, 'rows' => $rows, 'pagination' => $pagination)
+                        )
+                    );
+            } // Router request
+            else {
+                $documents = $document ?
+                    $this->fhm_tools->dmRepository()->getNewsByGroupIndex(
+                        $document,
+                        $dataSearch['search'],
+                        1,
+                        $this->pagination->page
+                    ) :
+                    $this->fhm_tools->dmRepository()->getFrontIndex(
+                        $dataSearch['search'],
+                        1,
+                        $this->pagination->page,
+                        $instance->grouping->current
+                    );
+                if ($pagination) {
                     $pagination = $document ?
-                        $this->fhm_tools->getPagination(1, count($documents), $this->fhm_tools->dmRepository("FhmNewsBundle:News")->getNewsByGroupCount($document, $dataSearch['search']), 'pagination', $this->fhm_tools->formRename($form->getName(), $dataSearch), $this->fhm_tools->getUrl('fhm_api_news_detail', array('template' => $template, 'id' => $id, 'rows' => $rows, 'pagination' => $pagination))) :
-                        $this->fhm_tools->getPagination(1, count($documents), $this->fhm_tools->dmRepository("FhmNewsBundle:News")->getFrontCount($dataSearch['search'], $instance->grouping->current), 'pagination', $this->fhm_tools->formRename($form->getName(), $dataSearch), $this->fhm_tools->getUrl('fhm_api_news_detail', array('template' => $template, 'id' => $id, 'rows' => $rows, 'pagination' => $pagination)));
+                        $this->fhm_tools->getPagination(
+                            1,
+                            count($documents),
+                            $this->fhm_tools->dmRepository("FhmNewsBundle:News")->getNewsByGroupCount(
+                                $document,
+                                $dataSearch['search']
+                            ),
+                            'pagination',
+                            $this->fhm_tools->formRename($form->getName(), $dataSearch),
+                            $this->fhm_tools->getUrl(
+                                'fhm_api_news_detail',
+                                array(
+                                    'template' => $template,
+                                    'id' => $id,
+                                    'rows' => $rows,
+                                    'pagination' => $pagination,
+                                )
+                            )
+                        ) :
+                        $this->fhm_tools->getPagination(
+                            1,
+                            count($documents),
+                            $this->fhm_tools->dmRepository("FhmNewsBundle:News")->getFrontCount(
+                                $dataSearch['search'],
+                                $instance->grouping->current
+                            ),
+                            'pagination',
+                            $this->fhm_tools->formRename($form->getName(), $dataSearch),
+                            $this->fhm_tools->getUrl(
+                                'fhm_api_news_detail',
+                                array(
+                                    'template' => $template,
+                                    'id' => $id,
+                                    'rows' => $rows,
+                                    'pagination' => $pagination,
+                                )
+                            )
+                        );
                 }
             }
         }
 
         return new Response(
             $this->renderView(
-                "::FhmNews/Template/" . $template . ".html.twig",
+                "::FhmNews/Template/".$template.".html.twig",
                 array(
-                    'document'   => $document,
-                    'documents'  => $documents,
+                    'document' => $document,
+                    'documents' => $documents,
                     'pagination' => $pagination ? $pagination : array(),
-                    'instance'   => $instance,
-                    'form'       => $form ? $form->createView() : $form,
+                    'instance' => $instance,
+                    'form' => $form ? $form->createView() : $form,
                 )
             )
         );

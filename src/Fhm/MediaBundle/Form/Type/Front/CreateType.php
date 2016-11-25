@@ -14,32 +14,46 @@ class CreateType extends FhmType
         $this->setTranslation('media');
         parent::buildForm($builder, $options);
         $builder
-            ->add('name', TextType::class, array('label' => $this->translation . '.front.create.form.name', 'required' => false))
-            ->add('file', FileType::class, array('label' => $this->translation . '.front.create.form.file'))
-            ->add('tag', TextType::class, array('label' => $this->translation . '.front.create.form.tag', 'mapped' => false, 'required' => false))
-            ->add('parent',DocumentType::class, array(
-                'label'         => $this->translation . '.front.create.form.parent',
-                'class'         => 'FhmMediaBundle:MediaTag',
-                'choice_label'      => 'route',
-                'query_builder' => function (\Fhm\MediaBundle\Repository\MediaTagRepository $dr)
-                {
-                    return $dr->getFormEnable();
-                },
-                'mapped'        => false,
-                'required'      => false
-            ))
-            ->add('tags', DocumentType::class, array(
-                'label'         => $this->translation . '.front.create.form.tags',
-                'class'         => 'FhmMediaBundle:MediaTag',
-                'choice_label'      => 'route',
-                'query_builder' => function (\Fhm\MediaBundle\Repository\MediaTagRepository $dr)
-                {
-                    return $dr->getFormEnable();
-                },
-                'multiple'      => true,
-                'required'      => false,
-                'by_reference'  => false
-            ))
+            ->add(
+                'name',
+                TextType::class,
+                array('label' => $this->translation.'.front.create.form.name', 'required' => false)
+            )
+            ->add('file', FileType::class, array('label' => $this->translation.'.front.create.form.file'))
+            ->add(
+                'tag',
+                TextType::class,
+                array('label' => $this->translation.'.front.create.form.tag', 'mapped' => false, 'required' => false)
+            )
+            ->add(
+                'parent',
+                DocumentType::class,
+                array(
+                    'label' => $this->translation.'.front.create.form.parent',
+                    'class' => 'FhmMediaBundle:MediaTag',
+                    'choice_label' => 'route',
+                    'query_builder' => function (\Fhm\MediaBundle\Repository\MediaTagRepository $dr) {
+                        return $dr->getFormEnable();
+                    },
+                    'mapped' => false,
+                    'required' => false,
+                )
+            )
+            ->add(
+                'tags',
+                DocumentType::class,
+                array(
+                    'label' => $this->translation.'.front.create.form.tags',
+                    'class' => 'FhmMediaBundle:MediaTag',
+                    'choice_label' => 'route',
+                    'query_builder' => function (\Fhm\MediaBundle\Repository\MediaTagRepository $dr) {
+                        return $dr->getFormEnable();
+                    },
+                    'multiple' => true,
+                    'required' => false,
+                    'by_reference' => false,
+                )
+            )
             ->remove('seo_title')
             ->remove('seo_description')
             ->remove('seo_keywords')

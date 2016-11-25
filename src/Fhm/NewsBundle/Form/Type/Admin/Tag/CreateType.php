@@ -5,8 +5,16 @@ use Fhm\FhmBundle\Form\Type\Admin\CreateType as FhmType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/**
+ * Class CreateType
+ * @package Fhm\NewsBundle\Form\Type\Admin\Tag
+ */
 class CreateType extends FhmType
 {
+    /**
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $this->setTranslation('news');
