@@ -13,14 +13,14 @@ class UpdateType extends FhmType
         $this->setTranslation('notification');
         parent::buildForm($builder, $options);
         $builder
-            ->add('content', TextareaType::class, array('label' => $this->instance->translation . '.admin.update.form.content', 'attr' => array('class' => 'editor')))
+            ->add('content', TextareaType::class, array('label' => $this->translation . '.admin.update.form.content', 'attr' => array('class' => 'editor')))
             ->add('user', DocumentType::class, array(
-                'label'         => $this->instance->translation . '.admin.update.form.user',
+                'label'         => $this->translation . '.admin.update.form.user',
                 'class'         => 'FhmUserBundle:User',
                 'choice_label'      => 'name',
                 'query_builder' => function (\Fhm\UserBundle\Repository\UserRepository $dr)
                 {
-                    return $dr->getFormEnable($this->instance->grouping->filtered);
+                    return $dr->getFormEnable();
                 }
             ))
             ->remove('name')
