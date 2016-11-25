@@ -24,6 +24,9 @@ class AutocompleteType extends AbstractType
         $this->container = $container;
     }
 
+    /**
+     * @param OptionsResolver $resolver
+     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(

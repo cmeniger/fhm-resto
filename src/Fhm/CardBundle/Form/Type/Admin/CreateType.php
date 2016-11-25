@@ -62,7 +62,7 @@ class CreateType extends FhmType
     {
         $resolver->setDefaults(
             array(
-                'data_class' => null,
+                'data_class' => 'Fhm\FhmCardBundle\Document\Card',
                 'translation_domain' => 'FhmCardBundle',
                 'cascade_validation' => true,
             )

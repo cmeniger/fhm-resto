@@ -21,23 +21,24 @@ class CreateType extends FhmType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $this->setTranslation('site');
         parent::buildForm($builder, $options);
         $builder
             ->add(
                 'title',
                 TextType::class,
-                array('label' => $this->instance.'.admin.create.form.title', 'required' => false)
+                array('label' => $this->translation.'.admin.create.form.title', 'required' => false)
             )
             ->add(
                 'subtitle',
                 TextType::class,
-                array('label' => $this->instance.'.admin.create.form.subtitle', 'required' => false)
+                array('label' => $this->translation.'.admin.create.form.subtitle', 'required' => false)
             )
             ->add(
                 'legal_notice',
                 TextType::class,
                 array(
-                    'label' => $this->instance.'.admin.create.form.legalnotice',
+                    'label' => $this->translation.'.admin.create.form.legalnotice',
                     'required' => false,
                     'attr' => array('class' => 'editor'),
                 )
@@ -46,7 +47,7 @@ class CreateType extends FhmType
                 'menu',
                 DocumentType::class,
                 array(
-                    'label' => $this->instance.'.admin.create.form.menu',
+                    'label' => $this->translation.'.admin.create.form.menu',
                     'class' => 'FhmMenuBundle:Menu',
                     'query_builder' => function (\Fhm\MenuBundle\Repository\MenuRepository $dr) {
                         return $dr->getFormEnable();
@@ -58,7 +59,7 @@ class CreateType extends FhmType
                 'news',
                 DocumentType::class,
                 array(
-                    'label' => $this->instance.'.admin.create.form.news',
+                    'label' => $this->translation.'.admin.create.form.news',
                     'class' => 'FhmNewsBundle:NewsGroup',
                     'query_builder' => function (\Fhm\NewsBundle\Repository\NewsGroupRepository $dr) {
                         return $dr->getFormEnable();
@@ -70,7 +71,7 @@ class CreateType extends FhmType
                 'partner',
                 DocumentType::class,
                 array(
-                    'label' => $this->instance.'.admin.create.form.partner',
+                    'label' => $this->translation.'.admin.create.form.partner',
                     'class' => 'FhmPartnerBundle:PartnerGroup',
                     'query_builder' => function (\Fhm\PartnerBundle\Repository\PartnerGroupRepository $dr) {
                         return $dr->getFormEnable();
@@ -82,7 +83,7 @@ class CreateType extends FhmType
                 'slider',
                 DocumentType::class,
                 array(
-                    'label' => $this->instance.'.admin.create.form.slider',
+                    'label' => $this->translation.'.admin.create.form.slider',
                     'class' => 'FhmSliderBundle:Slider',
                     'query_builder' => function (\Fhm\SliderBundle\Repository\SliderRepository $dr) {
                         return $dr->getFormEnable();

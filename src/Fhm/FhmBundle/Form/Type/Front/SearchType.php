@@ -15,6 +15,15 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class SearchType extends AbstractType
 {
     protected $instance;
+    protected $translation;
+
+    /**
+     * @param $domaine
+     */
+    public function setTranslation($domaine)
+    {
+        $this->translation = $domaine;
+    }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
