@@ -9,6 +9,7 @@ use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class CreateType extends FhmType
 {
@@ -38,5 +39,19 @@ class CreateType extends FhmType
                 'by_reference'  => false
             ))
             ->remove('description');
+    }
+
+    /**
+     * @param OptionsResolver $resolver
+     */
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults(
+            array(
+                'data_class' => 'Fhm\PartnerBundle\Document\Partner',
+                'translation_domain' => 'FhmPartnerBundle',
+                'cascade_validation' => true,
+            )
+        );
     }
 }

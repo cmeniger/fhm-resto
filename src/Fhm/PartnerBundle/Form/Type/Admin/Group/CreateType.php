@@ -5,6 +5,7 @@ use Doctrine\Bundle\MongoDBBundle\Form\Type\DocumentType;
 use Fhm\FhmBundle\Form\Type\Admin\CreateType as FhmType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class CreateType extends FhmType
 {
@@ -27,5 +28,19 @@ class CreateType extends FhmType
                 'by_reference'  => false
             ))
             ->remove('global');
+    }
+
+    /**
+     * @param OptionsResolver $resolver
+     */
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults(
+            array(
+                'data_class' => 'Fhm\PartnerBundle\Document\PartnerGroup',
+                'translation_domain' => 'FhmPartnerBundle',
+                'cascade_validation' => true,
+            )
+        );
     }
 }

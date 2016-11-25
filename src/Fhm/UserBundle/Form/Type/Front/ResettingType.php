@@ -5,6 +5,7 @@ use Fhm\FhmBundle\Form\Type\Front\UpdateType as FhmType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Core\Validator\Constraints\UserPassword;
 
 class ResettingType extends FhmType
@@ -41,4 +42,19 @@ class ResettingType extends FhmType
     {
         return 'FhmResetting';
     }
+    
+    /**
+     * @param OptionsResolver $resolver
+     */
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults(
+            array(
+                'data_class' => 'Fhm\UserBundle\Document\User',
+                'translation_domain' => 'FhmUserBundle',
+                'cascade_validation' => true,
+            )
+        );
+    }
+
 }

@@ -5,6 +5,7 @@ use Doctrine\Bundle\MongoDBBundle\Form\Type\DocumentType;
 use Fhm\FhmBundle\Form\Type\Admin\UpdateType as FhmType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class UpdateType extends FhmType
 {
@@ -33,5 +34,19 @@ class UpdateType extends FhmType
             ->remove('share')
             ->remove('global')
             ->remove('active');
+    }
+
+    /**
+     * @param OptionsResolver $resolver
+     */
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults(
+            array(
+                'data_class' => 'Fhm\NotificationBundle\Document\Notification',
+                'translation_domain' => 'FhmNotificationBundle',
+                'cascade_validation' => true,
+            )
+        );
     }
 }

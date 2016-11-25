@@ -7,6 +7,7 @@ use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class CreateType extends FhmType
 {
@@ -44,5 +45,19 @@ class CreateType extends FhmType
             ->remove('submitNew')
             ->remove('submitDuplicate')
             ->remove('submitQuit');
+    }
+
+    /**
+     * @param OptionsResolver $resolver
+     */
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults(
+            array(
+                'data_class' => 'Fhm\UserBundle\Document\User',
+                'translation_domain' => 'FhmUserBundle',
+                'cascade_validation' => true,
+            )
+        );
     }
 }

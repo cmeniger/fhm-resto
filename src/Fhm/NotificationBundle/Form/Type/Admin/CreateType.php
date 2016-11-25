@@ -5,6 +5,7 @@ use Doctrine\Bundle\MongoDBBundle\Form\Type\DocumentType;
 use Fhm\FhmBundle\Form\Type\Admin\CreateType as FhmType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class CreateType extends FhmType
 {
@@ -33,5 +34,19 @@ class CreateType extends FhmType
             ->remove('share')
             ->remove('global')
             ->remove('active');
+    }
+
+    /**
+     * @param OptionsResolver $resolver
+     */
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults(
+            array(
+                'data_class' => 'Fhm\NotificationBundle\Document\Notification',
+                'translation_domain' => 'FhmNotificationBundle',
+                'cascade_validation' => true,
+            )
+        );
     }
 }
