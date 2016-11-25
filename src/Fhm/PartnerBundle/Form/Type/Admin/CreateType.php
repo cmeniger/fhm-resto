@@ -14,23 +14,24 @@ class CreateType extends FhmType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $this->setTranslation('partner');
         parent::buildForm($builder, $options);
         $builder
-            ->add('content', TextareaType::class, array('label' => $this->instance->translation . '.admin.create.form.content', 'attr' => array('class' => 'editor')))
-            ->add('link', TextType::class, array('label' => $this->instance->translation . '.admin.create.form.link', 'required' => false))
-            ->add('order', IntegerType::class, array('label' => $this->instance->translation . '.admin.create.form.order', 'required' => false))
+            ->add('content', TextareaType::class, array('label' => $this->translation . '.admin.create.form.content', 'attr' => array('class' => 'editor')))
+            ->add('link', TextType::class, array('label' => $this->translation . '.admin.create.form.link', 'required' => false))
+            ->add('order', IntegerType::class, array('label' => $this->translation . '.admin.create.form.order', 'required' => false))
             ->add('image', MediaType::class, array(
-                    'label'  => $this->instance->translation . '.admin.create.form.image',
+                    'label'  => $this->translation . '.admin.create.form.image',
                     'filter' => 'image/*'
                 )
             )
             ->add('partnergroups', DocumentType::class, array(
-                'label'         => $this->instance->translation . '.admin.create.form.partnergroups',
+                'label'         => $this->translation . '.admin.create.form.partnergroups',
                 'class'         => 'FhmPartnerBundle:PartnerGroup',
                 'choice_label'      => 'name',
                 'query_builder' => function (\Fhm\PartnerBundle\Repository\PartnerGroupRepository $dr)
                 {
-                    return $dr->getFormEnable($this->instance->grouping->filtered);
+                    return $dr->getFormEnable();
                 },
                 'multiple'      => true,
                 'required'      => false,

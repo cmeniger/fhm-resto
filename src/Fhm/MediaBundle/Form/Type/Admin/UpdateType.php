@@ -12,29 +12,30 @@ class UpdateType extends FhmType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $this->setTranslation('media');
         parent::buildForm($builder, $options);
         $builder
-            ->add('file', FileType::class, array('label' => $this->instance->translation . '.admin.update.form.file', 'required' => false, 'attr'=>array('class'=>'drop')))
-            ->add('tag', TextType::class, array('label' => $this->instance->translation . '.admin.update.form.tag', 'mapped' => false, 'required' => false))
-            ->add('private', CheckboxType::class, array('label' => $this->instance->translation . '.admin.update.form.private', 'required' => false))
+            ->add('file', FileType::class, array('label' => $this->translation . '.admin.update.form.file', 'required' => false, 'attr'=>array('class'=>'drop')))
+            ->add('tag', TextType::class, array('label' => $this->translation . '.admin.update.form.tag', 'mapped' => false, 'required' => false))
+            ->add('private', CheckboxType::class, array('label' => $this->translation . '.admin.update.form.private', 'required' => false))
             ->add('parent', DocumentType::class, array(
-                'label'         => $this->instance->translation . '.admin.update.form.parent',
+                'label'         => $this->translation . '.admin.update.form.parent',
                 'class'         => 'FhmMediaBundle:MediaTag',
                 'choice_label'      => 'route',
                 'query_builder' => function (\Fhm\MediaBundle\Repository\MediaTagRepository $dr)
                 {
-                    return $dr->getFormFiltered($this->instance->grouping->filtered);
+                    return $dr->getFormFiltered();
                 },
                 'mapped'        => false,
                 'required'      => false
             ))
             ->add('tags',DocumentType::class, array(
-                'label'         => $this->instance->translation . '.admin.update.form.tags',
+                'label'         => $this->translation . '.admin.update.form.tags',
                 'class'         => 'FhmMediaBundle:MediaTag',
                 'choice_label'      => 'route',
                 'query_builder' => function (\Fhm\MediaBundle\Repository\MediaTagRepository $dr)
                 {
-                    return $dr->getFormFiltered($this->instance->grouping->filtered);
+                    return $dr->getFormFiltered();
                 },
                 'multiple'      => true,
                 'required'      => false,

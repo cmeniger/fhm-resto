@@ -18,7 +18,7 @@ class UpdateType extends FhmType
         parent::buildForm($builder, $options);
         $builder
             ->add('image', MediaType::class, array(
-                'label'    => $this->instance->translation . '.admin.update.form.image',
+                'label'    => $this->translation . '.admin.update.form.image',
                 'filter'   => 'image/*',
                 'required' => false
             ));
