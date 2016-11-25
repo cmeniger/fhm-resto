@@ -10,6 +10,7 @@ class CreateType extends FhmType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $this->setTranslation('workflow');
         parent::buildForm($builder, $options);
         $builder
             ->add('validate_check', CheckboxType::class, array('label' => $this->instance->translation . '.admin.create.form.validate_check', 'required' => false))

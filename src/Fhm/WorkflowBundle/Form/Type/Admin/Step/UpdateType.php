@@ -10,6 +10,7 @@ class UpdateType extends FhmType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $this->setTranslation('workflow');
         parent::buildForm($builder, $options);
         $builder
             ->add('color', TextType::class, array('label' => $this->instance->translation . '.admin.update.form.color', 'attr' => array('class' => 'colorpicker'), 'required' => false))

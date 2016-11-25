@@ -10,6 +10,7 @@ class CreateType extends FhmType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $this->setTranslation('workflow');
         parent::buildForm($builder, $options);
         $builder
             ->add('task', DocumentType::class, array(

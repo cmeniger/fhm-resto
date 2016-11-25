@@ -13,6 +13,7 @@ class UpdateType extends GeolocationType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $this->setTranslation('user');
         parent::buildForm($builder, $options);
         $builder
             ->add('username', TextType::class, array('label' => $this->instance->translation . '.admin.update.form.username'))
