@@ -11,6 +11,7 @@ class CreateType extends FhmType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $this->setTranslation('menu');
         parent::buildForm($builder, $options);
         $builder
             ->add('icon', TextType::class, array('label' => $this->instance->translation . '.admin.create.form.icon', 'required' => false))

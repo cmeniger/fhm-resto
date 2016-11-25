@@ -8,6 +8,7 @@ class CreateType extends FhmType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $this->setTranslation('media');
         parent::buildForm($builder, $options);
         $builder
             ->add('color', 'text', array('label' => $this->instance->translation . '.admin.create.form.color', 'attr' => array('class' => 'colorpicker'), 'required' => false))

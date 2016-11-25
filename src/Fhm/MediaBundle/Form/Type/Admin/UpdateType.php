@@ -12,6 +12,7 @@ class UpdateType extends FhmType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $this->setTranslation('media');
         parent::buildForm($builder, $options);
         $builder
             ->add('file', FileType::class, array('label' => $this->instance->translation . '.admin.update.form.file', 'required' => false, 'attr'=>array('class'=>'drop')))
