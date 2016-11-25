@@ -26,18 +26,18 @@ class CreateType extends FhmType
             ->add(
                 'title',
                 TextType::class,
-                array('label' => $this->instance->translation.'.admin.create.form.title', 'required' => false)
+                array('label' => $this->instance.'.admin.create.form.title', 'required' => false)
             )
             ->add(
                 'subtitle',
                 TextType::class,
-                array('label' => $this->instance->translation.'.admin.create.form.subtitle', 'required' => false)
+                array('label' => $this->instance.'.admin.create.form.subtitle', 'required' => false)
             )
             ->add(
                 'legal_notice',
                 TextType::class,
                 array(
-                    'label' => $this->instance->translation.'.admin.create.form.legalnotice',
+                    'label' => $this->instance.'.admin.create.form.legalnotice',
                     'required' => false,
                     'attr' => array('class' => 'editor'),
                 )
@@ -46,11 +46,11 @@ class CreateType extends FhmType
                 'menu',
                 DocumentType::class,
                 array(
-                    'label' => $this->instance->translation.'.admin.create.form.menu',
+                    'label' => $this->instance.'.admin.create.form.menu',
                     'class' => 'FhmMenuBundle:Menu',
-                    'query_builder' => function (\Fhm\MenuBundle\Repository\MenuRepository $dr) {
-                        return $dr->getFormEnable($this->instance->grouping->filtered);
-                    },
+//                    'query_builder' => function (\Fhm\MenuBundle\Repository\MenuRepository $dr) {
+//                        return $dr->getFormEnable($this->instance->grouping->filtered);
+//                    },
                     'required' => false,
                 )
             )
@@ -58,11 +58,11 @@ class CreateType extends FhmType
                 'news',
                 DocumentType::class,
                 array(
-                    'label' => $this->instance->translation.'.admin.create.form.news',
+                    'label' => $this->instance.'.admin.create.form.news',
                     'class' => 'FhmNewsBundle:NewsGroup',
-                    'query_builder' => function (\Fhm\NewsBundle\Repository\NewsGroupRepository $dr) {
-                        return $dr->getFormEnable($this->instance->grouping->filtered);
-                    },
+//                    'query_builder' => function (\Fhm\NewsBundle\Repository\NewsGroupRepository $dr) {
+//                        return $dr->getFormEnable($this->instance->grouping->filtered);
+//                    },
                     'required' => false,
                 )
             )
@@ -70,11 +70,11 @@ class CreateType extends FhmType
                 'partner',
                 DocumentType::class,
                 array(
-                    'label' => $this->instance->translation.'.admin.create.form.partner',
+                    'label' => $this->instance.'.admin.create.form.partner',
                     'class' => 'FhmPartnerBundle:PartnerGroup',
-                    'query_builder' => function (\Fhm\PartnerBundle\Repository\PartnerGroupRepository $dr) {
-                        return $dr->getFormEnable($this->instance->grouping->filtered);
-                    },
+//                    'query_builder' => function (\Fhm\PartnerBundle\Repository\PartnerGroupRepository $dr) {
+//                        return $dr->getFormEnable($this->instance->grouping->filtered);
+//                    },
                     'required' => false,
                 )
             )
@@ -82,11 +82,11 @@ class CreateType extends FhmType
                 'slider',
                 DocumentType::class,
                 array(
-                    'label' => $this->instance->translation.'.admin.create.form.slider',
+                    'label' => $this->instance.'.admin.create.form.slider',
                     'class' => 'FhmSliderBundle:Slider',
-                    'query_builder' => function (\Fhm\SliderBundle\Repository\SliderRepository $dr) {
-                        return $dr->getFormEnable($this->instance->grouping->filtered);
-                    },
+//                    'query_builder' => function (\Fhm\SliderBundle\Repository\SliderRepository $dr) {
+//                        return $dr->getFormEnable($this->instance->grouping->filtered);
+//                    },
                     'required' => false,
                 )
             )
@@ -94,11 +94,11 @@ class CreateType extends FhmType
                 'gallery',
                 DocumentType::class,
                 array(
-                    'label' => $this->instance->translation.'.admin.create.form.gallery',
+                    'label' => $this->instance.'.admin.create.form.gallery',
                     'class' => 'FhmGalleryBundle:Gallery',
-                    'query_builder' => function (\Fhm\GalleryBundle\Repository\GalleryRepository $dr) {
-                        return $dr->getFormEnable($this->instance->grouping->filtered);
-                    },
+//                    'query_builder' => function (\Fhm\GalleryBundle\Repository\GalleryRepository $dr) {
+//                        return $dr->getFormEnable($this->instance->grouping->filtered);
+//                    },
                     'required' => false,
                 )
             )
@@ -106,7 +106,7 @@ class CreateType extends FhmType
                 'background',
                 MediaType::class,
                 array(
-                    'label' => $this->instance->translation.'.admin.create.form.background',
+                    'label' => $this->instance.'.admin.create.form.background',
                     'filter' => 'image/*',
                     'required' => false,
                 )
@@ -115,7 +115,7 @@ class CreateType extends FhmType
                 'logo',
                 MediaType::class,
                 array(
-                    'label' => $this->instance->translation.'.admin.create.form.logo',
+                    'label' => $this->instance.'.admin.create.form.logo',
                     'filter' => 'image/*',
                     'required' => false,
                 )
@@ -124,67 +124,67 @@ class CreateType extends FhmType
                 'contact',
                 DocumentType::class,
                 array(
-                    'label' => $this->instance->translation.'.admin.create.form.contact',
+                    'label' => $this->instance.'.admin.create.form.contact',
                     'class' => 'FhmContactBundle:Contact',
-                    'query_builder' => function (\Fhm\ContactBundle\Repository\ContactRepository $dr) {
-                        return $dr->getFormEnable($this->instance->grouping->filtered);
-                    },
+//                    'query_builder' => function (\Fhm\ContactBundle\Repository\ContactRepository $dr) {
+//                        return $dr->getFormEnable($this->instance->grouping->filtered);
+//                    },
                     'required' => false,
                 )
             )
             ->add(
                 'social_facebook',
                 TextType::class,
-                array('label' => $this->instance->translation.'.admin.create.form.social.facebook', 'required' => false)
+                array('label' => $this->instance.'.admin.create.form.social.facebook', 'required' => false)
             )
             ->add(
                 'social_facebook_id',
                 TextType::class,
                 array(
-                    'label' => $this->instance->translation.'.admin.create.form.social.facebookId',
+                    'label' => $this->instance.'.admin.create.form.social.facebookId',
                     'required' => false,
                 )
             )
             ->add(
                 'social_twitter',
                 TextType::class,
-                array('label' => $this->instance->translation.'.admin.create.form.social.twitter', 'required' => false)
+                array('label' => $this->instance.'.admin.create.form.social.twitter', 'required' => false)
             )
             ->add(
                 'social_twitter_id',
                 TextType::class,
                 array(
-                    'label' => $this->instance->translation.'.admin.create.form.social.twitterId',
+                    'label' => $this->instance.'.admin.create.form.social.twitterId',
                     'required' => false,
                 )
             )
             ->add(
                 'social_google',
                 TextType::class,
-                array('label' => $this->instance->translation.'.admin.create.form.social.google', 'required' => false)
+                array('label' => $this->instance.'.admin.create.form.social.google', 'required' => false)
             )
             ->add(
                 'social_google_id',
                 TextType::class,
-                array('label' => $this->instance->translation.'.admin.create.form.social.googleId', 'required' => false)
+                array('label' => $this->instance.'.admin.create.form.social.googleId', 'required' => false)
             )
             ->add(
                 'social_instagram',
                 TextType::class,
                 array(
-                    'label' => $this->instance->translation.'.admin.create.form.social.instagram',
+                    'label' => $this->instance.'.admin.create.form.social.instagram',
                     'required' => false,
                 )
             )
             ->add(
                 'social_youtube',
                 TextType::class,
-                array('label' => $this->instance->translation.'.admin.create.form.social.youtube', 'required' => false)
+                array('label' => $this->instance.'.admin.create.form.social.youtube', 'required' => false)
             )
             ->add(
                 'social_flux',
                 TextType::class,
-                array('label' => $this->instance->translation.'.admin.create.form.social.flux', 'required' => false)
+                array('label' => $this->instance.'.admin.create.form.social.flux', 'required' => false)
             )
             ->remove('global')
             ->remove('share');
@@ -197,7 +197,7 @@ class CreateType extends FhmType
     {
         $resolver->setDefaults(
             array(
-                'data_class' => null,
+                'data_class' => 'Fhm\SiteBundle\Document\Site',
                 'translation_domain' => 'FhmSiteBundle',
                 'cascade_validation' => true,
             )

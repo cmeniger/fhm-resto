@@ -18,8 +18,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class UpdateType extends AbstractType
 {
     protected $instance;
-    protected $document;
-
 
     /**
      * @param FormBuilderInterface $builder
@@ -27,16 +25,14 @@ class UpdateType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $data = $builder->getData();
-        $this->instance = $data['instance'];
-        $this->document = $data['document'];
+        $this->instance = $options['translation_domain'];
 
         $builder
-            ->add('name', TextType::class, array('label' => $this->instance->translation.'.admin.update.form.name'))
+            ->add('name', TextType::class, array('label' => $this->instance.'.admin.update.form.name'))
             ->add(
                 'description',
                 TextareaType::class,
-                array('label' => $this->instance->translation.'.admin.update.form.description', 'required' => false)
+                array('label' => $this->instance.'.admin.update.form.description', 'required' => false)
             )
             ->add(
                 'seo_title',
@@ -56,66 +52,66 @@ class UpdateType extends AbstractType
             ->add(
                 'active',
                 CheckboxType::class,
-                array('label' => $this->instance->translation.'.admin.update.form.active', 'required' => false)
+                array('label' => $this->instance.'.admin.update.form.active', 'required' => false)
             )
             ->add(
                 'submitSave',
                 SubmitType::class,
-                array('label' => $this->instance->translation.'.admin.update.form.submit.save')
+                array('label' => $this->instance.'.admin.update.form.submit.save')
             )
             ->add(
                 'submitNew',
                 SubmitType::class,
-                array('label' => $this->instance->translation.'.admin.update.form.submit.new')
+                array('label' => $this->instance.'.admin.update.form.submit.new')
             )
             ->add(
                 'submitDuplicate',
                 SubmitType::class,
-                array('label' => $this->instance->translation.'.admin.update.form.submit.duplicate')
+                array('label' => $this->instance.'.admin.update.form.submit.duplicate')
             )
             ->add(
                 'submitQuit',
                 SubmitType::class,
-                array('label' => $this->instance->translation.'.admin.update.form.submit.quit')
+                array('label' => $this->instance.'.admin.update.form.submit.quit')
             )
             ->add(
                 'submitConfig',
                 SubmitType::class,
-                array('label' => $this->instance->translation.'.admin.update.form.submit.config')
+                array('label' => $this->instance.'.admin.update.form.submit.config')
             );
-        if ($this->instance->language->visible) {
-            $builder->add(
-                'languages',
-                ChoiceType::class,
-                array(
-                    'choices' => $this->instance->language->available,
-                    'multiple' => true,
-                )
-            );
-        }
-        if ($this->instance->grouping->visible) {
-            $builder
-                ->add(
-                    'grouping',
-                    ChoiceType::class,
-                    array(
-                        'choices' => $this->instance->grouping->available,
-                        'multiple' => true,
-                    )
-                )
-                ->add(
-                    'share',
-                    CheckboxType::class,
-                    array('label' => $this->instance->translation.'.admin.update.form.share', 'required' => false)
-                );
-            if ($this->instance->user->admin) {
-                $builder->add(
-                    'global',
-                    CheckboxType::class,
-                    array('label' => $this->instance->translation.'.admin.update.form.global', 'required' => false)
-                );
-            }
-        }
+//        if ($this->instance->language->visible) {
+//            $builder->add(
+//                'languages',
+//                ChoiceType::class,
+//                array(
+//                    'choices' => $this->instance->language->available,
+//                    'multiple' => true,
+//                )
+//            );
+//        }
+//        if ($this->instance->grouping->visible) {
+//            $builder
+//                ->add(
+//                    'grouping',
+//                    ChoiceType::class,
+//                    array(
+//                        'choices' => $this->instance->grouping->available,
+//                        'multiple' => true,
+//                    )
+//                )
+//                ->add(
+//                    'share',
+//                    CheckboxType::class,
+//                    array('label' => $this->instance->translation.'.admin.update.form.share', 'required' => false)
+//                );
+//            if ($this->instance->user->admin) {
+//                $builder->add(
+//                    'global',
+//                    CheckboxType::class,
+//                    array('label' => $this->instance->translation.'.admin.update.form.global', 'required' => false)
+//                );
+//            }
+//        }
     }
 
     /**
@@ -133,8 +129,8 @@ class UpdateType extends AbstractType
     {
         $resolver->setDefaults(
             array(
-                'data_class' => $this->instance->class,
-                'translation_domain' => $this->instance->domain,
+                'data_class' => '',
+                'translation_domain' => '',
                 'cascade_validation' => true,
             )
         );

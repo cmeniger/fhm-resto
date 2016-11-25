@@ -369,29 +369,29 @@ class Tools implements ContainerAwareInterface
             $languageAvailable[$value] = $fhmExtension->getCountry($value);
         }
 
-        $data->source  = $this->source;
+        $data->source = $this->source;
         $data->section = $this->section;
-        $data->class   = $this->class;
-        $data->route   = $this->route;
+        $data->class = $this->class;
+        $data->route = $this->route;
         $data->lastroute = $this->getLastRoute();
-        $data->domain    = $this->translation[0];
+        $data->domain = $this->translation[0];
         $data->translation = $this->translation[1];
-        $data->language    = new \stdClass();
-        $data->language->current   = $languageCurrent;
-        $data->language->used      = $languageCurrent;
-        $data->language->filtered  = $languageFiltered;
+        $data->language = new \stdClass();
+        $data->language->current = $languageCurrent;
+        $data->language->used = $languageCurrent;
+        $data->language->filtered = $languageFiltered;
         $data->language->different = $document ? !$document->hasLanguage($languageCurrent) : false;
         $data->language->available = $languageAvailable;
-        $data->language->visible   = $this->language_disable?
-            false:
+        $data->language->visible = $this->language_disable ?
+            false :
             $this->getParameters(array("languages", "codes"), "fhm_fhm");
         $data->grouping = new \stdClass();
         $data->grouping->current = $groupingCurrent;
-        $data->grouping->used    = $groupingUsed;
-        $data->grouping->filtered  = $groupingFiltered;
+        $data->grouping->used = $groupingUsed;
+        $data->grouping->filtered = $groupingFiltered;
         $data->grouping->different = $groupingUsed != '' && $document ? !$document->hasGrouping($groupingUsed) : false;
         $data->grouping->available = $groupingAvailable;
-        $data->grouping->visible   = $this->getContainer()
+        $data->grouping->visible = $this->getContainer()
             ->get($this->getParameters("grouping", "fhm_fhm"))
             ->getVisible();
 
@@ -891,7 +891,8 @@ class Tools implements ContainerAwareInterface
      *
      * @return mixed
      */
-    public function getParameters($route, $parent) {
+    public function getParameters($route, $parent)
+    {
         $parameters = $this->getContainer()->getParameter($parent);
         $value = $parameters;
         foreach ((array)$route as $sub) {
@@ -908,8 +909,11 @@ class Tools implements ContainerAwareInterface
      *
      * @return string
      */
-    public function getUrl($route = null, $parameters = array(), $referenceType = null) {
-        $route = $route == null ? $this->getContainer()->get('request')->get('_route') : $route;
+    public function getUrl($route = null, $parameters = array(), $referenceType = null)
+    {
+        $route = $route == null ? $this->getContainer()->get('request_stack')->getCurrentRequest()->get(
+            '_route'
+        ) : $route;
 
         return $this->getContainer()->get('router')->generate($route, $parameters, $referenceType);
     }
@@ -919,7 +923,7 @@ class Tools implements ContainerAwareInterface
      */
     public function getUser()
     {
-        if ($this->getContainer()->get('security.token_storage')->getToken()){
+        if ($this->getContainer()->get('security.token_storage')->getToken()) {
             return $this->getContainer()->get('security.token_storage')->getToken()->getUser();
         }
 
@@ -949,7 +953,8 @@ class Tools implements ContainerAwareInterface
      *
      * @return string
      */
-    public function trans($key, $parameters = array(), $domain = null) {
+    public function trans($key, $parameters = array(), $domain = null)
+    {
         $key = $key[0] == '.' ? $this->translation[1].$key : $key;
         $domain = $domain == null ? $this->translation[0] : $domain;
 
@@ -969,7 +974,8 @@ class Tools implements ContainerAwareInterface
      *
      * @return mixed
      */
-    public function dmRepository($repository = null) {
+    public function dmRepository($repository = null)
+    {
         $this->initLanguage();
 
         return $this->dm()->getRepository(($repository == null) ? $this->repository : $repository)->setParent(
@@ -982,7 +988,8 @@ class Tools implements ContainerAwareInterface
      *
      * @return $this
      */
-    public function dmDetach(&$obj) {
+    public function dmDetach(&$obj)
+    {
         if ($obj != "") {
             $this->dm()->detach($obj);
         }
@@ -996,7 +1003,9 @@ class Tools implements ContainerAwareInterface
      * @return $this
      */
     public
-    function dmPersist(&$obj) {
+    function dmPersist(
+        &$obj
+    ) {
         if ($obj != "") {
             $this->dm()->persist($obj);
             $this->dm()->flush();
@@ -1011,7 +1020,9 @@ class Tools implements ContainerAwareInterface
      * @return $this
      */
     public
-    function dmRemove(&$obj) {
+    function dmRemove(
+        &$obj
+    ) {
         if ($obj != "") {
             $this->dm()->remove($obj);
             $this->dm()->flush();

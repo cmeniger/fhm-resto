@@ -52,7 +52,7 @@ class SearchType extends AbstractType
         $resolver->setDefaults(
             array(
                 'data_class' => null,
-                'translation_domain' => $this->instance->domain,
+                'translation_domain' => 'FhmFhmBundle',
                 'cascade_validation' => true,
             )
         );

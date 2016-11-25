@@ -64,8 +64,8 @@ class RefAdminController extends Controller
         }
         $instance = $this->fhm_tools->instanceData();
         $classType = $this->form->type->search;
-        $form = $this->createForm($classType, array('instance' => $instance));
-        $request = $this->get('request_stack');
+        $form = $this->createForm($classType, null, array('instance' => $instance));
+        $request = $this->get('request_stack')->getCurrentRequest();
         $dataSearch = $request->get('FhmSearch');
         $dataPagination = $request->get('FhmPagination');
         $dataSort = $request->get('FhmSort') ? $request->get('FhmSort') : $this->fhm_tools->getSort();
@@ -78,7 +78,7 @@ class RefAdminController extends Controller
                 ->getAdminIndex(
                     $dataSearch['search'],
                     $dataPagination['pagination'],
-                    $this->fhm_tools->getParameter(array('pagination', 'admin', 'page'), 'fhm_fhm'),
+                    $this->fhm_tools->getParameters(array('pagination', 'admin', 'page'), 'fhm_fhm'),
                     $instance->grouping->filtered,
                     $instance->user->super
                 );
@@ -160,7 +160,14 @@ class RefAdminController extends Controller
         $instance = $this->fhm_tools->instanceData();
         $classType = $this->form->type->create;
         $classHandler = $this->form->handler->create;
-        $form = $this->createForm($classType, array('document' => $document, 'instance' => $instance));
+        $form = $this->createForm(
+            $classType,
+            $document,
+            array(
+                'data_class' => $instance->class,
+                'translation_domain' => $instance->translation
+            )
+        );
         $handler = new $classHandler($form, $request);
         $process = $handler->process();
         if ($process) {
