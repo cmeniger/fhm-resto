@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="de711e3b-ec4c-4812-b0a1-69bbce67b4e0" name="Default" comment="Fix gitignore : bower, idea, node_module,web css images js">
+    <list default="true" id="de711e3b-ec4c-4812-b0a1-69bbce67b4e0" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
@@ -25,109 +25,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="services.yml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Fhm/WorkflowBundle/Resources/config/services.yml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1260">
-              <caret line="70" column="0" selection-start-line="70" selection-start-column="0" selection-end-line="70" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="services.yml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Fhm/MediaBundle/Resources/config/services.yml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="396">
-              <caret line="22" column="0" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Tools.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Fhm/FhmBundle/Services/Tools.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="16002">
-              <caret line="895" column="57" selection-start-line="895" selection-start-column="57" selection-end-line="895" selection-end-column="57" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="services.yml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/config/services.yml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="738">
-              <caret line="47" column="1" selection-start-line="46" selection-start-column="23" selection-end-line="46" selection-end-column="27" />
-              <folding>
-                <marker date="1480068881562" expanded="true" signature="53:131" placeholder="..." />
-                <marker date="1480068881562" expanded="true" signature="290:306" placeholder="..." />
-                <marker date="1480068881562" expanded="true" signature="345:372" placeholder="..." />
-                <marker date="1480068881562" expanded="true" signature="433:446" placeholder="..." />
-                <marker date="1480068881562" expanded="true" signature="478:488" placeholder="..." />
-                <marker date="1480068881562" expanded="true" signature="521:526" placeholder="..." />
-                <marker date="1480068881562" expanded="true" signature="566:574" placeholder="..." />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="MediaTagExtension.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Fhm/MediaBundle/Twig/MediaTagExtension.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Local.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Fhm/MediaBundle/Services/Local.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2268">
-              <caret line="126" column="99" selection-start-line="126" selection-start-column="99" selection-end-line="126" selection-end-column="99" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="S3.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Fhm/MediaBundle/Services/S3.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="234">
-              <caret line="43" column="45" selection-start-line="43" selection-start-column="45" selection-end-line="43" selection-end-column="45" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name=".gitignore" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/.gitignore">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="324">
-              <caret line="18" column="7" selection-start-line="18" selection-start-column="7" selection-end-line="18" selection-end-column="7" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="MediaExtension.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Fhm/MediaBundle/Twig/MediaExtension.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="540">
-              <caret line="30" column="5" selection-start-line="30" selection-start-column="5" selection-end-line="30" selection-end-column="5" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="MediaTypeExtension.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Fhm/MediaBundle/Form/Extension/MediaTypeExtension.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="684">
-              <caret line="49" column="42" selection-start-line="49" selection-start-column="33" selection-end-line="49" selection-end-column="42" />
+            <state relative-caret-position="270">
+              <caret line="15" column="14" selection-start-line="15" selection-start-column="14" selection-end-line="15" selection-end-column="14" />
               <folding />
             </state>
           </provider>
@@ -8820,7 +8722,7 @@
       <workItem from="1479910003551" duration="249000" />
       <workItem from="1479910330855" duration="1635000" />
       <workItem from="1479912335572" duration="249000" />
-      <workItem from="1480068856958" duration="1275000" />
+      <workItem from="1480068856958" duration="1424000" />
     </task>
     <task id="LOCAL-00001" summary="service config">
       <created>1479911114014</created>
@@ -8857,11 +8759,18 @@
       <option name="project" value="LOCAL" />
       <updated>1480069880070</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Fix gitignore : bower, idea, node_module,web css images js">
+      <created>1480070142390</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1480070142390</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1245000" />
+    <option name="totallyTimeSpent" value="1394000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="57" y="24" width="1863" height="1056" extended-state="6" />
@@ -9309,8 +9218,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="324">
-          <caret line="18" column="7" selection-start-line="18" selection-start-column="7" selection-end-line="18" selection-end-column="7" />
+        <state relative-caret-position="270">
+          <caret line="15" column="14" selection-start-line="15" selection-start-column="14" selection-end-line="15" selection-end-column="14" />
           <folding />
         </state>
       </provider>
