@@ -131,7 +131,6 @@ class FrontController extends FhmController
         // For activate this route, delete next line
         throw $this->createNotFoundException($this->fhm_tools->trans('fhm.error.route', array(), 'FhmFhmBundle'));
 
-        //return parent::createAction($request);
     }
 
     /**

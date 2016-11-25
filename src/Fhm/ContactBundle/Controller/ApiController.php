@@ -74,7 +74,7 @@ class ApiController extends FhmController
 
         $classType = "\\Fhm\\ContactBundle\\Form\\Type\\Template\\".ucfirst($template)."Type";
         $classHandler = "\\Fhm\\ContactBundle\\Form\\Handler\\Api\\FormHandler";
-        $form = $this->createForm(new $classType($instance), null);
+        $form = $this->createForm($classType);
         $handler = new $classHandler($form, $request);
         $process = $handler->process();
         if ($process) {
