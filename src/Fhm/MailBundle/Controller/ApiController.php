@@ -47,7 +47,13 @@ class ApiController extends FhmController
      */
     public function adminTestAction()
     {
-        $this->get('session')->getFlashBag()->add('notice', $this->fhm_tools->trans("mail.test.flash.ok", array("%email%" => $this->fhm_tools->getParameter('admin', 'fhm_mailer'))));
+        $this->get('session')->getFlashBag()->add(
+            'notice',
+            $this->fhm_tools->trans(
+                "mail.test.flash.ok",
+                array("%email%" => $this->fhm_tools->getParameters('admin', 'fhm_mailer'))
+            )
+        );
         $this->container->get('fhm_mail')->AdminTest();
 
         return $this->redirect($this->fhm_tools->getLastRoute());
@@ -78,10 +84,14 @@ class ApiController extends FhmController
     {
         return array
         (
-            "user"             => $this->getUser(),
-            "urlConfirm"       => $this->container->get('router')->generate('fos_user_registration_confirm', array('token' => md5($this->getUser()->getUsername())), true),
-            "version"          => "mail",
-            "server_http_host" => $this->fhm_tools->getParameter('host', 'fhm_mailer')
+            "user" => $this->getUser(),
+            "urlConfirm" => $this->container->get('router')->generate(
+                'fos_user_registration_confirm',
+                array('token' => md5($this->getUser()->getUsername())),
+                true
+            ),
+            "version" => "mail",
+            "server_http_host" => $this->fhm_tools->getParameters('host', 'fhm_mailer'),
         );
     }
 
@@ -97,10 +107,14 @@ class ApiController extends FhmController
     {
         return array
         (
-            "user"             => $this->getUser(),
-            "urlConfirm"       => $this->container->get('router')->generate('fos_user_registration_confirm', array('token' => md5($this->getUser()->getUsername())), true),
-            "version"          => "mail",
-            "server_http_host" => $this->fhm_tools->getParameter('host', 'fhm_mailer')
+            "user" => $this->getUser(),
+            "urlConfirm" => $this->container->get('router')->generate(
+                'fos_user_registration_confirm',
+                array('token' => md5($this->getUser()->getUsername())),
+                true
+            ),
+            "version" => "mail",
+            "server_http_host" => $this->fhm_tools->getParameters('host', 'fhm_mailer'),
         );
     }
 
@@ -115,22 +129,27 @@ class ApiController extends FhmController
     public function contactDefaultAction()
     {
         $message = new \Fhm\ContactBundle\Document\ContactMessage();
-        $message->setField(array(
-            'firstname' => 'John',
-            'lastname'  => 'Do',
-            'email'     => 'john.do@domain.com',
-            'phone'     => '0123456789',
-            'content'   => 'Praesent nec nisl a purus blandit viverra. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Sed aliquam, nisi quis porttitor congue, elit erat euismod orci, ac placerat dolor lectus quis orci. Sed a libero. Praesent venenatis metus at tortor pulvinar varius. Suspendisse potenti.'
-        ));
+        $message->setField(
+            array(
+                'firstname' => 'John',
+                'lastname' => 'Do',
+                'email' => 'john.do@domain.com',
+                'phone' => '0123456789',
+                'content' => 'Praesent nec nisl a purus blandit viverra.
+                 Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae;
+                 Sed aliquam, nisi quis porttitor congue, elit erat euismod orci, ac placerat dolor lectus quis orci.
+                 Sed a libero. Praesent venenatis metus at tortor pulvinar varius. Suspendisse potenti.',
+            )
+        );
         $contact = new \Fhm\ContactBundle\Document\Contact();
         $contact->setName("Contact test");
         $contact->addMessage($message);
 
         return array
         (
-            "message"          => $message,
-            "version"          => "mail",
-            "server_http_host" => $this->fhm_tools->getParameter('host', 'fhm_mailer')
+            "message" => $message,
+            "version" => "mail",
+            "server_http_host" => $this->fhm_tools->getParameters('host', 'fhm_mailer'),
         );
     }
 }

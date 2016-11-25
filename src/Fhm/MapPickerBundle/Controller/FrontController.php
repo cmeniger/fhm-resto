@@ -35,18 +35,19 @@ class FrontController extends FhmController
     {
         $documents = $this->fhm_tools->dmRepository()->getFrontIndex();
 
-        foreach($documents as &$document)
-        {
-            $document->mappicker = $this->container->get('mappicker.' . $document->getMap())->setDocument($document);
-            foreach($document->getZone() as $zone)
-            {
-                $document->addZone($zone['code'], $this->fhm_tools->dm()->getRepository('FhmSiteBundle:Site')->find($zone['site']));
+        foreach ($documents as &$document) {
+            $document->mappicker = $this->container->get('mappicker.'.$document->getMap())->setDocument($document);
+            foreach ($document->getZone() as $zone) {
+                $document->addZone(
+                    $zone['code'],
+                    $this->fhm_tools->dm()->getRepository('FhmSiteBundle:Site')->find($zone['site'])
+                );
             }
         }
 
         return array(
             'documents' => $documents,
-            'instance'  => $this->fhm_tools->instanceData()
+            'instance' => $this->fhm_tools->instanceData(),
         );
     }
 
@@ -63,8 +64,6 @@ class FrontController extends FhmController
     {
         // For activate this route, delete next line
         throw $this->createNotFoundException($this->fhm_tools->trans('fhm.error.route', array(), 'FhmFhmBundle'));
-
-        return parent::detailAction($id);
     }
 
     /**
@@ -79,8 +78,6 @@ class FrontController extends FhmController
     {
         // For activate this route, delete next line
         throw $this->createNotFoundException($this->fhm_tools->trans('fhm.error.route', array(), 'FhmFhmBundle'));
-
-        return parent::createAction($request);
     }
 
     /**
@@ -96,8 +93,6 @@ class FrontController extends FhmController
     {
         // For activate this route, delete next line
         throw $this->createNotFoundException($this->fhm_tools->trans('fhm.error.route', array(), 'FhmFhmBundle'));
-
-        return parent::updateAction($request, $id);
     }
 
     /**
@@ -112,8 +107,6 @@ class FrontController extends FhmController
     {
         // For activate this route, delete next line
         throw $this->createNotFoundException($this->fhm_tools->trans('fhm.error.route', array(), 'FhmFhmBundle'));
-
-        return parent::deleteAction($id);
     }
 
     /**
@@ -129,7 +122,5 @@ class FrontController extends FhmController
     {
         // For activate this route, delete next line
         throw $this->createNotFoundException($this->fhm_tools->trans('fhm.error.route', array(), 'FhmFhmBundle'));
-
-        return $this->detailAction($id);
     }
 }

@@ -50,39 +50,40 @@ class AdminController extends FhmController
     public function createAction(Request $request)
     {
         // ERROR - Unknown route
-        if(!$this->fhm_tools->routeExists($this->source . '_admin_' . $this->route) || !$this->fhm_tools->routeExists($this->source . '_admin_' . $this->route . '_create'))
-        {
+        if (!$this->fhm_tools->routeExists($this->source.'_admin_'.$this->route) || !$this->fhm_tools->routeExists(
+                $this->source.'_admin_'.$this->route.'_create'
+            )
+        ) {
             throw $this->createNotFoundException($this->fhm_tools->trans('fhm.error.route', array(), 'FhmFhmBundle'));
         }
-        $document     = $this->document;
-        $instance     = $this->fhm_tools->instanceData();
-        $classType    = $this->form->type->create;
+        $document = $this->document;
+        $instance = $this->fhm_tools->instanceData();
+        $classType = $this->form->type->create;
         $classHandler = $this->form->handler->create;
-        $form         = $this->createForm(new $classType($instance, $document), $document);
-        $handler      = new $classHandler($form, $request);
-        $process      = $handler->process();
-        if($process)
-        {
+        $form = $this->createForm($classType, $document);
+        $handler = new $classHandler($form, $request);
+        $process = $handler->process();
+        if ($process) {
             $data = $request->get($form->getName());
             // Envoi email
             $this->container->get('fhm_mail')->adminMessage
             (
                 array
                 (
-                    'to'     => $data['to'],
+                    'to' => $data['to'],
                     'object' => $data['object'],
-                    'body'   => $data['body']
+                    'body' => $data['body'],
                 )
             );
             // Message
             $this->get('session')->getFlashBag()->add('notice', $this->fhm_tools->trans('.admin.create.flash.ok'));
 
-            return $this->redirect($this->fhm_tools->getUrl($this->source . '_admin_' . $this->route));
+            return $this->redirect($this->fhm_tools->getUrl($this->source.'_admin_'.$this->route));
         }
 
         return array(
-            'form'        => $form->createView(),
-            'instance'    => $instance,
+            'form' => $form->createView(),
+            'instance' => $instance,
             'breadcrumbs' => array(
                 array(
                     'link' => $this->fhm_tools->getUrl('project_home'),
@@ -93,15 +94,15 @@ class AdminController extends FhmController
                     'text' => $this->fhm_tools->trans('fhm.admin.breadcrumb', array(), 'FhmFhmBundle'),
                 ),
                 array(
-                    'link' => $this->fhm_tools->getUrl($this->source . '_admin_' . $this->route),
+                    'link' => $this->fhm_tools->getUrl($this->source.'_admin_'.$this->route),
                     'text' => $this->fhm_tools->trans('.admin.index.breadcrumb'),
                 ),
                 array(
-                    'link'    => $this->fhm_tools->getUrl($this->source . '_admin_' . $this->route . '_create'),
-                    'text'    => $this->fhm_tools->trans('.admin.create.breadcrumb'),
-                    'current' => true
-                )
-            )
+                    'link' => $this->fhm_tools->getUrl($this->source.'_admin_'.$this->route.'_create'),
+                    'text' => $this->fhm_tools->trans('.admin.create.breadcrumb'),
+                    'current' => true,
+                ),
+            ),
         );
     }
 
@@ -118,8 +119,6 @@ class AdminController extends FhmController
     {
         // For activate this route, delete next line
         throw $this->createNotFoundException($this->fhm_tools->trans('fhm.error.route', array(), 'FhmFhmBundle'));
-
-        return parent::duplicateAction($request, $id);
     }
 
     /**
@@ -135,8 +134,6 @@ class AdminController extends FhmController
     {
         // For activate this route, delete next line
         throw $this->createNotFoundException($this->fhm_tools->trans('fhm.error.route', array(), 'FhmFhmBundle'));
-
-        return parent::updateAction($request, $id);
     }
 
     /**
@@ -207,8 +204,6 @@ class AdminController extends FhmController
     {
         // For activate this route, delete next line
         throw $this->createNotFoundException($this->fhm_tools->trans('fhm.error.route', array(), 'FhmFhmBundle'));
-
-        return parent::deactivateAction($id);
     }
 
     /**
@@ -223,8 +218,6 @@ class AdminController extends FhmController
     {
         // For activate this route, delete next line
         throw $this->createNotFoundException($this->fhm_tools->trans('fhm.error.route', array(), 'FhmFhmBundle'));
-
-        return parent::importAction($request);
     }
 
     /**
@@ -239,8 +232,6 @@ class AdminController extends FhmController
     {
         // For activate this route, delete next line
         throw $this->createNotFoundException($this->fhm_tools->trans('fhm.error.route', array(), 'FhmFhmBundle'));
-
-        return parent::exportAction($request);
     }
 
     /**
@@ -254,8 +245,6 @@ class AdminController extends FhmController
     {
         // For activate this route, delete next line
         throw $this->createNotFoundException($this->fhm_tools->trans('fhm.error.route', array(), 'FhmFhmBundle'));
-
-        return parent::groupingAction($request);
     }
 
     /**
@@ -269,7 +258,7 @@ class AdminController extends FhmController
     public function modelAction(Request $request)
     {
         return array(
-            'instance'    => $this->fhm_tools->instanceData(),
+            'instance' => $this->fhm_tools->instanceData(),
             'breadcrumbs' => array(
                 array(
                     'link' => $this->fhm_tools->getUrl('project_home'),
@@ -280,15 +269,15 @@ class AdminController extends FhmController
                     'text' => $this->fhm_tools->trans('fhm.admin.breadcrumb', array(), 'FhmFhmBundle'),
                 ),
                 array(
-                    'link' => $this->fhm_tools->getUrl($this->source . '_admin_' . $this->route),
+                    'link' => $this->fhm_tools->getUrl($this->source.'_admin_'.$this->route),
                     'text' => $this->fhm_tools->trans('.admin.index.breadcrumb'),
                 ),
                 array(
-                    'link'    => $this->fhm_tools->getUrl($this->source . '_admin_' . $this->route . '_model'),
-                    'text'    => $this->fhm_tools->trans('.admin.model.breadcrumb'),
-                    'current' => true
-                )
-            )
+                    'link' => $this->fhm_tools->getUrl($this->source.'_admin_'.$this->route.'_model'),
+                    'text' => $this->fhm_tools->trans('.admin.model.breadcrumb'),
+                    'current' => true,
+                ),
+            ),
         );
     }
 }
