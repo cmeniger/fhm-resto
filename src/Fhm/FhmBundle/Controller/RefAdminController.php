@@ -297,8 +297,14 @@ class RefAdminController extends Controller
             throw new HttpException(403, $this->fhm_tools->trans('.error.forbidden'));
         }
         $this->fhm_tools->historic($document);
-        $form = $this->createForm($classType, array('document' => $document, 'instance' => $instance));
-        $handler = new $classHandler($form, $request);
+        $form = $this->createForm(
+            $classType,
+            $document,
+            array(
+                'data_class' => $instance->class,
+                'translation_domain' => $instance->translation
+            )
+        );        $handler = new $classHandler($form, $request);
         $process = $handler->process();
         if ($process) {
             $data = $request->get($form->getName());
@@ -563,7 +569,13 @@ class RefAdminController extends Controller
         $instance = $this->fhm_tools->instanceData();
         $classType = $this->form->type->import;
         $classHandler = $this->form->handler->import;
-        $form = $this->createForm($classType, array('instance' => $instance));
+        $form = $this->createForm(
+            $classType,
+            null,
+            array(
+                'translation_domain' => $instance->translation
+            )
+        );
         $handler = new $classHandler($form, $request);
         $process = $handler->process();
         if ($datas = $process) {
@@ -638,8 +650,13 @@ class RefAdminController extends Controller
         $instance = $this->fhm_tools->instanceData();
         $classType = $this->form->type->export;
         $classHandler = $this->form->handler->export;
-        $form = $this->createForm($classType, array('instance' => $instance));
-        $handler = new $classHandler($form, $request);
+        $form = $this->createForm(
+            $classType,
+            null,
+            array(
+                'translation_domain' => $instance->translation
+            )
+        );        $handler = new $classHandler($form, $request);
         $process = $handler->process();
         if ($process) {
             $documents = $this->fhm_tools->dmRepository()->getExport();
