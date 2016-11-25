@@ -17,14 +17,12 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class CreateType extends AbstractType
 {
-    protected $instance;
-
     protected $translation;
 
     /**
      * @param $domaine
      */
-    public function setTranslation($domaine)
+    public function setTranslation($domaine = 'fhm')
     {
         $this->translation = $domaine;
     }
@@ -35,14 +33,13 @@ class CreateType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $this->instance = $options['translation_domain'];
 
         $builder
-            ->add('name', TextType::class, array('label' => $this->instance.'.admin.create.form.name'))
+            ->add('name', TextType::class, array('label' => $this->translation.'.admin.create.form.name'))
             ->add(
                 'description',
                 TextareaType::class,
-                array('label' => $this->instance.'.admin.create.form.description', 'required' => false)
+                array('label' => $this->translation.'.admin.create.form.description', 'required' => false)
             )
             ->add(
                 'seo_title',
@@ -62,63 +59,63 @@ class CreateType extends AbstractType
             ->add(
                 'active',
                 CheckboxType::class,
-                array('label' => $this->instance.'.admin.create.form.active', 'required' => false)
+                array('label' => $this->translation.'.admin.create.form.active', 'required' => false)
             )
             ->add(
                 'submitSave',
                 SubmitType::class,
-                array('label' => $this->instance.'.admin.create.form.submit.save')
+                array('label' => $this->translation.'.admin.create.form.submit.save')
             )
             ->add(
                 'submitNew',
                 SubmitType::class,
-                array('label' => $this->instance.'.admin.create.form.submit.new')
+                array('label' => $this->translation.'.admin.create.form.submit.new')
             )
             ->add(
                 'submitDuplicate',
                 SubmitType::class,
-                array('label' => $this->instance.'.admin.create.form.submit.duplicate')
+                array('label' => $this->translation.'.admin.create.form.submit.duplicate')
             )
             ->add(
                 'submitQuit',
                 SubmitType::class,
-                array('label' => $this->instance.'.admin.create.form.submit.quit')
+                array('label' => $this->translation.'.admin.create.form.submit.quit')
             )
             ->add(
                 'submitConfig',
                 SubmitType::class,
-                array('label' => $this->instance.'.admin.create.form.submit.config')
+                array('label' => $this->translation.'.admin.create.form.submit.config')
             );
-//        if ($this->instance->language->visible) {
+//        if ($this->translation->language->visible) {
 //            $builder->add(
 //                'languages',
 //                ChoiceType::class,
 //                array(
-//                    'choices' => $this->instance->language->available,
+//                    'choices' => $this->translation->language->available,
 //                    'multiple' => true,
 //                )
 //            );
 //        }
-//        if ($this->instance->grouping->visible) {
+//        if ($this->translation->grouping->visible) {
 //            $builder
 //                ->add(
 //                    'grouping',
 //                    ChoiceType::class,
 //                    array(
-//                        'choices' => $this->instance->grouping->available,
+//                        'choices' => $this->translation->grouping->available,
 //                        'multiple' => true,
 //                    )
 //                )
 //                ->add(
 //                    'share',
 //                    CheckboxType::class,
-//                    array('label' => $this->instance->translation.'.admin.create.form.share', 'required' => false)
+//                    array('label' => $this->translation->translation.'.admin.create.form.share', 'required' => false)
 //                );
-//            if ($this->instance->user->admin) {
+//            if ($this->translation->user->admin) {
 //                $builder->add(
 //                    'global',
 //                    CheckboxType::class,
-//                    array('label' => $this->instance->translation.'.admin.create.form.global', 'required' => false)
+//                    array('label' => $this->translation->translation.'.admin.create.form.global', 'required' => false)
 //                );
 //            }
 //        }

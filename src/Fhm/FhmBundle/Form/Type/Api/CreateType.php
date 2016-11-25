@@ -15,14 +15,12 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class CreateType extends AbstractType
 {
-    protected $instance;
-
     protected $translation;
 
     /**
      * @param $domaine
      */
-    public function setTranslation($domaine)
+    public function setTranslation($domaine = 'fhm')
     {
         $this->translation = $domaine;
     }
@@ -33,35 +31,33 @@ class CreateType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $data = $builder->getData();
-        $this->instance = $data['instance'];
 
         $builder
-            ->add('name', TextType::class, array('label' => $this->instance->translation.'.front.create.form.name'))
+            ->add('name', TextType::class, array('label' => $this->translation.'.front.create.form.name'))
             ->add(
                 'description',
                 TextareaType::class,
-                array('label' => $this->instance->translation.'.front.create.form.description', 'required' => false)
+                array('label' => $this->translation.'.front.create.form.description', 'required' => false)
             )
             ->add(
                 'submitSave',
                 SubmitType::class,
-                array('label' => $this->instance->translation.'.front.create.form.submit.save')
+                array('label' => $this->translation.'.front.create.form.submit.save')
             )
             ->add(
                 'submitNew',
                 SubmitType::class,
-                array('label' => $this->instance->translation.'.front.create.form.submit.new')
+                array('label' => $this->translation.'.front.create.form.submit.new')
             )
             ->add(
                 'submitDuplicate',
                 SubmitType::class,
-                array('label' => $this->instance->translation.'.front.create.form.submit.duplicate')
+                array('label' => $this->translation.'.front.create.form.submit.duplicate')
             )
             ->add(
                 'submitQuit',
                 SubmitType::class,
-                array('label' => $this->instance->translation.'.front.create.form.submit.quit')
+                array('label' => $this->translation.'.front.create.form.submit.quit')
             );
     }
 
@@ -80,8 +76,8 @@ class CreateType extends AbstractType
     {
         $resolver->setDefaults(
             array(
-                'data_class' => $this->instance->class,
-                'translation_domain' => $this->instance->domain,
+                'data_class' => 'Fhm\FhmBundle\Document\Fhm',
+                'translation_domain' => 'FhmFhmBundle',
                 'cascade_validation' => true,
             )
         );

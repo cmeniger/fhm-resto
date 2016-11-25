@@ -14,14 +14,12 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class SearchType extends AbstractType
 {
-    protected $instance;
-
     protected $translation;
 
     /**
      * @param $domaine
      */
-    public function setTranslation($domaine)
+    public function setTranslation($domaine = 'fhm')
     {
         $this->translation = $domaine;
     }
@@ -32,15 +30,13 @@ class SearchType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $data = $builder->getData();
-        $this->instance = $data['instance'];
         $builder->add(
             'search',
             TextType::class,
             array(
                 'required' => false,
                 'attr' => array(
-                    'placeholder' => $this->instance->translation.'.front.index.form.search',
+                    'placeholder' => $this->translation.'.front.index.form.search',
                     'data-type' => 'list',
                 ),
             )
@@ -62,8 +58,8 @@ class SearchType extends AbstractType
     {
         $resolver->setDefaults(
             array(
-                'data_class' => null,
-                'translation_domain' => $this->instance->domain,
+                'data_class' => 'Fhm\FhmBundle\Document\Fhm',
+                'translation_domain' => 'FhmFhmBundle',
                 'cascade_validation' => true,
             )
         );

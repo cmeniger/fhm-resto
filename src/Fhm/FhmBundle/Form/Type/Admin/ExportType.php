@@ -13,14 +13,12 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class ExportType extends AbstractType
 {
-    protected $instance;
-
     protected $translation;
 
     /**
      * @param $domaine
      */
-    public function setTranslation($domaine)
+    public function setTranslation($domaine = 'fhm')
     {
         $this->translation = $domaine;
     }
@@ -31,13 +29,11 @@ class ExportType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $data = $builder->getData();
-        $this->instance = $data['instance'];
         $builder
             ->add(
                 'submit',
                 SubmitType::class,
-                array('label' => $this->instance->translation.'.admin.export.form.submit')
+                array('label' => $this->translation.'.admin.export.form.submit')
             );
     }
 
@@ -56,8 +52,8 @@ class ExportType extends AbstractType
     {
         $resolver->setDefaults(
             array(
-                'data_class' => null,
-                'translation_domain' => $this->instance->domain,
+                'data_class' => 'Fhm\FhmBundle\Document\Fhm',
+                'translation_domain' => 'FhmFhmBundle',
                 'cascade_validation' => true,
             )
         );
