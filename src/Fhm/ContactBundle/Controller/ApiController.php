@@ -62,29 +62,30 @@ class ApiController extends FhmController
     {
         $document = $this->fhm_tools->dmRepository()->find($id);
         $instance = $this->fhm_tools->instanceData($document);
-        if($document == "")
-        {
+        if ($document == "") {
             throw $this->createNotFoundException($this->fhm_tools->trans('.error.unknown'));
-        }
-        // ERROR - Forbidden
-        elseif(!$instance->user->admin && ($document->getDelete() || !$document->getActive()))
-        {
+        } // ERROR - Forbidden
+        elseif (!$instance->user->admin && ($document->getDelete() || !$document->getActive())) {
             throw new HttpException(403, $this->fhm_tools->trans('.error.forbidden'));
         }
-        $template     = $this->get('templating')->exists("::FhmContact/Template/form." . $document->getFormTemplate() . ".html.twig") ? $document->getFormTemplate() : "default";
-        $classType    = "\\Fhm\\ContactBundle\\Form\\Type\\Template\\" . ucfirst($template) . "Type";
+        $template = $this->get('templating')->exists(
+            "::FhmContact/Template/form.".$document->getFormTemplate().".html.twig"
+        ) ? $document->getFormTemplate() : "default";
+
+        $classType = "\\Fhm\\ContactBundle\\Form\\Type\\Template\\".ucfirst($template)."Type";
         $classHandler = "\\Fhm\\ContactBundle\\Form\\Handler\\Api\\FormHandler";
-        $form         = $this->createForm(new $classType($instance), null);
-        $handler      = new $classHandler($form, $request);
-        $process      = $handler->process();
-        if($process)
-        {
+        $form = $this->createForm(new $classType($instance), null);
+        $handler = new $classHandler($form, $request);
+        $process = $handler->process();
+        if ($process) {
             $data = $request->get($form->getName());
             unset($data['_token']);
             // Name
             $name = '';
             $name = (isset($data['name'])) ? $data['name'] : $name;
-            $name = ($name == '' && isset($data['firstname']) && isset($data['lastname'])) ? $data['firstname'] . ' ' . $data['lastname'] : $name;
+            $name = ($name == '' && isset($data['firstname']) && isset($data['lastname']))
+                ? $data['firstname'].' '.$data['lastname']
+                : $name;
             $name = ($name == '' && isset($data['email'])) ? $data['email'] : $name;
             $name = ($name == '') ? $document->getName() : $name;
             // Email
@@ -101,27 +102,26 @@ class ApiController extends FhmController
             $this->fhm_tools->dmPersist($message);
             $this->fhm_tools->dmPersist($document);
             // Email
-            $this->container->get('fhm_mail')->contact
-            (
+            $this->container->get('fhm_mail')->contact(
                 array
                 (
-                    'message'  => $message,
-                    'template' => $document->getFormTemplate()
+                    'message' => $message,
+                    'template' => $document->getFormTemplate(),
                 )
             );
             // Message
-            $this->get('session')->getFlashBag()->add('contact-' . $id, $this->fhm_tools->trans('.front.index.flash.ok'));
+            $this->get('session')->getFlashBag()->add('contact-'.$id, $this->fhm_tools->trans('.front.index.flash.ok'));
             // Reset form
-            $form = $this->createForm(new $classType($instance), null);
+            $form = $this->createForm($classType);
         }
 
         return new Response(
             $this->renderView(
-                "::FhmContact/Template/form." . $template . ".html.twig",
+                "::FhmContact/Template/form.".$template.".html.twig",
                 array(
                     'document' => $document,
                     'instance' => $instance,
-                    'form'     => $form->createView()
+                    'form' => $form->createView(),
                 )
             )
         );
@@ -136,10 +136,9 @@ class ApiController extends FhmController
      */
     public function emailAction(Request $request)
     {
-        $datas    = $request->get('FhmContact');
+        $datas = $request->get('FhmContact');
         $document = $this->fhm_tools->dmRepository()->find($datas['id']);
-        if($document)
-        {
+        if ($document) {
             // Message
             $message = new \Fhm\ContactBundle\Document\Message();
             $message->setFirstname($datas['firstname']);
@@ -152,12 +151,11 @@ class ApiController extends FhmController
             $this->fhm_tools->dmPersist($message);
             $this->fhm_tools->dmPersist($document);
             // Email
-            $this->container->get('fhm_mail')->contact
-            (
+            $this->container->get('fhm_mail')->contact(
                 array
                 (
-                    'message'  => $message,
-                    'template' => $document->getFormTemplate()
+                    'message' => $message,
+                    'template' => $document->getFormTemplate(),
                 )
             );
             // Message

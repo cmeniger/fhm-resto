@@ -34,48 +34,72 @@ class FrontController extends FhmController
     public function indexAction()
     {
         // ERROR - Unknown route
-        if(!$this->fhm_tools->routeExists($this->source . '_' . $this->route))
-        {
+        if (!$this->fhm_tools->routeExists($this->source.'_'.$this->route)) {
             throw $this->createNotFoundException($this->fhm_tools->trans('fhm.error.route', array(), 'FhmFhmBundle'));
         }
-        $instance  = $this->fhm_tools->instanceData();
+        $instance = $this->fhm_tools->instanceData();
         $classType = $this->form->type->search;
-        $form      = $this->createForm(new $classType($instance), null);
-        $form->setData($this->get('request')->get($form->getName()));
-        $dataSearch     = $form->getData();
-        $dataPagination = $this->get('request')->get('FhmPagination');
+        $form = $this->createForm($classType);
+        $form->setData($this->get('request_stack')->get($form->getName()));
+        $dataSearch = $form->getData();
+        $dataPagination = $this->get('request_stack')->get('FhmPagination');
         // Ajax pagination request
-        if(isset($dataPagination['pagination']))
-        {
-            $documents = $this->fhm_tools->dmRepository()->getFrontIndex($dataSearch['search'], $dataPagination['pagination'], $this->fhm_tools->getParameters(array('pagination', 'front', 'page'), 'fhm_fhm'), $instance->grouping->current);
-
-            return array(
-                'documents'  => $documents,
-                'pagination' => $this->fhm_tools->getPagination($dataPagination['pagination'], count($documents), $this->fhm_tools->dmRepository()->getFrontCount($dataSearch['search'], $instance->grouping->current), 'pagination', $this->fhm_tools->formRename($form->getName(), $dataSearch)),
-                'instance'   => $instance,
+        if (isset($dataPagination['pagination'])) {
+            $documents = $this->fhm_tools->dmRepository()->getFrontIndex(
+                $dataSearch['search'],
+                $dataPagination['pagination'],
+                $this->fhm_tools->getParameters(array('pagination', 'front', 'page'), 'fhm_fhm'),
+                $instance->grouping->current
             );
-        }
-        // Router request
-        else
-        {
-            $documents = $this->fhm_tools->dmRepository()->getFrontIndex($dataSearch['search'], 1, $this->fhm_tools->getParameters(array('pagination', 'front', 'page'), 'fhm_fhm'), $instance->grouping->current);
 
             return array(
-                'documents'   => $documents,
-                'pagination'  => $this->fhm_tools->getPagination(1, count($documents), $this->fhm_tools->dmRepository()->getFrontCount($dataSearch['search'], $instance->grouping->current), 'pagination', $this->fhm_tools->formRename($form->getName(), $dataSearch)),
-                'form'        => $form->createView(),
-                'instance'    => $instance,
+                'documents' => $documents,
+                'pagination' => $this->fhm_tools->getPagination(
+                    $dataPagination['pagination'],
+                    count($documents),
+                    $this->fhm_tools->dmRepository()->getFrontCount(
+                        $dataSearch['search'],
+                        $instance->grouping->current
+                    ),
+                    'pagination',
+                    $this->fhm_tools->formRename($form->getName(), $dataSearch)
+                ),
+                'instance' => $instance,
+            );
+        } // Router request
+        else {
+            $documents = $this->fhm_tools->dmRepository()->getFrontIndex(
+                $dataSearch['search'],
+                1,
+                $this->fhm_tools->getParameters(array('pagination', 'front', 'page'), 'fhm_fhm'),
+                $instance->grouping->current
+            );
+
+            return array(
+                'documents' => $documents,
+                'pagination' => $this->fhm_tools->getPagination(
+                    1,
+                    count($documents),
+                    $this->fhm_tools->dmRepository()->getFrontCount(
+                        $dataSearch['search'],
+                        $instance->grouping->current
+                    ),
+                    'pagination',
+                    $this->fhm_tools->formRename($form->getName(), $dataSearch)
+                ),
+                'form' => $form->createView(),
+                'instance' => $instance,
                 'breadcrumbs' => array(
                     array(
                         'link' => $this->fhm_tools->getUrl('project_home'),
                         'text' => $this->fhm_tools->trans('project.home.breadcrumb', array(), 'ProjectDefaultBundle'),
                     ),
                     array(
-                        'link' => $this->fhm_tools->getUrl($this->source . '_' . $this->route),
+                        'link' => $this->fhm_tools->getUrl($this->source.'_'.$this->route),
                         'text' => $this->fhm_tools->trans('.front.index.breadcrumb'),
-                        'current' => true
-                    )
-                )
+                        'current' => true,
+                    ),
+                ),
             );
         }
     }
@@ -123,8 +147,6 @@ class FrontController extends FhmController
     {
         // For activate this route, delete next line
         throw $this->createNotFoundException($this->fhm_tools->trans('fhm.error.route', array(), 'FhmFhmBundle'));
-
-       // return parent::updateAction($request, $id);
     }
 
     /**
@@ -139,8 +161,6 @@ class FrontController extends FhmController
     {
         // For activate this route, delete next line
         throw $this->createNotFoundException($this->fhm_tools->trans('fhm.error.route', array(), 'FhmFhmBundle'));
-
-       // return parent::deleteAction($id);
     }
 
     /**

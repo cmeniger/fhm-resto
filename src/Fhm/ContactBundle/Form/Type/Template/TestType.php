@@ -9,25 +9,61 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-
+/**
+ * Class TestType
+ * @package Fhm\ContactBundle\Form\Type\Template
+ */
 class TestType extends AbstractType
 {
-    protected $instance;
-
-    public function __construct($instance)
-    {
-        $this->instance = $instance;
-    }
-
+    /**
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('firstname', TextType::class, array('label' => $this->instance->translation . '.form.firstname'))
-            ->add('lastname', TextType::class, array('label' => $this->instance->translation . '.form.lastname'))
-            ->add('email', EmailType::class, array('label' => $this->instance->translation . '.form.email'))
-            ->add('phone',TextType::class, array('label' => $this->instance->translation . '.form.phone', 'required' => false))
-            ->add('content', TextareaType::class, array('label' => $this->instance->translation . '.form.content'))
-            ->add('submit', SubmitType::class, array('label' => $this->instance->translation . '.form.submit'));
+            ->add(
+                'firstname',
+                TextType::class,
+                array(
+                    'label' => 'contact.form.firstname'
+                )
+            )
+            ->add(
+                'lastname',
+                TextType::class,
+                array(
+                    'label' => 'contact.form.lastname'
+                )
+            )
+            ->add(
+                'email',
+                EmailType::class,
+                array(
+                    'label' => 'contact.form.email'
+                )
+            )
+            ->add(
+                'phone',
+                TextType::class,
+                array(
+                    'label' => 'contact.form.phone', 'required' => false
+                )
+            )
+            ->add(
+                'content',
+                TextareaType::class,
+                array(
+                    'label' => 'contact.form.content'
+                )
+            )
+            ->add(
+                'submit',
+                SubmitType::class,
+                array(
+                    'label' => 'contact.form.submit'
+                )
+            );
     }
 
     /**
@@ -38,14 +74,16 @@ class TestType extends AbstractType
         return 'FhmContactDefault';
     }
 
+    /**
+     * @param OptionsResolver $resolver
+     */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults
-        (
+        $resolver->setDefaults(
             array(
-                'data_class'         => $this->instance->class,
-                'translation_domain' => $this->instance->domain,
-                'cascade_validation' => true
+                'data_class' => 'Fhm\ContactBundle\Document\Contact',
+                'translation_domain' => 'FhmContactBundle',
+                'cascade_validation' => true,
             )
         );
     }
