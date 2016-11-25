@@ -48,7 +48,7 @@ class AdminController extends FhmController
      */
     public function createAction(Request $request)
     {
-        $response  = parent::createAction($request);
+        $response = parent::createAction($request);
         $documents = $this->fhm_tools->dmRepository()->findAll();
         if (count($documents) == 1) {
             $document = $documents[0];
@@ -84,12 +84,11 @@ class AdminController extends FhmController
     public function updateDefaultAction(Request $request)
     {
         $document = $this->fhm_tools->dmRepository()->getDefault();
-        if($document)
-        {
-            return $this->redirect($this->fhm_tools->getUrl(array('id' => $document->getId()), 'fhm_admin_site_update'));
-        }
-        else
-        {
+        if ($document) {
+            return $this->redirect(
+                $this->fhm_tools->getUrl(array('id' => $document->getId()), 'fhm_admin_site_update')
+            );
+        } else {
             return $this->redirect($this->fhm_tools->getUrl(array(), 'fhm_admin_site'));
         }
     }
@@ -133,8 +132,7 @@ class AdminController extends FhmController
     public function deleteAction($id)
     {
         $document = $this->fhm_tools->dmRepository()->find($id);
-        if($document && $document->getDefault())
-        {
+        if ($document && $document->getDefault()) {
             throw new HttpException(403, $this->fhm_tools->trans('.error.forbidden'));
         }
 
@@ -178,8 +176,7 @@ class AdminController extends FhmController
     public function deactivateAction($id)
     {
         $document = $this->fhm_tools->dmRepository()->find($id);
-        if($document && $document->getDefault())
-        {
+        if ($document && $document->getDefault()) {
             throw new HttpException(403, $this->fhm_tools->trans('.error.forbidden'));
         }
 
@@ -235,29 +232,28 @@ class AdminController extends FhmController
     public function defaultAction($id)
     {
         // ERROR - Unknown route
-        if(!$this->fhm_tools->routeExists('fhm_admin_' . $this->route))
-        {
+        if (!$this->fhm_tools->routeExists('fhm_admin_'.$this->route)) {
             throw $this->createNotFoundException($this->fhm_tools->trans('fhm.error.route', array(), 'FhmFhmBundle'));
         }
         $document = $this->fhm_tools->dmRepository()->find($id);
         $instance = $this->fhm_tools->instanceData($document);
         // ERROR - Unknown
-        if($document == "")
-        {
+        if ($document == "") {
             throw $this->createNotFoundException($this->fhm_tools->trans('.error.unknown'));
         }
-        if(!$instance->user->admin)
-        {
+        if (!$instance->user->admin) {
             throw new HttpException(403, $this->fhm_tools->trans('.error.forbidden'));
         }
         // Deactivate
-        $this->fhm_tools->dmRepository()->setLanguage($instance->language->visible ? $document->getLanguages() : false)->resetDefault();
+        $this->fhm_tools->dmRepository()->setLanguage(
+            $instance->language->visible ? $document->getLanguages() : false
+        )->resetDefault();
         $document->setDefault(true);
         $document->setActive(true);
         $this->fhm_tools->dmPersist($document);
         // Message
         $this->get('session')->getFlashBag()->add('notice', $this->fhm_tools->trans('.admin.default.flash.ok'));
 
-        return $this->redirect($this->fhm_tools->getUrl(array(), 'fhm_admin_' . $this->route));
+        return $this->redirect($this->fhm_tools->getUrl(array(), 'fhm_admin_'.$this->route));
     }
 }

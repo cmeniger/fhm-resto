@@ -3,6 +3,8 @@ namespace Fhm\SliderBundle\Controller\Item;
 
 use Fhm\FhmBundle\Controller\RefAdminController as FhmController;
 use Fhm\SliderBundle\Document\SliderItem;
+use Fhm\SliderBundle\Form\Type\Admin\Item\CreateType;
+use Fhm\SliderBundle\Form\Type\Admin\Item\UpdateType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -22,9 +24,9 @@ class AdminController extends FhmController
     {
         $this->setFhmTools($tools);
         parent::__construct('Fhm', 'Slider', 'slider_item', 'SliderItem');
-        $this->form->type->create = 'Fhm\\SliderBundle\\Form\\Type\\Admin\\Item\\CreateType';
-        $this->form->type->update = 'Fhm\\SliderBundle\\Form\\Type\\Admin\\Item\\UpdateType';
-        $this->translation        = array('FhmSliderBundle', 'slider.item');
+        $this->form->type->create = CreateType::class;
+        $this->form->type->update = UpdateType::class;
+        $this->translation = array('FhmSliderBundle', 'slider.item');
     }
 
     /**
@@ -97,8 +99,10 @@ class AdminController extends FhmController
 
         return array_merge(
             array(
-                'slider1' => $this->fhm_tools->dmRepository('FhmSliderBundle:Slider')->getAllEnable($instance->grouping->current),
-                'slider2' => $this->getList($document->getSliders())
+                'slider1' => $this->fhm_tools->dmRepository('FhmSliderBundle:Slider')->getAllEnable(
+                    $instance->grouping->current
+                ),
+                'slider2' => $this->getList($document->getSliders()),
             ),
             parent::detailAction($id)
         );
@@ -204,14 +208,12 @@ class AdminController extends FhmController
      */
     public function listSliderAction(Request $request)
     {
-        $datas    = json_decode($request->get('list'));
+        $datas = json_decode($request->get('list'));
         $document = $this->fhm_tools->dmRepository()->find($request->get('id'));
-        foreach($document->getSliders() as $slider)
-        {
+        foreach ($document->getSliders() as $slider) {
             $document->removeSlider($slider);
         }
-        foreach($datas as $key => $data)
-        {
+        foreach ($datas as $key => $data) {
             $document->addSlider($this->fhm_tools->dmRepository('FhmSliderBundle:Slider')->find($data->id));
         }
         $this->fhm_tools->dmPersist($document);

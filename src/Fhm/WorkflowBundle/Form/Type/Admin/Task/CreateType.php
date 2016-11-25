@@ -13,49 +13,61 @@ class CreateType extends FhmType
         $this->setTranslation('workflow');
         parent::buildForm($builder, $options);
         $builder
-            ->add('step', DocumentType::class, array(
-                'label'         => $this->translation . '.admin.create.form.step',
-                'class'         => 'FhmWorkflowBundle:WorkflowStep',
-                'choice_label'      => 'name',
-                'query_builder' => function (\Fhm\WorkflowBundle\Repository\WorkflowStepRepository $dr)
-                {
-                    return $dr->getFormEnable();
-                },
-                'required'      => false
-            ))
-            ->add('action', DocumentType::class, array(
-                'label'         => $this->translation . '.admin.create.form.action',
-                'class'         => 'FhmWorkflowBundle:WorkflowAction',
-                'choice_label'      => 'name',
-                'query_builder' => function (\Fhm\WorkflowBundle\Repository\WorkflowActionRepository $dr)
-                {
-                    return $dr->getFormEnable();
-                }
-            ))
-            ->add('parents', DocumentType::class, array(
-                'label'         => $this->translation . '.admin.create.form.parents',
-                'class'         => 'FhmWorkflowBundle:WorkflowTask',
-                'choice_label'      => 'name',
-                'query_builder' => function (\Fhm\WorkflowBundle\Repository\WorkflowTaskRepository $dr)
-                {
-                    return $dr->getFormEnable();
-                },
-                'multiple'      => true,
-                'required'      => false,
-                'by_reference'  => false
-            ))
-            ->add('sons', DocumentType::class, array(
-                'label'         => $this->translation . '.admin.create.form.sons',
-                'class'         => 'FhmWorkflowBundle:WorkflowTask',
-                'choice_label'      => 'name',
-                'query_builder' => function (\Fhm\WorkflowBundle\Repository\WorkflowTaskRepository $dr)
-                {
-                    return $dr->getFormEnable();
-                },
-                'multiple'      => true,
-                'required'      => false,
-                'by_reference'  => false
-            ))
+            ->add(
+                'step',
+                DocumentType::class,
+                array(
+                    'label' => $this->translation.'.admin.create.form.step',
+                    'class' => 'FhmWorkflowBundle:WorkflowStep',
+                    'choice_label' => 'name',
+                    'query_builder' => function (\Fhm\WorkflowBundle\Repository\WorkflowStepRepository $dr) {
+                        return $dr->getFormEnable();
+                    },
+                    'required' => false,
+                )
+            )
+            ->add(
+                'action',
+                DocumentType::class,
+                array(
+                    'label' => $this->translation.'.admin.create.form.action',
+                    'class' => 'FhmWorkflowBundle:WorkflowAction',
+                    'choice_label' => 'name',
+                    'query_builder' => function (\Fhm\WorkflowBundle\Repository\WorkflowActionRepository $dr) {
+                        return $dr->getFormEnable();
+                    },
+                )
+            )
+            ->add(
+                'parents',
+                DocumentType::class,
+                array(
+                    'label' => $this->translation.'.admin.create.form.parents',
+                    'class' => 'FhmWorkflowBundle:WorkflowTask',
+                    'choice_label' => 'name',
+                    'query_builder' => function (\Fhm\WorkflowBundle\Repository\WorkflowTaskRepository $dr) {
+                        return $dr->getFormEnable();
+                    },
+                    'multiple' => true,
+                    'required' => false,
+                    'by_reference' => false,
+                )
+            )
+            ->add(
+                'sons',
+                DocumentType::class,
+                array(
+                    'label' => $this->translation.'.admin.create.form.sons',
+                    'class' => 'FhmWorkflowBundle:WorkflowTask',
+                    'choice_label' => 'name',
+                    'query_builder' => function (\Fhm\WorkflowBundle\Repository\WorkflowTaskRepository $dr) {
+                        return $dr->getFormEnable();
+                    },
+                    'multiple' => true,
+                    'required' => false,
+                    'by_reference' => false,
+                )
+            )
             ->remove('seo_title')
             ->remove('seo_description')
             ->remove('seo_keywords')

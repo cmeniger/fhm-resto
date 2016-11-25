@@ -14,27 +14,34 @@ class CreateType extends FhmType
         $this->setTranslation('workflow');
         parent::buildForm($builder, $options);
         $builder
-            ->add('task', DocumentType::class, array(
-                'label'         => $this->translation . '.admin.create.form.task',
-                'class'         => 'FhmWorkflowBundle:WorkflowTask',
-                'choice_label'      => 'name',
-                'query_builder' => function (\Fhm\WorkflowBundle\Repository\WorkflowTaskRepository $dr)
-                {
-                    return $dr->getFormEnable();
-                },
-                'required'      => false
-            ))
-            ->add('type', ChoiceType::class, array(
-                'label'   => $this->translation . '.admin.create.form.type',
-                'choices' => array(
-                    '0' => $this->translation . '.type.0',
-                    '1' => $this->translation . '.type.1',
-                    '2' => $this->translation . '.type.2',
-                    '3' => $this->translation . '.type.3',
-                    '4' => $this->translation . '.type.4',
-                    '5' => $this->translation . '.type.5'
-                ),
-            ))
+            ->add(
+                'task',
+                DocumentType::class,
+                array(
+                    'label' => $this->translation.'.admin.create.form.task',
+                    'class' => 'FhmWorkflowBundle:WorkflowTask',
+                    'choice_label' => 'name',
+                    'query_builder' => function (\Fhm\WorkflowBundle\Repository\WorkflowTaskRepository $dr) {
+                        return $dr->getFormEnable();
+                    },
+                    'required' => false,
+                )
+            )
+            ->add(
+                'type',
+                ChoiceType::class,
+                array(
+                    'label' => $this->translation.'.admin.create.form.type',
+                    'choices' => array(
+                        '0' => $this->translation.'.type.0',
+                        '1' => $this->translation.'.type.1',
+                        '2' => $this->translation.'.type.2',
+                        '3' => $this->translation.'.type.3',
+                        '4' => $this->translation.'.type.4',
+                        '5' => $this->translation.'.type.5',
+                    ),
+                )
+            )
             ->remove('seo_title')
             ->remove('seo_description')
             ->remove('seo_keywords')

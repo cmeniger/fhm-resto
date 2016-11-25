@@ -14,8 +14,20 @@ class CreateType extends FhmType
         $this->setTranslation('workflow');
         parent::buildForm($builder, $options);
         $builder
-            ->add('color', TextType::class, array('label' => $this->translation . '.admin.create.form.color', 'attr' => array('class' => 'colorpicker'), 'required' => false))
-            ->add('order', IntegerType::class, array('label' => $this->translation . '.admin.create.form.order', 'required' => false))
+            ->add(
+                'color',
+                TextType::class,
+                array(
+                    'label' => $this->translation.'.admin.create.form.color',
+                    'attr' => array('class' => 'colorpicker'),
+                    'required' => false,
+                )
+            )
+            ->add(
+                'order',
+                IntegerType::class,
+                array('label' => $this->translation.'.admin.create.form.order', 'required' => false)
+            )
             ->remove('seo_title')
             ->remove('seo_description')
             ->remove('seo_keywords')

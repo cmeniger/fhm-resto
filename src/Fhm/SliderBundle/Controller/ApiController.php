@@ -67,23 +67,25 @@ class ApiController extends FhmController
         $document = ($document) ? $document : $this->fhm_tools->dmRepository()->getByName($id);
         $instance = $this->fhm_tools->instanceData($document);
         // ERROR - unknown
-        if($document == "")
-        {
-            throw $this->createNotFoundException($this->fhm_tools->trans('slider.item.error.unknown', array(), 'FhmSliderBundle'));
-        }
-        // ERROR - Forbidden
-        elseif(!$instance->user->admin && ($document->getDelete() || !$document->getActive()))
-        {
-            throw new HttpException(403, $this->fhm_tools->trans('slider.item.error.forbidden', array(), 'FhmSliderBundle'));
+        if ($document == "") {
+            throw $this->createNotFoundException(
+                $this->fhm_tools->trans('slider.item.error.unknown', array(), 'FhmSliderBundle')
+            );
+        } // ERROR - Forbidden
+        elseif (!$instance->user->admin && ($document->getDelete() || !$document->getActive())) {
+            throw new HttpException(
+                403,
+                $this->fhm_tools->trans('slider.item.error.forbidden', array(), 'FhmSliderBundle')
+            );
         }
 
         return new Response(
             $this->renderView(
-                "::FhmSlider/Template/" . $template . ".html.twig",
+                "::FhmSlider/Template/".$template.".html.twig",
                 array(
                     'document' => $document,
-                    'items'    => $this->fhm_tools->dmRepository("FhmSliderBundle:SliderItem")->getByGroupAll($document),
-                    'instance' => $instance
+                    'items' => $this->fhm_tools->dmRepository("FhmSliderBundle:SliderItem")->getByGroupAll($document),
+                    'instance' => $instance,
                 )
             )
         );

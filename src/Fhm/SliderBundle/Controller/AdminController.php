@@ -93,8 +93,10 @@ class AdminController extends FhmController
 
         return array_merge(
             array(
-                'item1'  => $this->fhm_tools->dmRepository('FhmSliderBundle:SliderItem')->getAllEnable($instance->grouping->current),
-                'item2'  => $this->getList($document->getItems()),
+                'item1' => $this->fhm_tools->dmRepository('FhmSliderBundle:SliderItem')->getAllEnable(
+                    $instance->grouping->current
+                ),
+                'item2' => $this->getList($document->getItems()),
             ),
             parent::detailAction($id)
         );
@@ -200,14 +202,12 @@ class AdminController extends FhmController
      */
     public function listItemAction(Request $request)
     {
-        $datas    = json_decode($request->get('list'));
+        $datas = json_decode($request->get('list'));
         $document = $this->fhm_tools->dmRepository()->find($request->get('id'));
-        foreach($document->getItems() as $item)
-        {
+        foreach ($document->getItems() as $item) {
             $document->removeItem($item);
         }
-        foreach($datas as $key => $data)
-        {
+        foreach ($datas as $key => $data) {
             $document->addItem($this->fhm_tools->dmRepository('FhmSliderBundle:SliderItem')->find($data->id));
         }
         $this->fhm_tools->dmPersist($document);

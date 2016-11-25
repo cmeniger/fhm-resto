@@ -37,9 +37,6 @@ class FrontController extends FhmController
     {
         /** For activate this route, delete next line **/
         throw $this->createNotFoundException($this->fhm_tools->trans('fhm.error.route', array(), 'FhmFhmBundle'));
-
-        /** to uncommet to activate the action */
-        //return parent::indexAction();
     }
 
     /**
@@ -54,7 +51,7 @@ class FrontController extends FhmController
     public function detailAction($id)
     {
         parent::detailAction($id);
-        $this->get($this->fhm_tools->getParameter("grouping", "fhm_fhm"))->setGrouping($id);
+        $this->get($this->fhm_tools->getParameters("grouping", "fhm_fhm"))->setGrouping($id);
 
         return $this->redirect($this->fhm_tools->getUrl('project_home'));
     }
@@ -71,9 +68,6 @@ class FrontController extends FhmController
     {
         /** For activate this route, delete next line **/
         throw $this->createNotFoundException($this->fhm_tools->trans('fhm.error.route', array(), 'FhmFhmBundle'));
-
-        /** to uncomment to activate the action */
-        //return parent::createAction($request);
     }
 
     /**
@@ -89,9 +83,6 @@ class FrontController extends FhmController
     {
         /** For activate this route, delete next line **/
         throw $this->createNotFoundException($this->fhm_tools->trans('fhm.error.route', array(), 'FhmFhmBundle'));
-
-        /** to uncomment to activate the action */
-        //return parent::duplicateAction($request, $id);
     }
 
     /**
@@ -107,9 +98,6 @@ class FrontController extends FhmController
     {
         // For activate this route, delete next line
         throw $this->createNotFoundException($this->fhm_tools->trans('fhm.error.route', array(), 'FhmFhmBundle'));
-
-        /** to uncomment to activate the action */
-        //return parent::updateAction($request, $id);
     }
 
     /**
@@ -124,9 +112,6 @@ class FrontController extends FhmController
     {
         // For activate this route, delete next line
         throw $this->createNotFoundException($this->fhm_tools->trans('fhm.error.route', array(), 'FhmFhmBundle'));
-
-        /** to uncomment to activate the action */
-        //return parent::deleteAction($id);
     }
 
     /**

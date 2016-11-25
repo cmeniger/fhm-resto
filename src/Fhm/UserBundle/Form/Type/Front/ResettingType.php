@@ -12,10 +12,10 @@ class ResettingType extends FhmType
 {
     public function __construct($instance)
     {
-        $instance              = new \stdClass();
+        $instance = new \stdClass();
         $instance->translation = 'user';
-        $instance->class       = 'Fhm\\UserBundle\\Document\\User';
-        $instance->domain      = 'FhmUserBundle';
+        $instance->class = 'Fhm\\UserBundle\\Document\\User';
+        $instance->domain = 'FhmUserBundle';
         parent::__construct($instance, null);
     }
 
@@ -24,13 +24,17 @@ class ResettingType extends FhmType
         $this->setTranslation('user');
         parent::buildForm($builder, $options);
         $builder
-            ->add('plainPassword', RepeatedType::class, array
-            (
-                'type'            => PasswordType::class,
-                'first_options'   => array('label' => $this->translation . '.front.resetting.reset.form.password_new'),
-                'second_options'  => array('label' => $this->translation . '.front.resetting.reset.form.password_confirmation'),
-                'invalid_message' => 'fos_user.password.mismatch',
-            ))
+            ->add(
+                'plainPassword',
+                RepeatedType::class,
+                array
+                (
+                    'type' => PasswordType::class,
+                    'first_options' => array('label' => $this->translation.'.front.resetting.reset.form.password_new'),
+                    'second_options' => array('label' => $this->translation.'.front.resetting.reset.form.password_confirmation'),
+                    'invalid_message' => 'fos_user.password.mismatch',
+                )
+            )
             ->remove('name')
             ->remove('description')
             ->remove('submitNew')
@@ -42,7 +46,7 @@ class ResettingType extends FhmType
     {
         return 'FhmResetting';
     }
-    
+
     /**
      * @param OptionsResolver $resolver
      */

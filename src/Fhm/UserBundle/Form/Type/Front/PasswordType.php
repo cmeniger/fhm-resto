@@ -12,10 +12,10 @@ class PasswordType extends FhmType
 {
     public function __construct($instance)
     {
-        $instance              = new \stdClass();
+        $instance = new \stdClass();
         $instance->translation = 'user';
-        $instance->class       = 'Fhm\\UserBundle\\Document\\User';
-        $instance->domain      = 'FhmUserBundle';
+        $instance->class = 'Fhm\\UserBundle\\Document\\User';
+        $instance->domain = 'FhmUserBundle';
         parent::__construct($instance, null);
     }
 
@@ -24,14 +24,26 @@ class PasswordType extends FhmType
         $this->setTranslation('user');
         parent::buildForm($builder, $options);
         $builder
-            ->add('current_password', PasswordTypeBase::class, array('label' => $this->translation . '.front.password.form.password', 'mapped' => false, 'constraints' => new UserPassword()))
-            ->add('plainPassword', RepeatedType::class, array
-            (
-                'type'            => PasswordTypeBase::class,
-                'first_options'   => array('label' => $this->translation . '.front.password.form.password_new'),
-                'second_options'  => array('label' => $this->translation . '.front.password.form.password_confirmation'),
-                'invalid_message' => 'fos_user.password.mismatch',
-            ))
+            ->add(
+                'current_password',
+                PasswordTypeBase::class,
+                array(
+                    'label' => $this->translation.'.front.password.form.password',
+                    'mapped' => false,
+                    'constraints' => new UserPassword(),
+                )
+            )
+            ->add(
+                'plainPassword',
+                RepeatedType::class,
+                array
+                (
+                    'type' => PasswordTypeBase::class,
+                    'first_options' => array('label' => $this->translation.'.front.password.form.password_new'),
+                    'second_options' => array('label' => $this->translation.'.front.password.form.password_confirmation'),
+                    'invalid_message' => 'fos_user.password.mismatch',
+                )
+            )
             ->remove('name')
             ->remove('description')
             ->remove('submitNew')

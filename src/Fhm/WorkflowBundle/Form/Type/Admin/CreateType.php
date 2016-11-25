@@ -13,18 +13,21 @@ class CreateType extends FhmType
         $this->setTranslation('workflow');
         parent::buildForm($builder, $options);
         $builder
-            ->add('tasks', DocumentType::class, array(
-                'label'         => $this->translation . '.admin.create.form.tasks',
-                'class'         => 'FhmWorkflowBundle:WorkflowTask',
-                'choice_label'      => 'name',
-                'query_builder' => function (\Fhm\WorkflowBundle\Repository\WorkflowTaskRepository $dr)
-                {
-                    return $dr->getFormParent();
-                },
-                'multiple'      => true,
-                'required'      => false,
-                'by_reference'  => false
-            ));
+            ->add(
+                'tasks',
+                DocumentType::class,
+                array(
+                    'label' => $this->translation.'.admin.create.form.tasks',
+                    'class' => 'FhmWorkflowBundle:WorkflowTask',
+                    'choice_label' => 'name',
+                    'query_builder' => function (\Fhm\WorkflowBundle\Repository\WorkflowTaskRepository $dr) {
+                        return $dr->getFormParent();
+                    },
+                    'multiple' => true,
+                    'required' => false,
+                    'by_reference' => false,
+                )
+            );
     }
 
     /**

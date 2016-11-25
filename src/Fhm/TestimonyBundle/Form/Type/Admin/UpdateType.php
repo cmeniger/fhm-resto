@@ -6,23 +6,30 @@ use Fhm\MediaBundle\Form\Type\MediaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/**
+ * Class UpdateType
+ * @package Fhm\TestimonyBundle\Form\Type\Admin
+ */
 class UpdateType extends FhmType
 {
-    public function __construct($instance, $document)
-    {
-        parent::__construct($instance, $document);
-    }
-
+    /**
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $this->setTranslation('testimony');
         parent::buildForm($builder, $options);
         $builder
-            ->add('image', MediaType::class, array(
-                'label'    => $this->translation . '.admin.update.form.image',
-                'filter'   => 'image/*',
-                'required' => false
-            ));
+            ->add(
+                'image',
+                MediaType::class,
+                array(
+                    'label' => $this->translation.'.admin.update.form.image',
+                    'filter' => 'image/*',
+                    'required' => false,
+                )
+            );
     }
 
     /**

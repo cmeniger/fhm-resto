@@ -48,83 +48,75 @@ class FrontController extends FhmController
     {
         // For activate this route, delete next line
         throw $this->createNotFoundException($this->fhm_tools->trans('fhm.error.route', array(), 'FhmFhmBundle'));
-
-        return parent::createAction($request);
     }
 
     /**
-    * @Route
-    * (
-    *      path="/duplicate/{id}",
-    *      name="fhm_testimony_duplicate",
-    *      requirements={"id"="[a-z0-9]*"}
-    * )
-    * @Template("::FhmTestimony/Front/create.html.twig")
-    */
+     * @Route
+     * (
+     *      path="/duplicate/{id}",
+     *      name="fhm_testimony_duplicate",
+     *      requirements={"id"="[a-z0-9]*"}
+     * )
+     * @Template("::FhmTestimony/Front/create.html.twig")
+     */
     public function duplicateAction(Request $request, $id)
     {
         // For activate this route, delete next line
         throw $this->createNotFoundException($this->fhm_tools->trans('fhm.error.route', array(), 'FhmFhmBundle'));
-
-        return parent::duplicateAction($request, $id);
     }
 
     /**
-    * @Route
-    * (
-    *      path="/update/{id}",
-    *      name="fhm_testimony_update",
-    *      requirements={"id"="[a-z0-9]*"}
-    * )
-    * @Template("::FhmTestimony/Front/update.html.twig")
-    */
+     * @Route
+     * (
+     *      path="/update/{id}",
+     *      name="fhm_testimony_update",
+     *      requirements={"id"="[a-z0-9]*"}
+     * )
+     * @Template("::FhmTestimony/Front/update.html.twig")
+     */
     public function updateAction(Request $request, $id)
     {
         // For activate this route, delete next line
         throw $this->createNotFoundException($this->fhm_tools->trans('fhm.error.route', array(), 'FhmFhmBundle'));
-
-        return parent::updateAction($request, $id);
     }
 
     /**
-    * @Route
-    * (
-    *      path="/detail/{id}",
-    *      name="fhm_testimony_detail",
-    *      requirements={"id"=".+"}
-    * )
-    * @Template("::FhmTestimony/Front/detail.html.twig")
-    */
+     * @Route
+     * (
+     *      path="/detail/{id}",
+     *      name="fhm_testimony_detail",
+     *      requirements={"id"=".+"}
+     * )
+     * @Template("::FhmTestimony/Front/detail.html.twig")
+     */
     public function detailAction($id)
     {
         return parent::detailAction($id);
     }
 
     /**
-    * @Route
-    * (
-    *      path="/delete/{id}",
-    *      name="fhm_testimony_delete",
-    *      requirements={"id"="[a-z0-9]*"}
-    * )
-    */
+     * @Route
+     * (
+     *      path="/delete/{id}",
+     *      name="fhm_testimony_delete",
+     *      requirements={"id"="[a-z0-9]*"}
+     * )
+     */
     public function deleteAction($id)
     {
         // For activate this route, delete next line
         throw $this->createNotFoundException($this->fhm_tools->trans('fhm.error.route', array(), 'FhmFhmBundle'));
-
-        return parent::deleteAction($id);
     }
 
     /**
-    * @Route
-    * (
-    *      path="/{id}",
-    *      name="fhm_testimony_lite",
-    *      requirements={"id"=".+"}
-    * )
-    * @Template("::FhmTestimony/Front/detail.html.twig")
-    */
+     * @Route
+     * (
+     *      path="/{id}",
+     *      name="fhm_testimony_lite",
+     *      requirements={"id"=".+"}
+     * )
+     * @Template("::FhmTestimony/Front/detail.html.twig")
+     */
     public function liteAction($id)
     {
         return $this->detailAction($id);
