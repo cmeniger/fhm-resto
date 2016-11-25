@@ -63,8 +63,8 @@ class ApiController extends FhmController
     public function counterAction(Request $request)
     {
         return array(
-            'count'    => $this->fhm_tools->dmRepository()->getCountNew($this->getUser()),
-            'instance' => $this->fhm_tools->instanceData()
+            'count' => $this->fhm_tools->dmRepository()->getCountNew($this->getUser()),
+            'instance' => $this->fhm_tools->instanceData(),
         );
     }
 
@@ -78,9 +78,11 @@ class ApiController extends FhmController
     public function counterNumberAction(Request $request)
     {
         $response = new JsonResponse();
-        $response->setData(array(
-            'count' => $this->fhm_tools->dmRepository()->getCountNew($this->getUser())
-        ));
+        $response->setData(
+            array(
+                'count' => $this->fhm_tools->dmRepository()->getCountNew($this->getUser()),
+            )
+        );
 
         return $response;
     }
@@ -97,7 +99,7 @@ class ApiController extends FhmController
     {
         return array(
             'documents' => $this->fhm_tools->dmRepository()->getIndexNew($this->getUser()),
-            'instance'  => $this->fhm_tools->instanceData()
+            'instance' => $this->fhm_tools->instanceData(),
         );
     }
 
@@ -113,7 +115,7 @@ class ApiController extends FhmController
     {
         return array(
             'documents' => $this->fhm_tools->dmRepository()->getIndexAll($this->getUser()),
-            'instance'  => $this->fhm_tools->instanceData()
+            'instance' => $this->fhm_tools->instanceData(),
         );
     }
 
@@ -131,22 +133,21 @@ class ApiController extends FhmController
         $document = ($document) ? $document : $this->fhm_tools->dmRepository()->getByAlias($id);
         $document = ($document) ? $document : $this->fhm_tools->dmRepository()->getByName($id);
         $instance = $this->fhm_tools->instanceData($document);
-        if($document == "")
-        {
+        if ($document == "") {
             throw $this->createNotFoundException($this->fhm_tools->trans('.error.unknown'));
-        }
-        // ERROR - Forbidden
-        elseif(!$instance->user->admin && ($document->getDelete() || !$document->getActive()))
-        {
+        } // ERROR - Forbidden
+        elseif (!$instance->user->admin && ($document->getDelete() || !$document->getActive())) {
             throw new HttpException(403, $this->fhm_tools->trans('.error.forbidden'));
         }
 
         return new Response(
             $this->renderView(
-                "::FhmNotification/Template/template." . ($this->get('templating')->exists("::FhmNotification/Template/template." . $document->getTemplate() . ".html.twig") ? $document->getTemplate() : "default") . ".html.twig",
+                "::FhmNotification/Template/template.".($this->get('templating')->exists(
+                    "::FhmNotification/Template/template.".$document->getTemplate().".html.twig"
+                ) ? $document->getTemplate() : "default").".html.twig",
                 array(
                     'document' => $document,
-                    'instance' => $instance
+                    'instance' => $instance,
                 )
             )
         );
@@ -166,17 +167,12 @@ class ApiController extends FhmController
         $document = ($document) ? $document : $this->fhm_tools->dmRepository()->getByAlias($id);
         $document = ($document) ? $document : $this->fhm_tools->dmRepository()->getByName($id);
         $instance = $this->fhm_tools->instanceData($document);
-        if($document == "")
-        {
+        if ($document == "") {
             throw $this->createNotFoundException($this->fhm_tools->trans('.error.unknown'));
-        }
-        elseif($document->getUser() != $this->getUser())
-        {
+        } elseif ($document->getUser() != $this->getUser()) {
             throw new HttpException(403, $this->fhm_tools->trans('.error.forbidden'));
-        }
-        // ERROR - Forbidden
-        elseif(!$instance->user->admin && ($document->getDelete() || !$document->getActive()))
-        {
+        } // ERROR - Forbidden
+        elseif (!$instance->user->admin && ($document->getDelete() || !$document->getActive())) {
             throw new HttpException(403, $this->fhm_tools->trans('.error.forbidden'));
         }
         $document->setDelete(true);
@@ -199,17 +195,12 @@ class ApiController extends FhmController
         $document = ($document) ? $document : $this->fhm_tools->dmRepository()->getByAlias($id);
         $document = ($document) ? $document : $this->fhm_tools->dmRepository()->getByName($id);
         $instance = $this->fhm_tools->instanceData($document);
-        if($document == "")
-        {
+        if ($document == "") {
             throw $this->createNotFoundException($this->fhm_tools->trans('.error.unknown'));
-        }
-        elseif($document->getUser() != $this->getUser())
-        {
+        } elseif ($document->getUser() != $this->getUser()) {
             throw new HttpException(403, $this->fhm_tools->trans('.error.forbidden'));
-        }
-        // ERROR - Forbidden
-        elseif(!$instance->user->admin && ($document->getDelete() || !$document->getActive()))
-        {
+        } // ERROR - Forbidden
+        elseif (!$instance->user->admin && ($document->getDelete() || !$document->getActive())) {
             throw new HttpException(403, $this->fhm_tools->trans('.error.forbidden'));
         }
         $document->setNew($code);

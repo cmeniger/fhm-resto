@@ -94,8 +94,10 @@ class AdminController extends FhmController
 
         return array_merge(
             array(
-                'partnergroups1' => $this->fhm_tools->dmRepository('FhmPartnerBundle:PartnerGroup')->getListEnable($instance->grouping->current),
-                'partnergroups2' => $this->getList($document->getPartnergroups())
+                'partnergroups1' => $this->fhm_tools->dmRepository('FhmPartnerBundle:PartnerGroup')->getListEnable(
+                    $instance->grouping->current
+                ),
+                'partnergroups2' => $this->getList($document->getPartnergroups()),
             ),
             parent::detailAction($id)
         );
@@ -216,13 +218,11 @@ class AdminController extends FhmController
     public function partnergroupAction(Request $request)
     {
         $partnergroups = json_decode($request->get('list'));
-        $document   = $this->fhm_tools->dmRepository()->find($request->get('id'));
-        foreach($document->getPartnergroups() as $partnergroup)
-        {
+        $document = $this->fhm_tools->dmRepository()->find($request->get('id'));
+        foreach ($document->getPartnergroups() as $partnergroup) {
             $document->removePartnergroup($partnergroup);
         }
-        foreach($partnergroups as $key => $data)
-        {
+        foreach ($partnergroups as $key => $data) {
             $partnergroup = $this->fhm_tools->dmRepository('FhmPartnerBundle:PartnerGroup')->find($data->id);
             $document->addPartnergroup($partnergroup);
         }

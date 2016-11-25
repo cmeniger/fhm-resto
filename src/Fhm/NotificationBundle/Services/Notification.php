@@ -22,14 +22,18 @@ class Notification
 
     /**
      * @param \Fhm\UserBundle\Document\User $user
-     * @param string                        $content
-     * @param string                        $template
-     * @param array                         $parameter
+     * @param string $content
+     * @param string $template
+     * @param array $parameter
      *
      * @return $this
      */
-    public function create(\Fhm\UserBundle\Document\User $user, $content = '', $template = 'default', $parameter = array())
-    {
+    public function create(
+        \Fhm\UserBundle\Document\User $user,
+        $content = '',
+        $template = 'default',
+        $parameter = array()
+    ) {
         $document = new \Fhm\NotificationBundle\Document\Notification();
         $document->setUserCreate($this->fhm_tools->getUser());
         $document->setUser($user);

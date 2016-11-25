@@ -3,6 +3,8 @@ namespace Fhm\PartnerBundle\Controller\Group;
 
 use Fhm\FhmBundle\Controller\RefAdminController as FhmController;
 use Fhm\PartnerBundle\Document\PartnerGroup;
+use Fhm\PartnerBundle\Form\Type\Admin\Group\CreateType;
+use Fhm\PartnerBundle\Form\Type\Admin\Group\UpdateType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -22,9 +24,9 @@ class AdminController extends FhmController
     {
         $this->setFhmTools($tools);
         parent::__construct('Fhm', 'Partner', 'partner_group', 'PartnerGroup');
-        $this->form->type->create = 'Fhm\\PartnerBundle\\Form\\Type\\Admin\\Group\\CreateType';
-        $this->form->type->update = 'Fhm\\PartnerBundle\\Form\\Type\\Admin\\Group\\UpdateType';
-        $this->translation        = array('FhmPartnerBundle', 'partner.group');
+        $this->form->type->create = CreateType::class;
+        $this->form->type->update = UpdateType::class;
+        $this->translation = array('FhmPartnerBundle', 'partner.group');
     }
 
     /**
@@ -97,8 +99,10 @@ class AdminController extends FhmController
 
         return array_merge(
             array(
-                'partner1' => $this->fhm_tools->dmRepository('FhmPartnerBundle:Partner')->getAllEnable($instance->grouping->current),
-                'partner2' => $this->getList($document->getPartner())
+                'partner1' => $this->fhm_tools->dmRepository('FhmPartnerBundle:Partner')->getAllEnable(
+                    $instance->grouping->current
+                ),
+                'partner2' => $this->getList($document->getPartner()),
             ),
             parent::detailAction($id)
         );
@@ -115,39 +119,67 @@ class AdminController extends FhmController
      */
     public function previewAction($id)
     {
-        $response  = parent::detailAction($id);
-        $document  = $response['document'];
-        $instance  = $response['instance'];
+        $response = parent::detailAction($id);
+        $document = $response['document'];
         $classType = $this->form->type->search;
-        $form      = $this->createForm(new $classType($instance), null);
-        $form->setData($this->get('request')->get($form->getName()));
-        $dataSearch        = $form->getData();
-        $dataPagination    = $this->get('request')->get('FhmPagination');
+        $form = $this->createForm($classType);
+        $form->setData($this->get('request_stack')->get($form->getName()));
+        $dataSearch = $form->getData();
+        $dataPagination = $this->get('request_stack')->get('FhmPagination');
         $this->translation = array('FhmPartnerBundle', 'partner');
         // Ajax pagination request
-        if(isset($dataPagination['pagination']))
-        {
-            $documents = $this->fhm_tools->dmRepository("FhmPartnerBundle:Partner")->getPartnerByGroupIndex($document, $dataSearch['search'], $dataPagination['pagination'], $this->fhm_tools->getParameters(array('pagination', 'front', 'page'), 'fhm_fhm'));
+        if (isset($dataPagination['pagination'])) {
+            $documents = $this->fhm_tools->dmRepository("FhmPartnerBundle:Partner")->getPartnerByGroupIndex(
+                $document,
+                $dataSearch['search'],
+                $dataPagination['pagination'],
+                $this->fhm_tools->getParameters(array('pagination', 'front', 'page'), 'fhm_fhm')
+            );
 
             return array_merge(
                 $response,
                 array(
-                    'documents'  => $documents,
-                    'pagination' => $this->fhm_tools->getPagination($dataPagination['pagination'], count($documents), $this->fhm_tools->dmRepository("FhmPartnerBundle:Partner")->getPartnerByGroupCount($document, $dataSearch['search']), 'pagination', $this->fhm_tools->formRename($form->getName(), $dataSearch), $this->fhm_tools->getUrl('fhm_partner_group_lite', array('id' => $id))),
-                ));
-        }
-        // Router request
-        else
-        {
-            $documents = $this->fhm_tools->dmRepository("FhmPartnerBundle:Partner")->getPartnerByGroupIndex($document, $dataSearch['search'], 1, $this->fhm_tools->getParameters(array('pagination', 'front', 'page'), 'fhm_fhm'));
+                    'documents' => $documents,
+                    'pagination' => $this->fhm_tools->getPagination(
+                        $dataPagination['pagination'],
+                        count($documents),
+                        $this->fhm_tools->dmRepository("FhmPartnerBundle:Partner")->getPartnerByGroupCount(
+                            $document,
+                            $dataSearch['search']
+                        ),
+                        'pagination',
+                        $this->fhm_tools->formRename($form->getName(), $dataSearch),
+                        $this->fhm_tools->getUrl('fhm_partner_group_lite', array('id' => $id))
+                    ),
+                )
+            );
+        } // Router request
+        else {
+            $documents = $this->fhm_tools->dmRepository("FhmPartnerBundle:Partner")->getPartnerByGroupIndex(
+                $document,
+                $dataSearch['search'],
+                1,
+                $this->fhm_tools->getParameters(array('pagination', 'front', 'page'), 'fhm_fhm')
+            );
 
             return array_merge(
                 $response,
                 array(
-                    'documents'  => $documents,
-                    'pagination' => $this->fhm_tools->getPagination(1, count($documents), $this->fhm_tools->dmRepository("FhmPartnerBundle:Partner")->getPartnerByGroupCount($document, $dataSearch['search']), 'pagination', $this->fhm_tools->formRename($form->getName(), $dataSearch), $this->fhm_tools->getUrl('fhm_partner_group_lite', array('id' => $id))),
-                    'form'       => $form->createView(),
-                ));
+                    'documents' => $documents,
+                    'pagination' => $this->fhm_tools->getPagination(
+                        1,
+                        count($documents),
+                        $this->fhm_tools->dmRepository("FhmPartnerBundle:Partner")->getPartnerByGroupCount(
+                            $document,
+                            $dataSearch['search']
+                        ),
+                        'pagination',
+                        $this->fhm_tools->formRename($form->getName(), $dataSearch),
+                        $this->fhm_tools->getUrl('fhm_partner_group_lite', array('id' => $id))
+                    ),
+                    'form' => $form->createView(),
+                )
+            );
         }
     }
 
@@ -251,14 +283,12 @@ class AdminController extends FhmController
      */
     public function partnerAction(Request $request)
     {
-        $partner  = json_decode($request->get('list'));
+        $partner = json_decode($request->get('list'));
         $document = $this->fhm_tools->dmRepository()->find($request->get('id'));
-        foreach($document->getPartner() as $new)
-        {
+        foreach ($document->getPartner() as $new) {
             $document->removePartner($new);
         }
-        foreach($partner as $key => $data)
-        {
+        foreach ($partner as $key => $data) {
             $new = $this->fhm_tools->dmRepository('FhmPartnerBundle:Partner')->find($data->id);
             $document->addPartner($new);
         }

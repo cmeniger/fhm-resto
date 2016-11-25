@@ -6,14 +6,22 @@ use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/**
+ * Class CreateType
+ * @package Fhm\NewsletterBundle\Form\Type\Admin
+ */
 class CreateType extends FhmType
 {
+    /**
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $this->setTranslation('newsletter');
         parent::buildForm($builder, $options);
         $builder
-            ->add('email', EmailType::class, array('label' => $this->translation . '.admin.update.form.email'))
+            ->add('email', EmailType::class, array('label' => $this->translation.'.admin.update.form.email'))
             ->remove('name')
             ->remove('description')
             ->remove('seo_title')

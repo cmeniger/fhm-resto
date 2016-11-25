@@ -30,14 +30,11 @@ class Note
      */
     public function average($id)
     {
-        $sum   = $this->fhm_tools->dmRepository('FhmNoteBundle:Note')->getAverageByObject($id);
+        $sum = $this->fhm_tools->dmRepository('FhmNoteBundle:Note')->getAverageByObject($id);
         $count = $this->fhm_tools->dmRepository('FhmNoteBundle:Note')->getCountByObject($id);
-        if($count > 0)
-        {
+        if ($count > 0) {
             return $sum / $count;
-        }
-        else
-        {
+        } else {
             return 0;
         }
     }
@@ -50,6 +47,9 @@ class Note
      */
     public function count($document, $value)
     {
-        return $this->fhm_tools->dmRepository('FhmNoteBundle:Note')->getCountByObjectAndValue($document->getId(), $value);
+        return $this->fhm_tools->dmRepository('FhmNoteBundle:Note')->getCountByObjectAndValue(
+            $document->getId(),
+            $value
+        );
     }
 }
