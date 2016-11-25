@@ -87,7 +87,7 @@ class UpdateType extends FhmType
                     'class' => 'FhmEventBundle:EventGroup',
                     'choice_label' => 'name',
                     'query_builder' => function (\Fhm\EventBundle\Repository\EventGroupRepository $dr) {
-                        return $dr->getFormEnable($this->grouping->filtered);
+                        return $dr->getFormEnable();
                     },
                     'multiple' => true,
                     'required' => false,

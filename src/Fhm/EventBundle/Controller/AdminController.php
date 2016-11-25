@@ -95,7 +95,7 @@ class AdminController extends FhmController
         return array_merge(
             array(
                 'eventgroups1' => $this->fhm_tools->dmRepository('FhmEventBundle:EventGroup')->getListEnable($instance->grouping->current),
-                'eventgroups2' => $this->getList($document->getEventgroups())
+                'eventgroups2' => $this->fhm_tools->getList($document->getEventgroups())
             ),
             parent::detailAction($id)
         );

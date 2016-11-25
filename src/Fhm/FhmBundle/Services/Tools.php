@@ -219,7 +219,7 @@ class Tools implements ContainerAwareInterface
     {
         $class = $this->class.'Historic';
         if (class_exists($class)) {
-            $request = $this->getContainer()->get('request');
+            $request = $this->getContainer()->get('request_stack')->getCurrentRequest();
             $instance = $this->instanceData();
             $dataPagination = $request->get('FhmPagination');
 
@@ -244,7 +244,7 @@ class Tools implements ContainerAwareInterface
     {
         $class = $this->class.'Historic';
         if (class_exists($class)) {
-            $request = $this->getContainer()->get('request');
+            $request = $this->getContainer()->get('request_stack')->getCurrentRequest();
             $dataPagination = $request->get('FhmPagination');
             $instance = $this->instanceData();
             $pagination = $this->setPagination(
