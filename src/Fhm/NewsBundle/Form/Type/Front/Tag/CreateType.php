@@ -8,6 +8,7 @@ class CreateType extends FhmType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $this->setTranslation('news');
         parent::buildForm($builder, $options);
     }
 }

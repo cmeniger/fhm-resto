@@ -6,13 +6,9 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 class UpdateType extends FhmType
 {
-    public function __construct($instance)
-    {
-        parent::__construct($instance);
-    }
-
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $this->setTranslation('testimony');
         parent::buildForm($builder, $options);
     }
 }

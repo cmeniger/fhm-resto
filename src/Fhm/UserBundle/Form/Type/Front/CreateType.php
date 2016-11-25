@@ -21,21 +21,22 @@ class CreateType extends FhmType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $this->setTranslation('user');
         parent::buildForm($builder, $options);
         $builder
-            ->add('username', TextType::class, array('label' => $this->instance->translation . '.front.create.form.username'))
+            ->add('username', TextType::class, array('label' => $this->translation . '.front.create.form.username'))
             ->add('email', RepeatedType::class, array
             (
                 'type'            => EmailType::class,
-                'first_options'   => array('label' => $this->instance->translation . '.front.create.form.email'),
-                'second_options'  => array('label' => $this->instance->translation . '.front.create.form.email_confirmation'),
+                'first_options'   => array('label' => $this->translation . '.front.create.form.email'),
+                'second_options'  => array('label' => $this->translation . '.front.create.form.email_confirmation'),
                 'invalid_message' => 'user.email.mismatch',
             ))
             ->add('plainPassword', RepeatedType::class, array
             (
                 'type'            => PasswordType::class,
-                'first_options'   => array('label' => $this->instance->translation . '.front.create.form.password'),
-                'second_options'  => array('label' => $this->instance->translation . '.front.create.form.password_confirmation'),
+                'first_options'   => array('label' => $this->translation . '.front.create.form.password'),
+                'second_options'  => array('label' => $this->translation . '.front.create.form.password_confirmation'),
                 'invalid_message' => 'user.password.mismatch',
             ))
             ->remove('name')

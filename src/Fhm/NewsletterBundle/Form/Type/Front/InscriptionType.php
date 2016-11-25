@@ -10,6 +10,7 @@ class InscriptionType extends FhmType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $this->setTranslation('newsletter');
         parent::buildForm($builder, $options);
         $builder
             ->add('submitQuit', SubmitType::class, array('label' => $this->instance->translation . '.front.create.form.submit.inscription'))
