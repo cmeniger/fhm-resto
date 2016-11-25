@@ -50,7 +50,8 @@ In docker :
     cd /var/www/fhm-tools-v2
     composer selfupdate
     composer install
-    chmod -R 777 var/cache var/logs
+    mkdir -p var/sessions
+    chmod -R 777 var/cache var/logs var/sessions
 
 4) Checking your System Configuration
 -------------------------------------
@@ -88,11 +89,11 @@ To see a real-live Symfony page in action, access the following page:
 
 To send email, you must create these users and give admin rights by running the following command :
 
-    php app/console fos:user:create fhm support@fhmsolutions.com fhm
-    php app/console fos:user:create admin admin@fhm-tools-v2.com admin
-    php app/console fos:user:create noreply noreply@fhm-tools-v2.com noreply
-    php app/console fos:user:promote fhm ROLE_SUPER_ADMIN
-    php app/console fos:user:promote admin ROLE_ADMIN
+    php bin/console fos:user:create fhm support@fhmsolutions.com fhm
+    php bin/console fos:user:create admin admin@fhm-tools-v2.com admin
+    php bin/console fos:user:create noreply noreply@fhm-tools-v2.com noreply
+    php bin/console fos:user:promote fhm ROLE_SUPER_ADMIN
+    php bin/console fos:user:promote admin ROLE_ADMIN
 
 You can connect to the application with these credentials :
 
