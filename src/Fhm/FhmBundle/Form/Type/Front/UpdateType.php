@@ -23,42 +23,39 @@ class UpdateType extends AbstractType
     /**
      * @param $domaine
      */
-    public function setTranslation($domaine)
+    public function setTranslation($domaine = 'fhm')
     {
         $this->translation = $domaine;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $data = $builder->getData();
-        $this->instance = $data['instance'];
-        $this->document = $data['document'];
         $builder
-            ->add('name', TextType::class, array('label' => $this->instance->translation.'.front.update.form.name'))
+            ->add('name', TextType::class, array('label' => $this->translation.'.front.update.form.name'))
             ->add(
                 'description',
                 TextareaType::class,
-                array('label' => $this->instance->translation.'.front.update.form.description', 'required' => false)
+                array('label' => $this->translation.'.front.update.form.description', 'required' => false)
             )
             ->add(
                 'submitSave',
                 SubmitType::class,
-                array('label' => $this->instance->translation.'.front.update.form.submit.save')
+                array('label' => $this->translation.'.front.update.form.submit.save')
             )
             ->add(
                 'submitNew',
                 SubmitType::class,
-                array('label' => $this->instance->translation.'.front.update.form.submit.new')
+                array('label' => $this->translation.'.front.update.form.submit.new')
             )
             ->add(
                 'submitDuplicate',
                 SubmitType::class,
-                array('label' => $this->instance->translation.'.front.update.form.submit.duplicate')
+                array('label' => $this->translation.'.front.update.form.submit.duplicate')
             )
             ->add(
                 'submitQuit',
                 SubmitType::class,
-                array('label' => $this->instance->translation.'.front.update.form.submit.quit')
+                array('label' => $this->translation.'.front.update.form.submit.quit')
             );
     }
 
@@ -77,8 +74,8 @@ class UpdateType extends AbstractType
     {
         $resolver->setDefaults(
             array(
-                'data_class' => $this->instance->class,
-                'translation_domain' => $this->instance->domain,
+                'data_class' => 'Fhm\FhmBundle\Document\Fhm',
+                'translation_domain' => 'FhmFhmBundle',
                 'cascade_validation' => true,
             )
         );

@@ -14,14 +14,12 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class ImportType extends AbstractType
 {
-    protected $instance;
-
     protected $translation;
 
     /**
      * @param $domaine
      */
-    public function setTranslation($domaine)
+    public function setTranslation($domaine = 'fhm')
     {
         $this->translation = $domaine;
     }
@@ -32,14 +30,12 @@ class ImportType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $data = $builder->getData();
-        $this->instance = $data['instance'];
         $builder
-            ->add('file', FileType::class, array('label' => $this->instance->translation.'.admin.import.form.file'))
+            ->add('file', FileType::class, array('label' => $this->translation.'.admin.import.form.file'))
             ->add(
                 'submit',
                 SubmitType::class,
-                array('label' => $this->instance->translation.'.admin.import.form.submit')
+                array('label' => $this->translation.'.admin.import.form.submit')
             );
     }
 
@@ -58,8 +54,8 @@ class ImportType extends AbstractType
     {
         $resolver->setDefaults(
             array(
-                'data_class' => null,
-                'translation_domain' => $this->instance->domain,
+                'data_class' => 'Fhm\FhmBundle\Document\Fhm',
+                'translation_domain' => 'FhmFhmBundle',
                 'cascade_validation' => true,
             )
         );
