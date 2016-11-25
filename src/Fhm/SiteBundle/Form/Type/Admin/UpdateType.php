@@ -49,7 +49,7 @@ class UpdateType extends FhmType
                     'class' => 'FhmMenuBundle:Menu',
                     'choice_label' => 'name',
                     'query_builder' => function (\Fhm\MenuBundle\Repository\MenuRepository $dr) {
-//                        return $dr->getFormEnable($this->instance->grouping->filtered);
+                        return $dr->getFormEnable();
                     },
                     'required' => false,
                 )
@@ -62,7 +62,7 @@ class UpdateType extends FhmType
                     'class' => 'FhmNewsBundle:NewsGroup',
                     'choice_label' => 'name',
                     'query_builder' => function (\Fhm\NewsBundle\Repository\NewsGroupRepository $dr) {
-//                        return $dr->getFormEnable($this->instance->grouping->filtered);
+                        return $dr->getFormEnable();
                     },
                     'required' => false,
                 )
@@ -75,7 +75,7 @@ class UpdateType extends FhmType
                     'class' => 'FhmPartnerBundle:PartnerGroup',
                     'choice_label' => 'name',
                     'query_builder' => function (\Fhm\PartnerBundle\Repository\PartnerGroupRepository $dr) {
-//                        return $dr->getFormEnable($this->instance->grouping->filtered);
+                        return $dr->getFormEnable();
                     },
                     'required' => false,
                 )
@@ -88,7 +88,7 @@ class UpdateType extends FhmType
                     'class' => 'FhmSliderBundle:Slider',
                     'choice_label' => 'name',
                     'query_builder' => function (\Fhm\SliderBundle\Repository\SliderRepository $dr) {
-//                        return $dr->getFormEnable($this->instance->grouping->filtered);
+                        return $dr->getFormEnable();
                     },
                     'required' => false,
                 )
@@ -101,7 +101,7 @@ class UpdateType extends FhmType
                     'class' => 'FhmGalleryBundle:Gallery',
                     'choice_label' => 'name',
                     'query_builder' => function (\Fhm\GalleryBundle\Repository\GalleryRepository $dr) {
-//                        return $dr->getFormEnable($this->instance->grouping->filtered);
+                        return $dr->getFormEnable();
                     },
                     'required' => false,
                 )
@@ -132,7 +132,7 @@ class UpdateType extends FhmType
                     'class' => 'FhmContactBundle:Contact',
                     'choice_label' => 'name',
                     'query_builder' => function (\Fhm\ContactBundle\Repository\ContactRepository $dr) {
-//                        return $dr->getFormEnable($this->instance->grouping->filtered);
+                        return $dr->getFormEnable();
                     },
                     'required' => false,
                 )
