@@ -50,8 +50,6 @@ class AdminController extends FhmController
     {
         // For activate this route, delete next line
         throw $this->createNotFoundException($this->fhm_tools->trans('fhm.error.route', array(), 'FhmFhmBundle'));
-
-        //return parent::createAction($request);
     }
 
     /**
@@ -67,8 +65,6 @@ class AdminController extends FhmController
     {
         // For activate this route, delete next line
         throw $this->createNotFoundException($this->fhm_tools->trans('fhm.error.route', array(), 'FhmFhmBundle'));
-
-        //return parent::duplicateAction($request, $id);
     }
 
     /**
@@ -85,7 +81,6 @@ class AdminController extends FhmController
         // For activate this route, delete next line
         throw $this->createNotFoundException($this->fhm_tools->trans('fhm.error.route', array(), 'FhmFhmBundle'));
 
-        //return parent::updateAction($request, $id);
     }
 
     /**
@@ -141,7 +136,6 @@ class AdminController extends FhmController
         // For activate this route, delete next line
         throw $this->createNotFoundException($this->fhm_tools->trans('fhm.error.route', array(), 'FhmFhmBundle'));
 
-        return parent::activateAction($id);
     }
 
     /**
@@ -157,7 +151,6 @@ class AdminController extends FhmController
         // For activate this route, delete next line
         throw $this->createNotFoundException($this->fhm_tools->trans('fhm.error.route', array(), 'FhmFhmBundle'));
 
-        ///return parent::deactivateAction($id);
     }
 
     /**

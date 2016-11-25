@@ -64,13 +64,7 @@ class RefAdminController extends Controller
         }
         $instance = $this->fhm_tools->instanceData();
         $classType = $this->form->type->search;
-        $form = $this->createForm(
-            $classType,
-            null,
-            array(
-                'translation_domain' => $instance->translation
-            )
-        );
+        $form = $this->createForm($classType);
         $request = $this->get('request_stack')->getCurrentRequest();
         $dataSearch = $request->get('FhmSearch');
         $dataPagination = $request->get('FhmPagination');
@@ -556,13 +550,7 @@ class RefAdminController extends Controller
         $instance = $this->fhm_tools->instanceData();
         $classType = $this->form->type->import;
         $classHandler = $this->form->handler->import;
-        $form = $this->createForm(
-            $classType,
-            null,
-            array(
-                'translation_domain' => $instance->translation
-            )
-        );
+        $form = $this->createForm($classType);
         $handler = new $classHandler($form, $request);
         $process = $handler->process();
         if ($datas = $process) {
@@ -637,13 +625,8 @@ class RefAdminController extends Controller
         $instance = $this->fhm_tools->instanceData();
         $classType = $this->form->type->export;
         $classHandler = $this->form->handler->export;
-        $form = $this->createForm(
-            $classType,
-            null,
-            array(
-                'translation_domain' => $instance->translation
-            )
-        );        $handler = new $classHandler($form, $request);
+        $form = $this->createForm($classType);
+        $handler = new $classHandler($form, $request);
         $process = $handler->process();
         if ($process) {
             $documents = $this->fhm_tools->dmRepository()->getExport();

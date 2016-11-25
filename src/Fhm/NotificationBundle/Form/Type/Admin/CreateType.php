@@ -5,21 +5,23 @@ use Doctrine\Bundle\MongoDBBundle\Form\Type\DocumentType;
 use Fhm\FhmBundle\Form\Type\Admin\CreateType as FhmType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class CreateType extends FhmType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $this->setTranslation('notification');
         parent::buildForm($builder, $options);
         $builder
-            ->add('content', TextareaType::class, array('label' => $this->instance->translation . '.admin.create.form.content', 'attr' => array('class' => 'editor')))
+            ->add('content', TextareaType::class, array('label' => $this->translation . '.admin.create.form.content', 'attr' => array('class' => 'editor')))
             ->add('user', DocumentType::class, array(
-                'label'         => $this->instance->translation . '.admin.create.form.user',
+                'label'         => $this->translation . '.admin.create.form.user',
                 'class'         => 'FhmUserBundle:User',
                 'choice_label'      => 'name',
                 'query_builder' => function (\Fhm\UserBundle\Repository\UserRepository $dr)
                 {
-                    return $dr->getFormEnable($this->instance->grouping->filtered);
+                    return $dr->getFormEnable();
                 }
             ))
             ->remove('name')
@@ -32,5 +34,19 @@ class CreateType extends FhmType
             ->remove('share')
             ->remove('global')
             ->remove('active');
+    }
+
+    /**
+     * @param OptionsResolver $resolver
+     */
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults(
+            array(
+                'data_class' => 'Fhm\NotificationBundle\Document\Notification',
+                'translation_domain' => 'FhmNotificationBundle',
+                'cascade_validation' => true,
+            )
+        );
     }
 }

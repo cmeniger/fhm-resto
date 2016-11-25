@@ -12,6 +12,7 @@ class CreateType extends FhmType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $this->setTranslation('mail');
         $builder
             ->add('to', EmailType::class, array('label' => $this->instance->translation . '.admin.create.form.to', 'mapped' => false))
             ->add('object', TextType::class, array('label' => $this->instance->translation . '.admin.create.form.object', 'mapped' => false))

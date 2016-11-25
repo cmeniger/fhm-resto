@@ -24,7 +24,7 @@ class AdminController extends FhmController
         parent::__construct('Fhm', 'Event', 'event_group', 'EventGroup');
         $this->form->type->create = 'Fhm\\EventBundle\\Form\\Type\\Admin\\Group\\CreateType';
         $this->form->type->update = 'Fhm\\EventBundle\\Form\\Type\\Admin\\Group\\UpdateType';
-        $this->translation        = array('FhmEventBundle', 'event.group');
+        $this->translation = array('FhmEventBundle', 'event.group');
     }
 
     /**
@@ -97,8 +97,10 @@ class AdminController extends FhmController
 
         return array_merge(
             array(
-                'event1' => $this->fhm_tools->dmRepository('FhmEventBundle:Event')->getAllEnable($instance->grouping->current),
-                'event2' => $this->getList($document->getEvent())
+                'event1' => $this->fhm_tools->dmRepository('FhmEventBundle:Event')->getAllEnable(
+                    $instance->grouping->current
+                ),
+                'event2' => $this->getList($document->getEvent()),
             ),
             parent::detailAction($id)
         );
@@ -115,39 +117,67 @@ class AdminController extends FhmController
      */
     public function previewAction($id)
     {
-        $response  = parent::detailAction($id);
-        $document  = $response['document'];
-        $instance  = $response['instance'];
+        $response = parent::detailAction($id);
+        $document = $response['document'];
         $classType = $this->form->type->search;
-        $form      = $this->createForm(new $classType($instance), null);
-        $form->setData($this->get('request')->get($form->getName()));
-        $dataSearch        = $form->getData();
-        $dataPagination    = $this->get('request')->get('FhmPagination');
+        $form = $this->createForm($classType);
+        $form->setData($this->get('request_stack')->get($form->getName()));
+        $dataSearch = $form->getData();
+        $dataPagination = $this->get('request_stack')->get('FhmPagination');
         $this->translation = array('FhmEventBundle', 'event');
         // Ajax pagination request
-        if(isset($dataPagination['pagination']))
-        {
-            $documents = $this->fhm_tools->dmRepository("FhmEventBundle:Event")->getEventByGroupIndex($document, $dataSearch['search'], $dataPagination['pagination'], $this->fhm_tools->getParameter(array('pagination', 'front', 'page'), 'fhm_fhm'));
+        if (isset($dataPagination['pagination'])) {
+            $documents = $this->fhm_tools->dmRepository("FhmEventBundle:Event")->getEventByGroupIndex(
+                $document,
+                $dataSearch['search'],
+                $dataPagination['pagination'],
+                $this->fhm_tools->getParameters(array('pagination', 'front', 'page'), 'fhm_fhm')
+            );
 
             return array_merge(
                 $response,
                 array(
-                    'documents'  => $documents,
-                    'pagination' => $this->fhm_tools->getPagination($dataPagination['pagination'], count($documents), $this->fhm_tools->dmRepository("FhmEventBundle:Event")->getEventByGroupCount($document, $dataSearch['search']), 'pagination', $this->fhm_tools->formRename($form->getName(), $dataSearch), $this->fhm_tools->getUrl('fhm_event_group_lite', array('id' => $id))),
-                ));
-        }
-        // Router request
-        else
-        {
-            $documents = $this->fhm_tools->dmRepository("FhmEventBundle:Event")->getEventByGroupIndex($document, $dataSearch['search'], 1, $this->fhm_tools->getParameter(array('pagination', 'front', 'page'), 'fhm_fhm'));
+                    'documents' => $documents,
+                    'pagination' => $this->fhm_tools->getPagination(
+                        $dataPagination['pagination'],
+                        count($documents),
+                        $this->fhm_tools->dmRepository("FhmEventBundle:Event")->getEventByGroupCount(
+                            $document,
+                            $dataSearch['search']
+                        ),
+                        'pagination',
+                        $this->fhm_tools->formRename($form->getName(), $dataSearch),
+                        $this->fhm_tools->getUrl('fhm_event_group_lite', array('id' => $id))
+                    ),
+                )
+            );
+        } // Router request
+        else {
+            $documents = $this->fhm_tools->dmRepository("FhmEventBundle:Event")->getEventByGroupIndex(
+                $document,
+                $dataSearch['search'],
+                1,
+                $this->fhm_tools->getParameters(array('pagination', 'front', 'page'), 'fhm_fhm')
+            );
 
             return array_merge(
                 $response,
                 array(
-                    'documents'  => $documents,
-                    'pagination' => $this->fhm_tools->getPagination(1, count($documents), $this->fhm_tools->dmRepository("FhmEventBundle:Event")->getEventByGroupCount($document, $dataSearch['search']), 'pagination', $this->fhm_tools->formRename($form->getName(), $dataSearch), $this->fhm_tools->getUrl('fhm_event_group_lite', array('id' => $id))),
-                    'form'       => $form->createView(),
-                ));
+                    'documents' => $documents,
+                    'pagination' => $this->fhm_tools->getPagination(
+                        1,
+                        count($documents),
+                        $this->fhm_tools->dmRepository("FhmEventBundle:Event")->getEventByGroupCount(
+                            $document,
+                            $dataSearch['search']
+                        ),
+                        'pagination',
+                        $this->fhm_tools->formRename($form->getName(), $dataSearch),
+                        $this->fhm_tools->getUrl('fhm_event_group_lite', array('id' => $id))
+                    ),
+                    'form' => $form->createView(),
+                )
+            );
         }
     }
 
@@ -251,14 +281,12 @@ class AdminController extends FhmController
      */
     public function eventAction(Request $request)
     {
-        $event     = json_decode($request->get('list'));
+        $event = json_decode($request->get('list'));
         $document = $this->fhm_tools->dmRepository()->find($request->get('id'));
-        foreach($document->getEvents() as $event)
-        {
+        foreach ($document->getEvents() as $event) {
             $document->removeEvent($event);
         }
-        foreach($event as $key => $data)
-        {
+        foreach ($event as $key => $data) {
             $event = $this->fhm_tools->dmRepository('FhmEventBundle:Event')->find($data->id);
             $document->addEvent($event);
         }
