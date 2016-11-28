@@ -173,7 +173,7 @@ ivory_google_map:
         format: json
         client: httplug.client.default
         message_factory: httplug.message_factory.default
-    api_key: ~
+    api_key: AIzaSyAF_6nXrBELMKyL9jFeElmg7DT6plv9afQ
     language: "%locale%"
 
 # EWZ Recaptcha
