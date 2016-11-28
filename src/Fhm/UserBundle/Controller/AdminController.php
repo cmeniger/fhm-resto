@@ -5,6 +5,7 @@ namespace Fhm\UserBundle\Controller;
 use Fhm\FhmBundle\Controller\RefAdminController as FhmController;
 use Fhm\FhmBundle\Services\Tools;
 use Fhm\UserBundle\Document\User;
+use Fhm\UserBundle\Form\Type\Admin\PasswordType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -90,9 +91,7 @@ class AdminController extends FhmController
     public function detailAction($id)
     {
         $document = $this->fhm_tools->dmRepository()->find($id);
-        $instance = $this->fhm_tools->instanceData();
-        $classType = 'Fhm\\UserBundle\\Form\\Type\\Admin\\PasswordType';
-        $form = $this->createForm(new $classType($instance), $document);
+        $form = $this->createForm(PasswordType::class, $document);
 
         return array_merge(array('formPassword' => $form->createView()), parent::detailAction($id));
     }
@@ -219,10 +218,8 @@ class AdminController extends FhmController
     public function passwordAction(Request $request, $id)
     {
         $document = $this->fhm_tools->dmRepository()->find($id);
-        $instance = $this->fhm_tools->instanceData();
-        $classType = 'Fhm\\UserBundle\\Form\\Type\\Admin\\PasswordType';
         $classHandler = 'Fhm\\UserBundle\\Form\\Handler\\Admin\\PasswordHandler';
-        $form = $this->createForm(new $classType($instance), $document);
+        $form = $this->createForm(PasswordType::class, $document);
         $handler = new $classHandler($form, $request);
         $process = $handler->process();
         if ($process) {

@@ -50,7 +50,6 @@ framework:
     trusted_proxies: ~
     session:
         handler_id:  session.handler.native_file
-#        save_path: "/var/lib/php/sessions"
         save_path:   "%kernel.root_dir%/../var/sessions/%kernel.environment%"
     fragments:       ~
     http_method_override: true
@@ -65,9 +64,6 @@ twig:
         project: "%project%"
         mailer: "%fhm_mailer%"
         oauth_facebook_id: "%oauth.facebook.id%"
-#    form_themes:
-#        - "bootstrap_3_layout.html.twig"
-#        - "form_div_layout.html.twig"
 
 # Doctrine Configuration (used to access databases and manipulate their information)
 doctrine:

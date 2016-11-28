@@ -15,16 +15,6 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 class PasswordType extends AbstractType
 {
     /**
-     * @var
-     */
-    protected $instance;
-
-    public function __construct($instance)
-    {
-        $this->instance = $instance;
-    }
-
-    /**
      * @param FormBuilderInterface $builder
      * @param array $options
      */
@@ -37,15 +27,19 @@ class PasswordType extends AbstractType
                 array
                 (
                     'type' => \Symfony\Component\Form\Extension\Core\Type\PasswordType::class,
-                    'first_options' => array('label' => $this->instance->translation.'.admin.detail.password.password'),
-                    'second_options' => array('label' => $this->instance->translation.'.admin.detail.password.password_confirmation'),
+                    'first_options' => array(
+                        'label' => 'user.admin.detail.password.password'
+                    ),
+                    'second_options' => array(
+                        'label' => 'user.admin.detail.password.password_confirmation'
+                    ),
                     'invalid_message' => 'fos_user.password.mismatch',
                 )
             )
             ->add(
                 'submit',
                 SubmitType::class,
-                array('label' => $this->instance->translation.'.admin.detail.password.submit')
+                array('label' => 'user.admin.detail.password.submit')
             );
     }
 
@@ -58,13 +52,15 @@ class PasswordType extends AbstractType
     }
 
 
+    /**
+     * @param OptionsResolver $resolver
+     */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults
-        (
+        $resolver->setDefaults(
             array(
-                'data_class' => $this->instance->class,
-                'translation_domain' => $this->instance->domain,
+                'data_class' => 'Fhm\UserBundle\Document\User',
+                'translation_domain' => 'FhmUserBundle',
                 'cascade_validation' => true,
             )
         );

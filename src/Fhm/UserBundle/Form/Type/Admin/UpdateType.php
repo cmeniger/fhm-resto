@@ -3,8 +3,10 @@ namespace Fhm\UserBundle\Form\Type\Admin;
 
 use Fhm\GeolocationBundle\Form\Type\Admin\UpdateType as GeolocationType;
 use Fhm\MediaBundle\Form\Type\MediaType;
+use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -25,8 +27,16 @@ class UpdateType extends GeolocationType
         $this->setTranslation('user');
         parent::buildForm($builder, $options);
         $builder
-            ->add('username', TextType::class, array('label' => $this->translation.'.admin.update.form.username'))
-            ->add('email', 'email', array('label' => $this->translation.'.admin.update.form.email'))
+            ->add(
+                'username',
+                TextType::class,
+                array('label' => $this->translation.'.admin.update.form.username')
+            )
+            ->add(
+                'email',
+                EmailType::class,
+                array('label' => $this->translation.'.admin.update.form.email')
+            )
             ->add(
                 'first_name',
                 TextType::class,
@@ -39,7 +49,7 @@ class UpdateType extends GeolocationType
             )
             ->add(
                 'birth_date',
-                'birthday',
+                BirthdayType::class,
                 array('label' => $this->translation.'.admin.update.form.birth_date', 'required' => false)
             )
             ->add(

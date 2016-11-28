@@ -78,7 +78,7 @@
             {% if document.isLocked() %}
                 <span class="status alert radius label">{{ (instance.translation ~ '.status.locked')|trans }}</span>
             {% endif %}
-            {% if document.isExpired() %}
+            {% if not document.isAccountNonExpired() %}
                 <span class="status alert radius label">{{ (instance.translation ~ '.status.expired')|trans }}</span>
             {% endif %}
         </td>
