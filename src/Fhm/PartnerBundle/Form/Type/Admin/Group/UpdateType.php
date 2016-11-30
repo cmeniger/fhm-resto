@@ -24,13 +24,13 @@ class UpdateType extends FhmType
             ->add(
                 'add_global',
                 CheckboxType::class,
-                array('label' => $this->translation.'.admin.update.form.add_global', 'required' => false)
+                array('label' => $options['translation_route'].'.admin.update.form.add_global', 'required' => false)
             )
             ->add(
                 'partners',
                 'document',
                 array(
-                    'label' => $this->translation.'.admin.update.form.partners',
+                    'label' => $options['translation_route'].'.admin.update.form.partners',
                     'class' => 'FhmPartnerBundle:Partner',
                     'choice_label' => 'name',
                     'query_builder' => function (\Fhm\PartnerBundle\Repository\PartnerRepository $dr) {

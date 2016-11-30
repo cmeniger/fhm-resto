@@ -14,9 +14,9 @@ class UpdateType extends FhmType
     {
         parent::__construct($instance, $document);
 
-        $this->maps['nomap'] = $this->translation.'.nomap.choice';
+        $this->maps['nomap'] = $options['translation_route'].'.nomap.choice';
         foreach ($maps as $map) {
-            $this->maps[$map] = $this->translation.'.'.$map.'.choice';
+            $this->maps[$map] = $options['translation_route'].'.'.$map.'.choice';
         }
     }
 
@@ -28,12 +28,12 @@ class UpdateType extends FhmType
             ->add(
                 'order',
                 NumberType::class,
-                array('label' => $this->translation.'.admin.create.form.order', 'required' => false)
+                array('label' => $options['translation_route'].'.admin.create.form.order', 'required' => false)
             )
             ->add(
                 'map',
                 ChoiceType::class,
-                array('choices' => $this->maps, 'label' => $this->translation.'.admin.create.form.map')
+                array('choices' => $this->maps, 'label' => $options['translation_route'].'.admin.create.form.map')
             )
             ->remove('global');
     }

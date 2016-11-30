@@ -24,7 +24,7 @@ class UpdateType extends AbstractType
      */
     public function setTranslation($domaine = 'fhm')
     {
-        $this->translation = $domaine;
+        $options['translation_route'] = $domaine;
     }
 
     /**
@@ -34,11 +34,11 @@ class UpdateType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name', TextType::class, array('label' => $this->translation.'.admin.update.form.name'))
+            ->add('name', TextType::class, array('label' => $options['translation_route'].'.admin.update.form.name'))
             ->add(
                 'description',
                 TextareaType::class,
-                array('label' => $this->translation.'.admin.update.form.description', 'required' => false)
+                array('label' => $options['translation_route'].'.admin.update.form.description', 'required' => false)
             )
             ->add(
                 'seo_title',
@@ -58,66 +58,72 @@ class UpdateType extends AbstractType
             ->add(
                 'active',
                 CheckboxType::class,
-                array('label' => $this->translation.'.admin.update.form.active', 'required' => false)
+                array('label' => $options['translation_route'].'.admin.update.form.active', 'required' => false)
             )
             ->add(
                 'submitSave',
                 SubmitType::class,
-                array('label' => $this->translation.'.admin.update.form.submit.save')
+                array('label' => $options['translation_route'].'.admin.update.form.submit.save')
             )
             ->add(
                 'submitNew',
                 SubmitType::class,
-                array('label' => $this->translation.'.admin.update.form.submit.new')
+                array('label' => $options['translation_route'].'.admin.update.form.submit.new')
             )
             ->add(
                 'submitDuplicate',
                 SubmitType::class,
-                array('label' => $this->translation.'.admin.update.form.submit.duplicate')
+                array('label' => $options['translation_route'].'.admin.update.form.submit.duplicate')
             )
             ->add(
                 'submitQuit',
                 SubmitType::class,
-                array('label' => $this->translation.'.admin.update.form.submit.quit')
+                array('label' => $options['translation_route'].'.admin.update.form.submit.quit')
             )
             ->add(
                 'submitConfig',
                 SubmitType::class,
-                array('label' => $this->translation.'.admin.update.form.submit.config')
+                array('label' => $options['translation_route'].'.admin.update.form.submit.config')
             );
-//        if ($this->instance->language->visible) {
-//            $builder->add(
-//                'languages',
-//                ChoiceType::class,
-//                array(
-//                    'choices' => $this->instance->language->available,
-//                    'multiple' => true,
-//                )
-//            );
-//        }
-//        if ($this->instance->grouping->visible) {
-//            $builder
-//                ->add(
-//                    'grouping',
-//                    ChoiceType::class,
-//                    array(
-//                        'choices' => $this->instance->grouping->available,
-//                        'multiple' => true,
-//                    )
-//                )
-//                ->add(
-//                    'share',
-//                    CheckboxType::class,
-//                    array('label' => $this->instance->translation.'.admin.update.form.share', 'required' => false)
-//                );
-//            if ($this->instance->user->admin) {
-//                $builder->add(
-//                    'global',
-//                    CheckboxType::class,
-//                    array('label' => $this->instance->translation.'.admin.update.form.global', 'required' => false)
-//                );
-//            }
-//        }
+
+        if ($options['lang_visible']) {
+            $builder->add(
+                'languages',
+                ChoiceType::class,
+                array(
+                    'choices' => $options['lang_available'],
+                    'multiple' => true,
+                )
+            );
+        }
+        if ($options['grouping_visible']) {
+            $builder
+                ->add(
+                    'grouping',
+                    ChoiceType::class,
+                    array(
+                        'choices' => $options['grouping_available'],
+                        'multiple' => true,
+                    )
+                )
+                ->add(
+                    'share',
+                    CheckboxType::class,
+                    array(
+                        'label' => $options['translation_route'].'.admin.update.form.share',
+                        'required' => false
+                    )
+                );
+            if ($options['user_admin']) {
+                $builder->add(
+                    'global',
+                    CheckboxType::class,
+                    array('label' => $options['translation_route'].'.admin.update.form.global',
+                          'required' => false
+                    )
+                );
+            }
+        }
     }
 
     /**
@@ -138,6 +144,13 @@ class UpdateType extends AbstractType
                 'data_class' => 'Fhm\FhmBundle\Document\Fhm',
                 'translation_domain' => 'FhmFhmBundle',
                 'cascade_validation' => true,
+                'translation_route'=>'',
+                'filter'=>'',
+                'lang_visible'=>'',
+                'lang_available'=>'',
+                'grouping_visible'=>'',
+                'grouping_available'=>'',
+                'user_admin'=>''
             )
         );
     }

@@ -3,6 +3,8 @@ namespace Fhm\GalleryBundle\Form\Type\Admin\Item;
 
 use Doctrine\Bundle\MongoDBBundle\Form\Type\DocumentType;
 use Fhm\FhmBundle\Form\Type\Admin\CreateType as FhmType;
+use Fhm\GalleryBundle\Repository\GalleryRepository;
+use Fhm\MediaBundle\Repository\MediaTagRepository;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -13,15 +15,15 @@ class MultipleType extends FhmType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $this->setTranslation('gallery.item');
         parent::buildForm($builder, $options);
         $builder
-            ->add('title', TextType::class, array('label' => $this->translation.'.admin.multiple.form.title'))
+            ->add('title', TextType::class, array(
+                'label' => $options['translation_route'].'.admin.multiple.form.title'))
             ->add(
                 'subtitle',
                 TextType::class,
                 array(
-                    'label' => $this->translation.'.admin.multiple.form.subtitle',
+                    'label' => $options['translation_route'].'.admin.multiple.form.subtitle',
                     'required' => false,
                 )
             )
@@ -29,7 +31,7 @@ class MultipleType extends FhmType
                 'content',
                 TextareaType::class,
                 array(
-                    'label' => $this->translation.'.admin.multiple.form.content',
+                    'label' => $options['translation_route'].'.admin.multiple.form.content',
                     'attr' => array('class' => 'editor'),
                     'required' => false,
                 )
@@ -38,7 +40,7 @@ class MultipleType extends FhmType
                 'link',
                 TextType::class,
                 array(
-                    'label' => $this->translation.'.admin.multiple.form.link',
+                    'label' => $options['translation_route'].'.admin.multiple.form.link',
                     'required' => false,
                 )
             )
@@ -46,11 +48,11 @@ class MultipleType extends FhmType
                 'galleries',
                 DocumentType::class,
                 array(
-                    'label' => $this->translation.'.admin.multiple.form.galleries',
+                    'label' => $options['translation_route'].'.admin.multiple.form.galleries',
                     'class' => 'FhmGalleryBundle:Gallery',
                     'choice_label' => 'name',
-                    'query_builder' => function (\Fhm\GalleryBundle\Repository\GalleryRepository $dr) {
-                        return $dr->getFormEnable();
+                    'query_builder' => function (GalleryRepository $dr) use ($options) {
+                        return $dr->getFormEnable($options['filter']);
                     },
                     'required' => false,
                     'multiple' => true,
@@ -61,7 +63,7 @@ class MultipleType extends FhmType
                 'file',
                 FileType::class,
                 array(
-                    'label' => $this->translation.'.admin.multiple.form.file',
+                    'label' => $options['translation_route'].'.admin.multiple.form.file',
                     'mapped' => false,
                 )
             )
@@ -69,7 +71,7 @@ class MultipleType extends FhmType
                 'tag',
                 TextType::class,
                 array(
-                    'label' => $this->translation.'.admin.multiple.form.tag',
+                    'label' => $options['translation_route'].'.admin.multiple.form.tag',
                     'required' => false,
                     'mapped' => false,
                 )
@@ -78,11 +80,11 @@ class MultipleType extends FhmType
                 'parent',
                 DocumentType::class,
                 array(
-                    'label' => $this->translation.'.admin.multiple.form.parent',
+                    'label' => $options['translation_route'].'.admin.multiple.form.parent',
                     'class' => 'FhmMediaBundle:MediaTag',
                     'choice_label' => 'route',
-                    'query_builder' => function (\Fhm\MediaBundle\Repository\MediaTagRepository $dr) {
-                        return $dr->getFormEnable();
+                    'query_builder' => function (MediaTagRepository $dr) use ($options) {
+                        return $dr->getFormEnable($options['filter']);
                     },
                     'required' => false,
                     'mapped' => false,
@@ -92,11 +94,11 @@ class MultipleType extends FhmType
                 'tags',
                 DocumentType::class,
                 array(
-                    'label' => $this->translation.'.admin.multiple.form.tags',
+                    'label' => $options['translation_route'].'.admin.multiple.form.tags',
                     'class' => 'FhmMediaBundle:MediaTag',
                     'choice_label' => 'route',
-                    'query_builder' => function (\Fhm\MediaBundle\Repository\MediaTagRepository $dr) {
-                        return $dr->getFormEnable();
+                    'query_builder' => function (MediaTagRepository $dr) use ($options) {
+                        return $dr->getFormEnable($options['filter']);
                     },
                     'multiple' => true,
                     'required' => false,
@@ -119,9 +121,16 @@ class MultipleType extends FhmType
     {
         $resolver->setDefaults(
             array(
-                'data_class' => 'Fhm\GalleryBundle\Document\GalleryItem',
-                'translation_domain' => 'FhmGalleryBundle',
+                'data_class' => '',
+                'translation_domain' => '',
+                'translation_route' => '',
                 'cascade_validation' => true,
+                'filter'=>'',
+                'lang_visible'=>'',
+                'lang_available'=>'',
+                'grouping_visible'=>'',
+                'grouping_available'=>'',
+                'user_admin'=>''
             )
         );
     }

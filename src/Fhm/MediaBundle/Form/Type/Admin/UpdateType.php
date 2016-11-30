@@ -19,7 +19,7 @@ class UpdateType extends FhmType
                 'file',
                 FileType::class,
                 array(
-                    'label' => $this->translation.'.admin.update.form.file',
+                    'label' => $options['translation_route'].'.admin.update.form.file',
                     'required' => false,
                     'attr' => array('class' => 'drop'),
                 )
@@ -27,18 +27,18 @@ class UpdateType extends FhmType
             ->add(
                 'tag',
                 TextType::class,
-                array('label' => $this->translation.'.admin.update.form.tag', 'mapped' => false, 'required' => false)
+                array('label' => $options['translation_route'].'.admin.update.form.tag', 'mapped' => false, 'required' => false)
             )
             ->add(
                 'private',
                 CheckboxType::class,
-                array('label' => $this->translation.'.admin.update.form.private', 'required' => false)
+                array('label' => $options['translation_route'].'.admin.update.form.private', 'required' => false)
             )
             ->add(
                 'parent',
                 DocumentType::class,
                 array(
-                    'label' => $this->translation.'.admin.update.form.parent',
+                    'label' => $options['translation_route'].'.admin.update.form.parent',
                     'class' => 'FhmMediaBundle:MediaTag',
                     'choice_label' => 'route',
                     'query_builder' => function (\Fhm\MediaBundle\Repository\MediaTagRepository $dr) {
@@ -52,7 +52,7 @@ class UpdateType extends FhmType
                 'tags',
                 DocumentType::class,
                 array(
-                    'label' => $this->translation.'.admin.update.form.tags',
+                    'label' => $options['translation_route'].'.admin.update.form.tags',
                     'class' => 'FhmMediaBundle:MediaTag',
                     'choice_label' => 'route',
                     'query_builder' => function (\Fhm\MediaBundle\Repository\MediaTagRepository $dr) {

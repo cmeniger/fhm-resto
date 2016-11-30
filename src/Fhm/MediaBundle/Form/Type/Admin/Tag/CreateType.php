@@ -2,20 +2,20 @@
 namespace Fhm\MediaBundle\Form\Type\Admin\Tag;
 
 use Fhm\FhmBundle\Form\Type\Admin\CreateType as FhmType;
+use Fhm\MediaBundle\Repository\MediaTagRepository;
 use Symfony\Component\Form\FormBuilderInterface;
 
 class CreateType extends FhmType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $this->setTranslation('media');
         parent::buildForm($builder, $options);
         $builder
             ->add(
                 'color',
                 'text',
                 array(
-                    'label' => $this->translation.'.admin.create.form.color',
+                    'label' => $options['translation_route'].'.admin.create.form.color',
                     'attr' => array('class' => 'colorpicker'),
                     'required' => false,
                 )
@@ -23,16 +23,16 @@ class CreateType extends FhmType
             ->add(
                 'private',
                 'checkbox',
-                array('label' => $this->translation.'.admin.create.form.private', 'required' => false)
+                array('label' => $options['translation_route'].'.admin.create.form.private', 'required' => false)
             )
             ->add(
                 'parent',
                 'document',
                 array(
-                    'label' => $this->translation.'.admin.create.form.parent',
+                    'label' => $options['translation_route'].'.admin.create.form.parent',
                     'class' => 'FhmMediaBundle:MediaTag',
                     'choice_label' => 'route',
-                    'query_builder' => function (\Fhm\MediaBundle\Repository\MediaTagRepository $dr) {
+                    'query_builder' => function (MediaTagRepository $dr) {
                         return $dr->getFormFiltered();
                     },
                     'required' => false,

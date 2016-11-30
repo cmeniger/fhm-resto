@@ -12,11 +12,16 @@ class CreateType extends FhmType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $this->setTranslation('mail');
         $builder
-            ->add('to', EmailType::class, array('label' => $this->instance->translation . '.admin.create.form.to', 'mapped' => false))
-            ->add('object', TextType::class, array('label' => $this->instance->translation . '.admin.create.form.object', 'mapped' => false))
-            ->add('body', TextareaType::class, array('label' => $this->instance->translation . '.admin.create.form.body', 'attr' => array('class' => 'editor'), 'mapped' => false))
-            ->add('submitSave', SubmitType::class, array('label' => $this->instance->translation . '.admin.create.form.submit.save'));
+            ->add('to', EmailType::class, array('label' => $options['translation_route'] . '.admin.create.form.to',
+                                                'mapped' => false))
+            ->add('object', TextType::class, array(
+                'label' => $options['translation_route'] . '.admin.create.form.object',
+                'mapped' => false))
+            ->add('body', TextareaType::class, array(
+                'label' => $options['translation_route'] . '.admin.create.form.body',
+                'attr' => array('class' => 'editor'), 'mapped' => false))
+            ->add('submitSave', SubmitType::class, array(
+                'label' => $options['translation_route'] . '.admin.create.form.submit.save'));
     }
 }

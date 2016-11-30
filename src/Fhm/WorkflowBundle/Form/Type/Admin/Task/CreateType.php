@@ -3,6 +3,9 @@ namespace Fhm\WorkflowBundle\Form\Type\Admin\Task;
 
 use Doctrine\Bundle\MongoDBBundle\Form\Type\DocumentType;
 use Fhm\FhmBundle\Form\Type\Admin\CreateType as FhmType;
+use Fhm\WorkflowBundle\Repository\WorkflowActionRepository;
+use Fhm\WorkflowBundle\Repository\WorkflowStepRepository;
+use Fhm\WorkflowBundle\Repository\WorkflowTaskRepository;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -10,18 +13,17 @@ class CreateType extends FhmType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $this->setTranslation('workflow');
         parent::buildForm($builder, $options);
         $builder
             ->add(
                 'step',
                 DocumentType::class,
                 array(
-                    'label' => $this->translation.'.admin.create.form.step',
+                    'label' => $options['translation_route'].'.admin.create.form.step',
                     'class' => 'FhmWorkflowBundle:WorkflowStep',
                     'choice_label' => 'name',
-                    'query_builder' => function (\Fhm\WorkflowBundle\Repository\WorkflowStepRepository $dr) {
-                        return $dr->getFormEnable();
+                    'query_builder' => function (WorkflowStepRepository $dr) use ($options) {
+                        return $dr->getFormEnable($options['filter']);
                     },
                     'required' => false,
                 )
@@ -30,11 +32,11 @@ class CreateType extends FhmType
                 'action',
                 DocumentType::class,
                 array(
-                    'label' => $this->translation.'.admin.create.form.action',
+                    'label' => $options['translation_route'].'.admin.create.form.action',
                     'class' => 'FhmWorkflowBundle:WorkflowAction',
                     'choice_label' => 'name',
-                    'query_builder' => function (\Fhm\WorkflowBundle\Repository\WorkflowActionRepository $dr) {
-                        return $dr->getFormEnable();
+                    'query_builder' => function (WorkflowActionRepository $dr) use ($options) {
+                        return $dr->getFormEnable($options['filter']);
                     },
                 )
             )
@@ -42,11 +44,11 @@ class CreateType extends FhmType
                 'parents',
                 DocumentType::class,
                 array(
-                    'label' => $this->translation.'.admin.create.form.parents',
+                    'label' => $options['translation_route'].'.admin.create.form.parents',
                     'class' => 'FhmWorkflowBundle:WorkflowTask',
                     'choice_label' => 'name',
-                    'query_builder' => function (\Fhm\WorkflowBundle\Repository\WorkflowTaskRepository $dr) {
-                        return $dr->getFormEnable();
+                    'query_builder' => function (WorkflowTaskRepository $dr) use ($options) {
+                        return $dr->getFormEnable($options['filter']);
                     },
                     'multiple' => true,
                     'required' => false,
@@ -57,11 +59,11 @@ class CreateType extends FhmType
                 'sons',
                 DocumentType::class,
                 array(
-                    'label' => $this->translation.'.admin.create.form.sons',
+                    'label' => $options['translation_route'].'.admin.create.form.sons',
                     'class' => 'FhmWorkflowBundle:WorkflowTask',
                     'choice_label' => 'name',
-                    'query_builder' => function (\Fhm\WorkflowBundle\Repository\WorkflowTaskRepository $dr) {
-                        return $dr->getFormEnable();
+                    'query_builder' => function (WorkflowTaskRepository $dr) use ($options) {
+                        return $dr->getFormEnable($options['filter']);
                     },
                     'multiple' => true,
                     'required' => false,
@@ -77,17 +79,4 @@ class CreateType extends FhmType
             ->remove('global');
     }
 
-    /**
-     * @param OptionsResolver $resolver
-     */
-    public function configureOptions(OptionsResolver $resolver)
-    {
-        $resolver->setDefaults(
-            array(
-                'data_class' => 'Fhm\WorkflowBundle\Document\WorkflowTask',
-                'translation_domain' => 'FhmWorkflowBundle',
-                'cascade_validation' => true,
-            )
-        );
-    }
 }

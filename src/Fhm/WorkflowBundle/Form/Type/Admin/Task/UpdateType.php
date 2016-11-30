@@ -3,24 +3,26 @@ namespace Fhm\WorkflowBundle\Form\Type\Admin\Task;
 
 use Doctrine\Bundle\MongoDBBundle\Form\Type\DocumentType;
 use Fhm\FhmBundle\Form\Type\Admin\UpdateType as FhmType;
+use Fhm\WorkflowBundle\Repository\WorkflowActionRepository;
+use Fhm\WorkflowBundle\Repository\WorkflowStepRepository;
+use Fhm\WorkflowBundle\Repository\WorkflowTaskRepository;
 use Symfony\Component\Form\FormBuilderInterface;
 
 class UpdateType extends FhmType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $this->setTranslation('workflow');
         parent::buildForm($builder, $options);
         $builder
             ->add(
                 'step',
                 DocumentType::class,
                 array(
-                    'label' => $this->translation.'.admin.update.form.step',
+                    'label' => $options['translation_route'].'.admin.update.form.step',
                     'class' => 'FhmWorkflowBundle:WorkflowStep',
                     'choice_label' => 'name',
-                    'query_builder' => function (\Fhm\WorkflowBundle\Repository\WorkflowStepRepository $dr) {
-                        return $dr->getFormEnable();
+                    'query_builder' => function (WorkflowStepRepository $dr) use ($options) {
+                        return $dr->getFormEnable($options['filter']);
                     },
                     'required' => false,
                 )
@@ -29,11 +31,11 @@ class UpdateType extends FhmType
                 'action',
                 DocumentType::class,
                 array(
-                    'label' => $this->translation.'.admin.update.form.action',
+                    'label' => $options['translation_route'].'.admin.update.form.action',
                     'class' => 'FhmWorkflowBundle:WorkflowAction',
                     'choice_label' => 'name',
-                    'query_builder' => function (\Fhm\WorkflowBundle\Repository\WorkflowActionRepository $dr) {
-                        return $dr->getFormEnable();
+                    'query_builder' => function (WorkflowActionRepository $dr) use ($options) {
+                        return $dr->getFormEnable($options['filter']);
                     },
                 )
             )
@@ -41,11 +43,11 @@ class UpdateType extends FhmType
                 'parents',
                 DocumentType::class,
                 array(
-                    'label' => $this->translation.'.admin.update.form.parents',
+                    'label' => $options['translation_route'].'.admin.update.form.parents',
                     'class' => 'FhmWorkflowBundle:WorkflowTask',
                     'choice_label' => 'name',
-                    'query_builder' => function (\Fhm\WorkflowBundle\Repository\WorkflowTaskRepository $dr) {
-                        return $dr->getFormEnable();
+                    'query_builder' => function (WorkflowTaskRepository $dr) use ($options) {
+                        return $dr->getFormEnable($options['filter']);
                     },
                     'multiple' => true,
                     'required' => false,
@@ -56,11 +58,11 @@ class UpdateType extends FhmType
                 'sons',
                 DocumentType::class,
                 array(
-                    'label' => $this->translation.'.admin.update.form.sons',
+                    'label' => $options['translation_route'].'.admin.update.form.sons',
                     'class' => 'FhmWorkflowBundle:WorkflowTask',
                     'choice_label' => 'name',
-                    'query_builder' => function (\Fhm\WorkflowBundle\Repository\WorkflowTaskRepository $dr) {
-                        return $dr->getFormEnable();
+                    'query_builder' => function (WorkflowTaskRepository $dr) use ($options){
+                        return $dr->getFormEnable($options['filter']);
                     },
                     'multiple' => true,
                     'required' => false,

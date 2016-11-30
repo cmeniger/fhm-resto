@@ -17,28 +17,15 @@ class UpdateType extends FhmType
             ->add(
                 'icon',
                 TextType::class,
-                array('label' => $this->translation.'.admin.update.form.icon', 'required' => false)
+                array('label' => $options['translation_route'].'.admin.update.form.icon', 'required' => false)
             )
             ->add(
                 'route',
                 LinkType::class,
-                array('label' => $this->translation.'.admin.update.form.route', 'required' => false)
+                array('label' => $options['translation_route'].'.admin.update.form.route', 'required' => false)
             )
             ->remove('share')
             ->remove('global');
     }
-
-    /**
-     * @param OptionsResolver $resolver
-     */
-    public function configureOptions(OptionsResolver $resolver)
-    {
-        $resolver->setDefaults(
-            array(
-                'data_class' => 'Fhm\MenuBundle\Document\Menu',
-                'translation_domain' => 'FhmMenuBundle',
-                'cascade_validation' => true,
-            )
-        );
-    }
+    
 }

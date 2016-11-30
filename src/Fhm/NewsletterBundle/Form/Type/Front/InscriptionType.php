@@ -25,9 +25,9 @@ class InscriptionType extends FhmType
             ->add(
                 'submitQuit',
                 SubmitType::class,
-                array('label' => $this->translation.'.front.create.form.submit.inscription')
+                array('label' => $options['translation_route'].'.front.create.form.submit.inscription')
             )
-            ->add('email', EmailType::class, array('label' => $this->translation.'.admin.create.form.email'))
+            ->add('email', EmailType::class, array('label' => $options['translation_route'].'.admin.create.form.email'))
             ->remove('name')
             ->remove('description')
             ->remove('submitSave')
@@ -35,17 +35,4 @@ class InscriptionType extends FhmType
             ->remove('submitNew');
     }
 
-    /**
-     * @param OptionsResolver $resolver
-     */
-    public function configureOptions(OptionsResolver $resolver)
-    {
-        $resolver->setDefaults(
-            array(
-                'data_class' => 'Fhm\NewsletterBundle\Document\Newsletter',
-                'translation_domain' => 'FhmNewsletterBundle',
-                'cascade_validation' => true,
-            )
-        );
-    }
 }

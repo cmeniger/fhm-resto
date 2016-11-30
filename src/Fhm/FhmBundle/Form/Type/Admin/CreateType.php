@@ -17,29 +17,18 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class CreateType extends AbstractType
 {
-    protected $translation;
-
-    /**
-     * @param $domaine
-     */
-    public function setTranslation($domaine = 'fhm')
-    {
-        $this->translation = $domaine;
-    }
-
     /**
      * @param FormBuilderInterface $builder
      * @param array $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-
         $builder
-            ->add('name', TextType::class, array('label' => $this->translation.'.admin.create.form.name'))
+            ->add('name', TextType::class, array('label' => $options['translation_route'].'.admin.create.form.name'))
             ->add(
                 'description',
                 TextareaType::class,
-                array('label' => $this->translation.'.admin.create.form.description', 'required' => false)
+                array('label' => $options['translation_route'].'.admin.create.form.description', 'required' => false)
             )
             ->add(
                 'seo_title',
@@ -59,66 +48,71 @@ class CreateType extends AbstractType
             ->add(
                 'active',
                 CheckboxType::class,
-                array('label' => $this->translation.'.admin.create.form.active', 'required' => false)
+                array('label' => $options['translation_route'].'.admin.create.form.active', 'required' => false)
             )
             ->add(
                 'submitSave',
                 SubmitType::class,
-                array('label' => $this->translation.'.admin.create.form.submit.save')
+                array('label' => $options['translation_route'].'.admin.create.form.submit.save')
             )
             ->add(
                 'submitNew',
                 SubmitType::class,
-                array('label' => $this->translation.'.admin.create.form.submit.new')
+                array('label' => $options['translation_route'].'.admin.create.form.submit.new')
             )
             ->add(
                 'submitDuplicate',
                 SubmitType::class,
-                array('label' => $this->translation.'.admin.create.form.submit.duplicate')
+                array('label' => $options['translation_route'].'.admin.create.form.submit.duplicate')
             )
             ->add(
                 'submitQuit',
                 SubmitType::class,
-                array('label' => $this->translation.'.admin.create.form.submit.quit')
+                array('label' => $options['translation_route'].'.admin.create.form.submit.quit')
             )
             ->add(
                 'submitConfig',
                 SubmitType::class,
-                array('label' => $this->translation.'.admin.create.form.submit.config')
+                array('label' => $options['translation_route'].'.admin.create.form.submit.config')
             );
-//        if ($this->translation->language->visible) {
-//            $builder->add(
-//                'languages',
-//                ChoiceType::class,
-//                array(
-//                    'choices' => $this->translation->language->available,
-//                    'multiple' => true,
-//                )
-//            );
-//        }
-//        if ($this->translation->grouping->visible) {
-//            $builder
-//                ->add(
-//                    'grouping',
-//                    ChoiceType::class,
-//                    array(
-//                        'choices' => $this->translation->grouping->available,
-//                        'multiple' => true,
-//                    )
-//                )
-//                ->add(
-//                    'share',
-//                    CheckboxType::class,
-//                    array('label' => $this->translation->translation.'.admin.create.form.share', 'required' => false)
-//                );
-//            if ($this->translation->user->admin) {
-//                $builder->add(
-//                    'global',
-//                    CheckboxType::class,
-//                    array('label' => $this->translation->translation.'.admin.create.form.global', 'required' => false)
-//                );
-//            }
-//        }
+                if ($options['lang_visible']) {
+                    $builder->add(
+                        'languages',
+                        ChoiceType::class,
+                        array(
+                            'choices' => $options['lang_available'],
+                            'multiple' => true,
+                        )
+                    );
+                }
+                if ($options['grouping_visible']) {
+                    $builder
+                        ->add(
+                            'grouping',
+                            ChoiceType::class,
+                            array(
+                                'choices' => $options['grouping_available'],
+                                'multiple' => true,
+                            )
+                        )
+                        ->add(
+                            'share',
+                            CheckboxType::class,
+                            array(
+                                'label' => $options['translation_route'].'.admin.create.form.share',
+                                'required' => false
+                            )
+                        );
+                    if ($options['user_admin']) {
+                        $builder->add(
+                            'global',
+                            CheckboxType::class,
+                            array('label' => $options['translation_route'].'.admin.create.form.global',
+                                  'required' => false
+                            )
+                        );
+                    }
+                }
     }
 
     /**
@@ -139,6 +133,13 @@ class CreateType extends AbstractType
                 'data_class' => 'Fhm\FhmBundle\Document\Fhm',
                 'translation_domain' => 'FhmFhmBundle',
                 'cascade_validation' => true,
+                'translation_route'=>'',
+                'filter'=>'',
+                'lang_visible'=>'',
+                'lang_available'=>'',
+                'grouping_visible'=>'',
+                'grouping_available'=>'',
+                'user_admin'=>''
             )
         );
     }

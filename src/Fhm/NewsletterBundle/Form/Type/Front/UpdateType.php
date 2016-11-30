@@ -16,7 +16,6 @@ class UpdateType extends FhmType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $this->setTranslation('newsletter');
         parent::buildForm($builder, $options);
     }
 }

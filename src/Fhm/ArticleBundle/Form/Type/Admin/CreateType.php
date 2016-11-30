@@ -4,6 +4,7 @@ namespace Fhm\ArticleBundle\Form\Type\Admin;
 use Doctrine\Bundle\MongoDBBundle\Form\Type\DocumentType;
 use Fhm\FhmBundle\Form\Type\Admin\CreateType as FhmType;
 use Fhm\FhmBundle\Form\Type\AutocompleteType;
+use Fhm\GalleryBundle\Repository\GalleryRepository;
 use Fhm\MediaBundle\Form\Type\MediaType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -22,7 +23,6 @@ class CreateType extends FhmType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $this->setTranslation('article');
         parent::buildForm($builder, $options);
         $builder
 
@@ -30,19 +30,19 @@ class CreateType extends FhmType
                 'title',
                 TextType::class,
                 array(
-                    'label' => $this->translation.'.admin.create.form.title'
+                    'label' => $options['translation_route'].'.admin.create.form.title'
                 )
             )
             ->add(
                 'subtitle',
                 TextType::class,
-                array('label' => $this->translation.'.admin.create.form.subtitle', 'required' => false)
+                array('label' => $options['translation_route'].'.admin.create.form.subtitle', 'required' => false)
             )
             ->add(
                 'resume',
                 TextareaType::class,
                 array(
-                    'label' => $this->translation.'.admin.create.form.resume',
+                    'label' => $options['translation_route'].'.admin.create.form.resume',
                     'attr' => array('class' => 'editor'),
                 )
             )
@@ -50,7 +50,7 @@ class CreateType extends FhmType
                 'content',
                 TextareaType::class,
                 array(
-                    'label' => $this->translation.'.admin.create.form.content',
+                    'label' => $options['translation_route'].'.admin.create.form.content',
                     'attr' => array('class' => 'editor'),
                 )
             )
@@ -58,7 +58,7 @@ class CreateType extends FhmType
                 'image',
                 MediaType::class,
                 array(
-                    'label' => $this->translation.'.admin.create.form.image',
+                    'label' => $options['translation_route'].'.admin.create.form.image',
                     'filter' => 'image/*',
                     'required' => false,
                 )
@@ -67,10 +67,10 @@ class CreateType extends FhmType
                 'gallery',
                 DocumentType::class,
                 array(
-                    'label' => $this->translation.'.admin.create.form.gallery',
+                    'label' => $options['translation_route'].'.admin.create.form.gallery',
                     'class' => 'FhmGalleryBundle:Gallery',
-                    'query_builder' => function (\Fhm\GalleryBundle\Repository\GalleryRepository $dr) {
-                        return $dr->getFormEnable();
+                    'query_builder' => function (GalleryRepository $dr) use ($options) {
+                        return $dr->getFormEnable($options['filter']);
                     },
                     'required' => false,
                 )
@@ -79,7 +79,7 @@ class CreateType extends FhmType
                 'author',
                 AutocompleteType::class,
                 array(
-                    'label' => $this->translation.'.admin.create.form.author',
+                    'label' => $options['translation_route'].'.admin.create.form.author',
                     'class' => 'FhmUserBundle:User',
                     'url' => 'fhm_api_user_autocomplete',
                     'required' => false,
@@ -89,17 +89,5 @@ class CreateType extends FhmType
             ->remove('name')
             ->remove('description');
     }
-    /**
-     * @param OptionsResolver $resolver
-     */
-    public function configureOptions(OptionsResolver $resolver)
-    {
-        $resolver->setDefaults(
-            array(
-                'data_class' => 'Fhm\ArticleBundle\Document\Article',
-                'translation_domain' => 'FhmArticleBundle',
-                'cascade_validation' => true,
-            )
-        );
-    }
-}
+
+ }

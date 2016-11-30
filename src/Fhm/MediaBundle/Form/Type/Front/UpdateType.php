@@ -8,7 +8,6 @@ class UpdateType extends FhmType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $this->setTranslation('media');
         parent::buildForm($builder, $options);
     }
 }

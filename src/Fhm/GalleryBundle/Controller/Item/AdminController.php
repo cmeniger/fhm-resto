@@ -67,16 +67,24 @@ class AdminController extends FhmController
     {
         // ERROR - Unknown route
         if (!$this->fhm_tools->routeExists('fhm_admin_'.$this->route) || !$this->fhm_tools->routeExists(
-                'fhm_admin_'.$this->route.'_multiple'
-            )
-        ) {
+                'fhm_admin_'.$this->route.'_multiple')) {
             throw $this->createNotFoundException($this->fhm_tools->trans('fhm.error.route', array(), 'FhmFhmBundle'));
         }
         $document = $this->document;
         $instance = $this->fhm_tools->instanceData();
         $classType = 'Fhm\\GalleryBundle\\Form\\Type\\Admin\\Item\\MultipleType';
         $classHandler = $this->form->handler->create;
-        $form = $this->createForm($classType, $document);
+        $form = $this->createForm($classType, $document, array(
+            'data_class' =>$instance->class,
+            'translation_domain' => $instance->domain,
+            'translation_route' =>$this->translation[1],
+            'filter'=>$instance->grouping->filtered,
+            'lang_visible'=>$instance->language->visible,
+            'lang_available'=>$instance->language->available,
+            'grouping_visible'=>$instance->grouping->visible,
+            'grouping_available'=>$instance->grouping->available,
+            'user_admin'=>$instance->user->admin
+        ));
         $handler = new $classHandler($form, $request);
         $process = $handler->process();
         if ($process) {
@@ -135,7 +143,7 @@ class AdminController extends FhmController
         return array(
             'form' => $form->createView(),
             'instance' => $instance,
-            'watermarks' => $this->fhm_tools->getParameter('watermark', 'fhm_media') ? $this->fhm_tools->getParameter(
+            'watermarks' => $this->fhm_tools->getParameters('watermark', 'fhm_media') ? $this->fhm_tools->getParameter(
                 'files',
                 'fhm_media'
             ) : '',

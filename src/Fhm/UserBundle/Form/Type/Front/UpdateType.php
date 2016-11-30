@@ -19,18 +19,6 @@ use Symfony\Component\Security\Core\Validator\Constraints\UserPassword;
  */
 class UpdateType extends GeolocationType
 {
-    protected $root;
-
-    public function __construct($context, $instance)
-    {
-        $this->root = $context->getToken()->getUser()->getId();
-        $instance = new \stdClass();
-        $instance->translation = 'user';
-        $instance->class = 'Fhm\\UserBundle\\Document\\User';
-        $instance->domain = 'FhmUserBundle';
-        parent::__construct($instance, null);
-    }
-
     /**
      * @param FormBuilderInterface $builder
      * @param array $options
@@ -38,50 +26,50 @@ class UpdateType extends GeolocationType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $this->setTranslation('user');
         parent::buildForm($builder, $options);
         $builder
             ->add(
                 'current_password',
                 PasswordType::class,
                 array(
-                    'label' => $this->translation.'.front.update.form.password',
+                    'label' => $options['translation_route'].'.front.update.form.password',
                     'mapped' => false,
                     'constraints' => new UserPassword(),
                 )
             )
-            ->add('username', TextType::class, array('label' => $this->translation.'.front.update.form.username'))
-            ->add('email', EmailType::class, array('label' => $this->translation.'.front.update.form.email'))
+            ->add('username', TextType::class, array(
+                'label' => $options['translation_route'].'.front.update.form.username'))
+            ->add('email', EmailType::class, array('label' => $options['translation_route'].'.front.update.form.email'))
             ->add(
                 'first_name',
                 TextType::class,
-                array('label' => $this->translation.'.front.update.form.first_name', 'required' => false)
+                array('label' => $options['translation_route'].'.front.update.form.first_name', 'required' => false)
             )
             ->add(
                 'last_name',
                 TextType::class,
-                array('label' => $this->translation.'.front.update.form.last_name', 'required' => false)
+                array('label' => $options['translation_route'].'.front.update.form.last_name', 'required' => false)
             )
             ->add(
                 'birth_date',
                 BirthdayType::class,
-                array('label' => $this->translation.'.front.update.form.birth_date', 'required' => false)
+                array('label' => $options['translation_route'].'.front.update.form.birth_date', 'required' => false)
             )
             ->add(
                 'tel1',
                 TextType::class,
-                array('label' => $this->translation.'.front.update.form.tel1', 'required' => false)
+                array('label' => $options['translation_route'].'.front.update.form.tel1', 'required' => false)
             )
             ->add(
                 'tel2',
                 TextType::class,
-                array('label' => $this->translation.'.front.update.form.tel2', 'required' => false)
+                array('label' => $options['translation_route'].'.front.update.form.tel2', 'required' => false)
             )
             ->add(
                 'sign',
                 TextareaType::class,
                 array(
-                    'label' => $this->translation.'.front.update.form.sign',
+                    'label' => $options['translation_route'].'.front.update.form.sign',
                     'attr' => array('class' => 'editor'),
                     'required' => false,
                 )
@@ -102,7 +90,7 @@ class UpdateType extends GeolocationType
                 'avatar',
                 MediaType::class,
                 array(
-                    'label' => $this->translation.'.front.update.form.avatar',
+                    'label' => $options['translation_route'].'.front.update.form.avatar',
                     'filter' => 'image/*',
                     'root' => '&user',
                     'private' => false,
@@ -112,71 +100,62 @@ class UpdateType extends GeolocationType
             ->add(
                 'social_facebook',
                 TextType::class,
-                array('label' => $this->translation.'.front.update.form.social.facebook', 'required' => false)
+                array('label' => $options['translation_route'].'.front.update.form.social.facebook',
+                      'required' => false)
             )
             ->add(
                 'social_facebook_id',
                 TextType::class,
-                array('label' => $this->translation.'.front.update.form.social.facebookId', 'required' => false)
+                array('label' => $options['translation_route'].'.front.update.form.social.facebookId',
+                      'required' => false)
             )
             ->add(
                 'social_twitter',
                 TextType::class,
-                array('label' => $this->translation.'.front.update.form.social.twitter', 'required' => false)
+                array('label' => $options['translation_route'].'.front.update.form.social.twitter', 'required' => false)
             )
             ->add(
                 'social_twitter_id',
                 TextType::class,
-                array('label' => $this->translation.'.front.update.form.social.twitterId', 'required' => false)
+                array('label' => $options['translation_route'].'.front.update.form.social.twitterId',
+                      'required' => false)
             )
             ->add(
                 'social_google',
                 TextType::class,
-                array('label' => $this->translation.'.front.update.form.social.google', 'required' => false)
+                array('label' => $options['translation_route'].'.front.update.form.social.google', 'required' => false)
             )
             ->add(
                 'social_google_id',
                 TextType::class,
-                array('label' => $this->translation.'.front.update.form.social.googleId', 'required' => false)
+                array('label' => $options['translation_route'].'.front.update.form.social.googleId',
+                      'required' => false)
             )
             ->add(
                 'social_instagram',
                 TextType::class,
-                array('label' => $this->translation.'.front.update.form.social.instagram', 'required' => false)
+                array('label' => $options['translation_route'].'.front.update.form.social.instagram',
+                      'required' => false)
             )
             ->add(
                 'social_youtube',
                 TextType::class,
-                array('label' => $this->translation.'.front.update.form.social.youtube', 'required' => false)
+                array('label' => $options['translation_route'].'.front.update.form.social.youtube', 'required' => false)
             )
             ->add(
                 'social_flux',
                 TextType::class,
-                array('label' => $this->translation.'.front.update.form.social.flux', 'required' => false)
+                array('label' => $options['translation_route'].'.front.update.form.social.flux', 'required' => false)
             )
             ->add(
                 'social_site',
                 TextType::class,
-                array('label' => $this->translation.'.front.update.form.social.site', 'required' => false)
+                array('label' => $options['translation_route'].'.front.update.form.social.site', 'required' => false)
             )
             ->remove('name')
             ->remove('description')
             ->remove('submitNew')
             ->remove('submitDuplicate')
             ->remove('submitQuit');
-    }
-
-    /**
-     * @param OptionsResolver $resolver
-     */
-    public function configureOptions(OptionsResolver $resolver)
-    {
-        $resolver->setDefaults(
-            array(
-                'data_class' => 'Fhm\UserBundle\Document\User',
-                'translation_domain' => 'FhmUserBundle',
-                'cascade_validation' => true,
-            )
-        );
     }
 }

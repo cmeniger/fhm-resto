@@ -20,17 +20,4 @@ class CreateType extends FhmType
         $this->setTranslation('event');
         parent::buildForm($builder, $options);
     }
-    /**
-     * @param OptionsResolver $resolver
-     */
-    public function configureOptions(OptionsResolver $resolver)
-    {
-        $resolver->setDefaults(
-            array(
-                'data_class' => 'Fhm\EventBundle\Document\Event',
-                'translation_domain' => 'FhmEventBundle',
-                'cascade_validation' => true,
-            )
-        );
-    }
 }

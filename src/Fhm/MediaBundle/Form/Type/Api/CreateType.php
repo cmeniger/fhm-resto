@@ -3,6 +3,7 @@ namespace Fhm\MediaBundle\Form\Type\Api;
 
 use Doctrine\Bundle\MongoDBBundle\Form\Type\DocumentType;
 use Fhm\MediaBundle\Form\Type\Admin\CreateType as FhmType;
+use Fhm\MediaBundle\Repository\MediaTagRepository;
 use Symfony\Component\Form\FormBuilderInterface;
 
 class CreateType extends FhmType
@@ -23,11 +24,11 @@ class CreateType extends FhmType
                 'parent',
                 DocumentType::class,
                 array(
-                    'label' => $this->instance->translation.'.admin.create.form.parent',
+                    'label' => $options['translation_route'].'.admin.create.form.parent',
                     'class' => 'FhmMediaBundle:MediaTag',
                     'choice_label' => 'route',
-                    'query_builder' => function (\Fhm\MediaBundle\Repository\MediaTagRepository $dr) {
-                        return $dr->setRoot($this->root)->getFormFiltered($this->instance->grouping->filtered);
+                    'query_builder' => function (MediaTagRepository $dr) use ($options) {
+                        return $dr->setRoot($this->root)->getFormFiltered($options['filter']);
                     },
                     'mapped' => false,
                     'required' => false,
@@ -37,11 +38,11 @@ class CreateType extends FhmType
                 'tags',
                 DocumentType::class,
                 array(
-                    'label' => $this->instance->translation.'.admin.create.form.tags',
+                    'label' => $options['translation_route'].'.admin.create.form.tags',
                     'class' => 'FhmMediaBundle:MediaTag',
                     'choice_label' => 'route',
-                    'query_builder' => function (\Fhm\MediaBundle\Repository\MediaTagRepository $dr) {
-                        return $dr->setRoot($this->root)->getFormFiltered($this->instance->grouping->filtered);
+                    'query_builder' => function (MediaTagRepository $dr) use ($options) {
+                        return $dr->setRoot($this->root)->getFormFiltered($options['filter']);
                     },
                     'multiple' => true,
                     'required' => false,

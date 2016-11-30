@@ -39,21 +39,21 @@ class UpdateType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $this->translation='card.product';
+        $options['translation_route']='card.product';
         $builder
-            ->add('name', TextType::class, array('label' => $this->translation . '.api.update.form.name'))
-            ->add('description', TextareaType::class, array('label' => $this->translation . '.api.update.form.description', 'required' => false))
-            ->add('price', MoneyType::class, array('label' => $this->translation . '.api.update.form.price', 'currency' => '', 'required' => false))
-            ->add('currency', TextType::class, array('label' => $this->translation . '.api.update.form.currency', 'required' => false))
-            ->add('order', IntegerType::class, array('label' => $this->translation . '.api.update.form.order', 'required' => false))
-            ->add('forward', CheckboxType::class, array('label' => $this->translation . '.api.update.form.forward', 'required' => false))
+            ->add('name', TextType::class, array('label' => $options['translation_route'] . '.api.update.form.name'))
+            ->add('description', TextareaType::class, array('label' => $options['translation_route'] . '.api.update.form.description', 'required' => false))
+            ->add('price', MoneyType::class, array('label' => $options['translation_route'] . '.api.update.form.price', 'currency' => '', 'required' => false))
+            ->add('currency', TextType::class, array('label' => $options['translation_route'] . '.api.update.form.currency', 'required' => false))
+            ->add('order', IntegerType::class, array('label' => $options['translation_route'] . '.api.update.form.order', 'required' => false))
+            ->add('forward', CheckboxType::class, array('label' => $options['translation_route'] . '.api.update.form.forward', 'required' => false))
             ->add('image', MediaType::class, array(
-                'label'    => $this->translation . '.api.update.form.image',
+                'label'    => $options['translation_route'] . '.api.update.form.image',
                 'filter'   => 'image/*',
                 'required' => false
             ))
             ->add('categories', DocumentType::class, array(
-                'label'         => $this->translation . '.api.update.form.categories',
+                'label'         => $options['translation_route'] . '.api.update.form.categories',
                 'class'         => 'FhmCardBundle:CardCategory',
                 'choice_label'      => 'route',
                 'query_builder' => function (\Fhm\CardBundle\Repository\CardCategoryRepository $dr)
@@ -65,7 +65,7 @@ class UpdateType extends AbstractType
                 'required'      => false
             ))
             ->add('ingredients', DocumentType::class, array(
-                'label'         => $this->translation . '.api.update.form.ingredients',
+                'label'         => $options['translation_route'] . '.api.update.form.ingredients',
                 'class'         => 'FhmCardBundle:CardIngredient',
                 'choice_label'      => 'name',
                 'query_builder' => function (\Fhm\CardBundle\Repository\CardIngredientRepository $dr)
@@ -76,7 +76,7 @@ class UpdateType extends AbstractType
                 'required'      => false,
                 'by_reference'  => false
             ))
-            ->add('submitSave', SubmitType::class, array('label' => $this->translation . '.api.update.form.submit.save'));
+            ->add('submitSave', SubmitType::class, array('label' => $options['translation_route'] . '.api.update.form.submit.save'));
     }
 
     /**

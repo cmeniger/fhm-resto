@@ -15,18 +15,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class CreateType extends FhmType
 {
-    /**
-     * CreateType constructor.
-     * @param $instance
-     */
-    public function __construct($instance)
-    {
-        $instance = new \stdClass();
-        $instance->translation = 'user';
-        $instance->class = 'Fhm\\UserBundle\\Document\\User';
-        $instance->domain = 'FhmUserBundle';
-        parent::__construct($instance, null);
-    }
 
     /**
      * @param FormBuilderInterface $builder
@@ -34,18 +22,19 @@ class CreateType extends FhmType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $this->setTranslation('user');
         parent::buildForm($builder, $options);
         $builder
-            ->add('username', TextType::class, array('label' => $this->translation.'.front.create.form.username'))
+            ->add('username', TextType::class, array(
+                'label' => $options['translation_route'].'.front.create.form.username'))
             ->add(
                 'email',
                 RepeatedType::class,
                 array
                 (
                     'type' => EmailType::class,
-                    'first_options' => array('label' => $this->translation.'.front.create.form.email'),
-                    'second_options' => array('label' => $this->translation.'.front.create.form.email_confirmation'),
+                    'first_options' => array('label' => $options['translation_route'].'.front.create.form.email'),
+                    'second_options' => array(
+                        'label' => $options['translation_route'].'.front.create.form.email_confirmation'),
                     'invalid_message' => 'user.email.mismatch',
                 )
             )
@@ -55,8 +44,9 @@ class CreateType extends FhmType
                 array
                 (
                     'type' => PasswordType::class,
-                    'first_options' => array('label' => $this->translation.'.front.create.form.password'),
-                    'second_options' => array('label' => $this->translation.'.front.create.form.password_confirmation'),
+                    'first_options' => array('label' => $options['translation_route'].'.front.create.form.password'),
+                    'second_options' => array(
+                        'label' => $options['translation_route'].'.front.create.form.password_confirmation'),
                     'invalid_message' => 'user.password.mismatch',
                 )
             )
@@ -67,17 +57,4 @@ class CreateType extends FhmType
             ->remove('submitQuit');
     }
 
-    /**
-     * @param OptionsResolver $resolver
-     */
-    public function configureOptions(OptionsResolver $resolver)
-    {
-        $resolver->setDefaults(
-            array(
-                'data_class' => 'Fhm\UserBundle\Document\User',
-                'translation_domain' => 'FhmUserBundle',
-                'cascade_validation' => true,
-            )
-        );
-    }
-}
+   }

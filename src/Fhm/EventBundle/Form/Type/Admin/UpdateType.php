@@ -3,6 +3,7 @@ namespace Fhm\EventBundle\Form\Type\Admin;
 
 use Doctrine\Bundle\MongoDBBundle\Form\Type\DocumentType;
 use Fhm\EventBundle\Form\Type\Admin\Group\AddType;
+use Fhm\EventBundle\Repository\EventGroupRepository;
 use Fhm\FhmBundle\Form\Type\Admin\UpdateType as FhmType;
 use Fhm\MediaBundle\Form\Type\MediaType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
@@ -26,17 +27,17 @@ class UpdateType extends FhmType
         $this->setTranslation('event');
         parent::buildForm($builder, $options);
         $builder
-            ->add('title', TextType::class, array('label' => $this->translation.'.admin.update.form.title'))
+            ->add('title', TextType::class, array('label' => $options['translation_route'].'.admin.update.form.title'))
             ->add(
                 'subtitle',
                 TextType::class,
-                array('label' => $this->translation.'.admin.update.form.subtitle', 'required' => false)
+                array('label' => $options['translation_route'].'.admin.update.form.subtitle', 'required' => false)
             )
             ->add(
                 'resume',
                 TextareaType::class,
                 array(
-                    'label' => $this->translation.'.admin.update.form.resume',
+                    'label' => $options['translation_route'].'.admin.update.form.resume',
                     'attr' => array('class' => 'editor'),
                 )
             )
@@ -44,7 +45,7 @@ class UpdateType extends FhmType
                 'content',
                 TextareaType::class,
                 array(
-                    'label' => $this->translation.'.admin.update.form.content',
+                    'label' => $options['translation_route'].'.admin.update.form.content',
                     'attr' => array('class' => 'editor'),
                 )
             )
@@ -52,7 +53,7 @@ class UpdateType extends FhmType
                 'date_start',
                 DateTimeType::class,
                 array(
-                    'label' => $this->translation.'.admin.update.form.start',
+                    'label' => $options['translation_route'].'.admin.update.form.start',
                     'widget' => 'single_text',
                     'input' => 'datetime',
                     'format' => 'dd/MM/yyyy HH:mm',
@@ -63,7 +64,7 @@ class UpdateType extends FhmType
                 'date_end',
                 DateTimeType::class,
                 array(
-                    'label' => $this->translation.'.admin.update.form.end',
+                    'label' => $options['translation_route'].'.admin.update.form.end',
                     'widget' => 'single_text',
                     'input' => 'datetime',
                     'format' => 'dd/MM/yyyy HH:mm',
@@ -74,7 +75,7 @@ class UpdateType extends FhmType
                 'image',
                 MediaType::class,
                 array(
-                    'label' => $this->translation.'.admin.update.form.image',
+                    'label' => $options['translation_route'].'.admin.update.form.image',
                     'filter' => 'image/*',
                     'required' => false,
                 )
@@ -83,11 +84,11 @@ class UpdateType extends FhmType
                 'eventgroups',
                 DocumentType::class,
                 array(
-                    'label' => $this->translation.'.admin.update.form.eventgroups',
+                    'label' => $options['translation_route'].'.admin.update.form.eventgroups',
                     'class' => 'FhmEventBundle:EventGroup',
                     'choice_label' => 'name',
-                    'query_builder' => function (\Fhm\EventBundle\Repository\EventGroupRepository $dr) {
-                        return $dr->getFormEnable();
+                    'query_builder' => function (EventGroupRepository $dr) use ($options) {
+                        return $dr->getFormEnable($options['filter']);
                     },
                     'multiple' => true,
                     'required' => false,
@@ -97,17 +98,5 @@ class UpdateType extends FhmType
             ->remove('name')
             ->remove('description');
     }
-    /**
-     * @param OptionsResolver $resolver
-     */
-    public function configureOptions(OptionsResolver $resolver)
-    {
-        $resolver->setDefaults(
-            array(
-                'data_class' => 'Fhm\EventBundle\Document\Event',
-                'translation_domain' => 'FhmEventBundle',
-                'cascade_validation' => true,
-            )
-        );
-    }
+
 }

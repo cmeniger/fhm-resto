@@ -3,6 +3,8 @@ namespace Fhm\WorkflowBundle\Form\Type\Admin\Action;
 
 use Doctrine\Bundle\MongoDBBundle\Form\Type\DocumentType;
 use Fhm\FhmBundle\Form\Type\Admin\CreateType as FhmType;
+use Fhm\UserBundle\Repository\UserRepository;
+use Fhm\WorkflowBundle\Repository\WorkflowTaskRepository;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -11,23 +13,22 @@ class CreateType extends FhmType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $this->setTranslation('workflow');
         parent::buildForm($builder, $options);
         $builder
             ->add(
                 'validate_check',
                 CheckboxType::class,
-                array('label' => $this->translation.'.admin.create.form.validate_check', 'required' => false)
+                array('label' => $options['translation_route'].'.admin.create.form.validate_check', 'required' => false)
             )
             ->add(
                 'validate_users',
                 DocumentType::class,
                 array(
-                    'label' => $this->translation.'.admin.create.form.validate_users',
+                    'label' => $options['translation_route'].'.admin.create.form.validate_users',
                     'class' => 'FhmUserBundle:User',
                     'choice_label' => 'name',
-                    'query_builder' => function (\Fhm\UserBundle\Repository\UserRepository $dr) {
-                        return $dr->getFormEnable();
+                    'query_builder' => function (UserRepository $dr) use ($options) {
+                        return $dr->getFormEnable($options['filter']);
                     },
                     'multiple' => true,
                     'required' => false,
@@ -37,17 +38,17 @@ class CreateType extends FhmType
             ->add(
                 'dismiss_check',
                 CheckboxType::class,
-                array('label' => $this->translation.'.admin.create.form.dismiss_check', 'required' => false)
+                array('label' => $options['translation_route'].'.admin.create.form.dismiss_check', 'required' => false)
             )
             ->add(
                 'dismiss_users',
                 DocumentType::class,
                 array(
-                    'label' => $this->translation.'.admin.create.form.dismiss_users',
+                    'label' => $options['translation_route'].'.admin.create.form.dismiss_users',
                     'class' => 'FhmUserBundle:User',
                     'choice_label' => 'name',
-                    'query_builder' => function (\Fhm\UserBundle\Repository\UserRepository $dr) {
-                        return $dr->getFormEnable();
+                    'query_builder' => function (UserRepository $dr) use ($options) {
+                        return $dr->getFormEnable($options['filter']);
                     },
                     'multiple' => true,
                     'required' => false,
@@ -57,17 +58,17 @@ class CreateType extends FhmType
             ->add(
                 'cancel_check',
                 CheckboxType::class,
-                array('label' => $this->translation.'.admin.create.form.cancel_check', 'required' => false)
+                array('label' => $options['translation_route'].'.admin.create.form.cancel_check', 'required' => false)
             )
             ->add(
                 'cancel_users',
                 DocumentType::class,
                 array(
-                    'label' => $this->translation.'.admin.create.form.cancel_users',
+                    'label' => $options['translation_route'].'.admin.create.form.cancel_users',
                     'class' => 'FhmUserBundle:User',
                     'choice_label' => 'name',
-                    'query_builder' => function (\Fhm\UserBundle\Repository\UserRepository $dr) {
-                        return $dr->getFormEnable();
+                    'query_builder' => function (UserRepository $dr) use ($options) {
+                        return $dr->getFormEnable($options['filter']);
                     },
                     'multiple' => true,
                     'required' => false,
@@ -77,17 +78,17 @@ class CreateType extends FhmType
             ->add(
                 'upload_check',
                 CheckboxType::class,
-                array('label' => $this->translation.'.admin.create.form.upload_check', 'required' => false)
+                array('label' => $options['translation_route'].'.admin.create.form.upload_check', 'required' => false)
             )
             ->add(
                 'upload_users',
                 DocumentType::class,
                 array(
-                    'label' => $this->translation.'.admin.create.form.upload_users',
+                    'label' => $options['translation_route'].'.admin.create.form.upload_users',
                     'class' => 'FhmUserBundle:User',
                     'choice_label' => 'name',
-                    'query_builder' => function (\Fhm\UserBundle\Repository\UserRepository $dr) {
-                        return $dr->getFormEnable();
+                    'query_builder' => function (UserRepository $dr) use ($options) {
+                        return $dr->getFormEnable($options['filter']);
                     },
                     'multiple' => true,
                     'required' => false,
@@ -97,17 +98,17 @@ class CreateType extends FhmType
             ->add(
                 'download_check',
                 CheckboxType::class,
-                array('label' => $this->translation.'.admin.create.form.download_check', 'required' => false)
+                array('label' => $options['translation_route'].'.admin.create.form.download_check', 'required' => false)
             )
             ->add(
                 'download_users',
                 DocumentType::class,
                 array(
-                    'label' => $this->translation.'.admin.create.form.download_users',
+                    'label' => $options['translation_route'].'.admin.create.form.download_users',
                     'class' => 'FhmUserBundle:User',
                     'choice_label' => 'name',
-                    'query_builder' => function (\Fhm\UserBundle\Repository\UserRepository $dr) {
-                        return $dr->getFormEnable();
+                    'query_builder' => function (UserRepository $dr) use ($options) {
+                        return $dr->getFormEnable($options['filter']);
                     },
                     'multiple' => true,
                     'required' => false,
@@ -117,17 +118,17 @@ class CreateType extends FhmType
             ->add(
                 'comment_check',
                 CheckboxType::class,
-                array('label' => $this->translation.'.admin.create.form.comment_check', 'required' => false)
+                array('label' => $options['translation_route'].'.admin.create.form.comment_check', 'required' => false)
             )
             ->add(
                 'comment_users',
                 DocumentType::class,
                 array(
-                    'label' => $this->translation.'.admin.create.form.comment_users',
+                    'label' => $options['translation_route'].'.admin.create.form.comment_users',
                     'class' => 'FhmUserBundle:User',
                     'choice_label' => 'name',
-                    'query_builder' => function (\Fhm\UserBundle\Repository\UserRepository $dr) {
-                        return $dr->getFormEnable();
+                    'query_builder' => function (UserRepository $dr) use ($options) {
+                        return $dr->getFormEnable($options['filter']);
                     },
                     'multiple' => true,
                     'required' => false,
@@ -138,11 +139,11 @@ class CreateType extends FhmType
                 'tasks',
                 DocumentType::class,
                 array(
-                    'label' => $this->translation.'.admin.create.form.tasks',
+                    'label' => $options['translation_route'].'.admin.create.form.tasks',
                     'class' => 'FhmWorkflowBundle:WorkflowTask',
                     'choice_label' => 'name',
-                    'query_builder' => function (\Fhm\WorkflowBundle\Repository\WorkflowTaskRepository $dr) {
-                        return $dr->getFormEnable();
+                    'query_builder' => function (WorkflowTaskRepository $dr) use ($options) {
+                        return $dr->getFormEnable($options['filter']);
                     },
                     'multiple' => true,
                     'required' => false,
@@ -158,17 +159,4 @@ class CreateType extends FhmType
             ->remove('global');
     }
 
-    /**
-     * @param OptionsResolver $resolver
-     */
-    public function configureOptions(OptionsResolver $resolver)
-    {
-        $resolver->setDefaults(
-            array(
-                'data_class' => 'Fhm\WorkflowBundle\Document\WorkflowAction',
-                'translation_domain' => 'FhmWorkflowBundle',
-                'cascade_validation' => true,
-            )
-        );
-    }
 }

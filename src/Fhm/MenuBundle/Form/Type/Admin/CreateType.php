@@ -18,12 +18,12 @@ class CreateType extends FhmType
             ->add(
                 'icon',
                 TextType::class,
-                array('label' => $this->translation.'.admin.create.form.icon', 'required' => false)
+                array('label' => $options['translation_route'].'.admin.create.form.icon', 'required' => false)
             )
             ->add(
                 'route',
                 LinkType::class,
-                array('label' => $this->translation.'.admin.create.form.route', 'required' => false)
+                array('label' => $options['translation_route'].'.admin.create.form.route', 'required' => false)
             )
             ->add(
                 'id',
@@ -34,17 +34,4 @@ class CreateType extends FhmType
             ->remove('global');
     }
 
-    /**
-     * @param OptionsResolver $resolver
-     */
-    public function configureOptions(OptionsResolver $resolver)
-    {
-        $resolver->setDefaults(
-            array(
-                'data_class' => 'Fhm\MenuBundle\Document\Menu',
-                'translation_domain' => 'FhmMenuBundle',
-                'cascade_validation' => true,
-            )
-        );
-    }
 }

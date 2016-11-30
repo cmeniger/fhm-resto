@@ -3,6 +3,7 @@ namespace Fhm\NotificationBundle\Form\Type\Admin;
 
 use Doctrine\Bundle\MongoDBBundle\Form\Type\DocumentType;
 use Fhm\FhmBundle\Form\Type\Admin\UpdateType as FhmType;
+use Fhm\UserBundle\Repository\UserRepository;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -25,17 +26,18 @@ class UpdateType extends FhmType
             ->add(
                 'content',
                 TextareaType::class,
-                array('label' => $this->translation.'.admin.update.form.content', 'attr' => array('class' => 'editor'))
+                array('label' => $options['translation_route'].'.admin.update.form.content',
+                      'attr' => array('class' => 'editor'))
             )
             ->add(
                 'user',
                 DocumentType::class,
                 array(
-                    'label' => $this->translation.'.admin.update.form.user',
+                    'label' => $options['translation_route'].'.admin.update.form.user',
                     'class' => 'FhmUserBundle:User',
                     'choice_label' => 'name',
-                    'query_builder' => function (\Fhm\UserBundle\Repository\UserRepository $dr) {
-                        return $dr->getFormEnable();
+                    'query_builder' => function (UserRepository $dr) use ($options) {
+                        return $dr->getFormEnable($options['filter']);
                     },
                 )
             )
@@ -49,19 +51,5 @@ class UpdateType extends FhmType
             ->remove('share')
             ->remove('global')
             ->remove('active');
-    }
-
-    /**
-     * @param OptionsResolver $resolver
-     */
-    public function configureOptions(OptionsResolver $resolver)
-    {
-        $resolver->setDefaults(
-            array(
-                'data_class' => 'Fhm\NotificationBundle\Document\Notification',
-                'translation_domain' => 'FhmNotificationBundle',
-                'cascade_validation' => true,
-            )
-        );
     }
 }

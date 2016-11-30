@@ -38,32 +38,32 @@ class UpdateType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $this->translation='card.category';
+        $options['translation_route']='card.category';
         $builder
-            ->add('name', TextType::class, array('label' => $this->translation . '.api.update.form.name'))
+            ->add('name', TextType::class, array('label' => $options['translation_route'] . '.api.update.form.name'))
             ->add('description', TextareaType::class, array(
-                'label' => $this->translation . '.api.update.form.description',
+                'label' => $options['translation_route'] . '.api.update.form.description',
                 'required' => false))
             ->add('price', MoneyType::class, array(
-                'label' => $this->translation . '.api.update.form.price',
+                'label' => $options['translation_route'] . '.api.update.form.price',
                 'currency' => '',
                 'required' => false))
             ->add('currency', TextType::class, array(
-                'label' => $this->translation . '.api.update.form.currency',
+                'label' => $options['translation_route'] . '.api.update.form.currency',
                 'required' => false))
             ->add('order', IntegerType::class, array(
-                'label' => $this->translation . '.api.update.form.order',
+                'label' => $options['translation_route'] . '.api.update.form.order',
                 'required' => false))
             ->add('menu', CheckboxType::class, array(
-                'label' => $this->translation . '.api.update.form.menu',
+                'label' => $options['translation_route'] . '.api.update.form.menu',
                       'required' => false))
             ->add('image', MediaType::class, array(
-                'label'    => $this->translation . '.api.update.form.image',
+                'label'    => $options['translation_route'] . '.api.update.form.image',
                 'filter'   => 'image/*',
                 'required' => false
             ))
             ->add('parents', DocumentType::class, array(
-                'label'         => $this->translation . '.api.update.form.parents',
+                'label'         => $options['translation_route'] . '.api.update.form.parents',
                 'class'         => 'FhmCardBundle:CardCategory',
                 'choice_label'      => 'route',
                 'query_builder' => function (\Fhm\CardBundle\Repository\CardCategoryRepository $dr)
@@ -75,7 +75,7 @@ class UpdateType extends AbstractType
                 'required'      => false
             ))
             ->add('products', DocumentType::class, array(
-                'label'         => $this->translation . '.api.update.form.products',
+                'label'         => $options['translation_route'] . '.api.update.form.products',
                 'class'         => 'FhmCardBundle:CardProduct',
                 'choice_label'      => 'name',
                 'query_builder' => function (\Fhm\CardBundle\Repository\CardProductRepository $dr)
@@ -87,7 +87,7 @@ class UpdateType extends AbstractType
                 'required'      => false
             ))
             ->add('submitSave', SubmitType::class, array(
-                    'label' => $this->translation . '.api.update.form.submit.save'));
+                    'label' => $options['translation_route'] . '.api.update.form.submit.save'));
     }
 
     public function getBlockPrefix()

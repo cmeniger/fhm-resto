@@ -3,6 +3,7 @@ namespace Fhm\MediaBundle\Form\Type\Admin;
 
 use Doctrine\Bundle\MongoDBBundle\Form\Type\DocumentType;
 use Fhm\FhmBundle\Form\Type\Admin\CreateType as FhmType;
+use Fhm\MediaBundle\Repository\MediaTagRepository;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -12,34 +13,35 @@ class CreateType extends FhmType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $this->setTranslation('media');
         parent::buildForm($builder, $options);
         $builder
             ->add(
                 'name',
                 TextType::class,
-                array('label' => $this->translation.'.admin.create.form.name', 'required' => false)
+                array('label' => $options['translation_route'].'.admin.create.form.name', 'required' => false)
             )
-            ->add('file', FileType::class, array('label' => $this->translation.'.admin.create.form.file'))
+            ->add('file', FileType::class, array('label' => $options['translation_route'].'.admin.create.form.file'))
             ->add(
                 'tag',
-                TextType::class,
-                array('label' => $this->translation.'.admin.create.form.tag', 'mapped' => false, 'required' => false)
+                TextType::class, array(
+                    'label' => $options['translation_route'].'.admin.create.form.tag',
+                    'mapped' => false,
+                    'required' => false)
             )
             ->add(
                 'private',
                 CheckboxType::class,
-                array('label' => $this->translation.'.admin.create.form.private', 'required' => false)
+                array('label' => $options['translation_route'].'.admin.create.form.private', 'required' => false)
             )
             ->add(
                 'parent',
                 DocumentType::class,
                 array(
-                    'label' => $this->translation.'.admin.create.form.parent',
+                    'label' => $options['translation_route'].'.admin.create.form.parent',
                     'class' => 'FhmMediaBundle:MediaTag',
                     'choice_label' => 'route',
-                    'query_builder' => function (\Fhm\MediaBundle\Repository\MediaTagRepository $dr) {
-                        return $dr->getFormFiltered();
+                    'query_builder' => function (MediaTagRepository $dr) use ($options)  {
+                        return $dr->getFormFiltered($options['filter']);
                     },
                     'mapped' => false,
                     'required' => false,
@@ -49,11 +51,11 @@ class CreateType extends FhmType
                 'tags',
                 DocumentType::class,
                 array(
-                    'label' => $this->translation.'.admin.create.form.tags',
+                    'label' => $options['translation_route'].'.admin.create.form.tags',
                     'class' => 'FhmMediaBundle:MediaTag',
                     'choice_label' => 'route',
-                    'query_builder' => function (\Fhm\MediaBundle\Repository\MediaTagRepository $dr) {
-                        return $dr->getFormFiltered();
+                    'query_builder' => function (MediaTagRepository $dr)  use ($options) {
+                        return $dr->getFormFiltered($options['filter']);
                     },
                     'multiple' => true,
                     'required' => false,

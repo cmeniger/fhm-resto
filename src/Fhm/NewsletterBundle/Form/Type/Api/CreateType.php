@@ -19,7 +19,7 @@ class CreateType extends FhmType
     {
         parent::buildForm($builder, $options);
         $builder
-            ->add('email', EmailType::class, array('label' => $this->instance->translation.'.admin.create.form.email'))
+            ->add('email', EmailType::class, array('label' => $options['translation_route'].'.admin.create.form.email'))
             ->remove('name')
             ->remove('description')
             ->remove('submitSave')

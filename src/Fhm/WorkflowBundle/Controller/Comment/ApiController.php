@@ -66,8 +66,7 @@ class ApiController extends FhmController
         $document = $this->fhm_tools->dmRepository('FhmWorkflowBundle:Workflow')->find($id);
         $instance = $this->fhm_tools->instanceData($document);
         $iterator = $document->getAllComments($this->getUser())->getIterator();
-        $iterator->uasort(function ($a, $b)
-        {
+        $iterator->uasort(function ($a, $b) {
             return ($a->getDateCreate() > $b->getDateCreate()) ? -1 : 1;
         });
 
@@ -92,8 +91,7 @@ class ApiController extends FhmController
         $document = $this->fhm_tools->dmRepository('FhmWorkflowBundle:WorkflowTask')->find($id);
         $instance = $this->fhm_tools->instanceData($document);
         $iterator = $document->getComments()->getIterator();
-        $iterator->uasort(function ($a, $b)
-        {
+        $iterator->uasort(function ($a, $b) {
             return ($a->getDateCreate() > $b->getDateCreate()) ? -1 : 1;
         });
 

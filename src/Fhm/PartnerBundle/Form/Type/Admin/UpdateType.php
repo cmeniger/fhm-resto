@@ -4,6 +4,7 @@ namespace Fhm\PartnerBundle\Form\Type\Admin;
 use Doctrine\Bundle\MongoDBBundle\Form\Type\DocumentType;
 use Fhm\FhmBundle\Form\Type\Admin\UpdateType as FhmType;
 use Fhm\MediaBundle\Form\Type\MediaType;
+use Fhm\PartnerBundle\Repository\PartnerGroupRepository;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -22,29 +23,29 @@ class UpdateType extends FhmType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $this->setTranslation('partner');
         parent::buildForm($builder, $options);
         $builder
             ->add(
                 'content',
                 TextareaType::class,
-                array('label' => $this->translation.'.admin.update.form.content', 'attr' => array('class' => 'editor'))
+                array('label' => $options['translation_route'].'.admin.update.form.content',
+                      'attr' => array('class' => 'editor'))
             )
             ->add(
                 'link',
                 TextType::class,
-                array('label' => $this->translation.'.admin.update.form.link', 'required' => false)
+                array('label' => $options['translation_route'].'.admin.update.form.link', 'required' => false)
             )
             ->add(
                 'order',
                 IntegerType::class,
-                array('label' => $this->translation.'.admin.update.form.order', 'required' => false)
+                array('label' => $options['translation_route'].'.admin.update.form.order', 'required' => false)
             )
             ->add(
                 'image',
                 MediaType::class,
                 array(
-                    'label' => $this->translation.'.admin.update.form.image',
+                    'label' => $options['translation_route'].'.admin.update.form.image',
                     'filter' => 'image/*',
                 )
             )
@@ -52,11 +53,11 @@ class UpdateType extends FhmType
                 'partnergroups',
                 DocumentType::class,
                 array(
-                    'label' => $this->translation.'.admin.update.form.partnergroups',
+                    'label' => $options['translation_route'].'.admin.update.form.partnergroups',
                     'class' => 'FhmPartnerBundle:PartnerGroup',
                     'choice_label' => 'name',
-                    'query_builder' => function (\Fhm\PartnerBundle\Repository\PartnerGroupRepository $dr) {
-                        return $dr->getFormEnable();
+                    'query_builder' => function (PartnerGroupRepository $dr)  use ($options) {
+                        return $dr->getFormEnable($options['filter']);
                     },
                     'multiple' => true,
                     'required' => false,
@@ -65,18 +66,5 @@ class UpdateType extends FhmType
             )
             ->remove('description');
     }
-
-    /**
-     * @param OptionsResolver $resolver
-     */
-    public function configureOptions(OptionsResolver $resolver)
-    {
-        $resolver->setDefaults(
-            array(
-                'data_class' => 'Fhm\PartnerBundle\Document\Partner',
-                'translation_domain' => 'FhmPartnerBundle',
-                'cascade_validation' => true,
-            )
-        );
-    }
+    
 }

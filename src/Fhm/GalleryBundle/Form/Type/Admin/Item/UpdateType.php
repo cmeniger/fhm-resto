@@ -3,6 +3,7 @@ namespace Fhm\GalleryBundle\Form\Type\Admin\Item;
 
 use Doctrine\Bundle\MongoDBBundle\Form\Type\DocumentType;
 use Fhm\FhmBundle\Form\Type\Admin\UpdateType as FhmType;
+use Fhm\GalleryBundle\Repository\GalleryRepository;
 use Fhm\MediaBundle\Form\Type\MediaType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -14,20 +15,19 @@ class UpdateType extends FhmType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $this->setTranslation('gallery.item');
         parent::buildForm($builder, $options);
         $builder
-            ->add('title', TextType::class, array('label' => $this->translation.'.admin.update.form.title'))
+            ->add('title', TextType::class, array('label' => $options['translation_route'].'.admin.update.form.title'))
             ->add(
                 'subtitle',
                 TextType::class,
-                array('label' => $this->translation.'.admin.update.form.subtitle', 'required' => false)
+                array('label' => $options['translation_route'].'.admin.update.form.subtitle', 'required' => false)
             )
             ->add(
                 'content',
                 TextareaType::class,
                 array(
-                    'label' => $this->translation.'.admin.update.form.content',
+                    'label' => $options['translation_route'].'.admin.update.form.content',
                     'attr' => array('class' => 'editor'),
                     'required' => false,
                 )
@@ -35,18 +35,18 @@ class UpdateType extends FhmType
             ->add(
                 'link',
                 TextType::class,
-                array('label' => $this->translation.'.admin.update.form.link', 'required' => false)
+                array('label' => $options['translation_route'].'.admin.update.form.link', 'required' => false)
             )
             ->add(
                 'order',
                 IntegerType::class,
-                array('label' => $this->translation.'.admin.update.form.order', 'required' => false)
+                array('label' => $options['translation_route'].'.admin.update.form.order', 'required' => false)
             )
             ->add(
                 'image',
                 MediaType::class,
                 array(
-                    'label' => $this->translation.'.admin.update.form.image',
+                    'label' => $options['translation_route'].'.admin.update.form.image',
                     'filter' => 'image/*',
                 )
             )
@@ -54,10 +54,10 @@ class UpdateType extends FhmType
                 'galleries',
                 DocumentType::class,
                 array(
-                    'label' => $this->translation.'.admin.update.form.galleries',
+                    'label' => $options['translation_route'].'.admin.update.form.galleries',
                     'class' => 'FhmGalleryBundle:Gallery',
                     'choice_label' => 'name',
-                    'query_builder' => function (\Fhm\GalleryBundle\Repository\GalleryRepository $dr) {
+                    'query_builder' => function (GalleryRepository $dr) {
                         return $dr->getFormEnable();
                     },
                     'required' => false,
@@ -69,17 +69,4 @@ class UpdateType extends FhmType
             ->remove('description');
     }
 
-    /**
-     * @param OptionsResolver $resolver
-     */
-    public function configureOptions(OptionsResolver $resolver)
-    {
-        $resolver->setDefaults(
-            array(
-                'data_class' => 'Fhm\GalleryBundle\Document\GalleryItem',
-                'translation_domain' => 'FhmGalleryBundle',
-                'cascade_validation' => true,
-            )
-        );
-    }
 }

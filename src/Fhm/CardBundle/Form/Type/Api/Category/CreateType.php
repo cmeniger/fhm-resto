@@ -29,21 +29,21 @@ class CreateType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     { 
-        $this->translation='card.category';
+        $options['translation_route']='card.category';
         $builder
-            ->add('name', TextType::class, array('label' => $this->translation . '.api.create.form.name'))
-            ->add('description', TextareaType::class, array('label' => $this->translation . '.api.create.form.description', 'required' => false))
-            ->add('price', MoneyType::class, array('label' => $this->translation . '.api.create.form.price', 'currency' => '', 'required' => false))
-            ->add('currency', TextType::class, array('label' => $this->translation . '.api.create.form.currency', 'required' => false))
-            ->add('order', IntegerType::class, array('label' => $this->translation . '.api.create.form.order', 'required' => false))
-            ->add('menu', CheckboxType::class, array('label' => $this->translation . '.api.create.form.menu', 'required' => false))
+            ->add('name', TextType::class, array('label' => $options['translation_route'] . '.api.create.form.name'))
+            ->add('description', TextareaType::class, array('label' => $options['translation_route'] . '.api.create.form.description', 'required' => false))
+            ->add('price', MoneyType::class, array('label' => $options['translation_route'] . '.api.create.form.price', 'currency' => '', 'required' => false))
+            ->add('currency', TextType::class, array('label' => $options['translation_route'] . '.api.create.form.currency', 'required' => false))
+            ->add('order', IntegerType::class, array('label' => $options['translation_route'] . '.api.create.form.order', 'required' => false))
+            ->add('menu', CheckboxType::class, array('label' => $options['translation_route'] . '.api.create.form.menu', 'required' => false))
             ->add('image', MediaType::class, array(
-                'label'    => $this->translation . '.api.create.form.image',
+                'label'    => $options['translation_route'] . '.api.create.form.image',
                 'filter'   => 'image/*',
                 'required' => false
             ))
             ->add('parents', DocumentType::class, array(
-                'label'         => $this->translation . '.api.create.form.parents',
+                'label'         => $options['translation_route'] . '.api.create.form.parents',
                 'class'         => 'FhmCardBundle:CardCategory',
                 'choice_label'      => 'route',
                 'query_builder' => function (\Fhm\CardBundle\Repository\CardCategoryRepository $dr)
@@ -55,7 +55,7 @@ class CreateType extends AbstractType
                 'required'      => false
             ))
             ->add('products', DocumentType::class, array(
-                'label'         => $this->translation . '.api.create.form.products',
+                'label'         => $options['translation_route'] . '.api.create.form.products',
                 'class'         => 'FhmCardBundle:CardProduct',
                 'choice_label'      => 'name',
                 'query_builder' => function (\Fhm\CardBundle\Repository\CardProductRepository $dr)
@@ -66,7 +66,7 @@ class CreateType extends AbstractType
                 'by_reference'  => false,
                 'required'      => false
             ))
-            ->add('submitSave', SubmitType::class, array('label' => $this->translation . '.api.create.form.submit.save'));
+            ->add('submitSave', SubmitType::class, array('label' => $options['translation_route'] . '.api.create.form.submit.save'));
     }
 
     /**

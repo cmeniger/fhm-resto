@@ -3,6 +3,7 @@ namespace Fhm\WorkflowBundle\Form\Type\Admin\Log;
 
 use Doctrine\Bundle\MongoDBBundle\Form\Type\DocumentType;
 use Fhm\FhmBundle\Form\Type\Admin\CreateType as FhmType;
+use Fhm\WorkflowBundle\Repository\WorkflowTaskRepository;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -11,18 +12,17 @@ class CreateType extends FhmType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $this->setTranslation('workflow');
-        parent::buildForm($builder, $options);
+           parent::buildForm($builder, $options);
         $builder
             ->add(
                 'task',
                 DocumentType::class,
                 array(
-                    'label' => $this->translation.'.admin.create.form.task',
+                    'label' => $options['translation_route'].'.admin.create.form.task',
                     'class' => 'FhmWorkflowBundle:WorkflowTask',
                     'choice_label' => 'name',
-                    'query_builder' => function (\Fhm\WorkflowBundle\Repository\WorkflowTaskRepository $dr) {
-                        return $dr->getFormEnable();
+                    'query_builder' => function (WorkflowTaskRepository $dr) use ($options) {
+                        return $dr->getFormEnable($options['filter']);
                     },
                     'required' => false,
                 )
@@ -31,14 +31,14 @@ class CreateType extends FhmType
                 'type',
                 ChoiceType::class,
                 array(
-                    'label' => $this->translation.'.admin.create.form.type',
+                    'label' => $options['translation_route'].'.admin.create.form.type',
                     'choices' => array(
-                        '0' => $this->translation.'.type.0',
-                        '1' => $this->translation.'.type.1',
-                        '2' => $this->translation.'.type.2',
-                        '3' => $this->translation.'.type.3',
-                        '4' => $this->translation.'.type.4',
-                        '5' => $this->translation.'.type.5',
+                        '0' => $options['translation_route'].'.type.0',
+                        '1' => $options['translation_route'].'.type.1',
+                        '2' => $options['translation_route'].'.type.2',
+                        '3' => $options['translation_route'].'.type.3',
+                        '4' => $options['translation_route'].'.type.4',
+                        '5' => $options['translation_route'].'.type.5',
                     ),
                 )
             )
@@ -51,17 +51,4 @@ class CreateType extends FhmType
             ->remove('global');
     }
 
-    /**
-     * @param OptionsResolver $resolver
-     */
-    public function configureOptions(OptionsResolver $resolver)
-    {
-        $resolver->setDefaults(
-            array(
-                'data_class' => 'Fhm\WorkflowBundle\Document\WorkflowLog',
-                'translation_domain' => 'FhmWorkflowBundle',
-                'cascade_validation' => true,
-            )
-        );
-    }
 }

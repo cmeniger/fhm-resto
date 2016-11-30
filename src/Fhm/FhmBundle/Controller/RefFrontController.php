@@ -144,7 +144,17 @@ class RefFrontController extends Controller
         $instance     = $this->fhm_tools->instanceData();
         $classType    = $this->form->type->create;
         $classHandler = $this->form->handler->create;
-        $form           = $this->createForm($classType, $document);
+        $form = $this->createForm($classType, $document, array(
+            'data_class' =>$instance->class,
+            'translation_domain' => $instance->domain,
+            'filter'=>$instance->grouping->filtered,
+            'translation_route' =>$this->translation[1],
+            'lang_visible'=>$instance->language->visible,
+            'lang_available'=>$instance->language->available,
+            'grouping_visible'=>$instance->grouping->visible,
+            'grouping_available'=>$instance->grouping->available,
+            'user_admin'=>$instance->user->admin
+        ));
         $handler      = new $classHandler($form, $request);
         $process      = $handler->process();
         if ($process) {
@@ -247,7 +257,17 @@ class RefFrontController extends Controller
         if (!$instance->user->super && $document->getDelete()) {
             throw new HttpException(403, $this->fhm_tools->trans('.error.forbidden'));
         }
-        $form    = $this->createForm($classType, $document);
+        $form = $this->createForm($classType, $document, array(
+            'data_class' =>$instance->class,
+            'translation_domain' => $instance->domain,
+            'translation_route' =>$this->translation[1],
+            'filter'=>$instance->grouping->filtered,
+            'lang_visible'=>$instance->language->visible,
+            'lang_available'=>$instance->language->available,
+            'grouping_visible'=>$instance->grouping->visible,
+            'grouping_available'=>$instance->grouping->available,
+            'user_admin'=>$instance->user->admin
+        ));
 
         $handler = new $classHandler($form, $request);
         $process = $handler->process($document, $this->fhm_tools->dm(), $this->bundle);

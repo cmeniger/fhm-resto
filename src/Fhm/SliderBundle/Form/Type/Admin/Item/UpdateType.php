@@ -4,6 +4,7 @@ namespace Fhm\SliderBundle\Form\Type\Admin\Item;
 use Doctrine\Bundle\MongoDBBundle\Form\Type\DocumentType;
 use Fhm\FhmBundle\Form\Type\Admin\UpdateType as FhmType;
 use Fhm\MediaBundle\Form\Type\MediaType;
+use Fhm\SliderBundle\Repository\SliderRepository;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -18,23 +19,19 @@ class UpdateType extends FhmType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        /**
-         *
-         */
-        $this->setTranslation('slider');
         parent::buildForm($builder, $options);
         $builder
-            ->add('title', TextType::class, array('label' => $this->translation.'.admin.update.form.title'))
+            ->add('title', TextType::class, array('label' => $options['translation_route'].'.admin.update.form.title'))
             ->add(
                 'subtitle',
                 TextType::class,
-                array('label' => $this->translation.'.admin.update.form.subtitle', 'required' => false)
+                array('label' => $options['translation_route'].'.admin.update.form.subtitle', 'required' => false)
             )
             ->add(
                 'content',
                 TextareaType::class,
                 array(
-                    'label' => $this->translation.'.admin.update.form.content',
+                    'label' => $options['translation_route'].'.admin.update.form.content',
                     'attr' => array('class' => 'editor'),
                     'required' => false,
                 )
@@ -42,18 +39,18 @@ class UpdateType extends FhmType
             ->add(
                 'link',
                 TextType::class,
-                array('label' => $this->translation.'.admin.update.form.link', 'required' => false)
+                array('label' => $options['translation_route'].'.admin.update.form.link', 'required' => false)
             )
             ->add(
                 'order',
                 NumberType::class,
-                array('label' => $this->translation.'.admin.update.form.order', 'required' => false)
+                array('label' => $options['translation_route'].'.admin.update.form.order', 'required' => false)
             )
             ->add(
                 'image',
                 MediaType::class,
                 array(
-                    'label' => $this->translation.'.admin.update.form.image',
+                    'label' => $options['translation_route'].'.admin.update.form.image',
                     'filter' => 'image/*',
                 )
             )
@@ -61,11 +58,11 @@ class UpdateType extends FhmType
                 'sliders',
                 DocumentType::class,
                 array(
-                    'label' => $this->translation.'.admin.update.form.sliders',
+                    'label' => $options['translation_route'].'.admin.update.form.sliders',
                     'class' => 'FhmSliderBundle:Slider',
                     'choice_label' => 'name',
-                    'query_builder' => function (\Fhm\SliderBundle\Repository\SliderRepository $dr) {
-                        return $dr->getFormEnable();
+                    'query_builder' => function (SliderRepository $dr) use ($options) {
+                        return $dr->getFormEnable($options['filter']);
                     },
                     'required' => false,
                     'multiple' => true,
@@ -76,18 +73,4 @@ class UpdateType extends FhmType
             ->remove('description');
     }
 
-    /**
-     * @param OptionsResolver $resolver
-     */
-    public function configureOptions(OptionsResolver $resolver)
-    {
-        $resolver->setDefaults(
-            array(
-                'data_class' => 'Fhm\SliderBundle\Document\SliderItem',
-                'translation_domain' => 'FhmSliderBundle',
-                'cascade_validation' => true,
-            )
-        );
-    }
-
-}
+   }

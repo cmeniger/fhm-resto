@@ -18,7 +18,7 @@ class UpdateType extends FhmType
                 'color',
                 TextType::class,
                 array(
-                    'label' => $this->translation.'.admin.update.form.color',
+                    'label' => $options['translation_route'].'.admin.update.form.color',
                     'attr' => array('class' => 'colorpicker'),
                     'required' => false,
                 )
@@ -26,7 +26,7 @@ class UpdateType extends FhmType
             ->add(
                 'order',
                 IntegerType::class,
-                array('label' => $this->translation.'.admin.update.form.order', 'required' => false)
+                array('label' => $options['translation_route'].'.admin.update.form.order', 'required' => false)
             )
             ->remove('seo_title')
             ->remove('seo_description')

@@ -20,7 +20,7 @@ class ExportType extends AbstractType
      */
     public function setTranslation($domaine = 'fhm')
     {
-        $this->translation = $domaine;
+        $options['translation_route'] = $domaine;
     }
 
     /**
@@ -33,7 +33,7 @@ class ExportType extends AbstractType
             ->add(
                 'submit',
                 SubmitType::class,
-                array('label' => $this->translation.'.admin.export.form.submit')
+                array('label' => $options['translation_route'].'.admin.export.form.submit')
             );
     }
 
@@ -55,6 +55,13 @@ class ExportType extends AbstractType
                 'data_class' => 'Fhm\FhmBundle\Document\Fhm',
                 'translation_domain' => 'FhmFhmBundle',
                 'cascade_validation' => true,
+                'translation_route'=>'',
+                'filter'=>'',
+                'lang_visible'=>'',
+                'lang_available'=>'',
+                'grouping_visible'=>'',
+                'grouping_available'=>'',
+                'user_admin'=>''
             )
         );
     }

@@ -23,7 +23,7 @@ class UpdateType extends AbstractType
      */
     public function setTranslation($domaine = 'fhm')
     {
-        $this->translation = $domaine;
+        $options['translation_route'] = $domaine;
     }
 
     /**
@@ -33,31 +33,31 @@ class UpdateType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name', TextType::class, array('label' => $this->translation.'.front.update.form.name'))
+            ->add('name', TextType::class, array('label' => $options['translation_route'].'.front.update.form.name'))
             ->add(
                 'description',
                 TextareaType::class,
-                array('label' => $this->translation.'.front.update.form.description', 'required' => false)
+                array('label' => $options['translation_route'].'.front.update.form.description', 'required' => false)
             )
             ->add(
                 'submitSave',
                 SubmitType::class,
-                array('label' => $this->translation.'.front.update.form.submit.save')
+                array('label' => $options['translation_route'].'.front.update.form.submit.save')
             )
             ->add(
                 'submitNew',
                 SubmitType::class,
-                array('label' => $this->translation.'.front.update.form.submit.new')
+                array('label' => $options['translation_route'].'.front.update.form.submit.new')
             )
             ->add(
                 'submitDuplicate',
                 SubmitType::class,
-                array('label' => $this->translation.'.front.update.form.submit.duplicate')
+                array('label' => $options['translation_route'].'.front.update.form.submit.duplicate')
             )
             ->add(
                 'submitQuit',
                 SubmitType::class,
-                array('label' => $this->translation.'.front.update.form.submit.quit')
+                array('label' => $options['translation_route'].'.front.update.form.submit.quit')
             );
     }
 
@@ -79,6 +79,13 @@ class UpdateType extends AbstractType
                 'data_class' => 'Fhm\FhmBundle\Document\Fhm',
                 'translation_domain' => 'FhmFhmBundle',
                 'cascade_validation' => true,
+                'translation_route'=>'',
+                'filter'=>'',
+                'lang_visible'=>'',
+                'lang_available'=>'',
+                'grouping_visible'=>'',
+                'grouping_available'=>'',
+                'user_admin'=>''
             )
         );
     }

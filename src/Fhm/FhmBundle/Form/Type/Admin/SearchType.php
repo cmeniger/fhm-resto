@@ -20,7 +20,7 @@ class SearchType extends AbstractType
      */
     public function setTranslation($domaine = 'fhm')
     {
-        $this->translation = $domaine;
+        $options['translation_route'] = $domaine;
     }
 
     /**
@@ -35,7 +35,7 @@ class SearchType extends AbstractType
             array(
                 'required' => false,
                 'attr' => array(
-                    'placeholder' => $this->translation.'.admin.index.form.search',
+                    'placeholder' => $options['translation_route'].'.admin.index.form.search',
                     'data-type' => 'list',
                 ),
             )
@@ -60,6 +60,13 @@ class SearchType extends AbstractType
                 'data_class' => 'Fhm\FhmBundle\Document\Fhm',
                 'translation_domain' => 'FhmFhmBundle',
                 'cascade_validation' => true,
+                'translation_route'=>'',
+                'filter'=>'',
+                'lang_visible'=>'',
+                'lang_available'=>'',
+                'grouping_visible'=>'',
+                'grouping_available'=>'',
+                'user_admin'=>''
             )
         );
     }

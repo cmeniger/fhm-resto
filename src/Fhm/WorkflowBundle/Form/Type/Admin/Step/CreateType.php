@@ -11,14 +11,13 @@ class CreateType extends FhmType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $this->setTranslation('workflow');
         parent::buildForm($builder, $options);
         $builder
             ->add(
                 'color',
                 TextType::class,
                 array(
-                    'label' => $this->translation.'.admin.create.form.color',
+                    'label' => $options['translation_route'].'.admin.create.form.color',
                     'attr' => array('class' => 'colorpicker'),
                     'required' => false,
                 )
@@ -26,7 +25,7 @@ class CreateType extends FhmType
             ->add(
                 'order',
                 IntegerType::class,
-                array('label' => $this->translation.'.admin.create.form.order', 'required' => false)
+                array('label' => $options['translation_route'].'.admin.create.form.order', 'required' => false)
             )
             ->remove('seo_title')
             ->remove('seo_description')
@@ -37,17 +36,4 @@ class CreateType extends FhmType
             ->remove('global');
     }
 
-    /**
-     * @param OptionsResolver $resolver
-     */
-    public function configureOptions(OptionsResolver $resolver)
-    {
-        $resolver->setDefaults(
-            array(
-                'data_class' => 'Fhm\WorkflowBundle\Document\WorkflowStep',
-                'translation_domain' => 'FhmWorkflowBundle',
-                'cascade_validation' => true,
-            )
-        );
-    }
 }

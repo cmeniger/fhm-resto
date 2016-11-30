@@ -3,6 +3,8 @@ namespace Fhm\FhmBundle\Controller;
 
 use Fhm\FhmBundle\Document\Fhm;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
@@ -160,7 +162,17 @@ class RefAdminController extends Controller
         $instance = $this->fhm_tools->instanceData();
         $classType = $this->form->type->create;
         $classHandler = $this->form->handler->create;
-        $form = $this->createForm($classType, $document);
+        $form = $this->createForm($classType, $document, array(
+                'data_class' =>$instance->class,
+                'translation_domain' => $instance->domain,
+                'translation_route' =>$this->translation[1],
+                'filter'=>$instance->grouping->filtered,
+                'lang_visible'=>$instance->language->visible,
+                'lang_available'=>$instance->language->available,
+                'grouping_visible'=>$instance->grouping->visible,
+                'grouping_available'=>$instance->grouping->available,
+                'user_admin'=>$instance->user->admin
+            ));
         $handler = new $classHandler($form, $request);
         $process = $handler->process();
         if ($process) {
@@ -231,6 +243,7 @@ class RefAdminController extends Controller
         );
     }
 
+
     /**
      * @param Request $request
      * @param         $id
@@ -284,7 +297,17 @@ class RefAdminController extends Controller
             throw new HttpException(403, $this->fhm_tools->trans('.error.forbidden'));
         }
         $this->fhm_tools->historic($document);
-        $form = $this->createForm($classType, $document);
+        $form = $this->createForm($classType, $document, array(
+            'data_class' =>$instance->class,
+            'translation_domain' => $instance->domain,
+            'translation_route' =>$this->translation[1],
+            'filter'=>$instance->grouping->filtered,
+            'lang_visible'=>$instance->language->visible,
+            'lang_available'=>$instance->language->available,
+            'grouping_visible'=>$instance->grouping->visible,
+            'grouping_available'=>$instance->grouping->available,
+            'user_admin'=>$instance->user->admin
+        ));
         $handler = new $classHandler($form, $request);
         $process = $handler->process();
         if ($process) {
@@ -333,9 +356,9 @@ class RefAdminController extends Controller
         }
 
         return array(
-            'document' => $document,
-            'form' => $form->createView(),
-            'instance' => $instance,
+            'document'  => $document,
+            'form'      => $form->createView(),
+            'instance'  => $instance,
             'breadcrumbs' => array(
                 array(
                     'link' => $this->fhm_tools->getUrl('project_home'),

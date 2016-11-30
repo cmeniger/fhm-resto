@@ -4,6 +4,9 @@ namespace Fhm\GalleryBundle\Form\Type\Admin;
 use Doctrine\Bundle\MongoDBBundle\Form\Type\DocumentType;
 use Fhm\FhmBundle\Form\Type\Admin\UpdateType as FhmType;
 use Fhm\MediaBundle\Form\Type\MediaType;
+use Fhm\GalleryBundle\Repository\GalleryAlbumRepository;
+use Fhm\GalleryBundle\Repository\GalleryItemRepository;
+use Fhm\GalleryBundle\Repository\GalleryVideoRepository;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
@@ -21,20 +24,19 @@ class UpdateType extends FhmType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $this->setTranslation('gallery');
         parent::buildForm($builder, $options);
         $builder
-            ->add('title', TextType::class, array('label' => $this->translation.'.admin.update.form.title'))
+            ->add('title', TextType::class, array('label' => $options['translation_route'].'.admin.update.form.title'))
             ->add(
                 'subtitle',
                 TextType::class,
-                array('label' => $this->translation.'.admin.update.form.subtitle', 'required' => false)
+                array('label' => $options['translation_route'].'.admin.update.form.subtitle', 'required' => false)
             )
             ->add(
                 'resume',
                 TextareaType::class,
                 array(
-                    'label' => $this->translation.'.admin.update.form.resume',
+                    'label' => $options['translation_route'].'.admin.update.form.resume',
                     'attr' => array('class' => 'editor'),
                     'required' => false,
                 )
@@ -43,7 +45,7 @@ class UpdateType extends FhmType
                 'content',
                 TextareaType::class,
                 array(
-                    'label' => $this->translation.'.admin.update.form.content',
+                    'label' => $options['translation_route'].'.admin.update.form.content',
                     'attr' => array('class' => 'editor'),
                     'required' => false,
                 )
@@ -51,36 +53,39 @@ class UpdateType extends FhmType
             ->add(
                 'add_global_item',
                 CheckboxType::class,
-                array('label' => $this->translation.'.admin.update.form.add_global_item', 'required' => false)
+                array('label' => $options['translation_route'].'.admin.update.form.add_global_item',
+                      'required' => false)
             )
             ->add(
                 'add_global_video',
                 CheckboxType::class,
-                array('label' => $this->translation.'.admin.update.form.add_global_video', 'required' => false)
+                array('label' => $options['translation_route'].'.admin.update.form.add_global_video',
+                      'required' => false)
             )
             ->add(
                 'order_item',
                 ChoiceType::class,
-                array('label' => $this->translation.'.admin.update.form.order_item', 'choices' => $this->_sortChoices())
+                array('label' => $options['translation_route'].'.admin.update.form.order_item',
+                      'choices' => $this->_sortChoices($options))
             )
             ->add(
                 'order_video',
                 ChoiceType::class,
                 array(
-                    'label' => $this->translation.'.admin.update.form.order_video',
-                    'choices' => $this->_sortChoices(),
+                    'label' => $options['translation_route'].'.admin.update.form.order_video',
+                    'choices' => $this->_sortChoices($options),
                 )
             )
             ->add(
                 'order',
                 IntegerType::class,
-                array('label' => $this->translation.'.admin.update.form.order', 'required' => false)
+                array('label' => $options['translation_route'].'.admin.update.form.order', 'required' => false)
             )
             ->add(
                 'image',
                 MediaType::class,
                 array(
-                    'label' => $this->translation.'.admin.update.form.image',
+                    'label' => $options['translation_route'].'.admin.update.form.image',
                     'filter' => 'image/*',
                     'required' => false,
                 )
@@ -89,11 +94,11 @@ class UpdateType extends FhmType
                 'albums',
                 DocumentType::class,
                 array(
-                    'label' => $this->translation.'.admin.update.form.albums',
+                    'label' => $options['translation_route'].'.admin.update.form.albums',
                     'class' => 'FhmGalleryBundle:GalleryAlbum',
                     'choice_label' => 'name',
-                    'query_builder' => function (\Fhm\GalleryBundle\Repository\GalleryAlbumRepository $dr) {
-                        return $dr->getFormEnable();
+                    'query_builder' => function (GalleryAlbumRepository $dr) use ($options) {
+                        return $dr->getFormEnable($options['filter']);
                     },
                     'required' => false,
                     'multiple' => true,
@@ -104,11 +109,11 @@ class UpdateType extends FhmType
                 'items',
                 DocumentType::class,
                 array(
-                    'label' => $this->translation.'.admin.update.form.items',
+                    'label' => $options['translation_route'].'.admin.update.form.items',
                     'class' => 'FhmGalleryBundle:GalleryItem',
                     'choice_label' => 'name',
-                    'query_builder' => function (\Fhm\GalleryBundle\Repository\GalleryItemRepository $dr) {
-                        return $dr->getFormEnable();
+                    'query_builder' => function (GalleryItemRepository $dr)  use ($options) {
+                        return $dr->getFormEnable($options['filter']);
                     },
                     'required' => false,
                     'multiple' => true,
@@ -119,11 +124,11 @@ class UpdateType extends FhmType
                 'videos',
                 DocumentType::class,
                 array(
-                    'label' => $this->translation.'.admin.update.form.videos',
+                    'label' => $options['translation_route'].'.admin.update.form.videos',
                     'class' => 'FhmGalleryBundle:GalleryVideo',
                     'choice_label' => 'name',
-                    'query_builder' => function (\Fhm\GalleryBundle\Repository\GalleryVideoRepository $dr) {
-                        return $dr->getFormEnable();
+                    'query_builder' => function (GalleryVideoRepository $dr)  use ($options) {
+                        return $dr->getFormEnable($options['filter']);
                     },
                     'required' => false,
                     'multiple' => true,
@@ -137,32 +142,19 @@ class UpdateType extends FhmType
     /**
      * @return array
      */
-    private function _sortChoices()
+    private function _sortChoices($options)
     {
         return array
         (
-            "title" => $this->translation.'.admin.sort.title.asc',
-            "title desc" => $this->translation.'.admin.sort.title.desc',
-            "order" => $this->translation.'.admin.sort.order.asc',
-            "order desc" => $this->translation.'.admin.sort.order.desc',
-            "date_update" => $this->translation.'.admin.sort.update.asc',
-            "date_update desc" => $this->translation.'.admin.sort.update.desc',
-            "date_update" => $this->translation.'.admin.sort.update.asc',
-            "date_update desc" => $this->translation.'.admin.sort.update.desc',
+            "title" => $options['translation_route'].'.admin.sort.title.asc',
+            "title desc" => $options['translation_route'].'.admin.sort.title.desc',
+            "order" => $options['translation_route'].'.admin.sort.order.asc',
+            "order desc" => $options['translation_route'].'.admin.sort.order.desc',
+            "date_update" => $options['translation_route'].'.admin.sort.update.asc',
+            "date_update desc" => $options['translation_route'].'.admin.sort.update.desc',
+            "date_update" => $options['translation_route'].'.admin.sort.update.asc',
+            "date_update desc" => $options['translation_route'].'.admin.sort.update.desc',
         );
     }
 
-    /**
-     * @param OptionsResolver $resolver
-     */
-    public function configureOptions(OptionsResolver $resolver)
-    {
-        $resolver->setDefaults(
-            array(
-                'data_class' => 'Fhm\GalleryBundle\Document\Gallery',
-                'translation_domain' => 'FhmGalleryBundle',
-                'cascade_validation' => true,
-            )
-        );
-    }
 }
