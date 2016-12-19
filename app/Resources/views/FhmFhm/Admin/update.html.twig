@@ -58,42 +58,6 @@
                         {% endblock %}
                     </div>
                 {% endblock %}
-                {% block content_data_grouping %}
-                    {% if form.grouping is defined %}
-                        <div class="form-bloc form-grouping row">
-                            {% block content_data_grouping_data %}
-                                <div class="large-6 medium-6 small-12 columns">
-                                    <fieldset>
-                                        <legend>{{ grouping_name }}</legend>
-                                        <div class="row">
-                                            {{ form_label(form.grouping, grouping_name) }}
-                                            {{ form_errors(form.grouping) }}
-                                            {{ form_widget(form.grouping) }}
-                                        </div>
-                                    </fieldset>
-                                </div>
-                            {% endblock %}
-                        </div>
-                    {% endif %}
-                {% endblock %}
-                {% block content_data_language %}
-                    {% if form.languages is defined %}
-                        <div class="form-bloc form-languages row">
-                            {% block content_data_language_data %}
-                                <div class="large-6 medium-6 small-12 columns">
-                                    <fieldset>
-                                        <legend>{{ ('fhm.language.fieldset')|trans({},'FhmFhmBundle') }}</legend>
-                                        <div class="row">
-                                            {{ form_label(form.languages, ('fhm.language.label')|trans({},'FhmFhmBundle')) }}
-                                            {{ form_errors(form.languages) }}
-                                            {{ form_widget(form.languages) }}
-                                        </div>
-                                    </fieldset>
-                                </div>
-                            {% endblock %}
-                        </div>
-                    {% endif %}
-                {% endblock %}
                 {% block content_data_seo %}
                     <div class="form-bloc form-seo row">
                         {% block content_data_seo_data %}

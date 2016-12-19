@@ -3,15 +3,3 @@ services:
         class: Fhm\MenuBundle\Form\type\Extension\LinkType
         tags:
              - { name: link.type, alias: link }
-
-    fhm_menu_controller_api:
-        class: Fhm\MenuBundle\Controller\ApiController
-        arguments: ["@fhm_tools"]
-
-    fhm_menu_controller_admin:
-        class: Fhm\MenuBundle\Controller\AdminController
-        arguments: ["@fhm_tools"]
-
-    fhm_menu_controller_front:
-        class: Fhm\MenuBundle\Controller\FrontController
-        arguments: ["@fhm_tools"]

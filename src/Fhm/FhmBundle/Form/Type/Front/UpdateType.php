@@ -16,8 +16,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class UpdateType extends AbstractType
 {
-    protected $instance;
-    protected $document;
     protected $translation;
 
     /**

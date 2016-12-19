@@ -1,4 +1,6 @@
-{% set instance = instance|merge({'domain':'FhmUserBundle', 'translation':'user', 'route':'user', 'source':'fhm'}) %}
+{#{% set instance = instance|merge({'domain':'FhmUserBundle', 'translation':'user', 'route':'user', 'source':'fhm'}) %}#}
+
+{% set instance = {'domain':'FhmUserBundle', 'translation':'user', 'route':'user', 'source':'fhm'} %}
 {% set breadcrumbs = [{'link':path('project_home'), 'text':'project.home.breadcrumb'|trans({},'ProjectDefaultBundle')}, {'link':'', 'text':('user.front.login.breadcrumb')|trans({},'FhmUserBundle'), 'current':true}] %}
 {% set layout_extend = "::layout.front.html.twig" %}
 {% trans_default_domain instance.domain %}

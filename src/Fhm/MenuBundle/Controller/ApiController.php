@@ -12,18 +12,25 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
 /**
- * @Route("/api/menu", service="fhm_menu_controller_api")
+ * @Route("/api/menu")
+ * ----------------------------------
+ * Class ApiController
+ * @package Fhm\MenuBundle\Controller
  */
 class ApiController extends FhmController
 {
     /**
      * ApiController constructor.
-     * @param Tools $tools
      */
-    public function __construct(Tools $tools)
+    public function __construct()
     {
-        $this->setFhmTools($tools);
-        parent::__construct('Fhm', 'Menu', 'menu');
+        self::$repository = "FhmMenuBundle:Menu";
+        self::$source = "fhm";
+        self::$domain = "FhmMenuBundle";
+        self::$translation = "menu";
+        self::$document = new Menu();
+        self::$class = get_class(self::$document);
+        self::$route = 'menu';
     }
 
     /**
@@ -50,17 +57,17 @@ class ApiController extends FhmController
      */
     public function detailAction($template, $id)
     {
-        $response = $this->fhm_tools->getContainer()->get('fhm_cache')->getResponseCache(0, 0, true);
+        $response = $this->get('fhm_cache')->getResponseCache(0, 0, true);
         if (is_null($id)) {
-            $site = $this->fhm_tools->dmRepository("FhmSiteBundle:Site")->getDefault();
-            $id   = ($site && $site->getMenu()) ? $site->getMenu()->getId() : null;
+            $site = $this->get('fhm_tools')->dmRepository("FhmSiteBundle:Site")->getDefault();
+            $id = ($site && $site->getMenu()) ? $site->getMenu()->getId() : null;
             if (is_null($id)) {
                 return $this->render(
-                    "::FhmMenu/Template/" . $template . ".html.twig",
+                    "::FhmMenu/Template/".$template.".html.twig",
                     array(
                         'document' => null,
-                        'tree'     => null,
-                        'instance' => $this->fhm_tools->instanceData(),
+                        'tree' => null,
+                        'instance' => $this->getProperties(),
                     ),
                     $response
                 );
@@ -68,34 +75,30 @@ class ApiController extends FhmController
         }
         $menuRepository = $this->getDoctrine()->getManager()->getRepository("FhmMenuBundle:Menu");
         $document = $menuRepository->find($id);
-        $document = ($document) ? $document : $menuRepository->findOneBy(array("alias"=>$id));
-        $document = ($document) ? $document : $menuRepository->findOneBy(array("name"=>$id));
-        $instance = $this->fhm_tools->instanceData($document);
+        $document = ($document) ? $document : $menuRepository->findOneBy(array("alias" => $id));
+        $document = ($document) ? $document : $menuRepository->findOneBy(array("name" => $id));
         // ERROR - unknown
         if ($document == "") {
-            throw $this->createNotFoundException($this->get('translator')->trans(
-                'menu.error.unknown',
-                array(),
-                'FhmMenuBundle'
-            ));
-        } elseif (!$instance->user->admin && ($document->getDelete() || !$document->getActive())) {
+            throw $this->createNotFoundException(
+                $this->get('translator')->trans(
+                    'menu.error.unknown',
+                    array(),
+                    'FhmMenuBundle'
+                )
+            );
+        } elseif (!$this->getUser()->isSuperAdmin() && ($document->getDelete() || !$document->getActive())) {
             throw new HttpException(
                 403,
                 $this->get('translator')->trans('menu.error.forbidden', array(), 'FhmMenuBundle')
             );
         }
-        // Change grouping
-        if ($instance->grouping->different && $document->getGrouping()) {
-            $this->get($this->getParameter("fhm_fhm")["grouping"])
-                 ->setGrouping($document->getFirstGrouping());
-        }
 
         return $this->render(
-            "::FhmMenu/Template/" . $template . ".html.twig",
+            "::FhmMenu/Template/".$template.".html.twig",
             array(
                 'document' => $document,
-                'tree'     => $menuRepository->getTree($document->getId()),
-                'instance' => $instance,
+                'tree' => $menuRepository->getTree($document->getId()),
+                'instance' => $this->getProperties(),
             ),
             $response
         );
@@ -124,35 +127,37 @@ class ApiController extends FhmController
     public function addmoduleAction(Request $request)
     {
         $datas = $request->get('FhmAdd');
-        $data  = array();
+        $data = array();
         if ($datas['module'] != '' && $datas['data'] != '') {
             if ($datas['module'] == "newsGroup") {
-                $documentMenu = $this->getDoctrine()
-                    ->getManager()
-                    ->getRepository('FhmNewsBundle:' . ucfirst($datas['module']))->find($datas['data']);
+                $documentMenu = $this->getDoctrine()->getManager()->getRepository(
+                    'FhmNewsBundle:'.ucfirst($datas['module'])
+                )->find($datas['data']);
             } else {
-                $documentMenu = $this->getDoctrine()
-                    ->getManager()
-                    ->getRepository('Fhm' . ucfirst($datas['module']) . 'Bundle:' . ucfirst($datas['module']))
-                    ->find($datas['data']);
+                $documentMenu = $this->getDoctrine()->getManager()->getRepository(
+                    'Fhm'.ucfirst($datas['module']).'Bundle:'.ucfirst($datas['module'])
+                )->find($datas['data']);
             }
-            $data['link']   = utf8_encode($this->getRoute($datas['module'], $documentMenu));
+            $data['link'] = utf8_encode($this->getRoute($datas['module'], $documentMenu));
             $data['module'] = utf8_encode($datas['module']);
-            $data['id']     = utf8_encode($datas['data']);
+            $data['id'] = utf8_encode($datas['data']);
         }
         $response = new JsonResponse();
 
         return $response->setData($data);
     }
 
+    /**
+     * @param $module
+     * @param $document
+     * @return string
+     */
     private function getRoute($module, $document)
     {
         if ($module === "media") {
-            $route = $this->get($this->getParameters('fhm_media')['service'])
-                ->setDocument($document)
-                ->getPathWeb();
+            $route = $this->get($this->getParameters('service', 'fhm_media'))->setDocument($document)->getPathWeb();
         } else {
-            $route = '/' . $module . '/detail/' . $document->getAlias();
+            $route = '/'.$module.'/detail/'.$document->getAlias();
         }
 
         return $route;

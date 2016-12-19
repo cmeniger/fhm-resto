@@ -1,7 +1,5 @@
 {% extends "::layout.admin.html.twig" %}
 {% trans_default_domain instance.domain %}
-{% import "::Macros/pagination.html.twig" as macroPagination %}
-{% import "::Macros/sort.html.twig" as macroSort %}
 
 {% block tagline %}
     {% if not app.request.isxmlhttprequest %}
@@ -47,7 +45,7 @@
             <form action="{% block content_search_url %}{{ path(instance.source ~ '_admin_' ~ instance.route) }}{% endblock %}" method="POST"  {% block content_search_parameter %}{% endblock %}>
                 <div class="row collapse">
                     <div class="small-6 columns">
-                        {{ form_widget(form.search) }}
+                        {{ form_widget(form) }}
                     </div>
                     <div class="small-1 columns end">
                         <button class="button postfix" type="submit"><i class="fa fa-search"></i></button>
@@ -60,26 +58,16 @@
 
     {# List #}
     {% block content_data %}
-        <div id="{{ pagination.idData }}" class="row">
+        <div class="row">
             {% if documents %}
                 <table class="fullwidth">
                     <thead>
                         <tr>
                             {% block content_data_header %}
-                                <th>{{ (instance.translation ~ '.admin.index.table.header.name')|trans }}{{ macroSort.print('alias', sort) }}</th>
+                                <th>{{ (instance.translation ~ '.admin.index.table.header.name')|trans }}</th>
                             {% endblock %}
                             {% block content_data_header_status %}
-                                <th>{{ (instance.translation ~ '.admin.index.table.header.status')|trans }}{{ macroSort.print('active', sort) }}</th>
-                            {% endblock %}
-                            {% block content_data_header_language %}
-                                {% if instance.language.visible %}
-                                    <th>{{ ('fhm.language.title')|trans({},'FhmFhmBundle') }}</th>
-                                {% endif %}
-                            {% endblock %}
-                            {% block content_data_header_grouping %}
-                                {% if instance.grouping.visible %}
-                                    <th>{{ grouping_name is defined ? grouping_name : '' }}</th>
-                                {% endif %}
+                                <th>{{ (instance.translation ~ '.admin.index.table.header.status')|trans }}</th>
                             {% endblock %}
                             {% block content_data_header_action %}
                                 <th>{{ (instance.translation ~ '.admin.index.table.header.action')|trans }}</th>
@@ -105,35 +93,13 @@
                                             {% if document.getGlobal() %}
                                                 <span class="status regular radius label">{{ ('fhm.status.global')|trans({}, 'FhmFhmBundle') }}</span>
                                             {% endif %}
-                                            {% if document.getShare() and not document.hasGrouping(instance.grouping.used) %}
+                                            {% if document.getShare() %}
                                                 <span class="status regular radius label">{{ ('fhm.status.share')|trans({}, 'FhmFhmBundle') }}</span>
                                             {% endif %}
                                         {% endblock %}
                                     </td>
                                 {% endblock %}
-                                {% block content_data_language %}
-                                    {% if instance.language.visible %}
-                                        <td>
-                                            {% block content_data_language_data %}
-                                                {% for data in document.getLanguages() %}
-                                                    {{ data|flag|raw }}
-                                                {% endfor %}
-                                            {% endblock %}
-                                        </td>
-                                    {% endif %}
-                                {% endblock %}
-                                {% block content_data_grouping %}
-                                    {% if instance.grouping.visible %}
-                                        <td>
-                                            {% block content_data_grouping_data %}
-                                                {% for data in document.getGrouping() %}
-                                                    <span class="status {{ data == instance.grouping.used ? 'success' : 'warning' }} radius label">{{ data }}</span>
-                                                {% endfor %}
-                                            {% endblock %}
-                                        </td>
-                                    {% endif %}
-                                {% endblock %}
-                                {% if document.getShare() and not document.hasGrouping(instance.grouping.used) and not instance.user.admin %}
+                                {% if document.getShare()  and not instance.user.admin %}
                                     {% block content_data_action_share %}
                                         <td>
                                             <div class="actions">
@@ -243,7 +209,7 @@
 
     {# Pagination #}
     {% block content_pagination %}
-        {{ macroPagination.print(pagination) }}
+
     {% endblock %}
 
 {% endblock %}

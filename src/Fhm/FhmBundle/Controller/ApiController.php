@@ -1,7 +1,7 @@
 <?php
 namespace Fhm\FhmBundle\Controller;
 
-use Fhm\FhmBundle\Services\Tools;
+use Fhm\FhmBundle\Document\Fhm;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
@@ -9,18 +9,22 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 /**
- * @Route("/api" , service="fhm_admin_controller_api")
+ * @Route("/api")
  */
 class ApiController extends RefApiController
 {
     /**
      * ApiController constructor.
-     * @param Tools $tools
      */
-    public function __construct(Tools $tools)
+    public function __construct()
     {
-        $this->setFhmTools($tools);
-        parent::__construct();
+        self::$repository = "FhmFhmBundle:Fhm";
+        self::$source = "fhm";
+        self::$domain = "FhmFhmBundle";
+        self::$translation = "fhm";
+        self::$document = new Fhm();
+        self::$class = get_class(self::$document);
+        self::$route = 'fhm';
     }
 
     /**
@@ -36,15 +40,14 @@ class ApiController extends RefApiController
         if ($locale) {
             $this->get('session')->set('_locale', $locale);
         }
-
         if ($this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
             $this->get('session')->set('_localeAdmin', $locale);
         }
 
         return $this->redirect(
-            $this->fhm_tools->getLastRoute() ?
-                $this->fhm_tools->getLastRoute() :
-                $this->generateUrl('project_home')
+            $this->get('fhm_tools')->getLastRoute($request) ? $this->get('fhm_tools')->getLastRoute(
+                $request
+            ) : $this->generateUrl('project_home')
         );
     }
 }

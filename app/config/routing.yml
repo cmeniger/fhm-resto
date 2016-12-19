@@ -9,9 +9,3 @@ routing_other:
 
 routing_project:
     resource: "routing_project.yml"
-
-# Toujours laisser ce bundle à la fin.
-fhm_error:
-    resource: "@FhmErrorBundle/Controller/"
-    type:     annotation
-    prefix:   /

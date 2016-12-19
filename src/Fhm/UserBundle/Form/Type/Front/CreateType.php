@@ -23,38 +23,37 @@ class CreateType extends FhmType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         parent::buildForm($builder, $options);
-        $builder
-            ->add('username', TextType::class, array(
-                'label' => $options['translation_route'].'.front.create.form.username'))
-            ->add(
-                'email',
-                RepeatedType::class,
-                array
-                (
-                    'type' => EmailType::class,
-                    'first_options' => array('label' => $options['translation_route'].'.front.create.form.email'),
-                    'second_options' => array(
-                        'label' => $options['translation_route'].'.front.create.form.email_confirmation'),
-                    'invalid_message' => 'user.email.mismatch',
-                )
+        $builder->add(
+            'username',
+            TextType::class,
+            array(
+                'label' => $options['translation_route'].'.front.create.form.username',
             )
-            ->add(
-                'plainPassword',
-                RepeatedType::class,
-                array
-                (
-                    'type' => PasswordType::class,
-                    'first_options' => array('label' => $options['translation_route'].'.front.create.form.password'),
-                    'second_options' => array(
-                        'label' => $options['translation_route'].'.front.create.form.password_confirmation'),
-                    'invalid_message' => 'user.password.mismatch',
-                )
+        )->add(
+            'email',
+            RepeatedType::class,
+            array(
+                'type' => EmailType::class,
+                'first_options' => array('label' => $options['translation_route'].'.front.create.form.email'),
+                'second_options' => array(
+                    'label' => $options['translation_route'].'.front.create.form.email_confirmation',
+                ),
+                'invalid_message' => 'user.email.mismatch',
             )
-            ->remove('name')
-            ->remove('description')
-            ->remove('submitNew')
-            ->remove('submitDuplicate')
-            ->remove('submitQuit');
+        )->add(
+            'plainPassword',
+            RepeatedType::class,
+            array(
+                'type' => PasswordType::class,
+                'first_options' => array('label' => $options['translation_route'].'.front.create.form.password'),
+                'second_options' => array(
+                    'label' => $options['translation_route'].'.front.create.form.password_confirmation',
+                ),
+                'invalid_message' => 'user.password.mismatch',
+            )
+        )->remove('name')->remove('description')->remove('submitNew')->remove('submitDuplicate')->remove(
+            'submitQuit'
+        );
     }
 
-   }
+}

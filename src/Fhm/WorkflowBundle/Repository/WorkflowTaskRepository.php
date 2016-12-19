@@ -15,7 +15,10 @@ use Doctrine\ODM\MongoDB\Mapping\ClassMetadata;
 class WorkflowTaskRepository extends FhmRepository
 {
     /**
-     * Constructor
+     * WorkflowTaskRepository constructor.
+     * @param DocumentManager $dm
+     * @param UnitOfWork $uow
+     * @param ClassMetadata $class
      */
     public function __construct(DocumentManager $dm, UnitOfWork $uow, ClassMetadata $class)
     {
@@ -23,31 +26,14 @@ class WorkflowTaskRepository extends FhmRepository
     }
 
     /**
-     * @param string $grouping
-     *
      * @return \Doctrine\ODM\MongoDB\Query\Builder
      */
-    public function getFormParent($grouping = "")
+    public function getFormParent()
     {
         $builder = $this->createQueryBuilder();
         // Parent
-        if($this->parent)
-        {
+        if ($this->parent) {
             $builder->field('parent')->in(array('0', null));
-        }
-        // Language
-        if($this->language)
-        {
-            $builder->field('languages')->in((array) $this->language);
-        }
-        // Grouping
-        if($grouping != "")
-        {
-            $builder->addAnd(
-                $builder->expr()
-                    ->addOr($builder->expr()->field('grouping')->in((array) $grouping))
-                    ->addOr($builder->expr()->field('share')->equals(true))
-            );
         }
         // Common
         $builder->field('parents')->equals(null);

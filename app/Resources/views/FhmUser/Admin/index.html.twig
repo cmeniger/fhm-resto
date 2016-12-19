@@ -2,11 +2,11 @@
 {% extends "::FhmFhm/Admin/index.html.twig" %}
 
 {% block content_data_header %}
-    <th>{{ 'user.admin.index.table.header.username'|trans }}{{ macroSort.print('username', sort) }}</th>
-    <th>{{ 'user.admin.index.table.header.email'|trans }}{{ macroSort.print('emailCanonical', sort) }}</th>
-    <th>{{ 'user.admin.index.table.header.firstname'|trans }}{{ macroSort.print('first_name', sort) }}</th>
-    <th>{{ 'user.admin.index.table.header.lastname'|trans }}{{ macroSort.print('last_name', sort) }}</th>
-    <th>{{ 'user.admin.index.table.header.create'|trans }}{{ macroSort.print('date_create', sort) }}</th>
+    <th>{{ 'user.admin.index.table.header.username'|trans }}</th>
+    <th>{{ 'user.admin.index.table.header.email'|trans }}</th>
+    <th>{{ 'user.admin.index.table.header.firstname'|trans }}</th>
+    <th>{{ 'user.admin.index.table.header.lastname'|trans }}</th>
+    <th>{{ 'user.admin.index.table.header.create'|trans }}</th>
 {% endblock %}
 
 {% block content_data_body %}
@@ -19,7 +19,7 @@
 
 {% block content_data_status_data %}
     {{ parent() }}
-    {% if document.isLocked() %}
+    {% if not document.isAccountNonLocked() %}
         <span class="status alert radius label">{{ (instance.translation ~ '.status.locked')|trans }}</span>
     {% endif %}
     {% if not document.isAccountNonExpired() %}

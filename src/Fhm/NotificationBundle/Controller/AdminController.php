@@ -10,19 +10,25 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 /**
- * @Route("/admin/notification", service="fhm_notification_controller_admin")
+ * @Route("/admin/notification")
+ * -----------------------------------------
+ * Class AdminController
+ * @package Fhm\NotificationBundle\Controller
  */
 class AdminController extends FhmController
 {
     /**
      * AdminController constructor.
-     *
-     * @param \Fhm\FhmBundle\Services\Tools $tools
      */
-    public function __construct(\Fhm\FhmBundle\Services\Tools $tools)
+    public function __construct()
     {
-        $this->setFhmTools($tools);
-        parent::__construct('Fhm', 'Notification', 'notification');
+        self::$repository = "FhmNotificationBundle:Notification";
+        self::$source = "fhm";
+        self::$domain = "FhmNotificationBundle";
+        self::$translation = "notification";
+        self::$document = new Notification();
+        self::$class = get_class(self::$document);
+        self::$route = 'notification';
     }
 
     /**
@@ -36,50 +42,6 @@ class AdminController extends FhmController
     public function indexAction()
     {
         return parent::indexAction();
-    }
-
-    /**
-     * @Route
-     * (
-     *      path="/create",
-     *      name="fhm_admin_notification_create"
-     * )
-     * @Template("::FhmNotification/Admin/create.html.twig")
-     */
-    public function createAction(Request $request)
-    {
-        // For activate this route, delete next line
-        throw $this->createNotFoundException($this->fhm_tools->trans('fhm.error.route', array(), 'FhmFhmBundle'));
-    }
-
-    /**
-     * @Route
-     * (
-     *      path="/duplicate/{id}",
-     *      name="fhm_admin_notification_duplicate",
-     *      requirements={"id"="[a-z0-9]*"}
-     * )
-     * @Template("::FhmNotification/Admin/create.html.twig")
-     */
-    public function duplicateAction(Request $request, $id)
-    {
-        // For activate this route, delete next line
-        throw $this->createNotFoundException($this->fhm_tools->trans('fhm.error.route', array(), 'FhmFhmBundle'));
-    }
-
-    /**
-     * @Route
-     * (
-     *      path="/update/{id}",
-     *      name="fhm_admin_notification_update",
-     *      requirements={"id"="[a-z0-9]*"}
-     * )
-     * @Template("::FhmNotification/Admin/update.html.twig")
-     */
-    public function updateAction(Request $request, $id)
-    {
-        // For activate this route, delete next line
-        throw $this->createNotFoundException($this->fhm_tools->trans('fhm.error.route', array(), 'FhmFhmBundle'));
     }
 
     /**
@@ -125,34 +87,6 @@ class AdminController extends FhmController
     /**
      * @Route
      * (
-     *      path="/activate/{id}",
-     *      name="fhm_admin_notification_activate",
-     *      requirements={"id"="[a-z0-9]*"}
-     * )
-     */
-    public function activateAction($id)
-    {
-        // For activate this route, delete next line
-        throw $this->createNotFoundException($this->fhm_tools->trans('fhm.error.route', array(), 'FhmFhmBundle'));
-    }
-
-    /**
-     * @Route
-     * (
-     *      path="/deactivate/{id}",
-     *      name="fhm_admin_notification_deactivate",
-     *      requirements={"id"="[a-z0-9]*"}
-     * )
-     */
-    public function deactivateAction($id)
-    {
-        // For activate this route, delete next line
-        throw $this->createNotFoundException($this->fhm_tools->trans('fhm.error.route', array(), 'FhmFhmBundle'));
-    }
-
-    /**
-     * @Route
-     * (
      *      path="/import",
      *      name="fhm_admin_notification_import"
      * )
@@ -174,17 +108,5 @@ class AdminController extends FhmController
     public function exportAction(Request $request)
     {
         return parent::exportAction($request);
-    }
-
-    /**
-     * @Route
-     * (
-     *      path="/grouping",
-     *      name="fhm_admin_notification_grouping"
-     * )
-     */
-    public function groupingAction(Request $request)
-    {
-        return parent::groupingAction($request);
     }
 }

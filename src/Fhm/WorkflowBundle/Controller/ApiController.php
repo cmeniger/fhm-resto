@@ -10,19 +10,25 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 /**
- * @Route("/api/workflow", service="fhm_workflow_controller_api")
+ * @Route("/api/workflow")
+ * --------------------------------------
+ * Class ApiController
+ * @package Fhm\WorkflowBundle\Controller
  */
 class ApiController extends FhmController
 {
     /**
      * ApiController constructor.
-     *
-     * @param \Fhm\FhmBundle\Services\Tools $tools
      */
-    public function __construct(\Fhm\FhmBundle\Services\Tools $tools)
+    public function __construct()
     {
-        $this->setFhmTools($tools);
-        parent::__construct('Fhm', 'Workflow', 'workflow');
+        self::$repository = "FhmWorkflowBundle:Workflow";
+        self::$source = "fhm";
+        self::$domain = "FhmWorkflowBundle";
+        self::$translation = "workflow";
+        self::$document = new Workflow();
+        self::$class = get_class(self::$document);
+        self::$route = 'workflow';
     }
 
     /**
@@ -62,12 +68,9 @@ class ApiController extends FhmController
      */
     public function modalAction($id)
     {
-        $document = $this->fhm_tools->dmRepository()->find($id);
-        $instance = $this->fhm_tools->instanceData($document);
-
+        $document = $this->get('fhm_tools')->dmRepository(self::$repository)->find($id);
         return array(
             'document' => $document,
-            'instance' => $instance
         );
     }
 
@@ -82,27 +85,26 @@ class ApiController extends FhmController
     public function statusAction()
     {
         return array(
-            'instance' => $this->fhm_tools->instanceData(),
             'datas'    => array(
                 '0' => array(
                     'trans'     => 'workflow.status.wait',
                     'code'      => 'wait',
-                    'workflows' => $this->fhm_tools->dmRepository()->getByStatus(0, true)
+                    'workflows' => $this->get('fhm_tools')->dmRepository(self::$repository)->getByStatus(0, true)
                 ),
                 '1' => array(
                     'trans'     => 'workflow.status.run',
                     'code'      => 'run',
-                    'workflows' => $this->fhm_tools->dmRepository()->getByStatus(1, true)
+                    'workflows' => $this->get('fhm_tools')->dmRepository(self::$repository)->getByStatus(1, true)
                 ),
                 '2' => array(
                     'trans'     => 'workflow.status.finish',
                     'code'      => 'finish',
-                    'workflows' => $this->fhm_tools->dmRepository()->getByStatus(2, true)
+                    'workflows' => $this->get('fhm_tools')->dmRepository(self::$repository)->getByStatus(2, true)
                 ),
                 '3' => array(
                     'trans'     => 'workflow.status.cancel',
                     'code'      => 'cancel',
-                    'workflows' => $this->fhm_tools->dmRepository()->getByStatus(3, true)
+                    'workflows' => $this->get('fhm_tools')->dmRepository(self::$repository)->getByStatus(3, true)
                 )
             )
         );

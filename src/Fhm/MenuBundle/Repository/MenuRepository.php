@@ -14,7 +14,10 @@ use Doctrine\ODM\MongoDB\Mapping\ClassMetadata;
 class MenuRepository extends FhmRepository
 {
     /**
-     * Constructor
+     * MenuRepository constructor.
+     * @param DocumentManager $dm
+     * @param UnitOfWork $uow
+     * @param ClassMetadata $class
      */
     public function __construct(DocumentManager $dm, UnitOfWork $uow, ClassMetadata $class)
     {
@@ -22,22 +25,11 @@ class MenuRepository extends FhmRepository
     }
 
     /**
-     * @param string $grouping
-     *
      * @return \Doctrine\ODM\MongoDB\Query\Builder
      */
-    public function getFormEnable($grouping = "")
+    public function getFormEnable()
     {
         $builder = $this->createQueryBuilder();
-        // Language
-        if ($this->language) {
-            $builder->field('languages')->in((array) $this->language);
-        }
-        // Grouping
-        if ($grouping != "") {
-            $builder->addOr($builder->expr()->field('grouping')->in((array) $grouping));
-            $builder->addOr($builder->expr()->field('share')->equals(true));
-        }
         // Common
         $builder->field('parent')->in(array('0', null));
         $builder->field('active')->equals(true);

@@ -1,16 +1,4 @@
 services:
-    fhm_admin_controller_admin:
-        class: Fhm\FhmBundle\Controller\AdminController
-        arguments: ["@fhm_tools"]
-
-    fhm_admin_controller_api:
-        class: Fhm\FhmBundle\Controller\ApiController
-        arguments: ["@fhm_tools"]
-
-
-    fhm_grouping:
-        class: Fhm\FhmBundle\Services\Grouping
-        arguments: ["@fhm_tools"]
 
     fhm_tools:
         class: Fhm\FhmBundle\Services\Tools
@@ -31,13 +19,12 @@ services:
         calls:
             - [setContainer, ['@service_container']]
         tags:
-            - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
-            - { name: kernel.event_listener, event: kernel.controller, method: onKernelController }
-            - { name: kernel.event_listener, event: kernel.view, method: onKernelView }
-            - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse }
-            - { name: kernel.event_listener, event: kernel.finish_request, method: onKernelFinishRequest }
-            - { name: kernel.event_listener, event: kernel.terminate, method: onKernelTerminate }
-            - { name: kernel.event_listener, event: kernel.exception, method: onKernelException }
+            - { name: kernel.event_subscriber, event: kernel.request, method: onKernelRequest }
+
+    fhm.instance.data:
+        class: Fhm\FhmBundle\EventListener\FhmInstance
+        tags:
+            - { name: kernel.event_subscriber, event: kernel.controller, method: onKernelController }
 
     fhm.form.type.autocomplete:
         class: Fhm\FhmBundle\Form\Type\AutocompleteType

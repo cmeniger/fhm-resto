@@ -8,19 +8,25 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 /**
- * @Route("/notification", service="fhm_notification_controller_front")
+ * @Route("/notification")
+ * -----------------------------------------
+ * Class FrontController
+ * @package Fhm\NotificationBundle\Controller
  */
 class FrontController extends FhmController
 {
     /**
      * FrontController constructor.
-     *
-     * @param \Fhm\FhmBundle\Services\Tools $tools
      */
-    public function __construct(\Fhm\FhmBundle\Services\Tools $tools)
+    public function __construct()
     {
-        $this->setFhmTools($tools);
-        parent::__construct('Fhm', 'Notification', 'notification');
+        self::$repository = "FhmNotificationBundle:Notification";
+        self::$source = "fhm";
+        self::$domain = "FhmNotificationBundle";
+        self::$translation = "notification";
+        self::$document = new Notification();
+        self::$class = get_class(self::$document);
+        self::$route = 'notification';
     }
 
     /**
@@ -37,50 +43,6 @@ class FrontController extends FhmController
     }
 
     /**
-     * @Route
-     * (
-     *      path="/create",
-     *      name="fhm_notification_create"
-     * )
-     * @Template("::FhmNotification/Front/create.html.twig")
-     */
-    public function createAction(Request $request)
-    {
-        // For activate this route, delete next line
-        throw $this->createNotFoundException($this->fhm_tools->trans('fhm.error.route', array(), 'FhmFhmBundle'));
-    }
-
-    /**
-    * @Route
-    * (
-    *      path="/duplicate/{id}",
-    *      name="fhm_notification_duplicate",
-    *      requirements={"id"="[a-z0-9]*"}
-    * )
-    * @Template("::FhmNotification/Front/create.html.twig")
-    */
-    public function duplicateAction(Request $request, $id)
-    {
-        // For activate this route, delete next line
-        throw $this->createNotFoundException($this->fhm_tools->trans('fhm.error.route', array(), 'FhmFhmBundle'));
-    }
-
-    /**
-    * @Route
-    * (
-    *      path="/update/{id}",
-    *      name="fhm_notification_update",
-    *      requirements={"id"="[a-z0-9]*"}
-    * )
-    * @Template("::FhmNotification/Front/update.html.twig")
-    */
-    public function updateAction(Request $request, $id)
-    {
-        // For activate this route, delete next line
-        throw $this->createNotFoundException($this->fhm_tools->trans('fhm.error.route', array(), 'FhmFhmBundle'));
-    }
-
-    /**
     * @Route
     * (
     *      path="/detail/{id}",
@@ -92,20 +54,6 @@ class FrontController extends FhmController
     public function detailAction($id)
     {
         return parent::detailAction($id);
-    }
-
-    /**
-    * @Route
-    * (
-    *      path="/delete/{id}",
-    *      name="fhm_notification_delete",
-    *      requirements={"id"="[a-z0-9]*"}
-    * )
-    */
-    public function deleteAction($id)
-    {
-        // For activate this route, delete next line
-        throw $this->createNotFoundException($this->fhm_tools->trans('fhm.error.route', array(), 'FhmFhmBundle'));
     }
 
     /**

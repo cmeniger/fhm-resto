@@ -15,7 +15,10 @@ use Doctrine\ODM\MongoDB\Mapping\ClassMetadata;
 class WorkflowLogRepository extends FhmRepository
 {
     /**
-     * Constructor
+     * WorkflowLogRepository constructor.
+     * @param DocumentManager $dm
+     * @param UnitOfWork $uow
+     * @param ClassMetadata $class
      */
     public function __construct(DocumentManager $dm, UnitOfWork $uow, ClassMetadata $class)
     {

@@ -23,12 +23,10 @@
 {% macro add(data) %}
 
     {% set link = true %}
-
+    {% set class = '' %}
     {# Class #}
     {% if data['class'] is defined %}
         {% set class = data['class'] %}
-    {% else %}
-        {% set class = '' %}
     {% endif %}
 
     {# Active #}

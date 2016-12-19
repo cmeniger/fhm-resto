@@ -14,7 +14,10 @@ use Doctrine\ODM\MongoDB\Mapping\ClassMetadata;
 class NotificationRepository extends FhmRepository
 {
     /**
-     * Constructor
+     * NotificationRepository constructor.
+     * @param DocumentManager $dm
+     * @param UnitOfWork $uow
+     * @param ClassMetadata $class
      */
     public function __construct(DocumentManager $dm, UnitOfWork $uow, ClassMetadata $class)
     {
@@ -29,8 +32,7 @@ class NotificationRepository extends FhmRepository
      */
     public function getIndexNew($user)
     {
-        if(!$user)
-        {
+        if (!$user) {
             return 0;
         }
         $builder = $this->createQueryBuilder();
@@ -38,12 +40,9 @@ class NotificationRepository extends FhmRepository
         $builder->field('new')->equals(true);
         $builder->field('active')->equals(true);
         $builder->field('delete')->equals(false);
-        $builder->sort('date_create','desc');
+        $builder->sort('date_create', 'desc');
 
-        return $builder
-            ->getQuery()
-            ->execute()
-            ->toArray();
+        return $builder->getQuery()->execute()->toArray();
     }
 
     /**
@@ -54,20 +53,16 @@ class NotificationRepository extends FhmRepository
      */
     public function getIndexAll($user)
     {
-        if(!$user)
-        {
+        if (!$user) {
             return 0;
         }
         $builder = $this->createQueryBuilder();
         $builder->field('user.id')->equals($user->getId());
         $builder->field('active')->equals(true);
         $builder->field('delete')->equals(false);
-        $builder->sort('date_create','desc');
+        $builder->sort('date_create', 'desc');
 
-        return $builder
-            ->getQuery()
-            ->execute()
-            ->toArray();
+        return $builder->getQuery()->execute()->toArray();
     }
 
     /**
@@ -78,8 +73,7 @@ class NotificationRepository extends FhmRepository
      */
     public function getCountNew($user)
     {
-        if(!$user)
-        {
+        if (!$user) {
             return 0;
         }
         $builder = $this->createQueryBuilder();
@@ -88,10 +82,7 @@ class NotificationRepository extends FhmRepository
         $builder->field('active')->equals(true);
         $builder->field('delete')->equals(false);
 
-        return $builder
-            ->count()
-            ->getQuery()
-            ->execute();
+        return $builder->count()->getQuery()->execute();
     }
 
     /**
@@ -102,8 +93,7 @@ class NotificationRepository extends FhmRepository
      */
     public function getCountAll($user)
     {
-        if(!$user)
-        {
+        if (!$user) {
             return 0;
         }
         $builder = $this->createQueryBuilder();
@@ -111,9 +101,6 @@ class NotificationRepository extends FhmRepository
         $builder->field('active')->equals(true);
         $builder->field('delete')->equals(false);
 
-        return $builder
-            ->count()
-            ->getQuery()
-            ->execute();
+        return $builder->count()->getQuery()->execute();
     }
 }

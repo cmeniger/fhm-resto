@@ -75,22 +75,22 @@
             {% if document.getShare() and not document.hasGrouping(instance.grouping.used) %}
                 <span class="status regular radius label">{{ ('fhm.status.share')|trans({}, 'FhmFhmBundle') }}</span>
             {% endif %}
-            {% if document.isLocked() %}
-                <span class="status alert radius label">{{ (instance.translation ~ '.status.locked')|trans }}</span>
-            {% endif %}
+            {#{% if document.isLocked() %}#}
+                {#<span class="status alert radius label">{{ (instance.translation ~ '.status.locked')|trans }}</span>#}
+            {#{% endif %}#}
             {% if not document.isAccountNonExpired() %}
                 <span class="status alert radius label">{{ (instance.translation ~ '.status.expired')|trans }}</span>
             {% endif %}
         </td>
     </tr>
-    <tr>
-        <td><strong>{{ grouping_name is defined ? grouping_name : (instance.translation ~ '.admin.detail.data.grouping')|trans }}</strong></td>
-        <td>
-            {% for data in document.getGrouping() %}
-                <span class="status {{ data == instance.grouping.current ? 'success' : 'warning' }} radius label">{{ data }}</span>
-            {% endfor %}
-        </td>
-    </tr>
+    {#<tr>#}
+        {#<td><strong>{{ grouping_name is defined ? grouping_name : (instance.translation ~ '.admin.detail.data.grouping')|trans }}</strong></td>#}
+        {#<td>#}
+            {#{% for data in document.getGrouping() %}#}
+                {#<span class="status {{ data == instance.grouping.current ? 'success' : 'warning' }} radius label">{{ data }}</span>#}
+            {#{% endfor %}#}
+        {#</td>#}
+    {#</tr>#}
 {% endblock %}
 
 {% block content_admin_data %}

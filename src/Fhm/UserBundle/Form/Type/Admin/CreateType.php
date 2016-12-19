@@ -25,137 +25,126 @@ class CreateType extends GeolocationType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         parent::buildForm($builder, $options);
-        $builder
-            ->add('username', TextType::class, array(
-                'label' => $options['translation_route'].'.admin.create.form.username'))
-            ->add('email', EmailType::class, array('label' => $options['translation_route'].'.admin.create.form.email'))
-            ->add(
-                'first_name',
-                TextType::class,
-                array('label' => $options['translation_route'].'.admin.create.form.first_name', 'required' => false)
+        $builder->add(
+            'username',
+            TextType::class,
+            array(
+                'label' => $options['translation_route'].'.admin.create.form.username',
             )
-            ->add(
-                'last_name',
-                TextType::class,
-                array('label' => $options['translation_route'].'.admin.create.form.last_name', 'required' => false)
+        )->add(
+            'email',
+            EmailType::class,
+            array('label' => $options['translation_route'].'.admin.create.form.email')
+        )->add(
+            'first_name',
+            TextType::class,
+            array('label' => $options['translation_route'].'.admin.create.form.first_name', 'required' => false)
+        )->add(
+            'last_name',
+            TextType::class,
+            array('label' => $options['translation_route'].'.admin.create.form.last_name', 'required' => false)
+        )->add(
+            'birth_date',
+            BirthdayType::class,
+            array('label' => $options['translation_route'].'.admin.create.form.birth_date', 'required' => false)
+        )->add(
+            'tel1',
+            TextType::class,
+            array('label' => $options['translation_route'].'.admin.create.form.tel1', 'required' => false)
+        )->add(
+            'tel2',
+            TextType::class,
+            array('label' => $options['translation_route'].'.admin.create.form.tel2', 'required' => false)
+        )->add(
+            'enabled',
+            CheckboxType::class,
+            array('label' => $options['translation_route'].'.admin.create.form.enabled', 'required' => false)
+        )->add(
+            'sign',
+            TextareaType::class,
+            array(
+                'label' => $options['translation_route'].'.admin.create.form.sign',
+                'attr' => array('class' => 'editor'),
+                'required' => false,
             )
-            ->add(
-                'birth_date',
-                BirthdayType::class,
-                array('label' => $options['translation_route'].'.admin.create.form.birth_date', 'required' => false)
+        )->add(
+            'sex',
+            ChoiceType::class,
+            array(
+                'choices' => array(
+                    'm' => 'fhm.sex.m',
+                    'f' => 'fhm.sex.f',
+                ),
+                'label' => 'fhm.sex.label',
+                'translation_domain' => 'FhmFhmBundle',
+                'required' => false,
             )
-            ->add(
-                'tel1',
-                TextType::class,
-                array('label' => $options['translation_route'].'.admin.create.form.tel1', 'required' => false)
+        )->add(
+            'avatar',
+            MediaType::class,
+            array(
+                'label' => $options['translation_route'].'.admin.create.form.avatar',
+                'filter' => 'image/*',
+                'required' => false,
             )
-            ->add(
-                'tel2',
-                TextType::class,
-                array('label' => $options['translation_route'].'.admin.create.form.tel2', 'required' => false)
+        )->add(
+            'social_facebook',
+            TextType::class,
+            array(
+                'label' => $options['translation_route'].'.admin.create.form.social.facebook',
+                'required' => false,
             )
-            ->add(
-                'enabled',
-                CheckboxType::class,
-                array('label' => $options['translation_route'].'.admin.create.form.enabled', 'required' => false)
+        )->add(
+            'social_facebook_id',
+            TextType::class,
+            array(
+                'label' => $options['translation_route'].'.admin.create.form.social.facebookId',
+                'required' => false,
             )
-            ->add(
-                'locked',
-                CheckboxType::class,
-                array('label' => $options['translation_route'].'.admin.create.form.locked', 'required' => false)
+        )->add(
+            'social_twitter',
+            TextType::class,
+            array('label' => $options['translation_route'].'.admin.create.form.social.twitter', 'required' => false)
+        )->add(
+            'social_twitter_id',
+            TextType::class,
+            array(
+                'label' => $options['translation_route'].'.admin.create.form.social.twitterId',
+                'required' => false,
             )
-            ->add(
-                'sign',
-                TextareaType::class,
-                array(
-                    'label' => $options['translation_route'].'.admin.create.form.sign',
-                    'attr' => array('class' => 'editor'),
-                    'required' => false,
-                )
+        )->add(
+            'social_google',
+            TextType::class,
+            array('label' => $options['translation_route'].'.admin.create.form.social.google', 'required' => false)
+        )->add(
+            'social_google_id',
+            TextType::class,
+            array(
+                'label' => $options['translation_route'].'.admin.create.form.social.googleId',
+                'required' => false,
             )
-            ->add(
-                'sex',
-                ChoiceType::class,
-                array(
-                    'choices' => array(
-                        'm' => 'fhm.sex.m',
-                        'f' => 'fhm.sex.f',
-                    ),
-                    'label' => 'fhm.sex.label',
-                    'translation_domain' => 'FhmFhmBundle',
-                    'required' => false,
-                )
+        )->add(
+            'social_instagram',
+            TextType::class,
+            array(
+                'label' => $options['translation_route'].'.admin.create.form.social.instagram',
+                'required' => false,
             )
-            ->add(
-                'avatar',
-                MediaType::class,
-                array(
-                    'label' => $options['translation_route'].'.admin.create.form.avatar',
-                    'filter' => 'image/*',
-                    'required' => false,
-                )
-            )
-            ->add(
-                'social_facebook',
-                TextType::class,
-                array('label' => $options['translation_route'].'.admin.create.form.social.facebook',
-                      'required' => false)
-            )
-            ->add(
-                'social_facebook_id',
-                TextType::class,
-                array('label' => $options['translation_route'].'.admin.create.form.social.facebookId',
-                      'required' => false)
-            )
-            ->add(
-                'social_twitter',
-                TextType::class,
-                array('label' => $options['translation_route'].'.admin.create.form.social.twitter', 'required' => false)
-            )
-            ->add(
-                'social_twitter_id',
-                TextType::class,
-                array('label' => $options['translation_route'].'.admin.create.form.social.twitterId',
-                      'required' => false)
-            )
-            ->add(
-                'social_google',
-                TextType::class,
-                array('label' => $options['translation_route'].'.admin.create.form.social.google', 'required' => false)
-            )
-            ->add(
-                'social_google_id',
-                TextType::class,
-                array('label' => $options['translation_route'].'.admin.create.form.social.googleId',
-                      'required' => false)
-            )
-            ->add(
-                'social_instagram',
-                TextType::class,
-                array('label' => $options['translation_route'].'.admin.create.form.social.instagram',
-                      'required' => false)
-            )
-            ->add(
-                'social_youtube',
-                TextType::class,
-                array('label' => $options['translation_route'].'.admin.create.form.social.youtube', 'required' => false)
-            )
-            ->add(
-                'social_flux',
-                TextType::class,
-                array('label' => $options['translation_route'].'.admin.create.form.social.flux', 'required' => false)
-            )
-            ->add(
-                'social_site',
-                TextType::class,
-                array('label' => $options['translation_route'].'.admin.create.form.social.site', 'required' => false)
-            )
-            ->remove('name')
-            ->remove('description')
-            ->remove('active')
-            ->remove('share')
-            ->remove('global')
-            ->remove('grouping');
+        )->add(
+            'social_youtube',
+            TextType::class,
+            array('label' => $options['translation_route'].'.admin.create.form.social.youtube', 'required' => false)
+        )->add(
+            'social_flux',
+            TextType::class,
+            array('label' => $options['translation_route'].'.admin.create.form.social.flux', 'required' => false)
+        )->add(
+            'social_site',
+            TextType::class,
+            array('label' => $options['translation_route'].'.admin.create.form.social.site', 'required' => false)
+        )->remove('name')->remove('description')->remove('active')->remove('share')->remove('global')->remove(
+            'grouping'
+        );
     }
 
 

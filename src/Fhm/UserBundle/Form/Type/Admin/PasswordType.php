@@ -20,27 +20,24 @@ class PasswordType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder
-            ->add(
-                'plainPassword',
-                RepeatedType::class,
-                array
-                (
-                    'type' => \Symfony\Component\Form\Extension\Core\Type\PasswordType::class,
-                    'first_options' => array(
-                        'label' => 'user.admin.detail.password.password'
-                    ),
-                    'second_options' => array(
-                        'label' => 'user.admin.detail.password.password_confirmation'
-                    ),
-                    'invalid_message' => 'fos_user.password.mismatch',
-                )
+        $builder->add(
+            'plainPassword',
+            RepeatedType::class,
+            array(
+                'type' => \Symfony\Component\Form\Extension\Core\Type\PasswordType::class,
+                'first_options' => array(
+                    'label' => 'user.admin.detail.password.password',
+                ),
+                'second_options' => array(
+                    'label' => 'user.admin.detail.password.password_confirmation',
+                ),
+                'invalid_message' => 'fos_user.password.mismatch',
             )
-            ->add(
-                'submit',
-                SubmitType::class,
-                array('label' => 'user.admin.detail.password.submit')
-            );
+        )->add(
+            'submit',
+            SubmitType::class,
+            array('label' => 'user.admin.detail.password.submit')
+        );
     }
 
     /**
@@ -50,5 +47,5 @@ class PasswordType extends AbstractType
     {
         return 'FhmPassword';
     }
-    
+
 }

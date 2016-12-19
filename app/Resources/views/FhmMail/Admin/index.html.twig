@@ -2,9 +2,7 @@
 {% extends "::FhmFhm/Admin/index.html.twig" %}
 
 {% block content_data_header_grouping %}{% endblock %}
-{% block content_data_grouping %}{% endblock %}
 {% block content_data_header_language %}{% endblock %}
-{% block content_data_language %}{% endblock %}
 {% block content_data_header_status %}{% endblock %}
 {% block content_data_status %}{% endblock %}
 {% block content_data_action_share_links %}{% endblock %}
@@ -26,11 +24,11 @@
 {% endblock %}
 
 {% block content_data_header %}
-    <th>{{ (instance.translation ~ '.admin.index.table.header.date')|trans }}{{ macroSort.print('date_create', sort) }}</th>
-    <th>{{ (instance.translation ~ '.admin.index.table.header.model')|trans }}{{ macroSort.print('model', sort) }}</th>
-    <th>{{ (instance.translation ~ '.admin.index.table.header.to')|trans }}{{ macroSort.print('to', sort) }}</th>
-    <th>{{ (instance.translation ~ '.admin.index.table.header.subject')|trans }}{{ macroSort.print('subject', sort) }}</th>
-    <th>{{ (instance.translation ~ '.admin.index.table.header.type')|trans }}{{ macroSort.print('type', sort) }}</th>
+    <th>{{ (instance.translation ~ '.admin.index.table.header.date')|trans }}</th>
+    <th>{{ (instance.translation ~ '.admin.index.table.header.model')|trans }}</th>
+    <th>{{ (instance.translation ~ '.admin.index.table.header.to')|trans }}</th>
+    <th>{{ (instance.translation ~ '.admin.index.table.header.subject')|trans }}</th>
+    <th>{{ (instance.translation ~ '.admin.index.table.header.type')|trans }}</th>
 {% endblock %}
 
 {% block content_data_body %}

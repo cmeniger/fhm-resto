@@ -7,34 +7,35 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/**
+ * Class UpdateType
+ * @package Fhm\WorkflowBundle\Form\Type\Admin\Step
+ */
 class UpdateType extends FhmType
 {
+    /**
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $this->setTranslation('workflow');
         parent::buildForm($builder, $options);
-        $builder
-            ->add(
-                'color',
-                TextType::class,
-                array(
-                    'label' => $options['translation_route'].'.admin.update.form.color',
-                    'attr' => array('class' => 'colorpicker'),
-                    'required' => false,
-                )
+        $builder->add(
+            'color',
+            TextType::class,
+            array(
+                'label' => $options['translation_route'].'.admin.update.form.color',
+                'attr' => array('class' => 'colorpicker'),
+                'required' => false,
             )
-            ->add(
-                'order',
-                IntegerType::class,
-                array('label' => $options['translation_route'].'.admin.update.form.order', 'required' => false)
-            )
-            ->remove('seo_title')
-            ->remove('seo_description')
-            ->remove('seo_keywords')
-            ->remove('languages')
-            ->remove('grouping')
-            ->remove('share')
-            ->remove('global');
+        )->add(
+            'order',
+            IntegerType::class,
+            array('label' => $options['translation_route'].'.admin.update.form.order', 'required' => false)
+        )->remove('seo_title')->remove('seo_description')->remove('seo_keywords')->remove('languages')->remove(
+            'grouping'
+        )->remove('share')->remove('global');
     }
 
     /**

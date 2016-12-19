@@ -13,16 +13,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class SearchType extends AbstractType
 {
-    protected $translation;
-
-    /**
-     * @param $domaine
-     */
-    public function setTranslation($domaine = 'fhm')
-    {
-        $options['translation_route'] = $domaine;
-    }
-
     /**
      * @param FormBuilderInterface $builder
      * @param array $options
@@ -33,9 +23,10 @@ class SearchType extends AbstractType
             'search',
             TextType::class,
             array(
+                'label'=>'fhm.admin.index.form.search',
                 'required' => false,
                 'attr' => array(
-                    'placeholder' => $options['translation_route'].'.admin.index.form.search',
+                    'placeholder' => 'fhm.admin.index.form.search',
                     'data-type' => 'list',
                 ),
             )
@@ -55,19 +46,6 @@ class SearchType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(
-            array(
-                'data_class' => 'Fhm\FhmBundle\Document\Fhm',
-                'translation_domain' => 'FhmFhmBundle',
-                'cascade_validation' => true,
-                'translation_route'=>'',
-                'filter'=>'',
-                'lang_visible'=>'',
-                'lang_available'=>'',
-                'grouping_visible'=>'',
-                'grouping_available'=>'',
-                'user_admin'=>''
-            )
-        );
+        $resolver->setDefaults(array('translation_domain' => 'FhmFhmBundle'));
     }
 }

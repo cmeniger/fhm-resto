@@ -2,6 +2,7 @@
 namespace Fhm\MediaBundle\Twig;
 
 use Fhm\FhmBundle\Services\Tools;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Class MediaExtension
@@ -10,23 +11,18 @@ use Fhm\FhmBundle\Services\Tools;
  */
 class MediaExtension extends \Twig_Extension
 {
-    protected $fhm_tools;
     protected $template;
     protected $service;
     protected $path;
 
     /**
-     * MapNoMap constructor.
-     *
-     * @param \Symfony\Component\Templating\EngineInterface $template
-     * @param \Fhm\FhmBundle\Services\Tools                 $tools
+     * MediaExtension constructor.
+     * @param ContainerInterface $container
      */
-    public function __construct(\Symfony\Component\Templating\EngineInterface $template, Tools $tools)
+    public function __construct(ContainerInterface $container)
     {
-        $container       = $tools->getContainer();
-        $this->fhm_tools = $tools;
-        $this->template  = $template;
-        $this->service   = $container->get($tools->getParameters('service', 'fhm_media'));
+        $this->template  = new \Twig_Environment();
+        $this->service   = $container->get($container->getParameter('fhm_media')['service']);
         $this->path      = $this->service->getPath();
     }
 

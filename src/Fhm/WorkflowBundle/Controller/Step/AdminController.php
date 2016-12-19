@@ -10,7 +10,10 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 /**
- * @Route("/admin/workflowstep", service="fhm_workflow_controller_step_admin")
+ * @Route("/admin/workflowstep")
+ * -----------------------------------------
+ * Class AdminController
+ * @package Fhm\WorkflowBundle\Controller\Step
  */
 class AdminController extends FhmController
 {
@@ -19,13 +22,13 @@ class AdminController extends FhmController
      *
      * @param \Fhm\FhmBundle\Services\Tools $tools
      */
-    public function __construct(\Fhm\FhmBundle\Services\Tools $tools)
+    public function __construct()
     {
-        $this->setFhmTools($tools);
-        parent::__construct('Fhm', 'Workflow', 'workflow_step', 'WorkflowStep');
-        $this->form->type->create = 'Fhm\\WorkflowBundle\\Form\\Type\\Admin\\Step\\CreateType';
-        $this->form->type->update = 'Fhm\\WorkflowBundle\\Form\\Type\\Admin\\Step\\UpdateType';
-        $this->translation        = array('FhmWorkflowBundle', 'workflow.step');
+//        $this->setFhmTools($tools);
+//        parent::__construct('Fhm', 'Workflow', 'workflow_step', 'WorkflowStep');
+//        $this->form->type->create = 'Fhm\\WorkflowBundle\\Form\\Type\\Admin\\Step\\CreateType';
+//        $this->form->type->update = 'Fhm\\WorkflowBundle\\Form\\Type\\Admin\\Step\\UpdateType';
+//        $this->translation        = array('FhmWorkflowBundle', 'workflow.step');
     }
 
     /**

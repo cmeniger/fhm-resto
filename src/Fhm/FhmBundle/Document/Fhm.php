@@ -99,15 +99,6 @@ class Fhm
      */
     protected $seo_description;
 
-    /**
-     * @MongoDB\Field(type="collection")
-     */
-    protected $grouping;
-
-    /**
-     * @MongoDB\Field(type="collection")
-     */
-    protected $languages;
 
     /**
      * @MongoDB\ReferenceOne(nullable=true, cascade={"persist"})
@@ -130,8 +121,6 @@ class Fhm
         $this->global        = false;
         $this->order         = 0;
         $this->alias         = null;
-        $this->grouping      = array();
-        $this->languages     = array();
         $this->historic_sons = new ArrayCollection();
     }
 
@@ -494,198 +483,6 @@ class Fhm
     }
 
     /**
-     * @param string $grouping
-     *
-     * @return $this
-     */
-    public function addGrouping($grouping)
-    {
-        if($grouping)
-        {
-            if(!in_array($grouping, (array) $this->grouping))
-            {
-                $this->grouping[] = $grouping;
-            }
-            asort($this->grouping);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @param string $grouping
-     *
-     * @return $this
-     */
-    public function hasGrouping($grouping)
-    {
-        return in_array($grouping, (array) $this->grouping) ? true : false;
-    }
-
-    /**
-     * Remove grouping
-     *
-     * @param string $code
-     *
-     * @return self
-     */
-    public function removeGrouping($code)
-    {
-        foreach((array) $this->grouping as $key => $value)
-        {
-            if($value === $code)
-            {
-                unset($this->grouping[$key]);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * Reset grouping
-     *
-     * @return self
-     */
-    public function resetGrouping()
-    {
-        $this->grouping = array();
-
-        return $this;
-    }
-
-    /**
-     * Get grouping
-     *
-     * @return array $grouping
-     */
-    public function getGrouping()
-    {
-        $data = array();
-        foreach((array) $this->grouping as $grouping)
-        {
-            $data[$grouping] = $grouping;
-        }
-
-        return $data;
-    }
-
-    /**
-     * Set grouping
-     *
-     * @param $grouping
-     *
-     * @return $this
-     */
-    public function setGrouping($grouping)
-    {
-        $this->grouping = $grouping;
-
-        return $this;
-    }
-
-    /**
-     * Get grouping
-     *
-     * @return array $grouping
-     */
-    public function getFirstGrouping()
-    {
-        return (is_array($this->grouping) && count($this->grouping) > 0) ? $this->grouping[0] : "";
-    }
-
-    /**
-     * Set languages
-     *
-     * @param $languages
-     *
-     * @return $this
-     */
-    public function setLanguages($languages)
-    {
-        $this->languages = (array) $languages;
-
-        return $this;
-    }
-
-    /**
-     * Get languages
-     *
-     * @return array $languages
-     */
-    public function getLanguages()
-    {
-        $data = array();
-        foreach((array) $this->languages as $languages)
-        {
-            $data[$languages] = $languages;
-        }
-
-        return $data;
-    }
-
-    /**
-     * @param string $languages
-     *
-     * @return $this
-     */
-    public function addLanguage($languages)
-    {
-        if($languages)
-        {
-            if(!in_array($languages, (array) $this->languages))
-            {
-                $this->languages[] = $languages;
-            }
-            asort($this->languages);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @param string $languages
-     *
-     * @return $this
-     */
-    public function hasLanguage($languages)
-    {
-        return in_array($languages, (array) $this->languages) ? true : false;
-    }
-
-    /**
-     * Remove languages
-     *
-     * @param string $code
-     *
-     * @return self
-     */
-    public function removeLanguage($code)
-    {
-        foreach((array) $this->languages as $key => $value)
-        {
-            if($value === $code)
-            {
-                unset($this->languages[$key]);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * Reset languages
-     *
-     * @return self
-     */
-    public function resetLanguages()
-    {
-        $this->languages = array();
-
-        return $this;
-    }
-
-    /**
      * Get historic sons
      *
      * @return mixed
@@ -822,8 +619,6 @@ class Fhm
         $this->share           = $document->getShare();
         $this->global          = $document->getGlobal();
         $this->order           = $document->getOrder();
-        $this->grouping        = $document->getGrouping();
-        $this->languages       = $document->getLanguages();
         $this->date_create     = $document->getDateCreate();
         $this->date_update     = $document->getDateUpdate();
         $this->seo_title       = $document->getSeoTitle();
@@ -848,24 +643,12 @@ class Fhm
             $count += $this->getShare() != $this->getHistoricParent()->getShare() ? 1 : 0;
             $count += $this->getOrder() != $this->getHistoricParent()->getOrder() ? 1 : 0;
             $count += $this->getGlobal() != $this->getHistoricParent()->getGlobal() ? 1 : 0;
-            $count += $this->getGrouping() != $this->getHistoricParent()->getGrouping() ? 1 : 0;
-            $count += $this->getLanguages() != $this->getHistoricParent()->getLanguages() ? 1 : 0;
             $count += $this->getSeoTitle() != $this->getHistoricParent()->getSeoTitle() ? 1 : 0;
             $count += $this->getSeoDescription() != $this->getHistoricParent()->getSeoDescription() ? 1 : 0;
             $count += $this->getSeoKeywords() != $this->getHistoricParent()->getSeoKeywords() ? 1 : 0;
         }
 
         return $count;
-    }
-
-    /**
-     * Get first language
-     *
-     * @return string
-     */
-    public function getFirstLanguage()
-    {
-        return (is_array($this->languages) && count($this->languages) > 0) ? $this->languages[0] : "";
     }
 
     /**

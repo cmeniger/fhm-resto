@@ -16,10 +16,10 @@ class MediaTagExtension extends \Twig_Extension
      * @param \Symfony\Component\Templating\EngineInterface $template
      * @param \Fhm\FhmBundle\Services\Tools                 $tools
      */
-    public function __construct(\Symfony\Component\Templating\EngineInterface $template, \Fhm\FhmBundle\Services\Tools $tools)
+    public function __construct(\Fhm\FhmBundle\Services\Tools $tools)
     {
         $this->fhm_tools = $tools;
-        $this->template  = $template;
+        $this->template  = new \Twig_Environment();
     }
 
     /**

@@ -10,19 +10,25 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 /**
- * @Route("/api/mail", service="fhm_mail_controller_api")
+ * @Route("/api/mail")
+ * ----------------------------------
+ * Class ApiController
+ * @package Fhm\MailBundle\Controller
  */
 class ApiController extends FhmController
 {
     /**
      * ApiController constructor.
-     *
-     * @param \Fhm\FhmBundle\Services\Tools $tools
      */
-    public function __construct(\Fhm\FhmBundle\Services\Tools $tools)
+    public function __construct()
     {
-        $this->setFhmTools($tools);
-        parent::__construct('Fhm', 'Mail', 'mail');
+        self::$repository = "FhmMailBundle:Mail";
+        self::$source = "fhm";
+        self::$domain = "FhmMailBundle";
+        self::$translation = "mail";
+        self::$document = new Mail();
+        self::$class = get_class(self::$document);
+        self::$route = 'mail';
     }
 
     /**
@@ -49,14 +55,14 @@ class ApiController extends FhmController
     {
         $this->get('session')->getFlashBag()->add(
             'notice',
-            $this->fhm_tools->trans(
+            $this->trans(
                 "mail.test.flash.ok",
-                array("%email%" => $this->fhm_tools->getParameters('admin', 'fhm_mailer'))
+                array("%email%" => $this->get('fhm_tools')->getParameters('admin', 'fhm_mailer'))
             )
         );
-        $this->container->get('fhm_mail')->AdminTest();
+        $this->get('fhm_mail')->AdminTest();
 
-        return $this->redirect($this->fhm_tools->getLastRoute());
+        return $this->redirect($this->get('fhm_tools')->getLastRoute($this->get('request_stack')->getCurrentRequest()));
     }
 
     /**
@@ -82,16 +88,15 @@ class ApiController extends FhmController
      */
     public function userRegisterAction()
     {
-        return array
-        (
+        return array(
             "user" => $this->getUser(),
-            "urlConfirm" => $this->container->get('router')->generate(
+            "urlConfirm" => $this->get('router')->generate(
                 'fos_user_registration_confirm',
                 array('token' => md5($this->getUser()->getUsername())),
                 true
             ),
             "version" => "mail",
-            "server_http_host" => $this->fhm_tools->getParameters('host', 'fhm_mailer'),
+            "server_http_host" => $this->get('fhm_tools')->getParameters('host', 'fhm_mailer'),
         );
     }
 
@@ -105,16 +110,15 @@ class ApiController extends FhmController
      */
     public function userResetAction()
     {
-        return array
-        (
+        return array(
             "user" => $this->getUser(),
-            "urlConfirm" => $this->container->get('router')->generate(
+            "urlConfirm" => $this->get('router')->generate(
                 'fos_user_registration_confirm',
                 array('token' => md5($this->getUser()->getUsername())),
                 true
             ),
             "version" => "mail",
-            "server_http_host" => $this->fhm_tools->getParameters('host', 'fhm_mailer'),
+            "server_http_host" => $this->get('fhm_tools')->getParameters('host', 'fhm_mailer'),
         );
     }
 
@@ -137,7 +141,7 @@ class ApiController extends FhmController
                 'phone' => '0123456789',
                 'content' => 'Praesent nec nisl a purus blandit viverra.
                  Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae;
-                 Sed aliquam, nisi quis porttitor congue, elit erat euismod orci, ac placerat dolor lectus quis orci.
+                 Sed aliquam, nisi quis porttitor congue, elit erat euismod orci, ac placerat dolor lec.
                  Sed a libero. Praesent venenatis metus at tortor pulvinar varius. Suspendisse potenti.',
             )
         );
@@ -145,11 +149,10 @@ class ApiController extends FhmController
         $contact->setName("Contact test");
         $contact->addMessage($message);
 
-        return array
-        (
+        return array(
             "message" => $message,
             "version" => "mail",
-            "server_http_host" => $this->fhm_tools->getParameters('host', 'fhm_mailer'),
+            "server_http_host" => $this->get('fhm_tools')->getParameters('host', 'fhm_mailer'),
         );
     }
 }

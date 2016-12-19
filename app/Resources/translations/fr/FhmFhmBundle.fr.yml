@@ -4,6 +4,9 @@ fhm:
         link:                                   Console
         title:                                  Administration
         nodata:                                 Bientôt disponible...
+        index:
+            form:
+                search:                         Rechercher
 
     menu:
         title:                                  Administration

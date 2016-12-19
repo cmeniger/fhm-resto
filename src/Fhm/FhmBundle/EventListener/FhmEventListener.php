@@ -3,6 +3,8 @@ namespace Fhm\FhmBundle\EventListener;
 
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
@@ -14,9 +16,35 @@ use Symfony\Component\HttpKernel\Event\FinishRequestEvent;
 use Symfony\Component\HttpKernel\Event\PostResponseEvent;
 use Symfony\Component\HttpKernel\HttpKernel;
 
-class FhmEventListener implements ContainerAwareInterface
+/**
+ * Class FhmEventListener
+ * @package Fhm\FhmBundle\EventListener
+ */
+class FhmEventListener implements EventSubscriberInterface
 {
-    use ContainerAwareTrait;
+    /**
+     * @var ContainerInterface
+     */
+    protected $container;
+
+    /**
+     * Sets the container.
+     *
+     * @param ContainerInterface|null $container A ContainerInterface instance or null
+     */
+    public function setContainer(ContainerInterface $container = null)
+    {
+        $this->container = $container;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getContainer()
+    {
+        return $this->container;
+    }
+
     /**
      * @param GetResponseEvent $event
      *
@@ -24,10 +52,6 @@ class FhmEventListener implements ContainerAwareInterface
      */
     public function onKernelRequest(GetResponseEvent $event)
     {
-        // Twig global
-        $parameters = $this->container->getParameter("fhm_fhm");
-        $this->container->get($parameters["grouping"])->loadTwigGlobal();
-        $this->container->get('project_twig_global')->load();
         // Locale
         if ($event->getRequest()->hasPreviousSession()) {
             if ($locale = $event->getRequest()->attributes->get('_locale')) {
@@ -39,55 +63,28 @@ class FhmEventListener implements ContainerAwareInterface
         if (HttpKernel::MASTER_REQUEST != $event->getRequestType() || $event->getRequest()->isXmlHttpRequest()) {
             return false;
         }
-        $parameters  = $this->container->getParameter("project");
+        $parameters = $this->getContainer()->getParameter("project");
         $maintenance = isset($parameters['maintenance']) ? $parameters['maintenance'] : false;
-        $construct   = isset($parameters['construct']) ? $parameters['construct'] : false;
-        $firewall    = isset($parameters['firewall']) ? $parameters['firewall'] : array();
-        $date        = isset($parameters['date']) ? new \DateTime($parameters['date']) : '';
-        $route       = $event->getRequest()->attributes->get('_route');
-        $authorized  = false;
-        $authorized  = in_array($route, $firewall) ? true : $authorized;
-
-        if ($this->container->get('security.token_storage')->getToken()) {
-            $authorized  = $this->container->get('security.authorization_checker')->isGranted('ROLE_ADMIN') ?
-                true :
-                $authorized;
+        $construct = isset($parameters['construct']) ? $parameters['construct'] : false;
+        $firewall = isset($parameters['firewall']) ? $parameters['firewall'] : array();
+        $date = isset($parameters['date']) ? new \DateTime($parameters['date']) : '';
+        $route = $event->getRequest()->attributes->get('_route');
+        $authorized = false;
+        $authorized = in_array($route, $firewall) ? true : $authorized;
+        if ($this->getContainer()->get('security.token_storage')->getToken()) {
+            $authorized = $this->getContainer()->get('security.authorization_checker')->isGranted(
+                'ROLE_ADMIN'
+            ) ? true : $authorized;
         }
-
-        $authorized  = in_array($this->container->get('kernel')->getEnvironment(), array('test', 'dev')) ?
-            true :
-            $authorized;
+        $authorized = in_array(
+            $this->getContainer()->get('kernel')->getEnvironment(),
+            array('test', 'dev')
+        ) ? true : $authorized;
         if ($construct && !$authorized) {
-            $event->setResponse(
-                new Response(
-                    $this->container->get('templating')->render(
-                        '::ProjectDefault/Template/construct.html.twig',
-                        array(
-                            'date' => $date,
-                            'site' => $this->container->get(
-                                $this->container->getParameter("fhm_fhm")["grouping"]
-                            )->getSite()
-                        )
-                    ),
-                    503
-                )
-            );
+            $event->setResponse(new Response("", 503));
             $event->stopPropagation();
         } elseif ($maintenance && !$authorized) {
-            $event->setResponse(
-                new Response(
-                    $this->container->get('templating')->render(
-                        '::ProjectDefault/Template/maintenance.html.twig',
-                        array(
-                            'date' => $date,
-                            'site' => $this->container->get(
-                                $this->container->getParameter("fhm_fhm")["grouping"]
-                            )->getSite()
-                        )
-                    ),
-                    503
-                )
-            );
+            $event->setResponse( new Response("", 503));
             $event->stopPropagation();
         }
 
@@ -95,62 +92,12 @@ class FhmEventListener implements ContainerAwareInterface
     }
 
     /**
-     * @param GetResponseForControllerResultEvent $event
-     *
-     * @return bool
+     * @return array
      */
-    public function onKernelView(GetResponseForControllerResultEvent $event)
+    public static function getSubscribedEvents()
     {
-        return false;
-    }
-
-    /**
-     * @param FilterControllerEvent $event
-     *
-     * @return bool
-     */
-    public function onKernelController(FilterControllerEvent $event)
-    {
-        return false;
-    }
-
-    /**
-     * @param FilterResponseEvent $event
-     *
-     * @return bool
-     */
-    public function onKernelResponse(FilterResponseEvent $event)
-    {
-        return false;
-    }
-
-    /**
-     * @param FinishRequestEvent $event
-     *
-     * @return bool
-     */
-    public function onKernelFinishRequest(FinishRequestEvent $event)
-    {
-        return false;
-    }
-
-    /**
-     * @param PostResponseEvent $event
-     *
-     * @return bool
-     */
-    public function onKernelTerminate(PostResponseEvent $event)
-    {
-        return false;
-    }
-
-    /**
-     * @param GetResponseForExceptionEvent $event
-     *
-     * @return bool
-     */
-    public function onKernelException(GetResponseForExceptionEvent $event)
-    {
-        return false;
+        return array(
+            'kernel.request' => 'onKernelRequest'
+        );
     }
 }

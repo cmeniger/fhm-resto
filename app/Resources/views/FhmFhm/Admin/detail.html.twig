@@ -1,7 +1,6 @@
 {% extends "::layout.admin.html.twig" %}
 {% trans_default_domain instance.domain %}
 {% import "::Macros/dd.list.html.twig" as macroList %}
-{% import "::Macros/pagination.html.twig" as macroPagination %}
 
 {% block tagline %}
     <div class="row">
@@ -58,17 +57,11 @@
                 {% block content_anchor_data %}
                     <dt>{{ ('fhm.anchor.title')|trans({},'FhmFhmBundle') }} :</dt>
                     {% block content_anchor_link %}
-                        {#<dd><a href="#anchor-top">{{ ('fhm.anchor.top')|trans({},'FhmFhmBundle') }}</a></dd>#}
                         <dd><a href="#anchor-admin-data">{{ ('fhm.anchor.data')|trans({},'FhmFhmBundle') }}</a></dd>
                         <dd><a href="#anchor-admin-url">{{ ('fhm.anchor.url')|trans({},'FhmFhmBundle') }}</a></dd>
                         {% if historics is defined and historics != null %}
                             <dd>
                                 <a href="#anchor-admin-historic">{{ ('fhm.anchor.historic')|trans({},'FhmFhmBundle') }}</a>
-                            </dd>
-                        {% endif %}
-                        {% if instance.user.admin and instance.grouping.visible %}
-                            <dd>
-                                <a href="#anchor-admin-tools">{{ ('fhm.anchor.admin')|trans({},'FhmFhmBundle') }}</a>
                             </dd>
                         {% endif %}
                     {% endblock %}
@@ -119,31 +112,11 @@
                                 {% else %}
                                     <span class="status success radius label">{{ ('fhm.status.enable')|trans({}, 'FhmFhmBundle') }}</span>
                                 {% endif %}
-                                {% if document.getShare() and not document.hasGrouping(instance.grouping.used) %}
+                                {% if document.getShare()%}
                                     <span class="status regular radius label">{{ ('fhm.status.share')|trans({}, 'FhmFhmBundle') }}</span>
                                 {% endif %}
                             </td>
                         </tr>
-                        {% if instance.language.visible %}
-                            <tr>
-                                <td><strong>{{ ('fhm.language.title')|trans({},'FhmFhmBundle') }}</strong></td>
-                                <td>
-                                    {% for data in document.getLanguages() %}
-                                        {{ data|flag|raw }}
-                                    {% endfor %}
-                                </td>
-                            </tr>
-                        {% endif %}
-                        {% if instance.grouping.visible %}
-                            <tr>
-                                <td><strong>{{ grouping_name }}</strong></td>
-                                <td>
-                                    {% for data in document.getGrouping() %}
-                                        <span class="status {{ data == instance.grouping.current ? 'success' : 'warning' }} radius label">{{ data }}</span>
-                                    {% endfor %}
-                                </td>
-                            </tr>
-                        {% endif %}
                     {% endblock %}
                 </tbody>
             </table>
@@ -280,42 +253,19 @@
                     </table>
                 </div>
                 {% block content_historic_pagination %}
-                    {{ macroPagination.print(paginationHistoric) }}
                 {% endblock %}
-            </div>
-            <div id="historicModal" class="reveal-modal large historic" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
-                <h2 id="modalTitle">{{ ('fhm.historic.modal.title')|trans({},'FhmFhmBundle') }}</h2>
-                <div id="historicModalContent"></div>
-                <a class="close-reveal-modal" aria-label="Close">&#215;</a>
             </div>
         {% endif %}
     {% endblock %}
 
     {# Admin #}
     {% block content_admin %}
-        {% if instance.user.admin %}
+        {% if instance.user is defined and instance.user.admin %}
             <div class="row">
                 <h2 id="anchor-admin-tools">{{ (instance.translation ~ '.admin.detail.admin.title')|trans }}</h2>
             </div>
             {% block content_admin_data %}
-                {# Admin - Grouping #}
-                {% if instance.grouping.visible %}
-                    <div class="row">
-                        {{ macroList.admin
-                        (
-                        document,
-                        instance.grouping.available,
-                        document.getGrouping(),
-                        instance.grouping.current,
-                        instance.source ~ '_admin_' ~ instance.route ~ '_grouping',
-                        grouping_title is defined ? grouping_title : '',
-                        grouping_list1 is defined ? grouping_list1 : '',
-                        grouping_list2 is defined ? grouping_list2 : '',
-                        1,
-                        instance
-                        ) }}
-                    </div>
-                {% endif %}
+
             {% endblock %}
         {% endif %}
     {% endblock %}

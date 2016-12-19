@@ -1,5 +1,4 @@
 <?php
-
 namespace Fhm\UserBundle\Repository;
 
 use Fhm\FhmBundle\Repository\FhmRepository;
@@ -15,7 +14,10 @@ use Doctrine\ODM\MongoDB\Mapping\ClassMetadata;
 class UserRepository extends FhmRepository
 {
     /**
-     * Constructor
+     * UserRepository constructor.
+     * @param DocumentManager $dm
+     * @param UnitOfWork $uow
+     * @param ClassMetadata $class
      */
     public function __construct(DocumentManager $dm, UnitOfWork $uow, ClassMetadata $class)
     {
@@ -24,56 +26,33 @@ class UserRepository extends FhmRepository
 
     /**
      * @param string $search
-     * @param int    $page
-     * @param int    $count
-     * @param string $grouping
-     * @param bool   $roleSuperAdmin
-     *
+     * @param bool $roleSuperAdmin
      * @return mixed
      */
-    public function getAdminIndex($search = "", $page = 1, $count = 5, $grouping = "", $roleSuperAdmin = false)
+    public function getAdminIndex($search = "", $roleSuperAdmin = false)
     {
-        $builder = (($page > 0 && $count > 0) && $search) ? $this->search($search) : $this->createQueryBuilder();
-        // Grouping
-        if ($grouping != "") {
-            $builder->addOr($builder->expr()->field('grouping')->in((array) $grouping));
-            $builder->addOr($builder->expr()->field('share')->equals(true));
-        }
+        $builder = ($search) ? $this->search($search) : $this->createQueryBuilder();
         // RoleSuperAdmin
         if (!$roleSuperAdmin) {
             $builder->field('delete')->equals(false);
-        }
-        // Pagination
-        if ($page > 0 && $count > 0) {
-            $builder->limit($count);
-            $builder->skip(($page - 1) * $count);
         }
         // Common
         $builder->field('roles')->notIn(array('ROLE_SUPER_ADMIN'));
         $this->builderSort($builder);
 
-        return $builder
-            ->getQuery()
-            ->execute()
-            ->toArray();
+        return $builder->getQuery()->execute()->toArray();
     }
 
     /**
      * @param string $search
-     * @param string $grouping
-     * @param bool   $roleSuperAdmin
+     * @param bool $roleSuperAdmin
      *
      * @return int
      * @throws \Doctrine\ODM\MongoDB\MongoDBException
      */
-    public function getAdminCount($search = "", $grouping = "", $roleSuperAdmin = false)
+    public function getAdminCount($search = "", $roleSuperAdmin = false)
     {
         $builder = ($search) ? $this->search($search) : $this->createQueryBuilder();
-        // Grouping
-        if ($grouping != "") {
-            $builder->addOr($builder->expr()->field('grouping')->in((array) $grouping));
-            $builder->addOr($builder->expr()->field('share')->equals(true));
-        }
         // RoleSuperAdmin
         if (!$roleSuperAdmin) {
             $builder->field('delete')->equals(false);
@@ -81,29 +60,22 @@ class UserRepository extends FhmRepository
         // Common
         $builder->field('roles')->notIn(array('ROLE_SUPER_ADMIN'));
 
-        return count($builder
-            ->getQuery()
-            ->execute()
-            ->toArray());
+        return count(
+            $builder->getQuery()->execute()->toArray()
+        );
     }
 
     /**
      * @param string $search
-     * @param int    $page
-     * @param int    $count
-     * @param string $grouping
+     * @param int $page
+     * @param int $count
      *
      * @return mixed
      * @throws \Doctrine\ODM\MongoDB\MongoDBException
      */
-    public function getFrontIndex($search = "", $page = 1, $count = 5, $grouping = "")
+    public function getFrontIndex($search = "", $page = 1, $count = 5)
     {
         $builder = (($page > 0 && $count > 0) && $search) ? $this->search($search) : $this->createQueryBuilder();
-        // Grouping
-        if ($grouping != "") {
-            $builder->addOr($builder->expr()->field('grouping')->in((array) $grouping));
-            $builder->addOr($builder->expr()->field('share')->equals(true));
-        }
         // Pagination
         if ($page > 0 && $count > 0) {
             $builder->limit($count);
@@ -115,36 +87,26 @@ class UserRepository extends FhmRepository
         $builder->field('delete')->equals(false);
         $this->builderSort($builder);
 
-        return $builder
-            ->getQuery()
-            ->execute()
-            ->toArray();
+        return $builder->getQuery()->execute()->toArray();
     }
 
     /**
      * @param string $search
-     * @param string $grouping
      *
      * @return int
      * @throws \Doctrine\ODM\MongoDB\MongoDBException
      */
-    public function getFrontCount($search = "", $grouping = "")
+    public function getFrontCount($search = "")
     {
         $builder = ($search) ? $this->search($search) : $this->createQueryBuilder();
-        // Grouping
-        if ($grouping != "") {
-            $builder->addOr($builder->expr()->field('grouping')->in((array) $grouping));
-            $builder->addOr($builder->expr()->field('share')->equals(true));
-        }
         // Common
         $builder->field('roles')->notIn(array('ROLE_SUPER_ADMIN'));
         $builder->field('active')->equals(true);
         $builder->field('delete')->equals(false);
 
-        return count($builder
-            ->getQuery()
-            ->execute()
-            ->toArray());
+        return count(
+            $builder->getQuery()->execute()->toArray()
+        );
     }
 
     /**
@@ -154,11 +116,7 @@ class UserRepository extends FhmRepository
      */
     public function getExport($group = "")
     {
-        return $this->createQueryBuilder()
-            ->sort('username')
-            ->getQuery()
-            ->execute()
-            ->toArray();
+        return $this->createQueryBuilder()->sort('username')->getQuery()->execute()->toArray();
     }
 
     /**
@@ -173,10 +131,7 @@ class UserRepository extends FhmRepository
         $qb = $this->createQueryBuilder();
         $qb->addOr($qb->expr()->field('usernameCanonical')->equals(strtolower($data['username'])));
         $qb->addOr($qb->expr()->field('emailCanonical')->equals(strtolower($data['email'])));
-        $results = $qb
-            ->getQuery()
-            ->execute()
-            ->toArray();
+        $results = $qb->getQuery()->execute()->toArray();
         if (count($results) > 1) {
             return 'error';
         } elseif (count($results) == 1) {

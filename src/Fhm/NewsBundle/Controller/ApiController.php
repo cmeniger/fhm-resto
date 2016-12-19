@@ -10,19 +10,22 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 /**
- * @Route("/api/news", service="fhm_news_controller_api")
+ * @Route("/api/news")
  */
 class ApiController extends FhmController
 {
     /**
      * ApiController constructor.
-     *
-     * @param \Fhm\FhmBundle\Services\Tools $tools
      */
-    public function __construct(\Fhm\FhmBundle\Services\Tools $tools)
+    public function __construct()
     {
-        $this->setFhmTools($tools);
-        parent::__construct('Fhm', 'News', 'news');
+        self::$repository = "FhmNewsBundle:News";
+        self::$source = "fhm";
+        self::$domain = "FhmMenuBundle";
+        self::$translation = "news";
+        self::$document = new News();
+        self::$class = get_class(self::$document);
+        self::$route = 'news';
     }
 
     /**
@@ -54,32 +57,6 @@ class ApiController extends FhmController
     /**
      * @Route
      * (
-     *      path="/historic/",
-     *      name="fhm_api_news_historic"
-     * )
-     * @Template("::FhmNews/Api/historic.html.twig")
-     */
-    public function historicAction(Request $request)
-    {
-        return parent::historicAction($request);
-    }
-
-    /**
-     * @Route
-     * (
-     *      path="/historic/copy/{id}",
-     *      name="fhm_api_news_historic_copy",
-     *      requirements={"id"="[a-z0-9]*"}
-     * )
-     */
-    public function historicCopyAction(Request $request, $id)
-    {
-        return parent::historicCopyAction($request, $id);
-    }
-
-    /**
-     * @Route
-     * (
      *      path="/detail/{template}/{rows}/{pagination}/{id}",
      *      name="fhm_api_news_detail",
      *      requirements={"id"=".+", "rows"="\d*", "pagination"="[0-1]"},
@@ -90,171 +67,66 @@ class ApiController extends FhmController
     public function detailAction($template, $id, $rows, $pagination)
     {
         $document = "";
-        $instance = $this->fhm_tools->instanceData();
         // News
         if ($id && $template == 'full') {
-            $document = $this->fhm_tools->dmRepository()->getById($id);
-            $document = ($document) ? $document : $this->fhm_tools->dmRepository()->getByAlias($id);
-            $document = ($document) ? $document : $this->fhm_tools->dmRepository()->getByName($id);
-            $instance = $this->fhm_tools->instanceData($document);
+            $document = $this->get('fhm_tools')->dmRepository(self::$repository)->getById($id);
+            $document = ($document) ? $document : $this->get('fhm_tools')->dmRepository(self::$repository)->getByAlias(
+                $id
+            );
+            $document = ($document) ? $document : $this->get('fhm_tools')->dmRepository(self::$repository)->getByName(
+                $id
+            );
             $documents = '';
             $form = '';
             // ERROR - unknown
             if ($document == "") {
                 throw $this->createNotFoundException(
-                    $this->fhm_tools->trans('news.group.error.unknown', array(), 'FhmNewsBundle')
+                    $this->trans('news.group.error.unknown', array(), 'FhmNewsBundle')
                 );
             } // ERROR - Forbidden
-            elseif (!$instance->user->admin && ($document->getDelete() || !$document->getActive())) {
+            elseif (!$this->get('security.authorization_checker')->isGranted('ROLE_ADMIN') && ($document->getDelete(
+                    ) || !$document->getActive())
+            ) {
                 throw new HttpException(
                     403,
-                    $this->fhm_tools->trans('news.group.error.forbidden', array(), 'FhmNewsBundle')
-                );
-            }
-            // Change grouping
-            if ($instance->grouping->different && $document->getGrouping()) {
-                $this->get($this->fhm_tools->getParameters("grouping", "fhm_fhm"))->setGrouping(
-                    $document->getFirstGrouping()
+                    $this->trans('news.group.error.forbidden', array(), 'FhmNewsBundle')
                 );
             }
         } else {
             // Group
             if ($id) {
-                $document = $this->fhm_tools->dmRepository("FhmNewsBundle:NewsGroup")->getById($id);
-                $document = ($document) ? $document : $this->fhm_tools->dmRepository(
+                $document = $this->get('fhm_tools')->dmRepository("FhmNewsBundle:NewsGroup")->getById($id);
+                $document = ($document) ? $document : $this->get('fhm_tools')->dmRepository(
                     "FhmNewsBundle:NewsGroup"
                 )->getByAlias($id);
-                $document = ($document) ? $document : $this->fhm_tools->dmRepository(
+                $document = ($document) ? $document : $this->get('fhm_tools')->dmRepository(
                     "FhmNewsBundle:NewsGroup"
                 )->getByName($id);
-                $instance = $this->fhm_tools->instanceData($document);
                 // ERROR - unknown
                 if ($document == "") {
                     throw $this->createNotFoundException(
-                        $this->fhm_tools->trans('news.group.error.unknown', array(), 'FhmNewsBundle')
+                        $this->trans('news.group.error.unknown', array(), 'FhmNewsBundle')
                     );
                 } // ERROR - Forbidden
-                elseif (!$instance->user->admin && ($document->getDelete() || !$document->getActive())) {
+                elseif (!$this->get('security.authorization_checker')->isGranted(
+                        'ROLE_SUPER_ADMIN'
+                    ) && ($document->getDelete() || !$document->getActive())
+                ) {
                     throw new HttpException(
                         403,
-                        $this->fhm_tools->trans('news.group.error.forbidden', array(), 'FhmNewsBundle')
-                    );
-                }
-                // Change grouping
-                if ($instance->grouping->different && $document->getGrouping()) {
-                    $this->get($this->fhm_tools->getParameters("grouping", "fhm_fhm"))->setGrouping(
-                        $document->getFirstGrouping()
+                        $this->trans('news.group.error.forbidden', array(), 'FhmNewsBundle')
                     );
                 }
             }
             // News
             $classType = '\Fhm\FhmBundle\Form\Type\Front\SearchType';
             $form = $this->createForm($classType);
-            $form->setData($this->get('request_stack')->get($form->getName()));
+            $form->setData($this->get('request_stack')->getCurrentRequest()->get($form->getName()));
             $dataSearch = $form->getData();
-            $dataPagination = $this->get('request_stack')->get('FhmPagination');
-            $this->fhm_tools->setPagination($rows);
-            // Ajax pagination request
-            if ($pagination && isset($dataPagination['pagination'])) {
-                $documents = $document ?
-                    $this->fhm_tools->dmRepository()->getNewsByGroupIndex(
-                        $document,
-                        $dataSearch['search'],
-                        $dataPagination['pagination'],
-                        $this->pagination->page
-                    ) :
-                    $this->fhm_tools->dmRepository()->getFrontIndex(
-                        $dataSearch['search'],
-                        $dataPagination['pagination'],
-                        $this->pagination->page,
-                        $instance->grouping->current
-                    );
-                $pagination = $document ?
-                    $this->fhm_tools->getPagination(
-                        $dataPagination['pagination'],
-                        count($documents),
-                        $this->fhm_tools->dmRepository("FhmNewsBundle:News")->getNewsByGroupCount(
-                            $document,
-                            $dataSearch['search']
-                        ),
-                        'pagination',
-                        $this->fhm_tools->formRename($form->getName(), $dataSearch),
-                        $this->fhm_tools->getUrl(
-                            'fhm_api_news_detail',
-                            array('template' => $template, 'id' => $id, 'rows' => $rows, 'pagination' => $pagination)
-                        )
-                    ) :
-                    $this->fhm_tools->getPagination(
-                        $dataPagination['pagination'],
-                        count($documents),
-                        $this->fhm_tools->dmRepository("FhmNewsBundle:News")->getFrontCount(
-                            $dataSearch['search'],
-                            $instance->grouping->current
-                        ),
-                        'pagination',
-                        $this->fhm_tools->formRename($form->getName(), $dataSearch),
-                        $this->fhm_tools->getUrl(
-                            'fhm_api_news_detail',
-                            array('template' => $template, 'id' => $id, 'rows' => $rows, 'pagination' => $pagination)
-                        )
-                    );
-            } // Router request
-            else {
-                $documents = $document ?
-                    $this->fhm_tools->dmRepository()->getNewsByGroupIndex(
-                        $document,
-                        $dataSearch['search'],
-                        1,
-                        $this->pagination->page
-                    ) :
-                    $this->fhm_tools->dmRepository()->getFrontIndex(
-                        $dataSearch['search'],
-                        1,
-                        $this->pagination->page,
-                        $instance->grouping->current
-                    );
-                if ($pagination) {
-                    $pagination = $document ?
-                        $this->fhm_tools->getPagination(
-                            1,
-                            count($documents),
-                            $this->fhm_tools->dmRepository("FhmNewsBundle:News")->getNewsByGroupCount(
-                                $document,
-                                $dataSearch['search']
-                            ),
-                            'pagination',
-                            $this->fhm_tools->formRename($form->getName(), $dataSearch),
-                            $this->fhm_tools->getUrl(
-                                'fhm_api_news_detail',
-                                array(
-                                    'template' => $template,
-                                    'id' => $id,
-                                    'rows' => $rows,
-                                    'pagination' => $pagination,
-                                )
-                            )
-                        ) :
-                        $this->fhm_tools->getPagination(
-                            1,
-                            count($documents),
-                            $this->fhm_tools->dmRepository("FhmNewsBundle:News")->getFrontCount(
-                                $dataSearch['search'],
-                                $instance->grouping->current
-                            ),
-                            'pagination',
-                            $this->fhm_tools->formRename($form->getName(), $dataSearch),
-                            $this->fhm_tools->getUrl(
-                                'fhm_api_news_detail',
-                                array(
-                                    'template' => $template,
-                                    'id' => $id,
-                                    'rows' => $rows,
-                                    'pagination' => $pagination,
-                                )
-                            )
-                        );
-                }
-            }
+            $documents = $this->get('fhm_tools')->dmRepository(self::$repository)->getNewsByGroupIndex(
+                $document,
+                $dataSearch['search']
+            );
         }
 
         return new Response(
@@ -263,8 +135,6 @@ class ApiController extends FhmController
                 array(
                     'document' => $document,
                     'documents' => $documents,
-                    'pagination' => $pagination ? $pagination : array(),
-                    'instance' => $instance,
                     'form' => $form ? $form->createView() : $form,
                 )
             )

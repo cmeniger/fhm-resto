@@ -10,20 +10,21 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 /**
- * @Route("/api/workflowstep", service="fhm_workflow_controller_step_api")
+ * @Route("/api/workflowstep")
+ * -------------------------------------------
+ * Class ApiController
+ * @package Fhm\WorkflowBundle\Controller\Step
  */
 class ApiController extends FhmController
 {
     /**
      * ApiController constructor.
-     *
-     * @param \Fhm\FhmBundle\Services\Tools $tools
      */
-    public function __construct(\Fhm\FhmBundle\Services\Tools $tools)
+    public function __construct()
     {
-        $this->setFhmTools($tools);
-        parent::__construct('Fhm', 'Workflow', 'workflow_step', 'WorkflowStep');
-        $this->translation = array('FhmWorkflowBundle', 'workflow.step');
+//        $this->setFhmTools($tools);
+//        parent::__construct('Fhm', 'Workflow', 'workflow_step', 'WorkflowStep');
+//        $this->translation = array('FhmWorkflowBundle', 'workflow.step');
     }
 
     /**

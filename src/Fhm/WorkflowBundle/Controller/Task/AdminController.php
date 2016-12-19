@@ -10,22 +10,25 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 /**
- * @Route("/admin/workflowtask", service="fhm_workflow_controller_task_admin")
+ * @Route("/admin/workflowtask")
+ * ------------------------------------------
+ * Class AdminController
+ * @package Fhm\WorkflowBundle\Controller\Task
  */
 class AdminController extends FhmController
 {
     /**
      * AdminController constructor.
-     *
-     * @param \Fhm\FhmBundle\Services\Tools $tools
      */
-    public function __construct(\Fhm\FhmBundle\Services\Tools $tools)
+    public function __construct()
     {
-        $this->setFhmTools($tools);
-        parent::__construct('Fhm', 'Workflow', 'workflow_task', 'WorkflowTask');
-        $this->form->type->create = 'Fhm\\WorkflowBundle\\Form\\Type\\Admin\\Task\\CreateType';
-        $this->form->type->update = 'Fhm\\WorkflowBundle\\Form\\Type\\Admin\\Task\\UpdateType';
-        $this->translation        = array('FhmWorkflowBundle', 'workflow.task');
+        self::$repository = "FhmWorkflowBundle:WorkflowTask";
+        self::$source = "fhm";
+        self::$domain = "FhmWorkflowBundle";
+        self::$translation = "workflow";
+        self::$document = new WorkflowTask();
+        self::$class = get_class(self::$document);
+        self::$route = 'workflow_task';
     }
 
     /**
@@ -172,17 +175,5 @@ class AdminController extends FhmController
     public function exportAction(Request $request)
     {
         return parent::exportAction($request);
-    }
-
-    /**
-     * @Route
-     * (
-     *      path="/grouping",
-     *      name="fhm_admin_workflow_task_grouping"
-     * )
-     */
-    public function groupingAction(Request $request)
-    {
-        return parent::groupingAction($request);
     }
 }

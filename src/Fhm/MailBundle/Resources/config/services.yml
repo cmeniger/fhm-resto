@@ -1,22 +1,10 @@
 services:
     fhm_mail:
         class: Fhm\MailBundle\Services\Mailer
-        arguments: ["@fhm_tools", "@mailer", "@templating", "@service_container"]
+        arguments: ["@fhm_tools"]
 
     listener.mail.user.mail:
         class: Fhm\MailBundle\Listener\MailListener
         arguments: ["@fhm_mail"]
         tags:
-          - { name: kernel.event_listener, event: fhm.fhm.mail, method: onMail }
-
-    fhm_mail_controller_admin:
-        class: Fhm\MailBundle\Controller\AdminController
-        arguments: ["@fhm_tools"]
-
-    fhm_mail_controller_front:
-        class: Fhm\MailBundle\Controller\FrontController
-        arguments: ["@fhm_tools"]
-
-    fhm_mail_controller_api:
-        class: Fhm\MailBundle\Controller\ApiController
-        arguments: ["@fhm_tools"]
+          - { name: kernel.event_subscriber, event: fhm.fhm.mail, method: onMail }

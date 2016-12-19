@@ -9,120 +9,24 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 /**
  * @Route("/workflowtask", service="fhm_workflow_controller_task_front")
+ * --------------------------------------------
+ * Class FrontController
+ * @package Fhm\WorkflowBundle\Controller\Task
  */
 class FrontController extends FhmController
 {
     /**
      * FrontController constructor.
-     *
-     * @param \Fhm\FhmBundle\Services\Tools $tools
      */
-    public function __construct(\Fhm\FhmBundle\Services\Tools $tools)
+    public function __construct()
     {
-        $this->setFhmTools($tools);
-        parent::__construct('Fhm', 'Workflow', 'workflow_task', 'WorkflowTask');
-        $this->form->type->create = 'Fhm\\WorkflowBundle\\Form\\Type\\Front\\Task\\CreateType';
-        $this->form->type->update = 'Fhm\\WorkflowBundle\\Form\\Type\\Front\\Task\\UpdateType';
-        $this->translation        = array('FhmWorkflowBundle', 'workflow.task');
-    }
-
-    /**
-     * @Route
-     * (
-     *      path="/",
-     *      name="fhm_workflow_task"
-     * )
-     * @Template("::FhmWorkflow/Front/Task/index.html.twig")
-     */
-    public function indexAction()
-    {
-        // For activate this route, delete next line
-        throw $this->createNotFoundException($this->fhm_tools->trans('fhm.error.route', array(), 'FhmFhmBundle'));
-
-        return parent::indexAction();
-    }
-
-    /**
-     * @Route
-     * (
-     *      path="/create",
-     *      name="fhm_workflow_task_create"
-     * )
-     * @Template("::FhmWorkflow/Front/Task/create.html.twig")
-     */
-    public function createAction(Request $request)
-    {
-        // For activate this route, delete next line
-        throw $this->createNotFoundException($this->fhm_tools->trans('fhm.error.route', array(), 'FhmFhmBundle'));
-
-        return parent::createAction($request);
-    }
-
-    /**
-    * @Route
-    * (
-    *      path="/duplicate/{id}",
-    *      name="fhm_workflow_task_duplicate",
-    *      requirements={"id"="[a-z0-9]*"}
-    * )
-    * @Template("::FhmWorkflow/Front/Task/create.html.twig")
-    */
-    public function duplicateAction(Request $request, $id)
-    {
-        // For activate this route, delete next line
-        throw $this->createNotFoundException($this->fhm_tools->trans('fhm.error.route', array(), 'FhmFhmBundle'));
-
-        return parent::duplicateAction($request, $id);
-    }
-
-    /**
-    * @Route
-    * (
-    *      path="/update/{id}",
-    *      name="fhm_workflow_task_update",
-    *      requirements={"id"="[a-z0-9]*"}
-    * )
-    * @Template("::FhmWorkflow/Front/Task/update.html.twig")
-    */
-    public function updateAction(Request $request, $id)
-    {
-        // For activate this route, delete next line
-        throw $this->createNotFoundException($this->fhm_tools->trans('fhm.error.route', array(), 'FhmFhmBundle'));
-
-        return parent::updateAction($request, $id);
-    }
-
-    /**
-    * @Route
-    * (
-    *      path="/detail/{id}",
-    *      name="fhm_workflow_task_detail",
-    *      requirements={"id"=".+"}
-    * )
-    * @Template("::FhmWorkflow/Front/Task/detail.html.twig")
-    */
-    public function detailAction($id)
-    {
-        // For activate this route, delete next line
-        throw $this->createNotFoundException($this->fhm_tools->trans('fhm.error.route', array(), 'FhmFhmBundle'));
-
-        return parent::detailAction($id);
-    }
-
-    /**
-    * @Route
-    * (
-    *      path="/delete/{id}",
-    *      name="fhm_workflow_task_delete",
-    *      requirements={"id"="[a-z0-9]*"}
-    * )
-    */
-    public function deleteAction($id)
-    {
-        // For activate this route, delete next line
-        throw $this->createNotFoundException($this->fhm_tools->trans('fhm.error.route', array(), 'FhmFhmBundle'));
-
-        return parent::deleteAction($id);
+        self::$repository = "FhmWorkflowBundle:WorkflowTask";
+        self::$source = "fhm";
+        self::$domain = "FhmWorkflowBundle";
+        self::$translation = "workflow";
+        self::$document = new WorkflowTask();
+        self::$class = get_class(self::$document);
+        self::$route = 'workflow_task';
     }
 
     /**

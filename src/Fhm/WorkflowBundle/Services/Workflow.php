@@ -1,5 +1,6 @@
 <?php
 namespace Fhm\WorkflowBundle\Services;
+
 /**
  * Class Workflow
  *
@@ -21,7 +22,7 @@ class Workflow
 
     /**
      * @param \Fhm\WorkflowBundle\Document\Workflow $document
-     * @param string                                $name
+     * @param string $name
      *
      * @return \Fhm\WorkflowBundle\Document\Workflow
      */
@@ -48,10 +49,11 @@ class Workflow
      *
      * @return $this
      */
-    public function _duplicateTasks(\Fhm\WorkflowBundle\Document\Workflow $document, \Fhm\WorkflowBundle\Document\Workflow &$workflow)
-    {
-        foreach($document->getTasks() as $task)
-        {
+    public function _duplicateTasks(
+        \Fhm\WorkflowBundle\Document\Workflow $document,
+        \Fhm\WorkflowBundle\Document\Workflow &$workflow
+    ) {
+        foreach ($document->getTasks() as $task) {
             $new = new \Fhm\WorkflowBundle\Document\WorkflowTask();
             $new->setUserCreate($this->fhm_tools->getUser());
             $new->setName($task->getName());
@@ -75,10 +77,11 @@ class Workflow
      *
      * @return $this
      */
-    public function _duplicateSons(\Fhm\WorkflowBundle\Document\WorkflowTask $document, \Fhm\WorkflowBundle\Document\WorkflowTask &$task)
-    {
-        foreach($document->getSons() as $son)
-        {
+    public function _duplicateSons(
+        \Fhm\WorkflowBundle\Document\WorkflowTask $document,
+        \Fhm\WorkflowBundle\Document\WorkflowTask &$task
+    ) {
+        foreach ($document->getSons() as $son) {
             $new = new \Fhm\WorkflowBundle\Document\WorkflowTask();
             $new->setUserCreate($this->fhm_tools->getUser());
             $new->setName($son->getName());

@@ -1,12 +1,12 @@
 services:
-    fhm_newsletter_controller_admin:
-        class: Fhm\NewsletterBundle\Controller\AdminController
-        arguments: ["@fhm_tools"]
-
-    fhm_newsletter_controller_front:
-        class: Fhm\NewsletterBundle\Controller\FrontController
-        arguments: ["@fhm_tools"]
-
-    fhm_newsletter_controller_api:
-        class: Fhm\NewsletterBundle\Controller\ApiController
-        arguments: ["@fhm_tools"]
+#    fhm_newsletter_controller_admin:
+#        class: Fhm\NewsletterBundle\Controller\AdminController
+#        arguments: ["@fhm_tools"]
+#
+#    fhm_newsletter_controller_front:
+#        class: Fhm\NewsletterBundle\Controller\FrontController
+#        arguments: ["@fhm_tools"]
+#
+#    fhm_newsletter_controller_api:
+#        class: Fhm\NewsletterBundle\Controller\ApiController
+#        arguments: ["@fhm_tools"]

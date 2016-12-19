@@ -14,31 +14,21 @@ use Doctrine\ODM\MongoDB\Mapping\ClassMetadata;
 class FhmRepository extends DocumentRepository
 {
     protected $parent;
-    protected $language;
     protected $sort;
 
     /**
-     * Constructor
+     * FhmRepository constructor.
+     * @param DocumentManager $dm
+     * @param UnitOfWork $uow
+     * @param ClassMetadata $class
      */
     public function __construct(DocumentManager $dm, UnitOfWork $uow, ClassMetadata $class)
     {
         parent::__construct($dm, $uow, $class);
-        $this->parent   = false;
-        $this->language = false;
-        $this->sort     = array("order", "asc");
+        $this->parent = false;
+        $this->sort = array("order", "asc");
     }
 
-    /**
-     * @param $language
-     *
-     * @return $this
-     */
-    public function setLanguage($language)
-    {
-        $this->language = $language;
-
-        return $this;
-    }
 
     /**
      * @param $boolean
@@ -53,7 +43,7 @@ class FhmRepository extends DocumentRepository
     }
 
     /**
-     * @param mixed  $field
+     * @param mixed $field
      * @param string $order
      *
      * @return $this
@@ -67,46 +57,19 @@ class FhmRepository extends DocumentRepository
 
     /**
      * @param string $search
-     * @param int    $page
-     * @param int    $count
-     * @param string $grouping
-     * @param bool   $roleSuperAdmin
-     *
+     * @param bool $roleSuperAdmin
      * @return mixed
-     * @throws \Doctrine\ODM\MongoDB\MongoDBException
      */
-    public function getAdminIndex($search = "", $page = 1, $count = 5, $grouping = "", $roleSuperAdmin = false)
+    public function getAdminIndex($search = "", $roleSuperAdmin = false)
     {
         $builder = $search ? $this->search($search) : $this->createQueryBuilder();
         // Parent
-        if($this->parent)
-        {
+        if ($this->parent) {
             $builder->field('parent')->in(array('0', null));
         }
-        // Language
-        if($this->language)
-        {
-            $builder->field('languages')->in((array) $this->language);
-        }
-        // Grouping
-        if($grouping != "")
-        {
-            $builder->addAnd(
-                $builder->expr()
-                    ->addOr($builder->expr()->field('grouping')->in((array) $grouping))
-                    ->addOr($builder->expr()->field('share')->equals(true))
-            );
-        }
         // RoleSuperAdmin
-        if(!$roleSuperAdmin)
-        {
+        if (!$roleSuperAdmin) {
             $builder->field('delete')->equals(false);
-        }
-        // Pagination
-        if($page > 0 && $count > 0)
-        {
-            $builder->limit($count);
-            $builder->skip(($page - 1) * $count);
         }
         // Common
         $this->builderSort($builder);
@@ -116,159 +79,70 @@ class FhmRepository extends DocumentRepository
 
     /**
      * @param string $search
-     * @param string $grouping
-     * @param bool   $roleSuperAdmin
-     *
-     * @return int
-     * @throws \Doctrine\ODM\MongoDB\MongoDBException
+     * @param bool $roleSuperAdmin
+     * @return mixed
      */
-    public function getAdminCount($search = "", $grouping = "", $roleSuperAdmin = false)
+    public function getAdminCount($search = "", $roleSuperAdmin = false)
     {
         $builder = $search ? $this->search($search) : $this->createQueryBuilder();
         // Parent
-        if($this->parent)
-        {
+        if ($this->parent) {
             $builder->field('parent')->in(array('0', null));
         }
-        // Language
-        if($this->language)
-        {
-            $builder->field('languages')->in((array) $this->language);
-        }
-        // Grouping
-        if($grouping != "")
-        {
-            $builder->addAnd(
-                $builder->expr()
-                    ->addOr($builder->expr()->field('grouping')->in((array) $grouping))
-                    ->addOr($builder->expr()->field('share')->equals(true))
-            );
-        }
         // RoleSuperAdmin
-        if(!$roleSuperAdmin)
-        {
+        if (!$roleSuperAdmin) {
             $builder->field('delete')->equals(false);
         }
 
-        return $builder
-            ->count()
-            ->getQuery()
-            ->execute();
+        return $builder->count()->getQuery()->execute();
     }
 
     /**
      * @param string $search
-     * @param int    $page
-     * @param int    $count
-     * @param string $grouping
-     *
      * @return mixed
-     * @throws \Doctrine\ODM\MongoDB\MongoDBException
      */
-    public function getFrontIndex($search = "", $page = 1, $count = 5, $grouping = "")
+    public function getFrontIndex($search = "")
     {
         $builder = $search ? $this->search($search) : $this->createQueryBuilder();
         // Parent
-        if($this->parent)
-        {
+        if ($this->parent) {
             $builder->field('parent')->in(array('0', null));
-        }
-        // Language
-        if($this->language)
-        {
-            $builder->field('languages')->in((array) $this->language);
-        }
-        // Grouping
-        if($grouping != "")
-        {
-            $builder->addAnd(
-                $builder->expr()
-                    ->addOr($builder->expr()->field('grouping')->in((array) $grouping))
-                    ->addOr($builder->expr()->field('global')->equals(true))
-            );
-        }
-        // Pagination
-        if($page > 0 && $count > 0)
-        {
-            $builder->limit($count);
-            $builder->skip(($page - 1) * $count);
         }
         // Common
         $builder->field('active')->equals(true);
         $builder->field('delete')->equals(false);
         $this->builderSort($builder);
 
-        return $builder
-            ->getQuery()
-            ->execute()
-            ->toArray();
+        return $builder->getQuery()->execute()->toArray();
     }
 
     /**
      * @param string $search
-     * @param string $grouping
-     *
-     * @return int
-     * @throws \Doctrine\ODM\MongoDB\MongoDBException
+     * @return mixed
      */
-    public function getFrontCount($search = "", $grouping = "")
+    public function getFrontCount($search = "")
     {
         $builder = $search ? $this->search($search) : $this->createQueryBuilder();
         // Parent
-        if($this->parent)
-        {
+        if ($this->parent) {
             $builder->field('parent')->in(array('0', null));
-        }
-        // Language
-        if($this->language)
-        {
-            $builder->field('languages')->in((array) $this->language);
-        }
-        // Grouping
-        if($grouping != "")
-        {
-            $builder->addAnd(
-                $builder->expr()
-                    ->addOr($builder->expr()->field('grouping')->in((array) $grouping))
-                    ->addOr($builder->expr()->field('global')->equals(true))
-            );
         }
         // Common
         $builder->field('active')->equals(true);
         $builder->field('delete')->equals(false);
 
-        return $builder
-            ->count()
-            ->getQuery()
-            ->execute();
+        return $builder->count()->getQuery()->execute();
     }
 
     /**
-     * @param string $grouping
-     *
      * @return \Doctrine\ODM\MongoDB\Query\Builder
      */
-    public function getFormEnable($grouping = "")
+    public function getFormEnable()
     {
         $builder = $this->createQueryBuilder();
         // Parent
-        if($this->parent)
-        {
+        if ($this->parent) {
             $builder->field('parent')->in(array('0', null));
-        }
-        // Language
-        if($this->language)
-        {
-            $builder->field('languages')->in((array) $this->language);
-        }
-        // Grouping
-        if($grouping != "")
-        {
-            $builder->addAnd(
-                $builder->expr()
-                    ->addOr($builder->expr()->field('grouping')->in((array) $grouping))
-                    ->addOr($builder->expr()->field('share')->equals(true))
-            );
         }
         // Common
         $builder->field('active')->equals(true);
@@ -279,27 +153,14 @@ class FhmRepository extends DocumentRepository
     }
 
     /**
-     * @param string $grouping
-     *
      * @return \Doctrine\ODM\MongoDB\Query\Builder
      */
-    public function getFormFiltered($grouping = "")
+    public function getFormFiltered()
     {
         $builder = $this->createQueryBuilder();
         // Parent
-        if($this->parent)
-        {
+        if ($this->parent) {
             $builder->field('parent')->in(array('0', null));
-        }
-        // Language
-        if($this->language)
-        {
-            $builder->field('languages')->in((array) $this->language);
-        }
-        // Grouping
-        if($grouping != "")
-        {
-            $builder->field('grouping')->in((array) $grouping);
         }
         // Common
         $builder->field('active')->equals(true);
@@ -310,31 +171,14 @@ class FhmRepository extends DocumentRepository
     }
 
     /**
-     * @param string $grouping
-     *
      * @return \Doctrine\ODM\MongoDB\Query\Builder
      */
-    public function getFormAll($grouping = "")
+    public function getFormAll()
     {
         $builder = $this->createQueryBuilder();
         // Parent
-        if($this->parent)
-        {
+        if ($this->parent) {
             $builder->field('parent')->in(array('0', null));
-        }
-        // Language
-        if($this->language)
-        {
-            $builder->field('languages')->in((array) $this->language);
-        }
-        // Grouping
-        if($grouping != "")
-        {
-            $builder->addAnd(
-                $builder->expr()
-                    ->addOr($builder->expr()->field('grouping')->in((array) $grouping))
-                    ->addOr($builder->expr()->field('share')->equals(true))
-            );
         }
         // Common
         $this->builderSort($builder);
@@ -343,32 +187,14 @@ class FhmRepository extends DocumentRepository
     }
 
     /**
-     * @param string $grouping
-     *
      * @return array
-     * @throws \Doctrine\ODM\MongoDB\MongoDBException
      */
-    public function getListEnable($grouping = "")
+    public function getListEnable()
     {
         $builder = $this->createQueryBuilder();
         // Parent
-        if($this->parent)
-        {
+        if ($this->parent) {
             $builder->field('parent')->in(array('0', null));
-        }
-        // Language
-        if($this->language)
-        {
-            $builder->field('languages')->in((array) $this->language);
-        }
-        // Grouping
-        if($grouping != "")
-        {
-            $builder->addAnd(
-                $builder->expr()
-                    ->addOr($builder->expr()->field('grouping')->in((array) $grouping))
-                    ->addOr($builder->expr()->field('share')->equals(true))
-            );
         }
         // Common
         $builder->field('active')->equals(true);
@@ -376,9 +202,8 @@ class FhmRepository extends DocumentRepository
         $this->builderSort($builder);
         // Format list
         $documents = $builder->getQuery()->execute()->toArray();
-        $list      = array();
-        foreach($documents as $document)
-        {
+        $list = array();
+        foreach ($documents as $document) {
             $list[$document->getId()] = $document;
         }
 
@@ -387,39 +212,21 @@ class FhmRepository extends DocumentRepository
 
     /**
      * @param string $grouping
-     *
      * @return array
-     * @throws \Doctrine\ODM\MongoDB\MongoDBException
      */
     public function getListAll($grouping = "")
     {
         $builder = $this->createQueryBuilder();
         // Parent
-        if($this->parent)
-        {
+        if ($this->parent) {
             $builder->field('parent')->in(array('0', null));
-        }
-        // Language
-        if($this->language)
-        {
-            $builder->field('languages')->in((array) $this->language);
-        }
-        // Grouping
-        if($grouping != "")
-        {
-            $builder->addAnd(
-                $builder->expr()
-                    ->addOr($builder->expr()->field('grouping')->in((array) $grouping))
-                    ->addOr($builder->expr()->field('share')->equals(true))
-            );
         }
         // Common
         $this->builderSort($builder);
         // Format list
         $documents = $builder->getQuery()->execute()->toArray();
-        $list      = array();
-        foreach($documents as $document)
-        {
+        $list = array();
+        foreach ($documents as $document) {
             $list[$document->getId()] = $document;
         }
 
@@ -456,80 +263,40 @@ class FhmRepository extends DocumentRepository
         return $this->findOneByAlias($alias);
     }
 
+
     /**
-     * @param $grouping
-     *
+     * @param bool $roleSuperAdmin
      * @return mixed
      */
-    public function getByGrouping($grouping)
+    public function getAll($roleSuperAdmin = false)
     {
-        $builder = $this->createQueryBuilder();
-        $builder->field('grouping')->in((array) $grouping);
-        $this->builderSort($builder);
-
-        return $builder
-            ->getQuery()
-            ->execute()
-            ->toArray();
+        return $this->getAdminIndex("", 0, 0, $roleSuperAdmin);
     }
 
     /**
-     * @param string $grouping
-     * @param bool   $roleSuperAdmin
-     *
      * @return mixed
      */
-    public function getAll($grouping = "", $roleSuperAdmin = false)
+    public function getAllEnable()
     {
-        return $this->getAdminIndex("", 0, 0, $grouping, $roleSuperAdmin);
+        return $this->getFrontIndex("", 0, 0);
     }
 
     /**
-     * @param string $grouping
-     *
      * @return mixed
      */
-    public function getAllEnable($grouping = "")
-    {
-        return $this->getFrontIndex("", 0, 0, $grouping);
-    }
-
-    /**
-     * @param string $grouping
-     *
-     * @return mixed
-     */
-    public function getAllFiltered($grouping = "")
+    public function getAllFiltered()
     {
         $builder = $this->createQueryBuilder();
         // Parent
-        if($this->parent)
-        {
+        if ($this->parent) {
             $builder->field('parent')->in(array('0', null));
-        }
-        // Grouping
-        if($grouping != "")
-        {
-            $builder->addAnd(
-                $builder->expr()
-                    ->addOr($builder->expr()->field('grouping')->in((array) $grouping))
-                    ->addOr($builder->expr()->field('share')->equals(true))
-            );
-        }
-        // Language
-        if($this->language)
-        {
-            $builder->field('languages')->in((array) $this->language);
         }
         // Common
         $builder->field('active')->equals(true);
         $builder->field('delete')->equals(false);
         $this->builderSort($builder);
 
-        return $builder
-            ->getQuery()
-            ->execute()
-            ->toArray();
+        return $builder->getQuery()->execute()->toArray();
     }
 
     /**
@@ -537,13 +304,9 @@ class FhmRepository extends DocumentRepository
      */
     public function getGlobalEnableCount()
     {
-        return $this->createQueryBuilder()
-            ->field('global')->equals(true)
-            ->field('active')->equals(true)
-            ->field('delete')->equals(false)
-            ->count()
-            ->getQuery()
-            ->execute();
+        return $this->createQueryBuilder()->field('global')->equals(true)->field('active')->equals(true)->field(
+            'delete'
+        )->equals(false)->count()->getQuery()->execute();
     }
 
     /**
@@ -551,189 +314,105 @@ class FhmRepository extends DocumentRepository
      */
     public function getGlobalAllCount()
     {
-        return $this->createQueryBuilder()
-            ->field('global')->equals(true)
-            ->count()
-            ->getQuery()
-            ->execute();
+        return $this->createQueryBuilder()->field('global')->equals(true)->count()->getQuery()->execute();
     }
 
     /**
-     * @param int    $page
-     * @param int    $count
-     * @param string $grouping
-     * @param bool   $roleSuperAdmin
-     *
+     * @param $document
+     * @param int $page
+     * @param int $count
+     * @param bool $roleSuperAdmin
      * @return mixed
-     * @throws \Doctrine\ODM\MongoDB\MongoDBException
      */
-    public function getHistoricIndex($document, $page = 1, $count = 5, $grouping = "", $roleSuperAdmin = false)
+    public function getHistoricIndex($document, $page = 1, $count = 5, $roleSuperAdmin = false)
     {
         $builder = $this->createQueryBuilder();
         // Parent
-        if($this->parent)
-        {
+        if ($this->parent) {
             $builder->field('parent')->in(array('0', null));
         }
-        // Language
-        if($this->language)
-        {
-            $builder->field('languages')->in((array) $this->language);
-        }
-        // Grouping
-        if($grouping != "")
-        {
-            $builder->addAnd(
-                $builder->expr()
-                    ->addOr($builder->expr()->field('grouping')->in((array) $grouping))
-                    ->addOr($builder->expr()->field('share')->equals(true))
-            );
-        }
         // RoleSuperAdmin
-        if(!$roleSuperAdmin)
-        {
+        if (!$roleSuperAdmin) {
             $builder->field('delete')->equals(false);
         }
         // Pagination
-        if($page > 0 && $count > 0)
-        {
+        if ($page > 0 && $count > 0) {
             $builder->limit($count);
             $builder->skip(($page - 1) * $count);
         }
         // Common
         $builder->field('historic_parent')->equals($document);
-        $builder->sort('date_create','desc');
+        $builder->sort('date_create', 'desc');
 
         return $builder->getQuery()->execute()->toArray();
     }
 
     /**
-     * @param string $grouping
-     * @param bool   $roleSuperAdmin
-     *
-     * @return int
-     * @throws \Doctrine\ODM\MongoDB\MongoDBException
+     * @param $document
+     * @param bool $roleSuperAdmin
+     * @return mixed
      */
-    public function getHistoricCount($document, $grouping = "", $roleSuperAdmin = false)
+    public function getHistoricCount($document, $roleSuperAdmin = false)
     {
         $builder = $this->createQueryBuilder();
         // Parent
-        if($this->parent)
-        {
+        if ($this->parent) {
             $builder->field('parent')->in(array('0', null));
         }
-        // Language
-        if($this->language)
-        {
-            $builder->field('languages')->in((array) $this->language);
-        }
-        // Grouping
-        if($grouping != "")
-        {
-            $builder->addAnd(
-                $builder->expr()
-                    ->addOr($builder->expr()->field('grouping')->in((array) $grouping))
-                    ->addOr($builder->expr()->field('share')->equals(true))
-            );
-        }
         // RoleSuperAdmin
-        if(!$roleSuperAdmin)
-        {
+        if (!$roleSuperAdmin) {
             $builder->field('delete')->equals(false);
         }
         // Common
         $builder->field('historic_parent')->equals($document);
 
-        return $builder
-            ->count()
-            ->getQuery()
-            ->execute();
+        return $builder->count()->getQuery()->execute();
     }
 
     /**
-     * @param string $grouping
-     *
+     * @param $document
      * @return mixed
      */
-    public function getHistoricAll($document, $grouping = "")
+    public function getHistoricAll($document)
     {
         $builder = $this->createQueryBuilder();
         // Parent
-        if($this->parent)
-        {
+        if ($this->parent) {
             $builder->field('parent')->in(array('0', null));
-        }
-        // Grouping
-        if($grouping != "")
-        {
-            $builder->addAnd(
-                $builder->expr()
-                    ->addOr($builder->expr()->field('grouping')->in((array) $grouping))
-                    ->addOr($builder->expr()->field('share')->equals(true))
-            );
-        }
-        // Language
-        if($this->language)
-        {
-            $builder->field('languages')->in((array) $this->language);
         }
         // Common
         $builder->field('historic_parent')->equals($document);
-        $builder->sort('date_create','desc');
+        $builder->sort('date_create', 'desc');
 
-        return $builder
-            ->getQuery()
-            ->execute()
-            ->toArray();
+        return $builder->getQuery()->execute()->toArray();
     }
 
     /**
-     * @param string $grouping
-     *
+     * @param $document
      * @return mixed
      */
-    public function getHistoricEnable($document, $grouping = "")
+    public function getHistoricEnable($document)
     {
         $builder = $this->createQueryBuilder();
         // Parent
-        if($this->parent)
-        {
+        if ($this->parent) {
             $builder->field('parent')->in(array('0', null));
-        }
-        // Grouping
-        if($grouping != "")
-        {
-            $builder->addAnd(
-                $builder->expr()
-                    ->addOr($builder->expr()->field('grouping')->in((array) $grouping))
-                    ->addOr($builder->expr()->field('share')->equals(true))
-            );
-        }
-        // Language
-        if($this->language)
-        {
-            $builder->field('languages')->in((array) $this->language);
         }
         // Common
         $builder->field('historic_parent.id')->equals($document->getId());
         $builder->field('active')->equals(true);
         $builder->field('delete')->equals(false);
-        $builder->sort('date_create','desc');
+        $builder->sort('date_create', 'desc');
 
-        return $builder
-            ->getQuery()
-            ->execute()
-            ->toArray();
+        return $builder->getQuery()->execute()->toArray();
     }
 
     /**
-     * @param string $grouping
-     *
      * @return mixed
      */
-    public function getExport($grouping = "")
+    public function getExport()
     {
-        return $this->getAdminIndex("", 0, 0, $grouping);
+        return $this->getAdminIndex("", 0);
     }
 
     /**
@@ -744,18 +423,11 @@ class FhmRepository extends DocumentRepository
      */
     public function getImport($data, $index = null)
     {
-        $value   = !is_null($index) ? $data[$index] : $data['name'];
-        $results = $this->createQueryBuilder()
-            ->field('name')->equals($value)
-            ->getQuery()
-            ->execute()
-            ->toArray();
-        if(count($results) <= 1)
-        {
+        $value = !is_null($index) ? $data[$index] : $data['name'];
+        $results = $this->createQueryBuilder()->field('name')->equals($value)->getQuery()->execute()->toArray();
+        if (count($results) <= 1) {
             return array_pop($results);
-        }
-        else
-        {
+        } else {
             return 'error';
         }
     }
@@ -774,10 +446,7 @@ class FhmRepository extends DocumentRepository
         $builder->addOr($builder->expr()->field('id')->equals($string));
         $builder->addOr($builder->expr()->field('name')->equals($string));
         $builder->addOr($builder->expr()->field('alias')->equals($string));
-        $count = $builder
-            ->count()
-            ->getQuery()
-            ->execute();
+        $count = $builder->count()->getQuery()->execute();
 
         return $count > 0 ? false : true;
     }
@@ -789,19 +458,17 @@ class FhmRepository extends DocumentRepository
      */
     protected function search($search)
     {
-        $qb     = $this->createQueryBuilder();
-        $regx   = '/.*' . $search . '.*/i';
+        $qb = $this->createQueryBuilder();
+        $regx = '/.*'.$search.'.*/i';
         $fields = array();
         // Search ID field (not supported regex search)
         $fields[] = $qb->expr()->field('_id')->equals($search);
         // Search all fields
-        foreach($this->class->getFieldNames() as $field)
-        {
+        foreach ($this->class->getFieldNames() as $field) {
             $fields[] = $qb->expr()->field($field)->equals(new \MongoRegex($regx));
         }
         // Add OR conditions
-        foreach($fields as $field)
-        {
+        foreach ($fields as $field) {
             $qb->addOr($field);
         }
 
@@ -815,10 +482,7 @@ class FhmRepository extends DocumentRepository
      */
     public function truncate($document)
     {
-        return $this->createQueryBuilder($document)
-            ->remove()
-            ->getQuery()
-            ->execute();
+        return $this->createQueryBuilder($document)->remove()->getQuery()->execute();
     }
 
     /**
@@ -827,12 +491,10 @@ class FhmRepository extends DocumentRepository
     protected function builderSort(\Doctrine\ODM\MongoDB\Query\Builder &$builder)
     {
         $builder->sort($this->sort[0], $this->sort[1]);
-        if($this->sort[0] != 'order')
-        {
+        if ($this->sort[0] != 'order') {
             $builder->sort('order');
         }
-        if($this->sort[0] != 'name')
-        {
+        if ($this->sort[0] != 'name') {
             $builder->sort('name');
         }
     }

@@ -1,6 +1,12 @@
 <?php
 namespace Fhm\WorkflowBundle\Twig;
 
+use Fhm\FhmBundle\Services\Tools;
+
+/**
+ * Class WorkflowExtension
+ * @package Fhm\WorkflowBundle\Twig
+ */
 class WorkflowExtension extends \Twig_Extension
 {
     protected $fhm_tools;
@@ -9,15 +15,13 @@ class WorkflowExtension extends \Twig_Extension
 
     /**
      * WorkflowExtension constructor.
-     *
-     * @param \Symfony\Component\Templating\EngineInterface $template
-     * @param \Fhm\FhmBundle\Services\Tools                 $tools
+     * @param Tools $tools
      */
-    public function __construct(\Symfony\Component\Templating\EngineInterface $template, \Fhm\FhmBundle\Services\Tools $tools)
+    public function __construct(Tools $tools)
     {
         $this->fhm_tools = $tools;
-        $this->template  = $template;
-        $this->tasks     = array();
+        $this->template = new \Twig_Environment();
+        $this->tasks = array();
     }
 
     /**
@@ -53,14 +57,12 @@ class WorkflowExtension extends \Twig_Extension
      */
     public function getTask($task, $workflow, $instance)
     {
-        return $this->template->render
-        (
+        return $this->template->render(
             '::FhmWorkflow/Template/task.html.twig',
-            array
-            (
+            array(
                 'document' => $task,
                 'workflow' => $workflow,
-                'instance' => $instance
+                'instance' => $instance,
             )
         );
     }
@@ -74,20 +76,17 @@ class WorkflowExtension extends \Twig_Extension
      */
     public function getTaskAction($task, $workflow, $instance)
     {
-        if($task == null || $task->getAction() == null)
-        {
+        if ($task == null || $task->getAction() == null) {
             return null;
         }
 
-        return $this->template->render
-        (
+        return $this->template->render(
             '::FhmWorkflow/Template/task.action.html.twig',
-            array
-            (
+            array(
                 'document' => $task->getAction(),
                 'workflow' => $workflow,
-                'task'     => $task,
-                'instance' => $instance
+                'task' => $task,
+                'instance' => $instance,
             )
         );
     }
@@ -100,20 +99,21 @@ class WorkflowExtension extends \Twig_Extension
     public function getTaskAnchor($task)
     {
         $anchor = array(
-            'data-id'     => array($task->getId()),
+            'data-id' => array($task->getId()),
             'data-parent' => array(),
-            'data-son'    => array(),
+            'data-son' => array(),
         );
-        foreach($task->getParents() as $parent)
-        {
+        foreach ($task->getParents() as $parent) {
             $anchor['data-parent'][] = $parent->getId();
         }
-        foreach($task->getSons() as $son)
-        {
+        foreach ($task->getSons() as $son) {
             $anchor['data-son'][] = $son->getId();
         }
 
-        return "data-id='" . implode(',', $anchor['data-id']) . "' data-parent='" . implode(',', $anchor['data-parent']) . "' data-son='" . implode(',', $anchor['data-son']) . "'";
+        return "data-id='".implode(',', $anchor['data-id'])."' data-parent='".implode(
+            ',',
+            $anchor['data-parent']
+        )."' data-son='".implode(',', $anchor['data-son'])."'";
     }
 
     /**
@@ -124,14 +124,12 @@ class WorkflowExtension extends \Twig_Extension
      */
     public function getStepTask($task, $workflow, $instance)
     {
-        return $this->template->render
-        (
+        return $this->template->render(
             '::FhmWorkflow/Template/step.task.html.twig',
-            array
-            (
+            array(
                 'document' => $task,
                 'workflow' => $workflow,
-                'instance' => $instance
+                'instance' => $instance,
             )
         );
     }
@@ -145,20 +143,17 @@ class WorkflowExtension extends \Twig_Extension
      */
     public function getStepTaskAction($task, $workflow, $instance)
     {
-        if($task == null || $task->getAction() == null)
-        {
+        if ($task == null || $task->getAction() == null) {
             return null;
         }
 
-        return $this->template->render
-        (
+        return $this->template->render(
             '::FhmWorkflow/Template/step.action.html.twig',
-            array
-            (
+            array(
                 'document' => $task->getAction(),
                 'workflow' => $workflow,
-                'task'     => $task,
-                'instance' => $instance
+                'task' => $task,
+                'instance' => $instance,
             )
         );
     }
@@ -170,16 +165,13 @@ class WorkflowExtension extends \Twig_Extension
      */
     private function _tasks($workflow)
     {
-        if($workflow == null)
-        {
+        if ($workflow == null) {
             return array();
         }
-        foreach($workflow->getTasks() as $task)
-        {
+        foreach ($workflow->getTasks() as $task) {
             $this->tasks[] = array('level' => 1, 'task' => $task);
         }
-        foreach($workflow->getTasks() as $task)
-        {
+        foreach ($workflow->getTasks() as $task) {
             $this->_tasksSons($task, 2);
         }
 
@@ -194,16 +186,13 @@ class WorkflowExtension extends \Twig_Extension
      */
     private function _tasksSons($parent, $level)
     {
-        foreach($parent->getSons() as $task)
-        {
-            if(!$this->_tasksIn($task))
-            {
+        foreach ($parent->getSons() as $task) {
+            if (!$this->_tasksIn($task)) {
                 $this->tasks[] = array('level' => $level, 'task' => $task);
 //                $this->_tasksSons($task, $level + 1);
             }
         }
-        foreach($parent->getSons() as $task)
-        {
+        foreach ($parent->getSons() as $task) {
             $this->_tasksSons($task, $level + 1);
         }
     }
@@ -215,10 +204,8 @@ class WorkflowExtension extends \Twig_Extension
      */
     private function _tasksIn($task)
     {
-        foreach($this->tasks as $data)
-        {
-            if($data['task'] == $task)
-            {
+        foreach ($this->tasks as $data) {
+            if ($data['task'] == $task) {
                 return true;
             }
         }
@@ -231,18 +218,15 @@ class WorkflowExtension extends \Twig_Extension
      */
     private function _tasksOrder()
     {
-        $list  = array();
+        $list = array();
         $level = 1;
-        $end   = false;
-        while(!$end)
-        {
+        $end = false;
+        while (!$end) {
             $end = count($list) < count($this->tasks) ? false : true;
-            foreach($this->tasks as $task)
-            {
-                if($task['level'] === $level)
-                {
+            foreach ($this->tasks as $task) {
+                if ($task['level'] === $level) {
                     $list[] = $task;
-                    $end    = false;
+                    $end = false;
                 }
             }
             $level++;

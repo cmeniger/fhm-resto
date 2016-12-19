@@ -1,26 +1,33 @@
 <?php
-
 namespace Fhm\UserBundle\Controller;
 
-use Fhm\FhmBundle\Services\Tools;
+use Fhm\FhmBundle\Form\Handler\Front\CreateHandler;
+use Fhm\FhmBundle\Form\Handler\Front\UpdateHandler;
 use Fhm\UserBundle\Document\User;
 use Fhm\FhmBundle\Controller\RefFrontController as FhmController;
+use Fhm\UserBundle\Form\Type\Front\CreateType;
+use Fhm\UserBundle\Form\Type\Front\UpdateType;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 /**
- * @Route("/user", service ="fhm_user_controller_front")
+ * @Route("/user")
  */
 class FrontController extends FhmController
 {
     /**
-     * Constructor
+     * FrontController constructor.
      */
-    public function __construct(Tools $tools)
+    public function __construct()
     {
-        $this->setFhmTools($tools);
-        parent::__construct('Fhm', 'User', 'user');
+        self::$repository = "FhmUserBundle:User";
+        self::$source = "fhm";
+        self::$domain = "FhmUserBundle";
+        self::$translation = "user";
+        self::$document = new User();
+        self::$class = get_class(self::$document);
+        self::$route = 'user';
     }
 
     /**
@@ -60,6 +67,10 @@ class FrontController extends FhmController
      */
     public function createAction(Request $request)
     {
+        self::$form = new \stdClass();
+        self::$form->type = CreateType::class;
+        self::$form->handler = CreateHandler::class;
+
         return parent::createAction($request);
     }
 
@@ -74,6 +85,10 @@ class FrontController extends FhmController
      */
     public function duplicateAction(Request $request, $id)
     {
+        self::$form = new \stdClass();
+        self::$form->type = CreateType::class;
+        self::$form->handler = CreateHandler::class;
+
         return parent::duplicateAction($request, $id);
     }
 
@@ -88,6 +103,10 @@ class FrontController extends FhmController
      */
     public function updateAction(Request $request, $id)
     {
+        self::$form = new \stdClass();
+        self::$form->type = UpdateType::class;
+        self::$form->handler = UpdateHandler::class;
+
         return parent::updateAction($request, $id);
     }
 

@@ -5,7 +5,7 @@ services:
 
     twig.extension.note:
         class: Fhm\NoteBundle\Twig\NoteExtension
-        arguments: ["@templating", "@fhm_note"]
+        arguments: ["@fhm_note"]
         tags:
             - { name: twig.extension }
             

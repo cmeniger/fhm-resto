@@ -234,7 +234,6 @@
                         <div class="pull-right">{{ this.actions(branch, instance) }}</div>
                     </div>
                     {% if branch.getChilds()|length > 0 %}
-                        {#{{ dump(branch.getChilds()|length) }}#}
                         {{ this.branchs(branch.getChilds(), instance) }}
                     {% endif %}
                 </li>
@@ -320,55 +319,6 @@
             {% endif %}
             {# Right section #}
             <ul class="right">
-                {% if instance.language.visible %}
-                    <li class="has-dropdown not-click">
-                        <a href="#"><span class="flag">{{ instance.language.used|flag|raw }}</span></a>
-                        <ul class="dropdown">
-                            <li class="title back js-generated"><a href="javascript:void(0)">Back</a></li>
-                            <li class="parent-link show-for-small">
-                                <a class="parent-link js-generated" href="#">
-                                    <span>{{ instance.language.used|flag|raw }}</span></a>
-                            </li>
-                            {% for key, data in instance.language.available %}
-                                {% if instance.language.used != key %}
-                                    <li>
-                                        <a href="{{ path('fhm_api_locale', {'locale':key}) }}">
-                                            <span class="flag">{{ key|flag|raw }}</span> </a>
-                                    </li>
-                                {% endif %}
-                            {% endfor %}
-                            {% if instance.user.admin and instance.language.used %}
-                                <li class="divider"></li>
-                                <li>
-                                    <a href="{{ path('fhm_api_locale', {'locale':null}) }}">
-                                        <span class="flag">{{ 'all'|flag|raw }}</span> </a>
-                                </li>
-                            {% endif %}
-                        </ul>
-                    </li>
-                    <li class="divider"></li>
-                {% endif %}
-                {% if instance.grouping.visible %}
-                    <li class="has-dropdown not-click">
-                        <a href="{{ path('project_home') }}"><span>{{ instance.grouping.current }}</span></a>
-                        <ul class="dropdown">
-                            <li class="title back js-generated"><a href="javascript:void(0)">Back</a></li>
-                            <li class="parent-link show-for-small">
-                                <a class="parent-link js-generated" href="{{ path('project_home') }}">
-                                    <span>{{ instance.grouping.current }}</span></a>
-                            </li>
-                            {% for data in instance.grouping.available %}
-                                {% if instance.grouping.current != data %}
-                                    <li>
-                                        <a href="{{ path('fhm_site_lite', {'id' : data}) }}">
-                                            <span>{{ data }}</span> </a>
-                                    </li>
-                                {% endif %}
-                            {% endfor %}
-                        </ul>
-                    </li>
-                    <li class="divider"></li>
-                {% endif %}
                 {% if is_granted('IS_AUTHENTICATED_FULLY') %}
                     <li class="notification">
                         {{ render(path('fhm_api_notification_counter')) }}
@@ -510,55 +460,6 @@
             {% endif %}
             {# Right section #}
             <ul class="right">
-                {% if instance.language.visible %}
-                    <li class="has-dropdown not-click">
-                        <a href="#"><span class="flag">{{ instance.language.used|flag|raw }}</span></a>
-                        <ul class="dropdown">
-                            <li class="title back js-generated"><a href="javascript:void(0)">Back</a></li>
-                            <li class="parent-link show-for-small">
-                                <a class="parent-link js-generated" href="#">
-                                    <span>{{ instance.language.used|flag|raw }}</span></a>
-                            </li>
-                            {% for key, data in instance.language.available %}
-                                {% if instance.language.used != key %}
-                                    <li>
-                                        <a href="{{ path('fhm_api_locale', {'locale':key}) }}">
-                                            <span class="flag">{{ key|flag|raw }}</span> </a>
-                                    </li>
-                                {% endif %}
-                            {% endfor %}
-                            {% if instance.user.admin and instance.language.used %}
-                                <li class="divider"></li>
-                                <li>
-                                    <a href="{{ path('fhm_api_locale', {'locale':null}) }}">
-                                        <span class="flag">{{ 'all'|flag|raw }}</span> </a>
-                                </li>
-                            {% endif %}
-                        </ul>
-                    </li>
-                    <li class="divider"></li>
-                {% endif %}
-                {% if instance.grouping.visible %}
-                    <li class="has-dropdown not-click">
-                        <a href="{{ path('project_home') }}"><span>{{ instance.grouping.current }}</span></a>
-                        <ul class="dropdown">
-                            <li class="title back js-generated"><a href="javascript:void(0)">Back</a></li>
-                            <li class="parent-link show-for-small">
-                                <a class="parent-link js-generated" href="{{ path('project_home') }}">
-                                    <span>{{ instance.grouping.current }}</span></a>
-                            </li>
-                            {% for data in instance.grouping.available %}
-                                {% if instance.grouping.current != data %}
-                                    <li>
-                                        <a href="{{ path('fhm_site_lite', {'id' : data}) }}">
-                                            <span>{{ data }}</span> </a>
-                                    </li>
-                                {% endif %}
-                            {% endfor %}
-                        </ul>
-                    </li>
-                    <li class="divider"></li>
-                {% endif %}
                 <li class="notification">
                     {{ render(path('fhm_api_notification_counter')) }}
                 </li>

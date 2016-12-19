@@ -14,7 +14,10 @@ use Doctrine\ODM\MongoDB\Mapping\ClassMetadata;
 class SiteRepository extends FhmRepository
 {
     /**
-     * Constructor
+     * SiteRepository constructor.
+     * @param DocumentManager $dm
+     * @param UnitOfWork $uow
+     * @param ClassMetadata $class
      */
     public function __construct(DocumentManager $dm, UnitOfWork $uow, ClassMetadata $class)
     {
@@ -27,11 +30,6 @@ class SiteRepository extends FhmRepository
     public function getDefault()
     {
         $builder = $this->createQueryBuilder();
-        // Language
-        if($this->language)
-        {
-            $builder->field('languages')->in((array) $this->language);
-        }
 
         return $builder
             ->field('default')->equals(true)
@@ -41,16 +39,12 @@ class SiteRepository extends FhmRepository
     }
 
     /**
-     *
+     * void function
      */
     public function resetDefault()
     {
         $builder = $this->createQueryBuilder();
-        // Language
-        if($this->language)
-        {
-            $builder->field('languages')->in((array) $this->language);
-        }
+
         $builder
             ->field('default')->equals(true)
             ->field('default')->set(false)

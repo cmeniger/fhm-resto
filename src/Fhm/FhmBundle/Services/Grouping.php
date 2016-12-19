@@ -24,7 +24,6 @@ class Grouping
     public function __construct(Tools $tools)
     {
         $this->fhm_tools = $tools;
-        $this->fhm_tools->initLanguage();
         $this->site    = $this->fhm_tools->dmRepository('FhmSiteBundle:Site')->getDefault();
         $this->menu    = ($this->site) ? $this->site->getMenu() : "";
         $this->visible = false;
@@ -54,30 +53,29 @@ class Grouping
      */
     public function loadTwigGlobal()
     {
-        $container = $this->fhm_tools->getContainer();
-        $container->get('twig')->addGlobal('site', $this->site);
-        $container->get('twig')->addGlobal('menu', $this->menu);
-        $container->get('twig')->addGlobal('instance', (array) $this->fhm_tools->instanceData());
-        $container->get('twig')->addGlobal(
-            'grouping_name',
-            $this->fhm_tools->trans('fhm.grouping.name', array(), 'FhmFhmBundle')
-        );
-        $container->get('twig')->addGlobal(
-            'grouping_add',
-            $this->fhm_tools->trans('fhm.grouping.add', array("%name%" => $this->getGrouping()), 'FhmFhmBundle')
-        );
-        $container->get('twig')->addGlobal(
-            'grouping_title',
-            $this->fhm_tools->trans('fhm.grouping.title', array(), 'FhmFhmBundle')
-        );
-        $container->get('twig')->addGlobal(
-            'grouping_list1',
-            $this->fhm_tools->trans('fhm.grouping.list1', array(), 'FhmFhmBundle')
-        );
-        $container->get('twig')->addGlobal(
-            'grouping_list2',
-            $this->fhm_tools->trans('fhm.grouping.list2', array(), 'FhmFhmBundle')
-        );
+//        $container = $this->fhm_tools->getContainer();
+//        $container->get('twig')->addGlobal('site', $this->site);
+//        $container->get('twig')->addGlobal('menu', $this->menu);
+//        $container->get('twig')->addGlobal(
+//            'grouping_name',
+//            $this->fhm_tools->trans('fhm.grouping.name', array(), 'FhmFhmBundle', '')
+//        );
+//        $container->get('twig')->addGlobal(
+//            'grouping_add',
+//            $this->fhm_tools->trans('fhm.grouping.add', array("%name%" => $this->getGrouping()), 'FhmFhmBundle', '')
+//        );
+//        $container->get('twig')->addGlobal(
+//            'grouping_title',
+//            $this->fhm_tools->trans('fhm.grouping.title', array(), 'FhmFhmBundle', '')
+//        );
+//        $container->get('twig')->addGlobal(
+//            'grouping_list1',
+//            $this->fhm_tools->trans('fhm.grouping.list1', array(), 'FhmFhmBundle', '')
+//        );
+//        $container->get('twig')->addGlobal(
+//            'grouping_list2',
+//            $this->fhm_tools->trans('fhm.grouping.list2', array(), 'FhmFhmBundle', '')
+//        );
 
         return $this;
     }

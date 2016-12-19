@@ -3,7 +3,7 @@
 
 {% block content_data_header %}
     {{ parent() }}
-    <th>{{ (instance.translation ~ '.admin.index.table.header.title')|trans }}{{ macroSort.print('title', sort) }}</th>
+    <th>{{ (instance.translation ~ '.admin.index.table.header.title')|trans }}</th>
 {% endblock %}
 
 {% block content_data_body %}

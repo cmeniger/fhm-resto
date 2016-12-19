@@ -9,18 +9,19 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 /**
- * @Route("/", service="project_default_controller_front")
+ * @Route("/")
  */
 class FrontController extends RefFrontController
 {
     /**
      * FrontController constructor.
-     * @param $fhm_tools
      */
-
-    public function __construct(Tools $fhm_tools)
+    public function __construct()
     {
-        $this->setFhmTools($fhm_tools);
+        self::$source = "project";
+        self::$domain = "ProjectDefaultBundle";
+        self::$translation = "project";
+        self::$route = 'project';
     }
 
     /**
@@ -33,7 +34,7 @@ class FrontController extends RefFrontController
      */
     public function homeAction()
     {
-        return $this->fhm_tools->getContainer()->get($this->getParameter("fhm_fhm")["grouping"])->loadGrouping();
+        return $this->get($this->getParameter("fhm_fhm")["grouping"])->loadGrouping();
     }
 
     /**
@@ -55,9 +56,7 @@ class FrontController extends RefFrontController
 
         return $this->render(
             $template,
-            array(
-                'instance' => $this->get('fhm_tools')->instanceData()
-            ),
+            array(),
             $response
         );
     }

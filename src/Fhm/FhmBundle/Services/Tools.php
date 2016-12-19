@@ -4,6 +4,7 @@ namespace Fhm\FhmBundle\Services;
 use Fhm\UserBundle\Document\User;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -13,423 +14,39 @@ use Doctrine\Common\Collections\ArrayCollection;
  * Class Tools
  * @package Fhm\FhmBundle\Services
  */
-class Tools implements ContainerAwareInterface
+class Tools
 {
-    use ContainerAwareTrait;
-
-    protected $source;
-    protected $repository;
-    protected $translation;
-    protected $document;
-    protected $class;
-    protected $form;
-    protected $route;
-    protected $view;
-    protected $csvDelimiter;
-    protected $grouping;
-    protected $section;
-    protected $parent;
-    protected $language;
-    protected $language_disable;
-    protected $pagination;
-    protected $sort;
-    protected $instance;
-    protected $bundle;
 
     /**
      * Tools constructor.
-     *
      * @param ContainerInterface $container
      */
     public function __construct(ContainerInterface $container)
     {
-        $this->setContainer($container);
-        $this->repository = 'FhmFhmBundle:Fhm';
-        $this->csvDelimiter = ';';
-        $this->grouping = '';
-        $this->section = 'Front';
-        $this->parent = false;
-        $this->language = false;
-        $this->language_disable = false;
-        $this->pagination = null;
-        $this->sort = array('order', 'asc');
-        $this->instance = '';
+        $this->container = $container;
     }
 
     /**
-     * @param string $src
-     * @param string $bundle
-     * @param string $route
-     * @param string $document
-     * @param string $section
-     *
-     * @return array
+     * @return null
      */
-    public function initData($src = 'Fhm', $bundle = 'Fhm', $route = '', $document = '', $section = '')
+    public function getContainer()
     {
-        $this->source = strtolower($src);
-        $this->repository = $src.$bundle.'Bundle:'.($document ? $document : $bundle);
-        $this->class = $src.'\\'.$bundle.'Bundle'.'\\Document\\'.($document ? $document : $bundle);
-        $this->document = new $this->class();
-        $this->translation = array($src.$bundle.'Bundle', strtolower($bundle));
-        $this->view = $src.$bundle;
-        $this->route = $route;
-        $this->bundle = strtolower($bundle);
-        $this->section = ucfirst(strtolower($section));
-        $this->initForm($src.'\\'.$bundle.'Bundle');
-
-        return array(
-            'source' => $this->source,
-            'class' => $this->class,
-            'document' => $this->document,
-            'translation' => $this->translation,
-            'route' => $this->route,
-            'form' => $this->form,
-        );
+        return $this->container;
     }
 
     /**
-     * @param $bundle
-     *
-     * @return $this
-     */
-    public function initForm($bundle)
-    {
-        $folder = ($this->section == '') ? '' : $this->section.'\\';
-        $this->form = new \stdClass();
-        $this->form->type = new \stdClass();
-
-        $this->form->type->search = (class_exists($bundle.'\\Form\\Type\\'.$folder.'SearchType')) ?
-            '\\'.$bundle.'\\Form\\Type\\'.$folder.'SearchType' :
-            '\\Fhm\\FhmBundle\\Form\\Type\\'.$folder.'SearchType';
-        $this->form->type->create = (class_exists($bundle.'\\Form\\Type\\'.$folder.'CreateType')) ?
-            '\\'.$bundle.'\\Form\\Type\\'.$folder.'CreateType' :
-            '\\Fhm\\FhmBundle\\Form\\Type\\'.$folder.'CreateType';
-        $this->form->type->update = (class_exists($bundle.'\\Form\\Type\\'.$folder.'UpdateType')) ?
-            '\\'.$bundle.'\\Form\\Type\\'.$folder.'UpdateType' :
-            '\\Fhm\\FhmBundle\\Form\\Type\\'.$folder.'UpdateType';
-        $this->form->type->export = (class_exists($bundle.'\\Form\\Type\\'.$folder.'ExportType')) ?
-            '\\'.$bundle.'\\Form\\Type\\'.$folder.'ExportType' :
-            '\\Fhm\\FhmBundle\\Form\\Type\\'.$folder.'ExportType';
-        $this->form->type->import = (class_exists($bundle.'\\Form\\Type\\'.$folder.'ImportType')) ?
-            '\\'.$bundle.'\\Form\\Type\\'.$folder.'ImportType' :
-            '\\Fhm\\FhmBundle\\Form\\Type\\'.$folder.'ImportType';
-        $this->form->handler = new \stdClass();
-        $this->form->handler->create = (class_exists($bundle.'\\Form\\Handler\\'.$folder.'CreateHandler')) ?
-            '\\'.$bundle.'\\Form\\Handler\\'.$folder.'CreateHandler' :
-            '\\Fhm\\FhmBundle\\Form\\Handler\\'.$folder.'CreateHandler';
-        $this->form->handler->update = (class_exists($bundle.'\\Form\\Handler\\'.$folder.'UpdateHandler')) ?
-            '\\'.$bundle.'\\Form\\Handler\\'.$folder.'UpdateHandler' :
-            '\\Fhm\\FhmBundle\\Form\\Handler\\'.$folder.'UpdateHandler';
-        $this->form->handler->export = (class_exists($bundle.'\\Form\\Handler\\'.$folder.'ExportHandler')) ?
-            '\\'.$bundle.'\\Form\\Handler\\'.$folder.'ExportHandler' :
-            '\\Fhm\\FhmBundle\\Form\\Handler\\'.$folder.'ExportHandler';
-        $this->form->handler->import = (class_exists($bundle.'\\Form\\Handler\\'.$folder.'ImportHandler')) ?
-            '\\'.$bundle.'\\Form\\Handler\\'.$folder.'ImportHandler' :
-            '\\Fhm\\FhmBundle\\Form\\Handler\\'.$folder.'ImportHandler';
-
-        return $this;
-    }
-
-    /**
-     * @return $this
-     */
-    public function initLanguage()
-    {
-        $this->initLanguageDisable();
-        if (!$this->language_disable && $this->getParameters(array('languages', 'codes'), 'fhm_fhm')) {
-            $locale = $this->getParameters(array(), 'locale');
-            $session = $this->getSession()->get('_locale');
-            $used = $session ? $session : $locale;
-            $used = $this->getContainer()->get('security.authorization_checker')->isGranted('ROLE_MODERATOR') ?
-                $this->getUser()->getLanguages() :
-                $used;
-            $used = $this->getContainer()->get('security.authorization_checker')->isGranted('ROLE_ADMIN') ?
-                $this->getSession()->get('_localeAdmin') :
-                $used;
-
-            $this->language = $used;
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return $this
-     */
-    public function initLanguageDisable()
-    {
-        $exceptions = $this->getParameters(array('languages', 'exceptions'), 'fhm_fhm');
-        if (in_array($this->view, (array)$exceptions)) {
-            $this->setLanguageDisable(true);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @param $document
-     *
-     * @return $this
-     */
-    public function historic($document)
-    {
-        $class = $this->class.'Historic';
-        if (class_exists($class)) {
-            $session = $this->getSession();
-            $obj = clone($document);
-            if (!$session->get('historic_'.$document->getId())) {
-                $session->set('historic_'.$document->getId(), $obj);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @param      $document
-     * @param bool $object
-     *
-     * @return $this
-     */
-    public function historicAdd($document, $object = false)
-    {
-        $class = $this->class.'Historic';
-        if (class_exists($class)) {
-            $session = $this->getSession();
-            $obj = $object ? $document : $session->get('historic_'.$document->getId());
-            $historic = new $class;
-            $historic->historicMerge($this->dm(), $obj);
-            $historic->setHistoricParent($document);
-            $this->dmPersist($historic);
-            $document->addHistoricSon($historic);
-            $this->dmPersist($document);
-            $session->remove('historic_'.$document->getId());
-        }
-
-        return $this;
-    }
-
-    /**
-     * @param $document
-     *
-     * @return null|array
-     */
-    public function historicData($document)
-    {
-        $class = $this->class.'Historic';
-        if (class_exists($class)) {
-            $request = $this->getContainer()->get('request_stack')->getCurrentRequest();
-            $instance = $this->instanceData();
-            $dataPagination = $request->get('FhmPagination');
-
-            return $this->dmRepository($this->repository.'Historic')->getHistoricIndex(
-                $document,
-                $request->isXmlHttpRequest() ? $dataPagination['pagination'] : 1,
-                $this->getParameters(array('historic', 'page'), 'fhm_fhm'),
-                $instance->grouping->filtered,
-                $instance->user->super
-            );
-        } else {
-            return null;
-        }
-    }
-
-    /**
-     * @param $document
-     *
-     * @return null|\stdClass
-     */
-    public function historicPagination($document)
-    {
-        $class = $this->class.'Historic';
-        if (class_exists($class)) {
-            $request = $this->getContainer()->get('request_stack')->getCurrentRequest();
-            $dataPagination = $request->get('FhmPagination');
-            $instance = $this->instanceData();
-            $pagination = $this->setPagination(
-                $this->getParameters(array('historic', 'page'), 'fhm_fhm'),
-                $this->getParameters(array('historic', 'left'), 'fhm_fhm'),
-                $this->getParameters(array('historic', 'right'), 'fhm_fhm')
-            )->getPagination(
-                $request->isXmlHttpRequest() ? $dataPagination['pagination'] : 1,
-                count((array)$this->historicData($document)),
-                $this->dmRepository($this->repository.'Historic')->getHistoricCount(
-                    $document,
-                    $instance->grouping->filtered,
-                    $instance->user->super
-                ),
-                'pagination',
-                array(),
-                $this->getUrl(null, array('id' => $document->getId()))
-            );
-            $pagination->idData = "content_data_historic";
-            $pagination->idPagination = "content_pagination_historic";
-            $pagination->counter = $this->getContainer()->get('translator')->trans(
-                'fhm.historic.pagination.counter',
-                array('%count%' => $pagination->page, '%all%' => $pagination->count),
-                'FhmFhmBundle'
-            );
-
-            return $pagination;
-        } else {
-            return null;
-        }
-    }
-
-    /**
-     * @param $name
-     *
-     * @return bool
-     */
-    public function routeExists($name)
-    {
-        $router = $this->getContainer()->get('router');
-
-        return ($router->getRouteCollection()->get($name) === null) ? false : true;
-    }
-
-    /**
-     * @param string $document
-     * @return \stdClass
-     */
-    public function instanceData($document = "")
-    {
-        $this->initLanguage();
-
-        /**initialisation.....*/
-
-        $languageAvailable = $this->getParameters(array("languages", "codes"), "fhm_fhm");
-        $fhmExtension = new \Fhm\FhmBundle\Twig\FhmExtension($this->getContainer());
-        $data = new \stdClass();
-
-        /** @var  $groupingCurrent */
-        $groupingCurrent = $this->grouping ?
-            $this->grouping :
-            $this->getContainer()->get($this->getParameters("grouping", "fhm_fhm"))->getGrouping();
-
-        /** @var  $groupingAvailable */
-        $groupingAvailable = $this->getContainer()
-            ->get($this->getParameters("grouping", "fhm_fhm"))
-            ->getGroupingAvailable();
-
-        /** settings */
-        $languageFiltered = $languageCurrent = $this->language_disable ? false : $this->language;
-        $groupingUsed = $groupingFiltered = $groupingCurrent;
-
-        /** check if token exist before checking granted */
-
-        $roleAdmin = null;
-        $roleModerator = null;
-        $roleSuperAdmin = null;
-
-        if ($this->getContainer()->get('security.token_storage')->getToken()) {
-
-            /** @var  $roleSuperAdmin */
-            $roleSuperAdmin = $this->getContainer()->get('security.authorization_checker')
-                ->isGranted('ROLE_SUPER_ADMIN');
-
-            /** @var  $roleAdmin */
-            $roleAdmin = $this->getContainer()->get('security.authorization_checker')
-                ->isGranted('ROLE_ADMIN');
-
-            /** @var  $roleModerator */
-            $roleModerator = $this->getContainer()->get('security.authorization_checker')
-                ->isGranted('ROLE_MODERATOR');
-        }
-
-        $groupingUsed = $roleModerator ? $this->getUser()->getFirstGrouping() : $groupingUsed;
-        $groupingUsed = $roleAdmin ? "" : $groupingUsed;
-
-        $groupingFiltered = $roleModerator ? $this->getUser()->getGrouping() : $groupingFiltered;
-        $groupingFiltered = $roleAdmin ? "" : $groupingFiltered;
-
-        $groupingAvailable = $roleModerator ? $this->getUser()->getGrouping() : $groupingAvailable;
-        $groupingAvailable = $roleAdmin ?
-            $this->getContainer()->get($this->getParameters("grouping", "fhm_fhm"))->getGroupingAvailable() :
-            $groupingAvailable;
-
-        $languageFiltered = $roleModerator ? $this->getUser()->getLanguages() : $languageFiltered;
-        $languageFiltered = $roleAdmin ? "" : $languageFiltered;
-
-        $languageAvailable = $roleModerator ? $this->getUser()->getLanguages() : $languageAvailable;
-        $languageAvailable = $roleAdmin ?
-            $this->getParameters(array("languages", "codes"), "fhm_fhm") :
-            $languageAvailable;
-
-        $data->user = new \stdClass();
-        $data->user->document = $this->getUser();
-        $data->user->super = $roleSuperAdmin;
-        $data->user->admin = $roleAdmin;
-        $data->user->moderator = $roleModerator;
-
-
-        foreach ((array)$languageAvailable as $key => $value) {
-            unset($languageAvailable[$key]);
-            $languageAvailable[$value] = $fhmExtension->getCountry($value);
-        }
-
-        $data->source = $this->source;
-        $data->section = $this->section;
-        $data->class = $this->class;
-        $data->route = $this->route;
-        $data->lastroute = $this->getLastRoute();
-        $data->domain = $this->translation[0];
-        $data->translation = $this->translation[1];
-        $data->language = new \stdClass();
-        $data->language->current = $languageCurrent;
-        $data->language->used = $languageCurrent;
-        $data->language->filtered = $languageFiltered;
-        $data->language->different = $document ? !$document->hasLanguage($languageCurrent) : false;
-        $data->language->available = $languageAvailable;
-        $data->language->visible = $this->language_disable ?
-            false :
-            $this->getParameters(array("languages", "codes"), "fhm_fhm");
-        $data->grouping = new \stdClass();
-        $data->grouping->current = $groupingCurrent;
-        $data->grouping->used = $groupingUsed;
-        $data->grouping->filtered = $groupingFiltered;
-        $data->grouping->different = $groupingUsed != '' && $document ? !$document->hasGrouping($groupingUsed) : false;
-        $data->grouping->available = $groupingAvailable;
-        $data->grouping->visible = $this->getContainer()
-            ->get($this->getParameters("grouping", "fhm_fhm"))
-            ->getVisible();
-
-        $data->user->grouping = ($this->getUser() instanceof User) ? $this->getUser()->getGrouping() : '';
-
-        if ($this->section == "Admin" &&
-            !$data->user->admin &&
-            !$data->user->moderator &&
-            $data->grouping->current != ''
-            && !$data->user->document->hasGrouping($data->grouping->current)
-        ) {
-            throw new HttpException(
-                403,
-                $this->getContainer()->get('translator')->trans('fhm.error.forbidden', array(), 'FhmFhmBundle')
-            );
-        }
-
-        return $data;
-    }
-
-    /**
-     * @param        $datas
-     * @param string $filename
-     *
+     * @param $datas
+     * @param $filename
+     * @param $csvDelimiter
      * @return Response
      */
-    public function csvExport(
-        $datas,
-        $filename = ''
-    ) {
-        // Open file
+    public function csvExport($datas, $filename, $csvDelimiter)
+    {
         $flp = fopen('php://output', 'w');
         ob_start();
-        // Copy line per line
         foreach ($datas as $data) {
-            fputcsv($flp, $data, $this->csvDelimiter);
+            fputcsv($flp, $data, $csvDelimiter);
         }
-        // Close file
         fclose($flp);
         $csv = ob_get_clean();
         // Response
@@ -450,11 +67,8 @@ class Tools implements ContainerAwareInterface
      *
      * @return array
      */
-    public
-    function formRename(
-        $name,
-        $datas
-    ) {
+    public function formRename($name, $datas)
+    {
         $post = array();
         foreach ((array)$datas as $key => $value) {
             $post[$name."[".$key."]"] = $value;
@@ -463,58 +77,15 @@ class Tools implements ContainerAwareInterface
         return $post;
     }
 
-    /**
-     * @param $grouping
-     *
-     * @return $this
-     */
-    public
-    function setGrouping(
-        $grouping
-    ) {
-        $this->grouping = $grouping;
-
-        return $this;
-    }
 
     /**
      * @param $parent
      *
      * @return $this
      */
-    public
-    function setParent(
-        $parent
-    ) {
+    public function setParent($parent)
+    {
         $this->parent = $parent;
-
-        return $this;
-    }
-
-    /**
-     * @param $language
-     *
-     * @return $this
-     */
-    public
-    function setLanguage(
-        $language
-    ) {
-        $this->language = $language;
-
-        return $this;
-    }
-
-    /**
-     * @param $data
-     *
-     * @return $this
-     */
-    public
-    function setLanguageDisable(
-        $data
-    ) {
-        $this->language_disable = $data;
 
         return $this;
     }
@@ -524,213 +95,18 @@ class Tools implements ContainerAwareInterface
      *
      * @return $this
      */
-    public
-    function setSection(
-        $section
-    ) {
+    public function setSection($section)
+    {
         $this->section = $section;
 
         return $this;
     }
 
     /**
-     * @param string $field
-     * @param string $order
-     * @param string $post
-     * @param string $pagination
-     * @param string $path
-     *
-     * @return \stdClass
-     */
-    public
-    function getSort(
-        $field = "",
-        $order = "",
-        $post = "",
-        $pagination = 'pagination',
-        $path = ""
-    ) {
-        $post = array_merge(
-            (array)$post,
-            array(
-                "FhmPagination[".$pagination."]" => 1,
-            )
-        );
-        $sort = new \stdClass();
-        $sort->path = $path ? $path : $this->getUrl();
-        $sort->field = $field ? $field : $this->sort[0];
-        $sort->order = $order ? $order : $this->sort[1];
-        $sort->post = json_encode($post);
-        $sort->idData = "content_data";
-        $sort->idPagination = "content_pagination";
-
-        return $sort;
-    }
-
-    /**
-     * @param        $field
-     * @param string $order
-     *
-     * @return $this
-     */
-    public
-    function setSort(
-        $field,
-        $order = 'asc'
-    ) {
-        if ($field) {
-            $this->sort = array($field, $order);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @param null $page
-     * @param null $left
-     * @param null $right
-     *
-     * @return $this
-     */
-    public
-    function setPagination(
-        $page = null,
-        $left = null,
-        $right = null
-    ) {
-        if (!$this->pagination) {
-            if ($this->section == "Front" || $this->section == "Api") {
-                $this->pagination = new \stdClass();
-                $this->pagination->page = !is_null($page) ?
-                    $page :
-                    $this->getParameters(array('pagination', 'front', 'page'), 'fhm_fhm');
-                $this->pagination->left = !is_null($left) ?
-                    $left :
-                    $this->getParameters(array('pagination', 'front', 'left'), 'fhm_fhm');
-                $this->pagination->right = !is_null($right) ?
-                    $right :
-                    $this->getParameters(array('pagination', 'front', 'right'), 'fhm_fhm');
-            } else {
-                $this->pagination = new \stdClass();
-                $this->pagination->page = !is_null($page) ?
-                    $page :
-                    $this->getParameters(array('pagination', 'admin', 'page'), 'fhm_fhm');
-                $this->pagination->left = !is_null($left) ?
-                    $left :
-                    $this->getParameters(array('pagination', 'admin', 'left'), 'fhm_fhm');
-                $this->pagination->right = !is_null($right) ?
-                    $right :
-                    $this->getParameters(array('pagination', 'admin', 'right'), 'fhm_fhm');
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @param int $page
-     * @param int $countPage
-     * @param int $countAll
-     * @param string $tag
-     * @param array $post
-     * @param string $path
-     *
-     * @return \stdClass
-     */
-    public
-    function getPagination(
-        $page = 1,
-        $countPage = 1,
-        $countAll = 1,
-        $tag = 'pagination',
-        $post = array(),
-        $path = ""
-    ) {
-        $this->setPagination();
-        // Object
-        $post = array_merge(
-            (array)$post,
-            array(
-                "FhmSort[field]" => $this->sort[0],
-                "FhmSort[order]" => $this->sort[1],
-            )
-        );
-        $pagination = new \stdClass();
-        $pagination->path = $path ? $path : $this->getUrl();
-        $pagination->current = $page;
-        $pagination->post = json_encode($post);
-        $pagination->page = $countPage;
-        $pagination->count = $countAll;
-        $pagination->counter = $this->getContainer()->get('translator')->trans(
-            $this->translation[1].'.pagination.counter',
-            array('%count%' => $countPage, '%all%' => $pagination->count),
-            $this->translation[0]
-        );
-        $pagination->tag = "FhmPagination[".$tag."]";
-        $pagination->max = $this->pagination->page > 0 ?
-            ceil($pagination->count / $this->pagination->page) :
-            0;
-        $pagination->section = $this->section;
-        $pagination->idData = "content_data";
-        $pagination->idPagination = "content_pagination";
-        // Pagination
-        $datas = array();
-        $left = $this->pagination->left;
-        $right = $this->pagination->right;
-        // Pagination - Page 1
-        $obj = new \stdClass();
-        $obj->page = 1;
-        $obj->current = ($pagination->current == 1) ? true : false;
-        $obj->text = 1;
-        $datas[] = $obj;
-        // Pagination - Separator
-        if (($pagination->current - $left) > 2) {
-            $obj = new \stdClass();
-            $obj->page = ceil(($pagination->current - $left) / 2);
-            $obj->current = false;
-            $obj->text = '...';
-            $datas[] = $obj;
-        }
-        // Pagination - Bloc current
-        for ($i = ($pagination->current - $left); $i <= ($pagination->current + $right); $i++) {
-            if ($i > 1 && $i < $pagination->max) {
-                $obj = new \stdClass();
-                $obj->page = $i;
-                $obj->current = ($i == $pagination->current) ? true : false;
-                $obj->text = $i;
-                $datas[] = $obj;
-            }
-        }
-        // Pagination - Separator
-        if (($pagination->current + $right) < ($pagination->max - 1)) {
-            $obj = new \stdClass();
-            $obj->page = floor(($pagination->max - ($pagination->current + $right)) / 2) +
-                $pagination->current + $right;
-            $obj->current = false;
-            $obj->text = '...';
-            $datas[] = $obj;
-        }
-        // Pagination - Page max
-        if ($pagination->max > 1) {
-            $obj = new \stdClass();
-            $obj->page = $pagination->max;
-            $obj->current = ($pagination->current == $pagination->max);
-            $obj->text = $pagination->max;
-            $datas[] = $obj;
-        }
-        // Pagination - data
-        $pagination->datas = $datas;
-
-        return $pagination;
-    }
-
-    /**
      * @return mixed
      */
-    public
-    function getLastRoute()
+    public function getLastRoute(Request $request)
     {
-        $request = $this->getContainer()->get('request_stack')->getCurrentRequest();
         $referer = $request->headers->get('referer');
         $route = ($referer && $request->getBaseUrl() == '') ? $referer : '';
         $route = ($referer == '' && $request->getBaseUrl()) ? $request->getBaseUrl() : $route;
@@ -748,12 +124,8 @@ class Tools implements ContainerAwareInterface
      *
      * @return mixed|string
      */
-    public
-    function getAlias(
-        $id,
-        $name,
-        $repository = null
-    ) {
+    public function getAlias($id, $name, $repository = null)
+    {
         $alias = "";
         $unique = false;
         $code = 0;
@@ -828,14 +200,14 @@ class Tools implements ContainerAwareInterface
      *
      * @return string
      */
-    public
-    function getUnique(
+    public function getUnique(
         $id,
         $name,
         $multiple = false,
         $repository = null,
         $length = 4
-    ) {
+    )
+    {
         $alias = "";
         $unique = false;
         $code = $multiple ? 1 : 0;
@@ -854,10 +226,8 @@ class Tools implements ContainerAwareInterface
      *
      * @return ArrayCollection
      */
-    public
-    function getCollection(
-        $datas
-    ) {
+    public function getCollection($datas)
+    {
         $collection = new ArrayCollection();
         foreach ($datas as $data) {
             $collection->add($data);
@@ -871,10 +241,8 @@ class Tools implements ContainerAwareInterface
      *
      * @return array
      */
-    public
-    function getList(
-        $datas
-    ) {
+    public function getList($datas)
+    {
         $list = array();
         foreach ($datas as $data) {
             if ($data->getActive() && !$data->getDelete()) {
@@ -893,7 +261,7 @@ class Tools implements ContainerAwareInterface
      */
     public function getParameters($route, $parent)
     {
-        $parameters = $this->getContainer()->getParameter($parent);
+        $parameters = $this->container->getParameter($parent);
         $value = $parameters;
         foreach ((array)$route as $sub) {
             $value = $value[$sub];
@@ -911,11 +279,11 @@ class Tools implements ContainerAwareInterface
      */
     public function getUrl($route = null, $parameters = array(), $referenceType = null)
     {
-        $route = $route == null ? $this->getContainer()->get('request_stack')->getCurrentRequest()->get(
+        $route = $route == null ? $this->container->get('request_stack')->getCurrentRequest()->get(
             '_route'
         ) : $route;
 
-        return $this->getContainer()->get('router')->generate($route, $parameters, $referenceType);
+        return $this->container->get('router')->generate($route, $parameters, $referenceType);
     }
 
     /**
@@ -923,8 +291,8 @@ class Tools implements ContainerAwareInterface
      */
     public function getUser()
     {
-        if ($this->getContainer()->get('security.token_storage')->getToken()) {
-            return $this->getContainer()->get('security.token_storage')->getToken()->getUser();
+        if ($this->container->get('security.token_storage')->getToken()) {
+            return $this->container->get('security.token_storage')->getToken()->getUser();
         }
 
         return null;
@@ -939,95 +307,56 @@ class Tools implements ContainerAwareInterface
     }
 
     /**
-     * @return ContainerInterface
-     */
-    public function getContainer()
-    {
-        return $this->container;
-    }
-
-    /**
-     * @param       $key
-     * @param array $parameters
-     * @param null $domain
-     *
+     * @param $key
+     * @param $parameters
+     * @param $domain
+     * @param $translation
      * @return string
      */
-    public function trans($key, $parameters = array(), $domain = null)
+    public function trans($key, $parameters, $domain, $translation)
     {
-        $key = $key[0] == '.' ? $this->translation[1].$key : $key;
-        $domain = $domain == null ? $this->translation[0] : $domain;
-
-        return $this->getContainer()->get('translator')->trans($key, $parameters, $domain);
+        $key = $key[0] == '.' ? $translation.$key : $key;
+        return $this->container->get('translator')->trans($key, $parameters, $domain);
     }
 
     /**
-     * @return mixed
+     * @return \Doctrine\Common\Persistence\ObjectManager|object
      */
     public function dm()
     {
-        return $this->getContainer()->get('doctrine_mongodb')->getManager();
+        return $this->container->get('doctrine_mongodb')->getManager();
     }
 
     /**
-     * @param null $repository
-     *
-     * @return mixed
+     * @param $obj
+     * @return $this
      */
-    public function dmRepository($repository = null)
+    public function dmPersist(&$obj)
     {
-        $this->initLanguage();
+        $this->dm()->persist($obj);
+        $this->dm()->flush();
 
-        return $this->dm()->getRepository(($repository == null) ? $this->repository : $repository)->setParent(
-            $this->parent
-        )->setLanguage($this->language);
+        return $this;
     }
 
     /**
-     * @param $obj
-     *
-     * @return $this
+     * @param $repository
+     * @return \Doctrine\Common\Persistence\ObjectRepository|null
      */
-    public function dmDetach(&$obj)
+    public function dmRepository($repository)
     {
-        if ($obj != "") {
-            $this->dm()->detach($obj);
-        }
-
-        return $this;
+        return $this->dm()->getRepository($repository);
     }
 
     /**
-     * @param $obj
+     * @param $name
      *
-     * @return $this
+     * @return bool
      */
-    public
-    function dmPersist(
-        &$obj
-    ) {
-        if ($obj != "") {
-            $this->dm()->persist($obj);
-            $this->dm()->flush();
-        }
+    protected function routeExists($name)
+    {
+        $router = $this->container->get('router');
 
-        return $this;
-    }
-
-    /**
-     * @param $obj
-     *
-     * @return $this
-     */
-    public
-    function dmRemove(
-        &$obj
-    ) {
-        if ($obj != "") {
-            $this->dm()->remove($obj);
-            $this->dm()->flush();
-        }
-
-        return $this;
+        return ($router->getRouteCollection()->get($name) === null) ? false : true;
     }
 }

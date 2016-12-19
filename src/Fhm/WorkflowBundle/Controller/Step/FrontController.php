@@ -8,22 +8,23 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 /**
- * @Route("/workflowstep", service="fhm_workflow_controller_step_front")
+ * @Route("/workflowstep")
+ * ------------------------------------------
+ * Class FrontController
+ * @package Fhm\WorkflowBundle\Controller\Step
  */
 class FrontController extends FhmController
 {
     /**
      * FrontController constructor.
-     *
-     * @param \Fhm\FhmBundle\Services\Tools $tools
      */
-    public function __construct(\Fhm\FhmBundle\Services\Tools $tools)
+    public function __construct()
     {
-        $this->setFhmTools($tools);
-        parent::__construct('Fhm', 'Workflow', 'workflow_step', 'WorkflowStep');
-        $this->form->type->create = 'Fhm\\WorkflowBundle\\Form\\Type\\Front\\Step\\CreateType';
-        $this->form->type->update = 'Fhm\\WorkflowBundle\\Form\\Type\\Front\\Step\\UpdateType';
-        $this->translation        = array('FhmWorkflowBundle', 'workflow.step');
+//        $this->setFhmTools($tools);
+//        parent::__construct('Fhm', 'Workflow', 'workflow_step', 'WorkflowStep');
+//        $this->form->type->create = 'Fhm\\WorkflowBundle\\Form\\Type\\Front\\Step\\CreateType';
+//        $this->form->type->update = 'Fhm\\WorkflowBundle\\Form\\Type\\Front\\Step\\UpdateType';
+//        $this->translation        = array('FhmWorkflowBundle', 'workflow.step');
     }
 
     /**
@@ -36,6 +37,7 @@ class FrontController extends FhmController
      */
     public function indexAction()
     {
+        $twig = $this->get('twig');
         return array(
             'instance'    => $this->fhm_tools->instanceData(),
             'breadcrumbs' => array(

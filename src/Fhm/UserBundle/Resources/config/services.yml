@@ -1,16 +1,4 @@
 services:
-    fhm_user_controller_admin:
-        class: Fhm\UserBundle\Controller\AdminController
-        arguments: ["@fhm_tools"]
-
-    fhm_user_controller_api:
-        class: Fhm\UserBundle\Controller\ApiController
-        arguments: ["@fhm_tools"]
-
-    fhm_user_controller_front:
-        class: Fhm\UserBundle\Controller\FrontController
-        arguments: ["@fhm_tools"]
-
     fhm_user.profile.form.type:
         class: Fhm\UserBundle\Form\Type\Front\UpdateType
         arguments: ["@security.token_storage", "%fos_user.model.user.class%"]
@@ -37,7 +25,7 @@ services:
 
     fhm_user_activity_listener:
         class: Fhm\UserBundle\EventListener\ActivityListener
-        arguments: ["@security.token_storage", "@service_container"]
+        arguments: ["@security.token_storage", "@doctrine_mongodb.odm.default_document_manager"]
         tags:
           - { name: kernel.event_listener, event: kernel.controller, method: onCoreController }
 
@@ -47,7 +35,7 @@ services:
             - "@mailer"
             - "@router"
             - "@twig"
-            - "@service_container"
+            - "@fhm_mail"
             - {template: { confirmation: "%fos_user.registration.confirmation.template%",   resetting: "%fos_user.resetting.email.template%" }, from_email: { confirmation: "%fos_user.registration.confirmation.from_email%", resetting: "%fos_user.resetting.email.from_email%" }}
 
     fhm_user.security.user_provider:

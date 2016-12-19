@@ -12,13 +12,11 @@ class NoteExtension extends \Twig_Extension
 
     /**
      * NoteExtension constructor.
-     *
-     * @param \Symfony\Component\Templating\EngineInterface $template
-     * @param \Fhm\NoteBundle\Services\Note                 $note
+     * @param \Fhm\NoteBundle\Services\Note $note
      */
-    public function __construct(\Symfony\Component\Templating\EngineInterface $template, \Fhm\NoteBundle\Services\Note $note)
+    public function __construct(\Fhm\NoteBundle\Services\Note $note)
     {
-        $this->template = $template;
+        $this->template = new \Twig_Environment();
         $this->note     = $note;
     }
 

@@ -5,9 +5,15 @@ use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Intl\Intl;
 
+/**
+ * Class FhmExtension
+ * @package Fhm\FhmBundle\Twig
+ */
 class FhmExtension extends \Twig_Extension
 {
     protected $container;
+
+    protected $instance;
 
     /**
      * @param ContainerInterface $container
@@ -29,7 +35,7 @@ class FhmExtension extends \Twig_Extension
             new \Twig_SimpleFilter('schedules', array($this, 'getSchedules')),
             new \Twig_SimpleFilter('schedulesClose', array($this, 'getSchedulesClose')),
             new \Twig_SimpleFilter('schedulesState', array($this, 'getSchedulesState')),
-            new \Twig_SimpleFilter('schedulesStateHtml', array($this, 'getSchedulesStateHtml'))
+            new \Twig_SimpleFilter('schedulesStateHtml', array($this, 'getSchedulesStateHtml')),
         );
     }
 
@@ -40,9 +46,11 @@ class FhmExtension extends \Twig_Extension
      */
     public function getFlag($code, $height = null)
     {
-        $code  = strtolower($code);
+        $code = strtolower($code);
         $trans = $this->getCountry($code);
-        $html  = "<img src='" . $this->getFlagUrl($code) . "' alt='" . $trans . "' title='" . $trans . "' class='flag' style='" . ($height ? "height:" . $height . "px" : "") . "'/>";
+        $html = "<img src='".$this->getFlagUrl(
+                $code
+            )."' alt='".$trans."' title='".$trans."' class='flag' style='".($height ? "height:".$height."px" : "")."'/>";
 
         return $html;
     }
@@ -55,7 +63,9 @@ class FhmExtension extends \Twig_Extension
     public function getFlagUrl($code)
     {
         $code = $code ? strtolower($code) : 'all';
-        $file = file_exists('../web/images/flags/' . $code . '.png') ? '/images/flags/' . $code . '.png' : '/images/flags/default.png';
+        $file = file_exists(
+            '../web/images/flags/'.$code.'.png'
+        ) ? '/images/flags/'.$code.'.png' : '/images/flags/default.png';
 
         return $file;
     }
@@ -71,7 +81,11 @@ class FhmExtension extends \Twig_Extension
         $code = strtoupper($code);
         $code = $code == 'EN' ? 'GB' : $code;
 
-        return $code ? Intl::getRegionBundle()->getCountryName($code) : $this->container->get('translator')->trans('fhm.language.code.all', array(), 'FhmFhmBundle');
+        return $code ? Intl::getRegionBundle()->getCountryName($code) : $this->container->get('translator')->trans(
+            'fhm.language.code.all',
+            array(),
+            'FhmFhmBundle'
+        );
     }
 
     /**
@@ -82,7 +96,13 @@ class FhmExtension extends \Twig_Extension
      */
     public function getSchedules($data, $key = '')
     {
-        return $data ? $this->container->get('fhm_schedules')->setData($data)->getValue($key) : "<span class='schedules nodata'>" . $this->container->get('translator')->trans('fhm.schedules.nodata', array(), 'FhmFhmBundle') . "</span>";
+        return $data ? $this->container->get('fhm_schedules')->setData($data)->getValue(
+            $key
+        ) : "<span class='schedules nodata'>".$this->container->get('translator')->trans(
+                'fhm.schedules.nodata',
+                array(),
+                'FhmFhmBundle'
+            )."</span>";
     }
 
     /**
@@ -112,15 +132,15 @@ class FhmExtension extends \Twig_Extension
      */
     public function getSchedulesStateHtml($data, $class = true, $text = true, $indicator = false)
     {
-        return $this->container->get('templating')->render
-        (
+        $twig = new \Twig_Environment();
+
+        return $twig->render(
             '::FhmFhm/Template/schedules.state.html.twig',
-            array
-            (
-                'show_class'     => $class,
-                'show_text'      => $text,
+            array(
+                'show_class' => $class,
+                'show_text' => $text,
                 'show_indicator' => $indicator,
-                'state'          => $this->getSchedulesState($data)
+                'state' => $this->getSchedulesState($data),
             )
         );
     }
@@ -142,4 +162,13 @@ class FhmExtension extends \Twig_Extension
     {
         return 'fhm_extension';
     }
+
+    /**
+     * @return mixed
+     */
+    public function getInstance()
+    {
+        return $this->instance;
+    }
+
 }
