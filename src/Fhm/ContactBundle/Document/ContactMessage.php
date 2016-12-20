@@ -38,7 +38,7 @@ class ContactMessage extends FhmFhm
     public function __construct()
     {
         parent::__construct();
-        $this->contact      = null;
+        $this->contact = null;
         $this->sort_contact = null;
     }
 
@@ -136,8 +136,7 @@ class ContactMessage extends FhmFhm
     public function preRemove()
     {
         parent::preRemove();
-        if($this->contact)
-        {
+        if ($this->contact) {
             $this->contact->removeMessage($this);
         }
     }

@@ -14,7 +14,10 @@ use Doctrine\ODM\MongoDB\Mapping\ClassMetadata;
 class ContactMessageRepository extends FhmRepository
 {
     /**
-     * Constructor
+     * ContactMessageRepository constructor.
+     * @param DocumentManager $dm
+     * @param UnitOfWork $uow
+     * @param ClassMetadata $class
      */
     public function __construct(DocumentManager $dm, UnitOfWork $uow, ClassMetadata $class)
     {

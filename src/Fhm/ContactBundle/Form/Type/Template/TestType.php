@@ -21,49 +21,44 @@ class TestType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder
-            ->add(
-                'firstname',
-                TextType::class,
-                array(
-                    'label' => 'contact.form.firstname'
-                )
+        $builder->add(
+            'firstname',
+            TextType::class,
+            array(
+                'label' => 'contact.form.firstname',
             )
-            ->add(
-                'lastname',
-                TextType::class,
-                array(
-                    'label' => 'contact.form.lastname'
-                )
+        )->add(
+            'lastname',
+            TextType::class,
+            array(
+                'label' => 'contact.form.lastname',
             )
-            ->add(
-                'email',
-                EmailType::class,
-                array(
-                    'label' => 'contact.form.email'
-                )
+        )->add(
+            'email',
+            EmailType::class,
+            array(
+                'label' => 'contact.form.email',
             )
-            ->add(
-                'phone',
-                TextType::class,
-                array(
-                    'label' => 'contact.form.phone', 'required' => false
-                )
+        )->add(
+            'phone',
+            TextType::class,
+            array(
+                'label' => 'contact.form.phone',
+                'required' => false,
             )
-            ->add(
-                'content',
-                TextareaType::class,
-                array(
-                    'label' => 'contact.form.content'
-                )
+        )->add(
+            'content',
+            TextareaType::class,
+            array(
+                'label' => 'contact.form.content',
             )
-            ->add(
-                'submit',
-                SubmitType::class,
-                array(
-                    'label' => 'contact.form.submit'
-                )
-            );
+        )->add(
+            'submit',
+            SubmitType::class,
+            array(
+                'label' => 'contact.form.submit',
+            )
+        );
     }
 
     /**

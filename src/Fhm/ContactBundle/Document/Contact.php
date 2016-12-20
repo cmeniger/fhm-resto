@@ -108,8 +108,8 @@ class Contact extends FhmGeolocation
     public function __construct()
     {
         parent::__construct();
-        $this->form         = false;
-        $this->messages     = new ArrayCollection();
+        $this->form = false;
+        $this->messages = new ArrayCollection();
         $this->sort_message = 0;
         $this->sort_address = null;
     }
@@ -494,8 +494,7 @@ class Contact extends FhmGeolocation
     public function setMessages(ArrayCollection $messages)
     {
         $this->resetMessages();
-        foreach($messages as $message)
-        {
+        foreach ($messages as $message) {
             $message->setContact($this);
         }
         $this->messages = $messages;
@@ -512,8 +511,7 @@ class Contact extends FhmGeolocation
      */
     public function addMessage(\Fhm\ContactBundle\Document\ContactMessage $message)
     {
-        if(!$this->messages->contains($message))
-        {
+        if (!$this->messages->contains($message)) {
             $this->messages->add($message);
             $message->setContact($this);
         }
@@ -530,8 +528,7 @@ class Contact extends FhmGeolocation
      */
     public function removeMessage(\Fhm\ContactBundle\Document\ContactMessage $message)
     {
-        if($this->messages->contains($message))
-        {
+        if ($this->messages->contains($message)) {
             $this->messages->removeElement($message);
             $message->removeContact();
         }
@@ -546,8 +543,7 @@ class Contact extends FhmGeolocation
      */
     public function resetMessages()
     {
-        foreach($this->messages as $message)
-        {
+        foreach ($this->messages as $message) {
             $message->removeContact();
         }
         $this->messages = new ArrayCollection();
@@ -574,7 +570,7 @@ class Contact extends FhmGeolocation
     public function preRemove()
     {
         $this->resetMessages();
-        
+
         return parent::preRemove();
     }
 }

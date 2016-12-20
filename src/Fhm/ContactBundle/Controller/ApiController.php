@@ -10,19 +10,37 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 /**
- * @Route("/api/contact", service="fhm_contact_controller_api")
+ * @Route("/api/contact")
+ * ------------------------------------
+ * Class ApiController
+ * @package Fhm\ContactBundle\Controller
  */
 class ApiController extends FhmController
 {
     /**
      * ApiController constructor.
-     *
-     * @param \Fhm\FhmBundle\Services\Tools $tools
+     * @param string $repository
+     * @param string $source
+     * @param string $domain
+     * @param string $translation
+     * @param string $document
+     * @param string $route
      */
-    public function __construct(\Fhm\FhmBundle\Services\Tools $tools)
-    {
-        $this->setFhmTools($tools);
-        parent::__construct('Fhm', 'Contact', 'contact');
+    public function __construct(
+        $repository = "FhmContactBundle:Contact",
+        $source = "fhm",
+        $domain = "FhmContactBundle",
+        $translation = "contact",
+        $document = "Contact",
+        $route = 'contact'
+    ) {
+        self::$repository = $repository;
+        self::$source = $source;
+        self::$domain = $domain;
+        self::$translation = $translation;
+        self::$document = new $document();
+        self::$class = get_class(self::$document);
+        self::$route = $route;
     }
 
     /**
@@ -60,18 +78,16 @@ class ApiController extends FhmController
      */
     public function formAction(Request $request, $id)
     {
-        $document = $this->fhm_tools->dmRepository()->find($id);
-        $instance = $this->fhm_tools->instanceData($document);
+        $document = $this->get('fhm_tools')->dmRepository(self::$repository)->find($id);
         if ($document == "") {
-            throw $this->createNotFoundException($this->fhm_tools->trans('.error.unknown'));
+            throw $this->createNotFoundException($this->trans(self::$translation.'.error.unknown'));
         } // ERROR - Forbidden
-        elseif (!$instance->user->admin && ($document->getDelete() || !$document->getActive())) {
-            throw new HttpException(403, $this->fhm_tools->trans('.error.forbidden'));
+        elseif (!$this->getUser()->hasRole('ROLE_ADMIN') && ($document->getDelete() || !$document->getActive())) {
+            throw new HttpException(403, $this->trans(self::$translation.'.error.forbidden'));
         }
         $template = $this->get('templating')->exists(
             "::FhmContact/Template/form.".$document->getFormTemplate().".html.twig"
         ) ? $document->getFormTemplate() : "default";
-
         $classType = "\\Fhm\\ContactBundle\\Form\\Type\\Template\\".ucfirst($template)."Type";
         $classHandler = "\\Fhm\\ContactBundle\\Form\\Handler\\Api\\FormHandler";
         $form = $this->createForm($classType);
@@ -83,9 +99,7 @@ class ApiController extends FhmController
             // Name
             $name = '';
             $name = (isset($data['name'])) ? $data['name'] : $name;
-            $name = ($name == '' && isset($data['firstname']) && isset($data['lastname']))
-                ? $data['firstname'].' '.$data['lastname']
-                : $name;
+            $name = ($name == '' && isset($data['firstname']) && isset($data['lastname'])) ? $data['firstname'].' '.$data['lastname'] : $name;
             $name = ($name == '' && isset($data['email'])) ? $data['email'] : $name;
             $name = ($name == '') ? $document->getName() : $name;
             // Email
@@ -99,18 +113,20 @@ class ApiController extends FhmController
             $message->setField($data);
             // Contact
             $document->addMessage($message);
-            $this->fhm_tools->dmPersist($message);
-            $this->fhm_tools->dmPersist($document);
+            $this->get('fhm_tools')->dmPersist($message);
+            $this->get('fhm_tools')->dmPersist($document);
             // Email
-            $this->container->get('fhm_mail')->contact(
-                array
-                (
+            $this->get('fhm_mail')->contact(
+                array(
                     'message' => $message,
                     'template' => $document->getFormTemplate(),
                 )
             );
             // Message
-            $this->get('session')->getFlashBag()->add('contact-'.$id, $this->fhm_tools->trans('.front.index.flash.ok'));
+            $this->get('session')->getFlashBag()->add(
+                'contact-'.$id,
+                $this->trans(self::$translation.'.front.index.flash.ok')
+            );
             // Reset form
             $form = $this->createForm($classType);
         }
@@ -120,7 +136,6 @@ class ApiController extends FhmController
                 "::FhmContact/Template/form.".$template.".html.twig",
                 array(
                     'document' => $document,
-                    'instance' => $instance,
                     'form' => $form->createView(),
                 )
             )
@@ -137,7 +152,7 @@ class ApiController extends FhmController
     public function emailAction(Request $request)
     {
         $datas = $request->get('FhmContact');
-        $document = $this->fhm_tools->dmRepository()->find($datas['id']);
+        $document = $this->get('fhm_tools')->dmRepository(self::$repository)->find($datas['id']);
         if ($document) {
             // Message
             $message = new \Fhm\ContactBundle\Document\Message();
@@ -148,20 +163,22 @@ class ApiController extends FhmController
             $message->setContent($datas['content']);
             // Contact
             $document->addMessage($message);
-            $this->fhm_tools->dmPersist($message);
-            $this->fhm_tools->dmPersist($document);
+            $this->get('fhm_tools')->dmPersist($message);
+            $this->get('fhm_tools')->dmPersist($document);
             // Email
-            $this->container->get('fhm_mail')->contact(
-                array
-                (
+            $this->get('fhm_mail')->contact(
+                array(
                     'message' => $message,
                     'template' => $document->getFormTemplate(),
                 )
             );
             // Message
-            $this->get('session')->getFlashBag()->add('notice', $this->fhm_tools->trans('.front.index.flash.ok'));
+            $this->get('session')->getFlashBag()->add(
+                'notice',
+                $this->trans(self::$translation.'.front.index.flash.ok')
+            );
         }
 
-        return $this->redirect($this->fhm_tools->getUrl('project_home'));
+        return $this->redirect($this->getUrl('project_home'));
     }
 }

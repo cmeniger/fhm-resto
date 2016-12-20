@@ -1,26 +1,48 @@
 <?php
 namespace Fhm\ContactBundle\Controller;
 
+use Fhm\ContactBundle\Form\Type\Admin\CreateType;
+use Fhm\ContactBundle\Form\Type\Admin\UpdateType;
 use Fhm\FhmBundle\Controller\RefAdminController as FhmController;
 use Fhm\ContactBundle\Document\Contact;
+use Fhm\FhmBundle\Form\Handler\Admin\CreateHandler;
+use Fhm\FhmBundle\Form\Handler\Admin\UpdateHandler;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 /**
- * @Route("/admin/contact", service="fhm_contact_controller_admin")
+ * @Route("/admin/contact")
+ * ---------------------------------------
+ * Class AdminController
+ * @package Fhm\ContactBundle\Controller
  */
 class AdminController extends FhmController
 {
     /**
      * AdminController constructor.
-     *
-     * @param \Fhm\FhmBundle\Services\Tools $tools
+     * @param string $repository
+     * @param string $source
+     * @param string $domain
+     * @param string $translation
+     * @param string $document
+     * @param string $route
      */
-    public function __construct(\Fhm\FhmBundle\Services\Tools $tools)
-    {
-        $this->setFhmTools($tools);
-        parent::__construct('Fhm', 'Contact', 'contact');
+    public function __construct(
+        $repository = "FhmContactBundle:Contact",
+        $source = "fhm",
+        $domain = "FhmContactBundle",
+        $translation = "contact",
+        $document = "Contact",
+        $route = 'contact'
+    ) {
+        self::$repository = $repository;
+        self::$source = $source;
+        self::$domain = $domain;
+        self::$translation = $translation;
+        self::$document = new $document();
+        self::$class = get_class(self::$document);
+        self::$route = $route;
     }
 
     /**
@@ -46,6 +68,9 @@ class AdminController extends FhmController
      */
     public function createAction(Request $request)
     {
+        self::$form = new \stdClass();
+        self::$form->type = CreateType::class;
+        self::$form->handler = CreateHandler::class;
         return parent::createAction($request);
     }
 
@@ -88,6 +113,9 @@ class AdminController extends FhmController
      */
     public function updateAction(Request $request, $id)
     {
+        self::$form = new \stdClass();
+        self::$form->type = UpdateType::class;
+        self::$form->handler = UpdateHandler::class;
         return parent::updateAction($request, $id);
     }
 
@@ -102,6 +130,9 @@ class AdminController extends FhmController
      */
     public function duplicateAction(Request $request, $id)
     {
+        self::$form = new \stdClass();
+        self::$form->type = CreateType::class;
+        self::$form->handler = CreateHandler::class;
         return parent::duplicateAction($request, $id);
     }
 
@@ -181,17 +212,5 @@ class AdminController extends FhmController
     public function exportAction(Request $request)
     {
         return parent::exportAction($request);
-    }
-
-    /**
-     * @Route
-     * (
-     *      path="/grouping",
-     *      name="fhm_admin_contact_grouping"
-     * )
-     */
-    public function groupingAction(Request $request)
-    {
-        return parent::groupingAction($request);
     }
 }

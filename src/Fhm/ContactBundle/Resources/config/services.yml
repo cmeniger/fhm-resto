@@ -1,16 +1,1 @@
 services:
-    fhm_contact_controller_admin:
-        class: Fhm\ContactBundle\Controller\AdminController
-        arguments: ["@fhm_tools"]
-
-    fhm_contact_controller_front:
-        class: Fhm\ContactBundle\Controller\FrontController
-        arguments: ["@fhm_tools"]
-
-    fhm_contact_controller_api:
-        class: Fhm\ContactBundle\Controller\ApiController
-        arguments: ["@fhm_tools"]
-
-    fhm_contact_controller_message_admin:
-        class: Fhm\ContactBundle\Controller\Message\AdminController
-        arguments: ["@fhm_tools"]

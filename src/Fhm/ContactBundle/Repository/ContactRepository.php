@@ -14,7 +14,10 @@ use Doctrine\ODM\MongoDB\Mapping\ClassMetadata;
 class ContactRepository extends FhmRepository
 {
     /**
-     * Constructor
+     * ContactRepository constructor.
+     * @param DocumentManager $dm
+     * @param UnitOfWork $uow
+     * @param ClassMetadata $class
      */
     public function __construct(DocumentManager $dm, UnitOfWork $uow, ClassMetadata $class)
     {
@@ -23,14 +26,10 @@ class ContactRepository extends FhmRepository
 
     /**
      * @param string $search
-     * @param int    $page
-     * @param int    $count
-     * @param string $grouping
-     *
      * @return mixed
      */
-    public function getFrontIndex($search = "", $page = 0, $count = 0, $grouping = "")
+    public function getFrontIndex($search = "")
     {
-        return parent::getFrontIndex('', 0, 0, $grouping);
+        return parent::getFrontIndex('');
     }
 }

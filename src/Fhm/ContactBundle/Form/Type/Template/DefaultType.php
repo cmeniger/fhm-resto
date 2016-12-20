@@ -23,47 +23,41 @@ class DefaultType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder
-            ->add(
-                'firstname',
-                TextType::class,
-                array(
-                    'label' => 'contact.front.form.firstname',
-                    'mapped' => false
-                )
+        $builder->add(
+            'firstname',
+            TextType::class,
+            array(
+                'label' => 'contact.front.form.firstname',
+                'mapped' => false,
             )
-            ->add(
-                'lastname',
-                TextType::class,
-                array(
-                    'label' => 'contact.front.form.lastname',
-                    'mapped' => false
-                )
+        )->add(
+            'lastname',
+            TextType::class,
+            array(
+                'label' => 'contact.front.form.lastname',
+                'mapped' => false,
             )
-            ->add(
-                'email',
-                EmailType::class,
-                array('label' => 'contact.front.form.email', 'mapped' => false)
+        )->add(
+            'email',
+            EmailType::class,
+            array('label' => 'contact.front.form.email', 'mapped' => false)
+        )->add(
+            'phone',
+            TextType::class,
+            array(
+                'label' => 'contact.front.form.phone',
+                'mapped' => false,
+                'required' => false,
             )
-            ->add(
-                'phone',
-                TextType::class,
-                array(
-                    'label' => 'contact.front.form.phone',
-                    'mapped' => false,
-                    'required' => false,
-                )
-            )
-            ->add(
-                'content',
-                TextareaType::class,
-                array('label' => 'contact.front.form.content', 'mapped' => false)
-            )
-            ->add(
-                'submit',
-                SubmitType::class,
-                array('label' => 'contact.front.form.submit')
-            );
+        )->add(
+            'content',
+            TextareaType::class,
+            array('label' => 'contact.front.form.content', 'mapped' => false)
+        )->add(
+            'submit',
+            SubmitType::class,
+            array('label' => 'contact.front.form.submit')
+        );
     }
 
     /**
