@@ -1,5 +1,4 @@
 <?php
-
 namespace Fhm\FhmBundle\Form\Type\Admin;
 
 use Symfony\Component\Form\AbstractType;
@@ -29,12 +28,11 @@ class ExportType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder
-            ->add(
-                'submit',
-                SubmitType::class,
-                array('label' => $options['translation_route'].'.admin.export.form.submit')
-            );
+        $builder->add(
+            'submit',
+            SubmitType::class,
+            array('label' => $options['translation_route'].'.admin.export.form.submit')
+        );
     }
 
     /**
@@ -55,13 +53,13 @@ class ExportType extends AbstractType
                 'data_class' => 'Fhm\FhmBundle\Document\Fhm',
                 'translation_domain' => 'FhmFhmBundle',
                 'cascade_validation' => true,
-                'translation_route'=>'',
-                'filter'=>'',
-                'lang_visible'=>'',
-                'lang_available'=>'',
-                'grouping_visible'=>'',
-                'grouping_available'=>'',
-                'user_admin'=>''
+                'translation_route' => '',
+                'filter' => '',
+                'lang_visible' => '',
+                'lang_available' => '',
+                'grouping_visible' => '',
+                'grouping_available' => '',
+                'user_admin' => '',
             )
         );
     }

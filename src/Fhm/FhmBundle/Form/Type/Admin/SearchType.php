@@ -1,5 +1,4 @@
 <?php
-
 namespace Fhm\FhmBundle\Form\Type\Admin;
 
 use Symfony\Component\Form\AbstractType;
@@ -23,7 +22,7 @@ class SearchType extends AbstractType
             'search',
             TextType::class,
             array(
-                'label'=>'fhm.admin.index.form.search',
+                'label' => 'fhm.admin.index.form.search',
                 'required' => false,
                 'attr' => array(
                     'placeholder' => 'fhm.admin.index.form.search',

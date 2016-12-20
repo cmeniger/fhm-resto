@@ -3,6 +3,7 @@ namespace Fhm\MapPickerBundle\Controller;
 
 use Fhm\FhmBundle\Controller\RefApiController as FhmController;
 use Fhm\MapPickerBundle\Document\Map;
+use Fhm\MapPickerBundle\Document\MapPicker;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
@@ -10,19 +11,36 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 /**
- * @Route("/api/mappicker", service="fhm_mappicker_controller_api")
+ * @Route("/api/mappicker")
+ * Class ApiController
+ * @package Fhm\MapPickerBundle\Controller
  */
 class ApiController extends FhmController
 {
     /**
      * ApiController constructor.
-     *
-     * @param \Fhm\FhmBundle\Services\Tools $tools
+     * @param string $repository
+     * @param string $source
+     * @param string $domain
+     * @param string $translation
+     * @param $document
+     * @param string $route
      */
-    public function __construct(\Fhm\FhmBundle\Services\Tools $tools)
-    {
-        $this->setFhmTools($tools);
-        parent::__construct('Fhm', 'MapPicker', 'mappicker');
+    public function __construct(
+        $repository = "FhmMapPickerBundle:MapPicker",
+        $source = "fhm",
+        $domain = "FhmMapPickerBundle",
+        $translation = "mappicker",
+        $document = MapPicker::class,
+        $route = 'mappicker'
+    ) {
+        self::$repository = $repository;
+        self::$source = $source;
+        self::$domain = $domain;
+        self::$translation = $translation;
+        self::$document = new $document();
+        self::$class = get_class(self::$document);
+        self::$route = $route;
     }
 
     /**

@@ -2,25 +2,47 @@
 namespace Fhm\MapPickerBundle\Controller;
 
 use Fhm\FhmBundle\Controller\RefAdminController as FhmController;
+use Fhm\FhmBundle\Form\Handler\Admin\CreateHandler;
+use Fhm\FhmBundle\Form\Handler\Admin\UpdateHandler;
 use Fhm\MapPickerBundle\Document\MapPicker;
+use Fhm\MapPickerBundle\Form\Type\Admin\CreateType;
+use Fhm\MapPickerBundle\Form\Type\Admin\UpdateType;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 /**
- * @Route("/admin/mappicker", service="fhm_mappicker_controller_admin")
+ * @Route("/admin/mappicker")
+ * ---------------------------------------
+ * Class AdminController
+ * @package Fhm\MapPickerBundle\Controller
  */
 class AdminController extends FhmController
 {
     /**
      * AdminController constructor.
-     *
-     * @param \Fhm\FhmBundle\Services\Tools $tools
+     * @param string $repository
+     * @param string $source
+     * @param string $domain
+     * @param string $translation
+     * @param $document
+     * @param string $route
      */
-    public function __construct(\Fhm\FhmBundle\Services\Tools $tools)
-    {
-        $this->setFhmTools($tools);
-        parent::__construct('Fhm', 'MapPicker', 'mappicker');
+    public function __construct(
+        $repository = "FhmMapPickerBundle:MapPicker",
+        $source = "fhm",
+        $domain = "FhmMapPickerBundle",
+        $translation = "mappicker",
+        $document = MapPicker::class,
+        $route = 'mappicker'
+    ) {
+        self::$repository = $repository;
+        self::$source = $source;
+        self::$domain = $domain;
+        self::$translation = $translation;
+        self::$document = new $document();
+        self::$class = get_class(self::$document);
+        self::$route = $route;
     }
 
     /**
@@ -46,20 +68,13 @@ class AdminController extends FhmController
      */
     public function createAction(Request $request)
     {
-        // ERROR - Unknown route
-        if (!$this->fhm_tools->routeExists('fhm_admin_'.$this->route) || !$this->fhm_tools->routeExists(
-                'fhm_admin_'.$this->route.'_create'
-            )
-        ) {
-            throw $this->createNotFoundException($this->fhm_tools->trans('fhm.error.route', array(), 'FhmFhmBundle'));
-        }
-        $document = $this->document;
-        $instance = $this->fhm_tools->instanceData();
-        $classType = $this->form->type->create;
-        $classHandler = $this->form->handler->create;
+        $document = self::$document;
+        $classType = CreateType::class;
+        $classHandler = CreateHandler::class;
         $form = $this->createForm(
-            new $classType($instance, $document, $this->fhm_tools->getParameters('maps', 'fhm_mappicker')),
-            $document
+            $classType,
+            $document,
+            array('map' => $this->get('fhm_tools')->getParameter('maps', 'fhm_mappicker'))
         );
         $handler = new $classHandler($form, $request);
         $process = $handler->process();
@@ -67,23 +82,26 @@ class AdminController extends FhmController
             $data = $request->get($form->getName());
             // Persist
             $document->setUserCreate($this->getUser());
-            $document->setAlias($this->fhm_tools->getAlias($document->getId(), $document->getName()));
-            $this->fhm_tools->dmPersist($document);
+            $document->setAlias($this->get('fhm_tools')->getAlias($document->getId(), $document->getName()));
+            $this->get('fhm_tools')->dmPersist($document);
             // Message
-            $this->get('session')->getFlashBag()->add('notice', $this->fhm_tools->trans('.admin.create.flash.ok'));
+            $this->get('session')->getFlashBag()->add(
+                'notice',
+                $this->trans(self::$translation.'.admin.create.flash.ok')
+            );
             // Redirect
-            $redirect = $this->redirect($this->fhm_tools->getUrl('fhm_admin_'.$this->route));
+            $redirect = $this->redirect($this->getUrl('fhm_admin_'.self::$route));
             $redirect = isset($data['submitSave']) ? $this->redirect(
-                $this->fhm_tools->getUrl('fhm_admin_'.$this->route.'_update', array('id' => $document->getId()))
+                $this->getUrl('fhm_admin_'.self::$route.'_update', array('id' => $document->getId()))
             ) : $redirect;
             $redirect = isset($data['submitDuplicate']) ? $this->redirect(
-                $this->fhm_tools->getUrl('fhm_admin_'.$this->route.'_duplicate', array('id' => $document->getId()))
+                $this->getUrl('fhm_admin_'.self::$route.'_duplicate', array('id' => $document->getId()))
             ) : $redirect;
             $redirect = isset($data['submitNew']) ? $this->redirect(
-                $this->fhm_tools->getUrl('fhm_admin_'.$this->route.'_create')
+                $this->getUrl('fhm_admin_'.self::$route.'_create')
             ) : $redirect;
             $redirect = isset($data['submitConfig']) ? $this->redirect(
-                $this->fhm_tools->getUrl('fhm_admin_'.$this->route.'_detail', array('id' => $document->getId()))
+                $this->getUrl('fhm_admin_'.self::$route.'_detail', array('id' => $document->getId()))
             ) : $redirect;
 
             return $redirect;
@@ -91,23 +109,22 @@ class AdminController extends FhmController
 
         return array(
             'form' => $form->createView(),
-            'instance' => $instance,
             'breadcrumbs' => array(
                 array(
-                    'link' => $this->fhm_tools->getUrl('project_home'),
-                    'text' => $this->fhm_tools->trans('project.home.breadcrumb', array(), 'ProjectDefaultBundle'),
+                    'link' => $this->getUrl('project_home'),
+                    'text' => $this->trans('project.home.breadcrumb', array(), 'ProjectDefaultBundle'),
                 ),
                 array(
-                    'link' => $this->fhm_tools->getUrl('fhm_admin'),
-                    'text' => $this->fhm_tools->trans('fhm.admin.breadcrumb', array(), 'FhmFhmBundle'),
+                    'link' => $this->getUrl('fhm_admin'),
+                    'text' => $this->trans('fhm.admin.breadcrumb', array(), 'FhmFhmBundle'),
                 ),
                 array(
-                    'link' => $this->fhm_tools->getUrl('fhm_admin_'.$this->route),
-                    'text' => $this->fhm_tools->trans('.admin.index.breadcrumb'),
+                    'link' => $this->getUrl('fhm_admin_'.self::$route),
+                    'text' => $this->trans(self::$translation.'.admin.index.breadcrumb'),
                 ),
                 array(
-                    'link' => $this->fhm_tools->getUrl('fhm_admin_'.$this->route.'_create'),
-                    'text' => $this->fhm_tools->trans('.admin.create.breadcrumb'),
+                    'link' => $this->getUrl('fhm_admin_'.self::$route.'_create'),
+                    'text' => $this->trans(self::$translation.'.admin.create.breadcrumb'),
                     'current' => true,
                 ),
             ),
@@ -125,48 +142,41 @@ class AdminController extends FhmController
      */
     public function updateAction(Request $request, $id)
     {
-        // ERROR - Unknown route
-        if (!$this->fhm_tools->routeExists('fhm_admin_'.$this->route) || !$this->fhm_tools->routeExists(
-                'fhm_admin_'.$this->route.'_update'
-            )
-        ) {
-            throw $this->createNotFoundException($this->fhm_tools->trans('fhm.error.route', array(), 'FhmFhmBundle'));
-        }
-        $document = $this->fhm_tools->dmRepository()->find($id);
-        $instance = $this->fhm_tools->instanceData($document);
-        $classType = $this->form->type->update;
-        $classHandler = $this->form->handler->update;
+        $document = $this->get('fhm_tools')->dmRepository(self::$repository)->find($id);
+        $classType = UpdateType::class;
+        $classHandler = UpdateHandler::class;
         // ERROR - unknown
         if ($document == "") {
-            throw $this->createNotFoundException($this->fhm_tools->trans('.error.unknown'));
+            throw $this->createNotFoundException($this->trans(self::$translation.'.error.unknown'));
         }
         $form = $this->createForm(
-            new $classType($instance, $document, $this->fhm_tools->getParameters('maps', 'fhm_mappicker')),
-            $document
+            $classType,
+            $document,
+            array('map' => $this->get('fhm_tools')->getParameter('maps', 'fhm_mappicker'))
         );
         $handler = new $classHandler($form, $request);
-        $process = $handler->process($document, $this->fhm_tools->dm(), $this->bundle);
+        $process = $handler->process($document, $this->get('fhm_tools')->dm(), self::$bundle);
         if ($process) {
             $data = $request->get($form->getName());
             // Persist
             $document->setUserUpdate($this->getUser());
-            $document->setAlias($this->fhm_tools->getAlias($document->getId(), $document->getName()));
-            $this->fhm_tools->dmPersist($document);
+            $document->setAlias($this->get('fhm_tools')->getAlias($document->getId(), $document->getName()));
+            $this->get('fhm_tools')->dmPersist($document);
             // Message
-            $this->get('session')->getFlashBag()->add('notice', $this->fhm_tools->trans('.admin.update.flash.ok'));
+            $this->get('session')->getFlashBag()->add('notice', $this->trans('.admin.update.flash.ok'));
             // Redirect
-            $redirect = $this->redirect($this->fhm_tools->getUrl('fhm_admin_'.$this->route));
+            $redirect = $this->redirect($this->get('fhm_tools')->getUrl('fhm_admin_'.self::$route));
             $redirect = isset($data['submitSave']) ? $this->redirect(
-                $this->fhm_tools->getUrl('fhm_admin_'.$this->route.'_update', array('id' => $document->getId()))
+                $this->getUrl('fhm_admin_'.self::$route.'_update', array('id' => $document->getId()))
             ) : $redirect;
             $redirect = isset($data['submitDuplicate']) ? $this->redirect(
-                $this->fhm_tools->getUrl('fhm_admin_'.$this->route.'_duplicate', array('id' => $document->getId()))
+                $this->getUrl('fhm_admin_'.self::$route.'_duplicate', array('id' => $document->getId()))
             ) : $redirect;
             $redirect = isset($data['submitNew']) ? $this->redirect(
-                $this->fhm_tools->getUrl('fhm_admin_'.$this->route.'_create')
+                $this->getUrl('fhm_admin_'.self::$route.'_create')
             ) : $redirect;
             $redirect = isset($data['submitConfig']) ? $this->redirect(
-                $this->fhm_tools->getUrl('fhm_admin_'.$this->route.'_detail', array('id' => $document->getId()))
+                $this->getUrl('fhm_admin_'.self::$route.'_detail', array('id' => $document->getId()))
             ) : $redirect;
 
             return $redirect;
@@ -175,30 +185,33 @@ class AdminController extends FhmController
         return array(
             'document' => $document,
             'form' => $form->createView(),
-            'instance' => $instance,
             'breadcrumbs' => array(
                 array(
-                    'link' => $this->fhm_tools->getUrl('project_home'),
-                    'text' => $this->fhm_tools->trans('project.home.breadcrumb', array(), 'ProjectDefaultBundle'),
+                    'link' => $this->getUrl('project_home'),
+                    'text' => $this->trans(
+                        'project.home.breadcrumb',
+                        array(),
+                        'ProjectDefaultBundle'
+                    ),
                 ),
                 array(
-                    'link' => $this->fhm_tools->getUrl('fhm_admin'),
-                    'text' => $this->fhm_tools->trans('fhm.admin.breadcrumb', array(), 'FhmFhmBundle'),
+                    'link' => $this->getUrl('fhm_admin'),
+                    'text' => $this->trans('fhm.admin.breadcrumb', array(), 'FhmFhmBundle'),
                 ),
                 array(
-                    'link' => $this->fhm_tools->getUrl('fhm_admin_'.$this->route),
-                    'text' => $this->fhm_tools->trans('.admin.index.breadcrumb'),
+                    'link' => $this->get('fhm_tools')->getUrl('fhm_admin_'.self::$route),
+                    'text' => $this->trans(self::$translation.'.admin.index.breadcrumb'),
                 ),
                 array(
-                    'link' => $this->fhm_tools->getUrl('fhm_admin_'.$this->route.'_detail', array('id' => $id)),
-                    'text' => $this->fhm_tools->trans(
-                        '.admin.detail.breadcrumb',
+                    'link' => $this->getUrl('fhm_admin_'.self::$route.'_detail', array('id' => $id)),
+                    'text' => $this->trans(
+                        self::$translation.'.admin.detail.breadcrumb',
                         array('%name%' => $document->getName())
                     ),
                 ),
                 array(
-                    'link' => $this->fhm_tools->getUrl('fhm_admin_'.$this->route.'_update', array('id' => $id)),
-                    'text' => $this->fhm_tools->trans('.admin.update.breadcrumb'),
+                    'link' => $this->get('fhm_tools')->getUrl('fhm_admin_'.self::$route.'_update', array('id' => $id)),
+                    'text' => $this->trans(self::$translation.'.admin.update.breadcrumb'),
                     'current' => true,
                 ),
             ),
@@ -218,14 +231,14 @@ class AdminController extends FhmController
     {
         $response = parent::detailAction($id);
         $document = $response['document'];
-        $document->mappicker = $this->container->get('mappicker.'.$response['document']->getMap())->setDocument(
+        $document->mappicker = $this->get('mappicker.'.$response['document']->getMap())->setDocument(
             $response['document']
         );
-        $document->sites = $this->fhm_tools->dm()->getRepository('FhmSiteBundle:Site')->getFrontIndex('', 0, 0);
+        $document->sites = $this->get('fhm_tools')->dm()->getRepository('FhmSiteBundle:Site')->getFrontIndex('');
         foreach ((array)$document->getZone() as $zone) {
             $document->addZone(
                 $zone['code'],
-                $this->fhm_tools->dm()->getRepository('FhmSiteBundle:Site')->find($zone['site'])
+                $this->get('fhm_tools')->dm()->getRepository('FhmSiteBundle:Site')->find($zone['site'])
             );
         }
         $response['document'] = $document;
@@ -328,18 +341,6 @@ class AdminController extends FhmController
     /**
      * @Route
      * (
-     *      path="/grouping",
-     *      name="fhm_admin_mappicker_grouping"
-     * )
-     */
-    public function groupingAction(Request $request)
-    {
-        return parent::groupingAction($request);
-    }
-
-    /**
-     * @Route
-     * (
      *      path="/add",
      *      name="fhm_admin_mappicker_add"
      * )
@@ -347,11 +348,11 @@ class AdminController extends FhmController
     public function addAction(Request $request)
     {
         $datas = $request->get('FhmAdd');
-        $document = $this->fhm_tools->dmRepository()->find($datas['id']);
+        $document = $this->get('fhm_tools')->dmRepository(self::$repository)->find($datas['id']);
         $document->addZone($datas['code'], $datas['site']);
-        $this->fhm_tools->dmPersist($document);
+        $this->get('fhm_tools')->dmPersist($document);
 
-        return $this->redirect($this->fhm_tools->getLastRoute());
+        return $this->redirect($this->get('fhm_tools')->getLastRoute($this->get('request_stack')->getCurrentRequest()));
     }
 
     /**
@@ -364,10 +365,10 @@ class AdminController extends FhmController
      */
     public function removeAction($id, $code)
     {
-        $document = $this->fhm_tools->dmRepository()->find($id);
+        $document = $this->get('fhm_tools')->dmRepository(self::$repository)->find($id);
         $document->removeZone($code);
-        $this->fhm_tools->dmPersist($document);
+        $this->get('fhm_tools')->dmPersist($document);
 
-        return $this->redirect($this->fhm_tools->getLastRoute());
+        return $this->redirect($this->get('fhm_tools')->getLastRoute($this->get('request_stack')->getCurrentRequest()));
     }
 }

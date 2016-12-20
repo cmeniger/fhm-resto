@@ -5,6 +5,7 @@ use Fhm\FhmBundle\Form\Type\Admin\CreateType as FhmType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Class CreateType
@@ -12,37 +13,53 @@ use Symfony\Component\Form\FormBuilderInterface;
  */
 class CreateType extends FhmType
 {
-    private $maps = array();
-
-    public function __construct($instance, $document, $maps)
-    {
-        parent::__construct($instance, $document);
-
-        $this->maps['nomap'] = $options['translation_route'].'.nomap.choice';
-        foreach ($maps as $map) {
-            $this->maps[$map] = $options['translation_route'].'.'.$map.'.choice';
-        }
-    }
-
     /**
      * @param FormBuilderInterface $builder
      * @param array $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $this->setTranslation('mappicker');
         parent::buildForm($builder, $options);
-        $builder
-            ->add(
-                'order',
-                NumberType::class,
-                array('label' => $options['translation_route'].'.admin.create.form.order', 'required' => false)
+        $builder->add(
+            'order',
+            NumberType::class,
+            array('label' => $options['translation_route'].'.admin.create.form.order', 'required' => false)
+        )->add(
+            'map',
+            ChoiceType::class,
+            array(
+                'choices' => function () use ($options) {
+                    $mapsArray['nomap'] = $options['translation_route'].'.nomap.choice';
+                    foreach ($options['map'] as $map) {
+                        $mapsArray[$map] = $options['translation_route'].'.'.$map.'.choice';
+                    }
+
+                    return $mapsArray;
+                },
+                'label' => $options['translation_route'].'.admin.create.form.map',
             )
-            ->add(
-                'map',
-                ChoiceType::class,
-                array('choices' => $this->maps, 'label' => $options['translation_route'].'.admin.create.form.map')
+        )->remove('global');
+    }
+
+    /**
+     * @param OptionsResolver $resolver
+     */
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults(
+            array(
+                'data_class' => 'Fhm\FhmBundle\Document\Fhm',
+                'translation_domain' => 'FhmFhmBundle',
+                'cascade_validation' => true,
+                'translation_route' => '',
+                'filter' => '',
+                'lang_visible' => '',
+                'lang_available' => '',
+                'grouping_visible' => '',
+                'grouping_available' => '',
+                'user_admin' => '',
+                'map' => '',
             )
-            ->remove('global');
+        );
     }
 }

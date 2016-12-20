@@ -1,5 +1,4 @@
 <?php
-
 namespace Fhm\FhmBundle\Form\Type\Admin;
 
 use Symfony\Component\Form\AbstractType;
@@ -17,75 +16,57 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class UpdateType extends AbstractType
 {
-    protected $translation;
-
-    /**
-     * @param $domaine
-     */
-    public function setTranslation($domaine = 'fhm')
-    {
-        $options['translation_route'] = $domaine;
-    }
-
     /**
      * @param FormBuilderInterface $builder
      * @param array $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder
-            ->add('name', TextType::class, array('label' => $options['translation_route'].'.admin.update.form.name'))
-            ->add(
-                'description',
-                TextareaType::class,
-                array('label' => $options['translation_route'].'.admin.update.form.description', 'required' => false)
-            )
-            ->add(
-                'seo_title',
-                TextType::class,
-                array('label' => 'fhm.seo.title', 'translation_domain' => 'FhmFhmBundle', 'required' => false)
-            )
-            ->add(
-                'seo_description',
-                TextType::class,
-                array('label' => 'fhm.seo.description', 'translation_domain' => 'FhmFhmBundle', 'required' => false)
-            )
-            ->add(
-                'seo_keywords',
-                TextType::class,
-                array('label' => 'fhm.seo.keywords', 'translation_domain' => 'FhmFhmBundle', 'required' => false)
-            )
-            ->add(
-                'active',
-                CheckboxType::class,
-                array('label' => $options['translation_route'].'.admin.update.form.active', 'required' => false)
-            )
-            ->add(
-                'submitSave',
-                SubmitType::class,
-                array('label' => $options['translation_route'].'.admin.update.form.submit.save')
-            )
-            ->add(
-                'submitNew',
-                SubmitType::class,
-                array('label' => $options['translation_route'].'.admin.update.form.submit.new')
-            )
-            ->add(
-                'submitDuplicate',
-                SubmitType::class,
-                array('label' => $options['translation_route'].'.admin.update.form.submit.duplicate')
-            )
-            ->add(
-                'submitQuit',
-                SubmitType::class,
-                array('label' => $options['translation_route'].'.admin.update.form.submit.quit')
-            )
-            ->add(
-                'submitConfig',
-                SubmitType::class,
-                array('label' => $options['translation_route'].'.admin.update.form.submit.config')
-            );
-
+        $builder->add(
+            'name',
+            TextType::class,
+            array('label' => $options['translation_route'].'.admin.update.form.name')
+        )->add(
+            'description',
+            TextareaType::class,
+            array('label' => $options['translation_route'].'.admin.update.form.description', 'required' => false)
+        )->add(
+            'seo_title',
+            TextType::class,
+            array('label' => 'fhm.seo.title', 'translation_domain' => 'FhmFhmBundle', 'required' => false)
+        )->add(
+            'seo_description',
+            TextType::class,
+            array('label' => 'fhm.seo.description', 'translation_domain' => 'FhmFhmBundle', 'required' => false)
+        )->add(
+            'seo_keywords',
+            TextType::class,
+            array('label' => 'fhm.seo.keywords', 'translation_domain' => 'FhmFhmBundle', 'required' => false)
+        )->add(
+            'active',
+            CheckboxType::class,
+            array('label' => $options['translation_route'].'.admin.update.form.active', 'required' => false)
+        )->add(
+            'submitSave',
+            SubmitType::class,
+            array('label' => $options['translation_route'].'.admin.update.form.submit.save')
+        )->add(
+            'submitNew',
+            SubmitType::class,
+            array('label' => $options['translation_route'].'.admin.update.form.submit.new')
+        )->add(
+            'submitDuplicate',
+            SubmitType::class,
+            array('label' => $options['translation_route'].'.admin.update.form.submit.duplicate')
+        )->add(
+            'submitQuit',
+            SubmitType::class,
+            array('label' => $options['translation_route'].'.admin.update.form.submit.quit')
+        )->add(
+            'submitConfig',
+            SubmitType::class,
+            array('label' => $options['translation_route'].'.admin.update.form.submit.config')
+        );
         if ($options['lang_visible']) {
             $builder->add(
                 'languages',
@@ -97,29 +78,28 @@ class UpdateType extends AbstractType
             );
         }
         if ($options['grouping_visible']) {
-            $builder
-                ->add(
-                    'grouping',
-                    ChoiceType::class,
-                    array(
-                        'choices' => $options['grouping_available'],
-                        'multiple' => true,
-                    )
+            $builder->add(
+                'grouping',
+                ChoiceType::class,
+                array(
+                    'choices' => $options['grouping_available'],
+                    'multiple' => true,
                 )
-                ->add(
-                    'share',
-                    CheckboxType::class,
-                    array(
-                        'label' => $options['translation_route'].'.admin.update.form.share',
-                        'required' => false
-                    )
-                );
+            )->add(
+                'share',
+                CheckboxType::class,
+                array(
+                    'label' => $options['translation_route'].'.admin.update.form.share',
+                    'required' => false,
+                )
+            );
             if ($options['user_admin']) {
                 $builder->add(
                     'global',
                     CheckboxType::class,
-                    array('label' => $options['translation_route'].'.admin.update.form.global',
-                          'required' => false
+                    array(
+                        'label' => $options['translation_route'].'.admin.update.form.global',
+                        'required' => false,
                     )
                 );
             }
@@ -144,13 +124,13 @@ class UpdateType extends AbstractType
                 'data_class' => 'Fhm\FhmBundle\Document\Fhm',
                 'translation_domain' => 'FhmFhmBundle',
                 'cascade_validation' => true,
-                'translation_route'=>'',
-                'filter'=>'',
-                'lang_visible'=>'',
-                'lang_available'=>'',
-                'grouping_visible'=>'',
-                'grouping_available'=>'',
-                'user_admin'=>''
+                'translation_route' => '',
+                'filter' => '',
+                'lang_visible' => '',
+                'lang_available' => '',
+                'grouping_visible' => '',
+                'grouping_available' => '',
+                'user_admin' => '',
             )
         );
     }
