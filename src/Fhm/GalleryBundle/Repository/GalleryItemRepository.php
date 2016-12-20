@@ -14,7 +14,10 @@ use Doctrine\ODM\MongoDB\Mapping\ClassMetadata;
 class GalleryItemRepository extends FhmRepository
 {
     /**
-     * Constructor
+     * GalleryItemRepository constructor.
+     * @param DocumentManager $dm
+     * @param UnitOfWork $uow
+     * @param ClassMetadata $class
      */
     public function __construct(DocumentManager $dm, UnitOfWork $uow, ClassMetadata $class)
     {
@@ -23,49 +26,35 @@ class GalleryItemRepository extends FhmRepository
 
     /**
      * @param \Fhm\GalleryBundle\Document\Gallery $gallery
-     * @param string                              $search
-     * @param int                                 $page
-     * @param int                                 $count
+     * @param string $search
      *
      * @return mixed
      * @throws \Doctrine\ODM\MongoDB\MongoDBException
      */
-    public function getByGroupIndex(\Fhm\GalleryBundle\Document\Gallery $gallery, $search = "", $page = 1, $count = 5)
+    public function getByGroupIndex(\Fhm\GalleryBundle\Document\Gallery $gallery, $search = "")
     {
         $builder = ($search) ? $this->search($search) : $this->createQueryBuilder();
         // Global
-        if($gallery->getAddGlobalItem())
-        {
+        if ($gallery->getAddGlobalItem()) {
             $builder->addAnd(
-                $builder->expr()
-                    ->addOr($builder->expr()->field('galleries.id')->equals($gallery->getId()))
-                    ->addOr($builder->expr()->field('global')->equals(true))
+                $builder->expr()->addOr($builder->expr()->field('galleries.id')->equals($gallery->getId()))->addOr(
+                    $builder->expr()->field('global')->equals(true)
+                )
             );
-        }
-        else
-        {
+        } else {
             $builder->field('galleries.id')->equals($gallery->getId());
-        }
-        // Pagination
-        if($page > 0 && $count > 0)
-        {
-            $builder->limit($count);
-            $builder->skip(($page - 1) * $count);
         }
         // Common
         $builder->field('active')->equals(true);
         $builder->field('delete')->equals(false);
         $builder->sort($gallery->getOrderItemField(), $gallery->getOrderItemOrder());
 
-        return $builder
-            ->getQuery()
-            ->execute()
-            ->toArray();
+        return $builder->getQuery()->execute()->toArray();
     }
 
     /**
      * @param \Fhm\GalleryBundle\Document\Gallery $gallery
-     * @param string                              $search
+     * @param string $search
      *
      * @return mixed
      */
@@ -73,26 +62,20 @@ class GalleryItemRepository extends FhmRepository
     {
         $builder = ($search) ? $this->search($search) : $this->createQueryBuilder();
         // Global
-        if($gallery->getAddGlobalItem())
-        {
+        if ($gallery->getAddGlobalItem()) {
             $builder->addAnd(
-                $builder->expr()
-                    ->addOr($builder->expr()->field('galleries.id')->equals($gallery->getId()))
-                    ->addOr($builder->expr()->field('global')->equals(true))
+                $builder->expr()->addOr($builder->expr()->field('galleries.id')->equals($gallery->getId()))->addOr(
+                    $builder->expr()->field('global')->equals(true)
+                )
             );
-        }
-        else
-        {
+        } else {
             $builder->field('items.id')->equals($gallery->getId());
         }
         // Common
         $builder->field('active')->equals(true);
         $builder->field('delete')->equals(false);
 
-        return $builder
-            ->count()
-            ->getQuery()
-            ->execute();
+        return $builder->count()->getQuery()->execute();
     }
 
     /**
@@ -105,16 +88,13 @@ class GalleryItemRepository extends FhmRepository
     {
         $builder = $this->createQueryBuilder();
         // Global
-        if($gallery->getAddGlobalItem())
-        {
+        if ($gallery->getAddGlobalItem()) {
             $builder->addAnd(
-                $builder->expr()
-                    ->addOr($builder->expr()->field('galleries.id')->equals($gallery->getId()))
-                    ->addOr($builder->expr()->field('global')->equals(true))
+                $builder->expr()->addOr($builder->expr()->field('galleries.id')->equals($gallery->getId()))->addOr(
+                    $builder->expr()->field('global')->equals(true)
+                )
             );
-        }
-        else
-        {
+        } else {
             $builder->field('galleries.id')->equals($gallery->getId());
         }
         // Common
@@ -122,8 +102,6 @@ class GalleryItemRepository extends FhmRepository
         $builder->field('delete')->equals(false);
         $builder->sort($gallery->getOrderItemField(), $gallery->getOrderItemOrder());
 
-        return $builder
-            ->getQuery()
-            ->execute();
+        return $builder->getQuery()->execute();
     }
 }

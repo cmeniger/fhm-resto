@@ -1,5 +1,6 @@
 <?php
 namespace Fhm\MediaBundle\Twig;
+
 /**
  * Class MediaTagExtension
  *
@@ -13,13 +14,14 @@ class MediaTagExtension extends \Twig_Extension
     /**
      * MapNoMap constructor.
      *
-     * @param \Symfony\Component\Templating\EngineInterface $template
-     * @param \Fhm\FhmBundle\Services\Tools                 $tools
+     * @param \Fhm\FhmBundle\Services\Tools $tools
      */
     public function __construct(\Fhm\FhmBundle\Services\Tools $tools)
     {
         $this->fhm_tools = $tools;
-        $this->template  = new \Twig_Environment();
+        $this->template = new \Twig_Environment(
+            new \Twig_Loader_Filesystem($this->fhm_tools->getContainer()->getParameter('kernel.root_dir'))
+        );
     }
 
     /**
@@ -34,7 +36,7 @@ class MediaTagExtension extends \Twig_Extension
             new \Twig_SimpleFilter('tagBlocAdmin', array($this, 'getBlocAdmin')),
             new \Twig_SimpleFilter('tagBlocFront', array($this, 'getBlocFront')),
             new \Twig_SimpleFilter('tagBlocSelector', array($this, 'getBlocSelector')),
-            new \Twig_SimpleFilter('tagBlocEditor', array($this, 'getBlocEditor'))
+            new \Twig_SimpleFilter('tagBlocEditor', array($this, 'getBlocEditor')),
         );
     }
 
@@ -57,21 +59,18 @@ class MediaTagExtension extends \Twig_Extension
     public function getBreadcrumbs($tag, $root = "")
     {
         $current = $tag->getId();
-        $html    = "";
-        while($tag)
-        {
-            if($current == $tag->getId())
-            {
-                $html = "<li class='current'><a href='#' media-tag='" . $tag->getId() . "'>" . $tag->getName() . "</a></li>" . $html;
-            }
-            else
-            {
-                $html = "<li class=''><a href='#' media-tag='" . $tag->getId() . "'>" . $tag->getName() . "</a></li>" . $html;
+        $html = "";
+        while ($tag) {
+            if ($current == $tag->getId()) {
+                $html = "<li class='current'><a href='#' media-tag='".$tag->getId()."'>".$tag->getName(
+                    )."</a></li>".$html;
+            } else {
+                $html = "<li class=''><a href='#' media-tag='".$tag->getId()."'>".$tag->getName()."</a></li>".$html;
             }
             $tag = $tag->getParent() && $tag->getParent()->getId() != $root ? $tag->getParent() : false;
         }
 
-        return "<ul class='tag breadcrumbs'>" . $html . "</ul>";
+        return "<ul class='tag breadcrumbs'>".$html."</ul>";
     }
 
     /**
@@ -83,11 +82,11 @@ class MediaTagExtension extends \Twig_Extension
     {
         $tabs = $tag->getRouteObject();
         $html = "<ul class='tag'>";
-        foreach($tabs as $tab)
-        {
+        foreach ($tabs as $tab) {
             $current = end($tabs) === $tab;
-            $color   = $tab->getColor() ? "style='background-color:" . $tab->getColor() . ";'" : "";
-            $html .= "<li><span class='label round " . ($current ? 'current' : 'parent') . "' " . $color . ">" . $tab->getName() . ($tab->getPrivate() ? " <i class='fa fa-lock'></i> " : "") . "</span></li>";
+            $color = $tab->getColor() ? "style='background-color:".$tab->getColor().";'" : "";
+            $html .= "<li><span class='label round ".($current ? 'current' : 'parent')."' ".$color.">".$tab->getName(
+                ).($tab->getPrivate() ? " <i class='fa fa-lock'></i> " : "")."</span></li>";
         }
         $html .= "</ul>";
 
@@ -101,83 +100,76 @@ class MediaTagExtension extends \Twig_Extension
      */
     public function getTag($tag)
     {
-        $color = $tag->getColor() ? "style='background-color:" . $tag->getColor() . ";'" : "";
+        $color = $tag->getColor() ? "style='background-color:".$tag->getColor().";'" : "";
 
-        return "<span class='label round tag' " . $color . ">" . $tag->getName() . ($tag->getPrivate() ? " <i class='fa fa-lock'></i>" : "") . "</span>";
+        return "<span class='label round tag' ".$color.">".$tag->getName().($tag->getPrivate(
+        ) ? " <i class='fa fa-lock'></i>" : "")."</span>";
     }
 
     /**
      * @param \Fhm\MediaBundle\Document\MediaTag $tag
-     * @param object                             $instance
+     * @param object $instance
      *
      * @return string
      */
     public function getBlocAdmin($tag, $instance)
     {
-        return $this->template->render
-        (
+        return $this->template->render(
             '::FhmMedia/Template/Bloc/admin.tag.html.twig',
-            array
-            (
+            array(
                 'document' => $tag,
-                'instance' => $instance
+                'instance' => $instance,
             )
         );
     }
 
     /**
      * @param \Fhm\MediaBundle\Document\MediaTag $tag
-     * @param object                             $instance
+     * @param object $instance
      *
      * @return string
      */
     public function getBlocFront($tag, $instance)
     {
-        return $this->template->render
-        (
+        return $this->template->render(
             '::FhmMedia/Template/Bloc/front.tag.html.twig',
-            array
-            (
+            array(
                 'document' => $tag,
-                'instance' => $instance
+                'instance' => $instance,
             )
         );
     }
 
     /**
      * @param \Fhm\MediaBundle\Document\MediaTag $tag
-     * @param object                             $instance
+     * @param object $instance
      *
      * @return string
      */
     public function getBlocSelector($tag, $instance)
     {
-        return $this->template->render
-        (
+        return $this->template->render(
             '::FhmMedia/Template/Bloc/selector.tag.html.twig',
-            array
-            (
+            array(
                 'document' => $tag,
-                'instance' => $instance
+                'instance' => $instance,
             )
         );
     }
 
     /**
      * @param \Fhm\MediaBundle\Document\MediaTag $tag
-     * @param object                             $instance
+     * @param object $instance
      *
      * @return string
      */
     public function getBlocEditor($tag, $instance)
     {
-        return $this->template->render
-        (
+        return $this->template->render(
             '::FhmMedia/Template/Bloc/editor.tag.html.twig',
-            array
-            (
+            array(
                 'document' => $tag,
-                'instance' => $instance
+                'instance' => $instance,
             )
         );
     }

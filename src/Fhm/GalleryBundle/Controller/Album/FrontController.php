@@ -3,30 +3,45 @@ namespace Fhm\GalleryBundle\Controller\Album;
 
 use Fhm\FhmBundle\Controller\RefFrontController as FhmController;
 use Fhm\GalleryBundle\Document\Gallery;
+use Fhm\GalleryBundle\Document\GalleryAlbum;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 /**
- * @Route("/galleryalbum", service="fhm_gallery_controller_album_front")
+ * @Route("/galleryalbum")
+ * -------------------------------------------
+ * Class FrontController
+ * @package Fhm\GalleryBundle\Controller\Album
  */
 class FrontController extends FhmController
 {
     /**
      * FrontController constructor.
-     *
-     * @param \Fhm\FhmBundle\Services\Tools $tools
+     * @param string $repository
+     * @param string $source
+     * @param string $domain
+     * @param string $translation
+     * @param string $document
+     * @param string $route
      */
-    public function __construct(\Fhm\FhmBundle\Services\Tools $tools)
-    {
-        $this->setFhmTools($tools);
-        parent::__construct('Fhm', 'Gallery', 'gallery_album', 'GalleryAlbum');
-        $this->form->type->create = 'Fhm\\GalleryBundle\\Form\\Type\\Front\\Album\\CreateType';
-        $this->form->type->update = 'Fhm\\GalleryBundle\\Form\\Type\\Front\\Album\\UpdateType';
-        $this->translation        = array('FhmGalleryBundle', 'gallery.album');
+    public function __construct(
+        $repository = "FhmGalleryBundle:Gallery",
+        $source = "fhm",
+        $domain = "FhmGalleryBundle",
+        $translation = "gallery.album",
+        $document = GalleryAlbum::class,
+        $route = 'gallery_album'
+    ) {
+        self::$repository = $repository;
+        self::$source = $source;
+        self::$domain = $domain;
+        self::$translation = $translation;
+        self::$document = new $document();
+        self::$class = get_class(self::$document);
+        self::$route = $route;
     }
-
     /**
      * @Route
      * (
@@ -43,50 +58,6 @@ class FrontController extends FhmController
     /**
      * @Route
      * (
-     *      path="/create",
-     *      name="fhm_gallery_album_create"
-     * )
-     * @Template("::FhmGallery/Front/Album/create.html.twig")
-     */
-    public function createAction(Request $request)
-    {
-        // For activate this route, delete next line
-        throw $this->createNotFoundException($this->fhm_tools->trans('fhm.error.route', array(), 'FhmFhmBundle'));
-    }
-
-    /**
-     * @Route
-     * (
-     *      path="/duplicate/{id}",
-     *      name="fhm_gallery_album_duplicate",
-     *      requirements={"id"="[a-z0-9]*"}
-     * )
-     * @Template("::FhmGallery/Front/Album/create.html.twig")
-     */
-    public function duplicateAction(Request $request, $id)
-    {
-        // For activate this route, delete next line
-        throw $this->createNotFoundException($this->fhm_tools->trans('fhm.error.route', array(), 'FhmFhmBundle'));
-    }
-
-    /**
-     * @Route
-     * (
-     *      path="/update/{id}",
-     *      name="fhm_gallery_album_update",
-     *      requirements={"id"="[a-z0-9]*"}
-     * )
-     * @Template("::FhmGallery/Front/Album/update.html.twig")
-     */
-    public function updateAction(Request $request, $id)
-    {
-        // For activate this route, delete next line
-        throw $this->createNotFoundException($this->fhm_tools->trans('fhm.error.route', array(), 'FhmFhmBundle'));
-    }
-
-    /**
-     * @Route
-     * (
      *      path="/detail/{id}",
      *      name="fhm_gallery_album_detail",
      *      requirements={"id"=".+"}
@@ -96,20 +67,6 @@ class FrontController extends FhmController
     public function detailAction($id)
     {
         return parent::detailAction($id);
-    }
-
-    /**
-     * @Route
-     * (
-     *      path="/delete/{id}",
-     *      name="fhm_gallery_album_delete",
-     *      requirements={"id"="[a-z0-9]*"}
-     * )
-     */
-    public function deleteAction($id)
-    {
-        // For activate this route, delete next line
-        throw $this->createNotFoundException($this->fhm_tools->trans('fhm.error.route', array(), 'FhmFhmBundle'));
     }
 
     /**

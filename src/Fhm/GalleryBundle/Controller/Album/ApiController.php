@@ -3,6 +3,7 @@ namespace Fhm\GalleryBundle\Controller\Album;
 
 use Fhm\FhmBundle\Controller\RefApiController as FhmController;
 use Fhm\GalleryBundle\Document\Gallery;
+use Fhm\GalleryBundle\Document\GalleryAlbum;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
@@ -10,20 +11,37 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 /**
- * @Route("/api/gallery/album", service="fhm_gallery_controller_album_api")
+ * @Route("/api/gallery/album")
+ * -------------------------------------------
+ * Class ApiController
+ * @package Fhm\GalleryBundle\Controller\Album
  */
 class ApiController extends FhmController
 {
     /**
      * ApiController constructor.
-     *
-     * @param \Fhm\FhmBundle\Services\Tools $tools
+     * @param string $repository
+     * @param string $source
+     * @param string $domain
+     * @param string $translation
+     * @param string $document
+     * @param string $route
      */
-    public function __construct(\Fhm\FhmBundle\Services\Tools $tools)
-    {
-        $this->setFhmTools($tools);
-        parent::__construct('Fhm', 'Gallery', 'gallery_album', 'GalleryAlbum');
-        $this->translation = array('FhmGalleryBundle', 'gallery.album');
+    public function __construct(
+        $repository = "FhmGalleryBundle:Gallery",
+        $source = "fhm",
+        $domain = "FhmGalleryBundle",
+        $translation = "gallery.album",
+        $document = GalleryAlbum::class,
+        $route = 'gallery_album'
+    ) {
+        self::$repository = $repository;
+        self::$source = $source;
+        self::$domain = $domain;
+        self::$translation = $translation;
+        self::$document = new $document();
+        self::$class = get_class(self::$document);
+        self::$route = $route;
     }
 
     /**
@@ -63,20 +81,19 @@ class ApiController extends FhmController
      */
     public function detailAction($template, $id)
     {
-        $document = $this->fhm_tools->dmRepository()->getById($id);
-        $document = ($document) ? $document : $this->fhm_tools->dmRepository()->getByAlias($id);
-        $document = ($document) ? $document : $this->fhm_tools->dmRepository()->getByName($id);
-        $instance = $this->fhm_tools->instanceData($document);
+        $document = $this->get('fhm_tools')->dmRepository(self::$repository)->getById($id);
+        $document = ($document) ? $document : $this->get('fhm_tools')->dmRepository(self::$repository)->getByAlias($id);
+        $document = ($document) ? $document : $this->get('fhm_tools')->dmRepository(self::$repository)->getByName($id);
         // ERROR - unknown
         if ($document == "") {
             throw $this->createNotFoundException(
-                $this->fhm_tools->trans('gallery.album.error.unknown', array(), 'FhmGalleryBundle')
+                $this->trans('gallery.album.error.unknown', array(), 'FhmGalleryBundle')
             );
         } // ERROR - Forbidden
-        elseif (!$instance->user->admin && ($document->getDelete() || !$document->getActive())) {
+        elseif (!$this->getUser()->hasRole('ROLE_ADMIN') && ($document->getDelete() || !$document->getActive())) {
             throw new HttpException(
                 403,
-                $this->fhm_tools->trans('gallery.album.error.forbidden', array(), 'FhmGalleryBundle')
+                $this->trans('gallery.album.error.forbidden', array(), 'FhmGalleryBundle')
             );
         }
 
@@ -85,8 +102,9 @@ class ApiController extends FhmController
                 "::FhmGallery/Template/".$template.".html.twig",
                 array(
                     'document' => $document,
-                    'galleries' => $this->fhm_tools->dmRepository("FhmGalleryBundle:Gallery")->getByGroupAll($document),
-                    'instance' => $instance,
+                    'galleries' => $this->get('fhm_tools')->dmRepository("FhmGalleryBundle:Gallery")->getByGroupAll(
+                        $document
+                    ),
                 )
             )
         );

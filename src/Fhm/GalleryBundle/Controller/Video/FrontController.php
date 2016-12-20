@@ -3,115 +3,44 @@ namespace Fhm\GalleryBundle\Controller\Video;
 
 use Fhm\FhmBundle\Controller\RefFrontController as FhmController;
 use Fhm\GalleryBundle\Document\Gallery;
+use Fhm\GalleryBundle\Document\GalleryVideo;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 /**
- * @Route("/galleryvideo", service="fhm_gallery_controller_video_front")
+ * @Route("/galleryvideo")
+ * ------------------------------------------
+ * Class FrontController
+ * @package Fhm\GalleryBundle\Controller\Video
  */
 class FrontController extends FhmController
 {
     /**
-     * FrontController constructor.
-     *
-     * @param \Fhm\FhmBundle\Services\Tools $tools
+     * AdminController constructor.
+     * @param string $repository
+     * @param string $source
+     * @param string $domain
+     * @param string $translation
+     * @param string $document
+     * @param string $route
      */
-    public function __construct(\Fhm\FhmBundle\Services\Tools $tools)
-    {
-        $this->setFhmTools($tools);
-        parent::__construct('Fhm', 'Gallery', 'gallery_video', 'GalleryVideo');
-        $this->form->type->create = 'Fhm\\GalleryBundle\\Form\\Type\\Front\\Video\\CreateType';
-        $this->form->type->update = 'Fhm\\GalleryBundle\\Form\\Type\\Front\\Video\\UpdateType';
-        $this->translation        = array('FhmGalleryBundle', 'gallery.video');
-    }
-
-    /**
-     * @Route
-     * (
-     *      path="/",
-     *      name="fhm_gallery_video"
-     * )
-     * @Template("::FhmGallery/Front/Video/index.html.twig")
-     */
-    public function indexAction()
-    {
-        // For activate this route, delete next line
-        throw $this->createNotFoundException($this->fhm_tools->trans('fhm.error.route', array(), 'FhmFhmBundle'));
-    }
-
-    /**
-     * @Route
-     * (
-     *      path="/create",
-     *      name="fhm_gallery_video_create"
-     * )
-     * @Template("::FhmGallery/Front/Video/create.html.twig")
-     */
-    public function createAction(Request $request)
-    {
-        // For activate this route, delete next line
-        throw $this->createNotFoundException($this->fhm_tools->trans('fhm.error.route', array(), 'FhmFhmBundle'));
-    }
-
-    /**
-     * @Route
-     * (
-     *      path="/duplicate/{id}",
-     *      name="fhm_gallery_video_duplicate",
-     *      requirements={"id"="[a-z0-9]*"}
-     * )
-     * @Template("::FhmGallery/Front/Video/create.html.twig")
-     */
-    public function duplicateAction(Request $request, $id)
-    {
-        // For activate this route, delete next line
-        throw $this->createNotFoundException($this->fhm_tools->trans('fhm.error.route', array(), 'FhmFhmBundle'));
-    }
-
-    /**
-     * @Route
-     * (
-     *      path="/update/{id}",
-     *      name="fhm_gallery_video_update",
-     *      requirements={"id"="[a-z0-9]*"}
-     * )
-     * @Template("::FhmGallery/Front/Video/update.html.twig")
-     */
-    public function updateAction(Request $request, $id)
-    {
-        // For activate this route, delete next line
-        throw $this->createNotFoundException($this->fhm_tools->trans('fhm.error.route', array(), 'FhmFhmBundle'));
-    }
-
-    /**
-     * @Route
-     * (
-     *      path="/detail/{id}",
-     *      name="fhm_gallery_video_detail",
-     *      requirements={"id"=".+"}
-     * )
-     * @Template("::FhmGallery/Front/Video/detail.html.twig")
-     */
-    public function detailAction($id)
-    {
-        // For activate this route, delete next line
-        throw $this->createNotFoundException($this->fhm_tools->trans('fhm.error.route', array(), 'FhmFhmBundle'));
-    }
-
-    /**
-     * @Route
-     * (
-     *      path="/delete/{id}",
-     *      name="fhm_gallery_video_delete",
-     *      requirements={"id"="[a-z0-9]*"}
-     * )
-     */
-    public function deleteAction($id)
-    {
-        // For activate this route, delete next line
-        throw $this->createNotFoundException($this->fhm_tools->trans('fhm.error.route', array(), 'FhmFhmBundle'));
+    public function __construct(
+        $repository = "FhmGalleryBundle:Gallery",
+        $source = "fhm",
+        $domain = "FhmGalleryBundle",
+        $translation = "gallery.video",
+        $document = GalleryVideo::class,
+        $route = 'gallery_video'
+    ) {
+        self::$repository = $repository;
+        self::$source = $source;
+        self::$domain = $domain;
+        self::$translation = $translation;
+        self::$document = new $document();
+        self::$class = get_class(self::$document);
+        self::$route = $route;
     }
 
     /**

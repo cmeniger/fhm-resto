@@ -2,6 +2,8 @@
 namespace Fhm\GalleryBundle\Controller\Album;
 
 use Fhm\FhmBundle\Controller\RefAdminController as FhmController;
+use Fhm\FhmBundle\Form\Handler\Admin\CreateHandler;
+use Fhm\FhmBundle\Form\Handler\Admin\UpdateHandler;
 use Fhm\GalleryBundle\Document\GalleryAlbum;
 use Fhm\GalleryBundle\Form\Type\Admin\Album\CreateType;
 use Fhm\GalleryBundle\Form\Type\Admin\Album\UpdateType;
@@ -11,22 +13,37 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 /**
- * @Route("/admin/galleryalbum", service="fhm_gallery_controller_album_admin")
+ * @Route("/admin/galleryalbum")
+ * -------------------------------------------
+ * Class AdminController
+ * @package Fhm\GalleryBundle\Controller\Album
  */
 class AdminController extends FhmController
 {
     /**
      * AdminController constructor.
-     *
-     * @param \Fhm\FhmBundle\Services\Tools $tools
+     * @param string $repository
+     * @param string $source
+     * @param string $domain
+     * @param string $translation
+     * @param string $document
+     * @param string $route
      */
-    public function __construct(\Fhm\FhmBundle\Services\Tools $tools)
-    {
-        $this->setFhmTools($tools);
-        parent::__construct('Fhm', 'Gallery', 'gallery_album', 'GalleryAlbum');
-        $this->form->type->create = CreateType::class;
-        $this->form->type->update = UpdateType::class;
-        $this->translation = array('FhmGalleryBundle', 'gallery.album');
+    public function __construct(
+        $repository = "FhmGalleryBundle:Gallery",
+        $source = "fhm",
+        $domain = "FhmGalleryBundle",
+        $translation = "gallery.album",
+        $document = GalleryAlbum::class,
+        $route = 'gallery_album'
+    ) {
+        self::$repository = $repository;
+        self::$source = $source;
+        self::$domain = $domain;
+        self::$translation = $translation;
+        self::$document = new $document();
+        self::$class = get_class(self::$document);
+        self::$route = $route;
     }
 
     /**
@@ -52,6 +69,10 @@ class AdminController extends FhmController
      */
     public function createAction(Request $request)
     {
+        self::$form = new \stdClass();
+        self::$form->type = CreateType::class;
+        self::$form->handler = CreateHandler::class;
+
         return parent::createAction($request);
     }
 
@@ -66,6 +87,10 @@ class AdminController extends FhmController
      */
     public function duplicateAction(Request $request, $id)
     {
+        self::$form = new \stdClass();
+        self::$form->type = CreateType::class;
+        self::$form->handler = CreateHandler::class;
+
         return parent::duplicateAction($request, $id);
     }
 
@@ -80,6 +105,10 @@ class AdminController extends FhmController
      */
     public function updateAction(Request $request, $id)
     {
+        self::$form = new \stdClass();
+        self::$form->type = UpdateType::class;
+        self::$form->handler = UpdateHandler::class;
+
         return parent::updateAction($request, $id);
     }
 
@@ -94,14 +123,11 @@ class AdminController extends FhmController
      */
     public function detailAction($id)
     {
-        $document = $this->fhm_tools->dmRepository()->find($id);
-        $instance = $this->fhm_tools->instanceData($document);
+        $document = $this->get('fhm_tools')->dmRepository(self::$repository)->find($id);
 
         return array_merge(
             array(
-                'gallery1' => $this->fhm_tools->dmRepository('FhmGalleryBundle:Gallery')->getAllEnable(
-                    $instance->grouping->current
-                ),
+                'gallery1' => $this->get('fhm_tools')->dmRepository('FhmGalleryBundle:Gallery')->getAllEnable(),
                 'gallery2' => $this->getList($document->getGalleries()),
             ),
             parent::detailAction($id)
@@ -203,18 +229,6 @@ class AdminController extends FhmController
     /**
      * @Route
      * (
-     *      path="/grouping",
-     *      name="fhm_admin_gallery_album_grouping"
-     * )
-     */
-    public function groupingAction(Request $request)
-    {
-        return parent::groupingAction($request);
-    }
-
-    /**
-     * @Route
-     * (
      *      path="/list/gallery",
      *      name="fhm_admin_gallery_album_gallery",
      *      requirements={"id"="[a-z0-9]*"}
@@ -223,14 +237,14 @@ class AdminController extends FhmController
     public function listGalleryAction(Request $request)
     {
         $datas = json_decode($request->get('list'));
-        $document = $this->fhm_tools->dmRepository()->find($request->get('id'));
+        $document = $this->get('fhm_tools')->dmRepository(self::$repository)->find($request->get('id'));
         foreach ($document->getGalleries() as $gallery) {
             $document->removeGallery($gallery);
         }
         foreach ($datas as $key => $data) {
-            $document->addGallery($this->fhm_tools->dmRepository('FhmGalleryBundle:Gallery')->find($data->id));
+            $document->addGallery($this->get('fhm_tools')->dmRepository('FhmGalleryBundle:Gallery')->find($data->id));
         }
-        $this->fhm_tools->dmPersist($document);
+        $this->get('fhm_tools')->dmPersist($document);
 
         return new Response();
     }

@@ -20,7 +20,9 @@ class WorkflowExtension extends \Twig_Extension
     public function __construct(Tools $tools)
     {
         $this->fhm_tools = $tools;
-        $this->template = new \Twig_Environment();
+        $this->template = new \Twig_Environment(
+            new \Twig_Loader_Filesystem($this->fhm_tools->getContainer()->getParameter('kernel.root_dir'))
+        );
         $this->tasks = array();
     }
 

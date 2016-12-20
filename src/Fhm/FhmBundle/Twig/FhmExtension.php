@@ -132,7 +132,7 @@ class FhmExtension extends \Twig_Extension
      */
     public function getSchedulesStateHtml($data, $class = true, $text = true, $indicator = false)
     {
-        $twig = new \Twig_Environment();
+        $twig = new \Twig_Environment(new \Twig_Loader_Filesystem($this->container->getParameter('kernel.root_dir')));
 
         return $twig->render(
             '::FhmFhm/Template/schedules.state.html.twig',

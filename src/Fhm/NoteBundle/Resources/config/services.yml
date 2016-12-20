@@ -5,7 +5,7 @@ services:
 
     twig.extension.note:
         class: Fhm\NoteBundle\Twig\NoteExtension
-        arguments: ["@fhm_note"]
+        arguments: ["@fhm_note", "%kernel.root_dir%"]
         tags:
             - { name: twig.extension }
             

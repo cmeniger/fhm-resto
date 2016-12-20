@@ -11,6 +11,9 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 /**
  * @Route("/admin")
+ * ---------------------------------
+ * Class AdminController
+ * @package Fhm\FhmBundle\Controller
  */
 class AdminController extends RefAdminController
 {

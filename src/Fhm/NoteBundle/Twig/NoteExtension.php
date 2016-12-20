@@ -13,10 +13,12 @@ class NoteExtension extends \Twig_Extension
     /**
      * NoteExtension constructor.
      * @param \Fhm\NoteBundle\Services\Note $note
+     * @param $rootDir
      */
-    public function __construct(\Fhm\NoteBundle\Services\Note $note)
+    public function __construct(\Fhm\NoteBundle\Services\Note $note, $rootDir)
     {
-        $this->template = new \Twig_Environment();
+        $this->template =  new \Twig_Environment(new \Twig_Loader_Filesystem($rootDir));
+
         $this->note     = $note;
     }
 

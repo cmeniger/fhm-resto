@@ -21,7 +21,8 @@ class MediaExtension extends \Twig_Extension
      */
     public function __construct(ContainerInterface $container)
     {
-        $this->template  = new \Twig_Environment();
+        $this->template  = new \Twig_Environment(new \Twig_Loader_Filesystem($container->get('kernel')->getRootDir()));
+
         $this->service   = $container->get($container->getParameter('fhm_media')['service']);
         $this->path      = $this->service->getPath();
     }

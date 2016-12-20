@@ -11,107 +11,107 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/**
+ * Class MultipleType
+ * @package Fhm\GalleryBundle\Form\Type\Admin\Item
+ */
 class MultipleType extends FhmType
 {
+    /**
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         parent::buildForm($builder, $options);
-        $builder
-            ->add('title', TextType::class, array(
-                'label' => $options['translation_route'].'.admin.multiple.form.title'))
-            ->add(
-                'subtitle',
-                TextType::class,
-                array(
-                    'label' => $options['translation_route'].'.admin.multiple.form.subtitle',
-                    'required' => false,
-                )
+        $builder->add(
+            'title',
+            TextType::class,
+            array(
+                'label' => $options['translation_route'].'.admin.multiple.form.title',
             )
-            ->add(
-                'content',
-                TextareaType::class,
-                array(
-                    'label' => $options['translation_route'].'.admin.multiple.form.content',
-                    'attr' => array('class' => 'editor'),
-                    'required' => false,
-                )
+        )->add(
+            'subtitle',
+            TextType::class,
+            array(
+                'label' => $options['translation_route'].'.admin.multiple.form.subtitle',
+                'required' => false,
             )
-            ->add(
-                'link',
-                TextType::class,
-                array(
-                    'label' => $options['translation_route'].'.admin.multiple.form.link',
-                    'required' => false,
-                )
+        )->add(
+            'content',
+            TextareaType::class,
+            array(
+                'label' => $options['translation_route'].'.admin.multiple.form.content',
+                'attr' => array('class' => 'editor'),
+                'required' => false,
             )
-            ->add(
-                'galleries',
-                DocumentType::class,
-                array(
-                    'label' => $options['translation_route'].'.admin.multiple.form.galleries',
-                    'class' => 'FhmGalleryBundle:Gallery',
-                    'choice_label' => 'name',
-                    'query_builder' => function (GalleryRepository $dr) use ($options) {
-                        return $dr->getFormEnable($options['filter']);
-                    },
-                    'required' => false,
-                    'multiple' => true,
-                    'by_reference' => false,
-                )
+        )->add(
+            'link',
+            TextType::class,
+            array(
+                'label' => $options['translation_route'].'.admin.multiple.form.link',
+                'required' => false,
             )
-            ->add(
-                'file',
-                FileType::class,
-                array(
-                    'label' => $options['translation_route'].'.admin.multiple.form.file',
-                    'mapped' => false,
-                )
+        )->add(
+            'galleries',
+            DocumentType::class,
+            array(
+                'label' => $options['translation_route'].'.admin.multiple.form.galleries',
+                'class' => 'FhmGalleryBundle:Gallery',
+                'choice_label' => 'name',
+                'query_builder' => function (GalleryRepository $dr) use ($options) {
+                    return $dr->getFormEnable($options['filter']);
+                },
+                'required' => false,
+                'multiple' => true,
+                'by_reference' => false,
             )
-            ->add(
-                'tag',
-                TextType::class,
-                array(
-                    'label' => $options['translation_route'].'.admin.multiple.form.tag',
-                    'required' => false,
-                    'mapped' => false,
-                )
+        )->add(
+            'file',
+            FileType::class,
+            array(
+                'label' => $options['translation_route'].'.admin.multiple.form.file',
+                'mapped' => false,
             )
-            ->add(
-                'parent',
-                DocumentType::class,
-                array(
-                    'label' => $options['translation_route'].'.admin.multiple.form.parent',
-                    'class' => 'FhmMediaBundle:MediaTag',
-                    'choice_label' => 'route',
-                    'query_builder' => function (MediaTagRepository $dr) use ($options) {
-                        return $dr->getFormEnable($options['filter']);
-                    },
-                    'required' => false,
-                    'mapped' => false,
-                )
+        )->add(
+            'tag',
+            TextType::class,
+            array(
+                'label' => $options['translation_route'].'.admin.multiple.form.tag',
+                'required' => false,
+                'mapped' => false,
             )
-            ->add(
-                'tags',
-                DocumentType::class,
-                array(
-                    'label' => $options['translation_route'].'.admin.multiple.form.tags',
-                    'class' => 'FhmMediaBundle:MediaTag',
-                    'choice_label' => 'route',
-                    'query_builder' => function (MediaTagRepository $dr) use ($options) {
-                        return $dr->getFormEnable($options['filter']);
-                    },
-                    'multiple' => true,
-                    'required' => false,
-                    'by_reference' => false,
-                    'mapped' => false,
-                )
+        )->add(
+            'parent',
+            DocumentType::class,
+            array(
+                'label' => $options['translation_route'].'.admin.multiple.form.parent',
+                'class' => 'FhmMediaBundle:MediaTag',
+                'choice_label' => 'route',
+                'query_builder' => function (MediaTagRepository $dr) use ($options) {
+                    return $dr->getFormEnable($options['filter']);
+                },
+                'required' => false,
+                'mapped' => false,
             )
-            ->remove('submitNew')
-            ->remove('submitDuplicate')
-            ->remove('submitQuit')
-            ->remove('submitConfig')
-            ->remove('name')
-            ->remove('description');
+        )->add(
+            'tags',
+            DocumentType::class,
+            array(
+                'label' => $options['translation_route'].'.admin.multiple.form.tags',
+                'class' => 'FhmMediaBundle:MediaTag',
+                'choice_label' => 'route',
+                'query_builder' => function (MediaTagRepository $dr) use ($options) {
+                    return $dr->getFormEnable($options['filter']);
+                },
+                'multiple' => true,
+                'required' => false,
+                'by_reference' => false,
+                'mapped' => false,
+            )
+        )->remove('submitNew')->remove('submitDuplicate')->remove('submitQuit')->remove('submitConfig')->remove(
+            'name'
+        )->remove('description');
     }
 
     /**
@@ -125,12 +125,12 @@ class MultipleType extends FhmType
                 'translation_domain' => '',
                 'translation_route' => '',
                 'cascade_validation' => true,
-                'filter'=>'',
-                'lang_visible'=>'',
-                'lang_available'=>'',
-                'grouping_visible'=>'',
-                'grouping_available'=>'',
-                'user_admin'=>''
+                'filter' => '',
+                'lang_visible' => '',
+                'lang_available' => '',
+                'grouping_visible' => '',
+                'grouping_available' => '',
+                'user_admin' => '',
             )
         );
     }

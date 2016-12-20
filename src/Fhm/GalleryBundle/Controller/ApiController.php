@@ -10,19 +10,37 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 /**
- * @Route("/api/gallery", service="fhm_gallery_controller_api")
+ * @Route("/api/gallery")
+ * ------------------------------------
+ * Class ApiController
+ * @package Fhm\GalleryBundle\Controller
  */
 class ApiController extends FhmController
 {
     /**
      * ApiController constructor.
-     *
-     * @param \Fhm\FhmBundle\Services\Tools $tools
+     * @param string $repository
+     * @param string $source
+     * @param string $domain
+     * @param string $translation
+     * @param string $document
+     * @param string $route
      */
-    public function __construct(\Fhm\FhmBundle\Services\Tools $tools)
-    {
-        $this->setFhmTools($tools);
-        parent::__construct('Fhm', 'Gallery', 'gallery');
+    public function __construct(
+        $repository = "FhmGalleryBundle:Gallery",
+        $source = "fhm",
+        $domain = "FhmGalleryBundle",
+        $translation = "gallery",
+        $document = Gallery::class,
+        $route = 'gallery'
+    ) {
+        self::$repository = $repository;
+        self::$source = $source;
+        self::$domain = $domain;
+        self::$translation = $translation;
+        self::$document = new $document();
+        self::$class = get_class(self::$document);
+        self::$route = $route;
     }
 
     /**
@@ -62,29 +80,30 @@ class ApiController extends FhmController
      */
     public function detailAction($template, $id)
     {
-        $document = $this->fhm_tools->dmRepository()->getById($id);
-        $document = ($document) ? $document : $this->fhm_tools->dmRepository()->getByAlias($id);
-        $document = ($document) ? $document : $this->fhm_tools->dmRepository()->getByName($id);
-        $instance = $this->fhm_tools->instanceData($document);
+        $document = $this->get('fhm_tools')->dmRepository(self::$repository)->getById($id);
+        $document = ($document) ? $document : $this->get('fhm_tools')->dmRepository(self::$repository)->getByAlias($id);
+        $document = ($document) ? $document : $this->get('fhm_tools')->dmRepository(self::$repository)->getByName($id);
         // ERROR - unknown
-        if($document == "")
-        {
-            throw $this->createNotFoundException($this->fhm_tools->trans('gallery.item.error.unknown', array(), 'FhmGalleryBundle'));
-        }
-        // ERROR - Forbidden
-        elseif(!$instance->user->admin && ($document->getDelete() || !$document->getActive()))
-        {
-            throw new HttpException(403, $this->fhm_tools->trans('gallery.item.error.forbidden', array(), 'FhmGalleryBundle'));
+        if ($document == "") {
+            throw $this->createNotFoundException(
+                $this->trans('gallery.item.error.unknown', array(), 'FhmGalleryBundle')
+            );
+        } // ERROR - Forbidden
+        elseif (!$this->getUser()->hasRole('ROLE_ADMIN') && ($document->getDelete() || !$document->getActive())) {
+            throw new HttpException(403, $this->trans('gallery.item.error.forbidden', array(), 'FhmGalleryBundle'));
         }
 
         return new Response(
             $this->renderView(
-                "::FhmGallery/Template/" . $template . ".html.twig",
+                "::FhmGallery/Template/".$template.".html.twig",
                 array(
                     'document' => $document,
-                    'items'    => $this->fhm_tools->dmRepository("FhmGalleryBundle:GalleryItem")->getByGroupAll($document),
-                    'videos'   => $this->fhm_tools->dmRepository("FhmGalleryBundle:GalleryVideo")->getByGroupAll($document),
-                    'instance' => $instance
+                    'items' => $this->get('fhm_tools')->dmRepository("FhmGalleryBundle:GalleryItem")->getByGroupAll(
+                        $document
+                    ),
+                    'videos' => $this->get('fhm_tools')->dmRepository("FhmGalleryBundle:GalleryVideo")->getByGroupAll(
+                        $document
+                    ),
                 )
             )
         );

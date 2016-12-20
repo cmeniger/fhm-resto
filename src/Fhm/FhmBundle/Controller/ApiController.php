@@ -10,6 +10,9 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 /**
  * @Route("/api")
+ * ---------------------------------
+ * Class ApiController
+ * @package Fhm\FhmBundle\Controller
  */
 class ApiController extends RefApiController
 {
