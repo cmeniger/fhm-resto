@@ -6,6 +6,8 @@ use Fhm\CardBundle\Form\Type\Admin\Category\CreateType;
 use Fhm\CardBundle\Form\Type\Admin\Category\UpdateType;
 use Fhm\FhmBundle\Controller\RefAdminController as FhmController;
 use Fhm\CardBundle\Document\CardCategory;
+use Fhm\FhmBundle\Form\Handler\Admin\CreateHandler;
+use Fhm\FhmBundle\Form\Handler\Admin\UpdateHandler;
 use Fhm\FhmBundle\Services\Tools;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,21 +16,38 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 /**
- * @Route("/admin/cardcategory", service="fhm_card_controller_category_admin")
+ * @Route("/admin/cardcategory")
+ * ------------------------------------------
+ * Class AdminController
+ * @package Fhm\CardBundle\Controller\Category
  */
 class AdminController extends FhmController
 {
     /**
-     * AdminController constructor.
-     * @param Tools $tools
+     * FrontController constructor.
+     *
+     * @param string $repository
+     * @param string $source
+     * @param string $domain
+     * @param string $translation
+     * @param string $document
+     * @param string $route
      */
-    public function __construct(Tools $tools)
-    {
-        $this->setFhmTools($tools);
-        parent::__construct('Fhm', 'Card', 'card_category', 'CardCategory');
-        $this->form->type->create = CreateType::class;
-        $this->form->type->update = UpdateType::class;
-        $this->translation        = array('FhmCardBundle', 'card.category');
+    public function __construct(
+        $repository = "FhmCardBundle:CardCategory",
+        $source = "fhm",
+        $domain = "FhmCardBundle",
+        $translation = "card.category",
+        $document = "CardCategory",
+        $route = "card_category"
+    ) {
+        self::$repository = $repository;
+        self::$source = $source;
+        self::$domain = $domain;
+        self::$translation = $translation;
+        self::$document = new $document();
+        self::$class = get_class(self::$document);
+        self::$route = $route;
     }
 
     /**
@@ -54,6 +73,9 @@ class AdminController extends FhmController
      */
     public function createAction(Request $request)
     {
+        self::$form = new \stdClass();
+        self::$form->type = CreateType::class;
+        self::$form->handler = CreateHandler::class;
         return parent::createAction($request);
     }
 
@@ -68,6 +90,9 @@ class AdminController extends FhmController
      */
     public function duplicateAction(Request $request, $id)
     {
+        self::$form = new \stdClass();
+        self::$form->type = CreateType::class;
+        self::$form->handler = CreateHandler::class;
         return parent::duplicateAction($request, $id);
     }
 
@@ -82,6 +107,9 @@ class AdminController extends FhmController
      */
     public function updateAction(Request $request, $id)
     {
+        self::$form = new \stdClass();
+        self::$form->type = UpdateType::class;
+        self::$form->handler = UpdateHandler::class;
         return parent::updateAction($request, $id);
     }
 
@@ -175,18 +203,6 @@ class AdminController extends FhmController
     public function exportAction(Request $request)
     {
         return parent::exportAction($request);
-    }
-
-    /**
-     * @Route
-     * (
-     *      path="/grouping",
-     *      name="fhm_admin_card_category_grouping"
-     * )
-     */
-    public function groupingAction(Request $request)
-    {
-        return parent::groupingAction($request);
     }
 
     /**

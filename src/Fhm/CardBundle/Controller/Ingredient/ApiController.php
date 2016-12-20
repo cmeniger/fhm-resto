@@ -5,6 +5,8 @@ use Fhm\CardBundle\Form\Type\Api\Ingredient\CreateType;
 use Fhm\CardBundle\Form\Type\Api\Ingredient\UpdateType;
 use Fhm\FhmBundle\Controller\RefApiController as FhmController;
 use Fhm\CardBundle\Document\CardIngredient;
+use Fhm\FhmBundle\Form\Handler\Admin\CreateHandler;
+use Fhm\FhmBundle\Form\Handler\Admin\UpdateHandler;
 use Fhm\FhmBundle\Services\Tools;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -14,20 +16,38 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 /**
- * @Route("/api/cardingredient", service ="fhm_card_controller_ingredient_api")
+ * @Route("/api/cardingredient")
+ * --------------------------------------------
+ * Class ApiController
+ * @package Fhm\CardBundle\Controller\Ingredient
  */
 class ApiController extends FhmController
 {
     /**
-     * Constructor
+     * AdminController constructor.
+     *
+     * @param string $repository
+     * @param string $source
+     * @param string $domain
+     * @param string $translation
+     * @param string $document
+     * @param string $route
      */
-    public function __construct(Tools $tools)
-    {
-        $this->setFhmTools($tools);
-        parent::__construct('Fhm', 'Card', 'card_ingredient', 'CardIngredient');
-        $this->form->type->create = CreateType::class;
-        $this->form->type->update = UpdateType::class;
-        $this->translation = array('FhmCardBundle', 'card.ingredient');
+    public function __construct(
+        $repository = "FhmCardBundle:CardIngredient",
+        $source = "fhm",
+        $domain = "FhmCardBundle",
+        $translation = "card.ingredient",
+        $document = "CardIngredient",
+        $route = "card_ingredient"
+    ) {
+        self::$repository = $repository;
+        self::$source = $source;
+        self::$domain = $domain;
+        self::$translation = $translation;
+        self::$document = new $document();
+        self::$class = get_class(self::$document);
+        self::$route = $route;
     }
 
     /**
@@ -59,32 +79,6 @@ class ApiController extends FhmController
     /**
      * @Route
      * (
-     *      path="/historic",
-     *      name="fhm_api_card_ingredient_historic"
-     * )
-     * @Template("::FhmCard/Api/Ingredient/historic.html.twig")
-     */
-    public function historicAction(Request $request)
-    {
-        return parent::historicAction($request);
-    }
-
-    /**
-     * @Route
-     * (
-     *      path="/historic/copy/{id}",
-     *      name="fhm_api_card_ingredient_historic_copy",
-     *      requirements={"id"="[a-z0-9]*"}
-     * )
-     */
-    public function historicCopyAction(Request $request, $id)
-    {
-        return parent::historicCopyAction($request, $id);
-    }
-
-    /**
-     * @Route
-     * (
      *      path="/embed/{template}/{idCard}/{idProduct}",
      *      name="fhm_api_card_ingredient_embed",
      *      requirements={"idCard"="[a-z0-9]*", "idProduct"="[a-z0-9]*"},
@@ -93,21 +87,20 @@ class ApiController extends FhmController
      */
     public function embedAction(Request $request, $idCard, $idProduct, $template)
     {
-        $card = $this->fhm_tools->dmRepository('FhmCardBundle:Card')->find($idCard);
-        $product = $this->fhm_tools->dmRepository('FhmCardBundle:CardProduct')->find($idProduct);
-        $instance = $this->fhm_tools->instanceData();
+        $card = $this->get('fhm_tools')->dmRepository('FhmCardBundle:Card')->find($idCard);
+        $product = $this->get('fhm_tools')->dmRepository('FhmCardBundle:CardProduct')->find($idProduct);
         // ERROR - unknown
         if ($card == "") {
             throw $this->createNotFoundException(
-                $this->get('translator')->trans('card.error.unknown', array(), $this->translation[0])
+                $this->get('translator')->trans('card.error.unknown', array(), self::$domain)
             );
         }
         if ($product == "") {
             throw $this->createNotFoundException(
-                $this->get('translator')->trans('card.product.error.unknown', array(), $this->translation[0])
+                $this->get('translator')->trans('card.product.error.unknown', array(), self::$domain)
             );
         }
-        $documents = $this->fhm_tools->dmRepository()->getByProduct($card, $product, $instance->grouping->filtered);
+        $documents = $this->get('fhm_tools')->dmRepository(self::$repository)->getByProduct($card, $product);
         $inline = array();
         foreach ($documents as $ingredient) {
             $inline[] = $ingredient->getName();
@@ -121,7 +114,6 @@ class ApiController extends FhmController
                     "product" => $product,
                     "ingredients" => $documents,
                     "inline" => implode(', ', $inline),
-                    "instance" => $instance,
                 )
             )
         );
@@ -137,8 +129,7 @@ class ApiController extends FhmController
      */
     public function editorAction(Request $request, $id)
     {
-        $card = $this->fhm_tools->dmRepository('FhmCardBundle:Card')->find($id);
-        $instance = $this->fhm_tools->instanceData($card);
+        $card = $this->get('fhm_tools')->dmRepository('FhmCardBundle:Card')->find($id);
         $this->authorized($card);
 
         return new Response(
@@ -146,8 +137,7 @@ class ApiController extends FhmController
                 "::FhmCard/Template/Editor/ingredient.html.twig",
                 array(
                     "card" => $card,
-                    "tree" => $this->fhm_tools->dmRepository()->getByCardAll($card, $instance->grouping->filtered),
-                    "instance" => $instance,
+                    "tree" => $this->get('fhm_tools')->dmRepository(self::$repository)->getByCardAll($card),
                 )
             )
         );
@@ -163,19 +153,18 @@ class ApiController extends FhmController
      */
     public function sortAction(Request $request, $idCard)
     {
-        $card = $this->fhm_tools->dmRepository('FhmCardBundle:Card')->find($idCard);
-        $instance = $this->fhm_tools->instanceData();
+        $card = $this->get('fhm_tools')->dmRepository('FhmCardBundle:Card')->find($idCard);
         $this->authorized($card);
         $list = json_decode($request->get('list'));
         $order = 1;
         foreach ($list as $obj) {
-            $document = $this->fhm_tools->dmRepository()->find($obj->id);
+            $document = $this->get('fhm_tools')->dmRepository(self::$repository)->find($obj->id);
             $document->setOrder($order);
-            $this->fhm_tools->dmPersist($document);
+            $this->get('fhm_tools')->dmPersist($document);
             $order++;
         }
 
-        return $this->_refresh($card, $instance);
+        return $this->__refresh($card);
     }
 
     /**
@@ -189,12 +178,11 @@ class ApiController extends FhmController
      */
     public function createAction(Request $request, $idCard)
     {
-        $card = $this->fhm_tools->dmRepository('FhmCardBundle:Card')->find($idCard);
-        $instance = $this->fhm_tools->instanceData();
+        $card = $this->get('fhm_tools')->dmRepository('FhmCardBundle:Card')->find($idCard);
         $this->authorized($card);
-        $document = $this->document;
-        $classType = $this->form->type->create;
-        $classHandler = $this->form->handler->create;
+        $document = self::$document;
+        $classType = CreateType::class;
+        $classHandler = CreateHandler::class;
         $form = $this->createForm($classType, $document);
         $handler = new $classHandler($form, $request);
         $process = $handler->process();
@@ -203,15 +191,14 @@ class ApiController extends FhmController
             $document->setUserCreate($this->getUser());
             $document->setAlias($this->getAlias($document->getId(), $document->getName()));
             $document->setCard($card);
-            $this->fhm_tools->dmPersist($document);
+            $this->get('fhm_tools')->dmPersist($document);
 
-            return $this->_refresh($card, $instance);
+            return $this->__refresh($card);
         }
 
         return array(
             'card' => $card,
             'form' => $form->createView(),
-            'instance' => $instance,
         );
     }
 
@@ -226,34 +213,32 @@ class ApiController extends FhmController
      */
     public function updateAction(Request $request, $idCard, $idIngredient)
     {
-        $card = $this->fhm_tools->dmRepository('FhmCardBundle:Card')->find($idCard);
-        $document = $this->fhm_tools->dmRepository()->find($idIngredient);
-        $instance = $this->fhm_tools->instanceData();
+        $card = $this->get('fhm_tools')->dmRepository('FhmCardBundle:Card')->find($idCard);
+        $document = $this->get('fhm_tools')->dmRepository(self::$repository)->find($idIngredient);
         $this->authorized($card);
         if ($document == "") {
             throw $this->createNotFoundException(
-                $this->get('translator')->trans($this->translation[1].'.error.unknown', array(), $this->translation[0])
+                $this->get('translator')->trans(self::$translation.'.error.unknown', array(), self::$domain)
             );
         }
-        $classType = $this->form->type->update;
-        $classHandler = $this->form->handler->update;
+        $classType = UpdateType::class;
+        $classHandler = UpdateHandler::class;
         $form = $this->createForm($classType, $document);
         $handler = new $classHandler($form, $request);
         $process = $handler->process();
         if ($process) {
-           // Persist
+            // Persist
             $document->setUserUpdate($this->getUser());
             $document->setAlias($this->getAlias($document->getId(), $document->getName()));
-            $this->fhm_tools->dmPersist($document);
+            $this->get('fhm_tools')->dmPersist($document);
 
-            return $this->_refresh($card, $instance);
+            return $this->__refresh($card);
         }
 
         return array(
             'card' => $card,
             'document' => $document,
             'form' => $form->createView(),
-            'instance' => $instance,
         );
     }
 
@@ -267,20 +252,19 @@ class ApiController extends FhmController
      */
     public function activateAction(Request $request, $idCard, $idIngredient)
     {
-        $card = $this->fhm_tools->dmRepository('FhmCardBundle:Card')->find($idCard);
-        $document = $this->fhm_tools->dmRepository()->find($idIngredient);
-        $instance = $this->fhm_tools->instanceData();
+        $card = $this->get('fhm_tools')->dmRepository('FhmCardBundle:Card')->find($idCard);
+        $document = $this->get('fhm_tools')->dmRepository(self::$repository)->find($idIngredient);
         $this->authorized($card);
         if ($document == "") {
             throw $this->createNotFoundException(
-                $this->get('translator')->trans($this->translation[1].'.error.unknown', array(), $this->translation[0])
+                $this->get('translator')->trans(self::$translation.'.error.unknown', array(), self::$domain)
             );
         }
         $document->setUserUpdate($this->getUser());
         $document->setActive(true);
-        $this->fhm_tools->dmPersist($document);
+        $this->get('fhm_tools')->dmPersist($document);
 
-        return $this->_refresh($card, $instance);
+        return $this->__refresh($card);
     }
 
     /**
@@ -293,20 +277,19 @@ class ApiController extends FhmController
      */
     public function deactivateAction(Request $request, $idCard, $idIngredient)
     {
-        $card = $this->fhm_tools->dmRepository('FhmCardBundle:Card')->find($idCard);
-        $document = $this->fhm_tools->dmRepository()->find($idIngredient);
-        $instance = $this->fhm_tools->instanceData();
+        $card = $this->get('fhm_tools')->dmRepository('FhmCardBundle:Card')->find($idCard);
+        $document = $this->get('fhm_tools')->dmRepository(self::$repository)->find($idIngredient);
         $this->authorized($card);
         if ($document == "") {
             throw $this->createNotFoundException(
-                $this->get('translator')->trans($this->translation[1].'.error.unknown', array(), $this->translation[0])
+                $this->get('translator')->trans(self::$translation.'.error.unknown', array(), self::$domain)
             );
         }
         $document->setUserUpdate($this->getUser());
         $document->setActive(false);
-        $this->fhm_tools->dmPersist($document);
+        $this->get('fhm_tools')->dmPersist($document);
 
-        return $this->_refresh($card, $instance);
+        return $this->__refresh($card);
     }
 
     /**
@@ -319,25 +302,23 @@ class ApiController extends FhmController
      */
     public function deleteAction(Request $request, $idCard, $idIngredient)
     {
-        $card = $this->fhm_tools->dmRepository('FhmCardBundle:Card')->find($idCard);
-        $document = $this->fhm_tools->dmRepository()->find($idIngredient);
-        $instance = $this->fhm_tools->instanceData();
+        $card = $this->get('fhm_tools')->dmRepository('FhmCardBundle:Card')->find($idCard);
+        $document = $this->get('fhm_tools')->dmRepository(self::$repository)->find($idIngredient);
         $this->authorized($card);
         if ($document == "") {
             throw $this->createNotFoundException(
-                $this->get('translator')->trans($this->translation[1].'.error.unknown', array(), $this->translation[0])
+                $this->get('translator')->trans(self::$translation.'.error.unknown', array(), self::$domain)
             );
         }
-        // Delete
         if ($document->getDelete()) {
-            $this->fhm_tools->dmRemove($document);
+            $this->get('fhm_tools')->dmRemove($document);
         } else {
             $document->setUserUpdate($this->getUser());
             $document->setDelete(true);
-            $this->fhm_tools->dmPersist($document);
+            $this->get('fhm_tools')->dmPersist($document);
         }
 
-        return $this->_refresh($card, $instance);
+        return $this->__refresh($card);
     }
 
     /**
@@ -350,31 +331,29 @@ class ApiController extends FhmController
      */
     public function undeleteAction(Request $request, $idCard, $idIngredient)
     {
-        $card = $this->fhm_tools->dmRepository('FhmCardBundle:Card')->find($idCard);
-        $document = $this->fhm_tools->dmRepository()->find($idIngredient);
-        $instance = $this->fhm_tools->instanceData();
+        $card = $this->get('fhm_tools')->dmRepository('FhmCardBundle:Card')->find($idCard);
+        $document = $this->get('fhm_tools')->dmRepository(self::$repository)->find($idIngredient);
         $this->authorized($card);
         if ($document == "") {
             throw $this->createNotFoundException(
-                $this->get('translator')->trans($this->translation[1].'.error.unknown', array(), $this->translation[0])
+                $this->get('translator')->trans(self::$translation.'.error.unknown', array(), self::$domain)
             );
         }
         // Undelete
         $document->setUserUpdate($this->getUser());
         $document->setDelete(false);
-        $this->fhm_tools->dmPersist($document);
+        $this->get('fhm_tools')->dmPersist($document);
 
-        return $this->_refresh($card, $instance);
+        return $this->__refresh($card);
     }
 
     /**
      * @param $card
-     * @param $instance
      *
      * @return JsonResponse
      * @throws \Exception
      */
-    private function _refresh($card, $instance)
+    private function __refresh($card)
     {
         $response = new JsonResponse();
         $response->setData(
@@ -384,8 +363,7 @@ class ApiController extends FhmController
                     "::FhmCard/Template/Editor/ingredient.html.twig",
                     array(
                         "card" => $card,
-                        "tree" => $this->fhm_tools->dmRepository()->getByCardAll($card, $instance->grouping->filtered),
-                        "instance" => $instance,
+                        "tree" => $this->fhm_tools->dmRepository()->getByCardAll($card),
                     )
                 ),
             )
@@ -405,7 +383,7 @@ class ApiController extends FhmController
     {
         if ($card == "") {
             throw $this->createNotFoundException(
-                $this->get('translator')->trans('card.error.unknown', array(), $this->translation[0])
+                $this->get('translator')->trans('card.error.unknown', array(), self::$domain)
             );
         }
         if ($card->getParent() && method_exists($card->getParent(), 'hasModerator')) {
@@ -413,12 +391,11 @@ class ApiController extends FhmController
                 )->hasModerator($this->getUser())
             ) {
                 throw new HttpException(
-                    403,
-                    $this->get('translator')->trans(
-                        $this->translation[1].'.error.forbidden',
-                        array(),
-                        $this->translation[0]
-                    )
+                    403, $this->get('translator')->trans(
+                    self::$translation.'.error.forbidden',
+                    array(),
+                    self::$domain
+                )
                 );
             }
         }

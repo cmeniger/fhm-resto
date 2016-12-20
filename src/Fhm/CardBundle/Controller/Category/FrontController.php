@@ -11,119 +11,38 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 /**
- * @Route("/cardcategory" , service="fhm_card_controller_category_front")
+ * @Route("/cardcategory")
+ * -------------------------------------------
+ * Class FrontController
+ * @package Fhm\CardBundle\Controller\Category
  */
 class FrontController extends FhmController
 {
     /**
-     * Constructor
+     * FrontController constructor.
+     *
+     * @param string $repository
+     * @param string $source
+     * @param string $domain
+     * @param string $translation
+     * @param string $document
+     * @param string $route
      */
-    public function __construct(Tools $tools)
-    {
-        $this->setFhmTools($tools);
-        parent::__construct('Fhm', 'Card', 'card_category', 'CardCategory');
-        $this->form->type->create = CreateType::class;
-        $this->form->type->update = UpdateType::class;
-        $this->translation = array('FhmCardBundle', 'card.category');
-    }
-
-    /**
-     * @Route
-     * (
-     *      path="/",
-     *      name="fhm_card_category"
-     * )
-     * @Template("::FhmCard/Front/Category/index.html.twig")
-     */
-    public function indexAction()
-    {
-        // For activate this route, delete next line
-        throw $this->createNotFoundException(
-            $this->get('translator')->trans('fhm.error.route', array(), 'FhmFhmBundle')
-        );
-    }
-
-    /**
-     * @Route
-     * (
-     *      path="/create",
-     *      name="fhm_card_category_create"
-     * )
-     * @Template("::FhmCard/Front/Category/create.html.twig")
-     */
-    public function createAction(Request $request)
-    {
-        // For activate this route, delete next line
-        throw $this->createNotFoundException(
-            $this->get('translator')->trans('fhm.error.route', array(), 'FhmFhmBundle')
-        );
-    }
-
-    /**
-     * @Route
-     * (
-     *      path="/duplicate/{id}",
-     *      name="fhm_card_category_duplicate",
-     *      requirements={"id"="[a-z0-9]*"}
-     * )
-     * @Template("::FhmCard/Front/Category/create.html.twig")
-     */
-    public function duplicateAction(Request $request, $id)
-    {
-        // For activate this route, delete next line
-        throw $this->createNotFoundException(
-            $this->get('translator')->trans('fhm.error.route', array(), 'FhmFhmBundle')
-        );
-    }
-
-    /**
-     * @Route
-     * (
-     *      path="/update/{id}",
-     *      name="fhm_card_category_update",
-     *      requirements={"id"="[a-z0-9]*"}
-     * )
-     * @Template("::FhmCard/Front/Category/update.html.twig")
-     */
-    public function updateAction(Request $request, $id)
-    {
-        // For activate this route, delete next line
-        throw $this->createNotFoundException(
-            $this->get('translator')->trans('fhm.error.route', array(), 'FhmFhmBundle')
-        );
-    }
-
-    /**
-     * @Route
-     * (
-     *      path="/detail/{id}",
-     *      name="fhm_card_category_detail",
-     *      requirements={"id"=".+"}
-     * )
-     * @Template("::FhmCard/Front/Category/detail.html.twig")
-     */
-    public function detailAction($id)
-    {
-        // For activate this route, delete next line
-        throw $this->createNotFoundException(
-            $this->get('translator')->trans('fhm.error.route', array(), 'FhmFhmBundle')
-        );
-    }
-
-    /**
-     * @Route
-     * (
-     *      path="/delete/{id}",
-     *      name="fhm_card_category_delete",
-     *      requirements={"id"="[a-z0-9]*"}
-     * )
-     */
-    public function deleteAction($id)
-    {
-        // For activate this route, delete next line
-        throw $this->createNotFoundException(
-            $this->get('translator')->trans('fhm.error.route', array(), 'FhmFhmBundle')
-        );
+    public function __construct(
+        $repository = "FhmCardBundle:CardCategory",
+        $source = "fhm",
+        $domain = "FhmCardBundle",
+        $translation = "card.category",
+        $document = "CardCategory",
+        $route = "card_category"
+    ) {
+        self::$repository = $repository;
+        self::$source = $source;
+        self::$domain = $domain;
+        self::$translation = $translation;
+        self::$document = new $document();
+        self::$class = get_class(self::$document);
+        self::$route = $route;
     }
 
     /**
