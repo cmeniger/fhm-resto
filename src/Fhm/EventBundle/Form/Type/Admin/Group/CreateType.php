@@ -18,30 +18,26 @@ class CreateType extends FhmType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $this->setTranslation('group');
         parent::buildForm($builder, $options);
-        $builder
-            ->add(
-                'add_global',
-                'checkbox',
-                array('label' => $options['translation_route'].'.admin.create.form.add_global', 'required' => false)
+        $builder->add(
+            'add_global',
+            'checkbox',
+            array('label' => $options['translation_route'].'.admin.create.form.add_global', 'required' => false)
+        )->add(
+            'events',
+            'document',
+            array(
+                'label' => $options['translation_route'].'.admin.create.form.events',
+                'class' => 'FhmEventBundle:Event',
+                'choice_label' => 'name',
+                'query_builder' => function (EventRepository $dr) use ($options) {
+                    return $dr->getFormEnable($options['filter']);
+                },
+                'required' => false,
+                'multiple' => true,
+                'by_reference' => false,
             )
-            ->add(
-                'events',
-                'document',
-                array(
-                    'label' => $options['translation_route'].'.admin.create.form.events',
-                    'class' => 'FhmEventBundle:Event',
-                    'choice_label' => 'name',
-                    'query_builder' => function (EventRepository $dr) use ($options) {
-                        return $dr->getFormEnable($options['filter']);
-                    },
-                    'required' => false,
-                    'multiple' => true,
-                    'by_reference' => false,
-                )
-            )
-            ->remove('global');
+        )->remove('global');
     }
 
 }

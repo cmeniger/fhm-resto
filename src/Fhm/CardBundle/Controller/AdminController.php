@@ -32,6 +32,7 @@ class AdminController extends FhmController
      * @param string $source
      * @param string $domaine
      * @param string $translation
+     * @param string $document
      * @param string $route
      */
     public function __construct(
@@ -39,13 +40,14 @@ class AdminController extends FhmController
         $source = "fhm",
         $domaine = "FhmCardBundle",
         $translation = "card",
+        $document = Card::class,
         $route = "card"
     ) {
         self::$repository = $repository;
         self::$source = $source;
         self::$domain = $domaine;
         self::$translation = $translation;
-        self::$document = new Card();
+        self::$document = new $document();
         self::$class = get_class(self::$document);
         self::$route = $route;
     }

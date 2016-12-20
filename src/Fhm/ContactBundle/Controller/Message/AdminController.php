@@ -1,6 +1,7 @@
 <?php
 namespace Fhm\ContactBundle\Controller\Message;
 
+use Fhm\ContactBundle\Document\ContactMessage;
 use Fhm\FhmBundle\Controller\RefAdminController as FhmController;
 use Fhm\ContactBundle\Document\Message;
 use Symfony\Component\HttpFoundation\Request;
@@ -30,7 +31,7 @@ class AdminController extends FhmController
         $source = "fhm",
         $domain = "FhmContactBundle",
         $translation = "contact.message",
-        $document = "ContactMessage",
+        $document = ContactMessage::class,
         $route = 'contact_message'
     ) {
         self::$repository = $repository;

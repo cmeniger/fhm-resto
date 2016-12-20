@@ -39,7 +39,7 @@ class ApiController extends FhmController
         $source = "fhm",
         $domain = "FhmCardBundle",
         $translation = "card.product",
-        $document = "CardProduct",
+        $document = CardProduct::class,
         $route = "card_product"
     ) {
         self::$repository = $repository;

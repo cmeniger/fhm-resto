@@ -1,6 +1,7 @@
 <?php
 namespace Fhm\EventBundle\Controller\Group;
 
+use Fhm\EventBundle\Document\EventGroup;
 use Fhm\FhmBundle\Controller\RefApiController as FhmController;
 use Fhm\EventBundle\Document\Event;
 use Symfony\Component\HttpFoundation\Request;
@@ -10,20 +11,38 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 /**
- * @Route("/api/event/group", service="fhm_event_controller_group_api")
+ * @Route("/api/event/group")
+ * -----------------------------------------
+ * Class ApiController
+ * @package Fhm\EventBundle\Controller\Group
  */
 class ApiController extends FhmController
 {
     /**
      * ApiController constructor.
-     *
-     * @param \Fhm\FhmBundle\Services\Tools $tools
+
+     * @param string $repository
+     * @param string $source
+     * @param string $domain
+     * @param string $translation
+     * @param string $document
+     * @param string $route
      */
-    public function __construct(\Fhm\FhmBundle\Services\Tools $tools)
-    {
-        $this->setFhmTools($tools);
-        parent::__construct('Fhm', 'Event', 'event_group', 'EventGroup');
-        $this->translation = array('FhmEventBundle', 'event.group');
+    public function __construct(
+        $repository = "FhmEventBundle:Event",
+        $source = "fhm",
+        $domain = "FhmEventBundle",
+        $translation = "event.group",
+        $document = EventGroup::class,
+        $route = 'event_group'
+    ) {
+        self::$repository = $repository;
+        self::$source = $source;
+        self::$domain = $domain;
+        self::$translation = $translation;
+        self::$document = new $document();
+        self::$class = get_class(self::$document);
+        self::$route = $route;
     }
 
     /**

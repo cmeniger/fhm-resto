@@ -14,7 +14,10 @@ use Doctrine\ODM\MongoDB\Mapping\ClassMetadata;
 class EventRepository extends FhmRepository
 {
     /**
-     * Constructor
+     * EventRepository constructor.
+     * @param DocumentManager $dm
+     * @param UnitOfWork $uow
+     * @param ClassMetadata $class
      */
     public function __construct(DocumentManager $dm, UnitOfWork $uow, ClassMetadata $class)
     {
@@ -23,35 +26,16 @@ class EventRepository extends FhmRepository
 
     /**
      * @param string $search
-     * @param int    $page
-     * @param int    $count
-     * @param string $grouping
-     *
+
      * @return mixed
      * @throws \Doctrine\ODM\MongoDB\MongoDBException
      */
-    public function getFrontIndex($search = "", $page = 1, $count = 5, $grouping = "")
+    public function getFrontIndex($search = "")
     {
         $builder = $search ? $this->search($search) : $this->createQueryBuilder();
         // Parent
-        if($this->parent)
-        {
+        if ($this->parent) {
             $builder->field('parent')->in(array('0', null));
-        }
-        // Grouping
-        if($grouping != "")
-        {
-            $builder->addAnd(
-                $builder->expr()
-                    ->addOr($builder->expr()->field('grouping')->in((array) $grouping))
-                    ->addOr($builder->expr()->field('global')->equals(true))
-            );
-        }
-        // Pagination
-        if($page > 0 && $count > 0)
-        {
-            $builder->limit($count);
-            $builder->skip(($page - 1) * $count);
         }
         // Common
         $builder->field('date_end')->gt(new \DateTime());
@@ -61,77 +45,49 @@ class EventRepository extends FhmRepository
         $builder->sort('order');
         $builder->sort('name');
 
-        return $builder
-            ->getQuery()
-            ->execute()
-            ->toArray();
+        return $builder->getQuery()->execute()->toArray();
     }
 
     /**
      * @param string $search
-     * @param string $grouping
      *
      * @return int
      * @throws \Doctrine\ODM\MongoDB\MongoDBException
      */
-    public function getFrontCount($search = "", $grouping = "")
+    public function getFrontCount($search = "")
     {
         $builder = ($search) ? $this->search($search) : $this->createQueryBuilder();
         // Parent
-        if($this->parent)
-        {
+        if ($this->parent) {
             $builder->field('parent')->in(array('0', null));
-        }
-        // Grouping
-        if($grouping != "")
-        {
-            $builder->addAnd(
-                $builder->expr()
-                    ->addOr($builder->expr()->field('grouping')->in((array) $grouping))
-                    ->addOr($builder->expr()->field('global')->equals(true))
-            );
         }
         // Common
         $builder->field('date_end')->gt(new \DateTime());
         $builder->field('active')->equals(true);
         $builder->field('delete')->equals(false);
 
-        return $builder
-            ->count()
-            ->getQuery()
-            ->execute();
+        return $builder->count()->getQuery()->execute();
     }
 
     /**
      * @param \Fhm\EventBundle\Document\EventGroup $eventgroup
-     * @param string                               $search
-     * @param int                                  $page
-     * @param int                                  $count
+     * @param string $search
      *
      * @return mixed
      * @throws \Doctrine\ODM\MongoDB\MongoDBException
      */
-    public function getEventByGroupIndex(\Fhm\EventBundle\Document\EventGroup $eventgroup, $search = "", $page = 1, $count = 5)
+    public function getEventByGroupIndex(\Fhm\EventBundle\Document\EventGroup $eventgroup, $search = "")
     {
-        $builder = (($page > 0 && $count > 0) && $search) ? $this->search($search) : $this->createQueryBuilder();
+        $builder = ($search) ? $this->search($search) : $this->createQueryBuilder();
         // Global
-        if($eventgroup->getAddGlobal())
-        {
+        if ($eventgroup->getAddGlobal()) {
             $builder->addAnd(
-                $builder->expr()
-                    ->addOr($builder->expr()->field('eventgroups.id')->equals($eventgroup->getId()))
-                    ->addOr($builder->expr()->field('global')->equals(true))
+                $builder->expr()->addOr($builder->expr()->field('eventgroups.id')->equals($eventgroup->getId()))->addOr(
+                    $builder->expr()->field('global')->equals(true)
+                )
             );
-        }
-        else
-        {
+        } else {
             $builder->field('eventgroups.id')->equals($eventgroup->getId());
-        }
-        // Pagination
-        if($page > 0 && $count > 0)
-        {
-            $builder->limit($count);
-            $builder->skip(($page - 1) * $count);
         }
         // Common
         $builder->field('date_end')->gt(new \DateTime());
@@ -141,15 +97,12 @@ class EventRepository extends FhmRepository
         $builder->sort('order');
         $builder->sort('name');
 
-        return $builder
-            ->getQuery()
-            ->execute()
-            ->toArray();
+        return $builder->getQuery()->execute()->toArray();
     }
 
     /**
      * @param \Fhm\EventBundle\Document\EventGroup $eventgroup
-     * @param string                               $search
+     * @param string $search
      *
      * @return mixed
      */
@@ -157,16 +110,13 @@ class EventRepository extends FhmRepository
     {
         $builder = ($search) ? $this->search($search) : $this->createQueryBuilder();
         // Global
-        if($eventgroup->getAddGlobal())
-        {
+        if ($eventgroup->getAddGlobal()) {
             $builder->addAnd(
-                $builder->expr()
-                    ->addOr($builder->expr()->field('eventgroups.id')->equals($eventgroup->getId()))
-                    ->addOr($builder->expr()->field('global')->equals(true))
+                $builder->expr()->addOr($builder->expr()->field('eventgroups.id')->equals($eventgroup->getId()))->addOr(
+                    $builder->expr()->field('global')->equals(true)
+                )
             );
-        }
-        else
-        {
+        } else {
             $builder->field('eventgroups.id')->equals($eventgroup->getId());
         }
         // Common
@@ -174,10 +124,7 @@ class EventRepository extends FhmRepository
         $builder->field('active')->equals(true);
         $builder->field('delete')->equals(false);
 
-        return $builder
-            ->count()
-            ->getQuery()
-            ->execute();
+        return $builder->count()->getQuery()->execute();
     }
 
     /**
@@ -190,16 +137,13 @@ class EventRepository extends FhmRepository
     {
         $builder = $this->createQueryBuilder();
         // Global
-        if($eventgroup->getAddGlobal())
-        {
+        if ($eventgroup->getAddGlobal()) {
             $builder->addAnd(
-                $builder->expr()
-                    ->addOr($builder->expr()->field('eventgroups.id')->equals($eventgroup->getId()))
-                    ->addOr($builder->expr()->field('global')->equals(true))
+                $builder->expr()->addOr($builder->expr()->field('eventgroups.id')->equals($eventgroup->getId()))->addOr(
+                    $builder->expr()->field('global')->equals(true)
+                )
             );
-        }
-        else
-        {
+        } else {
             $builder->field('eventgroups.id')->equals($eventgroup->getId());
         }
         // Common
@@ -210,29 +154,17 @@ class EventRepository extends FhmRepository
         $builder->sort('order');
         $builder->sort('name');
 
-        return $builder
-            ->getQuery()
-            ->execute();
+        return $builder->getQuery()->execute();
     }
 
     /**
-     * @param string $grouping
      *
      * @return mixed
      * @throws \Doctrine\ODM\MongoDB\MongoDBException
      */
-    public function getEventEnable($grouping = "")
+    public function getEventEnable()
     {
         $builder = $this->createQueryBuilder();
-        // Grouping
-        if($grouping != "")
-        {
-            $builder->addAnd(
-                $builder->expr()
-                    ->addOr($builder->expr()->field('grouping')->in((array) $grouping))
-                    ->addOr($builder->expr()->field('global')->equals(true))
-            );
-        }
         // Common
         $builder->field('active')->equals(true);
         $builder->field('delete')->equals(false);
@@ -240,23 +172,19 @@ class EventRepository extends FhmRepository
         $builder->sort('order');
         $builder->sort('name');
 
-        return $builder
-            ->getQuery()
-            ->execute()
-            ->toArray();
+        return $builder->getQuery()->execute()->toArray();
     }
 
     /**
      * @param        $date
      * @param string $search
-     * @param int    $page
-     * @param int    $count
-     * @param string $grouping
+     * @param int $page
+     * @param int $count
      *
      * @return mixed
      * @throws \Doctrine\ODM\MongoDB\MongoDBException
      */
-    public function getFrontDateIndex($date, $search = "", $page = 1, $count = 5, $grouping = "")
+    public function getFrontDateIndex($date, $search = "", $page = 1, $count = 5)
     {
         $builder = $search ? $this->search($search) : $this->createQueryBuilder();
         $dateMin = new \DateTime($date);
@@ -264,24 +192,8 @@ class EventRepository extends FhmRepository
         $dateMax = new \DateTime($date);
         $dateMax->setTime(23, 59, 59);
         // Parent
-        if($this->parent)
-        {
+        if ($this->parent) {
             $builder->field('parent')->in(array('0', null));
-        }
-        // Grouping
-        if($grouping != "")
-        {
-            $builder->addAnd(
-                $builder->expr()
-                    ->addOr($builder->expr()->field('grouping')->in((array) $grouping))
-                    ->addOr($builder->expr()->field('global')->equals(true))
-            );
-        }
-        // Pagination
-        if($page > 0 && $count > 0)
-        {
-            $builder->limit($count);
-            $builder->skip(($page - 1) * $count);
         }
         // Dates
         $builder->field('date_start')->lte($dateMax);
@@ -293,20 +205,16 @@ class EventRepository extends FhmRepository
         $builder->sort('order');
         $builder->sort('name');
 
-        return $builder
-            ->getQuery()
-            ->execute()
-            ->toArray();
+        return $builder->getQuery()->execute()->toArray();
     }
 
     /**
      * @param string $search
-     * @param string $grouping
      *
      * @return int
      * @throws \Doctrine\ODM\MongoDB\MongoDBException
      */
-    public function getFrontDateCount($date, $search = "", $grouping = "")
+    public function getFrontDateCount($date, $search = "")
     {
         $builder = ($search) ? $this->search($search) : $this->createQueryBuilder();
         $dateMin = new \DateTime($date);
@@ -314,18 +222,8 @@ class EventRepository extends FhmRepository
         $dateMax = new \DateTime($date);
         $dateMax->setTime(23, 59, 59);
         // Parent
-        if($this->parent)
-        {
+        if ($this->parent) {
             $builder->field('parent')->in(array('0', null));
-        }
-        // Grouping
-        if($grouping != "")
-        {
-            $builder->addAnd(
-                $builder->expr()
-                    ->addOr($builder->expr()->field('grouping')->in((array) $grouping))
-                    ->addOr($builder->expr()->field('global')->equals(true))
-            );
         }
         // Dates
         $builder->field('date_start')->lte($dateMax);
@@ -334,9 +232,6 @@ class EventRepository extends FhmRepository
         $builder->field('active')->equals(true);
         $builder->field('delete')->equals(false);
 
-        return $builder
-            ->count()
-            ->getQuery()
-            ->execute();
+        return $builder->count()->getQuery()->execute();
     }
 }

@@ -33,7 +33,7 @@ class AdminController extends FhmController
         $source = "fhm",
         $domain = "FhmContactBundle",
         $translation = "contact",
-        $document = "Contact",
+        $document = Contact::class,
         $route = 'contact'
     ) {
         self::$repository = $repository;

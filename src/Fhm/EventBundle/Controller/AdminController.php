@@ -9,19 +9,37 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 /**
- * @Route("/admin/event", service="fhm_event_controller_admin")
+ * @Route("/admin/event")
+ * -----------------------------------
+ * Class AdminController
+ * @package Fhm\EventBundle\Controller
  */
 class AdminController extends FhmController
 {
     /**
      * AdminController constructor.
-     *
-     * @param \Fhm\FhmBundle\Services\Tools $tools
+     * @param string $repository
+     * @param string $source
+     * @param string $domain
+     * @param string $translation
+     * @param string $document
+     * @param string $route
      */
-    public function __construct(\Fhm\FhmBundle\Services\Tools $tools)
-    {
-        $this->setFhmTools($tools);
-        parent::__construct('Fhm', 'Event', 'event');
+    public function __construct(
+        $repository = "FhmEventBundle:Event",
+        $source = "fhm",
+        $domain = "FhmEventBundle",
+        $translation = "event",
+        $document = Event::class,
+        $route = 'event'
+    ) {
+        self::$repository = $repository;
+        self::$source = $source;
+        self::$domain = $domain;
+        self::$translation = $translation;
+        self::$document = new $document();
+        self::$class = get_class(self::$document);
+        self::$route = $route;
     }
 
     /**

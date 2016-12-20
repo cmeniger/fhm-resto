@@ -8,19 +8,37 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 /**
- * @Route("/event", service="fhm_event_controller_front")
+ * @Route("/event")
+ * -----------------------------------
+ * Class FrontController
+ * @package Fhm\EventBundle\Controller
  */
 class FrontController extends FhmController
 {
     /**
      * FrontController constructor.
-     *
-     * @param \Fhm\FhmBundle\Services\Tools $tools
+     * @param string $repository
+     * @param string $source
+     * @param string $domain
+     * @param string $translation
+     * @param string $document
+     * @param string $route
      */
-    public function __construct(\Fhm\FhmBundle\Services\Tools $tools)
-    {
-        $this->setFhmTools($tools);
-        parent::__construct('Fhm', 'Event', 'event');
+    public function __construct(
+        $repository = "FhmEventBundle:Event",
+        $source = "fhm",
+        $domain = "FhmEventBundle",
+        $translation = "event",
+        $document = Event::class,
+        $route = 'event'
+    ) {
+        self::$repository = $repository;
+        self::$source = $source;
+        self::$domain = $domain;
+        self::$translation = $translation;
+        self::$document = new $document();
+        self::$class = get_class(self::$document);
+        self::$route = $route;
     }
 
     /**
@@ -37,50 +55,6 @@ class FrontController extends FhmController
     }
 
     /**
-     * @Route
-     * (
-     *      path="/create",
-     *      name="fhm_event_create"
-     * )
-     * @Template("::FhmEvent/Front/create.html.twig")
-     */
-    public function createAction(Request $request)
-    {
-        // For activate this route, delete next line
-        throw $this->createNotFoundException($this->fhm_tools->trans('fhm.error.route', array(), 'FhmFhmBundle'));
-    }
-
-    /**
-    * @Route
-    * (
-    *      path="/duplicate/{id}",
-    *      name="fhm_event_duplicate",
-    *      requirements={"id"="[a-z0-9]*"}
-    * )
-    * @Template("::FhmEvent/Front/create.html.twig")
-    */
-    public function duplicateAction(Request $request, $id)
-    {
-        // For activate this route, delete next line
-        throw $this->createNotFoundException($this->fhm_tools->trans('fhm.error.route', array(), 'FhmFhmBundle'));
-    }
-
-    /**
-    * @Route
-    * (
-    *      path="/update/{id}",
-    *      name="fhm_event_update",
-    *      requirements={"id"="[a-z0-9]*"}
-    * )
-    * @Template("::FhmEvent/Front/update.html.twig")
-    */
-    public function updateAction(Request $request, $id)
-    {
-        // For activate this route, delete next line
-        throw $this->createNotFoundException($this->fhm_tools->trans('fhm.error.route', array(), 'FhmFhmBundle'));
-    }
-
-    /**
     * @Route
     * (
     *      path="/detail/{id}",
@@ -92,20 +66,6 @@ class FrontController extends FhmController
     public function detailAction($id)
     {
         return parent::detailAction($id);
-    }
-
-    /**
-    * @Route
-    * (
-    *      path="/delete/{id}",
-    *      name="fhm_event_delete",
-    *      requirements={"id"="[a-z0-9]*"}
-    * )
-    */
-    public function deleteAction($id)
-    {
-        // For activate this route, delete next line
-        throw $this->createNotFoundException($this->fhm_tools->trans('fhm.error.route', array(), 'FhmFhmBundle'));
     }
 
     /**

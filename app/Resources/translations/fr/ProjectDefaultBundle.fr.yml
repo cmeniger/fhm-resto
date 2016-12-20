@@ -10,10 +10,10 @@ project:
         aroundme:                               Autour de moi
         placenote:                              Notez vos établissements
         place:                                  Vous avez un établissement ?
-        placetext:                              Rejoignez <strong>gratuitement</strong> la communauté <br/><span class="blue"><strong>ChichaMaps</strong></span> pour augmenter votre <strong>visibilité </strong> </br>et attirer de <strong>nouveaux clients</strong>.
+        placetext:                              Rejoignez <strong>gratuitement</strong> la communauté <br/><span class="blue"><strong>FhmTools</strong></span> pour augmenter votre <strong>visibilité </strong> </br>et attirer de <strong>nouveaux clients</strong>.
         about:
             title:                              A propos de nous
-            description:                        ChichaMaps est l’annuaire géolocalisé de référence qui recense les salons de thé chicha à travers le monde !
+            description:                        FhmTools est l’annuaire géolocalisé de référence qui recense les salons de thé chicha à travers le monde !
             userplace:
                 title:                          Vous êtes gérant
                 description:                    Gagnez en visibilité en ajoutant votre salon de thé chicha !
@@ -30,7 +30,7 @@ project:
         home:                                   Accueil
         back:                                   Retour
 
-    footer:                                     ChichaMaps 2016 Tous droits réservés. Site réalisé par
+    footer:                                     FhmTools 2016 Tous droits réservés. Site réalisé par
 
     construct:
         title:                                  Site en cours de construction
@@ -51,9 +51,9 @@ project:
         seconds:                                Secondes
 
     seo:
-        title:                                  ChichaMaps
-        description:                            ChichaMaps description
-        keywords:                               ChichaMaps, word1, word2
+        title:                                  FhmTools
+        description:                            FhmTools description
+        keywords:                               FhmTools, word1, word2
 
     pagination:
          counter:                               "Nombre de Places: '%count%' / '%all%'"
@@ -77,4 +77,4 @@ project:
          cancel:                                Annuler
 
     email:
-        sign:                                   A bientôt !<br><br><strong>L'équipe ChichaMaps</strong>
+        sign:                                   A bientôt !<br><br><strong>L'équipe FhmTools</strong>

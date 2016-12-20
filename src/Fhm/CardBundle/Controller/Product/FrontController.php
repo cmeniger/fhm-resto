@@ -33,7 +33,7 @@ class FrontController extends FhmController
         $source = "fhm",
         $domain = "FhmCardBundle",
         $translation = "card.product",
-        $document = "CardProduct",
+        $document = CardProduct::class,
         $route = "card_product"
     ) {
         self::$repository = $repository;
@@ -204,7 +204,6 @@ class FrontController extends FhmController
 
         return $this->redirect($this->get('fhm_tools')->getLastRoute($this->get('request_stack')->getCurrentRequest()));
     }
-
 
     /**
      * @Route

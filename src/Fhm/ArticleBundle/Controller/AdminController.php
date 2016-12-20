@@ -23,22 +23,24 @@ class AdminController extends FhmController
      * AdminController constructor.
      * @param string $repository
      * @param string $source
-     * @param string $domaine
+     * @param string $domain
      * @param string $translation
+     * @param string $document
      * @param string $route
      */
     public function __construct(
         $repository = "FhmArticleBundle:Article",
         $source = "fhm",
-        $domaine = "FhmArticleBundle",
+        $domain = "FhmArticleBundle",
         $translation = "article",
+        $document = Article::class,
         $route = 'article'
     ) {
         self::$repository = $repository;
         self::$source = $source;
-        self::$domain = $domaine;
+        self::$domain = $domain;
         self::$translation = $translation;
-        self::$document = new Article();
+        self::$document = new $document();
         self::$class = get_class(self::$document);
         self::$route = $route;
     }

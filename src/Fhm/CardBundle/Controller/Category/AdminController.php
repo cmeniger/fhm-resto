@@ -38,7 +38,7 @@ class AdminController extends FhmController
         $source = "fhm",
         $domain = "FhmCardBundle",
         $translation = "card.category",
-        $document = "CardCategory",
+        $document = CardCategory::class,
         $route = "card_category"
     ) {
         self::$repository = $repository;
