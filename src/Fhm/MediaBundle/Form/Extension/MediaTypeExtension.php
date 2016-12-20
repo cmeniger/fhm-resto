@@ -5,7 +5,6 @@
  * Date: 11/05/15
  * Time: 15:27
  */
-
 namespace Fhm\MediaBundle\Form\Extension;
 
 use Symfony\Component\Form\AbstractTypeExtension;
@@ -16,14 +15,18 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
+/**
+ * Class MediaTypeExtension
+ * @package Fhm\MediaBundle\Form\Extension
+ */
 class MediaTypeExtension extends AbstractTypeExtension
 {
     /**
-      *
-      * Returns the name of the type being extended.
-      *
-      * @return string The name of the type being extended
-    */
+     *
+     * Returns the name of the type being extended.
+     *
+     * @return string The name of the type being extended
+     */
     public function getExtendedType()
     {
         return FileType::class;
@@ -38,6 +41,7 @@ class MediaTypeExtension extends AbstractTypeExtension
     {
         $resolver->setDefined(array('image_path'));
     }
+
     /**
      *
      * @param \Symfony\Component\Form\FormView $view
@@ -48,7 +52,6 @@ class MediaTypeExtension extends AbstractTypeExtension
     {
         if (array_key_exists('media_path', $options)) {
             $parentData = $form->getParent()->getData();
-
             if (null !== $parentData) {
                 $accessor = PropertyAccess::createPropertyAccessor();
                 $mediaUrl = $accessor->getValue($parentData, $options['media_path']);

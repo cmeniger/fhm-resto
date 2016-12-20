@@ -6,16 +6,16 @@ use Fhm\MediaBundle\Form\Type\Admin\CreateType as FhmType;
 use Fhm\MediaBundle\Repository\MediaTagRepository;
 use Symfony\Component\Form\FormBuilderInterface;
 
+/**
+ * Class CreateType
+ * @package Fhm\MediaBundle\Form\Type\Api
+ */
 class CreateType extends FhmType
 {
-    protected $root;
-
-    public function __construct($instance, $document, $root)
-    {
-        parent::__construct($instance, $document);
-        $this->root = $root;
-    }
-
+    /**
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         parent::buildForm($builder, $options);

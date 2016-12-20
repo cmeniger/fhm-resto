@@ -2,26 +2,46 @@
 namespace Fhm\MediaBundle\Controller;
 
 use Fhm\FhmBundle\Controller\RefFrontController as FhmController;
+use Fhm\FhmBundle\Form\Handler\Front\CreateHandler;
 use Fhm\MediaBundle\Document\Media;
+use Fhm\MediaBundle\Form\Type\Front\CreateType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 /**
- * @Route("/media", service="fhm_media_controller_front")
+ * @Route("/media")
+ * -----------------------------------
+ * Class FrontController
+ * @package Fhm\MediaBundle\Controller
  */
 class FrontController extends FhmController
 {
     /**
      * FrontController constructor.
-     *
-     * @param \Fhm\FhmBundle\Services\Tools $tools
+     * @param string $repository
+     * @param string $source
+     * @param string $domain
+     * @param string $translation
+     * @param $document
+     * @param string $route
      */
-    public function __construct(\Fhm\FhmBundle\Services\Tools $tools)
-    {
-        $this->setFhmTools($tools);
-        parent::__construct('Fhm', 'Media', 'media');
+    public function __construct(
+        $repository = "FhmMediaBundle:Media",
+        $source = "fhm",
+        $domain = "FhmMediaBundle",
+        $translation = "media",
+        $document = Media::class,
+        $route = 'media'
+    ) {
+        self::$repository = $repository;
+        self::$source = $source;
+        self::$domain = $domain;
+        self::$translation = $translation;
+        self::$document = new $document();
+        self::$class = get_class(self::$document);
+        self::$route = $route;
     }
 
     /**
@@ -45,29 +65,11 @@ class FrontController extends FhmController
      * )
      * @Template("::FhmMedia/Front/create.html.twig")
      */
-
-
-    /**
-     * @Route
-     * (
-     *      path="/create",
-     *      name="fhm_media_create"
-     * )
-     * @Template("::FhmMedia/Front/create.html.twig")
-     */
     public function createAction(Request $request)
     {
-        // ERROR - Unknown route
-        if (!$this->fhm_tools->routeExists('fhm_'.$this->route) || !$this->fhm_tools->routeExists(
-                'fhm_'.$this->route.'_create'
-            )
-        ) {
-            throw $this->createNotFoundException($this->fhm_tools->trans('fhm.error.route', array(), 'FhmFhmBundle'));
-        }
-        $document = $this->document;
-        $instance = $this->fhm_tools->instanceData();
-        $classType = $this->form->type->create;
-        $classHandler = $this->form->handler->create;
+        $document = self::$document;
+        $classType = CreateType::class;
+        $classHandler = CreateHandler::class;
         $form = $this->createForm($classType, $document);
         $handler = new $classHandler($form, $request);
         $process = $handler->process();
@@ -75,20 +77,21 @@ class FrontController extends FhmController
             $data = $request->get($form->getName());
             // Tag
             if (isset($data['tag']) && $data['tag']) {
-                $tag = $this->fhm_tools->dmRepository('FhmMediaBundle:MediaTag')->getByName($data['tag']);
+                $tag = $this->get('fhm_tools')->dmRepository('FhmMediaBundle:MediaTag')->getByName($data['tag']);
                 if ($tag == "") {
                     $tag = new \Fhm\MediaBundle\Document\MediaTag();
                     $tag->setName($data['tag']);
                     $tag->setActive(true);
                 }
                 if (isset($data['parent']) && $data['parent']) {
-                    $tag->setParent($this->fhm_tools->dmRepository('FhmMediaBundle:MediaTag')->find($data['parent']));
+                    $tag->setParent(
+                        $this->get('fhm_tools')->dmRepository('FhmMediaBundle:MediaTag')->find($data['parent'])
+                    );
                 }
-                $this->fhm_tools->dmPersist($tag);
+                $this->get('fhm_tools')->dmPersist($tag);
                 $document->addTag($tag);
             }
-            $fileData = array
-            (
+            $fileData = array(
                 'tmp_name' => isset($_FILES['file']) ? $_FILES['file']['tmp_name'] : $_FILES[$form->getName(
                 )]['tmp_name']['file'],
                 'name' => isset($_FILES['file']) ? $_FILES['file']['name'] : $_FILES[$form->getName()]['name']['file'],
@@ -96,7 +99,7 @@ class FrontController extends FhmController
             );
             $file = new UploadedFile($fileData['tmp_name'], $fileData['name'], $fileData['type']);
             $tab = explode('.', $fileData['name']);
-            $name = $data['name'] ? $this->fhm_tools->getUnique(null, $data['name'], true) : $tab[0];
+            $name = $data['name'] ? $this->get('fhm_tools')->getUnique(null, $data['name'], true) : $tab[0];
             // Persist
             $document->setName($name);
             $document->setFile($file);
@@ -104,65 +107,38 @@ class FrontController extends FhmController
             $document->setAlias($this->fhm_tools->getAlias($document->getId(), $document->getName()));
             $document->setWatermark((array)$request->get('watermark'));
             $document->setActive(true);
-            $this->fhm_tools->dmPersist($document);
-            $this->get($this->fhm_tools->getParameters('service', 'fhm_media'))->setDocument($document)->setWatermark(
+            $this->get('fhm_tools')->dmPersist($document);
+            $this->get($this->get('fhm_tools')->getParameters('service', 'fhm_media'))->setDocument(
+                $document
+            )->setWatermark(
                 $request->get('watermark')
             )->execute();
         }
 
         return array(
             'form' => $form->createView(),
-            'instance' => $this->fhm_tools->instanceData(),
-            'watermarks' => $this->fhm_tools->getParameters('watermark', 'fhm_media') ? $this->fhm_tools->getParameters(
+            'watermarks' => $this->get('fhm_tools')->getParameters('watermark', 'fhm_media') ? $this->get(
+                'fhm_tools'
+            )->getParameters(
                 'files',
                 'fhm_media'
             ) : '',
             'breadcrumbs' => array(
                 array(
-                    'link' => $this->fhm_tools->getUrl('project_home'),
-                    'text' => $this->fhm_tools->trans('project.home.breadcrumb', array(), 'ProjectDefaultBundle'),
+                    'link' => $this->getUrl('project_home'),
+                    'text' => $this->trans('project.home.breadcrumb', array(), 'ProjectDefaultBundle'),
                 ),
                 array(
-                    'link' => $this->fhm_tools->getUrl('fhm_'.$this->route),
-                    'text' => $this->fhm_tools->trans('.front.index.breadcrumb'),
+                    'link' => $this->getUrl('fhm_'.$this->route),
+                    'text' => $this->trans('.front.index.breadcrumb'),
                 ),
                 array(
-                    'link' => $this->fhm_tools->getUrl('fhm_'.$this->route.'_create'),
-                    'text' => $this->fhm_tools->trans('.front.create.breadcrumb'),
+                    'link' => $this->getUrl('fhm_'.$this->route.'_create'),
+                    'text' => $this->trans('.front.create.breadcrumb'),
                     'current' => true,
                 ),
             ),
         );
-    }
-
-    /**
-     * @Route
-     * (
-     *      path="/duplicate/{id}",
-     *      name="fhm_media_duplicate",
-     *      requirements={"id"="[a-z0-9]*"}
-     * )
-     * @Template("::FhmMedia/Front/create.html.twig")
-     */
-    public function duplicateAction(Request $request, $id)
-    {
-        // For activate this route, delete next line
-        throw $this->createNotFoundException($this->fhm_tools->trans('fhm.error.route', array(), 'FhmFhmBundle'));
-    }
-
-    /**
-     * @Route
-     * (
-     *      path="/update/{id}",
-     *      name="fhm_media_update",
-     *      requirements={"id"="[a-z0-9]*"}
-     * )
-     * @Template("::FhmMedia/Front/update.html.twig")
-     */
-    public function updateAction(Request $request, $id)
-    {
-        // For activate this route, delete next line
-        throw $this->createNotFoundException($this->fhm_tools->trans('fhm.error.route', array(), 'FhmFhmBundle'));
     }
 
     /**
@@ -177,20 +153,6 @@ class FrontController extends FhmController
     public function detailAction($id)
     {
         return parent::detailAction($id);
-    }
-
-    /**
-     * @Route
-     * (
-     *      path="/delete/{id}",
-     *      name="fhm_media_delete",
-     *      requirements={"id"="[a-z0-9]*"}
-     * )
-     */
-    public function deleteAction($id)
-    {
-        // For activate this route, delete next line
-        throw $this->createNotFoundException($this->fhm_tools->trans('fhm.error.route', array(), 'FhmFhmBundle'));
     }
 
     /**

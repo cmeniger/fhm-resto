@@ -18,13 +18,16 @@ class MediaRepository extends FhmRepository
     protected $private;
 
     /**
-     * Constructor
+     * MediaRepository constructor.
+     * @param DocumentManager $dm
+     * @param UnitOfWork $uow
+     * @param ClassMetadata $class
      */
     public function __construct(DocumentManager $dm, UnitOfWork $uow, ClassMetadata $class)
     {
         parent::__construct($dm, $uow, $class);
-        $this->tag     = "";
-        $this->filter  = "";
+        $this->tag = "";
+        $this->filter = "";
         $this->private = true;
     }
 
@@ -47,10 +50,9 @@ class MediaRepository extends FhmRepository
      */
     public function setFilter($filter)
     {
-        if($filter !== '')
-        {
-            $filter       = str_replace('/*', '', $filter);
-            $filter       = str_replace('.', '', $filter);
+        if ($filter !== '') {
+            $filter = str_replace('/*', '', $filter);
+            $filter = str_replace('.', '', $filter);
             $this->filter = explode(',', $filter);
         }
 
@@ -71,51 +73,29 @@ class MediaRepository extends FhmRepository
 
     /**
      * @param string $search
-     * @param int    $page
-     * @param int    $count
-     * @param string $grouping
-     * @param bool   $roleSuperAdmin
+     * @param bool $roleSuperAdmin
      *
      * @return mixed
      * @throws \Doctrine\ODM\MongoDB\MongoDBException
      */
-    public function getAdminIndex($search = "", $page = 1, $count = 5, $grouping = "", $roleSuperAdmin = false)
+    public function getAdminIndex($search = "", $roleSuperAdmin = false)
     {
         $builder = ($search) ? $this->search($search) : $this->createQueryBuilder();
         // Parent
-        if($this->parent)
-        {
+        if ($this->parent) {
             $builder->field('parent')->in(array('0', null));
         }
         // Tag
-        if($this->tag)
-        {
+        if ($this->tag) {
             $builder->field('tags.id')->equals($this->tag);
         }
         // Private
-        if(!$this->private)
-        {
+        if (!$this->private) {
             $builder->field('private')->equals(false);
         }
-        // Grouping
-        if($grouping != "")
-        {
-            $builder->addAnd(
-                $builder->expr()
-                    ->addOr($builder->expr()->field('grouping')->in((array) $grouping))
-                    ->addOr($builder->expr()->field('share')->equals(true))
-            );
-        }
         // RoleSuperAdmin
-        if(!$roleSuperAdmin)
-        {
+        if (!$roleSuperAdmin) {
             $builder->field('delete')->equals(false);
-        }
-        // Pagination
-        if($page > 0 && $count > 0)
-        {
-            $builder->limit($count);
-            $builder->skip(($page - 1) * $count);
         }
         // Common
         $this->builderSort($builder);
@@ -126,166 +106,107 @@ class MediaRepository extends FhmRepository
 
     /**
      * @param string $search
-     * @param string $grouping
-     * @param bool   $roleSuperAdmin
+     * @param bool $roleSuperAdmin
      *
      * @return int
      * @throws \Doctrine\ODM\MongoDB\MongoDBException
      */
-    public function getAdminCount($search = "", $grouping = "", $roleSuperAdmin = false)
+    public function getAdminCount($search = "", $roleSuperAdmin = false)
     {
         $builder = ($search) ? $this->search($search) : $this->createQueryBuilder();
         // Parent
-        if($this->parent)
-        {
+        if ($this->parent) {
             $builder->field('parent')->in(array('0', null));
         }
         // Tag
-        if($this->tag)
-        {
+        if ($this->tag) {
             $builder->field('tags.id')->equals($this->tag);
         }
         // Private
-        if(!$this->private)
-        {
+        if (!$this->private) {
             $builder->field('private')->equals(false);
         }
-        // Grouping
-        if($grouping != "")
-        {
-            $builder->addAnd(
-                $builder->expr()
-                    ->addOr($builder->expr()->field('grouping')->in((array) $grouping))
-                    ->addOr($builder->expr()->field('share')->equals(true))
-            );
-        }
         // RoleSuperAdmin
-        if(!$roleSuperAdmin)
-        {
+        if (!$roleSuperAdmin) {
             $builder->field('delete')->equals(false);
         }
 
-        return $builder
-            ->count()
-            ->getQuery()
-            ->execute();
+        return $builder->count()->getQuery()->execute();
     }
 
     /**
      * @param string $search
-     * @param int    $page
-     * @param int    $count
-     * @param string $grouping
      *
      * @return mixed
      * @throws \Doctrine\ODM\MongoDB\MongoDBException
      */
-    public function getFrontIndex($search = "", $page = 1, $count = 5, $grouping = "")
+    public function getFrontIndex($search = "")
     {
         $builder = ($search) ? $this->search($search) : $this->createQueryBuilder();
         // Parent
-        if($this->parent)
-        {
+        if ($this->parent) {
             $builder->field('parent')->in(array('0', null));
         }
         // Tag
-        if($this->tag)
-        {
+        if ($this->tag) {
             $builder->field('tags.id')->equals($this->tag);
         }
         // Private
-        if(!$this->private)
-        {
+        if (!$this->private) {
             $builder->field('private')->equals(false);
         }
         // Filter
-        if($this->filter)
-        {
+        if ($this->filter) {
             $builder->addAnd(
-                $builder->expr()
-                    ->addOr($builder->expr()->field('type')->in($this->filter))
-                    ->addOr($builder->expr()->field('extension')->in($this->filter))
-                    ->addOr($builder->expr()->field('mimeType')->in($this->filter))
+                $builder->expr()->addOr($builder->expr()->field('type')->in($this->filter))->addOr(
+                        $builder->expr()->field('extension')->in($this->filter)
+                    )->addOr($builder->expr()->field('mimeType')->in($this->filter))
             );
         }
-        // Grouping
-        if($grouping != "")
-        {
-            $builder->addAnd(
-                $builder->expr()
-                    ->addOr($builder->expr()->field('grouping')->in((array) $grouping))
-                    ->addOr($builder->expr()->field('global')->equals(true))
-            );
-        }
-        // Pagination
-        if($page > 0 && $count > 0)
-        {
-            $builder->limit($count);
-            $builder->skip(($page - 1) * $count);
-        }
+
         // Common
         $builder->field('active')->equals(true);
         $builder->field('delete')->equals(false);
         $this->builderSort($builder);
 
-        return $builder
-            ->getQuery()
-            ->execute()
-            ->toArray();
+        return $builder->getQuery()->execute()->toArray();
     }
 
     /**
      * @param string $search
-     * @param string $grouping
      *
      * @return int
      * @throws \Doctrine\ODM\MongoDB\MongoDBException
      */
-    public function getFrontCount($search = "", $grouping = "")
+    public function getFrontCount($search = "")
     {
         $builder = ($search) ? $this->search($search) : $this->createQueryBuilder();
         // Parent
-        if($this->parent)
-        {
+        if ($this->parent) {
             $builder->field('parent')->in(array('0', null));
         }
         // Tag
-        if($this->tag)
-        {
+        if ($this->tag) {
             $builder->field('tags.id')->equals($this->tag);
         }
         // Private
-        if(!$this->private)
-        {
+        if (!$this->private) {
             $builder->field('private')->equals(false);
         }
         // Filter
-        if($this->filter)
-        {
+        if ($this->filter) {
             $builder->addAnd(
-                $builder->expr()
-                    ->addOr($builder->expr()->field('type')->in($this->filter))
-                    ->addOr($builder->expr()->field('extension')->in($this->filter))
-                    ->addOr($builder->expr()->field('mimeType')->in($this->filter))
+                $builder->expr()->addOr($builder->expr()->field('type')->in($this->filter))->addOr(
+                        $builder->expr()->field('extension')->in($this->filter)
+                    )->addOr($builder->expr()->field('mimeType')->in($this->filter))
             );
         }
-        // Grouping
-        if($grouping != "")
-        {
-            $builder->addAnd(
-                $builder->expr()
-                    ->addOr($builder->expr()->field('grouping')->in((array) $grouping))
-                    ->addOr($builder->expr()->field('global')->equals(true))
-            );
-        }
+
         // Common
         $builder->field('active')->equals(true);
         $builder->field('delete')->equals(false);
 
-        return $builder
-            ->count()
-            ->getQuery()
-            ->execute();
+        return $builder->count()->getQuery()->execute();
     }
 
     /**
@@ -297,17 +218,13 @@ class MediaRepository extends FhmRepository
     {
         $builder = $this->createQueryBuilder();
         // Private
-        if(!$this->private)
-        {
+        if (!$this->private) {
             $builder->field('private')->equals(false);
         }
         // Common
         $builder->field('tags.id')->equals($id);
         $this->builderSort($builder);
 
-        return $builder
-            ->getQuery()
-            ->execute()
-            ->toArray();
+        return $builder->getQuery()->execute()->toArray();
     }
 }

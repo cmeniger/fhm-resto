@@ -17,14 +17,17 @@ class MediaTagRepository extends FhmRepository
     protected $private;
 
     /**
-     * Constructor
+     * MediaTagRepository constructor.
+     * @param DocumentManager $dm
+     * @param UnitOfWork $uow
+     * @param ClassMetadata $class
      */
     public function __construct(DocumentManager $dm, UnitOfWork $uow, ClassMetadata $class)
     {
         parent::__construct($dm, $uow, $class);
-        $this->root    = "";
+        $this->root = "";
         $this->private = true;
-        $this->sort    = array("route", "asc");
+        $this->sort = array("route", "asc");
     }
 
     /**
@@ -61,27 +64,14 @@ class MediaTagRepository extends FhmRepository
     {
         $builder = $this->createQueryBuilder();
         // Private
-        if(!$this->private)
-        {
+        if (!$this->private) {
             $builder->field('private')->equals(false);
-        }
-        // Grouping
-        if($grouping != "")
-        {
-            $builder->addAnd(
-                $builder->expr()
-                    ->addOr($builder->expr()->field('grouping')->in((array) $grouping))
-                    ->addOr($builder->expr()->field('share')->equals(true))
-            );
         }
         // Common
         $builder->field('parent.id')->equals($id);
         $this->builderSort($builder);
 
-        return $builder
-            ->getQuery()
-            ->execute()
-            ->toArray();
+        return $builder->getQuery()->execute()->toArray();
     }
 
     /**
@@ -94,18 +84,8 @@ class MediaTagRepository extends FhmRepository
     {
         $builder = $this->createQueryBuilder();
         // Private
-        if(!$this->private)
-        {
+        if (!$this->private) {
             $builder->field('private')->equals(false);
-        }
-        // Grouping
-        if($grouping != "")
-        {
-            $builder->addAnd(
-                $builder->expr()
-                    ->addOr($builder->expr()->field('grouping')->in((array) $grouping))
-                    ->addOr($builder->expr()->field('share')->equals(true))
-            );
         }
         // Common
         $builder->field('parent.id')->equals($id);
@@ -113,10 +93,7 @@ class MediaTagRepository extends FhmRepository
         $builder->field('delete')->equals(false);
         $this->builderSort($builder);
 
-        return $builder
-            ->getQuery()
-            ->execute()
-            ->toArray();
+        return $builder->getQuery()->execute()->toArray();
     }
 
     /**
@@ -128,38 +105,22 @@ class MediaTagRepository extends FhmRepository
     {
         $builder = $this->createQueryBuilder();
         // Root
-        if($this->root)
-        {
+        if ($this->root) {
             $builder->field('parent.id')->equals($this->root);
-        }
-        // Parent
-        elseif($this->parent)
-        {
+        } // Parent
+        elseif ($this->parent) {
             $builder->field('parent')->in(array('0', null));
         }
         // Private
-        if(!$this->private)
-        {
+        if (!$this->private) {
             $builder->field('private')->equals(false);
-        }
-        // Grouping
-        if($grouping != "")
-        {
-            $builder->addAnd(
-                $builder->expr()
-                    ->addOr($builder->expr()->field('grouping')->in((array) $grouping))
-                    ->addOr($builder->expr()->field('global')->equals(true))
-            );
         }
         // Common
         $builder->field('active')->equals(true);
         $builder->field('delete')->equals(false);
         $this->builderSort($builder);
 
-        return $builder
-            ->getQuery()
-            ->execute()
-            ->toArray();
+        return $builder->getQuery()->execute()->toArray();
     }
 
     /**
@@ -171,67 +132,40 @@ class MediaTagRepository extends FhmRepository
     {
         $builder = $this->createQueryBuilder();
         // Root
-        if($this->root)
-        {
+        if ($this->root) {
             $builder->field('parent.id')->equals($this->root);
-        }
-        // Parent
-        elseif($this->parent)
-        {
+        } // Parent
+        elseif ($this->parent) {
             $builder->field('parent')->in(array('0', null));
         }
         // Private
-        if(!$this->private)
-        {
+        if (!$this->private) {
             $builder->field('private')->equals(false);
-        }
-        // Grouping
-        if($grouping != "")
-        {
-            $builder->addAnd(
-                $builder->expr()
-                    ->addOr($builder->expr()->field('grouping')->in((array) $grouping))
-                    ->addOr($builder->expr()->field('share')->equals(true))
-            );
         }
         // Common
         $builder->field('active')->equals(true);
         $builder->field('delete')->equals(false);
         $this->builderSort($builder);
 
-        return $builder
-            ->getQuery()
-            ->execute()
-            ->toArray();
+        return $builder->getQuery()->execute()->toArray();
     }
 
     /**
-     * @param string $grouping
-     *
      * @return \Doctrine\ODM\MongoDB\Query\Builder
      */
-    public function getFormFiltered($grouping = "")
+    public function getFormFiltered()
     {
         $builder = $this->createQueryBuilder();
         // Root
-        if($this->root)
-        {
+        if ($this->root) {
             $builder->field('parent.id')->equals($this->root);
-        }
-        // Parent
-        elseif($this->parent)
-        {
+        } // Parent
+        elseif ($this->parent) {
             $builder->field('parent')->in(array('0', null));
         }
         // Private
-        if(!$this->private)
-        {
+        if (!$this->private) {
             $builder->field('private')->equals(false);
-        }
-        // Grouping
-        if($grouping != "")
-        {
-            $builder->field('grouping')->in((array) $grouping);
         }
         // Common
         $builder->field('active')->equals(true);
