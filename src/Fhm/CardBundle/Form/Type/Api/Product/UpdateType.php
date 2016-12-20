@@ -13,7 +13,6 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-
 /**
  * Class UpdateType
  *
@@ -21,62 +20,82 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class UpdateType extends AbstractType
 {
-    protected $instance;
-    protected $document;
-    protected $card;
-    protected $translation;
-
-    public function __construct($instance, $document, $card)
-    {
-        $this->instance = $instance;
-        $this->document = $document;
-        $this->card     = $card;
-    }
-
     /**
      * @param FormBuilderInterface $builder
-     * @param array                $options
+     * @param array $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $options['translation_route']='card.product';
-        $builder
-            ->add('name', TextType::class, array('label' => $options['translation_route'] . '.api.update.form.name'))
-            ->add('description', TextareaType::class, array('label' => $options['translation_route'] . '.api.update.form.description', 'required' => false))
-            ->add('price', MoneyType::class, array('label' => $options['translation_route'] . '.api.update.form.price', 'currency' => '', 'required' => false))
-            ->add('currency', TextType::class, array('label' => $options['translation_route'] . '.api.update.form.currency', 'required' => false))
-            ->add('order', IntegerType::class, array('label' => $options['translation_route'] . '.api.update.form.order', 'required' => false))
-            ->add('forward', CheckboxType::class, array('label' => $options['translation_route'] . '.api.update.form.forward', 'required' => false))
-            ->add('image', MediaType::class, array(
-                'label'    => $options['translation_route'] . '.api.update.form.image',
-                'filter'   => 'image/*',
-                'required' => false
-            ))
-            ->add('categories', DocumentType::class, array(
-                'label'         => $options['translation_route'] . '.api.update.form.categories',
-                'class'         => 'FhmCardBundle:CardCategory',
-                'choice_label'      => 'route',
-                'query_builder' => function (\Fhm\CardBundle\Repository\CardCategoryRepository $dr)
-                {
+        $options['translation_route'] = 'card.product';
+        $builder->add(
+            'name',
+            TextType::class,
+            array('label' => $options['translation_route'].'.api.update.form.name')
+        )->add(
+            'description',
+            TextareaType::class,
+            array('label' => $options['translation_route'].'.api.update.form.description', 'required' => false)
+        )->add(
+            'price',
+            MoneyType::class,
+            array(
+                'label' => $options['translation_route'].'.api.update.form.price',
+                'currency' => '',
+                'required' => false,
+            )
+        )->add(
+            'currency',
+            TextType::class,
+            array('label' => $options['translation_route'].'.api.update.form.currency', 'required' => false)
+        )->add(
+            'order',
+            IntegerType::class,
+            array('label' => $options['translation_route'].'.api.update.form.order', 'required' => false)
+        )->add(
+            'forward',
+            CheckboxType::class,
+            array('label' => $options['translation_route'].'.api.update.form.forward', 'required' => false)
+        )->add(
+            'image',
+            MediaType::class,
+            array(
+                'label' => $options['translation_route'].'.api.update.form.image',
+                'filter' => 'image/*',
+                'required' => false,
+            )
+        )->add(
+            'categories',
+            DocumentType::class,
+            array(
+                'label' => $options['translation_route'].'.api.update.form.categories',
+                'class' => 'FhmCardBundle:CardCategory',
+                'choice_label' => 'route',
+                'query_builder' => function (\Fhm\CardBundle\Repository\CardCategoryRepository $dr) {
                     //                    return $dr->setSort('route')->getFormCard($this->card, $this->instance->grouping->filtered);
                 },
-                'multiple'      => true,
-                'by_reference'  => false,
-                'required'      => false
-            ))
-            ->add('ingredients', DocumentType::class, array(
-                'label'         => $options['translation_route'] . '.api.update.form.ingredients',
-                'class'         => 'FhmCardBundle:CardIngredient',
-                'choice_label'      => 'name',
-                'query_builder' => function (\Fhm\CardBundle\Repository\CardIngredientRepository $dr)
-                {
+                'multiple' => true,
+                'by_reference' => false,
+                'required' => false,
+            )
+        )->add(
+            'ingredients',
+            DocumentType::class,
+            array(
+                'label' => $options['translation_route'].'.api.update.form.ingredients',
+                'class' => 'FhmCardBundle:CardIngredient',
+                'choice_label' => 'name',
+                'query_builder' => function (\Fhm\CardBundle\Repository\CardIngredientRepository $dr) {
                     //                    return $dr->getFormCard($this->card, $this->instance->grouping->filtered);
                 },
-                'multiple'      => true,
-                'required'      => false,
-                'by_reference'  => false
-            ))
-            ->add('submitSave', SubmitType::class, array('label' => $options['translation_route'] . '.api.update.form.submit.save'));
+                'multiple' => true,
+                'required' => false,
+                'by_reference' => false,
+            )
+        )->add(
+            'submitSave',
+            SubmitType::class,
+            array('label' => $options['translation_route'].'.api.update.form.submit.save')
+        );
     }
 
     /**

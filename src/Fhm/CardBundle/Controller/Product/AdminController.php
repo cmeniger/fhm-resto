@@ -13,20 +13,38 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 /**
- * @Route("/admin/cardproduct", service="fhm_card_controller_product_admin")
+ * @Route("/admin/cardproduct")
+ * -----------------------------------------
+ * Class AdminController
+ * @package Fhm\CardBundle\Controller\Product
  */
 class AdminController extends FhmController
 {
     /**
-     * Constructor
+     * AdminController constructor.
+     *
+     * @param string $repository
+     * @param string $source
+     * @param string $domain
+     * @param string $translation
+     * @param string $document
+     * @param string $route
      */
-    public function __construct(Tools $tools)
-    {
-        $this->setFhmTools($tools);
-        parent::__construct('Fhm', 'Card', 'card_product', 'CardProduct');
-        $this->form->type->create = CreateType::class;
-        $this->form->type->update = UpdateType::class;
-        $this->translation        = array('FhmCardBundle', 'card.product');
+    public function __construct(
+        $repository = "FhmCardBundle:CardProduct",
+        $source = "fhm",
+        $domain = "FhmCardBundle",
+        $translation = "card.product",
+        $document = "CardProduct",
+        $route = "card_product"
+    ) {
+        self::$repository = $repository;
+        self::$source = $source;
+        self::$domain = $domain;
+        self::$translation = $translation;
+        self::$document = new $document();
+        self::$class = get_class(self::$document);
+        self::$route = $route;
     }
 
     /**
@@ -173,18 +191,6 @@ class AdminController extends FhmController
     public function exportAction(Request $request)
     {
         return parent::exportAction($request);
-    }
-
-    /**
-     * @Route
-     * (
-     *      path="/grouping",
-     *      name="fhm_admin_card_product_grouping"
-     * )
-     */
-    public function groupingAction(Request $request)
-    {
-        return parent::groupingAction($request);
     }
 
     /**

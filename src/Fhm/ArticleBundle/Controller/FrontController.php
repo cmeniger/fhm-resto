@@ -9,18 +9,35 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 /**
- * @Route("/article", service="fhm_article_controller_front")
+ * @Route("/article")
+ * -------------------------------------------
+ * Class FrontController
+ * @package Fhm\ArticleBundle\Controller
  */
 class FrontController extends FhmController
 {
     /**
      * FrontController constructor.
-     * @param Tools $tools
+     * @param string $repository
+     * @param string $source
+     * @param string $domaine
+     * @param string $translation
+     * @param string $route
      */
-    public function __construct(Tools $tools)
-    {
-        $this->setFhmTools($tools);
-        parent::__construct('Fhm', 'Article', 'article');
+    public function __construct(
+        $repository = "FhmArticleBundle:Article",
+        $source = "fhm",
+        $domaine = "FhmArticleBundle",
+        $translation = "article",
+        $route = 'article'
+    ) {
+        self::$repository = $repository;
+        self::$source = $source;
+        self::$domain = $domaine;
+        self::$translation = $translation;
+        self::$document = new Article();
+        self::$class = get_class(self::$document);
+        self::$route = $route;
     }
 
     /**
@@ -39,92 +56,26 @@ class FrontController extends FhmController
     /**
      * @Route
      * (
-     *      path="/create",
-     *      name="fhm_article_create"
+     *      path="/detail/{id}",
+     *      name="fhm_article_detail",
+     *      requirements={"id"=".+"}
      * )
-     * @Template("::FhmArticle/Front/create.html.twig")
+     * @Template("::FhmArticle/Front/detail.html.twig")
      */
-    public function createAction(Request $request)
-    {
-        // For activate this route, delete next line
-        throw $this->createNotFoundException(
-            $this->get('translator')->trans('fhm.error.route', array(), 'FhmFhmBundle')
-        );
-    }
-
-    /**
-    * @Route
-    * (
-    *      path="/duplicate/{id}",
-    *      name="fhm_article_duplicate",
-    *      requirements={"id"="[a-z0-9]*"}
-    * )
-    * @Template("::FhmArticle/Front/create.html.twig")
-    */
-    public function duplicateAction(Request $request, $id)
-    {
-        // For activate this route, delete next line
-        throw $this->createNotFoundException(
-            $this->get('translator')->trans('fhm.error.route', array(), 'FhmFhmBundle')
-        );
-    }
-
-    /**
-    * @Route
-    * (
-    *      path="/update/{id}",
-    *      name="fhm_article_update",
-    *      requirements={"id"="[a-z0-9]*"}
-    * )
-    * @Template("::FhmArticle/Front/update.html.twig")
-    */
-    public function updateAction(Request $request, $id)
-    {
-        // For activate this route, delete next line
-        throw $this->createNotFoundException(
-            $this->get('translator')->trans('fhm.error.route', array(), 'FhmFhmBundle')
-        );
-    }
-
-    /**
-    * @Route
-    * (
-    *      path="/detail/{id}",
-    *      name="fhm_article_detail",
-    *      requirements={"id"=".+"}
-    * )
-    * @Template("::FhmArticle/Front/detail.html.twig")
-    */
     public function detailAction($id)
     {
         return parent::detailAction($id);
     }
 
     /**
-    * @Route
-    * (
-    *      path="/delete/{id}",
-    *      name="fhm_article_delete",
-    *      requirements={"id"="[a-z0-9]*"}
-    * )
-    */
-    public function deleteAction($id)
-    {
-        // For activate this route, delete next line
-        throw $this->createNotFoundException(
-            $this->get('translator')->trans('fhm.error.route', array(), 'FhmFhmBundle')
-        );
-    }
-
-    /**
-    * @Route
-    * (
-    *      path="/{id}",
-    *      name="fhm_article_lite",
-    *      requirements={"id"=".+"}
-    * )
-    * @Template("::FhmArticle/Front/detail.html.twig")
-    */
+     * @Route
+     * (
+     *      path="/{id}",
+     *      name="fhm_article_lite",
+     *      requirements={"id"=".+"}
+     * )
+     * @Template("::FhmArticle/Front/detail.html.twig")
+     */
     public function liteAction($id)
     {
         return $this->detailAction($id);

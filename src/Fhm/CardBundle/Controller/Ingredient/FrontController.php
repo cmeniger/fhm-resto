@@ -11,21 +11,38 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 /**
- * @Route("/cardingredient" , service="fhm_card_controller_ingredient_front")
+ * @Route("/cardingredient")
+ * --------------------------------------------
+ * Class FrontController
+ * @package Fhm\CardBundle\Controller\Ingredient
  */
 class FrontController extends FhmController
 {
     /**
-     * FrontController constructor.
-     * @param Tools $tools
+     * AdminController constructor.
+     *
+     * @param string $repository
+     * @param string $source
+     * @param string $domain
+     * @param string $translation
+     * @param string $document
+     * @param string $route
      */
-    public function __construct(Tools $tools)
-    {
-        $this->setFhmTools($tools);
-        parent::__construct('Fhm', 'Card', 'card_ingredient', 'CardIngredient');
-        $this->form->type->create = CreateType::class;
-        $this->form->type->update = UpdateType::class;
-        $this->translation = array('FhmCardBundle', 'card.ingredient');
+    public function __construct(
+        $repository = "FhmCardBundle:CardIngredient",
+        $source = "fhm",
+        $domain = "FhmCardBundle",
+        $translation = "card.ingredient",
+        $document = "CardIngredient",
+        $route = "card_ingredient"
+    ) {
+        self::$repository = $repository;
+        self::$source = $source;
+        self::$domain = $domain;
+        self::$translation = $translation;
+        self::$document = new $document();
+        self::$class = get_class(self::$document);
+        self::$route = $route;
     }
 
     /**
@@ -44,56 +61,6 @@ class FrontController extends FhmController
     /**
      * @Route
      * (
-     *      path="/create",
-     *      name="fhm_card_ingredient_create"
-     * )
-     * @Template("::FhmCard/Front/Ingredient/create.html.twig")
-     */
-    public function createAction(Request $request)
-    {
-        // For activate this route, delete next line
-        throw $this->createNotFoundException(
-            $this->get('translator')->trans('fhm.error.route', array(), 'FhmFhmBundle')
-        );
-    }
-
-    /**
-     * @Route
-     * (
-     *      path="/duplicate/{id}",
-     *      name="fhm_card_ingredient_duplicate",
-     *      requirements={"id"="[a-z0-9]*"}
-     * )
-     * @Template("::FhmCard/Front/Ingredient/create.html.twig")
-     */
-    public function duplicateAction(Request $request, $id)
-    {
-        // For activate this route, delete next line
-        throw $this->createNotFoundException(
-            $this->get('translator')->trans('fhm.error.route', array(), 'FhmFhmBundle')
-        );
-    }
-
-    /**
-     * @Route
-     * (
-     *      path="/update/{id}",
-     *      name="fhm_card_ingredient_update",
-     *      requirements={"id"="[a-z0-9]*"}
-     * )
-     * @Template("::FhmCard/Front/Ingredient/update.html.twig")
-     */
-    public function updateAction(Request $request, $id)
-    {
-        // For activate this route, delete next line
-        throw $this->createNotFoundException(
-            $this->get('translator')->trans('fhm.error.route', array(), 'FhmFhmBundle')
-        );
-    }
-
-    /**
-     * @Route
-     * (
      *      path="/detail/{id}",
      *      name="fhm_card_ingredient_detail",
      *      requirements={"id"=".+"}
@@ -103,22 +70,6 @@ class FrontController extends FhmController
     public function detailAction($id)
     {
         return parent::detailAction($id);
-    }
-
-    /**
-     * @Route
-     * (
-     *      path="/delete/{id}",
-     *      name="fhm_card_ingredient_delete",
-     *      requirements={"id"="[a-z0-9]*"}
-     * )
-     */
-    public function deleteAction($id)
-    {
-        // For activate this route, delete next line
-        throw $this->createNotFoundException(
-            $this->get('translator')->trans('fhm.error.route', array(), 'FhmFhmBundle')
-        );
     }
 
     /**

@@ -20,53 +20,82 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class CreateType extends AbstractType
 {
-
-    protected $translation;
-
     /**
      * @param FormBuilderInterface $builder
-     * @param array                $options
+     * @param array $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
-    { 
-        $options['translation_route']='card.category';
-        $builder
-            ->add('name', TextType::class, array('label' => $options['translation_route'] . '.api.create.form.name'))
-            ->add('description', TextareaType::class, array('label' => $options['translation_route'] . '.api.create.form.description', 'required' => false))
-            ->add('price', MoneyType::class, array('label' => $options['translation_route'] . '.api.create.form.price', 'currency' => '', 'required' => false))
-            ->add('currency', TextType::class, array('label' => $options['translation_route'] . '.api.create.form.currency', 'required' => false))
-            ->add('order', IntegerType::class, array('label' => $options['translation_route'] . '.api.create.form.order', 'required' => false))
-            ->add('menu', CheckboxType::class, array('label' => $options['translation_route'] . '.api.create.form.menu', 'required' => false))
-            ->add('image', MediaType::class, array(
-                'label'    => $options['translation_route'] . '.api.create.form.image',
-                'filter'   => 'image/*',
-                'required' => false
-            ))
-            ->add('parents', DocumentType::class, array(
-                'label'         => $options['translation_route'] . '.api.create.form.parents',
-                'class'         => 'FhmCardBundle:CardCategory',
-                'choice_label'      => 'route',
-                'query_builder' => function (\Fhm\CardBundle\Repository\CardCategoryRepository $dr)
-                {
+    {
+        $options['translation_route'] = 'card.category';
+        $builder->add(
+            'name',
+            TextType::class,
+            array('label' => $options['translation_route'].'.api.create.form.name')
+        )->add(
+            'description',
+            TextareaType::class,
+            array('label' => $options['translation_route'].'.api.create.form.description', 'required' => false)
+        )->add(
+            'price',
+            MoneyType::class,
+            array(
+                'label' => $options['translation_route'].'.api.create.form.price',
+                'currency' => '',
+                'required' => false,
+            )
+        )->add(
+            'currency',
+            TextType::class,
+            array('label' => $options['translation_route'].'.api.create.form.currency', 'required' => false)
+        )->add(
+            'order',
+            IntegerType::class,
+            array('label' => $options['translation_route'].'.api.create.form.order', 'required' => false)
+        )->add(
+            'menu',
+            CheckboxType::class,
+            array('label' => $options['translation_route'].'.api.create.form.menu', 'required' => false)
+        )->add(
+            'image',
+            MediaType::class,
+            array(
+                'label' => $options['translation_route'].'.api.create.form.image',
+                'filter' => 'image/*',
+                'required' => false,
+            )
+        )->add(
+            'parents',
+            DocumentType::class,
+            array(
+                'label' => $options['translation_route'].'.api.create.form.parents',
+                'class' => 'FhmCardBundle:CardCategory',
+                'choice_label' => 'route',
+                'query_builder' => function (\Fhm\CardBundle\Repository\CardCategoryRepository $dr) {
 //                    return $dr->setSort('route')->getFormParents($this->card, $this->instance->grouping->filtered);
                 },
-                'multiple'      => true,
-                'by_reference'  => false,
-                'required'      => false
-            ))
-            ->add('products', DocumentType::class, array(
-                'label'         => $options['translation_route'] . '.api.create.form.products',
-                'class'         => 'FhmCardBundle:CardProduct',
-                'choice_label'      => 'name',
-                'query_builder' => function (\Fhm\CardBundle\Repository\CardProductRepository $dr)
-                {
+                'multiple' => true,
+                'by_reference' => false,
+                'required' => false,
+            )
+        )->add(
+            'products',
+            DocumentType::class,
+            array(
+                'label' => $options['translation_route'].'.api.create.form.products',
+                'class' => 'FhmCardBundle:CardProduct',
+                'choice_label' => 'name',
+                'query_builder' => function (\Fhm\CardBundle\Repository\CardProductRepository $dr) {
 //                    return $dr->setSort('alias')->getFormCard($this->card, $this->instance->grouping->filtered);
                 },
-                'multiple'      => true,
-                'by_reference'  => false,
-                'required'      => false
-            ))
-            ->add('submitSave', SubmitType::class, array('label' => $options['translation_route'] . '.api.create.form.submit.save'));
+                'multiple' => true,
+                'by_reference' => false,
+                'required' => false,
+            )
+        )->add(
+            'submitSave',
+            SubmitType::class,
+            array('label' => $options['translation_route'].'.api.create.form.submit.save')
+        );
     }
 
     /**
@@ -84,7 +113,7 @@ class CreateType extends AbstractType
     {
         $resolver->setDefaults(
             array(
-                'data_class' =>'Fhm\FhmCardBundle\Document\CardCategory',
+                'data_class' => 'Fhm\FhmCardBundle\Document\CardCategory',
                 'translation_domain' => 'FhmCardBundle',
                 'cascade_validation' => true,
             )

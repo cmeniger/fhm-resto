@@ -8,7 +8,6 @@ use Symfony\Component\HttpFoundation\Session\Session;
 
 /**
  * Class Card
- *
  * @package Fhm\CardBundle\Services
  */
 class Card
@@ -25,7 +24,7 @@ class Card
     public function __construct(Tools $tools)
     {
         $this->tools = $tools;
-        $this->_initialization();
+        $this->__initialization();
     }
 
     /**
@@ -35,7 +34,7 @@ class Card
      */
     public function generate($parent)
     {
-        $this->_initialization();
+        $this->__initialization();
         // Card
         $card = new \Fhm\CardBundle\Document\Card();
         $card->setUserCreate($parent->getUserCreate());
@@ -49,18 +48,18 @@ class Card
         $categories = $this->tools->dmRepository('FhmCardBundle:CardCategory')->getDefault();
         foreach ($categories as $category) {
             if ($category->getParents()->count() == 0) {
-                $this->_duplicateCategory($card, $category);
+                $this->__duplicateCategory($card, $category);
             }
         }
         // Products
         $products = $this->tools->dmRepository('FhmCardBundle:CardProduct')->getDefault();
         foreach ($products as $product) {
-            $this->_duplicateProduct($card, $product);
+            $this->__duplicateProduct($card, $product);
         }
         // Ingredients
         $ingredients = $this->tools->dmRepository('FhmCardBundle:CardIngredient')->getDefault();
         foreach ($ingredients as $ingredient) {
-            $this->_duplicateIngredient($card, $ingredient);
+            $this->__duplicateIngredient($card, $ingredient);
         }
 
         return $card;
@@ -73,7 +72,7 @@ class Card
      *
      * @return $this
      */
-    private function _duplicateCategory(
+    private function __duplicateCategory(
         \Fhm\CardBundle\Document\Card $card,
         \Fhm\CardBundle\Document\CardCategory $category,
         $parent = null
@@ -91,8 +90,8 @@ class Card
         $data->setSeoTitle($category->getSeoTitle());
         $data->setSeoDescription($category->getSeoDescription());
         $data->setSeoKeywords($category->getSeoKeywords());
-        $data->setGrouping($category->getGrouping());
-        $data->setLanguages($category->getLanguages());
+//        $data->setGrouping($category->getGrouping());
+//        $data->setLanguages($category->getLanguages());
         $data->setPrice($category->getPrice());
         $data->setCurrency($category->getCurrency());
         $data->setMenu($category->getMenu());
@@ -110,11 +109,11 @@ class Card
         $this->tools->dmPersist($card);
         // Sons
         foreach ($category->getSons() as $son) {
-            $this->_duplicateCategory($card, $son, $data);
+            $this->__duplicateCategory($card, $son, $data);
         }
         // Products
         foreach ($category->getProducts() as $product) {
-            $this->_duplicateProduct($card, $product, $data);
+            $this->__duplicateProduct($card, $product, $data);
         }
 
         return $this;
@@ -127,7 +126,7 @@ class Card
      *
      * @return $this
      */
-    private function _duplicateProduct(
+    private function __duplicateProduct(
         \Fhm\CardBundle\Document\Card $card,
         \Fhm\CardBundle\Document\CardProduct $product,
         $parent = null
@@ -145,8 +144,8 @@ class Card
         $data->setSeoTitle($product->getSeoTitle());
         $data->setSeoDescription($product->getSeoDescription());
         $data->setSeoKeywords($product->getSeoKeywords());
-        $data->setGrouping($product->getGrouping());
-        $data->setLanguages($product->getLanguages());
+//        $data->setGrouping($product->getGrouping());
+//        $data->setLanguages($product->getLanguages());
         $data->setPrice($product->getPrice());
         $data->setCurrency($product->getCurrency());
         $data->setForward($product->getForward());
@@ -161,7 +160,7 @@ class Card
         $this->tools->dmPersist($data);
         // Ingredients
         foreach ($product->getIngredients() as $ingredient) {
-            $this->_duplicateIngredient($card, $ingredient, $data);
+            $this->__duplicateIngredient($card, $ingredient, $data);
         }
 
         return $this;
@@ -174,7 +173,7 @@ class Card
      *
      * @return $this
      */
-    private function _duplicateIngredient(
+    private function __duplicateIngredient(
         \Fhm\CardBundle\Document\Card $card,
         \Fhm\CardBundle\Document\CardIngredient $ingredient,
         $parent = null
@@ -192,8 +191,8 @@ class Card
         $data->setSeoTitle($ingredient->getSeoTitle());
         $data->setSeoDescription($ingredient->getSeoDescription());
         $data->setSeoKeywords($ingredient->getSeoKeywords());
-        $data->setGrouping($ingredient->getGrouping());
-        $data->setLanguages($ingredient->getLanguages());
+//        $data->setGrouping($ingredient->getGrouping());
+//        $data->setLanguages($ingredient->getLanguages());
         $data->setImage($ingredient->getImage());
         $data->setDefault(false);
         $data->setActive(true);
@@ -210,7 +209,7 @@ class Card
     /**
      * @return $this
      */
-    private function _initialization()
+    private function __initialization()
     {
         $this->categories = new ArrayCollection();
         $this->products = new ArrayCollection();

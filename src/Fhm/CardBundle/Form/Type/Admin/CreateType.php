@@ -19,50 +19,62 @@ class CreateType extends FhmType
 {
     /**
      * @param FormBuilderInterface $builder
-     * @param array                $options
+     * @param array $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         parent::buildForm($builder, $options);
-        $builder
-            ->add('image', MediaType::class, array(
-                'label'    => $options['translation_route'] . '.admin.create.form.image',
-                'filter'   => 'image/*',
-                'required' => false
-            ))
-            ->add('categories', DocumentType::class, array(
-                'label'         => $options['translation_route'] . '.admin.create.form.categories',
-                'class'         => 'FhmCardBundle:CardCategory',
-                'choice_label'      => 'name',
+        $builder->add(
+            'image',
+            MediaType::class,
+            array(
+                'label' => $options['translation_route'].'.admin.create.form.image',
+                'filter' => 'image/*',
+                'required' => false,
+            )
+        )->add(
+            'categories',
+            DocumentType::class,
+            array(
+                'label' => $options['translation_route'].'.admin.create.form.categories',
+                'class' => 'FhmCardBundle:CardCategory',
+                'choice_label' => 'name',
                 'query_builder' => function (CardCategoryRepository $dr) use ($options) {
                     return $dr->getFormEnable($options['filter']);
                 },
-                'multiple'      => true,
-                'by_reference'  => false,
-                'required'      => false
-            ))
-            ->add('products', DocumentType::class, array(
-                'label'         => $options['translation_route'] . '.admin.create.form.products',
-                'class'         => 'FhmCardBundle:CardProduct',
-                'choice_label'      => 'name',
+                'multiple' => true,
+                'by_reference' => false,
+                'required' => false,
+            )
+        )->add(
+            'products',
+            DocumentType::class,
+            array(
+                'label' => $options['translation_route'].'.admin.create.form.products',
+                'class' => 'FhmCardBundle:CardProduct',
+                'choice_label' => 'name',
                 'query_builder' => function (CardProductRepository $dr) use ($options) {
                     return $dr->getFormEnable($options['filter']);
                 },
-                'multiple'      => true,
-                'by_reference'  => false,
-                'required'      => false
-            ))
-            ->add('ingredients', DocumentType::class, array(
-                'label'         => $options['translation_route'] . '.admin.create.form.ingredients',
-                'class'         => 'FhmCardBundle:CardIngredient',
-                'choice_label'      => 'name',
+                'multiple' => true,
+                'by_reference' => false,
+                'required' => false,
+            )
+        )->add(
+            'ingredients',
+            DocumentType::class,
+            array(
+                'label' => $options['translation_route'].'.admin.create.form.ingredients',
+                'class' => 'FhmCardBundle:CardIngredient',
+                'choice_label' => 'name',
                 'query_builder' => function (CardIngredientRepository $dr) use ($options) {
                     return $dr->getFormEnable($options['filter']);
                 },
-                'multiple'      => true,
-                'by_reference'  => false,
-                'required'      => false
-            ));
+                'multiple' => true,
+                'by_reference' => false,
+                'required' => false,
+            )
+        );
     }
-   
+
 }

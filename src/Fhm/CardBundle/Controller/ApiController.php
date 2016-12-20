@@ -13,17 +13,35 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 /**
- * @Route("/api/card", service="fhm_card_controller_api")
+ * @Route("/api/card")
+ * ----------------------------------
+ * Class ApiController
+ * @package Fhm\CardBundle\Controller
  */
 class ApiController extends FhmController
 {
     /**
-     * Constructor
+     * ApiController constructor.
+     * @param string $repository
+     * @param string $source
+     * @param string $domaine
+     * @param string $translation
+     * @param string $route
      */
-    public function __construct(Tools $tools)
-    {
-        $this->setFhmTools($tools);
-        parent::__construct('Fhm', 'Card', 'card');
+    public function __construct(
+        $repository = "FhmCardBundle:Card",
+        $source = "fhm",
+        $domaine = "FhmCardBundle",
+        $translation = "card",
+        $route = "card"
+    ) {
+        self::$repository = $repository;
+        self::$source = $source;
+        self::$domain = $domaine;
+        self::$translation = $translation;
+        self::$document = new Card();
+        self::$class = get_class(self::$document);
+        self::$route = $route;
     }
 
     /**
@@ -55,33 +73,6 @@ class ApiController extends FhmController
     /**
      * @Route
      * (
-     *      path="/historic",
-     *      name="fhm_api_card_historic"
-     * )
-     * @Template("::FhmCard/Api/historic.html.twig")
-     */
-    public function historicAction(Request $request)
-    {
-        return parent::historicAction($request);
-    }
-
-
-    /**
-     * @Route
-     * (
-     *      path="/historic/copy/{id}",
-     *      name="fhm_api_card_historic_copy",
-     *      requirements={"id"="[a-z0-9]*"}
-     * )
-     */
-    public function historicCopyAction(Request $request, $id)
-    {
-        return parent::historicCopyAction($request, $id);
-    }
-
-    /**
-     * @Route
-     * (
      *      path="/embed/{template}/{id}",
      *      name="fhm_api_card_embed",
      *      requirements={"id"="[a-z0-9]*"},
@@ -90,12 +81,11 @@ class ApiController extends FhmController
      */
     public function embedAction(Request $request, $id, $template)
     {
-        $document = $this->fhm_tools->dmRepository()->find($id);
-        $instance = $this->fhm_tools->instanceData($document);
+        $document = $this->get('fhm_tools')->dmRepository(self::$repository)->find($id);
         // ERROR - unknown
         if ($document == "") {
             throw $this->createNotFoundException(
-                $this->get('translator')->trans($this->translation[1].'.error.unknown', array(), $this->translation[0])
+                $this->get('translator')->trans(self::$translation.'.error.unknown', array(), self::$domain)
             );
         }
 
@@ -104,11 +94,9 @@ class ApiController extends FhmController
                 "::FhmCard/Template/".ucfirst(strtolower($template))."/index.html.twig",
                 array(
                     "document" => $document,
-                    "documents" => $this->fhm_tools->dmRepository('FhmCardBundle:CardCategory')->getByCard(
-                        $document,
-                        $instance->grouping->filtered
+                    "documents" => $this->get('fhm_tools')->dmRepository('FhmCardBundle:CardCategory')->getByCard(
+                        $document
                     ),
-                    "instance" => $instance,
                 )
             )
         );
@@ -124,8 +112,7 @@ class ApiController extends FhmController
      */
     public function editorAction(Request $request, $id)
     {
-        $document = $this->fhm_tools->dmRepository()->find($id);
-        $instance = $this->fhm_tools->instanceData($document);
+        $document = $this->get('fhm_tools')->dmRepository(self::$repository)->find($id);
         $this->_authorized($document);
 
         return new Response(
@@ -133,7 +120,6 @@ class ApiController extends FhmController
                 "::FhmCard/Template/Editor/index.html.twig",
                 array(
                     "document" => $document,
-                    "instance" => $instance,
                 )
             )
         );
@@ -149,8 +135,7 @@ class ApiController extends FhmController
      */
     public function editorPreviewAction(Request $request, $id)
     {
-        $document = $this->fhm_tools->dmRepository()->find($id);
-        $instance = $this->fhm_tools->instanceData($document);
+        $document = $this->get('fhm_tools')->dmRepository(self::$repository)->find($id);
         $this->_authorized($document);
 
         return new Response(
@@ -158,7 +143,6 @@ class ApiController extends FhmController
                 "::FhmCard/Template/Editor/preview.html.twig",
                 array(
                     "document" => $document,
-                    "instance" => $instance,
                 )
             )
         );
@@ -175,7 +159,7 @@ class ApiController extends FhmController
     {
         if ($card == "") {
             throw $this->createNotFoundException(
-                $this->get('translator')->trans('card.error.unknown', array(), $this->translation[0])
+                $this->get('translator')->trans('card.error.unknown', array(), self::$domain)
             );
         }
         if ($card->getParent() && method_exists($card->getParent(), 'hasModerator')) {
@@ -183,12 +167,11 @@ class ApiController extends FhmController
                 )->hasModerator($this->getUser())
             ) {
                 throw new HttpException(
-                    403,
-                    $this->get('translator')->trans(
-                        $this->translation[1].'.error.forbidden',
-                        array(),
-                        $this->translation[0]
-                    )
+                    403, $this->get('translator')->trans(
+                    self::$translation.'.error.forbidden',
+                    array(),
+                    self::$domain
+                )
                 );
             }
         }

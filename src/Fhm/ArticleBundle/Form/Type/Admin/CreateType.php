@@ -24,70 +24,59 @@ class CreateType extends FhmType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         parent::buildForm($builder, $options);
-        $builder
-
-            ->add(
-                'title',
-                TextType::class,
-                array(
-                    'label' => $options['translation_route'].'.admin.create.form.title'
-                )
+        $builder->add(
+            'title',
+            TextType::class,
+            array(
+                'label' => $options['translation_route'].'.admin.create.form.title',
             )
-            ->add(
-                'subtitle',
-                TextType::class,
-                array('label' => $options['translation_route'].'.admin.create.form.subtitle', 'required' => false)
+        )->add(
+            'subtitle',
+            TextType::class,
+            array('label' => $options['translation_route'].'.admin.create.form.subtitle', 'required' => false)
+        )->add(
+            'resume',
+            TextareaType::class,
+            array(
+                'label' => $options['translation_route'].'.admin.create.form.resume',
+                'attr' => array('class' => 'editor'),
             )
-            ->add(
-                'resume',
-                TextareaType::class,
-                array(
-                    'label' => $options['translation_route'].'.admin.create.form.resume',
-                    'attr' => array('class' => 'editor'),
-                )
+        )->add(
+            'content',
+            TextareaType::class,
+            array(
+                'label' => $options['translation_route'].'.admin.create.form.content',
+                'attr' => array('class' => 'editor'),
             )
-            ->add(
-                'content',
-                TextareaType::class,
-                array(
-                    'label' => $options['translation_route'].'.admin.create.form.content',
-                    'attr' => array('class' => 'editor'),
-                )
+        )->add(
+            'image',
+            MediaType::class,
+            array(
+                'label' => $options['translation_route'].'.admin.create.form.image',
+                'filter' => 'image/*',
+                'required' => false,
             )
-            ->add(
-                'image',
-                MediaType::class,
-                array(
-                    'label' => $options['translation_route'].'.admin.create.form.image',
-                    'filter' => 'image/*',
-                    'required' => false,
-                )
+        )->add(
+            'gallery',
+            DocumentType::class,
+            array(
+                'label' => $options['translation_route'].'.admin.create.form.gallery',
+                'class' => 'FhmGalleryBundle:Gallery',
+                'query_builder' => function (GalleryRepository $dr) use ($options) {
+                    return $dr->getFormEnable($options['filter']);
+                },
+                'required' => false,
             )
-            ->add(
-                'gallery',
-                DocumentType::class,
-                array(
-                    'label' => $options['translation_route'].'.admin.create.form.gallery',
-                    'class' => 'FhmGalleryBundle:Gallery',
-                    'query_builder' => function (GalleryRepository $dr) use ($options) {
-                        return $dr->getFormEnable($options['filter']);
-                    },
-                    'required' => false,
-                )
+        )->add(
+            'author',
+            AutocompleteType::class,
+            array(
+                'label' => $options['translation_route'].'.admin.create.form.author',
+                'class' => 'FhmUserBundle:User',
+                'url' => 'fhm_api_user_autocomplete',
+                'required' => false,
             )
-            ->add(
-                'author',
-                AutocompleteType::class,
-                array(
-                    'label' => $options['translation_route'].'.admin.create.form.author',
-                    'class' => 'FhmUserBundle:User',
-                    'url' => 'fhm_api_user_autocomplete',
-                    'required' => false,
-                )
-            )
-            ->remove('global')
-            ->remove('name')
-            ->remove('description');
+        )->remove('global')->remove('name')->remove('description');
     }
 
- }
+}

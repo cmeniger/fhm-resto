@@ -12,20 +12,37 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\Serializer\Tests\Fixtures\ToBeProxyfiedDummy;
 
 /**
- * @Route("/cardproduct", service="fhm_card_controller_product_front")
+ * @Route("/cardproduct")
+ * -----------------------------------------
+ * Class FrontController
+ * @package Fhm\CardBundle\Controller\Product
  */
 class FrontController extends FhmController
 {
     /**
-     * Constructor
+     * FrontController constructor.
+     * @param string $repository
+     * @param string $source
+     * @param string $domain
+     * @param string $translation
+     * @param string $document
+     * @param string $route
      */
-    public function __construct(Tools $tools)
-    {
-        $this->setFhmTools($tools);
-        parent::__construct('Fhm', 'Card', 'card_product', 'CardProduct');
-        $this->form->type->create = CreateType::class;
-        $this->form->type->update = UpdateType::class;
-        $this->translation = array('FhmCardBundle', 'card.product');
+    public function __construct(
+        $repository = "FhmCardBundle:CardProduct",
+        $source = "fhm",
+        $domain = "FhmCardBundle",
+        $translation = "card.product",
+        $document = "CardProduct",
+        $route = "card_product"
+    ) {
+        self::$repository = $repository;
+        self::$source = $source;
+        self::$domain = $domain;
+        self::$translation = $translation;
+        self::$document = new $document();
+        self::$class = get_class(self::$document);
+        self::$route = $route;
     }
 
     /**
@@ -39,58 +56,6 @@ class FrontController extends FhmController
     public function indexAction()
     {
         return parent::indexAction();
-    }
-
-    /**
-     * @Route
-     * (
-     *      path="/create",
-     *      name="fhm_card_product_create"
-     * )
-     * @Template("::FhmCard/Front/Product/create.html.twig")
-     */
-    public function createAction(Request $request)
-    {
-        // For activate this route, delete next line
-        throw $this->createNotFoundException(
-            $this->get('translator')->trans('fhm.error.route', array(), 'FhmFhmBundle')
-        );
-    }
-
-    /**
-     * @Route
-     * (
-     *      path="/duplicate/{id}",
-     *      name="fhm_card_product_duplicate",
-     *      requirements={"id"="[a-z0-9]*"}
-     * )
-     * @Template("::FhmCard/Front/Product/create.html.twig")
-     */
-    public function duplicateAction(Request $request, $id)
-    {
-        // For activate this route, delete next line
-        throw $this->createNotFoundException(
-            $this->get('translator')->trans('fhm.error.route', array(), 'FhmFhmBundle')
-        );
-
-    }
-
-    /**
-     * @Route
-     * (
-     *      path="/update/{id}",
-     *      name="fhm_card_product_update",
-     *      requirements={"id"="[a-z0-9]*"}
-     * )
-     * @Template("::FhmCard/Front/Product/update.html.twig")
-     */
-    public function updateAction(Request $request, $id)
-    {
-        // For activate this route, delete next line
-        throw $this->createNotFoundException(
-            $this->get('translator')->trans('fhm.error.route', array(), 'FhmFhmBundle')
-        );
-
     }
 
     /**
@@ -117,27 +82,27 @@ class FrontController extends FhmController
      */
     public function deleteAction($id)
     {
-        $document = $this->dmRepository()->find($id);
+        $document = $this->get('fhm_tools')->dmRepository(self::$repository)->find($id);
         // ERROR - Unknown
         if ($document == "") {
             throw $this->createNotFoundException(
-                $this->get('translator')->trans($this->translation[1].'.error.unknown', array(), $this->translation[0])
+                $this->get('translator')->trans(self::$translation.'.error.unknown', array(), self::$domain)
             );
         }
         // Deactivate
         $document->setDelete(true);
-        $this->fhm_tools->dmPersist($document);
+        $this->get('fhm_tools')->dmPersist($document);
         // Message
         $this->get('session')->getFlashBag()->add(
             'notice',
             $this->get('translator')->trans(
-                $this->translation[1].'.admin.activate.flash.ok',
+                self::$translation.'.admin.activate.flash.ok',
                 array(),
-                $this->translation[0]
+                self::$domain
             )
         );
 
-        return $this->redirect($this->fhm_tools->getLastRoute());
+        return $this->redirect($this->get('fhm_tools')->getLastRoute($this->get('request_stack')->getCurrentRequest()));
     }
 
     /**
@@ -150,27 +115,27 @@ class FrontController extends FhmController
      */
     public function undeleteAction($id)
     {
-        $document = $this->fhm_tools->dmRepository()->find($id);
+        $document = $this->get('fhm_tools')->dmRepository(self::$repository)->find($id);
         // ERROR - Unknown
         if ($document == "") {
             throw $this->createNotFoundException(
-                $this->get('translator')->trans($this->translation[1].'.error.unknown', array(), $this->translation[0])
+                $this->get('translator')->trans(self::$translation.'.error.unknown', array(), self::$domain)
             );
         }
         // Undelete
         $document->setDelete(false);
-        $this->fhm_tools->dmPersist($document);
+        $this->get('fhm_tools')->dmPersist($document);
         // Message
         $this->get('session')->getFlashBag()->add(
             'notice',
             $this->get('translator')->trans(
-                $this->translation[1].'.admin.undelete.flash.ok',
+                self::$translation.'.admin.undelete.flash.ok',
                 array(),
-                $this->translation[0]
+                self::$domain
             )
         );
 
-        return $this->redirect($this->fhm_tools->getLastRoute());
+        return $this->redirect($this->get('fhm_tools')->getLastRoute($this->get('request_stack')->getCurrentRequest()));
     }
 
 
@@ -184,27 +149,27 @@ class FrontController extends FhmController
      */
     public function activateAction($id)
     {
-        $document = $this->fhm_tools->dmRepository()->find($id);
+        $document = $this->get('fhm_tools')->dmRepository(self::$repository)->find($id);
         // ERROR - Unknown
         if ($document == "") {
             throw $this->createNotFoundException(
-                $this->get('translator')->trans($this->translation[1].'.error.unknown', array(), $this->translation[0])
+                $this->get('translator')->trans(self::$translation.'.error.unknown', array(), self::$domain)
             );
         }
         // activate
         $document->setActive(true);
-        $this->fhm_tools->dmPersist($document);
+        $this->get('fhm_tools')->dmPersist($document);
         // Message
         $this->get('session')->getFlashBag()->add(
             'notice',
             $this->get('translator')->trans(
-                $this->translation[1].'.admin.activate.flash.ok',
+                self::$translation.'.admin.activate.flash.ok',
                 array(),
-                $this->translation[0]
+                self::$domain
             )
         );
 
-        return $this->redirect($this->fhm_tools->getLastRoute());
+        return $this->redirect($this->get('fhm_tools')->getLastRoute($this->get('request_stack')->getCurrentRequest()));
     }
 
     /**
@@ -217,27 +182,27 @@ class FrontController extends FhmController
      */
     public function deactivateAction($id)
     {
-        $document = $this->fhm_tools->dmRepository()->find($id);
+        $document = $this->get('fhm_tools')->dmRepository(self::$repository)->find($id);
         // ERROR - Unknown
         if ($document == "") {
             throw $this->createNotFoundException(
-                $this->get('translator')->trans($this->translation[1].'.error.unknown', array(), $this->translation[0])
+                $this->get('translator')->trans(self::$translation.'.error.unknown', array(), self::$domain)
             );
         }
         // Deactivate
         $document->setActive(false);
-        $this->fhm_tools->dmPersist($document);
+        $this->get('fhm_tools')->dmPersist($document);
         // Message
         $this->get('session')->getFlashBag()->add(
             'notice',
             $this->get('translator')->trans(
-                $this->translation[1].'.admin.activate.flash.ok',
+                self::$translation.'.admin.activate.flash.ok',
                 array(),
-                $this->translation[0]
+                self::$domain
             )
         );
 
-        return $this->redirect($this->fhm_tools->getLastRoute());
+        return $this->redirect($this->get('fhm_tools')->getLastRoute($this->get('request_stack')->getCurrentRequest()));
     }
 
 

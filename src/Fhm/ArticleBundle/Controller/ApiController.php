@@ -3,7 +3,6 @@ namespace Fhm\ArticleBundle\Controller;
 
 use Fhm\FhmBundle\Controller\RefApiController as FhmController;
 use Fhm\ArticleBundle\Document\Article;
-use Fhm\FhmBundle\Services\Tools;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
@@ -11,18 +10,35 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 /**
- * @Route("/api/article", service="fhm_article_controller_api")
+ * @Route("/api/article")
+ * --------------------------------------
+ * Class ApiController
+ * @package Fhm\ArticleBundle\Controller
  */
 class ApiController extends FhmController
 {
     /**
      * ApiController constructor.
-     * @param Tools $tools
+     * @param string $repository
+     * @param string $source
+     * @param string $domaine
+     * @param string $translation
+     * @param string $route
      */
-    public function __construct(Tools $tools)
-    {
-        $this->setFhmTools($tools);
-        parent::__construct('Fhm', 'Article', 'article');
+    public function __construct(
+        $repository = "FhmArticleBundle:Article",
+        $source = "fhm",
+        $domaine = "FhmArticleBundle",
+        $translation = "article",
+        $route = 'article'
+    ) {
+        self::$repository = $repository;
+        self::$source = $source;
+        self::$domain = $domaine;
+        self::$translation = $translation;
+        self::$document = new Article();
+        self::$class = get_class(self::$document);
+        self::$route = $route;
     }
 
     /**
@@ -49,31 +65,5 @@ class ApiController extends FhmController
     public function autocompleteAction(Request $request)
     {
         return parent::autocompleteAction($request);
-    }
-
-    /**
-     * @Route
-     * (
-     *      path="/historic/",
-     *      name="fhm_api_article_historic"
-     * )
-     * @Template("::FhmArticle/Api/historic.html.twig")
-     */
-    public function historicAction(Request $request)
-    {
-        return parent::historicAction($request);
-    }
-
-    /**
-     * @Route
-     * (
-     *      path="/historic/copy/{id}",
-     *      name="fhm_api_article_historic_copy",
-     *      requirements={"id"="[a-z0-9]*"}
-     * )
-     */
-    public function historicCopyAction(Request $request, $id)
-    {
-        return parent::historicCopyAction($request, $id);
     }
 }

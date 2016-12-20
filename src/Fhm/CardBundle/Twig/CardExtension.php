@@ -3,20 +3,13 @@ namespace Fhm\CardBundle\Twig;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\HttpKernel\KernelInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 
+/**
+ * Class CardExtension
+ * @package Fhm\CardBundle\Twig
+ */
 class CardExtension extends \Twig_Extension
 {
-    protected $container;
-
-    /**
-     * @param ContainerInterface $container
-     */
-    public function __construct(ContainerInterface $container)
-    {
-        $this->container = $container;
-    }
-
     /**
      * {@inheritdoc}
      */
@@ -28,7 +21,7 @@ class CardExtension extends \Twig_Extension
             new \Twig_SimpleFilter('cardCategoryInline', array($this, 'getCategoryInline')),
             new \Twig_SimpleFilter('cardIngredientHtml', array($this, 'getIngredientHtml')),
             new \Twig_SimpleFilter('cardIngredientString', array($this, 'getIngredientString')),
-            new \Twig_SimpleFilter('cardTreeProduct', array($this, 'getTreeProduct'))
+            new \Twig_SimpleFilter('cardTreeProduct', array($this, 'getTreeProduct')),
         );
     }
 
@@ -44,43 +37,37 @@ class CardExtension extends \Twig_Extension
 
     /**
      * @param      $category
-     * @param      $instance
      * @param bool $multiple
      *
      * @return string
      */
-    public function getCategoryBreadcrumbs($category, $instance, $multiple = true)
+    public function getCategoryBreadcrumbs($category, $multiple = true)
     {
         $routes = array();
-        $used   = new ArrayCollection();
-        $html   = "";
-        foreach($category->getParents() as $parent)
-        {
+        $used = new ArrayCollection();
+        $html = "";
+        foreach ($category->getParents() as $parent) {
             $array = array($parent);
-            $this->_route($parent, $array, $routes, $used);
+            $this->__route($parent, $array, $routes, $used);
         }
-        if(count($routes) > 0)
-        {
-            foreach($routes as $route)
-            {
+        if (count($routes) > 0) {
+            foreach ($routes as $route) {
                 $html .= "<ul class='card category breadcrumbs'>";
-                foreach($route as $object)
-                {
-                    $html .= "<li class=''><a href='#' category-id='" . $object->getId() . "'>" . $object->getName() . "</a></li>";
+                foreach ($route as $object) {
+                    $html .= "<li class=''>";
+                    $html .= "<a href='#' category-id='".$object->getId()."'>".$object->getName()."</a></li>";
                 }
-                $html .= "<li class='current'><a href='#' category-id='" . $category->getId() . "'>" . $category->getName() . "</a></li>";
+                $html .= "<li class='current'>";
+                $html .= "<a href='#' category-id='".$category->getId()."'>".$category->getName()."</a></li>";
                 $html .= "</ul>";
-                if(!$multiple)
-                {
+                if (!$multiple) {
                     break;
                 }
             }
-        }
-        else
-        {
+        } else {
             $html .= "<ul class='card category breadcrumbs'>";
-            $html .= "<li class='current'><a href='#' category-id='" . $category->getId() . "'>" . $category->getName() . "</a></li>";
-            $html .= "</ul>";
+            $html .= "<li class='current'><a href='#' category-id='".$category->getId()."'>".$category->getName();
+            $html .= "</a></li></ul>";
         }
 
         return $html;
@@ -88,40 +75,32 @@ class CardExtension extends \Twig_Extension
 
     /**
      * @param      $category
-     * @param      $instance
      * @param bool $multiple
      *
      * @return string
      */
-    public function getCategoryRoute($category, $instance, $multiple = true)
+    public function getCategoryRoute($category, $multiple = true)
     {
         $routes = array();
-        $used   = new ArrayCollection();
-        $html   = "";
-        foreach($category->getParents() as $parent)
-        {
+        $used = new ArrayCollection();
+        $html = "";
+        foreach ($category->getParents() as $parent) {
             $array = array($parent);
-            $this->_route($parent, $array, $routes, $used);
+            $this->__route($parent, $array, $routes, $used);
         }
-        if(count($routes) > 0)
-        {
-            foreach($routes as $route)
-            {
+        if (count($routes) > 0) {
+            foreach ($routes as $route) {
                 $html .= "<div class='card category route'>";
-                foreach($route as $object)
-                {
-                    $html .= $object->getName() . "<span class='separator'>></span>";
+                foreach ($route as $object) {
+                    $html .= $object->getName()."<span class='separator'>></span>";
                 }
                 $html .= $category->getName();
                 $html .= "</div>";
-                if(!$multiple)
-                {
+                if (!$multiple) {
                     break;
                 }
             }
-        }
-        else
-        {
+        } else {
             $html .= "<div class='card category route'>";
             $html .= $category->getName();
             $html .= "</div>";
@@ -132,41 +111,33 @@ class CardExtension extends \Twig_Extension
 
     /**
      * @param      $category
-     * @param      $instance
      * @param bool $multiple
      *
      * @return string
      */
-    public function getCategoryInline($category, $instance, $multiple = true)
+    public function getCategoryInline($category, $multiple = true)
     {
         $routes = array();
-        $used   = new ArrayCollection();
-        $html   = "";
-        foreach($category->getParents() as $parent)
-        {
+        $used = new ArrayCollection();
+        $html = "";
+        foreach ($category->getParents() as $parent) {
             $array = array($parent);
-            $this->_route($parent, $array, $routes, $used);
+            $this->__route($parent, $array, $routes, $used);
         }
-        if(count($routes) > 0)
-        {
+        if (count($routes) > 0) {
             $html .= "<div class='card category route'>";
-            foreach($routes as $route)
-            {
-                foreach($route as $object)
-                {
-                    $html .= $object->getName() . "<span class='separator'>></span>";
+            foreach ($routes as $route) {
+                foreach ($route as $object) {
+                    $html .= $object->getName()."<span class='separator'>></span>";
                 }
                 $html .= $category->getName();
-                if(!$multiple)
-                {
+                if (!$multiple) {
                     break;
                 }
                 $html .= $route === end($routes) ? "" : "<span class='separator master'>/</span>";
             }
             $html .= "</div>";
-        }
-        else
-        {
+        } else {
             $html .= "<div class='card category route'>";
             $html .= $category->getName();
             $html .= "</div>";
@@ -195,8 +166,7 @@ class CardExtension extends \Twig_Extension
     public function getIngredientString($product)
     {
         $array = array();
-        foreach($product->getIngredients() as $ingredient)
-        {
+        foreach ($product->getIngredients() as $ingredient) {
             $array[] = $ingredient->getName();
         }
 
@@ -211,35 +181,25 @@ class CardExtension extends \Twig_Extension
      *
      * @return $this
      */
-    private function _route($category, &$route, &$all, &$used)
+    private function __route($category, &$route, &$all, &$used)
     {
         $first = true;
-        if($used->contains($category))
-        {
+        if ($used->contains($category)) {
             return false;
-        }
-        else
-        {
+        } else {
             $used->add($category);
         }
-        if($category->getParents()->count() == 0)
-        {
+        if ($category->getParents()->count() == 0) {
             array_push($all, $route);
-        }
-        else
-        {
-            foreach($category->getParents() as $parent)
-            {
+        } else {
+            foreach ($category->getParents() as $parent) {
                 array_unshift($route, $parent);
-                if($first)
-                {
+                if ($first) {
                     $first = false;
-                    $this->_route($parent, $route, $all, $used);
-                }
-                else
-                {
+                    $this->__route($parent, $route, $all, $used);
+                } else {
                     $current = $route;
-                    $this->_route($parent, $current, $all, $used);
+                    $this->__route($parent, $current, $all, $used);
                 }
             }
         }

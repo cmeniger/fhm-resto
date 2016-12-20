@@ -15,7 +15,10 @@ use Doctrine\ODM\MongoDB\Mapping\ClassMetadata;
 class CardRepository extends FhmRepository
 {
     /**
-     * Constructor
+     * CardRepository constructor.
+     * @param DocumentManager $dm
+     * @param UnitOfWork $uow
+     * @param ClassMetadata $class
      */
     public function __construct(DocumentManager $dm, UnitOfWork $uow, ClassMetadata $class)
     {
