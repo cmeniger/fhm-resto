@@ -1,9 +1,12 @@
 <?php
-
 namespace Fhm\GeolocationBundle\Services;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
+/**
+ * Class Map
+ * @package Fhm\GeolocationBundle\Services
+ */
 class Map
 {
     private $container;
@@ -11,12 +14,16 @@ class Map
     private $cluster;
     private $filter;
 
+    /**
+     * Map constructor.
+     * @param ContainerInterface $container
+     */
     public function __construct(ContainerInterface $container)
     {
         $this->container = $container;
-        $this->map       = $this->container->get('ivory_google_map.map');
-        $this->cluster   = $this->container->get('ivory_google_map.marker_cluster');
-        $this->filter    = array();
+        $this->map = $this->container->get('ivory_google_map.map');
+        $this->cluster = $this->container->get('ivory_google_map.marker_cluster');
+        $this->filter = array();
     }
 
     /**
@@ -30,8 +37,7 @@ class Map
     public function generate($markers, $options = array())
     {
         $options = array_merge(array('cluster' => array(), 'control' => array()), $options);
-        foreach($markers as $marker)
-        {
+        foreach ($markers as $marker) {
             $this->addMarker($marker);
         }
         $this->setMarkerCluster($options['cluster']);
@@ -77,7 +83,7 @@ class Map
         $this->setMarkerPopup($obj, $marker);
         $this->setMarkerIcon($obj, $marker);
         $this->cluster->addMarker($obj);
-        foreach($marker->getFilter() as $markerFilter) {
+        foreach ($marker->getFilter() as $markerFilter) {
             $this->filter[$markerFilter][] = $obj->getJavascriptVariable();
         }
 
@@ -130,7 +136,7 @@ class Map
     public function setMarkerCluster($options = array())
     {
         $default = array(
-            'gridSize' => $this->_parameter('cluster_grid')
+            'gridSize' => $this->_parameter('cluster_grid'),
         );
         $this->cluster->setOptions(array_merge($default, $options));
         $this->cluster->setType('marker_cluster');
@@ -148,21 +154,64 @@ class Map
      */
     public function setControl($options = array())
     {
-        $default  = array(
-            'pan'        => array('visible' => $this->_parameter(array('controls', 'pan', 'visible')), 'position' => $this->_parameter(array('controls', 'pan', 'position'))),
-            'rotate'     => array('visible' => $this->_parameter(array('controls', 'rotate', 'visible')), 'position' => $this->_parameter(array('controls', 'rotate', 'position'))),
-            'scale'      => array('visible' => $this->_parameter(array('controls', 'scale', 'visible')), 'position' => $this->_parameter(array('controls', 'scale', 'position')), 'style' => $this->_parameter(array('controls', 'scale', 'style'))),
-            'streetView' => array('visible' => $this->_parameter(array('controls', 'streetView', 'visible')), 'position' => $this->_parameter(array('controls', 'streetView', 'position'))),
-            'zoom'       => array('visible' => $this->_parameter(array('controls', 'zoom', 'visible')), 'position' => $this->_parameter(array('controls', 'zoom', 'position')), 'style' => $this->_parameter(array('controls', 'zoom', 'style'))),
-            'mapType'    => array('visible' => $this->_parameter(array('controls', 'mapType', 'visible')), 'position' => $this->_parameter(array('controls', 'mapType', 'position')), 'style' => 'default', 'type' => array('roadmap', 'satellite')),
+        $default = array(
+            'pan' => array(
+                'visible' => $this->_parameter(array('controls', 'pan', 'visible')),
+                'position' => $this->_parameter(array('controls', 'pan', 'position')),
+            ),
+            'rotate' => array(
+                'visible' => $this->_parameter(array('controls', 'rotate', 'visible')),
+                'position' => $this->_parameter(array('controls', 'rotate', 'position')),
+            ),
+            'scale' => array(
+                'visible' => $this->_parameter(array('controls', 'scale', 'visible')),
+                'position' => $this->_parameter(array('controls', 'scale', 'position')),
+                'style' => $this->_parameter(array('controls', 'scale', 'style')),
+            ),
+            'streetView' => array(
+                'visible' => $this->_parameter(array('controls', 'streetView', 'visible')),
+                'position' => $this->_parameter(array('controls', 'streetView', 'position')),
+            ),
+            'zoom' => array(
+                'visible' => $this->_parameter(array('controls', 'zoom', 'visible')),
+                'position' => $this->_parameter(array('controls', 'zoom', 'position')),
+                'style' => $this->_parameter(array('controls', 'zoom', 'style')),
+            ),
+            'mapType' => array(
+                'visible' => $this->_parameter(array('controls', 'mapType', 'visible')),
+                'position' => $this->_parameter(array('controls', 'mapType', 'position')),
+                'style' => 'default',
+                'type' => array('roadmap', 'satellite'),
+            ),
         );
         $controls = array_merge($default, $options);
-        !$controls['pan']['visible'] ? $this->map->setMapOption('panControl', false) : $this->map->setPanControl($controls['pan']['position']);
-        !$controls['rotate']['visible'] ? $this->map->setMapOption('rotateControl', false) : $this->map->setRotateControl($controls['rotate']['position']);
-        !$controls['scale']['visible'] ? $this->map->setMapOption('scaleControl', false) : $this->map->setScaleControl($controls['scale']['position'], $controls['scale']['style']);
-        !$controls['streetView']['visible'] ? $this->map->setMapOption('streetViewControl', false) : $this->map->setStreetViewControl($controls['streetView']['position']);
-        !$controls['zoom']['visible'] ? $this->map->setMapOption('zoomControl', false) : $this->map->setZoomControl($controls['zoom']['position'], $controls['zoom']['style']);
-        !$controls['mapType']['visible'] ? $this->map->setMapOption('mapTypeControl', false) : $this->map->setMapTypeControl($controls['mapType']['type'], $controls['mapType']['position'], $controls['mapType']['style']);
+        !$controls['pan']['visible'] ? $this->map->setMapOption('panControl', false) : $this->map->setPanControl(
+            $controls['pan']['position']
+        );
+        !$controls['rotate']['visible'] ? $this->map->setMapOption(
+            'rotateControl',
+            false
+        ) : $this->map->setRotateControl($controls['rotate']['position']);
+        !$controls['scale']['visible'] ? $this->map->setMapOption('scaleControl', false) : $this->map->setScaleControl(
+            $controls['scale']['position'],
+            $controls['scale']['style']
+        );
+        !$controls['streetView']['visible'] ? $this->map->setMapOption(
+            'streetViewControl',
+            false
+        ) : $this->map->setStreetViewControl($controls['streetView']['position']);
+        !$controls['zoom']['visible'] ? $this->map->setMapOption('zoomControl', false) : $this->map->setZoomControl(
+            $controls['zoom']['position'],
+            $controls['zoom']['style']
+        );
+        !$controls['mapType']['visible'] ? $this->map->setMapOption(
+            'mapTypeControl',
+            false
+        ) : $this->map->setMapTypeControl(
+            $controls['mapType']['type'],
+            $controls['mapType']['position'],
+            $controls['mapType']['style']
+        );
 
         return $this;
     }
@@ -173,10 +222,8 @@ class Map
     private function _parameter($route, $parent = 'fhm_map')
     {
         $parameters = $this->container->getParameter($parent);
-        $value      = $parameters;
-
-        foreach((array) $route as $sub)
-        {
+        $value = $parameters;
+        foreach ((array)$route as $sub) {
             $value = $value[$sub];
         }
 

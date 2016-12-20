@@ -1,24 +1,42 @@
 <?php
-
 namespace Fhm\GeolocationBundle\Controller;
 
 use Fhm\FhmBundle\Controller\RefApiController as FhmController;
+use Fhm\GeolocationBundle\Document\Geolocation;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 /**
- * @Route("/map", service="fhm_map_controller")
+ * @Route("/map")
+ * -----------------------------------------
+ * Class MapController
+ * @package Fhm\GeolocationBundle\Controller
  */
 class MapController extends FhmController
 {
     /**
-     * MapController constructor.
-     *
-     * @param \Fhm\FhmBundle\Services\Tools $tools
+     * AdminController constructor.
+     * @param string $repository
+     * @param string $source
+     * @param string $domain
+     * @param string $translation
+     * @param string $document
+     * @param string $route
      */
-    public function __construct(\Fhm\FhmBundle\Services\Tools $tools)
-    {
-        $this->setFhmTools($tools);
-        parent::__construct('Fhm', 'Geolocation', 'geolocation');
+    public function __construct(
+        $repository = "FhmGeolocationBundle:Geolocation",
+        $source = "fhm",
+        $domain = "FhmGeolocationBundle",
+        $translation = "geolocation",
+        $document = Geolocation::class,
+        $route = 'geolocation'
+    ) {
+        self::$repository = $repository;
+        self::$source = $source;
+        self::$domain = $domain;
+        self::$translation = $translation;
+        self::$document = new $document();
+        self::$class = get_class(self::$document);
+        self::$route = $route;
     }
 }

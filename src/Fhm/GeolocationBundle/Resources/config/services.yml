@@ -7,7 +7,3 @@ services:
         class: Fhm\GeolocationBundle\Twig\GeolocationExtension
         tags:
             - { name: twig.extension }
-
-    fhm_map_controller:
-        class: Fhm\GeolocationBundle\Controller\MapController
-        arguments: ["@fhm_tools"]

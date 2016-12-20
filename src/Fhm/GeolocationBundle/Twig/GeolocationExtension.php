@@ -3,6 +3,10 @@ namespace Fhm\GeolocationBundle\Twig;
 
 use Symfony\Component\HttpKernel\KernelInterface;
 
+/**
+ * Class GeolocationExtension
+ * @package Fhm\GeolocationBundle\Twig
+ */
 class GeolocationExtension extends \Twig_Extension
 {
     /**
@@ -16,24 +20,32 @@ class GeolocationExtension extends \Twig_Extension
         );
     }
 
+    /**
+     * @param $object
+     * @return string
+     */
     public function getHtml($object)
     {
         $address = '';
         $address .= $object->getAddressMain() == 'undefined' ? '' : $object->getAddressMain();
-        $address .= $object->getAddressAdditional() ? ($address ? '<br/>' : '') . $object->getAddressMain() : '';
-        $address .= ($address ? '<br/>' : '') . $object->getZipCode() . ' ' . $object->getCity();
-        $address .= '<br/>' . $object->getCountry();
+        $address .= $object->getAddressAdditional() ? ($address ? '<br/>' : '').$object->getAddressMain() : '';
+        $address .= ($address ? '<br/>' : '').$object->getZipCode().' '.$object->getCity();
+        $address .= '<br/>'.$object->getCountry();
 
         return $address;
     }
 
+    /**
+     * @param $object
+     * @return string
+     */
     public function getInline($object)
     {
         $address = '';
         $address .= $object->getAddressMain() == 'undefined' ? '' : $object->getAddressMain();
-        $address .= $object->getAddressAdditional() ? ($address ? ', ' : '') . $object->getAddressMain() : '';
-        $address .= ($address ? ', ' : '') . $object->getZipCode() . ' ' . $object->getCity();
-        $address .= ', ' . $object->getCountry();
+        $address .= $object->getAddressAdditional() ? ($address ? ', ' : '').$object->getAddressMain() : '';
+        $address .= ($address ? ', ' : '').$object->getZipCode().' '.$object->getCity();
+        $address .= ', '.$object->getCountry();
 
         return $address;
     }

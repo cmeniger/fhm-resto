@@ -15,7 +15,10 @@ use MyProject\Proxies\__CG__\stdClass;
 class GeolocationRepository extends FhmRepository
 {
     /**
-     * Constructor
+     * GeolocationRepository constructor.
+     * @param DocumentManager $dm
+     * @param UnitOfWork $uow
+     * @param ClassMetadata $class
      */
     public function __construct(DocumentManager $dm, UnitOfWork $uow, ClassMetadata $class)
     {
@@ -27,6 +30,6 @@ class GeolocationRepository extends FhmRepository
      */
     public function findUniqueBy($data)
     {
-        var_dump($data); exit();
+        return $data;
     }
 }

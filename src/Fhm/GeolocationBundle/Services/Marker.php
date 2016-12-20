@@ -1,10 +1,13 @@
 <?php
-
 namespace Fhm\GeolocationBundle\Services;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Templating\EngineInterface;
 
+/**
+ * Class Marker
+ * @package Fhm\GeolocationBundle\Services
+ */
 class Marker
 {
     private $container;
@@ -17,12 +20,17 @@ class Marker
     private $filter;
     private $title;
 
+    /**
+     * Marker constructor.
+     * @param EngineInterface $template
+     * @param ContainerInterface $container
+     */
     public function __construct(EngineInterface $template, ContainerInterface $container)
     {
-        $this->template  = $template;
+        $this->template = $template;
         $this->container = $container;
-        $this->popup     = '::FhmGeolocation/Map/popup.html.twig';
-        $this->filter    = array();
+        $this->popup = '::FhmGeolocation/Map/popup.html.twig';
+        $this->filter = array();
     }
 
     /**
@@ -118,7 +126,7 @@ class Marker
      */
     public function getIcon()
     {
-        return $this->_parameter('marker_icon_folder') . $this->icon;
+        return $this->_parameter('marker_icon_folder').$this->icon;
     }
 
     /**
@@ -199,9 +207,8 @@ class Marker
     private function _parameter($route, $parent = 'fhm_map')
     {
         $parameters = $this->container->getParameter($parent);
-        $value      = $parameters;
-        foreach((array) $route as $sub)
-        {
+        $value = $parameters;
+        foreach ((array)$route as $sub) {
             $value = $value[$sub];
         }
 
