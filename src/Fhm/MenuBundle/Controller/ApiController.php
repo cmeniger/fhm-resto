@@ -21,16 +21,28 @@ class ApiController extends FhmController
 {
     /**
      * ApiController constructor.
+     * @param string $repository
+     * @param string $source
+     * @param string $domain
+     * @param string $translation
+     * @param $document
+     * @param string $route
      */
-    public function __construct()
-    {
-        self::$repository = "FhmMenuBundle:Menu";
-        self::$source = "fhm";
-        self::$domain = "FhmMenuBundle";
-        self::$translation = "menu";
-        self::$document = new Menu();
+    public function __construct(
+        $repository = "FhmMenuBundle:Menu",
+        $source = "fhm",
+        $domain = "FhmMenuBundle",
+        $translation = "menu",
+        $document = Menu::class,
+        $route = 'menu'
+    ) {
+        self::$repository = $repository;
+        self::$source = $source;
+        self::$domain = $domain;
+        self::$translation = $translation;
+        self::$document = new $document();
         self::$class = get_class(self::$document);
-        self::$route = 'menu';
+        self::$route = $route;
     }
 
     /**

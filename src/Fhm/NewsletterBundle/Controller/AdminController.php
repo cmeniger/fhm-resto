@@ -13,23 +13,37 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 /**
  * @Route("/admin/newsletter")
+ * ---------------------------------------
+ * Class AdminController
+ * @package Fhm\NewsletterBundle\Controller
  */
 class AdminController extends FhmController
 {
     /**
-     * AdminController constructor.
+     * FrontController constructor.
+     * @param string $repository
+     * @param string $source
+     * @param string $domain
+     * @param string $translation
+     * @param $document
+     * @param string $route
      */
-    public function __construct()
-    {
-        self::$repository = "FhmNewsletterBundle:Newsletter";
-        self::$source = "fhm";
-        self::$domain = "FhmNewsletterBundle";
-        self::$translation = "newsletter";
-        self::$document = new Newsletter();
+    public function __construct(
+        $repository = "FhmNewsletterBundle:Newsletter",
+        $source = "fhm",
+        $domain = "FhmNewsletterBundle",
+        $translation = "newsletter",
+        $document = Newsletter::class,
+        $route = 'newsletter'
+    ) {
+        self::$repository = $repository;
+        self::$source = $source;
+        self::$domain = $domain;
+        self::$translation = $translation;
+        self::$document = new $document();
         self::$class = get_class(self::$document);
-        self::$route = 'newsletter';
+        self::$route = $route;
     }
-
     /**
      * @Route
      * (
