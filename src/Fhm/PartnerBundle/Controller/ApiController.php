@@ -2,6 +2,7 @@
 namespace Fhm\PartnerBundle\Controller;
 
 use Fhm\FhmBundle\Controller\RefApiController as FhmController;
+use Fhm\FhmBundle\Form\Type\Admin\SearchType;
 use Fhm\PartnerBundle\Document\Partner;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -10,19 +11,37 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 /**
- * @Route("/api/partner", service="fhm_partner_controller_api")
+ * @Route("/api/partner")
+ * -------------------------------------
+ * Class ApiController
+ * @package Fhm\PartnerBundle\Controller
  */
 class ApiController extends FhmController
 {
     /**
      * ApiController constructor.
-     *
-     * @param \Fhm\FhmBundle\Services\Tools $tools
+     * @param string $repository
+     * @param string $source
+     * @param string $domain
+     * @param string $translation
+     * @param string $document
+     * @param string $route
      */
-    public function __construct(\Fhm\FhmBundle\Services\Tools $tools)
-    {
-        $this->setFhmTools($tools);
-        parent::__construct('Fhm', 'Partner', 'partner');
+    public function __construct(
+        $repository = "FhmPartnerBundle:Partner",
+        $source = "fhm",
+        $domain = "FhmPartnerBundle",
+        $translation = "partner",
+        $document = Partner::class,
+        $route = 'partner'
+    ) {
+        self::$repository = $repository;
+        self::$source = $source;
+        self::$domain = $domain;
+        self::$translation = $translation;
+        self::$document = new $document();
+        self::$class = get_class(self::$document);
+        self::$route = $route;
     }
 
     /**
@@ -64,98 +83,71 @@ class ApiController extends FhmController
     public function detailAction($template, $id, $rows, $pagination)
     {
         $document = "";
-        $instance = $this->fhm_tools->instanceData();
         // Partner
-        if($id && $template == 'full')
-        {
-            $document  = $this->fhm_tools->dmRepository()->getById($id);
-            $document  = ($document) ? $document : $this->fhm_tools->dmRepository()->getByAlias($id);
-            $document  = ($document) ? $document : $this->fhm_tools->dmRepository()->getByName($id);
-            $instance  = $this->fhm_tools->instanceData($document);
+        if ($id && $template == 'full') {
+            $document = $this->get('fhm_tools')->dmRepository(self::$repository)->getById($id);
+            $document = ($document) ? $document : $this->get('fhm_tools')->dmRepository(self::$repository)->getByAlias(
+                $id
+            );
+            $document = ($document) ? $document : $this->get('fhm_tools')->dmRepository(self::$repository)->getByName(
+                $id
+            );
             $documents = '';
-            $form      = '';
+            $form = '';
             // ERROR - unknown
-            if($document == "")
-            {
-                throw $this->createNotFoundException($this->fhm_tools->trans('partner.group.error.unknown', array(), 'FhmPartnerBundle'));
+            if ($document == "") {
+                throw $this->createNotFoundException(
+                    $this->trans('partner.group.error.unknown', array(), 'FhmPartnerBundle')
+                );
+            } // ERROR - Forbidden
+            elseif (!$this->getUser()->hasRole('ROLE_ADMIN') && ($document->getDelete() || !$document->getActive())) {
+                throw new HttpException(
+                    403, $this->trans('partner.group.error.forbidden', array(), 'FhmPartnerBundle')
+                );
             }
-            // ERROR - Forbidden
-            elseif(!$instance->user->admin && ($document->getDelete() || !$document->getActive()))
-            {
-                throw new HttpException(403, $this->fhm_tools->trans('partner.group.error.forbidden', array(), 'FhmPartnerBundle'));
-            }
-            // Change grouping
-            if($instance->grouping->different && $document->getGrouping())
-            {
-                $this->get($this->fhm_tools->getParameter("grouping", "fhm_fhm"))->setGrouping($document->getFirstGrouping());
-            }
-        }
-        else
-        {
+
+        } else {
             // Group
-            if($id)
-            {
-                $document = $this->fhm_tools->dmRepository("FhmPartnerBundle:PartnerGroup")->getById($id);
-                $document = ($document) ? $document : $this->fhm_tools->dmRepository("FhmPartnerBundle:PartnerGroup")->getByAlias($id);
-                $document = ($document) ? $document : $this->fhm_tools->dmRepository("FhmPartnerBundle:PartnerGroup")->getByName($id);
-                $instance = $this->fhm_tools->instanceData($document);
+            if ($id) {
+                $document = $this->get('fhm_tools')->dmRepository("FhmPartnerBundle:PartnerGroup")->getById($id);
+                $document = ($document) ? $document : $this->get('fhm_tools')->dmRepository(
+                    "FhmPartnerBundle:PartnerGroup"
+                )->getByAlias($id);
+                $document = ($document) ? $document : $this->get('fhm_tools')->dmRepository(
+                    "FhmPartnerBundle:PartnerGroup"
+                )->getByName($id);
                 // ERROR - unknown
-                if($document == "")
-                {
-                    throw $this->createNotFoundException($this->fhm_tools->trans('partner.group.error.unknown', array(), 'FhmPartnerBundle'));
-                }
-                // ERROR - Forbidden
-                elseif(!$instance->user->admin && ($document->getDelete() || !$document->getActive()))
-                {
-                    throw new HttpException(403, $this->fhm_tools->trans('partner.group.error.forbidden', array(), 'FhmPartnerBundle'));
-                }
-                // Change grouping
-                if($instance->grouping->different && $document->getGrouping())
-                {
-                    $this->get($this->fhm_tools->getParameters("grouping", "fhm_fhm"))->setGrouping($document->getFirstGrouping());
+                if ($document == "") {
+                    throw $this->createNotFoundException(
+                        $this->trans('partner.group.error.unknown', array(), 'FhmPartnerBundle')
+                    );
+                } // ERROR - Forbidden
+                elseif (!$this->getUser()->hasRole('ROLE_ADMIN') && ($document->getDelete() || !$document->getActive(
+                        ))
+                ) {
+                    throw new HttpException(
+                        403, $this->trans('partner.group.error.forbidden', array(), 'FhmPartnerBundle')
+                    );
                 }
             }
             // Partner
-            $classType = '\Fhm\FhmBundle\Form\Type\Front\SearchType';
-            $form      = $this->createForm(new $classType($instance), null);
-            $form->setData($this->get('request')->get($form->getName()));
-            $dataSearch     = $form->getData();
-            $dataPagination = $this->get('request')->get('FhmPagination');
-            $this->fhm_tools->setPagination($rows);
-            // Ajax pagination request
-            if($pagination && isset($dataPagination['pagination']))
-            {
-                $documents  = $document ?
-                    $this->fhm_tools->dmRepository()->getPartnerByGroupIndex($document, $dataSearch['search'], $dataPagination['pagination'], $this->pagination->page) :
-                    $this->fhm_tools->dmRepository()->getFrontIndex($dataSearch['search'], $dataPagination['pagination'], $this->pagination->page);
-                $pagination = $document ?
-                    $this->fhm_tools->getPagination($dataPagination['pagination'], count($documents), $this->fhm_tools->dmRepository("FhmPartnerBundle:Partner")->getPartnerByGroupCount($document, $dataSearch['search']), 'pagination', $this->fhm_tools->formRename($form->getName(), $dataSearch), $this->fhm_tools->getUrl('fhm_api_partner_detail', array('template' => $template, 'group' => $id, 'rows' => $rows, 'pagination' => $pagination))) :
-                    $this->fhm_tools->getPagination($dataPagination['pagination'], count($documents), $this->fhm_tools->dmRepository("FhmPartnerBundle:Partner")->getFrontCount($dataSearch['search']), 'pagination', $this->fhm_tools->formRename($form->getName(), $dataSearch), $this->fhm_tools->getUrl('fhm_api_partner_detail', array('template' => $template, 'group' => $id, 'rows' => $rows, 'pagination' => $pagination)));
-            }
-            // Router request
-            else
-            {
-                $documents = $document ?
-                    $this->fhm_tools->dmRepository()->getPartnerByGroupIndex($document, $dataSearch['search'], 1, $this->pagination->page) :
-                    $this->fhm_tools->dmRepository()->getFrontIndex($dataSearch['search'], 1, $this->pagination->page);
-                if($pagination)
-                {
-                    $pagination = $document ?
-                        $this->fhm_tools->getPagination(1, count($documents), $this->fhm_tools->dmRepository("FhmPartnerBundle:Partner")->getPartnerByGroupCount($document, $dataSearch['search']), 'pagination', $this->fhm_tools->formRename($form->getName(), $dataSearch), $this->fhm_tools->getUrl('fhm_api_partner_detail', array('template' => $template, 'group' => $id, 'rows' => $rows, 'pagination' => $pagination))) :
-                        $this->fhm_tools->getPagination(1, count($documents), $this->fhm_tools->dmRepository("FhmPartnerBundle:Partner")->getFrontCount($dataSearch['search']), 'pagination', $this->fhm_tools->formRename($form->getName(), $dataSearch), $this->fhm_tools->getUrl('fhm_api_partner_detail', array('template' => $template, 'group' => $id, 'rows' => $rows, 'pagination' => $pagination)));
-                }
-            }
+            $form = $this->createForm(SearchType::class, null);
+            $form->setData($this->get('request_stack')->getCurrentRequest()->get($form->getName()));
+            $dataSearch = $form->getData();
+            $documents = $document ? $this->get('fhm_tools')->dmRepository(self::$repository)->getPartnerByGroupIndex(
+                $document,
+                $dataSearch['search']
+            ) : $this->get('fhm_tools')->dmRepository(self::$repository)->getFrontIndex($dataSearch['search']);
+
         }
 
         return new Response(
             $this->renderView(
-                "::FhmPartner/Template/" . $template . ".html.twig",
+                "::FhmPartner/Template/".$template.".html.twig",
                 array(
-                    'document'   => $document,
-                    'documents'  => $documents,
-                    'pagination' => $pagination ? $pagination : array(),
-                    'instance'   => $instance,
-                    'form'       => $form ? $form->createView() : $form,
+                    'document' => $document,
+                    'documents' => $documents,
+                    'form' => $form ? $form->createView() : $form,
                 )
             )
         );

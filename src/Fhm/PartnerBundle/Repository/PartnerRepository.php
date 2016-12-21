@@ -14,7 +14,10 @@ use Doctrine\ODM\MongoDB\Mapping\ClassMetadata;
 class PartnerRepository extends FhmRepository
 {
     /**
-     * Constructor
+     * PartnerRepository constructor.
+     * @param DocumentManager $dm
+     * @param UnitOfWork $uow
+     * @param ClassMetadata $class
      */
     public function __construct(DocumentManager $dm, UnitOfWork $uow, ClassMetadata $class)
     {
@@ -23,28 +26,14 @@ class PartnerRepository extends FhmRepository
 
     /**
      * @param string $search
-     * @param int    $page
-     * @param int    $count
-     * @param string $grouping
      *
      * @return mixed
      * @throws \Doctrine\ODM\MongoDB\MongoDBException
      */
-    public function getFrontIndex($search = "", $page = 1, $count = 5, $grouping = "")
+    public function getFrontIndex($search = "")
     {
-        $builder = (($page > 0 && $count > 0) && $search) ? $this->search($search) : $this->createQueryBuilder();
-        // Grouping
-        if($grouping != "")
-        {
-            $builder->addOr($builder->expr()->field('grouping')->in((array) $grouping));
-            $builder->addOr($builder->expr()->field('share')->equals(true));
-        }
-        // Pagination
-        if($page > 0 && $count > 0)
-        {
-            $builder->limit($count);
-            $builder->skip(($page - 1) * $count);
-        }
+        $builder = ($search) ? $this->search($search) : $this->createQueryBuilder();
+
         // Dates
         $builder->addAnd(
             $builder->expr()
@@ -74,15 +63,10 @@ class PartnerRepository extends FhmRepository
      * @return int
      * @throws \Doctrine\ODM\MongoDB\MongoDBException
      */
-    public function getFrontCount($search = "", $grouping = "")
+    public function getFrontCount($search = "")
     {
         $builder = ($search) ? $this->search($search) : $this->createQueryBuilder();
-        // Grouping
-        if($grouping != "")
-        {
-            $builder->addOr($builder->expr()->field('grouping')->in((array) $grouping));
-            $builder->addOr($builder->expr()->field('share')->equals(true));
-        }
+
         // Dates
         $builder->addAnd(
             $builder->expr()
@@ -113,9 +97,9 @@ class PartnerRepository extends FhmRepository
      * @return mixed
      * @throws \Doctrine\ODM\MongoDB\MongoDBException
      */
-    public function getPartnerByGroupIndex(\Fhm\PartnerBundle\Document\PartnerGroup $partnergroup, $search = "", $page = 1, $count = 5)
+    public function getPartnerByGroupIndex(\Fhm\PartnerBundle\Document\PartnerGroup $partnergroup, $search = "")
     {
-        $builder = (($page > 0 && $count > 0) && $search) ? $this->search($search) : $this->createQueryBuilder();
+        $builder = ($search) ? $this->search($search) : $this->createQueryBuilder();
         // Global
         if($partnergroup->getAddGlobal())
         {
@@ -128,12 +112,6 @@ class PartnerRepository extends FhmRepository
         else
         {
             $builder->field('partnergroups.id')->equals($partnergroup->getId());
-        }
-        // Pagination
-        if($page > 0 && $count > 0)
-        {
-            $builder->limit($count);
-            $builder->skip(($page - 1) * $count);
         }
         // Dates
         $builder->addAnd(

@@ -2,7 +2,9 @@
 namespace Fhm\PartnerBundle\Controller\Group;
 
 use Fhm\FhmBundle\Controller\RefFrontController as FhmController;
+use Fhm\FhmBundle\Form\Type\Admin\SearchType;
 use Fhm\PartnerBundle\Document\Partner;
+use Fhm\PartnerBundle\Document\PartnerGroup;
 use Fhm\PartnerBundle\Form\Type\Front\Group\UpdateType;
 use Fhm\PartnerBundle\Form\Type\Front\Group\CreateType;
 use Symfony\Component\HttpFoundation\Request;
@@ -10,22 +12,37 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 /**
- * @Route("/partnergroup", service="fhm_partner_controller_group_front")
+ * @Route("/partnergroup")
+ * ------------------------------------------
+ * Class FrontController
+ * @package Fhm\PartnerBundle\Controller\Group
  */
 class FrontController extends FhmController
 {
     /**
-     * FrontController constructor.
-     *
-     * @param \Fhm\FhmBundle\Services\Tools $tools
+     * AdminController constructor.
+     * @param string $repository
+     * @param string $source
+     * @param string $domain
+     * @param string $translation
+     * @param string $document
+     * @param string $route
      */
-    public function __construct(\Fhm\FhmBundle\Services\Tools $tools)
-    {
-        $this->setFhmTools($tools);
-        parent::__construct('Fhm', 'Partner', 'partner_group', 'PartnerGroup');
-        $this->form->type->create = CreateType::class;
-        $this->form->type->update = UpdateType::class;
-        $this->translation = array('FhmPartnerBundle', 'partner.group');
+    public function __construct(
+        $repository = "FhmPartnerBundle:PartnerGroup",
+        $source = "fhm",
+        $domain = "FhmPartnerBundle",
+        $translation = "partner.group",
+        $document = PartnerGroup::class,
+        $route = 'partner_group'
+    ) {
+        self::$repository = $repository;
+        self::$source = $source;
+        self::$domain = $domain;
+        self::$translation = $translation;
+        self::$document = new $document();
+        self::$class = get_class(self::$document);
+        self::$route = $route;
     }
 
     /**
@@ -40,56 +57,12 @@ class FrontController extends FhmController
     {
         $response = parent::indexAction();
         foreach ($response['documents'] as $key => $document) {
-            $response['documents'][$key]->documents = $this->fhm_tools->dmRepository(
+            $response['documents'][$key]->documents = $this->get('fhm_tools')->dmRepository(
                 "FhmPartnerBundle:Partner"
             )->getPartnerByGroupAll($document);
         }
 
         return $response;
-    }
-
-    /**
-     * @Route
-     * (
-     *      path="/create",
-     *      name="fhm_partner_group_create"
-     * )
-     * @Template("::FhmPartner/Front/Group/create.html.twig")
-     */
-    public function createAction(Request $request)
-    {
-        // For activate this route, delete next line
-        throw $this->createNotFoundException($this->fhm_tools->trans('fhm.error.route', array(), 'FhmFhmBundle'));
-    }
-
-    /**
-     * @Route
-     * (
-     *      path="/duplicate/{id}",
-     *      name="fhm_partner_group_duplicate",
-     *      requirements={"id"="[a-z0-9]*"}
-     * )
-     * @Template("::FhmPartner/Front/Group/create.html.twig")
-     */
-    public function duplicateAction(Request $request, $id)
-    {
-        // For activate this route, delete next line
-        throw $this->createNotFoundException($this->fhm_tools->trans('fhm.error.route', array(), 'FhmFhmBundle'));
-    }
-
-    /**
-     * @Route
-     * (
-     *      path="/update/{id}",
-     *      name="fhm_partner_group_update",
-     *      requirements={"id"="[a-z0-9]*"}
-     * )
-     * @Template("::FhmPartner/Front/Group/update.html.twig")
-     */
-    public function updateAction(Request $request, $id)
-    {
-        // For activate this route, delete next line
-        throw $this->createNotFoundException($this->fhm_tools->trans('fhm.error.route', array(), 'FhmFhmBundle'));
     }
 
     /**
@@ -105,81 +78,23 @@ class FrontController extends FhmController
     {
         $response = parent::detailAction($id);
         $document = $response['document'];
-        $classType = $this->form->type->search;
-        $form = $this->createForm($classType);
+        $form = $this->createForm(SearchType::class);
         $form->setData($this->get('request_stack')->get($form->getName()));
         $dataSearch = $form->getData();
-        $dataPagination = $this->get('request_stack')->get('FhmPagination');
-        $this->translation = array('FhmPartnerBundle', 'partner');
-        // Ajax pagination request
-        if (isset($dataPagination['pagination'])) {
-            $documents = $this->fhm_tools->dmRepository("FhmPartnerBundle:Partner")->getPartnerByGroupIndex(
-                $document,
-                $dataSearch['search'],
-                $dataPagination['pagination'],
-                $this->fhm_tools->getParameters(array('pagination', 'front', 'page'), 'fhm_fhm')
-            );
+        $documents = $this->get('fhm_tools')->dmRepository("FhmPartnerBundle:Partner")->getPartnerByGroupIndex(
+            $document,
+            $dataSearch['search']
+        );
 
-            return array_merge(
-                $response,
-                array(
-                    'documents' => $documents,
-                    'pagination' => $this->fhm_tools->getPagination(
-                        $dataPagination['pagination'],
-                        count($documents),
-                        $this->fhm_tools->dmRepository("FhmPartnerBundle:Partner")->getPartnerByGroupCount(
-                            $document,
-                            $dataSearch['search']
-                        ),
-                        'pagination',
-                        $this->fhm_tools->formRename($form->getName(), $dataSearch),
-                        $this->fhm_tools->getUrl('fhm_partner_group_lite', array('id' => $id))
-                    ),
-                )
-            );
-        } // Router request
-        else {
-            $documents = $this->fhm_tools->dmRepository("FhmPartnerBundle:Partner")->getPartnerByGroupIndex(
-                $document,
-                $dataSearch['search'],
-                1,
-                $this->fhm_tools->getParameters(array('pagination', 'front', 'page'), 'fhm_fhm')
-            );
-
-            return array_merge(
-                $response,
-                array(
-                    'documents' => $documents,
-                    'pagination' => $this->fhm_tools->getPagination(
-                        1,
-                        count($documents),
-                        $this->fhm_tools->dmRepository("FhmPartnerBundle:Partner")->getPartnerByGroupCount(
-                            $document,
-                            $dataSearch['search']
-                        ),
-                        'pagination',
-                        $this->fhm_tools->formRename($form->getName(), $dataSearch),
-                        $this->fhm_tools->getUrl('fhm_partner_group_lite', array('id' => $id))
-                    ),
-                    'form' => $form->createView(),
-                )
-            );
-        }
+        return array_merge(
+            $response,
+            array(
+                'documents' => $documents,
+                'form' => $form->createView(),
+            )
+        );
     }
 
-    /**
-     * @Route
-     * (
-     *      path="/delete/{id}",
-     *      name="fhm_partner_group_delete",
-     *      requirements={"id"="[a-z0-9]*"}
-     * )
-     */
-    public function deleteAction($id)
-    {
-        // For activate this route, delete next line
-        throw $this->createNotFoundException($this->fhm_tools->trans('fhm.error.route', array(), 'FhmFhmBundle'));
-    }
 
     /**
      * @Route
@@ -194,61 +109,17 @@ class FrontController extends FhmController
     {
         $response = parent::detailAction($id);
         $document = $response['document'];
-        $dataPagination = $this->get('request_stack')->get('FhmPagination');
-        $this->translation = array('FhmPartnerBundle', 'partner');
-        // Ajax pagination request
-        if (isset($dataPagination['pagination'])) {
-            $documents = $this->fhm_tools->dmRepository("FhmPartnerBundle:Partner")->getPartnerByGroupIndex(
-                $document,
-                '',
-                $dataPagination['pagination'],
-                $this->fhm_tools->getParameters(array('pagination', 'front', 'page'), 'fhm_fhm')
-            );
+        $documents = $this->get('fhm_tools')->dmRepository("FhmPartnerBundle:Partner")->getPartnerByGroupIndex(
+            $document,
+            ''
+        );
 
-            return array_merge(
-                $response,
-                array(
-                    'documents' => $documents,
-                    'pagination' => $this->fhm_tools->getPagination(
-                        $dataPagination['pagination'],
-                        count($documents),
-                        $this->fhm_tools->dmRepository("FhmPartnerBundle:Partner")->getPartnerByGroupCount(
-                            $document,
-                            ''
-                        ),
-                        'pagination',
-                        array(),
-                        $this->fhm_tools->getUrl('fhm_partner_group_template_brief', array('id' => $id))
-                    ),
-                )
-            );
-        } // Router request
-        else {
-            $documents = $this->fhm_tools->dmRepository("FhmPartnerBundle:Partner")->getPartnerByGroupIndex(
-                $document,
-                '',
-                1,
-                $this->fhm_tools->getParameters(array('pagination', 'front', 'page'), 'fhm_fhm')
-            );
-
-            return array_merge(
-                $response,
-                array(
-                    'documents' => $documents,
-                    'pagination' => $this->fhm_tools->getPagination(
-                        1,
-                        count($documents),
-                        $this->fhm_tools->dmRepository("FhmPartnerBundle:Partner")->getPartnerByGroupCount(
-                            $document,
-                            ''
-                        ),
-                        'pagination',
-                        array(),
-                        $this->fhm_tools->getUrl('fhm_partner_group_template_brief', array('id' => $id))
-                    ),
-                )
-            );
-        }
+        return array_merge(
+            $response,
+            array(
+                'documents' => $documents,
+            )
+        );
     }
 
     /**
