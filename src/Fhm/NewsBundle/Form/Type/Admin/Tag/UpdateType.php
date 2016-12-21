@@ -13,11 +13,10 @@ class UpdateType extends FhmType
 {
     /**
      * @param FormBuilderInterface $builder
-     * @param array $options.
+     * @param array $options .
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $this->setTranslation('news');
         parent::buildForm($builder, $options);
     }
 

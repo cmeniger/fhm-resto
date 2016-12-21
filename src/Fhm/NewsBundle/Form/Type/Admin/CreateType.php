@@ -27,102 +27,94 @@ class CreateType extends FhmType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         parent::buildForm($builder, $options);
-        $builder
-            ->add('title', TextType::class, array('label' => $options['translation_route'].'.admin.create.form.title'))
-            ->add(
-                'subtitle',
-                TextType::class,
-                array('label' => $options['translation_route'].'.admin.create.form.subtitle', 'required' => false)
+        $builder->add(
+            'title',
+            TextType::class,
+            array('label' => $options['translation_route'].'.admin.create.form.title')
+        )->add(
+            'subtitle',
+            TextType::class,
+            array('label' => $options['translation_route'].'.admin.create.form.subtitle', 'required' => false)
+        )->add(
+            'resume',
+            TextareaType::class,
+            array(
+                'label' => $options['translation_route'].'.admin.create.form.resume',
+                'attr' => array('class' => 'editor'),
             )
-            ->add(
-                'resume',
-                TextareaType::class,
-                array(
-                    'label' => $options['translation_route'].'.admin.create.form.resume',
-                    'attr' => array('class' => 'editor'),
-                )
+        )->add(
+            'content',
+            TextareaType::class,
+            array(
+                'label' => $options['translation_route'].'.admin.create.form.content',
+                'attr' => array('class' => 'editor'),
             )
-            ->add(
-                'content',
-                TextareaType::class,
-                array(
-                    'label' => $options['translation_route'].'.admin.create.form.content',
-                    'attr' => array('class' => 'editor'),
-                )
+        )->add(
+            'date_start',
+            DateTimeType::class,
+            array(
+                'label' => $options['translation_route'].'.admin.create.form.start',
+                'widget' => 'single_text',
+                'input' => 'datetime',
+                'format' => 'dd/MM/yyyy HH:mm',
+                'attr' => array('class' => 'datetimepicker'),
+                'required' => false,
             )
-            ->add(
-                'date_start',
-                DateTimeType::class,
-                array(
-                    'label' => $options['translation_route'].'.admin.create.form.start',
-                    'widget' => 'single_text',
-                    'input' => 'datetime',
-                    'format' => 'dd/MM/yyyy HH:mm',
-                    'attr' => array('class' => 'datetimepicker'),
-                    'required' => false,
-                )
+        )->add(
+            'date_end',
+            DateTimeType::class,
+            array(
+                'label' => $options['translation_route'].'.admin.create.form.end',
+                'widget' => 'single_text',
+                'input' => 'datetime',
+                'format' => 'dd/MM/yyyy HH:mm',
+                'attr' => array('class' => 'datetimepicker'),
+                'required' => false,
             )
-            ->add(
-                'date_end',
-                DateTimeType::class,
-                array(
-                    'label' => $options['translation_route'].'.admin.create.form.end',
-                    'widget' => 'single_text',
-                    'input' => 'datetime',
-                    'format' => 'dd/MM/yyyy HH:mm',
-                    'attr' => array('class' => 'datetimepicker'),
-                    'required' => false,
-                )
+        )->add(
+            'image',
+            MediaType::class,
+            array(
+                'label' => $options['translation_route'].'.admin.create.form.image',
+                'filter' => 'image/*',
+                'required' => false,
             )
-            ->add(
-                'image',
-                MediaType::class,
-                array(
-                    'label' => $options['translation_route'].'.admin.create.form.image',
-                    'filter' => 'image/*',
-                    'required' => false,
-                )
+        )->add(
+            'gallery',
+            DocumentType::class,
+            array(
+                'label' => $options['translation_route'].'.admin.create.form.gallery',
+                'class' => 'FhmGalleryBundle:Gallery',
+                'choice_label' => 'name',
+                'query_builder' => function (GalleryRepository $dr) use ($options) {
+                    return $dr->getFormEnable($options['filter']);
+                },
+                'required' => false,
             )
-            ->add(
-                'gallery',
-                DocumentType::class,
-                array(
-                    'label' => $options['translation_route'].'.admin.create.form.gallery',
-                    'class' => 'FhmGalleryBundle:Gallery',
-                    'choice_label' => 'name',
-                    'query_builder' => function (GalleryRepository $dr) use ($options) {
-                        return $dr->getFormEnable($options['filter']);
-                    },
-                    'required' => false,
-                )
+        )->add(
+            'newsgroups',
+            DocumentType::class,
+            array(
+                'label' => $options['translation_route'].'.admin.create.form.newsgroups',
+                'class' => 'FhmNewsBundle:NewsGroup',
+                'choice_label' => 'name',
+                'query_builder' => function (NewsGroupRepository $dr) use ($options) {
+                    return $dr->getFormEnable($options['filter']);
+                },
+                'multiple' => true,
+                'required' => false,
+                'by_reference' => false,
             )
-            ->add(
-                'newsgroups',
-                DocumentType::class,
-                array(
-                    'label' => $options['translation_route'].'.admin.create.form.newsgroups',
-                    'class' => 'FhmNewsBundle:NewsGroup',
-                    'choice_label' => 'name',
-                    'query_builder' => function (NewsGroupRepository $dr) use ($options) {
-                        return $dr->getFormEnable($options['filter']);
-                    },
-                    'multiple' => true,
-                    'required' => false,
-                    'by_reference' => false,
-                )
+        )->add(
+            'author',
+            AutocompleteType::class,
+            array(
+                'label' => $options['translation_route'].'.admin.create.form.author',
+                'class' => 'FhmUserBundle:User',
+                'url' => 'fhm_api_user_autocomplete',
+                'required' => false,
             )
-            ->add(
-                'author',
-                AutocompleteType::class,
-                array(
-                    'label' => $options['translation_route'].'.admin.create.form.author',
-                    'class' => 'FhmUserBundle:User',
-                    'url' => 'fhm_api_user_autocomplete',
-                    'required' => false,
-                )
-            )
-            ->remove('name')
-            ->remove('description');
+        )->remove('name')->remove('description');
     }
-    
+
 }

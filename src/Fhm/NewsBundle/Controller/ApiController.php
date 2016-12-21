@@ -2,6 +2,7 @@
 namespace Fhm\NewsBundle\Controller;
 
 use Fhm\FhmBundle\Controller\RefApiController as FhmController;
+use Fhm\FhmBundle\Form\Type\Admin\SearchType;
 use Fhm\NewsBundle\Document\News;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -11,21 +12,36 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 /**
  * @Route("/api/news")
+ * -----------------------------------
+ * Class ApiController
+ * @package Fhm\NewsBundle\Controller
  */
 class ApiController extends FhmController
 {
     /**
      * ApiController constructor.
+     * @param string $repository
+     * @param string $source
+     * @param string $domain
+     * @param string $translation
+     * @param $document
+     * @param string $route
      */
-    public function __construct()
-    {
-        self::$repository = "FhmNewsBundle:News";
-        self::$source = "fhm";
-        self::$domain = "FhmMenuBundle";
-        self::$translation = "news";
-        self::$document = new News();
+    public function __construct(
+        $repository = "FhmNewsBundle:News",
+        $source = "fhm",
+        $domain = "FhmNewsBundle",
+        $translation = "news",
+        $document = News::class,
+        $route = 'news'
+    ) {
+        self::$repository = $repository;
+        self::$source = $source;
+        self::$domain = $domain;
+        self::$translation = $translation;
+        self::$document = new $document();
         self::$class = get_class(self::$document);
-        self::$route = 'news';
+        self::$route = $route;
     }
 
     /**
@@ -88,8 +104,7 @@ class ApiController extends FhmController
                     ) || !$document->getActive())
             ) {
                 throw new HttpException(
-                    403,
-                    $this->trans('news.group.error.forbidden', array(), 'FhmNewsBundle')
+                    403, $this->trans('news.group.error.forbidden', array(), 'FhmNewsBundle')
                 );
             }
         } else {
@@ -113,14 +128,12 @@ class ApiController extends FhmController
                     ) && ($document->getDelete() || !$document->getActive())
                 ) {
                     throw new HttpException(
-                        403,
-                        $this->trans('news.group.error.forbidden', array(), 'FhmNewsBundle')
+                        403, $this->trans('news.group.error.forbidden', array(), 'FhmNewsBundle')
                     );
                 }
             }
             // News
-            $classType = '\Fhm\FhmBundle\Form\Type\Front\SearchType';
-            $form = $this->createForm($classType);
+            $form = $this->createForm(SearchType::class);
             $form->setData($this->get('request_stack')->getCurrentRequest()->get($form->getName()));
             $dataSearch = $form->getData();
             $documents = $this->get('fhm_tools')->dmRepository(self::$repository)->getNewsByGroupIndex(

@@ -2,6 +2,8 @@
 namespace Fhm\NewsBundle\Controller\Group;
 
 use Fhm\FhmBundle\Controller\RefAdminController as FhmController;
+use Fhm\FhmBundle\Form\Handler\Admin\CreateHandler;
+use Fhm\FhmBundle\Form\Handler\Admin\UpdateHandler;
 use Fhm\NewsBundle\Document\NewsGroup;
 use Fhm\NewsBundle\Form\Type\Admin\Group\CreateType;
 use Fhm\NewsBundle\Form\Type\Admin\Group\UpdateType;
@@ -11,22 +13,37 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 /**
- * @Route("/admin/newsgroup", service="fhm_news_controller_group_admin")
+ * @Route("/admin/newsgroup")
+ * ----------------------------------------
+ * Class AdminController
+ * @package Fhm\NewsBundle\Controller\Group
  */
 class AdminController extends FhmController
 {
     /**
-     * AdminController constructor.
-     *
-     * @param \Fhm\FhmBundle\Services\Tools $tools
+     * FrontController constructor.
+     * @param string $repository
+     * @param string $source
+     * @param string $domain
+     * @param string $translation
+     * @param $document
+     * @param string $route
      */
-    public function __construct(\Fhm\FhmBundle\Services\Tools $tools)
-    {
-        $this->setFhmTools($tools);
-        parent::__construct('Fhm', 'News', 'news_group', 'NewsGroup');
-        $this->form->type->create = CreateType::class;
-        $this->form->type->update = UpdateType::class;
-        $this->translation = array('FhmNewsBundle', 'news.group');
+    public function __construct(
+        $repository = "FhmNewsBundle:NewsGroup",
+        $source = "fhm",
+        $domain = "FhmNewsBundle",
+        $translation = "news.group",
+        $document = NewsGroup::class,
+        $route = 'news_group'
+    ) {
+        self::$repository = $repository;
+        self::$source = $source;
+        self::$domain = $domain;
+        self::$translation = $translation;
+        self::$document = new $document();
+        self::$class = get_class(self::$document);
+        self::$route = $route;
     }
 
     /**
@@ -52,6 +69,9 @@ class AdminController extends FhmController
      */
     public function createAction(Request $request)
     {
+        self::$form = new \stdClass();
+        self::$form->type = CreateType::class;
+        self::$form->handler = CreateHandler::class;
         return parent::createAction($request);
     }
 
@@ -66,6 +86,9 @@ class AdminController extends FhmController
      */
     public function duplicateAction(Request $request, $id)
     {
+        self::$form = new \stdClass();
+        self::$form->type = CreateType::class;
+        self::$form->handler = CreateHandler::class;
         return parent::duplicateAction($request, $id);
     }
 
@@ -80,6 +103,9 @@ class AdminController extends FhmController
      */
     public function updateAction(Request $request, $id)
     {
+        self::$form = new \stdClass();
+        self::$form->type = UpdateType::class;
+        self::$form->handler = UpdateHandler::class;
         return parent::updateAction($request, $id);
     }
 
@@ -94,13 +120,11 @@ class AdminController extends FhmController
      */
     public function detailAction($id)
     {
-        $document = $this->fhm_tools->dmRepository()->find($id);
-        $instance = $this->fhm_tools->instanceData($document);
+        $document = $this->get('fhm_tools')->dmRepository(self::$repository)->find($id);
 
         return array_merge(
             array(
-                'news1' => $this->fhm_tools->dmRepository('FhmNewsBundle:News')->getAllEnable(
-                    $instance->grouping->current
+                'news1' => $this->get('fhm_tools')->dmRepository('FhmNewsBundle:News')->getAllEnable(
                 ),
                 'news2' => $this->getList($document->getNews()),
             ),
@@ -203,18 +227,6 @@ class AdminController extends FhmController
     /**
      * @Route
      * (
-     *      path="/grouping",
-     *      name="fhm_admin_news_group_grouping"
-     * )
-     */
-    public function groupingAction(Request $request)
-    {
-        return parent::groupingAction($request);
-    }
-
-    /**
-     * @Route
-     * (
      *      path="/news",
      *      name="fhm_admin_news_group_news",
      *      requirements={"id"="[a-z0-9]*"}
@@ -223,15 +235,15 @@ class AdminController extends FhmController
     public function newsAction(Request $request)
     {
         $news = json_decode($request->get('list'));
-        $document = $this->fhm_tools->dmRepository()->find($request->get('id'));
+        $document = $this->get('fhm_tools')->dmRepository(self::$repository)->find($request->get('id'));
         foreach ($document->getNews() as $new) {
             $document->removeNews($new);
         }
         foreach ($news as $key => $data) {
-            $new = $this->fhm_tools->dmRepository('FhmNewsBundle:News')->find($data->id);
+            $new = $this->get('fhm_tools')->dmRepository('FhmNewsBundle:News')->find($data->id);
             $document->addNews($new);
         }
-        $this->fhm_tools->dmPersist($document);
+        $this->get('fhm_tools')->dmPersist($document);
 
         return new Response();
     }

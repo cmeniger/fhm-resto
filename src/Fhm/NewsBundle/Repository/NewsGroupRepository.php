@@ -15,7 +15,10 @@ use Doctrine\ODM\MongoDB\Mapping\ClassMetadata;
 class NewsGroupRepository extends FhmRepository
 {
     /**
-     * Constructor
+     * NewsGroupRepository constructor.
+     * @param DocumentManager $dm
+     * @param UnitOfWork $uow
+     * @param ClassMetadata $class
      */
     public function __construct(DocumentManager $dm, UnitOfWork $uow, ClassMetadata $class)
     {

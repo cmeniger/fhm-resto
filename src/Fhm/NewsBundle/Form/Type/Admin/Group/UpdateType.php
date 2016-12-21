@@ -20,44 +20,41 @@ class UpdateType extends FhmType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $this->setTranslation('news');
         parent::buildForm($builder, $options);
-        $builder
-            ->add(
-                'add_global',
-                CheckboxType::class,
-                array('label' => $options['translation_route'].'.admin.update.form.add_global', 'required' => false)
+        $builder->add(
+            'add_global',
+            CheckboxType::class,
+            array('label' => $options['translation_route'].'.admin.update.form.add_global', 'required' => false)
+        )->add(
+            'sort',
+            ChoiceType::class,
+            array(
+                'label' => $options['translation_route'].'.admin.update.form.sort',
+                'choices' => $this->sortChoices($options),
             )
-            ->add(
-                'sort',
-                ChoiceType::class,
-                array('label' => $options['translation_route'].'.admin.update.form.sort', 'choices' => $this->_sortChoices())
+        )->add(
+            'news',
+            DocumentType::class,
+            array(
+                'label' => $options['translation_route'].'.admin.update.form.news',
+                'class' => 'FhmNewsBundle:News',
+                'choice_label' => 'name',
+                'query_builder' => function (\Fhm\NewsBundle\Repository\NewsRepository $dr) {
+                    return $dr->getFormEnable();
+                },
+                'required' => false,
+                'multiple' => true,
+                'by_reference' => false,
             )
-            ->add(
-                'news',
-                DocumentType::class,
-                array(
-                    'label' => $options['translation_route'].'.admin.update.form.news',
-                    'class' => 'FhmNewsBundle:News',
-                    'choice_label' => 'name',
-                    'query_builder' => function (\Fhm\NewsBundle\Repository\NewsRepository $dr) {
-                        return $dr->getFormEnable();
-                    },
-                    'required' => false,
-                    'multiple' => true,
-                    'by_reference' => false,
-                )
-            )
-            ->remove('global');
+        )->remove('global');
     }
 
     /**
      * @return array
      */
-    private function _sortChoices()
+    private function sortChoices($options)
     {
-        return array
-        (
+        return array(
             "title" => $options['translation_route'].'.admin.sort.title.asc',
             "title desc" => $options['translation_route'].'.admin.sort.title.desc',
             "date_start" => $options['translation_route'].'.admin.sort.start.asc',

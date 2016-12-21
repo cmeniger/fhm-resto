@@ -2,6 +2,7 @@
 namespace Fhm\NewsBundle\Controller\Group;
 
 use Fhm\FhmBundle\Controller\RefApiController as FhmController;
+use Fhm\NewsBundle\Document\NewsGroup;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
@@ -9,20 +10,37 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 /**
- * @Route("/api/news/group", service="fhm_news_controller_group_api")
+ * @Route("/api/news/group")
+ * -----------------------------------------
+ * Class ApiController
+ * @package Fhm\NewsBundle\Controller\Group
  */
 class ApiController extends FhmController
 {
     /**
-     * ApiController constructor.
-     *
-     * @param \Fhm\FhmBundle\Services\Tools $tools
+     * FrontController constructor.
+     * @param string $repository
+     * @param string $source
+     * @param string $domain
+     * @param string $translation
+     * @param $document
+     * @param string $route
      */
-    public function __construct(\Fhm\FhmBundle\Services\Tools $tools)
-    {
-        $this->setFhmTools($tools);
-        parent::__construct('Fhm', 'News', 'news_group', 'NewsGroup');
-        $this->translation = array('FhmNewsBundle', 'news.group');
+    public function __construct(
+        $repository = "FhmNewsBundle:NewsGroup",
+        $source = "fhm",
+        $domain = "FhmNewsBundle",
+        $translation = "news.group",
+        $document = NewsGroup::class,
+        $route = 'news_group'
+    ) {
+        self::$repository = $repository;
+        self::$source = $source;
+        self::$domain = $domain;
+        self::$translation = $translation;
+        self::$document = new $document();
+        self::$class = get_class(self::$document);
+        self::$route = $route;
     }
 
     /**

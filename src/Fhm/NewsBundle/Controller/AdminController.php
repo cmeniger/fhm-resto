@@ -14,21 +14,36 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 /**
  * @Route("/admin/news")
+ * ----------------------------------
+ * Class AdminController
+ * @package Fhm\NewsBundle\Controller
  */
 class AdminController extends FhmController
 {
     /**
      * AdminController constructor.
+     * @param string $repository
+     * @param string $source
+     * @param string $domain
+     * @param string $translation
+     * @param $document
+     * @param string $route
      */
-    public function __construct()
-    {
-        self::$repository = "FhmNewsBundle:News";
-        self::$source = "fhm";
-        self::$domain = "FhmMenuBundle";
-        self::$translation = "news";
-        self::$document = new News();
+    public function __construct(
+        $repository = "FhmNewsBundle:News",
+        $source = "fhm",
+        $domain = "FhmNewsBundle",
+        $translation = "news",
+        $document = News::class,
+        $route = 'news'
+    ) {
+        self::$repository = $repository;
+        self::$source = $source;
+        self::$domain = $domain;
+        self::$translation = $translation;
+        self::$document = new $document();
         self::$class = get_class(self::$document);
-        self::$route = 'news';
+        self::$route = $route;
     }
 
     /**
@@ -57,6 +72,7 @@ class AdminController extends FhmController
         self::$form = new \stdClass();
         self::$form->type = CreateType::class;
         self::$form->handler = CreateHandler::class;
+
         return parent::createAction($request);
     }
 
@@ -74,6 +90,7 @@ class AdminController extends FhmController
         self::$form = new \stdClass();
         self::$form->type = CreateType::class;
         self::$form->handler = CreateHandler::class;
+
         return parent::duplicateAction($request, $id);
     }
 
@@ -91,6 +108,7 @@ class AdminController extends FhmController
         self::$form = new \stdClass();
         self::$form->type = UpdateType::class;
         self::$form->handler = UpdateHandler::class;
+
         return parent::updateAction($request, $id);
     }
 

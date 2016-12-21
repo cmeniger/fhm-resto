@@ -10,20 +10,37 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 /**
- * @Route("/api/newstag", service="fhm_news_controller_tag_api")
+ * @Route("/api/newstag")
+ * --------------------------------------
+ * Class ApiController
+ * @package Fhm\NewsBundle\Controller\Tag
  */
 class ApiController extends FhmController
 {
     /**
      * ApiController constructor.
-     *
-     * @param \Fhm\FhmBundle\Services\Tools $tools
+     * @param string $repository
+     * @param string $source
+     * @param string $domain
+     * @param string $translation
+     * @param $document
+     * @param string $route
      */
-    public function __construct(\Fhm\FhmBundle\Services\Tools $tools)
-    {
-        $this->setFhmTools($tools);
-        parent::__construct('Fhm', 'News', 'news_tag', 'NewsTag');
-        $this->translation = array('FhmNewsBundle', 'news.tag');
+    public function __construct(
+        $repository = "FhmNewsBundle:NewsTag",
+        $source = "fhm",
+        $domain = "FhmNewsBundle",
+        $translation = "news.tag",
+        $document = NewsTag::class,
+        $route = 'news_tag'
+    ) {
+        self::$repository = $repository;
+        self::$source = $source;
+        self::$domain = $domain;
+        self::$translation = $translation;
+        self::$document = new $document();
+        self::$class = get_class(self::$document);
+        self::$route = $route;
     }
 
     /**
@@ -50,31 +67,5 @@ class ApiController extends FhmController
     public function autocompleteAction(Request $request)
     {
         return parent::autocompleteAction($request);
-    }
-
-    /**
-    * @Route
-    * (
-    *      path="/historic",
-    *      name="fhm_api_news_tag_historic"
-    * )
-    * @Template("::FhmNews/Api/Tag/historic.html.twig")
-    */
-    public function historicAction(Request $request)
-    {
-        return parent::historicAction($request);
-    }
-
-    /**
-    * @Route
-    * (
-    *      path="/historic/copy/{id}",
-    *      name="fhm_api_news_tag_historic_copy",
-    *      requirements={"id"="[a-z0-9]*"}
-    * )
-    */
-    public function historicCopyAction(Request $request, $id)
-    {
-        return parent::historicCopyAction($request, $id);
     }
 }
