@@ -14,7 +14,10 @@ use Doctrine\ODM\MongoDB\Mapping\ClassMetadata;
 class NoteRepository extends FhmRepository
 {
     /**
-     * Constructor
+     * NoteRepository constructor.
+     * @param DocumentManager $dm
+     * @param UnitOfWork $uow
+     * @param ClassMetadata $class
      */
     public function __construct(DocumentManager $dm, UnitOfWork $uow, ClassMetadata $class)
     {
@@ -30,8 +33,7 @@ class NoteRepository extends FhmRepository
      */
     public function getByUserAndObject($user, $object)
     {
-        if($user == '' || $object == '')
-        {
+        if ($user == '' || $object == '') {
             return '';
         }
         $builder = $this->createQueryBuilder();
@@ -39,11 +41,9 @@ class NoteRepository extends FhmRepository
         $builder->field('parent.$id')->equals(new \MongoId($object->getId()));
         $builder->field('active')->equals(true);
         $builder->field('delete')->equals(false);
-        $builder->sort('date_create','desc');
+        $builder->sort('date_create', 'desc');
 
-        return $builder
-            ->getQuery()
-            ->getSingleResult();
+        return $builder->getQuery()->getSingleResult();
     }
 
     /**
@@ -53,20 +53,19 @@ class NoteRepository extends FhmRepository
      */
     public function getAverageByObject($object)
     {
-        if($object == '')
-        {
+        if ($object == '') {
             return '';
         }
-        $note    = 0;
+        $note = 0;
         $builder = $this->createQueryBuilder();
         $builder->field('parent.$id')->equals(new \MongoId($object));
         $builder->field('active')->equals(true);
         $builder->field('delete')->equals(false);
-        $builder->group(array('object' => 1), array('note' => 0), array('note' => 1))
-            ->reduce('function ( curr, result ){ result.note += curr.note;}');
+        $builder->group(array('object' => 1), array('note' => 0), array('note' => 1))->reduce(
+            'function ( curr, result ){ result.note += curr.note;}'
+        );
         $result = $builder->getQuery()->execute()->toArray();
-        if(!empty($result))
-        {
+        if (!empty($result)) {
             $note = $result[0]['note'];
         }
 
@@ -80,8 +79,7 @@ class NoteRepository extends FhmRepository
      */
     public function getByObject($object)
     {
-        if($object == '')
-        {
+        if ($object == '') {
             return '';
         }
         $builder = $this->createQueryBuilder();
@@ -100,8 +98,7 @@ class NoteRepository extends FhmRepository
      */
     public function getCountByObject($object)
     {
-        if($object == '')
-        {
+        if ($object == '') {
             return '';
         }
         $builder = $this->createQueryBuilder();
@@ -109,10 +106,7 @@ class NoteRepository extends FhmRepository
         $builder->field('active')->equals(true);
         $builder->field('delete')->equals(false);
 
-        return $builder
-            ->count()
-            ->getQuery()
-            ->execute();
+        return $builder->count()->getQuery()->execute();
     }
 
     /**
@@ -124,8 +118,7 @@ class NoteRepository extends FhmRepository
      */
     public function getCountByObjectAndValue($object, $value)
     {
-        if($object == '')
-        {
+        if ($object == '') {
             return '';
         }
         $builder = $this->createQueryBuilder();
@@ -134,9 +127,6 @@ class NoteRepository extends FhmRepository
         $builder->field('active')->equals(true);
         $builder->field('delete')->equals(false);
 
-        return $builder
-            ->count()
-            ->getQuery()
-            ->execute();
+        return $builder->count()->getQuery()->execute();
     }
 }

@@ -10,19 +10,37 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 /**
- * @Route("/admin/note", service="fhm_note_controller_admin")
+ * @Route("/admin/note")
+ * ---------------------------------
+ * Class AdminController
+ * @package Fhm\NoteBundle\Controller
  */
 class AdminController extends FhmController
 {
     /**
-     * AdminController constructor.
-     *
-     * @param \Fhm\FhmBundle\Services\Tools $tools
+     * FrontController constructor.
+     * @param string $repository
+     * @param string $source
+     * @param string $domain
+     * @param string $translation
+     * @param $document
+     * @param string $route
      */
-    public function __construct(\Fhm\FhmBundle\Services\Tools $tools)
-    {
-        $this->setFhmTools($tools);
-        parent::__construct('Fhm', 'Note', 'note');
+    public function __construct(
+        $repository = "FhmNoteBundle:Note",
+        $source = "fhm",
+        $domain = "FhmNoterBundle",
+        $translation = "note",
+        $document = Note::class,
+        $route = 'note'
+    ) {
+        self::$repository = $repository;
+        self::$source = $source;
+        self::$domain = $domain;
+        self::$translation = $translation;
+        self::$document = new $document();
+        self::$class = get_class(self::$document);
+        self::$route = $route;
     }
 
     /**
@@ -41,50 +59,6 @@ class AdminController extends FhmController
     /**
      * @Route
      * (
-     *      path="/create",
-     *      name="fhm_admin_note_create"
-     * )
-     * @Template("::FhmNote/Admin/create.html.twig")
-     */
-    public function createAction(Request $request)
-    {
-        // For activate this route, delete next line
-        throw $this->createNotFoundException($this->fhm_tools->trans('fhm.error.route', array(), 'FhmFhmBundle'));
-    }
-
-    /**
-     * @Route
-     * (
-     *      path="/duplicate/{id}",
-     *      name="fhm_admin_note_duplicate",
-     *      requirements={"id"="[a-z0-9]*"}
-     * )
-     * @Template("::FhmNote/Admin/create.html.twig")
-     */
-    public function duplicateAction(Request $request, $id)
-    {
-        // For activate this route, delete next line
-        throw $this->createNotFoundException($this->fhm_tools->trans('fhm.error.route', array(), 'FhmFhmBundle'));
-    }
-
-    /**
-     * @Route
-     * (
-     *      path="/update/{id}",
-     *      name="fhm_admin_note_update",
-     *      requirements={"id"="[a-z0-9]*"}
-     * )
-     * @Template("::FhmNote/Admin/update.html.twig")
-     */
-    public function updateAction(Request $request, $id)
-    {
-        // For activate this route, delete next line
-        throw $this->createNotFoundException($this->fhm_tools->trans('fhm.error.route', array(), 'FhmFhmBundle'));
-    }
-
-    /**
-     * @Route
-     * (
      *      path="/detail/{id}",
      *      name="fhm_admin_note_detail",
      *      requirements={"id"="[a-z0-9]*"}
@@ -93,45 +67,34 @@ class AdminController extends FhmController
      */
     public function detailAction($id)
     {
-        // ERROR - Unknown route
-        if (!$this->fhm_tools->routeExists($this->source.'_admin_'.$this->route) || !$this->fhm_tools->routeExists(
-                $this->source.'_admin_'.$this->route.'_detail'
-            )
-        ) {
-            throw $this->createNotFoundException($this->fhm_tools->trans('fhm.error.route', array(), 'FhmFhmBundle'));
-        }
-        $document = $this->fhm_tools->dmRepository()->find($id);
-        $instance = $this->fhm_tools->instanceData($document);
+        $document = $this->get('fhm_tools')->dmRepository(self::$repository)->find($id);
         // ERROR - unknown
         if ($document == "") {
-            throw $this->createNotFoundException($this->fhm_tools->trans('.error.unknown'));
+            throw $this->createNotFoundException($this->trans(self::$translation.'.error.unknown'));
         }
 
         return array(
             'document' => $document,
-            'instance' => $instance,
-            'historics' => $this->historicData($document),
-            'paginationHistoric' => $this->historicPagination($document),
             'breadcrumbs' => array(
                 array(
-                    'link' => $this->fhm_tools->getUrl('project_home'),
-                    'text' => $this->fhm_tools->trans('project.home.breadcrumb', array(), 'ProjectDefaultBundle'),
+                    'link' => $this->getUrl('project_home'),
+                    'text' => $this->trans('project.home.breadcrumb', array(), 'ProjectDefaultBundle'),
                 ),
                 array(
-                    'link' => $this->fhm_tools->getUrl('fhm_admin'),
-                    'text' => $this->fhm_tools->trans('fhm.admin.breadcrumb', array(), 'FhmFhmBundle'),
+                    'link' => $this->getUrl('fhm_admin'),
+                    'text' => $this->trans('fhm.admin.breadcrumb', array(), 'FhmFhmBundle'),
                 ),
                 array(
-                    'link' => $this->fhm_tools->getUrl($this->source.'_admin_'.$this->route),
-                    'text' => $this->fhm_tools->trans('.admin.index.breadcrumb'),
+                    'link' => $this->getUrl(self::$source.'_admin_'.self::$route),
+                    'text' => $this->trans('.admin.index.breadcrumb'),
                 ),
                 array(
-                    'link' => $this->fhm_tools->getUrl(
-                        $this->source.'_admin_'.$this->route.'_detail',
+                    'link' => $this->getUrl(
+                        self::$source.'_admin_'.self::$route.'_detail',
                         array('id' => $id)
                     ),
-                    'text' => $this->fhm_tools->trans(
-                        '.admin.detail.breadcrumb',
+                    'text' => $this->trans(
+                        self::$translation.'.admin.detail.breadcrumb',
                         array('%name%' => $document->getId())
                     ),
                     'current' => true,
@@ -169,34 +132,6 @@ class AdminController extends FhmController
     /**
      * @Route
      * (
-     *      path="/activate/{id}",
-     *      name="fhm_admin_note_activate",
-     *      requirements={"id"="[a-z0-9]*"}
-     * )
-     */
-    public function activateAction($id)
-    {
-        // For activate this route, delete next line
-        throw $this->createNotFoundException($this->fhm_tools->trans('fhm.error.route', array(), 'FhmFhmBundle'));
-    }
-
-    /**
-     * @Route
-     * (
-     *      path="/deactivate/{id}",
-     *      name="fhm_admin_note_deactivate",
-     *      requirements={"id"="[a-z0-9]*"}
-     * )
-     */
-    public function deactivateAction($id)
-    {
-        // For activate this route, delete next line
-        throw $this->createNotFoundException($this->fhm_tools->trans('fhm.error.route', array(), 'FhmFhmBundle'));
-    }
-
-    /**
-     * @Route
-     * (
      *      path="/import",
      *      name="fhm_admin_note_import"
      * )
@@ -220,16 +155,4 @@ class AdminController extends FhmController
         return parent::exportAction($request);
     }
 
-    /**
-     * @Route
-     * (
-     *      path="/grouping",
-     *      name="fhm_admin_note_grouping"
-     * )
-     */
-    public function groupingAction(Request $request)
-    {
-        // For activate this route, delete next line
-        throw $this->createNotFoundException($this->fhm_tools->trans('fhm.error.route', array(), 'FhmFhmBundle'));
-    }
 }

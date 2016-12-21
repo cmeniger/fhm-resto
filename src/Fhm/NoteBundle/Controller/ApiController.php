@@ -10,19 +10,37 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 /**
- * @Route("/api/note", service="fhm_note_controller_api")
+ * @Route("/api/note")
+ * ----------------------------------
+ * Class ApiController
+ * @package Fhm\NoteBundle\Controller
  */
 class ApiController extends FhmController
 {
     /**
      * ApiController constructor.
-     *
-     * @param \Fhm\FhmBundle\Services\Tools $tools
+     * @param string $repository
+     * @param string $source
+     * @param string $domain
+     * @param string $translation
+     * @param $document
+     * @param string $route
      */
-    public function __construct(\Fhm\FhmBundle\Services\Tools $tools)
-    {
-        $this->setFhmTools($tools);
-        parent::__construct('Fhm', 'Note', 'note');
+    public function __construct(
+        $repository = "FhmNoteBundle:Note",
+        $source = "fhm",
+        $domain = "FhmNoterBundle",
+        $translation = "note",
+        $document = Note::class,
+        $route = 'note'
+    ) {
+        self::$repository = $repository;
+        self::$source = $source;
+        self::$domain = $domain;
+        self::$translation = $translation;
+        self::$document = new $document();
+        self::$class = get_class(self::$document);
+        self::$route = $route;
     }
 
     /**
@@ -54,32 +72,6 @@ class ApiController extends FhmController
     /**
      * @Route
      * (
-     *      path="/historic",
-     *      name="fhm_api_note_historic"
-     * )
-     * @Template("::FhmNote/Api/historic.html.twig")
-     */
-    public function historicAction(Request $request)
-    {
-        return parent::historicAction($request);
-    }
-
-    /**
-     * @Route
-     * (
-     *      path="/historic/copy/{id}",
-     *      name="fhm_api_note_historic_copy",
-     *      requirements={"id"="[a-z0-9]*"}
-     * )
-     */
-    public function historicCopyAction(Request $request, $id)
-    {
-        return parent::historicCopyAction($request, $id);
-    }
-
-    /**
-     * @Route
-     * (
      *      path="/embed/{id}/{object}/{source}/{star}/{average}/{comment}/{comment_modal}/{add}/{edit}",
      *      name="fhm_api_note_embed",
      *      requirements={"id"="[a-z0-9]*"},
@@ -89,8 +81,9 @@ class ApiController extends FhmController
      */
     public function embedAction($id, $object, $source, $star, $average, $comment, $comment_modal, $add, $edit)
     {
-        $instance = $this->fhm_tools->instanceData();
-        $document = $this->fhm_tools->dmRepository(ucfirst($source).ucfirst($object).'Bundle:'.ucfirst($object))->find(
+        $document = $this->get('fhm_tools')->dmRepository(
+            ucfirst($source).ucfirst($object).'Bundle:'.ucfirst($object)
+        )->find(
             $id
         );
 
@@ -101,19 +94,21 @@ class ApiController extends FhmController
             'view_comment_modal' => $comment_modal,
             'view_add' => $add,
             'view_edit' => $edit,
-            'param_maximum' => $this->fhm_tools->getParameters('maximum', 'fhm_note'),
-            'param_anonymous' => $this->fhm_tools->getParameters('anonymous', 'fhm_note'),
-            'param_multiple' => $this->fhm_tools->getParameters('multiple', 'fhm_note'),
-            'param_edit' => $this->fhm_tools->getParameters('edit', 'fhm_note'),
-            'param_delete' => $this->fhm_tools->getParameters('delete', 'fhm_note'),
-            'param_default' => $this->fhm_tools->getParameters('default', 'fhm_note'),
+            'param_maximum' => $this->get('fhm_tools')->getParameters('maximum', 'fhm_note'),
+            'param_anonymous' => $this->get('fhm_tools')->getParameters('anonymous', 'fhm_note'),
+            'param_multiple' => $this->get('fhm_tools')->getParameters('multiple', 'fhm_note'),
+            'param_edit' => $this->get('fhm_tools')->getParameters('edit', 'fhm_note'),
+            'param_delete' => $this->get('fhm_tools')->getParameters('delete', 'fhm_note'),
+            'param_default' => $this->get('fhm_tools')->getParameters('default', 'fhm_note'),
             'object' => $object,
             'source' => $source,
             'document' => $document,
-            'user' => $this->fhm_tools->dmRepository()->getByUserAndObject($this->getUser(), $document),
+            'user' => $this->get('fhm_tools')->dmRepository(self::$repository)->getByUserAndObject(
+                $this->getUser(),
+                $document
+            ),
             'average' => $document ? $this->get('fhm_note')->average($document->getId()) : 0,
-            'notes' => $this->fhm_tools->dmRepository()->getByObject($id),
-            'instance' => $instance,
+            'notes' => $this->get('fhm_tools')->dmRepository(self::$repository)->getByObject($id),
         );
     }
 
@@ -128,19 +123,22 @@ class ApiController extends FhmController
     public function addAction(Request $request, $id)
     {
         $data = $request->get('FhmNote');
-        $value = $data['value'] > $this->fhm_tools->getParameters(
+        $value = $data['value'] > $this->get('fhm_tools')->getParameters(
             'maximum',
             'fhm_note'
-        ) ? $this->fhm_tools->getParameters('maximum', 'fhm_note') : ($data['value'] < 0 ? 0 : $data['value']);
+        ) ? $this->get('fhm_tools')->getParameters('maximum', 'fhm_note') : ($data['value'] < 0 ? 0 : $data['value']);
         $bundle = ucfirst($data['source']).ucfirst($data['object']).'Bundle:'.ucfirst($data['object']);
-        $object = $this->fhm_tools->dmRepository($bundle)->find($id);
+        $object = $this->get('fhm_tools')->dmRepository($bundle)->find($id);
         // ERROR - unknown
         if ($object == "") {
-            throw $this->createNotFoundException($this->fhm_tools->trans('.error.unknown'));
+            throw $this->createNotFoundException($this->trans(self::$translation.'.error.unknown'));
         } // User connected
         elseif ($this->getUser()) {
-            $document = $this->fhm_tools->dmRepository()->getByUserAndObject($this->getUser(), $object);
-            if (!$document || $this->fhm_tools->getParameters('multiple', 'fhm_note')) {
+            $document = $this->get('fhm_tools')->dmRepository(self::$repository)->getByUserAndObject(
+                $this->getUser(),
+                $object
+            );
+            if (!$document || $this->get('fhm_tools')->getParameters('multiple', 'fhm_note')) {
                 $note = new \Fhm\NoteBundle\Document\Note();
                 $note->setName('['.ucfirst($data['object']).'] '.$object->getName());
                 $note->setDescription($object->getName().','.$object->getAlias().','.$object->getId());
@@ -149,10 +147,10 @@ class ApiController extends FhmController
                 $note->setNote($value);
                 $note->setContent($data['content']);
                 $note->setDate(new \DateTime());
-                $this->fhm_tools->dmPersist($note);
+                $this->get('fhm_tools')->dmPersist($note);
             }
         } // Anonymous
-        elseif ($this->fhm_tools->getParameters('anonymous', 'fhm_note')) {
+        elseif ($this->get('fhm_tools')->getParameters('anonymous', 'fhm_note')) {
             $note = new \Fhm\NoteBundle\Document\Note();
             $note->setName('['.ucfirst($data['object']).'] '.$object->getName());
             $note->setDescription($object->getName().','.$object->getAlias().','.$object->getId());
@@ -161,13 +159,13 @@ class ApiController extends FhmController
             $note->setNote($value);
             $note->setContent($data['content']);
             $note->setDate(new \DateTime());
-            $this->fhm_tools->dmPersist($note);
+            $this->get('fhm_tools')->dmPersist($note);
         } // ERROR - forbidden
         else {
-            throw new HttpException(403, $this->fhm_tools->trans('.error.forbidden'));
+            throw new HttpException(403, $this->trans(self::$translation.'.error.forbidden'));
         }
 
-        return $this->redirect($this->fhm_tools->getLastRoute());
+        return $this->redirect($this->get('fhm_tools')->getLastRoute($this->get('request_stack')->getCurrentRequest()));
     }
 
     /**
@@ -181,24 +179,24 @@ class ApiController extends FhmController
     public function editAction(Request $request, $id)
     {
         $data = $request->get('FhmNote');
-        $value = $data['value'] > $this->fhm_tools->getParameters(
+        $value = $data['value'] > $this->get('fhm_tools')->getParameters(
             'maximum',
             'fhm_note'
-        ) ? $this->fhm_tools->getParameters('maximum', 'fhm_note') : ($data['value'] < 0 ? 0 : $data['value']);
-        $document = $this->fhm_tools->dmRepository()->find($id);
+        ) ? $this->get('fhm_tools')->getParameters('maximum', 'fhm_note') : ($data['value'] < 0 ? 0 : $data['value']);
+        $document = $this->get('fhm_tools')->dmRepository(self::$repository)->find($id);
         // ERROR - unknown
         if ($document == "") {
-            throw $this->createNotFoundException($this->fhm_tools->trans('.error.unknown'));
+            throw $this->createNotFoundException($this->trans(self::$translation.'.error.unknown'));
         }
         // ERROR - forbidden
-        if (!$this->fhm_tools->getParameters('edit', 'fhm_note') || $document->getUser() != $this->getUser()) {
-            throw new HttpException(403, $this->fhm_tools->trans('.error.forbidden'));
+        if (!$this->get('fhm_tools')->getParameters('edit', 'fhm_note') || $document->getUser() != $this->getUser()) {
+            throw new HttpException(403, $this->trans(self::$translation.'.error.forbidden'));
         }
         $document->setNote($value);
         $document->setContent($data['content']);
-        $this->fhm_tools->dmPersist($document);
+        $this->get('fhm_tools')->dmPersist($document);
 
-        return $this->redirect($this->fhm_tools->getLastRoute());
+        return $this->redirect($this->get('fhm_tools')->getLastRoute($this->get('request_stack')->getCurrentRequest()));
     }
 
     /**
@@ -211,23 +209,18 @@ class ApiController extends FhmController
      */
     public function deleteAction(Request $request, $id)
     {
-        $data = $request->get('FhmNote');
-        $value = $data['value'] > $this->fhm_tools->getParameters(
-            'maximum',
-            'fhm_note'
-        ) ? $this->fhm_tools->getParameters('maximum', 'fhm_note') : ($data['value'] < 0 ? 0 : $data['value']);
-        $document = $this->fhm_tools->dmRepository()->find($id);
+        $document = $this->get('fhm_tools')->dmRepository(self::$repository)->find($id);
         // ERROR - unknown
         if ($document == "") {
-            throw $this->createNotFoundException($this->fhm_tools->trans('.error.unknown'));
+            throw $this->createNotFoundException($this->trans(self::$translation.'.error.unknown'));
         }
         // ERROR - forbidden
-        if (!$this->fhm_tools->getParameters('delete', 'fhm_note') || $document->getUser() != $this->getUser()) {
-            throw new HttpException(403, $this->fhm_tools->trans('.error.forbidden'));
+        if (!$this->get('fhm_tools')->getParameters('delete', 'fhm_note') || $document->getUser() != $this->getUser()) {
+            throw new HttpException(403, $this->trans(self::$translation.'.error.forbidden'));
         }
         $document->setDelete(true);
-        $this->fhm_tools->dmPersist($document);
+        $this->get('fhm_tools')->dmPersist($document);
 
-        return $this->redirect($this->fhm_tools->getLastRoute());
+        return $this->redirect($this->get('fhm_tools')->getLastRoute($this->get('request_stack')->getCurrentRequest()));
     }
 }

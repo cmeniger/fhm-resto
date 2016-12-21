@@ -80,4 +80,18 @@ abstract class  GenericController extends Controller
     {
         return get_class_vars(self::class);
     }
+
+    /**
+     * @param $type
+     * @param $handler
+     * @return \stdClass
+     */
+    protected function setForm($type, $handler)
+    {
+        self::$form = new \stdClass();
+        self::$form->type = $type;
+        self::$form->handler = $handler;
+
+        return self::$form;
+    }
 }

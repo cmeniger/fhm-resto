@@ -5,18 +5,6 @@ services:
 
     twig.extension.note:
         class: Fhm\NoteBundle\Twig\NoteExtension
-        arguments: ["@fhm_note", "%kernel.root_dir%"]
+        arguments: ["@fhm_note", "%kernel.root_dir%", "%fhm_note%"]
         tags:
             - { name: twig.extension }
-            
-    fhm_note_controller_admin:
-        class: Fhm\NoteBundle\Controller\AdminController
-        arguments: ["@fhm_tools"]
-
-    fhm_note_controller_front:
-        class: Fhm\NoteBundle\Controller\FrontController
-        arguments: ["@fhm_tools"]
-
-    fhm_note_controller_api:
-        class: Fhm\NoteBundle\Controller\ApiController
-        arguments: ["@fhm_tools"]
