@@ -73,8 +73,7 @@ class FhmRepository extends DocumentRepository
         }
         // Common
         $this->builderSort($builder);
-
-        return $builder->getQuery()->execute()->toArray();
+        return $builder->getQuery();
     }
 
     /**

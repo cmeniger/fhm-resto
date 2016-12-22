@@ -2,6 +2,7 @@
 namespace Fhm\PartnerBundle\Controller\Group;
 
 use Fhm\FhmBundle\Controller\RefApiController as FhmController;
+use Fhm\PartnerBundle\Document\PartnerGroup;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
@@ -9,20 +10,37 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 /**
- * @Route("/api/partner/group", service="fhm_partner_controller_group_api")
+ * @Route("/api/partner/group")
+ * ------------------------------------------
+ * Class ApiController
+ * @package Fhm\PartnerBundle\Controller\Group
  */
 class ApiController extends FhmController
 {
     /**
-     * ApiController constructor.
-     *
-     * @param \Fhm\FhmBundle\Services\Tools $tools
+     * AdminController constructor.
+     * @param string $repository
+     * @param string $source
+     * @param string $domain
+     * @param string $translation
+     * @param string $document
+     * @param string $route
      */
-    public function __construct(\Fhm\FhmBundle\Services\Tools $tools)
-    {
-        $this->setFhmTools($tools);
-        parent::__construct('Fhm', 'Partner', 'partner_group', 'PartnerGroup');
-        $this->translation = array('FhmPartnerBundle', 'partner.group');
+    public function __construct(
+        $repository = "FhmPartnerBundle:PartnerGroup",
+        $source = "fhm",
+        $domain = "FhmPartnerBundle",
+        $translation = "partner.group",
+        $document = PartnerGroup::class,
+        $route = 'partner_group'
+    ) {
+        self::$repository = $repository;
+        self::$source = $source;
+        self::$domain = $domain;
+        self::$translation = $translation;
+        self::$document = new $document();
+        self::$class = get_class(self::$document);
+        self::$route = $route;
     }
 
     /**

@@ -9,19 +9,37 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 /**
- * @Route("/admin/partner", service="fhm_partner_controller_admin")
+ * @Route("/admin/partner")
+ * ------------------------------------
+ * Class AdminController
+ * @package Fhm\PartnerBundle\Controller
  */
 class AdminController extends FhmController
 {
     /**
      * AdminController constructor.
-     *
-     * @param \Fhm\FhmBundle\Services\Tools $tools
+     * @param string $repository
+     * @param string $source
+     * @param string $domain
+     * @param string $translation
+     * @param string $document
+     * @param string $route
      */
-    public function __construct(\Fhm\FhmBundle\Services\Tools $tools)
-    {
-        $this->setFhmTools($tools);
-        parent::__construct('Fhm', 'Partner', 'partner');
+    public function __construct(
+        $repository = "FhmPartnerBundle:Partner",
+        $source = "fhm",
+        $domain = "FhmPartnerBundle",
+        $translation = "partner",
+        $document = Partner::class,
+        $route = 'partner'
+    ) {
+        self::$repository = $repository;
+        self::$source = $source;
+        self::$domain = $domain;
+        self::$translation = $translation;
+        self::$document = new $document();
+        self::$class = get_class(self::$document);
+        self::$route = $route;
     }
 
     /**
@@ -89,14 +107,13 @@ class AdminController extends FhmController
      */
     public function detailAction($id)
     {
-        $document = $this->fhm_tools->dmRepository()->find($id);
-        $instance = $this->fhm_tools->instanceData($document);
+        $document = $this->get('fhm_tools')->dmRepository(self::$repository)->find($id);
 
         return array_merge(
             array(
-                'partnergroups1' => $this->fhm_tools->dmRepository('FhmPartnerBundle:PartnerGroup')->getListEnable(
-                    $instance->grouping->current
-                ),
+                'partnergroups1' => $this->get('fhm_tools')->dmRepository(
+                    'FhmPartnerBundle:PartnerGroup'
+                )->getListEnable(),
                 'partnergroups2' => $this->getList($document->getPartnergroups()),
             ),
             parent::detailAction($id)
@@ -198,18 +215,6 @@ class AdminController extends FhmController
     /**
      * @Route
      * (
-     *      path="/grouping",
-     *      name="fhm_admin_partner_grouping"
-     * )
-     */
-    public function groupingAction(Request $request)
-    {
-        return parent::groupingAction($request);
-    }
-
-    /**
-     * @Route
-     * (
      *      path="/partnergroup",
      *      name="fhm_admin_partner_partnergroup",
      *      requirements={"id"="[a-z0-9]*"}
@@ -218,15 +223,15 @@ class AdminController extends FhmController
     public function partnergroupAction(Request $request)
     {
         $partnergroups = json_decode($request->get('list'));
-        $document = $this->fhm_tools->dmRepository()->find($request->get('id'));
+        $document = $this->get('fhm_tools')->dmRepository(self::$repository)->find($request->get('id'));
         foreach ($document->getPartnergroups() as $partnergroup) {
             $document->removePartnergroup($partnergroup);
         }
         foreach ($partnergroups as $key => $data) {
-            $partnergroup = $this->fhm_tools->dmRepository('FhmPartnerBundle:PartnerGroup')->find($data->id);
+            $partnergroup = $this->get('fhm_tools')->dmRepository('FhmPartnerBundle:PartnerGroup')->find($data->id);
             $document->addPartnergroup($partnergroup);
         }
-        $this->fhm_tools->dmPersist($document);
+        $this->get('fhm_tools')->dmPersist($document);
 
         return new Response();
     }

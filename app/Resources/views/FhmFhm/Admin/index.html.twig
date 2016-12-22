@@ -56,18 +56,18 @@
 
     {% endif %}
 
-    {# List #}
+    {# pagined List with sort field #}
     {% block content_data %}
         <div class="row">
-            {% if documents %}
+            {% if pagination is defined %}
                 <table class="fullwidth">
                     <thead>
                         <tr>
                             {% block content_data_header %}
-                                <th>{{ (instance.translation ~ '.admin.index.table.header.name')|trans }}</th>
+                                <th {% if pagination.isSorted('name') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, (instance.translation ~ '.admin.index.table.header.name')|trans, 'name')|raw }}</th>
                             {% endblock %}
                             {% block content_data_header_status %}
-                                <th>{{ (instance.translation ~ '.admin.index.table.header.status')|trans }}</th>
+                                <th {% if pagination.isSorted('status') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, (instance.translation ~ '.admin.index.table.header.status')|trans, 'status')|raw }}</th>
                             {% endblock %}
                             {% block content_data_header_action %}
                                 <th>{{ (instance.translation ~ '.admin.index.table.header.action')|trans }}</th>
@@ -75,7 +75,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {% for document in documents %}
+                        {% for document in pagination %}
                             <tr>
                                 {% block content_data_body %}
                                     <td>{{ document.getName() }}</td>
@@ -99,7 +99,7 @@
                                         {% endblock %}
                                     </td>
                                 {% endblock %}
-                                {% if document.getShare()  and not instance.user.admin %}
+                                {% if document.getShare()  and not is_granted('ROLE_ADMIN') %}
                                     {% block content_data_action_share %}
                                         <td>
                                             <div class="actions">
@@ -197,6 +197,12 @@
                         {% endfor %}
                     </tbody>
                 </table>
+                <div class="navigation">
+                    <ul class="pagination-counter">
+                       <li class="arrow"><small>Total d'enrégistrements : {{ pagination.getTotalItemCount }}</small></li>
+                    </ul>
+                    {{ knp_pagination_render(pagination) }}
+                </div>
             {% else %}
                 {% block content_nodata %}
                     <div class="panel nodata">
@@ -206,10 +212,4 @@
             {% endif %}
         </div>
     {% endblock %}
-
-    {# Pagination #}
-    {% block content_pagination %}
-
-    {% endblock %}
-
 {% endblock %}

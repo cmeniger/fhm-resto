@@ -17,7 +17,6 @@ class CreateType extends FhmType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $this->setTranslation('partner');
         parent::buildForm($builder, $options);
     }
 

@@ -20,31 +20,35 @@ class RefAdminController extends GenericController
     public function indexAction()
     {
         $request = $this->get('request_stack')->getCurrentRequest();
-        $form = $this->createForm(SearchType::class);
-        $dataSearch = $request->get('FhmSearch');
-        $documents = $this->get('fhm_tools')->dmRepository(self::$repository)->getAdminIndex(
+        $dataSearch = $request->request->get('FhmSearch');
+        $query = $this->get('fhm_tools')->dmRepository(self::$repository)->getAdminIndex(
             $dataSearch['search'],
             $this->get('security.authorization_checker')->isGranted('ROLE_SUPER_ADMIN')
         );
+        $pagination = $this->get('knp_paginator')->paginate(
+            $query,
+            $request->query->getInt('page', 1),
+            $this->getParameters('pagination', 'fhm_fhm')
+        );
         /** Ajax request**/
         if ($request->isXmlHttpRequest()) {
-            return array('documents' => $documents);
+            return array('documents' => $query->execute()->toArray());
         } else {
             return array(
-                'documents' => $documents,
-                'form' => $form->createView(),
-                'breadcrumbs' => array(
+                'form'          => $this->createForm(SearchType::class)->createView(),
+                'pagination'    => $pagination,
+                'breadcrumbs'   => array(
                     array(
-                        'link' => $this->getUrl('project_home'),
-                        'text' => $this->trans('project.home.breadcrumb', array(), 'ProjectDefaultBundle'),
+                        'link'  => $this->getUrl('project_home'),
+                        'text'  => $this->trans('project.home.breadcrumb', array(), 'ProjectDefaultBundle'),
                     ),
                     array(
-                        'link' => $this->getUrl('fhm_admin'),
-                        'text' => $this->trans('fhm.admin.breadcrumb', array(), 'FhmFhmBundle'),
+                        'link'  => $this->getUrl('fhm_admin'),
+                        'text'  => $this->trans('fhm.admin.breadcrumb', array(), 'FhmFhmBundle'),
                     ),
                     array(
-                        'link' => $this->getUrl(self::$source.'_admin_'.self::$route),
-                        'text' => $this->trans(self::$translation.'.admin.index.breadcrumb'),
+                        'link'  => $this->getUrl(self::$source.'_admin_'.self::$route),
+                        'text'  => $this->trans(self::$translation.'.admin.index.breadcrumb'),
                         'current' => true,
                     ),
                 ),
