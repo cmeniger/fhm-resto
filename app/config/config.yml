@@ -45,6 +45,7 @@ framework:
     validation:      { enable_annotations: true }
     templating:
         engines: ['twig']
+        hinclude_default_template: "FhmFhm/Template/hinclude.html.twig"
     default_locale:  "%locale%"
     trusted_hosts:   ~
     trusted_proxies: ~
@@ -54,6 +55,8 @@ framework:
     fragments:       ~
     http_method_override: true
     assets: ~
+    serializer:
+        enabled: true
 
 # Twig Configuration (used for rendering application templates)
 twig:

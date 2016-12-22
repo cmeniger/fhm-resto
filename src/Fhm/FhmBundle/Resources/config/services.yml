@@ -37,3 +37,7 @@ services:
         arguments: ["@service_container"]
         tags:
             - { name: form.type, alias: schedules }
+
+    fhm_historic:
+            class: Fhm\FhmBundle\Services\HistoricService
+            arguments: ["@service_container"]

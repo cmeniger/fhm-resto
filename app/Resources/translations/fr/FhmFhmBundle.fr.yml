@@ -108,6 +108,7 @@ fhm:
                 delete:                         Supprimer
                 undelete:                       Restaurer
                 copy:                           Copier
+                restore:                        Restaurer
             confirm:
                 copy:                           Confirmer la copie de l\'historique ?
                 delete:                         Confirmer la suppression de l\'historique ?

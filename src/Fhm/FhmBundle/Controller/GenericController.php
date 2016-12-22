@@ -11,9 +11,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 /**
  * Class GenericController
+ *
  * @package Fhm\FhmBundle\Controller
  */
-abstract class  GenericController extends Controller
+abstract class GenericController extends Controller
 {
     protected static $source;
     protected static $repository;
@@ -31,8 +32,8 @@ abstract class  GenericController extends Controller
     protected function getParameters($route, $parent)
     {
         $parameters = $this->getParameter($parent);
-        $value = $parameters;
-        foreach ((array)$route as $sub) {
+        $value      = $parameters;
+        foreach ((array) $route as $sub) {
             $value = $value[$sub];
         }
 
@@ -41,8 +42,8 @@ abstract class  GenericController extends Controller
 
     /**
      * @param array $parameters
-     * @param null $route
-     * @param null $referenceType
+     * @param null  $route
+     * @param null  $referenceType
      *
      * @return string
      */
@@ -56,9 +57,9 @@ abstract class  GenericController extends Controller
     }
 
     /**
-     * @param $key
+     * @param       $key
      * @param array $parameters
-     * @param null $domain
+     * @param null  $domain
      *
      * @return string
      */

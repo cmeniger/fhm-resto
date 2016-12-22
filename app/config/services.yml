@@ -1,5 +1,4 @@
 services:
-
     session.handler.mongo:
         class: Symfony\Component\HttpFoundation\Session\Storage\Handler\MongoDbSessionHandler
         arguments: ['@mongo', '%mongo.session.options%']

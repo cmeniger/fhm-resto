@@ -226,6 +226,7 @@ class RefAdminController extends GenericController
 
         return array(
             'document' => $document,
+            'historics' => $this->get('fhm_historic')->getAllHistoricsByObject($document),
             'breadcrumbs' => array(
                 array(
                     'link' => $this->getUrl('project_home'),

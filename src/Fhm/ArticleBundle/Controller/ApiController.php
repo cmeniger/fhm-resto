@@ -60,4 +60,56 @@ class ApiController extends FhmController
     {
         return parent::autocompleteAction($request);
     }
+
+    /**
+     * @Route
+     * (
+     *      path="/historic/",
+     *      name="fhm_api_article_historic"
+     * )
+     * @Template("::FhmArticle/Api/historic.html.twig")
+     */
+    public function historicAction(Request $request)
+    {
+        return parent::historicAction($request);
+    }
+
+    /**
+     * @Route
+     * (
+     *      path="/historic/copy/{id}",
+     *      name="fhm_api_article_historic_copy",
+     *      requirements={"id"="[a-z0-9]*"}
+     * )
+     */
+    public function historicCopyAction(Request $request, $id)
+    {
+        return parent::historicCopyAction($request, $id);
+    }
+
+    /**
+     * @Route
+     * (
+     *      path="/historic/delete/{id}",
+     *      name="fhm_api_article_historic_delete",
+     *      requirements={"id"="[a-z0-9]*"}
+     * )
+     */
+    public function historicDeleteAction(Request $request, $id)
+    {
+        return parent::historicDeleteAction($request, $id);
+    }
+
+    /**
+     * @Route
+     * (
+     *      path="/historic/restore/{id}",
+     *      name="fhm_api_article_historic_restore",
+     *      requirements={"id"="[a-z0-9]*"}
+     * )
+     */
+    public function historicRestaureAction(Request $request, $id)
+    {
+        return parent::historicRestaureAction($request, $id);
+    }
 }
