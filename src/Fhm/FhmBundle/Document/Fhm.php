@@ -5,46 +5,39 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Bundle\MongoDBBundle\Validator\Constraints\Unique as MongoDBUnique;
 use Symfony\Component\Validator\Constraints as Assert;
-use JMS\Serializer\Annotation as Serializer;
 
 /**
  * Fhm
- * @package Fhm\FhmBundle\Document
- * @Serializer\AccessType("protected_method")
  * @MongoDB\Document(repositoryClass="Fhm\FhmBundle\Repository\FhmRepository")
+ *
  * @MongoDB\HasLifecycleCallbacks
  */
 class Fhm
 {
     /**
      * @MongoDB\Id(strategy="auto")
-     * @Serializer\Type("string")
      */
     protected $id;
 
     /**
      * @MongoDB\Field(type="date")
      * @Assert\Type("\DateTime")
-     * @Serializer\Type("DateTime")
      */
     protected $date_create;
 
     /**
      * @MongoDB\Field(type="date")
      * @Assert\Type("\DateTime")
-     * @Serializer\Type("DateTime")
      */
     protected $date_update;
 
     /**
      * @MongoDB\ReferenceOne(targetDocument="Fhm\UserBundle\Document\User", nullable=true, cascade={"persist"})
-     * @Serializer\Type("Fhm\UserBundle\Document\User")
      */
     protected $user_create;
 
     /**
      * @MongoDB\ReferenceOne(targetDocument="Fhm\UserBundle\Document\User", nullable=true, cascade={"persist"})
-     * @Serializer\Type("Fhm\UserBundle\Document\User")
      */
     protected $user_update;
 
@@ -69,7 +62,6 @@ class Fhm
     protected $global;
 
     /**
-     * @Serializer\Type("string")
      * @MongoDB\Field(type="string")
      */
     protected $name;
@@ -106,6 +98,7 @@ class Fhm
      * @Assert\Length(max = 150)
      */
     protected $seo_description;
+
 
     /**
      * @MongoDB\ReferenceOne(nullable=true, cascade={"persist"})

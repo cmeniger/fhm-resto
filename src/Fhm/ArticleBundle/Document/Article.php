@@ -5,13 +5,10 @@ use Fhm\FhmBundle\Document\Fhm as FhmFhm;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
-use JMS\SerializerBundle\Annotation\Type;
-use JMS\Serializer\Annotation as Serializer;
 
 /**
  * Article
  * @MongoDB\Document(repositoryClass="Fhm\ArticleBundle\Repository\ArticleRepository")
- * @Serializer\AccessType("protected_method")
  */
 class Article extends FhmFhm
 {

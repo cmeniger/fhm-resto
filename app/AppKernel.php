@@ -50,8 +50,7 @@ class AppKernel extends Kernel
             new Fhm\CardBundle\FhmCardBundle(),
             new Fhm\NoteBundle\FhmNoteBundle(),
             new Http\HttplugBundle\HttplugBundle(),
-            new JMS\SerializerBundle\JMSSerializerBundle(),
-          
+
         ];
 
         // Some bundles are only used while developing the application or during

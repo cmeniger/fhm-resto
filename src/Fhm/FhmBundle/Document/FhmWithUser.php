@@ -7,7 +7,6 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Bundle\MongoDBBundle\Validator\Constraints\Unique as MongoDBUnique;
 use Symfony\Component\Validator\Constraints as Assert;
-use JMS\Serializer\Annotation as Serializer;
 
 /**
  * Fhm
@@ -19,7 +18,6 @@ class FhmWithUser extends User
 {
     /**
      * @MongoDB\Id(strategy="auto")
-     * @Serializer\Type("string")
      */
     protected $id;
 

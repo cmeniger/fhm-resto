@@ -15,8 +15,13 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
  *
  * @package Fhm\FhmBundle\Document
  */
-class Historic extends Fhm
+class Historic
 {
+    /**
+     * @MongoDB\Id(strategy="auto")
+     */
+    protected $id;
+
     /**
      * @MongoDB\Field(type="string")
      */
@@ -31,6 +36,19 @@ class Historic extends Fhm
      * @MongoDB\Field(type="string")
      */
     protected $class;
+
+    /**
+     * @MongoDB\Field(type="date")
+     */
+    protected $dateCreate;
+
+    /**
+     * Historic constructor.
+     */
+    public function __construct()
+    {
+        $this->dateCreate = new \DateTime();
+    }
 
     /**
      * @return mixed
@@ -80,5 +98,23 @@ class Historic extends Fhm
         $this->class = $class;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getDateCreate()
+    {
+        return $this->dateCreate;
+    }
+
+    /**
+     * @param mixed $dateCreate
+     * @return Historic
+     */
+    public function setDateCreate($dateCreate)
+    {
+        $this->dateCreate = $dateCreate;
+
+        return $this;
+    }
 
 }

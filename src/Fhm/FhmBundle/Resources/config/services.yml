@@ -40,4 +40,4 @@ services:
 
     fhm_historic:
             class: Fhm\FhmBundle\Services\HistoricService
-            arguments: ["@service_container"]
+            arguments: ["@serializer", "@doctrine_mongodb.odm.default_document_manager"]
