@@ -5,7 +5,8 @@ use Fhm\CardBundle\Form\Type\Admin\Product\CreateType;
 use Fhm\CardBundle\Form\Type\Admin\Product\UpdateType;
 use Fhm\FhmBundle\Controller\RefAdminController as FhmController;
 use Fhm\CardBundle\Document\CardProduct;
-use Fhm\FhmBundle\Services\Tools;
+use Fhm\FhmBundle\Form\Handler\Admin\CreateHandler;
+use Fhm\FhmBundle\Form\Handler\Admin\UpdateHandler;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
@@ -21,30 +22,21 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 class AdminController extends FhmController
 {
     /**
-     * AdminController constructor.
-     *
-     * @param string $repository
-     * @param string $source
-     * @param string $domain
-     * @param string $translation
-     * @param string $document
-     * @param string $route
+     * FrontController constructor.
      */
-    public function __construct(
-        $repository = "FhmCardBundle:CardProduct",
-        $source = "fhm",
-        $domain = "FhmCardBundle",
-        $translation = "card.product",
-        $document = CardProduct::class,
-        $route = "card_product"
-    ) {
-        self::$repository = $repository;
-        self::$source = $source;
-        self::$domain = $domain;
-        self::$translation = $translation;
-        self::$document = new $document();
-        self::$class = get_class(self::$document);
-        self::$route = $route;
+    public function __construct()
+    {
+        self::$repository = "FhmCardBundle:CardProduct";
+        self::$source = "fhm";
+        self::$domain = "FhmCardBundle";
+        self::$translation = "card.product";
+        self::$class = CardProduct::class;
+        self::$route = "card_product";
+        self::$form = new \stdClass();
+        self::$form->createType    = CreateType::class;
+        self::$form->createHandler = CreateHandler::class;
+        self::$form->updateType    = UpdateType::class;
+        self::$form->updateHandler = UpdateHandler::class;
     }
 
     /**
@@ -191,21 +183,5 @@ class AdminController extends FhmController
     public function exportAction(Request $request)
     {
         return parent::exportAction($request);
-    }
-
-    /**
-     * @Route
-     * (
-     *      path="/sort",
-     *      name="fhm_admin_card_product_sort"
-     * )
-     */
-    public function sortAction(Request $request)
-    {
-        $id   = $request->get('master');
-        $list = json_decode($request->get('list'));
-       // $this->_treeSort($id, $list);
-
-        return new Response();
     }
 }

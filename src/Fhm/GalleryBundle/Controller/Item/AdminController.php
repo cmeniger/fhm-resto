@@ -22,29 +22,20 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 class AdminController extends FhmController
 {
     /**
-     * ApiController constructor.
-     * @param string $repository
-     * @param string $source
-     * @param string $domain
-     * @param string $translation
-     * @param string $document
-     * @param string $route
+     * AdminController constructor.
      */
-    public function __construct(
-        $repository = "FhmGalleryBundle:Gallery",
-        $source = "fhm",
-        $domain = "FhmGalleryBundle",
-        $translation = "gallery.item",
-        $document = GalleryItem::class,
-        $route = 'gallery_item'
-    ) {
-        self::$repository = $repository;
-        self::$source = $source;
-        self::$domain = $domain;
-        self::$translation = $translation;
-        self::$document = new $document();
-        self::$class = get_class(self::$document);
-        self::$route = $route;
+    public function __construct()
+    {
+        self::$repository = "FhmGalleryBundle:GalleryItem";
+        self::$source = "fhm";
+        self::$domain = "FhmGalleryBundle";
+        self::$translation = "gallery.item";
+        self::$class = GalleryItem::class;
+        self::$route = "gallery_item";
+        self::$form = new \stdClass();
+        self::$form->createType    = CreateType::class;
+        self::$form->createHandler = CreateHandler::class;
+        self::$form->updateType    = UpdateType::class;
     }
 
     /**
@@ -83,7 +74,7 @@ class AdminController extends FhmController
      */
     public function multipleAction(Request $request)
     {
-        $document = self::$document;
+        $document = new self::$class;
         $classType = MultipleType::class;
         $classHandler = CreateHandler::class;
         $form = $this->createForm(

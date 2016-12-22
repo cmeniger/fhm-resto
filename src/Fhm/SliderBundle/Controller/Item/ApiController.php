@@ -3,6 +3,7 @@ namespace Fhm\SliderBundle\Controller\Item;
 
 use Fhm\FhmBundle\Controller\RefApiController as FhmController;
 use Fhm\SliderBundle\Document\Slider;
+use Fhm\SliderBundle\Document\SliderItem;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
@@ -10,20 +11,24 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 /**
- * @Route("/api/slider/item", service="fhm_slider_controller_item_api")
+ * @Route("/api/slider/item")
+ * -------------------------------------------
+ * Class ApiController
+ * @package Fhm\SliderBundle\Controller\Item
  */
 class ApiController extends FhmController
 {
     /**
      * ApiController constructor.
-     *
-     * @param \Fhm\FhmBundle\Services\Tools $tools
      */
-    public function __construct(\Fhm\FhmBundle\Services\Tools $tools)
+    public function __construct()
     {
-        $this->setFhmTools($tools);
-        parent::__construct('Fhm', 'Slider', 'slider_item', 'SliderItem');
-        $this->translation = array('FhmSliderBundle', 'slider.item');
+        self::$repository = "FhmSliderBundle:SliderItem";
+        self::$source = "fhm";
+        self::$domain = "FhmSliderBundle";
+        self::$translation = "slider.item";
+        self::$class = SliderItem::class;
+        self::$route = "slider_item";
     }
 
     /**

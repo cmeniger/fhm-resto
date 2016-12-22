@@ -20,11 +20,12 @@ class FrontController extends FhmController
      */
     public function __construct()
     {
-//        $this->setFhmTools($tools);
-//        parent::__construct('Fhm', 'Workflow', 'workflow_step', 'WorkflowStep');
-//        $this->form->type->create = 'Fhm\\WorkflowBundle\\Form\\Type\\Front\\Step\\CreateType';
-//        $this->form->type->update = 'Fhm\\WorkflowBundle\\Form\\Type\\Front\\Step\\UpdateType';
-//        $this->translation        = array('FhmWorkflowBundle', 'workflow.step');
+        self::$repository = "FhmWorkflowBundle:WorkflowStep";
+        self::$source = "fhm";
+        self::$domain = "FhmWorkflowBundle";
+        self::$translation = "workflow.step";
+        self::$class = WorkflowStep::class;
+        self::$route = 'workflow_step';
     }
 
     /**
@@ -37,75 +38,22 @@ class FrontController extends FhmController
      */
     public function indexAction()
     {
-        $twig = $this->get('twig');
         return array(
-            'instance'    => $this->fhm_tools->instanceData(),
             'breadcrumbs' => array(
                 array(
-                    'link' => $this->fhm_tools->getUrl('project_home'),
-                    'text' => $this->fhm_tools->trans('project.home.breadcrumb', array(), 'ProjectDefaultBundle'),
+                    'link' => $this->getUrl('project_home'),
+                    'text' => $this->trans('project.home.breadcrumb', array(), 'ProjectDefaultBundle'),
                 ),
                 array(
-                    'link' => $this->fhm_tools->getUrl('fhm_workflow'),
-                    'text' => $this->fhm_tools->trans('workflow.front.index.breadcrumb'),
+                    'link' => $this->getUrl('fhm_workflow'),
+                    'text' => $this->trans('workflow.front.index.breadcrumb'),
                 ),
                 array(
-                    'link'    => $this->fhm_tools->getUrl($this->source . '_' . $this->route),
-                    'text'    => $this->fhm_tools->trans('.front.index.breadcrumb'),
-                    'current' => true
+                    'link'    => $this->getUrl(self::$source . '_' . self::$route),
+                    'text'    => $this->trans(self::$translation.'.front.index.breadcrumb'),
                 )
             )
         );
-    }
-
-    /**
-     * @Route
-     * (
-     *      path="/create",
-     *      name="fhm_workflow_step_create"
-     * )
-     * @Template("::FhmWorkflow/Front/Step/create.html.twig")
-     */
-    public function createAction(Request $request)
-    {
-        // For activate this route, delete next line
-        throw $this->createNotFoundException($this->fhm_tools->trans('fhm.error.route', array(), 'FhmFhmBundle'));
-
-        return parent::createAction($request);
-    }
-
-    /**
-     * @Route
-     * (
-     *      path="/duplicate/{id}",
-     *      name="fhm_workflow_step_duplicate",
-     *      requirements={"id"="[a-z0-9]*"}
-     * )
-     * @Template("::FhmWorkflow/Front/Step/create.html.twig")
-     */
-    public function duplicateAction(Request $request, $id)
-    {
-        // For activate this route, delete next line
-        throw $this->createNotFoundException($this->fhm_tools->trans('fhm.error.route', array(), 'FhmFhmBundle'));
-
-        return parent::duplicateAction($request, $id);
-    }
-
-    /**
-     * @Route
-     * (
-     *      path="/update/{id}",
-     *      name="fhm_workflow_step_update",
-     *      requirements={"id"="[a-z0-9]*"}
-     * )
-     * @Template("::FhmWorkflow/Front/Step/update.html.twig")
-     */
-    public function updateAction(Request $request, $id)
-    {
-        // For activate this route, delete next line
-        throw $this->createNotFoundException($this->fhm_tools->trans('fhm.error.route', array(), 'FhmFhmBundle'));
-
-        return parent::updateAction($request, $id);
     }
 
     /**
@@ -120,22 +68,6 @@ class FrontController extends FhmController
     public function detailAction($id)
     {
         return parent::detailAction($id);
-    }
-
-    /**
-     * @Route
-     * (
-     *      path="/delete/{id}",
-     *      name="fhm_workflow_step_delete",
-     *      requirements={"id"="[a-z0-9]*"}
-     * )
-     */
-    public function deleteAction($id)
-    {
-        // For activate this route, delete next line
-        throw $this->createNotFoundException($this->fhm_tools->trans('fhm.error.route', array(), 'FhmFhmBundle'));
-
-        return parent::deleteAction($id);
     }
 
     /**

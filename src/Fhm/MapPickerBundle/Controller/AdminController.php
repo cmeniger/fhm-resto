@@ -21,28 +21,19 @@ class AdminController extends FhmController
 {
     /**
      * AdminController constructor.
-     * @param string $repository
-     * @param string $source
-     * @param string $domain
-     * @param string $translation
-     * @param $document
-     * @param string $route
      */
-    public function __construct(
-        $repository = "FhmMapPickerBundle:MapPicker",
-        $source = "fhm",
-        $domain = "FhmMapPickerBundle",
-        $translation = "mappicker",
-        $document = MapPicker::class,
-        $route = 'mappicker'
-    ) {
-        self::$repository = $repository;
-        self::$source = $source;
-        self::$domain = $domain;
-        self::$translation = $translation;
-        self::$document = new $document();
-        self::$class = get_class(self::$document);
-        self::$route = $route;
+    public function __construct()
+    {
+        self::$repository = "FhmMapPickerBundle:MapPicker";
+        self::$source = "fhm";
+        self::$domain = "FhmMapPickerBundle";
+        self::$translation = "mappicker";
+        self::$class = MapPicker::class;
+        self::$route = "mappicker";
+        self::$form = new \stdClass();
+        self::$form->createType = CreateType::class;
+        self::$form->createHandler = CreateHandler::class;
+        self::$form->updateType = UpdateType::class;
     }
 
     /**
@@ -68,15 +59,13 @@ class AdminController extends FhmController
      */
     public function createAction(Request $request)
     {
-        $document = self::$document;
-        $classType = CreateType::class;
-        $classHandler = CreateHandler::class;
+        $document = new self::$class;
         $form = $this->createForm(
-            $classType,
+            self::$form->createType,
             $document,
             array('map' => $this->get('fhm_tools')->getParameter('maps', 'fhm_mappicker'))
         );
-        $handler = new $classHandler($form, $request);
+        $handler = new self::$form->createHandler($form, $request);
         $process = $handler->process();
         if ($process) {
             $data = $request->get($form->getName());
@@ -143,18 +132,16 @@ class AdminController extends FhmController
     public function updateAction(Request $request, $id)
     {
         $document = $this->get('fhm_tools')->dmRepository(self::$repository)->find($id);
-        $classType = UpdateType::class;
-        $classHandler = UpdateHandler::class;
         // ERROR - unknown
         if ($document == "") {
             throw $this->createNotFoundException($this->trans(self::$translation.'.error.unknown'));
         }
         $form = $this->createForm(
-            $classType,
+            self::$form->updateType,
             $document,
             array('map' => $this->get('fhm_tools')->getParameter('maps', 'fhm_mappicker'))
         );
-        $handler = new $classHandler($form, $request);
+        $handler = new self::$form->updateHandler($form, $request);
         $process = $handler->process($document, $this->get('fhm_tools')->dm(), self::$bundle);
         if ($process) {
             $data = $request->get($form->getName());

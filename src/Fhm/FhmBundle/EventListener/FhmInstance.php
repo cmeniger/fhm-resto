@@ -22,8 +22,6 @@ class FhmInstance implements EventSubscriberInterface
     protected $class;
     protected $route;
     protected $domain;
-    protected $bundle;
-
 
     /**
      * @param FilterControllerEvent $event
@@ -173,25 +171,6 @@ class FhmInstance implements EventSubscriberInterface
     public function setDomain($domain)
     {
         $this->domain = $domain;
-
-        return $this;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getBundle()
-    {
-        return $this->bundle;
-    }
-
-    /**
-     * @param mixed $bundle
-     * @return FhmInstance
-     */
-    public function setBundle($bundle)
-    {
-        $this->bundle = $bundle;
 
         return $this;
     }

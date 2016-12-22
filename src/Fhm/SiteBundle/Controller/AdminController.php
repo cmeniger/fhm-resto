@@ -29,10 +29,15 @@ class AdminController extends FhmController
         self::$source = "fhm";
         self::$domain = "FhmSiteBundle";
         self::$translation = "site";
-        self::$document = new Site();
-        self::$class = get_class(self::$document);
-        self::$route = 'site';
+        self::$class = Site::class;
+        self::$route = "site";
+        self::$form = new \stdClass();
+        self::$form->createType = CreateType::class;
+        self::$form->createHandler = CreateHandler::class;
+        self::$form->updateType = UpdateType::class;
+        self::$form->updateHandler = UpdateHandler::class;
     }
+
     /**
      * @Route
      * (
@@ -56,10 +61,6 @@ class AdminController extends FhmController
      */
     public function createAction(Request $request)
     {
-        self::$form = new \stdClass();
-        self::$form->type = CreateType::class;
-        self::$form->handler = CreateHandler::class;
-
         $response = parent::createAction($request);
         $documents = $this->get('fhm_tools')->dmRepository(self::$repository)->findAll();
         if (count($documents) == 1) {
@@ -116,9 +117,6 @@ class AdminController extends FhmController
      */
     public function updateAction(Request $request, $id)
     {
-        self::$form = new \stdClass();
-        self::$form->type = UpdateType::class;
-        self::$form->handler = UpdateHandler::class;
         return parent::updateAction($request, $id);
     }
 
@@ -133,9 +131,6 @@ class AdminController extends FhmController
      */
     public function duplicateAction(Request $request, $id)
     {
-        self::$form = new \stdClass();
-        self::$form->type = CreateType::class;
-        self::$form->handler = CreateHandler::class;
         return parent::duplicateAction($request, $id);
     }
 

@@ -2,25 +2,39 @@
 namespace Fhm\SliderBundle\Controller;
 
 use Fhm\FhmBundle\Controller\RefAdminController as FhmController;
+use Fhm\FhmBundle\Form\Handler\Admin\CreateHandler;
+use Fhm\FhmBundle\Form\Handler\Admin\UpdateHandler;
 use Fhm\SliderBundle\Document\Slider;
+use Fhm\SliderBundle\Form\Type\Admin\Item\CreateType;
+use Fhm\SliderBundle\Form\Type\Admin\Item\UpdateType;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 /**
- * @Route("/admin/slider", service="fhm_slider_controller_admin")
+ * @Route("/admin/slider")
+ * ------------------------------------------
+ * Class AdminController
+ * @package Fhm\SliderBundle\Controller
  */
 class AdminController extends FhmController
 {
     /**
      * AdminController constructor.
-     *
-     * @param \Fhm\FhmBundle\Services\Tools $tools
      */
-    public function __construct(\Fhm\FhmBundle\Services\Tools $tools)
+    public function __construct()
     {
-        $this->setFhmTools($tools);
-        parent::__construct('Fhm', 'Slider', 'slider');
+        self::$repository = "FhmSliderBundle:Slider";
+        self::$source = "fhm";
+        self::$domain = "FhmSliderBundle";
+        self::$translation = "slider";
+        self::$class = Slider::class;
+        self::$route = "slider";
+        self::$form = new \stdClass();
+        self::$form->createType = CreateType::class;
+        self::$form->createHandler = CreateHandler::class;
+        self::$form->updateType = UpdateType::class;
+        self::$form->updateHandler = UpdateHandler::class;
     }
 
     /**
@@ -88,14 +102,11 @@ class AdminController extends FhmController
      */
     public function detailAction($id)
     {
-        $document = $this->fhm_tools->dmRepository()->find($id);
-        $instance = $this->fhm_tools->instanceData($document);
+        $document = $this->get('fhm_tools')->dmRepository(self::$repository)->find($id);
 
         return array_merge(
             array(
-                'item1' => $this->fhm_tools->dmRepository('FhmSliderBundle:SliderItem')->getAllEnable(
-                    $instance->grouping->current
-                ),
+                'item1' => $this->get('fhm_tools')->dmRepository('FhmSliderBundle:SliderItem')->getAllEnable(),
                 'item2' => $this->getList($document->getItems()),
             ),
             parent::detailAction($id)
@@ -183,18 +194,6 @@ class AdminController extends FhmController
     /**
      * @Route
      * (
-     *      path="/grouping",
-     *      name="fhm_admin_slider_grouping"
-     * )
-     */
-    public function groupingAction(Request $request)
-    {
-        return parent::groupingAction($request);
-    }
-
-    /**
-     * @Route
-     * (
      *      path="/list/item",
      *      name="fhm_admin_slider_list_item",
      *      requirements={"id"="[a-z0-9]*"}
@@ -203,14 +202,14 @@ class AdminController extends FhmController
     public function listItemAction(Request $request)
     {
         $datas = json_decode($request->get('list'));
-        $document = $this->fhm_tools->dmRepository()->find($request->get('id'));
+        $document = $this->get('fhm_tools')->dmRepository(self::$repository)->find($request->get('id'));
         foreach ($document->getItems() as $item) {
             $document->removeItem($item);
         }
         foreach ($datas as $key => $data) {
-            $document->addItem($this->fhm_tools->dmRepository('FhmSliderBundle:SliderItem')->find($data->id));
+            $document->addItem($this->get('fhm_tools')->dmRepository('FhmSliderBundle:SliderItem')->find($data->id));
         }
-        $this->fhm_tools->dmPersist($document);
+        $this->get('fhm_tools')->dmPersist($document);
 
         return new Response();
     }

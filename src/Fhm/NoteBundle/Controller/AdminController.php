@@ -18,29 +18,16 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 class AdminController extends FhmController
 {
     /**
-     * FrontController constructor.
-     * @param string $repository
-     * @param string $source
-     * @param string $domain
-     * @param string $translation
-     * @param $document
-     * @param string $route
+     * AdminController constructor.
      */
-    public function __construct(
-        $repository = "FhmNoteBundle:Note",
-        $source = "fhm",
-        $domain = "FhmNoterBundle",
-        $translation = "note",
-        $document = Note::class,
-        $route = 'note'
-    ) {
-        self::$repository = $repository;
-        self::$source = $source;
-        self::$domain = $domain;
-        self::$translation = $translation;
-        self::$document = new $document();
-        self::$class = get_class(self::$document);
-        self::$route = $route;
+    public function __construct()
+    {
+        self::$repository = "FhmNoteBundle:Note";
+        self::$source = "fhm";
+        self::$domain = "FhmNoteBundle";
+        self::$translation = "note";
+        self::$class = Note::class;
+        self::$route = "note";
     }
 
     /**

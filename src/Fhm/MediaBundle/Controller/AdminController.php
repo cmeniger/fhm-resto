@@ -24,28 +24,20 @@ class AdminController extends FhmController
 {
     /**
      * AdminController constructor.
-     * @param string $repository
-     * @param string $source
-     * @param string $domain
-     * @param string $translation
-     * @param $document
-     * @param string $route
      */
-    public function __construct(
-        $repository = "FhmMediaBundle:Media",
-        $source = "fhm",
-        $domain = "FhmMediaBundle",
-        $translation = "media",
-        $document = Media::class,
-        $route = 'media'
-    ) {
-        self::$repository = $repository;
-        self::$source = $source;
-        self::$domain = $domain;
-        self::$translation = $translation;
-        self::$document = new $document();
-        self::$class = get_class(self::$document);
-        self::$route = $route;
+    public function __construct()
+    {
+        self::$repository = "FhmMediaBundle:Media";
+        self::$source = "fhm";
+        self::$domain = "FhmMediaBundle";
+        self::$translation = "media";
+        self::$class = Media::class;
+        self::$route = "media";
+        self::$form = new \stdClass();
+        self::$form->createType = CreateType::class;
+        self::$form->createHandler = CreateHandler::class;
+        self::$form->updateType = UpdateType::class;
+        self::$form->updateHandler = UpdateHandler::class;
     }
 
 
@@ -72,11 +64,9 @@ class AdminController extends FhmController
      */
     public function createAction(Request $request)
     {
-        $document = self::$document;
-        $classType = CreateType::class;
-        $classHandler = CreateHandler::class;
-        $form = $this->createForm($classType, $document);
-        $handler = new $classHandler($form, $request);
+        $document = new self::$class;
+        $form = $this->createForm(self::$form->createType, $document);
+        $handler = new self::$form->createHandler($form, $request);
         $process = $handler->process();
         if ($process) {
             $data = $request->get($form->getName());
@@ -175,8 +165,6 @@ class AdminController extends FhmController
     public function updateAction(Request $request, $id)
     {
         $document = $this->get('fhm_tools')->dmRepository(self::$repository)->find($id);
-        $classType = UpdateType::class;
-        $classHandler = UpdateHandler::class;
         // ERROR - unknown
         if ($document == "") {
             throw $this->createNotFoundException($this->trans(self::$translation.'.error.unknown'));
@@ -187,8 +175,8 @@ class AdminController extends FhmController
         if (!$this->getUser()->hasRole('ROLE_SUPER_ADMIN') && $document->getDelete()) {
             throw new HttpException(403, $this->trans(self::$translation.'.error.forbidden'));
         }
-        $form = $this->createForm($classType, $document);
-        $handler = new $classHandler($form, $request);
+        $form = $this->createForm(self::$form->updateType, $document);
+        $handler = new self::$form->updateHandler($form, $request);
         $process = $handler->process();
         if ($process) {
             $data = $request->get($form->getName());

@@ -25,8 +25,7 @@ class ApiController extends RefApiController
         self::$source = "fhm";
         self::$domain = "FhmFhmBundle";
         self::$translation = "fhm";
-        self::$document = new Fhm();
-        self::$class = get_class(self::$document);
+        self::$class = Fhm::class;
         self::$route = 'fhm';
     }
 

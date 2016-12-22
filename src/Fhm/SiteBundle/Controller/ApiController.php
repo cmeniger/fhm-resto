@@ -26,9 +26,8 @@ class ApiController extends FhmController
         self::$source = "fhm";
         self::$domain = "FhmSiteBundle";
         self::$translation = "site";
-        self::$document = new Site();
-        self::$class = get_class(self::$document);
-        self::$route = 'site';
+        self::$class = Site::class;
+        self::$route = "site";
     }
 
     /**

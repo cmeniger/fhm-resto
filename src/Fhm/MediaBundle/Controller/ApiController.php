@@ -4,6 +4,7 @@ namespace Fhm\MediaBundle\Controller;
 use Fhm\FhmBundle\Controller\RefApiController as FhmController;
 use Fhm\MediaBundle\Document\Media;
 use Fhm\MediaBundle\Form\Handler\Api\CreateHandler;
+use Fhm\MediaBundle\Form\Type\Admin\Tag\UpdateType;
 use Fhm\MediaBundle\Form\Type\Api\CreateType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,28 +23,19 @@ class ApiController extends FhmController
 {
     /**
      * ApiController constructor.
-     * @param string $repository
-     * @param string $source
-     * @param string $domain
-     * @param string $translation
-     * @param $document
-     * @param string $route
      */
-    public function __construct(
-        $repository = "FhmMediaBundle:Media",
-        $source = "fhm",
-        $domain = "FhmMediaBundle",
-        $translation = "media",
-        $document = Media::class,
-        $route = 'media'
-    ) {
-        self::$repository = $repository;
-        self::$source = $source;
-        self::$domain = $domain;
-        self::$translation = $translation;
-        self::$document = new $document();
-        self::$class = get_class(self::$document);
-        self::$route = $route;
+    public function __construct()
+    {
+        self::$repository = "FhmMediaBundle:Media";
+        self::$source = "fhm";
+        self::$domain = "FhmMediaBundle";
+        self::$translation = "media";
+        self::$class = Media::class;
+        self::$route = "media";
+        self::$form = new \stdClass();
+        self::$form->createType = CreateType::class;
+        self::$form->createHandler = CreateHandler::class;
+        self::$form->updateType = UpdateType::class;
     }
 
     /**

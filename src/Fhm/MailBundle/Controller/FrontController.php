@@ -17,28 +17,15 @@ class FrontController extends FhmController
 {
     /**
      * FrontController constructor.
-     * @param string $repository
-     * @param string $source
-     * @param string $domain
-     * @param string $translation
-     * @param $document
-     * @param string $route
      */
-    public function __construct(
-        $repository = "FhmMailBundle:Mail",
-        $source = "fhm",
-        $domain = "FhmMailBundle",
-        $translation = "mail",
-        $document = Mail::class,
-        $route = 'mail'
-    ) {
-        self::$repository = $repository;
-        self::$source = $source;
-        self::$domain = $domain;
-        self::$translation = $translation;
-        self::$document = new $document();
-        self::$class = get_class(self::$document);
-        self::$route = $route;
+    public function __construct()
+    {
+        self::$repository = "FhmMailBundle:Mail";
+        self::$source = "fhm";
+        self::$domain = "FhmMailBundle";
+        self::$translation = "mail";
+        self::$class = Mail::class;
+        self::$route = "mail";
     }
 
     /**

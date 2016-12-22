@@ -2,7 +2,11 @@
 namespace Fhm\WorkflowBundle\Controller\Task;
 
 use Fhm\FhmBundle\Controller\RefAdminController as FhmController;
+use Fhm\FhmBundle\Form\Handler\Admin\CreateHandler;
+use Fhm\FhmBundle\Form\Handler\Admin\UpdateHandler;
 use Fhm\WorkflowBundle\Document\WorkflowTask;
+use Fhm\WorkflowBundle\Form\Type\Admin\Action\CreateType;
+use Fhm\WorkflowBundle\Form\Type\Admin\Action\UpdateType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
@@ -25,10 +29,14 @@ class AdminController extends FhmController
         self::$repository = "FhmWorkflowBundle:WorkflowTask";
         self::$source = "fhm";
         self::$domain = "FhmWorkflowBundle";
-        self::$translation = "workflow";
-        self::$document = new WorkflowTask();
-        self::$class = get_class(self::$document);
+        self::$translation = "workflow.task";
+        self::$class = WorkflowTask::class;
         self::$route = 'workflow_task';
+        self::$form = new \stdClass();
+        self::$form->createType = CreateType::class;
+        self::$form->createHandler = CreateHandler::class;
+        self::$form->updateType = UpdateType::class;
+        self::$form->updateHandler = UpdateHandler::class;
     }
 
     /**

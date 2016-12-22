@@ -12,7 +12,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 /**
- * @Route("/api/workflowtask", service="fhm_workflow_controller_task_api")
+ * @Route("/api/workflowtask")
  * --------------------------------------------
  * Class ApiController
  * @package Fhm\WorkflowBundle\Controller\Task
@@ -22,16 +22,15 @@ class ApiController extends FhmController
     protected $trans_status;
 
     /**
-     * ApiController constructor.
+     * AdminController constructor.
      */
     public function __construct()
     {
         self::$repository = "FhmWorkflowBundle:WorkflowTask";
         self::$source = "fhm";
         self::$domain = "FhmWorkflowBundle";
-        self::$translation = "workflow";
-        self::$document = new WorkflowTask();
-        self::$class = get_class(self::$document);
+        self::$translation = "workflow.task";
+        self::$class = WorkflowTask::class;
         self::$route = 'workflow_task';
     }
 

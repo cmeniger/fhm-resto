@@ -17,29 +17,16 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 class FrontController extends FhmController
 {
     /**
-     * ApiController constructor.
-     * @param string $repository
-     * @param string $source
-     * @param string $domain
-     * @param string $translation
-     * @param $document
-     * @param string $route
+     * FrontController constructor.
      */
-    public function __construct(
-        $repository = "FhmNewsletterBundle:Newsletter",
-        $source = "fhm",
-        $domain = "FhmNewsletterBundle",
-        $translation = "newsletter",
-        $document = Newsletter::class,
-        $route = 'newsletter'
-    ) {
-        self::$repository = $repository;
-        self::$source = $source;
-        self::$domain = $domain;
-        self::$translation = $translation;
-        self::$document = new $document();
-        self::$class = get_class(self::$document);
-        self::$route = $route;
+    public function __construct()
+    {
+        self::$repository = "FhmNewsletterBundle:Newsletter";
+        self::$source = "fhm";
+        self::$domain = "FhmNewsletterBundle";
+        self::$translation = "newsletter";
+        self::$class = Newsletter::class;
+        self::$route = "newsletter";
     }
 
     /**

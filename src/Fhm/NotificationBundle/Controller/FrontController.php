@@ -24,9 +24,8 @@ class FrontController extends FhmController
         self::$source = "fhm";
         self::$domain = "FhmNotificationBundle";
         self::$translation = "notification";
-        self::$document = new Notification();
-        self::$class = get_class(self::$document);
-        self::$route = 'notification';
+        self::$class = Notification::class;
+        self::$route = "notification";
     }
 
     /**
@@ -43,28 +42,28 @@ class FrontController extends FhmController
     }
 
     /**
-    * @Route
-    * (
-    *      path="/detail/{id}",
-    *      name="fhm_notification_detail",
-    *      requirements={"id"=".+"}
-    * )
-    * @Template("::FhmNotification/Front/detail.html.twig")
-    */
+     * @Route
+     * (
+     *      path="/detail/{id}",
+     *      name="fhm_notification_detail",
+     *      requirements={"id"=".+"}
+     * )
+     * @Template("::FhmNotification/Front/detail.html.twig")
+     */
     public function detailAction($id)
     {
         return parent::detailAction($id);
     }
 
     /**
-    * @Route
-    * (
-    *      path="/{id}",
-    *      name="fhm_notification_lite",
-    *      requirements={"id"=".+"}
-    * )
-    * @Template("::FhmNotification/Front/detail.html.twig")
-    */
+     * @Route
+     * (
+     *      path="/{id}",
+     *      name="fhm_notification_lite",
+     *      requirements={"id"=".+"}
+     * )
+     * @Template("::FhmNotification/Front/detail.html.twig")
+     */
     public function liteAction($id)
     {
         return $this->detailAction($id);

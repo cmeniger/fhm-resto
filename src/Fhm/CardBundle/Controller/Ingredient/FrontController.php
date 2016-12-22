@@ -19,30 +19,16 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 class FrontController extends FhmController
 {
     /**
-     * AdminController constructor.
-     *
-     * @param string $repository
-     * @param string $source
-     * @param string $domain
-     * @param string $translation
-     * @param string $document
-     * @param string $route
+     * FrontController constructor.
      */
-    public function __construct(
-        $repository = "FhmCardBundle:CardIngredient",
-        $source = "fhm",
-        $domain = "FhmCardBundle",
-        $translation = "card.ingredient",
-        $document = CardIngredient::class,
-        $route = "card_ingredient"
-    ) {
-        self::$repository = $repository;
-        self::$source = $source;
-        self::$domain = $domain;
-        self::$translation = $translation;
-        self::$document = new $document();
-        self::$class = get_class(self::$document);
-        self::$route = $route;
+    public function __construct()
+    {
+        self::$repository = "FhmCardBundle:CardIngredient";
+        self::$source = "fhm";
+        self::$domain = "FhmCardBundle";
+        self::$translation = "card.ingredient";
+        self::$class = CardIngredient::class;
+        self::$route = "card_ingredient";
     }
 
     /**

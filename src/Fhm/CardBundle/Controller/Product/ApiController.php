@@ -8,7 +8,6 @@ use Fhm\FhmBundle\Controller\RefApiController as FhmController;
 use Fhm\CardBundle\Document\CardProduct;
 use Fhm\FhmBundle\Form\Handler\Admin\CreateHandler;
 use Fhm\FhmBundle\Form\Handler\Admin\UpdateHandler;
-use Fhm\FhmBundle\Services\Tools;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -26,29 +25,20 @@ class ApiController extends FhmController
 {
     /**
      * ApiController constructor.
-     *
-     * @param string $repository
-     * @param string $source
-     * @param string $domain
-     * @param string $translation
-     * @param string $document
-     * @param string $route
      */
-    public function __construct(
-        $repository = "FhmCardBundle:CardProduct",
-        $source = "fhm",
-        $domain = "FhmCardBundle",
-        $translation = "card.product",
-        $document = CardProduct::class,
-        $route = "card_product"
-    ) {
-        self::$repository = $repository;
-        self::$source = $source;
-        self::$domain = $domain;
-        self::$translation = $translation;
-        self::$document = new $document();
-        self::$class = get_class(self::$document);
-        self::$route = $route;
+    public function __construct()
+    {
+        self::$repository = "FhmCardBundle:CardProduct";
+        self::$source = "fhm";
+        self::$domain = "FhmCardBundle";
+        self::$translation = "card.product";
+        self::$class = CardProduct::class;
+        self::$route = "card_product";
+        self::$form = new \stdClass();
+        self::$form->createType    = CreateType::class;
+        self::$form->createHandler = CreateHandler::class;
+        self::$form->updateType    = UpdateType::class;
+        self::$form->updateHandler = UpdateHandler::class;
     }
 
     /**
@@ -219,14 +209,12 @@ class ApiController extends FhmController
         $card = $this->get('fhm_tools')->dmRepository('FhmCardBundle:Card')->find($idCard);
         $category = $this->get('fhm_tools')->dmRepository('FhmCardBundle:CardCategory')->find($idCategory);
         $this->__authorized($card);
-        $document = self::$document;
+        $document = new self::$class;
         if ($category) {
             $document->addCategory($category);
         }
-        $classType = CreateType::class;
-        $classHandler = CreateHandler::class;
-        $form = $this->createForm($classType, $document);
-        $handler = new $classHandler($form, $request);
+        $form = $this->createForm(self::$form->createType, $document);
+        $handler = new self::$form->createHandler($form, $request);
         $process = $handler->process();
         if ($process) {
             // Persist
@@ -264,10 +252,8 @@ class ApiController extends FhmController
                 $this->get('translator')->trans(self::$translation.'.error.unknown', array(), self::$domain)
             );
         }
-        $classType = UpdateType::class;
-        $classHandler = UpdateHandler::class;
-        $form = $this->createForm($classType, $document);
-        $handler = new $classHandler($form, $request);
+        $form = $this->createForm(self::$form->updateType, $document);
+        $handler = new self::$form->updateHandler($form, $request);
         $process = $handler->process();
         if ($process) {
             // Persist

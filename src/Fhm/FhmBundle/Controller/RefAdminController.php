@@ -23,7 +23,7 @@ class RefAdminController extends GenericController
         $dataSearch = $request->request->get('FhmSearch');
         $query = $this->get('fhm_tools')->dmRepository(self::$repository)->getAdminIndex(
             $dataSearch['search'],
-            $this->get('security.authorization_checker')->isGranted('ROLE_SUPER_ADMIN')
+            $this->getUser()->hasRole('ROLE_SUPER_ADMIN')
         );
         $pagination = $this->get('knp_paginator')->paginate(
             $query,
@@ -35,21 +35,20 @@ class RefAdminController extends GenericController
             return array('documents' => $query->execute()->toArray());
         } else {
             return array(
-                'form'          => $this->createForm(SearchType::class)->createView(),
-                'pagination'    => $pagination,
-                'breadcrumbs'   => array(
+                'form' => $this->createForm(SearchType::class)->createView(),
+                'pagination' => $pagination,
+                'breadcrumbs' => array(
                     array(
-                        'link'  => $this->getUrl('project_home'),
-                        'text'  => $this->trans('project.home.breadcrumb', array(), 'ProjectDefaultBundle'),
+                        'link' => $this->getUrl('project_home'),
+                        'text' => $this->trans('project.home.breadcrumb', array(), 'ProjectDefaultBundle'),
                     ),
                     array(
-                        'link'  => $this->getUrl('fhm_admin'),
-                        'text'  => $this->trans('fhm.admin.breadcrumb', array(), 'FhmFhmBundle'),
+                        'link' => $this->getUrl('fhm_admin'),
+                        'text' => $this->trans('fhm.admin.breadcrumb', array(), 'FhmFhmBundle'),
                     ),
                     array(
-                        'link'  => $this->getUrl(self::$source.'_admin_'.self::$route),
-                        'text'  => $this->trans(self::$translation.'.admin.index.breadcrumb'),
-                        'current' => true,
+                        'link' => $this->getUrl(self::$source.'_admin_'.self::$route),
+                        'text' => $this->trans(self::$translation.'.admin.index.breadcrumb'),
                     ),
                 ),
             );
@@ -63,22 +62,21 @@ class RefAdminController extends GenericController
      */
     public function createAction(Request $request)
     {
-        $document = self::$document;
+        $document = new self::$class;
         $form = $this->createForm(
-            self::$form->type,
+            self::$form->createType,
             $document,
             array(
                 'data_class' => self::$class,
                 'translation_domain' => self::$domain,
                 'translation_route' => self::$translation,
-                'user_admin' => $this->get('security.authorization_checker')->isGranted('ROLE_ADMIN'),
+                'user_admin' => $this->getUser()->hasRole('ROLE_SUPER_ADMIN'),
             )
         );
-        $handler = new self::$form->handler($form, $request);
+        $handler = new self::$form->createHandler($form, $request);
         $process = $handler->process();
         if ($process) {
             $data = $request->get($form->getName());
-            // Persist
             $document->setUserCreate($this->getUser());
             $document->setAlias(
                 $this->get('fhm_tools')->getAlias(
@@ -88,36 +86,12 @@ class RefAdminController extends GenericController
                 )
             );
             $this->get('fhm_tools')->dmPersist($document);
-            // Message
             $this->get('session')->getFlashBag()->add(
                 'notice',
                 $this->trans(self::$translation.'.admin.create.flash.ok')
             );
-            // Redirect
-            $redirect = $this->redirect($this->getUrl(self::$source.'_admin_'.self::$route));
-            $redirect = isset($data['submitSave']) ? $this->redirect(
-                $this->getUrl(
-                    self::$source.'_admin_'.self::$route.'_update',
-                    array('id' => $document->getId())
-                )
-            ) : $redirect;
-            $redirect = isset($data['submitDuplicate']) ? $this->redirect(
-                $this->getUrl(
-                    self::$source.'_admin_'.self::$route.'_duplicate',
-                    array('id' => $document->getId())
-                )
-            ) : $redirect;
-            $redirect = isset($data['submitNew']) ? $this->redirect(
-                $this->getUrl(self::$source.'_admin_'.self::$route.'_create')
-            ) : $redirect;
-            $redirect = isset($data['submitConfig']) ? $this->redirect(
-                $this->getUrl(
-                    self::$source.'_admin_'.self::$route.'_detail',
-                    array('id' => $document->getId())
-                )
-            ) : $redirect;
 
-            return $redirect;
+            return $this->redirectUrl($data, $document);
         }
 
         return array(
@@ -138,7 +112,6 @@ class RefAdminController extends GenericController
                 array(
                     'link' => $this->getUrl(self::$source.'_admin_'.self::$route.'_create'),
                     'text' => $this->trans(self::$translation.'.admin.create.breadcrumb'),
-                    'current' => true,
                 ),
             ),
         );
@@ -172,16 +145,13 @@ class RefAdminController extends GenericController
      */
     public function updateAction(Request $request, $id)
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN', null, $this->trans(self::$translation.'.error.forbidden'));
         $document = $this->get('fhm_tools')->dmRepository(self::$repository)->find($id);
-        // ERROR - unknown
         if ($document == "") {
             throw $this->createNotFoundException($this->trans(self::$translation.'.error.unknown'));
         }
-        if (!$this->get('security.authorization_checker')->isGranted('ROLE_ADMIN') && $document->getDelete()) {
-            throw new HttpException(403, $this->trans(self::$translation.'.error.forbidden'));
-        }
         $form = $this->createForm(
-            self::$form->type,
+            self::$form->updateType,
             $document,
             array(
                 'data_class' => self::$class,
@@ -190,42 +160,19 @@ class RefAdminController extends GenericController
                 'user_admin' => $this->get('security.authorization_checker')->isGranted('ROLE_SUPER_ADMIN'),
             )
         );
-        $handler = new self::$form->handler($form, $request);
+        $handler = new self::$form->updateHandler($form, $request);
         $process = $handler->process();
         if ($process) {
             $data = $request->get($form->getName());
-            // Persist
             $document->setUserUpdate($this->getUser());
             $this->get('fhm_tools')->dmPersist($document);
             $this->get('session')->getFlashBag()->add(
                 'notice',
                 $this->trans(self::$translation.'.admin.update.flash.ok')
             );
-            /** Redirect **/
-            $redirect = $this->redirect($this->getUrl(self::$source.'_admin_'.self::$route));
-            $redirect = isset($data['submitSave']) ? $this->redirect(
-                $this->getUrl(
-                    self::$source.'_admin_'.self::$route.'_update',
-                    array('id' => $document->getId())
-                )
-            ) : $redirect;
-            $redirect = isset($data['submitDuplicate']) ? $this->redirect(
-                $this->getUrl(
-                    self::$source.'_admin_'.self::$route.'_duplicate',
-                    array('id' => $document->getId())
-                )
-            ) : $redirect;
-            $redirect = isset($data['submitNew']) ? $this->redirect(
-                $this->getUrl(self::$source.'_admin_'.self::$route.'_create')
-            ) : $redirect;
-            $redirect = isset($data['submitConfig']) ? $this->redirect(
-                $this->getUrl(
-                    self::$source.'_admin_'.self::$route.'_detail',
-                    array('id' => $document->getId())
-                )
-            ) : $redirect;
 
-            return $redirect;
+            /** Redirect **/
+            return $this->redirectUrl($data, $document);
         }
 
         return array(
@@ -260,7 +207,6 @@ class RefAdminController extends GenericController
                         array('id' => $id)
                     ),
                     'text' => $this->trans(self::$translation.'.admin.update.breadcrumb'),
-                    'current' => true,
                 ),
             ),
         );
@@ -315,11 +261,10 @@ class RefAdminController extends GenericController
      */
     public function deleteAction($id)
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN', null, $this->trans(self::$translation.'.error.forbidden'));
         $document = $this->get('fhm_tools')->dmRepository(self::$repository)->find($id);
         if ($document == "") {
             throw $this->createNotFoundException($this->trans(self::$translation.'.error.unknown'));
-        } elseif ($document->getDelete() && !$this->getUser()->isSuperAdmin()) {
-            throw new HttpException(403, $this->trans(self::$translation.'.error.forbidden'));
         }
         if ($document->getDelete()) {
             $this->get('fhm_tools')->dm()->remove($document);
@@ -347,11 +292,10 @@ class RefAdminController extends GenericController
      */
     public function undeleteAction($id)
     {
+        $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN', null, $this->trans(self::$translation.'.error.forbidden'));
         $document = $this->get('fhm_tools')->dmRepository(self::$repository)->find($id);
         if ($document == "") {
             throw $this->createNotFoundException($this->trans(self::$translation.'.error.unknown'));
-        } elseif ($document->getDelete() && !$this->getUser()->isSuperAdmin()) {
-            throw new HttpException(403, $this->trans(self::$source.'.error.forbidden'));
         }
         $document->setDelete(false);
         $this->get('fhm_tools')->dmPersist($document);
@@ -516,5 +460,37 @@ class RefAdminController extends GenericController
                 ),
             ),
         );
+    }
+
+    /**
+     * @param $data
+     * @return mixed
+     */
+    private function redirectUrl($data, $document)
+    {
+        $redirect = $this->redirect($this->getUrl(self::$source.'_admin_'.self::$route));
+        $redirect = isset($data['submitSave']) ? $this->redirect(
+            $this->getUrl(
+                self::$source.'_admin_'.self::$route.'_update',
+                array('id' => $document->getId())
+            )
+        ) : $redirect;
+        $redirect = isset($data['submitDuplicate']) ? $this->redirect(
+            $this->getUrl(
+                self::$source.'_admin_'.self::$route.'_duplicate',
+                array('id' => $document->getId())
+            )
+        ) : $redirect;
+        $redirect = isset($data['submitNew']) ? $this->redirect(
+            $this->getUrl(self::$source.'_admin_'.self::$route.'_create')
+        ) : $redirect;
+        $redirect = isset($data['submitConfig']) ? $this->redirect(
+            $this->getUrl(
+                self::$source.'_admin_'.self::$route.'_detail',
+                array('id' => $document->getId())
+            )
+        ) : $redirect;
+
+        return $redirect;
     }
 }

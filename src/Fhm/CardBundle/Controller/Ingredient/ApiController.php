@@ -24,30 +24,21 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 class ApiController extends FhmController
 {
     /**
-     * AdminController constructor.
-     *
-     * @param string $repository
-     * @param string $source
-     * @param string $domain
-     * @param string $translation
-     * @param string $document
-     * @param string $route
+     * ApiController constructor.
      */
-    public function __construct(
-        $repository = "FhmCardBundle:CardIngredient",
-        $source = "fhm",
-        $domain = "FhmCardBundle",
-        $translation = "card.ingredient",
-        $document = CardIngredient::class,
-        $route = "card_ingredient"
-    ) {
-        self::$repository = $repository;
-        self::$source = $source;
-        self::$domain = $domain;
-        self::$translation = $translation;
-        self::$document = new $document();
-        self::$class = get_class(self::$document);
-        self::$route = $route;
+    public function __construct()
+    {
+        self::$repository = "FhmCardBundle:CardIngredient";
+        self::$source = "fhm";
+        self::$domain = "FhmCardBundle";
+        self::$translation = "card.ingredient";
+        self::$class = CardIngredient::class;
+        self::$route = "card_ingredient";
+        self::$form = new \stdClass();
+        self::$form->createType    = CreateType::class;
+        self::$form->createHandler = CreateHandler::class;
+        self::$form->updateType    = UpdateType::class;
+        self::$form->updateHandler = UpdateHandler::class;
     }
 
     /**
@@ -180,11 +171,9 @@ class ApiController extends FhmController
     {
         $card = $this->get('fhm_tools')->dmRepository('FhmCardBundle:Card')->find($idCard);
         $this->authorized($card);
-        $document = self::$document;
-        $classType = CreateType::class;
-        $classHandler = CreateHandler::class;
-        $form = $this->createForm($classType, $document);
-        $handler = new $classHandler($form, $request);
+        $document = new self::$class;
+        $form = $this->createForm(self::$form->createType, $document);
+        $handler = new self::$form->createHandler($form, $request);
         $process = $handler->process();
         if ($process) {
             // Persist
@@ -221,10 +210,8 @@ class ApiController extends FhmController
                 $this->get('translator')->trans(self::$translation.'.error.unknown', array(), self::$domain)
             );
         }
-        $classType = UpdateType::class;
-        $classHandler = UpdateHandler::class;
-        $form = $this->createForm($classType, $document);
-        $handler = new $classHandler($form, $request);
+        $form = $this->createForm(self::$form->updateType, $document);
+        $handler = new self::$form->updateHandler($form, $request);
         $process = $handler->process();
         if ($process) {
             // Persist
@@ -363,7 +350,7 @@ class ApiController extends FhmController
                     "::FhmCard/Template/Editor/ingredient.html.twig",
                     array(
                         "card" => $card,
-                        "tree" => $this->fhm_tools->dmRepository()->getByCardAll($card),
+                        "tree" => $this->get('fhm_tools')->dmRepository(self::$repository)->getByCardAll($card),
                     )
                 ),
             )

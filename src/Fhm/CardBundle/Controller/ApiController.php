@@ -21,29 +21,16 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 class ApiController extends FhmController
 {
     /**
-     * ApiController constructor.
-     * @param string $repository
-     * @param string $source
-     * @param string $domaine
-     * @param string $translation
-     * @param string $document
-     * @param string $route
+     * FrontController constructor.
      */
-    public function __construct(
-        $repository = "FhmCardBundle:Card",
-        $source = "fhm",
-        $domaine = "FhmCardBundle",
-        $translation = "card",
-        $document = Card::class,
-        $route = "card"
-    ) {
-        self::$repository = $repository;
-        self::$source = $source;
-        self::$domain = $domaine;
-        self::$translation = $translation;
-        self::$document = new $document();
-        self::$class = get_class(self::$document);
-        self::$route = $route;
+    public function __construct()
+    {
+        self::$repository = "FhmCardBundle:Card";
+        self::$source = "fhm";
+        self::$domain = "FhmCardBundle";
+        self::$translation = "card";
+        self::$class = Card::class;
+        self::$route = 'card';
     }
 
     /**
@@ -84,7 +71,6 @@ class ApiController extends FhmController
     public function embedAction(Request $request, $id, $template)
     {
         $document = $this->get('fhm_tools')->dmRepository(self::$repository)->find($id);
-        // ERROR - unknown
         if ($document == "") {
             throw $this->createNotFoundException(
                 $this->get('translator')->trans(self::$translation.'.error.unknown', array(), self::$domain)
@@ -115,7 +101,7 @@ class ApiController extends FhmController
     public function editorAction(Request $request, $id)
     {
         $document = $this->get('fhm_tools')->dmRepository(self::$repository)->find($id);
-        $this->_authorized($document);
+        $this->__authorized($document);
 
         return new Response(
             $this->renderView(
@@ -138,7 +124,7 @@ class ApiController extends FhmController
     public function editorPreviewAction(Request $request, $id)
     {
         $document = $this->get('fhm_tools')->dmRepository(self::$repository)->find($id);
-        $this->_authorized($document);
+        $this->__authorized($document);
 
         return new Response(
             $this->renderView(
@@ -157,7 +143,7 @@ class ApiController extends FhmController
      *
      * @return $this
      */
-    protected function _authorized($card)
+    protected function __authorized($card)
     {
         if ($card == "") {
             throw $this->createNotFoundException(

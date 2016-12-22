@@ -2,10 +2,7 @@
 namespace Fhm\CardBundle\Controller\Product;
 
 use Fhm\FhmBundle\Controller\RefFrontController as FhmController;
-use Fhm\CardBundle\Form\Type\Front\Product\UpdateType;
-use Fhm\CardBundle\Form\Type\Front\Product\CreateType;
 use Fhm\CardBundle\Document\CardProduct;
-use Fhm\FhmBundle\Services\Tools;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -21,28 +18,15 @@ class FrontController extends FhmController
 {
     /**
      * FrontController constructor.
-     * @param string $repository
-     * @param string $source
-     * @param string $domain
-     * @param string $translation
-     * @param string $document
-     * @param string $route
      */
-    public function __construct(
-        $repository = "FhmCardBundle:CardProduct",
-        $source = "fhm",
-        $domain = "FhmCardBundle",
-        $translation = "card.product",
-        $document = CardProduct::class,
-        $route = "card_product"
-    ) {
-        self::$repository = $repository;
-        self::$source = $source;
-        self::$domain = $domain;
-        self::$translation = $translation;
-        self::$document = new $document();
-        self::$class = get_class(self::$document);
-        self::$route = $route;
+    public function __construct()
+    {
+        self::$repository = "FhmCardBundle:CardProduct";
+        self::$source = "fhm";
+        self::$domain = "FhmCardBundle";
+        self::$translation = "card.product";
+        self::$class = CardProduct::class;
+        self::$route = "card_product";
     }
 
     /**

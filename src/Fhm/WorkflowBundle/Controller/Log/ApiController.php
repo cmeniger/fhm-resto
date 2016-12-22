@@ -10,20 +10,24 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 /**
- * @Route("/api/workflowlog", service="fhm_workflow_controller_log_api")
+ * @Route("/api/workflowlog")
+ * -------------------------------------------
+ * Class ApiController
+ * @package Fhm\WorkflowBundle\Controller\Log
  */
 class ApiController extends FhmController
 {
     /**
-     * ApiController constructor.
-     *
-     * @param \Fhm\FhmBundle\Services\Tools $tools
+     * FrontController constructor.
      */
-    public function __construct(\Fhm\FhmBundle\Services\Tools $tools)
+    public function __construct()
     {
-        $this->setFhmTools($tools);
-        parent::__construct('Fhm', 'Workflow', 'workflow_log', 'WorkflowLog');
-        $this->translation = array('FhmWorkflowBundle', 'workflow.log');
+        self::$repository = "FhmWorkflowBundle:WorkflowLog";
+        self::$source = "fhm";
+        self::$domain = "FhmWorkflowBundle";
+        self::$translation = "workflow.log";
+        self::$class = WorkflowLog::class;
+        self::$route = 'workflow_log';
     }
 
     /**
@@ -63,18 +67,17 @@ class ApiController extends FhmController
      */
     public function workflowAction($id)
     {
-        $document = $this->fhm_tools->dmRepository('FhmWorkflowBundle:Workflow')->find($id);
-        $instance = $this->fhm_tools->instanceData($document);
+        $document = $this->get('fhm_tools')->dmRepository('FhmWorkflowBundle:Workflow')->find($id);
         $iterator = $document->getAllLogs()->getIterator();
-        $iterator->uasort(function ($a, $b)
-        {
-            return ($a->getDateCreate() > $b->getDateCreate()) ? -1 : 1;
-        });
+        $iterator->uasort(
+            function ($a, $b) {
+                return ($a->getDateCreate() > $b->getDateCreate()) ? -1 : 1;
+            }
+        );
 
         return array(
             'documents' => iterator_to_array($iterator),
-            'document'  => $document,
-            'instance'  => $instance
+            'document' => $document,
         );
     }
 
@@ -89,18 +92,17 @@ class ApiController extends FhmController
      */
     public function taskAction($id)
     {
-        $document = $this->fhm_tools->dmRepository('FhmWorkflowBundle:WorkflowTask')->find($id);
-        $instance = $this->fhm_tools->instanceData($document);
+        $document = $this->get('fhm_tools')->dmRepository('FhmWorkflowBundle:WorkflowTask')->find($id);
         $iterator = $document->getLogs()->getIterator();
-        $iterator->uasort(function ($a, $b)
-        {
-            return ($a->getDateCreate() > $b->getDateCreate()) ? -1 : 1;
-        });
+        $iterator->uasort(
+            function ($a, $b) {
+                return ($a->getDateCreate() > $b->getDateCreate()) ? -1 : 1;
+            }
+        );
 
         return array(
             'documents' => iterator_to_array($iterator),
-            'task'      => $document,
-            'instance'  => $instance
+            'task' => $document,
         );
     }
 }

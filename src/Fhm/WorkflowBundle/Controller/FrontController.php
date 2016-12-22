@@ -24,8 +24,6 @@ class FrontController extends FhmController
         self::$source = "fhm";
         self::$domain = "FhmWorkflowBundle";
         self::$translation = "workflow";
-        self::$document = new Workflow();
-        self::$class = get_class(self::$document);
         self::$route = 'workflow';
     }
 
@@ -43,28 +41,28 @@ class FrontController extends FhmController
     }
 
     /**
-    * @Route
-    * (
-    *      path="/detail/{id}",
-    *      name="fhm_workflow_detail",
-    *      requirements={"id"=".+"}
-    * )
-    * @Template("::FhmWorkflow/Front/detail.html.twig")
-    */
+     * @Route
+     * (
+     *      path="/detail/{id}",
+     *      name="fhm_workflow_detail",
+     *      requirements={"id"=".+"}
+     * )
+     * @Template("::FhmWorkflow/Front/detail.html.twig")
+     */
     public function detailAction($id)
     {
         return parent::detailAction($id);
     }
 
     /**
-    * @Route
-    * (
-    *      path="/{id}",
-    *      name="fhm_workflow_lite",
-    *      requirements={"id"=".+"}
-    * )
-    * @Template("::FhmWorkflow/Front/detail.html.twig")
-    */
+     * @Route
+     * (
+     *      path="/{id}",
+     *      name="fhm_workflow_lite",
+     *      requirements={"id"=".+"}
+     * )
+     * @Template("::FhmWorkflow/Front/detail.html.twig")
+     */
     public function liteAction($id)
     {
         return $this->detailAction($id);

@@ -3,6 +3,7 @@ namespace Fhm\MediaBundle\Controller\Tag;
 
 use Fhm\FhmBundle\Controller\RefApiController as FhmController;
 use Fhm\MediaBundle\Document\Media;
+use Fhm\MediaBundle\Document\MediaTag;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
@@ -10,20 +11,24 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 /**
- * @Route("/api/mediatag", service="fhm_media_controller_tag_api")
+ * @Route("/api/mediatag")
+ * ----------------------------------------
+ * Class ApiController
+ * @package Fhm\MediaBundle\Controller\Tag
  */
 class ApiController extends FhmController
 {
     /**
-     * ApiController constructor.
-     *
-     * @param \Fhm\FhmBundle\Services\Tools $tools
+     * AdminController constructor.
      */
-    public function __construct(\Fhm\FhmBundle\Services\Tools $tools)
+    public function __construct()
     {
-        $this->setFhmTools($tools);
-        parent::__construct('Fhm', 'Media', 'media_tag', 'MediaTag');
-        $this->translation = array('FhmMediaBundle', 'media.tag');
+        self::$repository = "FhmMediaBundle:MediaTag";
+        self::$source = "fhm";
+        self::$domain = "FhmMediaBundle";
+        self::$translation = "media.tag";
+        self::$class = MediaTag::class;
+        self::$route = "media_tag";
     }
 
     /**

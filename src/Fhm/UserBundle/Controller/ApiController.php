@@ -9,6 +9,9 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 /**
  * @Route("/api/user")
+ * ----------------------------------
+ * Class ApiController
+ * @package Fhm\UserBundle\Controller
  */
 class ApiController extends FhmController
 {
@@ -21,8 +24,7 @@ class ApiController extends FhmController
         self::$source = "fhm";
         self::$domain = "FhmUserBundle";
         self::$translation = "user";
-        self::$document = new User();
-        self::$class = get_class(self::$document);
+        self::$class = User::class;
         self::$route = 'user';
     }
 

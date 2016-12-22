@@ -274,12 +274,4 @@ class RefFrontController extends GenericController
 
         return $this->redirect($this->getUrl(self::$source.'_'.self::$route));
     }
-
-    /**
-     * @return array
-     */
-    public function getProperties()
-    {
-        return get_class_vars(self::class);
-    }
 }

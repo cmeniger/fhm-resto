@@ -17,53 +17,40 @@ class FrontController extends FhmController
 {
     /**
      * FrontController constructor.
-     * @param string $repository
-     * @param string $source
-     * @param string $domain
-     * @param string $translation
-     * @param string $document
-     * @param string $route
      */
-    public function __construct(
-        $repository = "FhmGalleryBundle:Gallery",
-        $source = "fhm",
-        $domain = "FhmGalleryBundle",
-        $translation = "gallery",
-        $document = Gallery::class,
-        $route = 'gallery'
-    ) {
-        self::$repository = $repository;
-        self::$source = $source;
-        self::$domain = $domain;
-        self::$translation = $translation;
-        self::$document = new $document();
-        self::$class = get_class(self::$document);
-        self::$route = $route;
+    public function __construct()
+    {
+        self::$repository = "FhmGalleryBundle:Gallery";
+        self::$source = "fhm";
+        self::$domain = "FhmGalleryBundle";
+        self::$translation = "gallery";
+        self::$class = Gallery::class;
+        self::$route = "gallery";
     }
 
     /**
-    * @Route
-    * (
-    *      path="/detail/{id}",
-    *      name="fhm_gallery_detail",
-    *      requirements={"id"=".+"}
-    * )
-    * @Template("::FhmGallery/Front/detail.html.twig")
-    */
+     * @Route
+     * (
+     *      path="/detail/{id}",
+     *      name="fhm_gallery_detail",
+     *      requirements={"id"=".+"}
+     * )
+     * @Template("::FhmGallery/Front/detail.html.twig")
+     */
     public function detailAction($id)
     {
         return parent::detailAction($id);
     }
 
     /**
-    * @Route
-    * (
-    *      path="/{id}",
-    *      name="fhm_gallery_lite",
-    *      requirements={"id"=".+"}
-    * )
-    * @Template("::FhmGallery/Front/detail.html.twig")
-    */
+     * @Route
+     * (
+     *      path="/{id}",
+     *      name="fhm_gallery_lite",
+     *      requirements={"id"=".+"}
+     * )
+     * @Template("::FhmGallery/Front/detail.html.twig")
+     */
     public function liteAction($id)
     {
         return $this->detailAction($id);

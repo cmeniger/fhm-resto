@@ -24,29 +24,22 @@ class AdminController extends FhmController
 {
     /**
      * AdminController constructor.
-     * @param string $repository
-     * @param string $source
-     * @param string $domain
-     * @param string $translation
-     * @param $document
-     * @param string $route
      */
-    public function __construct(
-        $repository = "FhmMenuBundle:Menu",
-        $source = "fhm",
-        $domain = "FhmMenuBundle",
-        $translation = "menu",
-        $document = Menu::class,
-        $route = 'menu'
-    ) {
-        self::$repository = $repository;
-        self::$source = $source;
-        self::$domain = $domain;
-        self::$translation = $translation;
-        self::$document = new $document();
-        self::$class = get_class(self::$document);
-        self::$route = $route;
+    public function __construct()
+    {
+        self::$repository = "FhmMenuBundle:Menu";
+        self::$source = "fhm";
+        self::$domain = "FhmMenuBundle";
+        self::$translation = "Menu";
+        self::$class = Menu::class;
+        self::$route = "menu";
+        self::$form = new \stdClass();
+        self::$form->createType = CreateType::class;
+        self::$form->createHandler = CreateHandler::class;
+        self::$form->updateType = UpdateType::class;
+        self::$form->updateHandler = UpdateHandler::class;
     }
+
     /**
      * @Route
      * (
@@ -70,12 +63,9 @@ class AdminController extends FhmController
      */
     public function createAction(Request $request)
     {
-        $document = self::$document;
-        self::$form = new \stdClass();
-        self::$form->type = CreateType::class;
-        self::$form->handler = CreateHandler::class;
+        $document = new self::$class;
         $form = $this->createForm(
-            self::$form->type,
+            self::$form->createType,
             $document,
             array(
                 'data_class' => self::$class,
@@ -83,7 +73,7 @@ class AdminController extends FhmController
                 'translation_route' => self::$translation,
             )
         );
-        $handler = new self::$form->handler($form, $request);
+        $handler = new self::$form->createHandler($form, $request);
         $process = $handler->process();
         if ($process) {
             $data = $request->get($form->getName());
@@ -210,9 +200,6 @@ class AdminController extends FhmController
      */
     public function updateAction(Request $request, $id)
     {
-        self::$form = new \stdClass();
-        self::$form->type = UpdateType::class;
-        self::$form->handler = UpdateHandler::class;
         $response = parent::updateAction($request, $id);
         $path = (is_object($response)) ? $response : '';
 

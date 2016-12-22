@@ -27,9 +27,8 @@ class ApiController extends FhmController
         self::$source = "fhm";
         self::$domain = "FhmNotificationBundle";
         self::$translation = "notification";
-        self::$document = new Notification();
-        self::$class = get_class(self::$document);
-        self::$route = 'notification';
+        self::$class = Notification::class;
+        self::$route = "notification";
     }
 
     /**

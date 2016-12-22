@@ -2,7 +2,11 @@
 namespace Fhm\WorkflowBundle\Controller\Action;
 
 use Fhm\FhmBundle\Controller\RefAdminController as FhmController;
+use Fhm\FhmBundle\Form\Handler\Admin\CreateHandler;
+use Fhm\FhmBundle\Form\Handler\Admin\UpdateHandler;
 use Fhm\WorkflowBundle\Document\WorkflowAction;
+use Fhm\WorkflowBundle\Form\Type\Admin\Action\CreateType;
+use Fhm\WorkflowBundle\Form\Type\Admin\Action\UpdateType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
@@ -10,22 +14,29 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 /**
- * @Route("/admin/workflowaction", service="fhm_workflow_controller_action_admin")
+ * @Route("/admin/workflowaction")
+ * ---------------------------------------------
+ * Class AdminController
+ * @package Fhm\WorkflowBundle\Controller\Action
  */
 class AdminController extends FhmController
 {
     /**
-     * AdminController constructor.
-     *
-     * @param \Fhm\FhmBundle\Services\Tools $tools
+     * ApiController constructor.
      */
-    public function __construct(\Fhm\FhmBundle\Services\Tools $tools)
+    public function __construct()
     {
-        $this->setFhmTools($tools);
-        parent::__construct('Fhm', 'Workflow', 'workflow_action', 'WorkflowAction');
-        $this->form->type->create = 'Fhm\\WorkflowBundle\\Form\\Type\\Admin\\Action\\CreateType';
-        $this->form->type->update = 'Fhm\\WorkflowBundle\\Form\\Type\\Admin\\Action\\UpdateType';
-        $this->translation        = array('FhmWorkflowBundle', 'workflow.action');
+        self::$repository = "FhmWorkflowBundle:WorkflowAction";
+        self::$source = "fhm";
+        self::$domain = "FhmWorkflowBundle";
+        self::$translation = "workflow.action";
+        self::$class = WorkflowAction::class;
+        self::$route = 'Workflow_action';
+        self::$form = new \stdClass();
+        self::$form->createType = CreateType::class;
+        self::$form->createHandler = CreateHandler::class;
+        self::$form->updateType = UpdateType::class;
+        self::$form->updateHandler = UpdateHandler::class;
     }
 
     /**
@@ -172,17 +183,5 @@ class AdminController extends FhmController
     public function exportAction(Request $request)
     {
         return parent::exportAction($request);
-    }
-
-    /**
-     * @Route
-     * (
-     *      path="/grouping",
-     *      name="fhm_admin_workflow_action_grouping"
-     * )
-     */
-    public function groupingAction(Request $request)
-    {
-        return parent::groupingAction($request);
     }
 }

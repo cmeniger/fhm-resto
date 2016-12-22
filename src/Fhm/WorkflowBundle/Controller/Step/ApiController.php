@@ -22,9 +22,12 @@ class ApiController extends FhmController
      */
     public function __construct()
     {
-//        $this->setFhmTools($tools);
-//        parent::__construct('Fhm', 'Workflow', 'workflow_step', 'WorkflowStep');
-//        $this->translation = array('FhmWorkflowBundle', 'workflow.step');
+        self::$repository = "FhmWorkflowBundle:WorkflowStep";
+        self::$source = "fhm";
+        self::$domain = "FhmWorkflowBundle";
+        self::$translation = "workflow.step";
+        self::$class = WorkflowStep::class;
+        self::$route = 'workflow_step';
     }
 
     /**
@@ -64,8 +67,7 @@ class ApiController extends FhmController
     public function boardAction()
     {
         return array(
-            'documents' => $this->fhm_tools->dmRepository()->getAllEnable(),
-            'instance'  => $this->fhm_tools->instanceData()
+            'documents' => $this->get('fhm_tools')->dmRepository(self::$repository)->getAllEnable(),
         );
     }
 
@@ -81,9 +83,8 @@ class ApiController extends FhmController
     public function workflowAction($id)
     {
         return array(
-            'document'  => $this->fhm_tools->dmRepository()->find($id),
-            'workflows' => $this->fhm_tools->dmRepository('FhmWorkflowBundle:Workflow')->getByStep($id, true),
-            'instance'  => $this->fhm_tools->instanceData()
+            'document'  => $this->get('fhm_tools')->dmRepository(self::$repository)->find($id),
+            'workflows' => $this->get('fhm_tools')->dmRepository('FhmWorkflowBundle:Workflow')->getByStep($id, true),
         );
     }
 }

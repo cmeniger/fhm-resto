@@ -2,25 +2,31 @@
 namespace Fhm\TestimonyBundle\Controller;
 
 use Fhm\FhmBundle\Controller\RefApiController as FhmController;
+use Fhm\FhmBundle\Form\Type\Admin\SearchType;
 use Fhm\TestimonyBundle\Document\Testimony;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * @Route("/api/testimony", service="fhm_testimony_controller_api")
+ * @Route("/api/testimony")
+ * ---------------------------------------
+ * Class ApiController
+ * @package Fhm\TestimonyBundle\Controller
  */
 class ApiController extends FhmController
 {
     /**
      * ApiController constructor.
-     *
-     * @param \Fhm\FhmBundle\Services\Tools $tools
      */
-    public function __construct(\Fhm\FhmBundle\Services\Tools $tools)
+    public function __construct()
     {
-        $this->setFhmTools($tools);
-        parent::__construct('Fhm', 'Testimony', 'testimony');
+        self::$repository = "FhmTestimonyBundle:Testimony";
+        self::$source = "fhm";
+        self::$domain = "FhmTestimonyBundle";
+        self::$translation = "testimony";
+        self::$class = Testimony::class;
+        self::$route = "testimony";
     }
 
     /**
@@ -48,66 +54,18 @@ class ApiController extends FhmController
     public function detailAction($template, $rows, $pagination)
     {
         $document = "";
-        $instance = $this->fhm_tools->instanceData();
-        $classType = '\Fhm\FhmBundle\Form\Type\Front\SearchType';
-        $form = $this->createForm($classType);
+        $form = $this->createForm(SearchType::class);
         $form->setData($this->get('request_stack')->get($form->getName()));
         $dataSearch = $form->getData();
-        $dataPagination = $this->get('request_stack')->get('FhmPagination');
-        $this->fhm_tools->setPagination($rows);
-        // Ajax pagination request
-        if ($pagination && isset($dataPagination['pagination'])) {
-            $documents = $this->fhm_tools->dmRepository()->getFrontIndex(
-                $dataSearch['search'],
-                $dataPagination['pagination'],
-                $this->pagination->page,
-                $instance->grouping->current
-            );
-            $pagination = $this->fhm_tools->getPagination(
-                $dataPagination['pagination'],
-                count($documents),
-                $this->fhm_tools->dmRepository()->getFrontCount($dataSearch['search'], $instance->grouping->current),
-                'pagination',
-                $this->fhm_tools->formRename($form->getName(), $dataSearch),
-                $this->fhm_tools->getUrl(
-                    'fhm_api_testimony_detail',
-                    array('template' => $template, 'rows' => $rows, 'pagination' => $pagination)
-                )
-            );
-        } // Router request
-        else {
-            $documents = $this->fhm_tools->dmRepository()->getFrontIndex(
-                $dataSearch['search'],
-                1,
-                $this->pagination->page,
-                $instance->grouping->current
-            );
-            if ($pagination) {
-                $pagination = $this->fhm_tools->getPagination(
-                    1,
-                    count($documents),
-                    $this->fhm_tools->dmRepository()->getFrontCount(
-                        $dataSearch['search'],
-                        $instance->grouping->current
-                    ),
-                    'pagination',
-                    $this->fhm_tools->formRename($form->getName(), $dataSearch),
-                    $this->fhm_tools->getUrl(
-                        'fhm_api_testimony_detail',
-                        array('template' => $template, 'rows' => $rows, 'pagination' => $pagination)
-                    )
-                );
-            }
-        }
-
+        $documents = $this->get('fhm_tools')->dmRepository(self::$repository)->getFrontIndex(
+            $dataSearch['search']
+        );
         return new Response(
             $this->renderView(
                 "::FhmTestimony/Template/".$template.".html.twig",
                 array(
                     'document' => $document,
                     'documents' => $documents,
-                    'pagination' => $pagination ? $pagination : array(),
-                    'instance' => $instance,
                     'form' => $form ? $form->createView() : $form,
                 )
             )

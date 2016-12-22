@@ -8,7 +8,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 /**
- * @Route("/workflowtask", service="fhm_workflow_controller_task_front")
+ * @Route("/workflowtask")
  * --------------------------------------------
  * Class FrontController
  * @package Fhm\WorkflowBundle\Controller\Task
@@ -23,21 +23,20 @@ class FrontController extends FhmController
         self::$repository = "FhmWorkflowBundle:WorkflowTask";
         self::$source = "fhm";
         self::$domain = "FhmWorkflowBundle";
-        self::$translation = "workflow";
-        self::$document = new WorkflowTask();
-        self::$class = get_class(self::$document);
+        self::$translation = "workflow.task";
+        self::$class = WorkflowTask::class;
         self::$route = 'workflow_task';
     }
 
     /**
-    * @Route
-    * (
-    *      path="/{id}",
-    *      name="fhm_workflow_task_lite",
-    *      requirements={"id"=".+"}
-    * )
-    * @Template("::FhmWorkflow/Front/Task/detail.html.twig")
-    */
+     * @Route
+     * (
+     *      path="/{id}",
+     *      name="fhm_workflow_task_lite",
+     *      requirements={"id"=".+"}
+     * )
+     * @Template("::FhmWorkflow/Front/Task/detail.html.twig")
+     */
     public function liteAction($id)
     {
         return $this->detailAction($id);

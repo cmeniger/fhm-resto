@@ -22,28 +22,19 @@ class AdminController extends FhmController
 {
     /**
      * AdminController constructor.
-     * @param string $repository
-     * @param string $source
-     * @param string $domain
-     * @param string $translation
-     * @param string $document
-     * @param string $route
      */
-    public function __construct(
-        $repository = "FhmGalleryBundle:Gallery",
-        $source = "fhm",
-        $domain = "FhmGalleryBundle",
-        $translation = "gallery",
-        $document = Gallery::class,
-        $route = 'gallery'
-    ) {
-        self::$repository = $repository;
-        self::$source = $source;
-        self::$domain = $domain;
-        self::$translation = $translation;
-        self::$document = new $document();
-        self::$class = get_class(self::$document);
-        self::$route = $route;
+    public function __construct()
+    {
+        self::$repository = "FhmGalleryBundle:Gallery";
+        self::$source = "fhm";
+        self::$domain = "FhmGalleryBundle";
+        self::$translation = "gallery";
+        self::$class = Gallery::class;
+        self::$route = "gallery";
+        self::$form = new \stdClass();
+        self::$form->createType = CreateType::class;
+        self::$form->createHandler = CreateHandler::class;
+        self::$form->updateType = UpdateType::class;
     }
 
     /**
@@ -69,10 +60,6 @@ class AdminController extends FhmController
      */
     public function createAction(Request $request)
     {
-        self::$form = new \stdClass();
-        self::$form->type = CreateType::class;
-        self::$form->handler = CreateHandler::class;
-
         return parent::createAction($request);
     }
 
@@ -87,10 +74,6 @@ class AdminController extends FhmController
      */
     public function duplicateAction(Request $request, $id)
     {
-        self::$form = new \stdClass();
-        self::$form->type = CreateType::class;
-        self::$form->handler = CreateHandler::class;
-
         return parent::duplicateAction($request, $id);
     }
 
@@ -105,10 +88,6 @@ class AdminController extends FhmController
      */
     public function updateAction(Request $request, $id)
     {
-        self::$form = new \stdClass();
-        self::$form->type = UpdateType::class;
-        self::$form->handler = UpdateHandler::class;
-
         return parent::updateAction($request, $id);
     }
 

@@ -2,7 +2,11 @@
 namespace Fhm\WorkflowBundle\Controller\Step;
 
 use Fhm\FhmBundle\Controller\RefAdminController as FhmController;
+use Fhm\FhmBundle\Form\Handler\Admin\CreateHandler;
+use Fhm\FhmBundle\Form\Handler\Admin\UpdateHandler;
 use Fhm\WorkflowBundle\Document\WorkflowStep;
+use Fhm\WorkflowBundle\Form\Type\Admin\Action\CreateType;
+use Fhm\WorkflowBundle\Form\Type\Admin\Action\UpdateType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
@@ -19,16 +23,20 @@ class AdminController extends FhmController
 {
     /**
      * AdminController constructor.
-     *
-     * @param \Fhm\FhmBundle\Services\Tools $tools
      */
     public function __construct()
     {
-//        $this->setFhmTools($tools);
-//        parent::__construct('Fhm', 'Workflow', 'workflow_step', 'WorkflowStep');
-//        $this->form->type->create = 'Fhm\\WorkflowBundle\\Form\\Type\\Admin\\Step\\CreateType';
-//        $this->form->type->update = 'Fhm\\WorkflowBundle\\Form\\Type\\Admin\\Step\\UpdateType';
-//        $this->translation        = array('FhmWorkflowBundle', 'workflow.step');
+        self::$repository = "FhmWorkflowBundle:WorkflowStep";
+        self::$source = "fhm";
+        self::$domain = "FhmWorkflowBundle";
+        self::$translation = "workflow.step";
+        self::$class = WorkflowStep::class;
+        self::$route = 'workflow_step';
+        self::$form = new \stdClass();
+        self::$form->createType = CreateType::class;
+        self::$form->createHandler = CreateHandler::class;
+        self::$form->updateType = UpdateType::class;
+        self::$form->updateHandler = UpdateHandler::class;
     }
 
     /**
@@ -175,17 +183,5 @@ class AdminController extends FhmController
     public function exportAction(Request $request)
     {
         return parent::exportAction($request);
-    }
-
-    /**
-     * @Route
-     * (
-     *      path="/grouping",
-     *      name="fhm_admin_workflow_step_grouping"
-     * )
-     */
-    public function groupingAction(Request $request)
-    {
-        return parent::groupingAction($request);
     }
 }

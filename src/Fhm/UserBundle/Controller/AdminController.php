@@ -16,6 +16,9 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 /**
  * @Route("/admin/user")
+ * ----------------------------------
+ * Class AdminController
+ * @package Fhm\UserBundle\Controller
  */
 class AdminController extends FhmController
 {
@@ -28,10 +31,15 @@ class AdminController extends FhmController
         self::$source = "fhm";
         self::$domain = "FhmUserBundle";
         self::$translation = "user";
-        self::$document = new User();
-        self::$class = get_class(self::$document);
+        self::$class = User::class;
         self::$route = 'user';
+        self::$form = new \stdClass();
+        self::$form->createType = CreateType::class;
+        self::$form->createHandler = CreateHandler::class;
+        self::$form->updateType = UpdateType::class;
+        self::$form->updateHandler = UpdateHandler::class;
     }
+
 
     /**
      * @Route
@@ -56,10 +64,6 @@ class AdminController extends FhmController
      */
     public function createAction(Request $request)
     {
-        self::$form = new \stdClass();
-        self::$form->type = CreateType::class;
-        self::$form->handler = CreateHandler::class;
-
         return parent::createAction($request);
     }
 
@@ -74,10 +78,6 @@ class AdminController extends FhmController
      */
     public function duplicateAction(Request $request, $id)
     {
-        self::$form = new \stdClass();
-        self::$form->type = CreateType::class;
-        self::$form->handler = CreateHandler::class;
-
         return parent::duplicateAction($request, $id);
     }
 
@@ -92,10 +92,6 @@ class AdminController extends FhmController
      */
     public function updateAction(Request $request, $id)
     {
-        self::$form = new \stdClass();
-        self::$form->type = UpdateType::class;
-        self::$form->handler = UpdateHandler::class;
-
         return parent::updateAction($request, $id);
     }
 

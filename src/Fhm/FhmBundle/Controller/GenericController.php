@@ -18,12 +18,10 @@ abstract class  GenericController extends Controller
     protected static $source;
     protected static $repository;
     protected static $translation;
-    protected static $document;
     protected static $class;
     protected static $form;
     protected static $route;
     protected static $domain;
-    protected static $bundle;
 
     /**
      * @param $route
@@ -67,7 +65,7 @@ abstract class  GenericController extends Controller
     protected function trans($key, $parameters = array(), $domain = null)
     {
         $key = $key[0] == '.' ? self::$translation.$key : $key;
-        $domain = $domain == null ? self::$domain: $domain;
+        $domain = $domain == null ? self::$domain : $domain;
 
         return $this->get('translator')->trans($key, $parameters, $domain);
     }
@@ -81,17 +79,4 @@ abstract class  GenericController extends Controller
         return get_class_vars(self::class);
     }
 
-    /**
-     * @param $type
-     * @param $handler
-     * @return \stdClass
-     */
-    protected function setForm($type, $handler)
-    {
-        self::$form = new \stdClass();
-        self::$form->type = $type;
-        self::$form->handler = $handler;
-
-        return self::$form;
-    }
 }

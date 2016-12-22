@@ -18,29 +18,16 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 class ApiController extends FhmController
 {
     /**
-     * AdminController constructor.
-     * @param string $repository
-     * @param string $source
-     * @param string $domain
-     * @param string $translation
-     * @param string $document
-     * @param string $route
+     * ApiController constructor.
      */
-    public function __construct(
-        $repository = "FhmPartnerBundle:PartnerGroup",
-        $source = "fhm",
-        $domain = "FhmPartnerBundle",
-        $translation = "partner.group",
-        $document = PartnerGroup::class,
-        $route = 'partner_group'
-    ) {
-        self::$repository = $repository;
-        self::$source = $source;
-        self::$domain = $domain;
-        self::$translation = $translation;
-        self::$document = new $document();
-        self::$class = get_class(self::$document);
-        self::$route = $route;
+    public function __construct()
+    {
+        self::$repository = "FhmPartnerBundle:PartnerGroup";
+        self::$source = "fhm";
+        self::$domain = "FhmPartnerBundle";
+        self::$translation = "partner.group";
+        self::$class = PartnerGroup::class;
+        self::$route = "partner_group";
     }
 
     /**

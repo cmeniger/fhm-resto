@@ -2,6 +2,8 @@
 namespace Fhm\PartnerBundle\Controller\Group;
 
 use Fhm\FhmBundle\Controller\RefAdminController as FhmController;
+use Fhm\FhmBundle\Form\Handler\Admin\CreateHandler;
+use Fhm\FhmBundle\Form\Handler\Admin\UpdateHandler;
 use Fhm\FhmBundle\Form\Type\Admin\SearchType;
 use Fhm\PartnerBundle\Document\PartnerGroup;
 use Fhm\PartnerBundle\Form\Type\Admin\Group\CreateType;
@@ -21,28 +23,20 @@ class AdminController extends FhmController
 {
     /**
      * AdminController constructor.
-     * @param string $repository
-     * @param string $source
-     * @param string $domain
-     * @param string $translation
-     * @param string $document
-     * @param string $route
      */
-    public function __construct(
-        $repository = "FhmPartnerBundle:PartnerGroup",
-        $source = "fhm",
-        $domain = "FhmPartnerBundle",
-        $translation = "partner.group",
-        $document = PartnerGroup::class,
-        $route = 'partner_group'
-    ) {
-        self::$repository = $repository;
-        self::$source = $source;
-        self::$domain = $domain;
-        self::$translation = $translation;
-        self::$document = new $document();
-        self::$class = get_class(self::$document);
-        self::$route = $route;
+    public function __construct()
+    {
+        self::$repository = "FhmPartnerBundle:PartnerGroup";
+        self::$source = "fhm";
+        self::$domain = "FhmPartnerBundle";
+        self::$translation = "partner.group";
+        self::$class = PartnerGroup::class;
+        self::$route = "partner_group";
+        self::$form = new \stdClass();
+        self::$form->createType = CreateType::class;
+        self::$form->createHandler = CreateHandler::class;
+        self::$form->updateType = UpdateType::class;
+        self::$form->updateHandler = UpdateHandler::class;
     }
 
     /**

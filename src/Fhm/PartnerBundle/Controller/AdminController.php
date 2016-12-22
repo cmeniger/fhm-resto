@@ -2,7 +2,11 @@
 namespace Fhm\PartnerBundle\Controller;
 
 use Fhm\FhmBundle\Controller\RefAdminController as FhmController;
+use Fhm\FhmBundle\Form\Handler\Admin\CreateHandler;
+use Fhm\FhmBundle\Form\Handler\Admin\UpdateHandler;
 use Fhm\PartnerBundle\Document\Partner;
+use Fhm\PartnerBundle\Form\Type\Admin\Group\CreateType;
+use Fhm\PartnerBundle\Form\Type\Admin\Group\UpdateType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -18,28 +22,20 @@ class AdminController extends FhmController
 {
     /**
      * AdminController constructor.
-     * @param string $repository
-     * @param string $source
-     * @param string $domain
-     * @param string $translation
-     * @param string $document
-     * @param string $route
      */
-    public function __construct(
-        $repository = "FhmPartnerBundle:Partner",
-        $source = "fhm",
-        $domain = "FhmPartnerBundle",
-        $translation = "partner",
-        $document = Partner::class,
-        $route = 'partner'
-    ) {
-        self::$repository = $repository;
-        self::$source = $source;
-        self::$domain = $domain;
-        self::$translation = $translation;
-        self::$document = new $document();
-        self::$class = get_class(self::$document);
-        self::$route = $route;
+    public function __construct()
+    {
+        self::$repository = "FhmPartnerBundle:Partner";
+        self::$source = "fhm";
+        self::$domain = "FhmPartnerBundle";
+        self::$translation = "partner";
+        self::$class = Partner::class;
+        self::$route = "partner";
+        self::$form = new \stdClass();
+        self::$form->createType = CreateType::class;
+        self::$form->createHandler = CreateHandler::class;
+        self::$form->updateType = UpdateType::class;
+        self::$form->updateHandler = UpdateHandler::class;
     }
 
     /**

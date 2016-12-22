@@ -2,7 +2,9 @@
 namespace Fhm\MediaBundle\Controller\Tag;
 
 use Fhm\FhmBundle\Controller\RefAdminController as FhmController;
-use Fhm\MediaBundle\Document\Media;
+use Fhm\FhmBundle\Form\Handler\Admin\CreateHandler;
+use Fhm\FhmBundle\Form\Handler\Admin\UpdateHandler;
+use Fhm\MediaBundle\Document\MediaTag;
 use Fhm\MediaBundle\Form\Type\Admin\Tag\CreateType;
 use Fhm\MediaBundle\Form\Type\Admin\Tag\UpdateType;
 use Symfony\Component\HttpFoundation\Request;
@@ -10,23 +12,29 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 /**
- * @Route("/admin/mediatag", service="fhm_media_controller_tag_admin")
+ * @Route("/admin/mediatag")
+ * ----------------------------------------------
+ * Class AdminController
+ * @package Fhm\MediaBundle\Controller\Tag
  */
 class AdminController extends FhmController
 {
     /**
      * AdminController constructor.
-     *
-     * @param \Fhm\FhmBundle\Services\Tools $tools
      */
-    public function __construct(\Fhm\FhmBundle\Services\Tools $tools)
+    public function __construct()
     {
-        $this->setFhmTools($tools);
-        parent::__construct('Fhm', 'Media', 'media_tag', 'MediaTag');
-        $this->form->type->create = CreateType::class;
-        $this->form->type->update = UpdateType::class;
-        $this->translation = array('FhmMediaBundle', 'media.tag');
-        $this->fhm_tools->setSort('route');
+        self::$repository = "FhmMediaBundle:MediaTag";
+        self::$source = "fhm";
+        self::$domain = "FhmMediaBundle";
+        self::$translation = "media.tag";
+        self::$class = MediaTag::class;
+        self::$route = "media_tag";
+        self::$form = new \stdClass();
+        self::$form->createType = CreateType::class;
+        self::$form->createHandler = CreateHandler::class;
+        self::$form->updateType = UpdateType::class;
+        self::$form->updateHandler = UpdateHandler::class;
     }
 
     /**

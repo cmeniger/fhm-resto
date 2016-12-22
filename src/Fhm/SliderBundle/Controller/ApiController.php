@@ -10,19 +10,24 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 /**
- * @Route("/api/slider", service="fhm_slider_controller_api")
+ * @Route("/api/slider")
+ * -------------------------------------
+ * Class ApiController
+ * @package Fhm\SliderBundle\Controller
  */
 class ApiController extends FhmController
 {
     /**
-     * ApiController constructor.
-     *
-     * @param \Fhm\FhmBundle\Services\Tools $tools
+     * FrontController constructor.
      */
-    public function __construct(\Fhm\FhmBundle\Services\Tools $tools)
+    public function __construct()
     {
-        $this->setFhmTools($tools);
-        parent::__construct('Fhm', 'Slider', 'slider');
+        self::$repository = "FhmSliderBundle:Slider";
+        self::$source = "fhm";
+        self::$domain = "FhmSliderBundle";
+        self::$translation = "slider";
+        self::$class = Slider::class;
+        self::$route = "slider";
     }
 
     /**
@@ -62,20 +67,18 @@ class ApiController extends FhmController
      */
     public function detailAction($template, $id)
     {
-        $document = $this->fhm_tools->dmRepository()->getById($id);
-        $document = ($document) ? $document : $this->fhm_tools->dmRepository()->getByAlias($id);
-        $document = ($document) ? $document : $this->fhm_tools->dmRepository()->getByName($id);
-        $instance = $this->fhm_tools->instanceData($document);
+        $document = $this->get('fhm_tools')->dmRepository(self::$repository)->getById($id);
+        $document = ($document) ? $document : $this->get('fhm_tools')->dmRepository(self::$repository)->getByAlias($id);
+        $document = ($document) ? $document : $this->get('fhm_tools')->dmRepository(self::$repository)->getByName($id);
         // ERROR - unknown
         if ($document == "") {
             throw $this->createNotFoundException(
-                $this->fhm_tools->trans('slider.item.error.unknown', array(), 'FhmSliderBundle')
+                $this->trans('slider.item.error.unknown', array(), 'FhmSliderBundle')
             );
         } // ERROR - Forbidden
-        elseif (!$instance->user->admin && ($document->getDelete() || !$document->getActive())) {
+        elseif (!$this->getUser()->hasRole('ROLE_SUPER_ADMIN') && ($document->getDelete() || !$document->getActive())) {
             throw new HttpException(
-                403,
-                $this->fhm_tools->trans('slider.item.error.forbidden', array(), 'FhmSliderBundle')
+                403, $this->trans('slider.item.error.forbidden', array(), 'FhmSliderBundle')
             );
         }
 
@@ -84,8 +87,9 @@ class ApiController extends FhmController
                 "::FhmSlider/Template/".$template.".html.twig",
                 array(
                     'document' => $document,
-                    'items' => $this->fhm_tools->dmRepository("FhmSliderBundle:SliderItem")->getByGroupAll($document),
-                    'instance' => $instance,
+                    'items' => $this->get('fhm_tools')->dmRepository("FhmSliderBundle:SliderItem")->getByGroupAll(
+                        $document
+                    ),
                 )
             )
         );

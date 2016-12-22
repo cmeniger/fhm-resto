@@ -19,29 +19,17 @@ class FrontController extends FhmController
 {
     /**
      * FrontController constructor.
-     * @param string $repository
-     * @param string $source
-     * @param string $domain
-     * @param string $translation
-     * @param string $document
-     * @param string $route
      */
-    public function __construct(
-        $repository = "FhmGalleryBundle:Gallery",
-        $source = "fhm",
-        $domain = "FhmGalleryBundle",
-        $translation = "gallery.album",
-        $document = GalleryAlbum::class,
-        $route = 'gallery_album'
-    ) {
-        self::$repository = $repository;
-        self::$source = $source;
-        self::$domain = $domain;
-        self::$translation = $translation;
-        self::$document = new $document();
-        self::$class = get_class(self::$document);
-        self::$route = $route;
+    public function __construct()
+    {
+        self::$repository = "FhmGalleryBundle:GalleryAlbum";
+        self::$source = "fhm";
+        self::$domain = "FhmGalleryBundle";
+        self::$translation = "gallery.album";
+        self::$class = GalleryAlbum::class;
+        self::$route = "gallery_album";
     }
+
     /**
      * @Route
      * (

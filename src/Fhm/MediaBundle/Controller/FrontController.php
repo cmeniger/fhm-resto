@@ -4,6 +4,7 @@ namespace Fhm\MediaBundle\Controller;
 use Fhm\FhmBundle\Controller\RefFrontController as FhmController;
 use Fhm\FhmBundle\Form\Handler\Front\CreateHandler;
 use Fhm\MediaBundle\Document\Media;
+use Fhm\MediaBundle\Form\Type\Admin\Tag\UpdateType;
 use Fhm\MediaBundle\Form\Type\Front\CreateType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -20,28 +21,19 @@ class FrontController extends FhmController
 {
     /**
      * FrontController constructor.
-     * @param string $repository
-     * @param string $source
-     * @param string $domain
-     * @param string $translation
-     * @param $document
-     * @param string $route
      */
-    public function __construct(
-        $repository = "FhmMediaBundle:Media",
-        $source = "fhm",
-        $domain = "FhmMediaBundle",
-        $translation = "media",
-        $document = Media::class,
-        $route = 'media'
-    ) {
-        self::$repository = $repository;
-        self::$source = $source;
-        self::$domain = $domain;
-        self::$translation = $translation;
-        self::$document = new $document();
-        self::$class = get_class(self::$document);
-        self::$route = $route;
+    public function __construct()
+    {
+        self::$repository = "FhmMediaBundle:Media";
+        self::$source = "fhm";
+        self::$domain = "FhmMediaBundle";
+        self::$translation = "media";
+        self::$class = Media::class;
+        self::$route = "media";
+        self::$form = new \stdClass();
+        self::$form->createType = CreateType::class;
+        self::$form->createHandler = CreateHandler::class;
+        self::$form->updateType = UpdateType::class;
     }
 
     /**
@@ -67,11 +59,9 @@ class FrontController extends FhmController
      */
     public function createAction(Request $request)
     {
-        $document = self::$document;
-        $classType = CreateType::class;
-        $classHandler = CreateHandler::class;
-        $form = $this->createForm($classType, $document);
-        $handler = new $classHandler($form, $request);
+        $document = new self::$class;
+        $form = $this->createForm(self::$form->createType, $document);
+        $handler = new self::$form->createHandler($form, $request);
         $process = $handler->process();
         if ($process) {
             $data = $request->get($form->getName());

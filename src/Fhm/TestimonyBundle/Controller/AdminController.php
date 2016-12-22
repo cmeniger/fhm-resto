@@ -2,25 +2,39 @@
 namespace Fhm\TestimonyBundle\Controller;
 
 use Fhm\FhmBundle\Controller\RefAdminController as FhmController;
+use Fhm\FhmBundle\Form\Handler\Admin\CreateHandler;
+use Fhm\FhmBundle\Form\Handler\Admin\UpdateHandler;
 use Fhm\TestimonyBundle\Document\Testimony;
+use Fhm\TestimonyBundle\Form\Type\Admin\CreateType;
+use Fhm\TestimonyBundle\Form\Type\Admin\UpdateType;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 /**
- * @Route("/admin/testimony", service="fhm_testimony_controller_admin")
+ * @Route("/admin/testimony")
+ * --------------------------------------
+ * Class AdminController
+ * @package Fhm\TestimonyBundle\Controller
  */
 class AdminController extends FhmController
 {
     /**
      * AdminController constructor.
-     *
-     * @param \Fhm\FhmBundle\Services\Tools $tools
      */
-    public function __construct(\Fhm\FhmBundle\Services\Tools $tools)
+    public function __construct()
     {
-        $this->setFhmTools($tools);
-        parent::__construct('Fhm', 'Testimony', 'testimony');
+        self::$repository = "FhmTestimonyBundle:Testimony";
+        self::$source = "fhm";
+        self::$domain = "FhmTestimonyBundle";
+        self::$translation = "testimony";
+        self::$class = Testimony::class;
+        self::$route = "testimony";
+        self::$form = new \stdClass();
+        self::$form->createType = CreateType::class;
+        self::$form->createHandler = CreateHandler::class;
+        self::$form->updateType = UpdateType::class;
+        self::$form->updateHandler = UpdateHandler::class;
     }
 
     /**
@@ -167,17 +181,5 @@ class AdminController extends FhmController
     public function exportAction(Request $request)
     {
         return parent::exportAction($request);
-    }
-
-    /**
-     * @Route
-     * (
-     *      path="/grouping",
-     *      name="fhm_admin_testimony_grouping"
-     * )
-     */
-    public function groupingAction(Request $request)
-    {
-        return parent::groupingAction($request);
     }
 }

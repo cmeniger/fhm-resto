@@ -17,28 +17,15 @@ class FrontController extends FhmController
 {
     /**
      * FrontController constructor.
-     * @param string $repository
-     * @param string $source
-     * @param string $domain
-     * @param string $translation
-     * @param string $document
-     * @param string $route
      */
-    public function __construct(
-        $repository = "FhmEventBundle:Event",
-        $source = "fhm",
-        $domain = "FhmEventBundle",
-        $translation = "event",
-        $document = Event::class,
-        $route = 'event'
-    ) {
-        self::$repository = $repository;
-        self::$source = $source;
-        self::$domain = $domain;
-        self::$translation = $translation;
-        self::$document = new $document();
-        self::$class = get_class(self::$document);
-        self::$route = $route;
+    public function __construct()
+    {
+        self::$repository = "FhmEventBundle:Event";
+        self::$source = "fhm";
+        self::$domain = "FhmEventBundle";
+        self::$translation = "event";
+        self::$class = Event::class;
+        self::$route = "event";
     }
 
     /**

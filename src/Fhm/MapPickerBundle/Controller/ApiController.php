@@ -19,28 +19,15 @@ class ApiController extends FhmController
 {
     /**
      * ApiController constructor.
-     * @param string $repository
-     * @param string $source
-     * @param string $domain
-     * @param string $translation
-     * @param $document
-     * @param string $route
      */
-    public function __construct(
-        $repository = "FhmMapPickerBundle:MapPicker",
-        $source = "fhm",
-        $domain = "FhmMapPickerBundle",
-        $translation = "mappicker",
-        $document = MapPicker::class,
-        $route = 'mappicker'
-    ) {
-        self::$repository = $repository;
-        self::$source = $source;
-        self::$domain = $domain;
-        self::$translation = $translation;
-        self::$document = new $document();
-        self::$class = get_class(self::$document);
-        self::$route = $route;
+    public function __construct()
+    {
+        self::$repository = "FhmMapPickerBundle:MapPicker";
+        self::$source = "fhm";
+        self::$domain = "FhmMapPickerBundle";
+        self::$translation = "mappicker";
+        self::$class = MapPicker::class;
+        self::$route = "mappicker";
     }
 
     /**

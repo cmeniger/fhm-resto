@@ -2,8 +2,11 @@
 namespace Fhm\ContactBundle\Controller\Message;
 
 use Fhm\ContactBundle\Document\ContactMessage;
+use Fhm\ContactBundle\Form\Type\Admin\CreateType;
+use Fhm\ContactBundle\Form\Type\Admin\UpdateType;
 use Fhm\FhmBundle\Controller\RefAdminController as FhmController;
 use Fhm\ContactBundle\Document\Message;
+use Fhm\FhmBundle\Form\Handler\Admin\CreateHandler;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -19,28 +22,19 @@ class AdminController extends FhmController
 {
     /**
      * AdminController constructor.
-     * @param string $repository
-     * @param string $source
-     * @param string $domain
-     * @param string $translation
-     * @param string $document
-     * @param string $route
      */
-    public function __construct(
-        $repository = "FhmContactBundle:ContactMessage",
-        $source = "fhm",
-        $domain = "FhmContactBundle",
-        $translation = "contact.message",
-        $document = ContactMessage::class,
-        $route = 'contact_message'
-    ) {
-        self::$repository = $repository;
-        self::$source = $source;
-        self::$domain = $domain;
-        self::$translation = $translation;
-        self::$document = new $document();
-        self::$class = get_class(self::$document);
-        self::$route = $route;
+    public function __construct()
+    {
+        self::$repository = "FhmContactBundle:ContactMessage";
+        self::$source = "fhm";
+        self::$domain = "FhmContactBundle";
+        self::$translation = "contact.message";
+        self::$class = ContactMessage::class;
+        self::$route = "contact_message";
+        self::$form = new \stdClass();
+        self::$form->createType    = CreateType::class;
+        self::$form->createHandler = CreateHandler::class;
+        self::$form->updateType    = UpdateType::class;
     }
     /**
      * @Route

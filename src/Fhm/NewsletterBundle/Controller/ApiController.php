@@ -21,28 +21,15 @@ class ApiController extends FhmController
 {
     /**
      * ApiController constructor.
-     * @param string $repository
-     * @param string $source
-     * @param string $domain
-     * @param string $translation
-     * @param $document
-     * @param string $route
      */
-    public function __construct(
-        $repository = "FhmNewsletterBundle:Newsletter",
-        $source = "fhm",
-        $domain = "FhmNewsletterBundle",
-        $translation = "newsletter",
-        $document = Newsletter::class,
-        $route = 'newsletter'
-    ) {
-        self::$repository = $repository;
-        self::$source = $source;
-        self::$domain = $domain;
-        self::$translation = $translation;
-        self::$document = new $document();
-        self::$class = get_class(self::$document);
-        self::$route = $route;
+    public function __construct()
+    {
+        self::$repository = "FhmNewsletterBundle:Newsletter";
+        self::$source = "fhm";
+        self::$domain = "FhmNewsletterBundle";
+        self::$translation = "newsletter";
+        self::$class = Newsletter::class;
+        self::$route = "newsletter";
     }
 
     /**
@@ -85,13 +72,12 @@ class ApiController extends FhmController
         self::$form = new \stdClass();
         self::$form->type = CreateType::class;
         self::$form->handler = CreateHandler::class;
-
         $classHandler = self::$form->handler;
         $form = $this->createForm(self::$form->type, $document);
         $handler = new $classHandler($form, $request);
         $process = $handler->process();
         if ($process) {
-           // Persist
+            // Persist
             $document->setUserCreate($this->getUser());
             $document->setAlias($this->get('fhm_tools')->getAlias($document->getId(), $document->getName()));
             $document->setActive(true);
