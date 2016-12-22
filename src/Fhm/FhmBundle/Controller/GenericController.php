@@ -11,9 +11,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 /**
  * Class GenericController
+ *
  * @package Fhm\FhmBundle\Controller
  */
-abstract class  GenericController extends Controller
+abstract class GenericController extends Controller
 {
     protected static $source;
     protected static $repository;
@@ -26,15 +27,26 @@ abstract class  GenericController extends Controller
     protected static $bundle;
 
     /**
+     * To get list of instance data
+     *
+     * @return array
+     */
+    public function getProperties()
+    {
+        return get_class_vars(self::class);
+    }
+
+    /**
      * @param $route
      * @param $parent
+     *
      * @return mixed
      */
     protected function getParameters($route, $parent)
     {
         $parameters = $this->getParameter($parent);
-        $value = $parameters;
-        foreach ((array)$route as $sub) {
+        $value      = $parameters;
+        foreach ((array) $route as $sub) {
             $value = $value[$sub];
         }
 
@@ -43,8 +55,8 @@ abstract class  GenericController extends Controller
 
     /**
      * @param array $parameters
-     * @param null $route
-     * @param null $referenceType
+     * @param null  $route
+     * @param null  $referenceType
      *
      * @return string
      */
@@ -58,38 +70,30 @@ abstract class  GenericController extends Controller
     }
 
     /**
-     * @param $key
+     * @param       $key
      * @param array $parameters
-     * @param null $domain
+     * @param null  $domain
      *
      * @return string
      */
     protected function trans($key, $parameters = array(), $domain = null)
     {
-        $key = $key[0] == '.' ? self::$translation.$key : $key;
-        $domain = $domain == null ? self::$domain: $domain;
+        $key    = $key[0] == '.' ? self::$translation . $key : $key;
+        $domain = $domain == null ? self::$domain : $domain;
 
         return $this->get('translator')->trans($key, $parameters, $domain);
     }
 
     /**
-     * To get list of instance data
-     * @return array
-     */
-    public function getProperties()
-    {
-        return get_class_vars(self::class);
-    }
-
-    /**
      * @param $type
      * @param $handler
+     *
      * @return \stdClass
      */
     protected function setForm($type, $handler)
     {
-        self::$form = new \stdClass();
-        self::$form->type = $type;
+        self::$form          = new \stdClass();
+        self::$form->type    = $type;
         self::$form->handler = $handler;
 
         return self::$form;

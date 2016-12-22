@@ -363,7 +363,7 @@ class Gallery extends FhmFhm
      */
     public function setSort($sort)
     {
-        $this->sort = $sort;
+        $this->sort_item = $sort;
 
         return $this;
     }
@@ -375,7 +375,7 @@ class Gallery extends FhmFhm
      */
     public function getSort()
     {
-        return $this->sort;
+        return $this->sort_item;
     }
 
     /**
@@ -385,7 +385,7 @@ class Gallery extends FhmFhm
      */
     public function getSortField()
     {
-        $sort = explode(" ", $this->sort);
+        $sort = explode(" ", $this->sort_item);
 
         return $sort[0];
     }
@@ -397,7 +397,7 @@ class Gallery extends FhmFhm
      */
     public function getSortOrder()
     {
-        $sort = explode(" ", $this->sort);
+        $sort = explode(" ", $this->sort_item);
 
         return isset($sort[1]) ? $sort[1] : 'asc';
     }

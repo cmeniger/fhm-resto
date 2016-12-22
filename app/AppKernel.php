@@ -49,7 +49,8 @@ class AppKernel extends Kernel
             new Fhm\TestimonyBundle\FhmTestimonyBundle(),
             new Fhm\CardBundle\FhmCardBundle(),
             new Fhm\NoteBundle\FhmNoteBundle(),
-            new Http\HttplugBundle\HttplugBundle()
+            new Http\HttplugBundle\HttplugBundle(),
+            new JMS\SerializerBundle\JMSSerializerBundle(),
           
         ];
 

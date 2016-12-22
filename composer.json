@@ -40,7 +40,8 @@
         "widop/http-adapter"                   : "~1.1.0",
         "php-http/httplug-bundle"              : "^1.0",
         "php-http/guzzle6-adapter"             : "^1.1",
-        "knplabs/knp-paginator-bundle": "^2.5"
+        "knplabs/knp-paginator-bundle": "^2.5",
+        "jms/serializer-bundle": "^1.1"
     },
     "require-dev": {
         "phpunit/phpunit"                      : "^4.8 || ^5.0",

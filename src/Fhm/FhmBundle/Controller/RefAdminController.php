@@ -84,6 +84,7 @@ class RefAdminController extends GenericController
                 )
             );
             $this->get('fhm_tools')->dmPersist($document);
+            $this->get('fhm_historic')->save($document);
             // Message
             $this->get('session')->getFlashBag()->add(
                 'notice',
@@ -193,6 +194,7 @@ class RefAdminController extends GenericController
             // Persist
             $document->setUserUpdate($this->getUser());
             $this->get('fhm_tools')->dmPersist($document);
+            $this->get('fhm_historic')->save($document);
             $this->get('session')->getFlashBag()->add(
                 'notice',
                 $this->trans(self::$translation.'.admin.update.flash.ok')
@@ -276,6 +278,7 @@ class RefAdminController extends GenericController
 
         return array(
             'document' => $document,
+            'historics' => $this->get('fhm_historic')->getAllHistoricsByObject($document),
             'breadcrumbs' => array(
                 array(
                     'link' => $this->getUrl('project_home'),

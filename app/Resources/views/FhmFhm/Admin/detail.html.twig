@@ -170,7 +170,7 @@
         {% if historics is defined and historics != null %}
             <div class="row historic">
                 <h2 id="anchor-admin-historic">{{ ('fhm.historic.title')|trans({},'FhmFhmBundle') }}</h2>
-                <div id="{{ paginationHistoric.idData }}">
+                <div >
                     <table class="fullwidth">
                         <thead>
                             <tr>
@@ -188,53 +188,24 @@
                             {% for historic in historics %}
                                 <tr>
                                     {% block content_historic_body %}
-                                        <td>{{ historic.getDateCreate() | localizeddate('full', 'medium', app.request.locale) }}</td>
+                                        <td><i class="fa fa-archive" aria-hidden="true"></i> {{ historic.getDateCreate() | localizeddate('full', 'medium', app.request.locale) }}</td>
                                         <td>{{ historic.getUserCreate() ? historic.getUserCreate().getUsername() : '' }}</td>
                                         <td>{{ historic.historicDifference() }}</td>
                                     {% endblock %}
-                                    {% if historic.getDelete() %}
-                                        {% block content_historic_action_delete %}
-                                            <td>
-                                                <div class="actions">
-                                                    {% block content_historic_action_delete_button %}
-                                                        <a href="#" data-url="{{ path(instance.source ~ '_api_' ~ instance.route ~ '_historic') }}" data-id="{{ historic.getId() }}" data-compare class="tiny radius button split no-pip alert"><i class="fa fa-columns"></i> {{ ('fhm.historic.table.action.compare')|trans({},'FhmFhmBundle') }}
-                                                            <span data-dropdown="action{{ historic.getId() }}"><i class="fa fa-angle-down"></i></span></a>
-                                                    {% endblock %}
-                                                    <ul id="action{{ historic.getId() }}" class="f-dropdown" data-dropdown-content>
-                                                        {% block content_historic_action_delete_links %}
-                                                            <li>
-                                                                <a href="{{ path(instance.source ~ '_api_' ~ instance.route ~ '_historic_copy', {'id': historic.getId()}) }}" title="{{ ('fhm.historic.table.action.copy')|trans({},'FhmFhmBundle') }}" onclick="return confirm('{{ ('fhm.historic.table.confirm.copy')|trans({},'FhmFhmBundle') }}')"><i class="fa fa-fw fa-clone"></i> {{ ('fhm.historic.table.action.copy')|trans({},'FhmFhmBundle') }}
-                                                                </a>
-                                                            </li>
-                                                        {% endblock %}
-                                                        {% block content_data_action_delete_alert %}
-                                                            <li class="alert">
-                                                                <a href="{{ path(instance.source ~ '_admin_' ~ instance.route ~ '_undelete', {'id': historic.getId()}) }}" title="{{ (instance.translation ~ '.admin.index.table.action.undelete')|trans }}" onclick="return confirm('{{ ('fhm.historic.table.confirm.undelete')|trans({},'FhmFhmBundle') }}')"><i class="fa fa-fw fa-undo"></i> {{ ('fhm.historic.table.action.undelete')|trans({},'FhmFhmBundle') }}
-                                                                </a>
-                                                            </li>
-                                                            <li class="alert">
-                                                                <a href="{{ path(instance.source ~ '_admin_' ~ instance.route ~ '_delete', {'id': historic.getId()}) }}" title="{{ (instance.translation ~ '.admin.index.table.action.delete')|trans }}" onclick="return confirm('{{ ('fhm.historic.table.confirm.delete')|trans({},'FhmFhmBundle') }}')"><i class="fa fa-fw fa-trash-o"></i> {{ ('fhm.historic.table.action.delete')|trans({},'FhmFhmBundle') }}
-                                                                </a>
-                                                            </li>
-                                                        {% endblock %}
-                                                    </ul>
-                                                </div>
-                                            </td>
-                                        {% endblock %}
-                                    {% else %}
+                                    {#{% if historic.getDelete() %}#}
                                         {% block content_historic_action %}
                                             <td>
                                                 <div class="actions">
-                                                    {% block content_historic_action_button %}
-                                                        <a href="#" data-url="{{ path(instance.source ~ '_api_' ~ instance.route ~ '_historic') }}" data-id="{{ historic.getId() }}" data-compare class="tiny radius button split no-pip"><i class="fa fa-columns"></i> {{ ('fhm.historic.table.action.compare')|trans({},'FhmFhmBundle') }}
-                                                            <span data-dropdown="action{{ historic.getId() }}"><i class="fa fa-angle-down"></i></span></a>
-                                                    {% endblock %}
-                                                    <ul id="action{{ historic.getId() }}" class="f-dropdown" data-dropdown-content>
+                                                    <ul id="action{{ historic.getId() }}"  data-dropdown-content>
                                                         {% block content_historic_action_links %}
                                                             <li>
-                                                                <a href="{{ path(instance.source ~ '_api_' ~ instance.route ~ '_historic_copy', {'id': historic.getId()}) }}" title="{{ ('fhm.historic.table.action.copy')|trans({},'FhmFhmBundle') }}" onclick="return confirm('{{ ('fhm.historic.table.confirm.copy')|trans({},'FhmFhmBundle') }}')"><i class="fa fa-fw fa-clone"></i> {{ ('fhm.historic.table.action.copy')|trans({},'FhmFhmBundle') }}
+                                                                <a  href="{{ path(instance.source ~ '_api_' ~ instance.route ~ '_historic_restore', {'id': historic.getId()}) }}"  data-id="{{ historic.getId() }}"  title="{{ ('fhm.historic.table.action.restore')|trans({},'FhmFhmBundle') }}"><i class="fa fa-share" aria-hidden="true"></i> {{ ('fhm.historic.table.action.restore')|trans({},'FhmFhmBundle') }}
                                                                 </a>
                                                             </li>
+                                                            {#<li>#}
+                                                                {#<a  href="#" data-url="{{ path(instance.source ~ '_api_' ~ instance.route ~ '_historic_restore', {'id': historic.getId()}) }}"  data-id="{{ historic.getId() }}" data-restaure title="{{ ('fhm.historic.table.action.restore')|trans({},'FhmFhmBundle') }}" onclick="return confirm('{{ ('fhm.historic.table.confirm.copy')|trans({},'FhmFhmBundle') }}')"><i class="fa fa-share" aria-hidden="true"></i> {{ ('fhm.historic.table.action.restore')|trans({},'FhmFhmBundle') }}#}
+                                                                {#</a>#}
+                                                            {#</li>#}
                                                         {% endblock %}
                                                         {% block content_data_action_alert %}
                                                             <li class="alert">
@@ -246,7 +217,7 @@
                                                 </div>
                                             </td>
                                         {% endblock %}
-                                    {% endif %}
+                                    {#{% endif %}#}
                                 </tr>
                             {% endfor %}
                         </tbody>
@@ -257,6 +228,99 @@
             </div>
         {% endif %}
     {% endblock %}
+
+    {# Historics #}
+    {#{% block content_historic %}#}
+        {#{% if historics is defined and historics != null %}#}
+            {#<div class="row historic">#}
+                {#<h2 id="anchor-admin-historic">{{ ('fhm.historic.title')|trans({},'FhmFhmBundle') }}</h2>#}
+                {#<div id="{{ paginationHistoric.idData }}">#}
+                    {#<table class="fullwidth">#}
+                        {#<thead>#}
+                            {#<tr>#}
+                                {#{% block content_historic_header %}#}
+                                    {#<th>{{ ('fhm.historic.table.header.date')|trans({},'FhmFhmBundle') }}</th>#}
+                                    {#<th>{{ ('fhm.historic.table.header.user')|trans({},'FhmFhmBundle') }}</th>#}
+                                    {#<th>{{ ('fhm.historic.table.header.difference')|trans({},'FhmFhmBundle') }}</th>#}
+                                {#{% endblock %}#}
+                                {#{% block content_historic_header_action %}#}
+                                    {#<th>{{ ('fhm.historic.table.header.action')|trans({},'FhmFhmBundle') }}</th>#}
+                                {#{% endblock %}#}
+                            {#</tr>#}
+                        {#</thead>#}
+                        {#<tbody>#}
+                            {#{% for historic in historics %}#}
+                                {#<tr>#}
+                                    {#{% block content_historic_body %}#}
+                                        {#<td>{{ historic.getDateCreate() | localizeddate('full', 'medium', app.request.locale) }}</td>#}
+                                        {#<td>{{ historic.getUserCreate() ? historic.getUserCreate().getUsername() : '' }}</td>#}
+                                        {#<td>{{ historic.historicDifference() }}</td>#}
+                                    {#{% endblock %}#}
+                                    {#{% if historic.getDelete() %}#}
+                                        {#{% block content_historic_action_delete %}#}
+                                            {#<td>#}
+                                                {#<div class="actions">#}
+                                                    {#{% block content_historic_action_delete_button %}#}
+                                                        {#<a href="#" data-url="{{ path(instance.source ~ '_api_' ~ instance.route ~ '_historic') }}" data-id="{{ historic.getId() }}" data-compare class="tiny radius button split no-pip alert"><i class="fa fa-columns"></i> {{ ('fhm.historic.table.action.compare')|trans({},'FhmFhmBundle') }}#}
+                                                            {#<span data-dropdown="action{{ historic.getId() }}"><i class="fa fa-angle-down"></i></span></a>#}
+                                                    {#{% endblock %}#}
+                                                    {#<ul id="action{{ historic.getId() }}" class="f-dropdown" data-dropdown-content>#}
+                                                        {#{% block content_historic_action_delete_links %}#}
+                                                            {#<li>#}
+                                                                {#<a href="{{ path(instance.source ~ '_api_' ~ instance.route ~ '_historic_copy', {'id': historic.getId()}) }}" title="{{ ('fhm.historic.table.action.copy')|trans({},'FhmFhmBundle') }}" onclick="return confirm('{{ ('fhm.historic.table.confirm.copy')|trans({},'FhmFhmBundle') }}')"><i class="fa fa-fw fa-clone"></i> {{ ('fhm.historic.table.action.copy')|trans({},'FhmFhmBundle') }}#}
+                                                                {#</a>#}
+                                                            {#</li>#}
+                                                        {#{% endblock %}#}
+                                                        {#{% block content_data_action_delete_alert %}#}
+                                                            {#<li class="alert">#}
+                                                                {#<a href="{{ path(instance.source ~ '_admin_' ~ instance.route ~ '_undelete', {'id': historic.getId()}) }}" title="{{ (instance.translation ~ '.admin.index.table.action.undelete')|trans }}" onclick="return confirm('{{ ('fhm.historic.table.confirm.undelete')|trans({},'FhmFhmBundle') }}')"><i class="fa fa-fw fa-undo"></i> {{ ('fhm.historic.table.action.undelete')|trans({},'FhmFhmBundle') }}#}
+                                                                {#</a>#}
+                                                            {#</li>#}
+                                                            {#<li class="alert">#}
+                                                                {#<a href="{{ path(instance.source ~ '_admin_' ~ instance.route ~ '_delete', {'id': historic.getId()}) }}" title="{{ (instance.translation ~ '.admin.index.table.action.delete')|trans }}" onclick="return confirm('{{ ('fhm.historic.table.confirm.delete')|trans({},'FhmFhmBundle') }}')"><i class="fa fa-fw fa-trash-o"></i> {{ ('fhm.historic.table.action.delete')|trans({},'FhmFhmBundle') }}#}
+                                                                {#</a>#}
+                                                            {#</li>#}
+                                                        {#{% endblock %}#}
+                                                    {#</ul>#}
+                                                {#</div>#}
+                                            {#</td>#}
+                                        {#{% endblock %}#}
+                                    {#{% else %}#}
+                                        {#{% block content_historic_action %}#}
+                                            {#<td>#}
+                                                {#<div class="actions">#}
+                                                    {#{% block content_historic_action_button %}#}
+                                                        {#<a href="#" data-url="{{ path(instance.source ~ '_api_' ~ instance.route ~ '_historic') }}" data-id="{{ historic.getId() }}" data-compare class="tiny radius button split no-pip"><i class="fa fa-columns"></i> {{ ('fhm.historic.table.action.compare')|trans({},'FhmFhmBundle') }}#}
+                                                            {#<span data-dropdown="action{{ historic.getId() }}"><i class="fa fa-angle-down"></i></span></a>#}
+                                                    {#{% endblock %}#}
+                                                    {#<ul id="action{{ historic.getId() }}" class="f-dropdown" data-dropdown-content>#}
+                                                        {#{% block content_historic_action_links %}#}
+                                                            {#<li>#}
+                                                                {#<a href="{{ path(instance.source ~ '_api_' ~ instance.route ~ '_historic_copy', {'id': historic.getId()}) }}" title="{{ ('fhm.historic.table.action.copy')|trans({},'FhmFhmBundle') }}" onclick="return confirm('{{ ('fhm.historic.table.confirm.copy')|trans({},'FhmFhmBundle') }}')"><i class="fa fa-fw fa-clone"></i> {{ ('fhm.historic.table.action.copy')|trans({},'FhmFhmBundle') }}#}
+                                                                {#</a>#}
+                                                            {#</li>#}
+                                                        {#{% endblock %}#}
+                                                        {#{% block content_data_action_alert %}#}
+                                                            {#<li class="alert">#}
+                                                                {#<a href="{{ path(instance.source ~ '_admin_' ~ instance.route ~ '_delete', {'id': historic.getId()}) }}" title="{{ (instance.translation ~ '.admin.index.table.action.delete')|trans }}" onclick="return confirm('{{ ('fhm.historic.table.confirm.delete')|trans({},'FhmFhmBundle') }}')"><i class="fa fa-fw fa-trash-o"></i> {{ ('fhm.historic.table.action.delete')|trans({},'FhmFhmBundle') }}#}
+                                                                {#</a>#}
+                                                            {#</li>#}
+                                                        {#{% endblock %}#}
+                                                    {#</ul>#}
+                                                {#</div>#}
+                                            {#</td>#}
+                                        {#{% endblock %}#}
+                                    {#{% endif %}#}
+                                {#</tr>#}
+                            {#{% endfor %}#}
+                        {#</tbody>#}
+                    {#</table>#}
+                {#</div>#}
+                {#{% block content_historic_pagination %}#}
+                {#{% endblock %}#}
+            {#</div>#}
+        {#{% endif %}#}
+    {#{% endblock %}#}
 
     {# Admin #}
     {% block content_admin %}
