@@ -47,6 +47,10 @@ class UserProvider implements UserProviderInterface
         return $this->userManager->refreshUser($user);
     }
 
+    /**
+     * @param string $class
+     * @return mixed
+     */
     public function supportsClass($class)
     {
         return $this->userManager->supportsClass($class);

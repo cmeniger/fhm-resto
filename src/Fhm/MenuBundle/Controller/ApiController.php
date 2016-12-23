@@ -56,7 +56,7 @@ class ApiController extends FhmController
      */
     public function detailAction($template, $id)
     {
-        $response = $this->get('fhm_cache')->getResponseCache(0, 0, true);
+        //TODO manage cache later with varnish
         if (is_null($id)) {
             $site = $this->get('fhm_tools')->dmRepository("FhmSiteBundle:Site")->getDefault();
             $id = ($site && $site->getMenu()) ? $site->getMenu()->getId() : null;
@@ -67,8 +67,7 @@ class ApiController extends FhmController
                         'document' => null,
                         'tree' => null,
                         'instance' => $this->getProperties(),
-                    ),
-                    $response
+                    )
                 );
             }
         }
@@ -78,17 +77,11 @@ class ApiController extends FhmController
         $document = ($document) ? $document : $menuRepository->findOneBy(array("name" => $id));
         // ERROR - unknown
         if ($document == "") {
-            throw $this->createNotFoundException(
-                $this->get('translator')->trans(
-                    'menu.error.unknown',
-                    array(),
-                    'FhmMenuBundle'
-                )
-            );
+            throw $this->createNotFoundException($this->trans('menu.error.unknown'));
         } elseif (!$this->getUser()->isSuperAdmin() && ($document->getDelete() || !$document->getActive())) {
             throw new HttpException(
                 403,
-                $this->get('translator')->trans('menu.error.forbidden', array(), 'FhmMenuBundle')
+                $this->trans('menu.error.forbidden', array(), 'FhmMenuBundle')
             );
         }
 
@@ -98,8 +91,7 @@ class ApiController extends FhmController
                 'document' => $document,
                 'tree' => $menuRepository->getTree($document->getId()),
                 'instance' => $this->getProperties(),
-            ),
-            $response
+            )
         );
     }
 

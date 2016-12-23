@@ -16,15 +16,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class UpdateType extends AbstractType
 {
-    protected $translation;
-
-    /**
-     * @param $domaine
-     */
-    public function setTranslation($domaine = 'fhm')
-    {
-        $options['translation_route'] = $domaine;
-    }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {

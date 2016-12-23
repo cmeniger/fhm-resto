@@ -40,7 +40,7 @@ class UserRepository extends FhmRepository
         $builder->field('roles')->notIn(array('ROLE_SUPER_ADMIN'));
         $this->builderSort($builder);
 
-        return $builder->getQuery()->execute()->toArray();
+        return $builder->getQuery();
     }
 
     /**

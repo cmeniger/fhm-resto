@@ -1,6 +1,7 @@
-{% set instance = instance|merge({'domain':'FhmUserBundle', 'translation':'user', 'route':'user', 'source':'fhm'}) %}
+{% trans_default_domain 'FhmUserBundle' %}
+
 {% set breadcrumbs = [{'link':path('project_home'), 'text':'project.home.breadcrumb'|trans({},'ProjectDefaultBundle')}, {'link':'', 'text':('user.front.create.breadcrumb')|trans({},'FhmUserBundle'), 'current':true}] %}
-{% trans_default_domain instance.domain %}
+
 {% extends "::FhmFhm/Front/create.html.twig" %}
 
 {% block content_data_alert %}{% endblock %}
@@ -12,7 +13,7 @@
 {% endblock %}
 
 {% block tagline_data %}
-    <i class="fa fa-user-plus"></i> {{ (instance.translation ~ '.front.create.title')|trans }}
+    <i class="fa fa-user-plus"></i> {{ ('user.front.create.title')|trans }}
 {% endblock %}
 
 {% block content_data_fields_data %}

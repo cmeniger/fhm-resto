@@ -15,16 +15,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class CreateType extends AbstractType
 {
-    protected $translation;
-
-    /**
-     * @param $domaine
-     */
-    public function setTranslation($domaine = 'fhm')
-    {
-        $options['translation_route'] = $domaine;
-    }
-
     /**
      * @param FormBuilderInterface $builder
      * @param array $options

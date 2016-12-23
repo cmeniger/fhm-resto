@@ -122,14 +122,14 @@ fos_user:
         mailer: fhm_user.mailer.twig_swift
     resetting:
         form:
-            type: FhmResetting
+            type: Fhm\UserBundle\Form\Type\Front\ResettingType
         email:
             from_email:
                 address:        "%fhm_mailer.noreply%"
                 sender_name:    noreply
     registration:
         form:
-            type: FhmCreate
+            type: Fhm\UserBundle\Form\Type\Front\CreateType
         confirmation:
             enabled: true
             from_email:
@@ -137,10 +137,10 @@ fos_user:
                 sender_name:    Registration
     profile:
         form:
-            type: FhmUpdate
+            type: Fhm\UserBundle\Form\Type\Front\UpdateType
     change_password:
         form:
-            type: FhmPassword
+            type: Fhm\UserBundle\Form\Type\Front\PasswordType
 
 
 # Oauth

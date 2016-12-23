@@ -4,6 +4,7 @@ namespace Project\DefaultBundle\Controller;
 use Fhm\FhmBundle\Controller\RefFrontController;
 use Fhm\FhmBundle\Services\Tools;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -34,7 +35,17 @@ class FrontController extends RefFrontController
      */
     public function homeAction()
     {
-        return $this->get($this->getParameter("fhm_fhm")["grouping"])->loadGrouping();
+        $site = $this->get('fhm_tools')->dmRepository('FhmSiteBundle:Site')->getDefault();
+        if ($site) {
+            $menu = $site->getMenu();
+            if ($menu) {
+                return $this->redirectToRoute('fhm_menu_lite', array('id'=>$menu->getAlias()));
+            } else {
+                return $this->redirectToRoute('project_template', array('name'=>'default'));
+            }
+        }
+
+        return $this->redirectToRoute('fhm_admin_site_create');
     }
 
     /**
@@ -46,13 +57,10 @@ class FrontController extends RefFrontController
      */
     public function templateAction($name)
     {
-        // Response HTTP Cache
-        $response = $this->get('fhm_cache')->getResponseCache();
-        $template = ($this->get('templating')->exists('::ProjectDefault/Template/' . $name . '.html.twig')) ?
-            '::ProjectDefault/Template/' . $name . '.html.twig' :
-            '::ProjectDefault/Template/default.html.twig';
-        $date     = new \DateTime();
-        $response->setLastModified($date);
+        $response = new Response();
+        $template = ($this->get('templating')->exists(
+            '::ProjectDefault/Template/'.$name.'.html.twig'
+        )) ? '::ProjectDefault/Template/'.$name.'.html.twig' : '::ProjectDefault/Template/default.html.twig';
 
         return $this->render(
             $template,

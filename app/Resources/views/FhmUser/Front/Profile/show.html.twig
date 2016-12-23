@@ -1,7 +1,7 @@
-{% set instance = instance|merge({'domain':'FhmUserBundle', 'translation':'user', 'route':'user', 'source':'fhm'}) %}
+{% set instance = {'translation':'user', 'domain':'FhmUserBundle'} %}
 {% set breadcrumbs = [{'link':path('project_home'), 'text':'project.home.breadcrumb'|trans({},'ProjectDefaultBundle')}, {'link':'', 'text':('user.front.detail.breadcrumb')|trans({},'FhmUserBundle'), 'current':true}] %}
 {% set document = user %}
-{% set layout_extend = "::layout.user.html.twig" %}
+{% set layout_extend = "::layout.html.twig" %}
 {% trans_default_domain instance.domain %}
 {% extends "::FhmFhm/Front/detail.html.twig" %}
 
@@ -13,19 +13,19 @@
 
 {% block content_data_information %}
     <tr>
-        <td><strong>{{ (instance.translation ~ '.front.detail.data.create')|trans }}</strong></td>
+        <td><strong>{{ ('user.front.detail.data.create')|trans }}</strong></td>
         <td>{{ document.getUserCreate() ? document.getUserCreate().getUsername() ~ ' - ' : '' }}{{ document.getDateCreate() | localizeddate('full', 'short', app.request.locale) }}</td>
     </tr>
     <tr>
-        <td><strong>{{ (instance.translation ~ '.front.detail.data.update')|trans }}</strong></td>
+        <td><strong>{{ ('user.front.detail.data.update')|trans }}</strong></td>
         <td>{{ document.getUserUpdate() ? document.getUserUpdate().getUsername() ~ ' - ' : '' }}{{ document.getDateUpdate() | localizeddate('full', 'short', app.request.locale) }}</td>
     </tr>
     <tr>
-        <td><strong>{{ (instance.translation ~ '.front.detail.data.activity')|trans }}</strong></td>
+        <td><strong>{{ ('user.front.detail.data.activity')|trans }}</strong></td>
         <td>{{ document.getDateActivity() ? document.getDateActivity() | localizeddate('full', 'short', app.request.locale) : '' }}</td>
     </tr>
     <tr>
-        <td><strong>{{ (instance.translation ~ '.front.detail.data.username')|trans }}</strong></td>
+        <td><strong>{{ ('user.front.detail.data.username')|trans }}</strong></td>
         <td>{{ document.getUsername() }}</td>
     </tr>
     <tr>
@@ -33,35 +33,35 @@
         <td>{{ document.getEmail() }}</td>
     </tr>
     <tr>
-        <td><strong>{{ (instance.translation ~ '.front.detail.data.avatar')|trans }}</strong></td>
+        <td><strong>{{ ('user.front.detail.data.avatar')|trans }}</strong></td>
         <td>{{ document.getAvatar()|image('xs', 100, '/images/default-avatar.jpg')|raw }}</td>
     </tr>
     <tr>
-        <td><strong>{{ (instance.translation ~ '.front.detail.data.firstname')|trans }}</strong></td>
+        <td><strong>{{ ('user.front.detail.data.firstname')|trans }}</strong></td>
         <td>{{ document.getFirstname() }}</td>
     </tr>
     <tr>
-        <td><strong>{{ (instance.translation ~ '.front.detail.data.lastname')|trans }}</strong></td>
+        <td><strong>{{ ('user.front.detail.data.lastname')|trans }}</strong></td>
         <td>{{ document.getLastname() }}</td>
     </tr>
     <tr>
-        <td><strong>{{ (instance.translation ~ '.front.detail.data.birthdate')|trans }}</strong></td>
+        <td><strong>{{ ('user.front.detail.data.birthdate')|trans }}</strong></td>
         <td>{{ document.getBirthdate() ? document.getBirthdate()|localizeddate('long', 'none') : '' }}</td>
     </tr>
     <tr>
-        <td><strong>{{ (instance.translation ~ '.front.detail.data.tel1')|trans }}</strong></td>
+        <td><strong>{{ ('user.front.detail.data.tel1')|trans }}</strong></td>
         <td>{{ document.getTel1() }}</td>
     </tr>
     <tr>
-        <td><strong>{{ (instance.translation ~ '.front.detail.data.tel2')|trans }}</strong></td>
+        <td><strong>{{ ('user.front.detail.data.tel2')|trans }}</strong></td>
         <td>{{ document.getTel2() }}</td>
     </tr>
     <tr>
-        <td><strong>{{ (instance.translation ~ '.front.detail.data.address')|trans }}</strong></td>
+        <td><strong>{{ ('user.front.detail.data.address')|trans }}</strong></td>
         <td>{{ document|addressHtml|raw }}</td>
     </tr>
     <tr>
-        <td><strong>{{ (instance.translation ~ '.front.detail.data.sign')|trans }}</strong></td>
+        <td><strong>{{ ('user.front.detail.data.sign')|trans }}</strong></td>
         <td>{{ document.getSign()|raw }}</td>
     </tr>
 {% endblock %}

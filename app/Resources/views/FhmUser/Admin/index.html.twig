@@ -2,11 +2,11 @@
 {% extends "::FhmFhm/Admin/index.html.twig" %}
 
 {% block content_data_header %}
-    <th>{{ 'user.admin.index.table.header.username'|trans }}</th>
-    <th>{{ 'user.admin.index.table.header.email'|trans }}</th>
-    <th>{{ 'user.admin.index.table.header.firstname'|trans }}</th>
-    <th>{{ 'user.admin.index.table.header.lastname'|trans }}</th>
-    <th>{{ 'user.admin.index.table.header.create'|trans }}</th>
+    <th {% if pagination.isSorted('username') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, ('user.admin.index.table.header.username')|trans, 'username')|raw }}</th>
+    <th {% if pagination.isSorted('email') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, ('user.admin.index.table.header.email')|trans, 'email')|raw }}</th>
+    <th {% if pagination.isSorted('first_name') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, ('user.admin.index.table.header.firstname')|trans, 'first_name')|raw }}</th>
+    <th {% if pagination.isSorted('last_name') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, ('user.admin.index.table.header.lastname')|trans, 'last_name')|raw }}</th>
+    <th {% if pagination.isSorted('date_create') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, ('user.admin.index.table.header.create')|trans, 'date_create')|raw }}</th>
 {% endblock %}
 
 {% block content_data_body %}

@@ -59,8 +59,8 @@ class Cache
             $dateExpires->modify($expires);
             $response->setExpires($dateExpires);
             $response->setPublic();
-            // Check that the Response is not modified for the given Request
-            if ($response->isNotModified($this->getRequest())) {
+//            // Check that the Response is not modified for the given Request
+            if ($response->isNotModified($this->tools->getContainer()->get('request_stack'))) {
                 return $response;
             }
         }

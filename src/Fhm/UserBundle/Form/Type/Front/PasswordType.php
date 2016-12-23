@@ -55,4 +55,18 @@ class PasswordType extends FhmType
         return 'FhmPassword';
     }
 
+    /**
+     * @param OptionsResolver $resolver
+     */
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults(
+            array(
+                'data_class' => 'Fhm\UserBundle\Document\User',
+                'translation_domain' => 'FhmUserBundle',
+                'cascade_validation' => true,
+                'translation_route'=>'user',
+            )
+        );
+    }
 }

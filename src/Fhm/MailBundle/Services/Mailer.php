@@ -1,6 +1,7 @@
 <?php
 namespace Fhm\MailBundle\Services;
 
+use Fhm\UserBundle\Document\User;
 use Symfony\Component\Templating\EngineInterface;
 
 /**
@@ -92,6 +93,7 @@ class Mailer
                 array(
                     'server_http_host' => $this->fhm_tools->getParameters('host', 'fhm_mailer'),
                     'version' => 'mail',
+                    'site' => "",
                 )
             )
         );
@@ -156,6 +158,7 @@ class Mailer
 
     /**
      * Utilisateur enregistré
+     * @param $data
      */
     public function userRegister($data)
     {
@@ -163,10 +166,12 @@ class Mailer
             $this->fhm_tools->getParameters('noreply', 'fhm_mailer')
         );
         $data["send_mail"] = (isset($data["send_mail"])) ? $data["send_mail"] : true;
-        // Email - User
         if ($data["send_mail"]) {
             $this->sendMail(
-                array($noreply->getEmail() => $this->fhm_tools->getParameters('sign', 'fhm_mailer')),
+                array(
+                    $noreply instanceof User ? $noreply->getEmail(
+                    ) : "no-replay@fhmsolutions.com" => $this->fhm_tools->getParameters('sign', 'fhm_mailer'),
+                ),
                 $data['user']->getEmail(),
                 "Bienvenue sur ".$this->fhm_tools->getParameters('project', 'fhm_mailer'),
                 $this->renderMail($data, 'User'),
@@ -187,7 +192,10 @@ class Mailer
         // Email - User
         if ($data["send_mail"]) {
             $this->sendMail(
-                array($noreply->getEmail() => $this->fhm_tools->getParameters('sign', 'fhm_mailer')),
+                array(
+                    $noreply instanceof User ? $noreply->getEmail(
+                    ) : "no-replay@fhmsolutions.com" => $this->fhm_tools->getParameters('sign', 'fhm_mailer'),
+                ),
                 $data['user']->getEmail(),
                 "Réinitialiser mon mot de passe ".$this->fhm_tools->getParameters('project', 'fhm_mailer'),
                 $this->renderMail($data, 'User'),
@@ -218,7 +226,10 @@ class Mailer
         );
         // Email - User
         $this->sendMail(
-            array($noreply->getEmail() => $this->fhm_tools->getParameters('sign', 'fhm_mailer')),
+            array(
+                $noreply instanceof User ? $noreply->getEmail(
+                ) : "no-replay@fhmsolutions.com" => $this->fhm_tools->getParameters('sign', 'fhm_mailer'),
+            ),
             $data['message']->getEmail(),
             $this->fhm_tools->getParameters('project', 'fhm_mailer')." contact",
             $this->renderMail($data, 'Contact'),

@@ -7,7 +7,6 @@ services:
 
     fhm_user.registration.form.type:
         class: Fhm\UserBundle\Form\Type\Front\CreateType
-        arguments: ["%fos_user.model.user.class%"]
         tags:
           - { name: form.type, alias: FhmCreate }
 
