@@ -43,9 +43,9 @@
 
 {% block content_data_header %}
     {{ parent() }}
-    <th>{{ (instance.translation ~ '.admin.index.table.header.albums')|trans }}{{ macroSort.print('sort_album', sort) }}</th>
-    <th>{{ (instance.translation ~ '.admin.index.table.header.images')|trans }}{{ macroSort.print('sort_item', sort) }}</th>
-    <th>{{ (instance.translation ~ '.admin.index.table.header.videos')|trans }}{{ macroSort.print('sort_video', sort) }}</th>
+    <th>{{ (instance.translation ~ '.admin.index.table.header.albums')|trans }}</th>
+    <th>{{ (instance.translation ~ '.admin.index.table.header.images')|trans }}</th>
+    <th>{{ (instance.translation ~ '.admin.index.table.header.videos')|trans }}</th>
 {% endblock %}
 
  {% block content_data_body %}

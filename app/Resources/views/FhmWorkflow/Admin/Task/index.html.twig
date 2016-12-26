@@ -55,10 +55,10 @@
 
 {% block content_data_header %}
     {{ parent() }}
-    <th>{{ (instance.translation ~ '.admin.index.table.header.parent')|trans }}{{ macroSort.print('sort_parent', sort) }}</th>
-    <th>{{ (instance.translation ~ '.admin.index.table.header.son')|trans }}{{ macroSort.print('sort_son', sort) }}</th>
-    <th>{{ (instance.translation ~ '.admin.index.table.header.step')|trans }}{{ macroSort.print('sort_step', sort) }}</th>
-    <th>{{ (instance.translation ~ '.admin.index.table.header.state')|trans }}{{ macroSort.print('status', sort) }}</th>
+    <th>{{ (instance.translation ~ '.admin.index.table.header.parent')|trans }}</th>
+    <th>{{ (instance.translation ~ '.admin.index.table.header.son')|trans }}</th>
+    <th>{{ (instance.translation ~ '.admin.index.table.header.step')|trans }}</th>
+    <th>{{ (instance.translation ~ '.admin.index.table.header.state')|trans }}</th>
     <th>{{ (instance.translation ~ '.admin.index.table.header.buttons')|trans }}</th>
 {% endblock %}
 

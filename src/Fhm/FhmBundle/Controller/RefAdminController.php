@@ -30,8 +30,7 @@ class RefAdminController extends GenericController
             $request->query->getInt('page', 1),
             $this->getParameters('pagination', 'fhm_fhm')
         );
-        /** Ajax request**/
-        if ($request->isXmlHttpRequest()) {
+        if ($request->isXmlHttpRequest()) { /** Ajax request**/
             return array('documents' => $query->execute()->toArray());
         } else {
             return array(
@@ -127,7 +126,7 @@ class RefAdminController extends GenericController
     public function duplicateAction(Request $request, $id)
     {
         $document = $this->get('fhm_tools')->dmRepository(self::$repository)->find($id);
-        if ($document == "") {
+        if (! is_object($document)) {
             throw $this->createNotFoundException(
                 $this->trans(self::$translation.'.error.unknown', self::$domain)
             );
@@ -146,8 +145,9 @@ class RefAdminController extends GenericController
     public function updateAction(Request $request, $id)
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN', null, $this->trans(self::$translation.'.error.forbidden'));
+
         $document = $this->get('fhm_tools')->dmRepository(self::$repository)->find($id);
-        if ($document == "") {
+        if (!is_object($document)) {
             throw $this->createNotFoundException($this->trans(self::$translation.'.error.unknown'));
         }
         $form = $this->createForm(
@@ -220,7 +220,7 @@ class RefAdminController extends GenericController
     public function detailAction($id)
     {
         $document = $this->get('fhm_tools')->dmRepository(self::$repository)->find($id);
-        if ($document == "") {
+        if (! is_object($document)) {
             throw $this->createNotFoundException($this->trans(self::$translation.'.error.unknown'));
         }
 
@@ -264,7 +264,7 @@ class RefAdminController extends GenericController
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN', null, $this->trans(self::$translation.'.error.forbidden'));
         $document = $this->get('fhm_tools')->dmRepository(self::$repository)->find($id);
-        if ($document == "") {
+        if (! is_object($document)) {
             throw $this->createNotFoundException($this->trans(self::$translation.'.error.unknown'));
         }
         if ($document->getDelete()) {
@@ -295,7 +295,7 @@ class RefAdminController extends GenericController
     {
         $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN', null, $this->trans(self::$translation.'.error.forbidden'));
         $document = $this->get('fhm_tools')->dmRepository(self::$repository)->find($id);
-        if ($document == "") {
+        if (!is_object($document)) {
             throw $this->createNotFoundException($this->trans(self::$translation.'.error.unknown'));
         }
         $document->setDelete(false);
@@ -316,7 +316,7 @@ class RefAdminController extends GenericController
     public function activateAction($id)
     {
         $document = $this->get('fhm_tools')->dmRepository(self::$repository)->find($id);
-        if ($document == "") {
+        if (! is_object($document)) {
             throw $this->createNotFoundException($this->trans(self::$translation.'.error.unknown'));
         }
         $document->setActive(true);
@@ -337,7 +337,7 @@ class RefAdminController extends GenericController
     public function deactivateAction($id)
     {
         $document = $this->get('fhm_tools')->dmRepository(self::$repository)->find($id);
-        if ($document == "") {
+        if (! is_object($document)) {
             throw $this->createNotFoundException($this->trans(self::$translation.'.error.unknown'));
         }
         $document->setActive(false);

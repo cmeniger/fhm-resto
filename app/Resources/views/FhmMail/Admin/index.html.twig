@@ -24,11 +24,11 @@
 {% endblock %}
 
 {% block content_data_header %}
-    <th>{{ (instance.translation ~ '.admin.index.table.header.date')|trans }}</th>
-    <th>{{ (instance.translation ~ '.admin.index.table.header.model')|trans }}</th>
-    <th>{{ (instance.translation ~ '.admin.index.table.header.to')|trans }}</th>
-    <th>{{ (instance.translation ~ '.admin.index.table.header.subject')|trans }}</th>
-    <th>{{ (instance.translation ~ '.admin.index.table.header.type')|trans }}</th>
+    <th {% if pagination.isSorted('date') %} class="sorted" {% endif %}>{{ knp_pagination_sortable(pagination,  (instance.translation ~ '.admin.index.table.header.date')|trans, 'date')|raw }}</th>
+    <th {% if pagination.isSorted('model') %} class="sorted" {% endif %}>{{ knp_pagination_sortable(pagination,  (instance.translation ~ '.admin.index.table.header.model')|trans, 'model')|raw }}</th>
+    <th {% if pagination.isSorted('to') %} class="sorted" {% endif %}>{{ knp_pagination_sortable(pagination,  (instance.translation ~ '.admin.index.table.header.to')|trans, 'to')|raw }}</th>
+    <th {% if pagination.isSorted('subject') %} class="sorted" {% endif %}>{{ knp_pagination_sortable(pagination,  (instance.translation ~ '.admin.index.table.header.subject')|trans, 'subject')|raw }}</th>
+    <th {% if pagination.isSorted('type') %} class="sorted" {% endif %}>{{ knp_pagination_sortable(pagination,  (instance.translation ~ '.admin.index.table.header.type')|trans, 'type')|raw }}</th>
 {% endblock %}
 
 {% block content_data_body %}

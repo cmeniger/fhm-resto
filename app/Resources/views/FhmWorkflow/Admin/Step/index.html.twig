@@ -27,8 +27,8 @@
 
 {% block content_data_header %}
     {{ parent() }}
-    <th>{{ (instance.translation ~ '.admin.index.table.header.order')|trans }}{{ macroSort.print('order', sort) }}</th>
-    <th>{{ (instance.translation ~ '.admin.index.table.header.color')|trans }}{{ macroSort.print('color', sort) }}</th>
+    <th>{{ (instance.translation ~ '.admin.index.table.header.order')|trans }}</th>
+    <th>{{ (instance.translation ~ '.admin.index.table.header.color')|trans }}</th>
 {% endblock %}
 
 {% block content_data_body %}

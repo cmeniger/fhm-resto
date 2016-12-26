@@ -12,8 +12,8 @@
 {% block content_data_header %}
     <th>{{ (instance.translation ~ '.admin.index.table.header.image')|trans }}</th>
     {{ parent() }}
-    <th>{{ (instance.translation ~ '.admin.index.table.header.order')|trans }}{{ macroSort.print('order', sort) }}</th>
-    <th>{{ (instance.translation ~ '.admin.index.table.header.groups')|trans }}{{ macroSort.print('sort_partnergroup', sort) }}</th>
+    <th>{{ (instance.translation ~ '.admin.index.table.header.order')|trans }}</th>
+    <th>{{ (instance.translation ~ '.admin.index.table.header.groups')|trans }}</th>
 {% endblock %}
 
 {% block content_data_body %}

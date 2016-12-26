@@ -43,7 +43,7 @@
 
 {% block content_data_header %}
     {{ parent() }}
-    <th>{{ (instance.translation ~ '.admin.index.table.header.galleries')|trans }}{{ macroSort.print('sort_gallery', sort) }}</th>
+    <th>{{ (instance.translation ~ '.admin.index.table.header.galleries')|trans }}</th>
 {% endblock %}
 
  {% block content_data_body %}

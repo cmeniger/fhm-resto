@@ -35,9 +35,9 @@
 
 {% block content_data_header %}
     {{ parent() }}
-    <th>{{ (instance.translation ~ '.admin.index.table.header.start')|trans }}{{ macroSort.print('date_start', sort) }}</th>
-    <th>{{ (instance.translation ~ '.admin.index.table.header.end')|trans }}{{ macroSort.print('date_end', sort) }}</th>
-    <th>{{ (instance.translation ~ '.admin.index.table.header.eventgroups')|trans }}{{ macroSort.print('sort_eventgroup', sort) }}</th>
+    <th>{{ (instance.translation ~ '.admin.index.table.header.start')|trans }}</th>
+    <th>{{ (instance.translation ~ '.admin.index.table.header.end')|trans }}</th>
+    <th>{{ (instance.translation ~ '.admin.index.table.header.eventgroups')|trans }}</th>
 {% endblock %}
 
  {% block content_data_body %}

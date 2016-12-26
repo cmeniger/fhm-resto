@@ -12,7 +12,7 @@
 {% block content_data_header %}
     <th>{{ (instance.translation ~ '.admin.index.table.header.image')|trans }}</th>
     {{ parent() }}
-    <th>{{ (instance.translation ~ '.admin.index.table.header.sliders')|trans }}{{ macroSort.print('sort_slider', sort) }}</th>
+    <th>{{ (instance.translation ~ '.admin.index.table.header.sliders')|trans }}</th>
 {% endblock %}
 
  {% block content_data_body %}

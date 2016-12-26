@@ -221,11 +221,9 @@ class RefFrontController extends GenericController
         $document = $this->get('fhm_tools')->dmRepository(self::$repository)->getById($id);
         $document = ($document) ? $document : $this->get('fhm_tools')->dmRepository(self::$repository)->getByAlias($id);
         $document = ($document) ? $document : $this->get('fhm_tools')->dmRepository(self::$repository)->getByName($id);
-        if ($document == "") {
+        if (! is_object($document)) {
             throw $this->createNotFoundException($this->trans(self::$translation.'.error.unknown'));
-        } elseif (!$this->get('security.authorization_checker')->isGranted('ROLE_ADMIN') && ($document->getDelete(
-                ) || !$document->getActive())
-        ) {
+        } elseif (!$this->getUser()->hasRole('ROLE_ADMIN') && ($document->getDelete() || !$document->getActive())) {
             throw new HttpException(403, $this->trans(self::$translation.'.error.forbidden'));
         }
 

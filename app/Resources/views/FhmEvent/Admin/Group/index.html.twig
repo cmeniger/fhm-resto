@@ -35,7 +35,7 @@
 
 {% block content_data_header %}
     {{ parent() }}
-    <th>{{ (instance.translation ~ '.admin.index.table.header.events')|trans }}{{ macroSort.print('sort_event', sort) }}</th>
+    <th>{{ (instance.translation ~ '.admin.index.table.header.events')|trans }}</th>
 {% endblock %}
 
  {% block content_data_body %}

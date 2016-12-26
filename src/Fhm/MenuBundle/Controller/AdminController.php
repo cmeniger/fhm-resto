@@ -30,7 +30,7 @@ class AdminController extends FhmController
         self::$repository = "FhmMenuBundle:Menu";
         self::$source = "fhm";
         self::$domain = "FhmMenuBundle";
-        self::$translation = "Menu";
+        self::$translation = "menu";
         self::$class = Menu::class;
         self::$route = "menu";
         self::$form = new \stdClass();

@@ -51,6 +51,7 @@ site:
                 active:                         Activer
                 partner:                        Partenaires
                 legalnotice:                    Mentions légales
+                contact:                        Contact
                 social:
                     facebook:                   Facebook
                     facebookId:                 ID Facebook
@@ -61,6 +62,7 @@ site:
                     instagram:                  Instagram
                     youtube:                    Youtube
                     flux:                       Flux RSS
+                    placeholder:                http://
                 submit:
                     save:                       Sauvegarder
                     new:                        Sauvegarder et ajouter
@@ -99,6 +101,7 @@ site:
                 active:                         Activer
                 partner:                        Partenaires
                 legalnotice:                    Mentions légales
+                contact:                        Contact
                 social:
                     facebook:                   Facebook
                     facebookId:                 ID Facebook
@@ -109,6 +112,8 @@ site:
                     instagram:                  Instagram
                     youtube:                    Youtube
                     flux:                       Flux RSS
+                    placeholder:                http://
+
                 submit:
                     save:                       Sauvegarder
                     new:                        Sauvegarder et ajouter

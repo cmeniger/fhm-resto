@@ -2,7 +2,6 @@
 namespace Fhm\MenuBundle\Controller;
 
 use Fhm\FhmBundle\Controller\RefFrontController as FhmController;
-use Fhm\FhmBundle\Services\Tools;
 use Fhm\MenuBundle\Document\Menu;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
@@ -25,7 +24,7 @@ class FrontController extends FhmController
         self::$repository = "FhmMenuBundle:Menu";
         self::$source = "fhm";
         self::$domain = "FhmMenuBundle";
-        self::$translation = "Menu";
+        self::$translation = "menu";
         self::$class = Menu::class;
         self::$route = "menu";
     }
@@ -55,7 +54,7 @@ class FrontController extends FhmController
             }
             $session->set('menu', $id);
             if ($route['_route'] == "project_template") {
-                return $this->get('project_default_controller_front')->templateAction($variables["name"], null);
+                return $this->redirectToRoute('project_template', array('name'=>$variables["name"]));
             } else {
                 return $this->redirect($this->generateUrl($route['_route'], $variables));
             }

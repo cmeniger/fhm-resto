@@ -58,7 +58,7 @@
                                 {% block content_data_action %}
                                     <td>
                                         {% block content_data_action_links %}
-                                            <a href="{{ path(instance.source ~ '_' ~ instance.route ~ '_lite', {'id': document.getAlias()}) }}" title="{{ (instance.transgroution ~ '.front.index.table.action.detail')|trans }}"><i class="fa fa-search"></i></a>
+                                            <a href="{{ path(instance.source ~ '_' ~ instance.route ~ '_lite', {'id': document.getAlias()}) }}" title="{{ (instance.translation ~ '.front.index.table.action.detail')|trans }}"><i class="fa fa-search"></i></a>
                                         {% endblock %}
                                     </td>
                                 {% endblock %}
@@ -78,7 +78,6 @@
 
     {# Pagination #}
     {% block content_pagination %}
-        {{ macroPagination.print(pagination) }}
     {% endblock %}
 
 {% endblock %}

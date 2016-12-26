@@ -27,7 +27,7 @@ class ApiController extends FhmController
         self::$repository = "FhmMenuBundle:Menu";
         self::$source = "fhm";
         self::$domain = "FhmMenuBundle";
-        self::$translation = "Menu";
+        self::$translation = "menu";
         self::$class = Menu::class;
         self::$route = "menu";
     }
@@ -66,17 +66,16 @@ class ApiController extends FhmController
                     array(
                         'document' => null,
                         'tree' => null,
-                        'instance' => $this->getProperties(),
                     )
                 );
             }
         }
-        $menuRepository = $this->getDoctrine()->getManager()->getRepository("FhmMenuBundle:Menu");
+        $menuRepository = $this->get('doctrine.odm.mongodb.document_manager')->getRepository("FhmMenuBundle:Menu");
         $document = $menuRepository->find($id);
         $document = ($document) ? $document : $menuRepository->findOneBy(array("alias" => $id));
         $document = ($document) ? $document : $menuRepository->findOneBy(array("name" => $id));
         // ERROR - unknown
-        if ($document == "") {
+        if (!is_object($document)) {
             throw $this->createNotFoundException($this->trans('menu.error.unknown'));
         } elseif (!$this->getUser()->isSuperAdmin() && ($document->getDelete() || !$document->getActive())) {
             throw new HttpException(
@@ -84,7 +83,6 @@ class ApiController extends FhmController
                 $this->trans('menu.error.forbidden', array(), 'FhmMenuBundle')
             );
         }
-
         return $this->render(
             "::FhmMenu/Template/".$template.".html.twig",
             array(

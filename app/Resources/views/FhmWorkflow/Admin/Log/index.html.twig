@@ -27,10 +27,10 @@
 
 {% block content_data_header %}
     {{ parent() }}
-    <th>{{ (instance.translation ~ '.admin.index.table.header.date')|trans }}{{ macroSort.print('date_create', sort) }}</th>
-    <th>{{ (instance.translation ~ '.admin.index.table.header.type')|trans }}{{ macroSort.print('type', sort) }}</th>
-    <th>{{ (instance.translation ~ '.admin.index.table.header.description')|trans }}{{ macroSort.print('description', sort) }}</th>
-    <th>{{ (instance.translation ~ '.admin.index.table.header.task')|trans }}{{ macroSort.print('task', sort) }}</th>
+    <th>{{ (instance.translation ~ '.admin.index.table.header.date')|trans }}</th>
+    <th>{{ (instance.translation ~ '.admin.index.table.header.type')|trans }}</th>
+    <th>{{ (instance.translation ~ '.admin.index.table.header.description')|trans }}</th>
+    <th>{{ (instance.translation ~ '.admin.index.table.header.task')|trans }}</th>
 {% endblock %}
 
 {% block content_data_body %}

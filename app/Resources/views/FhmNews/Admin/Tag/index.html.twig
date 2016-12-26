@@ -15,8 +15,8 @@
 
 {% block content_data_header %}
     {{ parent() }}
-    <th>{{ (instance.translation ~ '.admin.index.table.header.primary')|trans }}{{ macroSort.print('sort_primary', sort) }}</th>
-    <th>{{ (instance.translation ~ '.admin.index.table.header.secondary')|trans }}{{ macroSort.print('sort_secondary', sort) }}</th>
+    <th>{{ (instance.translation ~ '.admin.index.table.header.primary')|trans }}</th>
+    <th>{{ (instance.translation ~ '.admin.index.table.header.secondary')|trans }}</th>
 {% endblock %}
 
 {% block content_data_body %}

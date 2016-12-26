@@ -20,13 +20,13 @@
 {% block content_data_header %}
     <th>{{ (instance.translation ~ '.admin.index.table.header.image')|trans }}</th>
     {{ parent() }}
-    <th>{{ (instance.translation ~ '.admin.index.table.header.card')|trans }}{{ macroSort.print('sort_card', sort) }}</th>
-    <th>{{ (instance.translation ~ '.admin.index.table.header.products')|trans }}{{ macroSort.print('sort_product', sort) }}</th>
-    <th>{{ (instance.translation ~ '.admin.index.table.header.order')|trans }}{{ macroSort.print('order', sort) }}</th>
+    <th>{{ (instance.translation ~ '.admin.index.table.header.card')|trans }}</th>
+    <th>{{ (instance.translation ~ '.admin.index.table.header.products')|trans }}</th>
+    <th>{{ (instance.translation ~ '.admin.index.table.header.order')|trans }}</th>
 {% endblock %}
 
 {% block content_data_header_status %}
-    <th>{{ (instance.translation ~ '.admin.index.table.header.default')|trans }}{{ macroSort.print('default', sort) }}</th>
+    <th>{{ (instance.translation ~ '.admin.index.table.header.default')|trans }}</th>
     {{ parent() }}
 {% endblock %}
 

@@ -131,6 +131,7 @@ class CreateType extends FhmType
             TextType::class,
             array(
                 'label' => $options['translation_route'].'.admin.create.form.social.facebook',
+                'attr' => ['placeholder' => $options['translation_route'].'.admin.create.form.social.placeholder'],
                 'required' => false,
             )
         )->add(
@@ -138,28 +139,39 @@ class CreateType extends FhmType
             TextType::class,
             array(
                 'label' => $options['translation_route'].'.admin.create.form.social.facebookId',
+                'attr' => ['placeholder' => $options['translation_route'].'.admin.create.form.social.facebookId'],
                 'required' => false,
             )
         )->add(
             'social_twitter',
             TextType::class,
-            array('label' => $options['translation_route'].'.admin.create.form.social.twitter', 'required' => false)
+            array(
+                'label' => $options['translation_route'].'.admin.create.form.social.twitter',
+                'attr' => ['placeholder' => $options['translation_route'].'.admin.create.form.social.placeholder'],
+                'required' => false,
+            )
         )->add(
             'social_twitter_id',
             TextType::class,
             array(
                 'label' => $options['translation_route'].'.admin.create.form.social.twitterId',
+                'attr' => ['placeholder' => $options['translation_route'].'.admin.create.form.social.twitterId'],
                 'required' => false,
             )
         )->add(
             'social_google',
             TextType::class,
-            array('label' => $options['translation_route'].'.admin.create.form.social.google', 'required' => false)
+            array(
+                'label' => $options['translation_route'].'.admin.create.form.social.google',
+                'attr' => ['placeholder' => $options['translation_route'].'.admin.create.form.social.placeholder'],
+                'required' => false,
+            )
         )->add(
             'social_google_id',
             TextType::class,
             array(
                 'label' => $options['translation_route'].'.admin.create.form.social.googleId',
+                'attr' => ['placeholder' => $options['translation_route'].'.admin.create.form.social.googleId'],
                 'required' => false,
             )
         )->add(
@@ -167,16 +179,25 @@ class CreateType extends FhmType
             TextType::class,
             array(
                 'label' => $options['translation_route'].'.admin.create.form.social.instagram',
+                'attr' => ['placeholder' => $options['translation_route'].'.admin.create.form.social.placeholder'],
                 'required' => false,
             )
         )->add(
             'social_youtube',
             TextType::class,
-            array('label' => $options['translation_route'].'.admin.create.form.social.youtube', 'required' => false)
+            array(
+                'label' => $options['translation_route'].'.admin.create.form.social.youtube',
+                'attr' => ['placeholder' => $options['translation_route'].'.admin.create.form.social.placeholder'],
+                'required' => false,
+            )
         )->add(
             'social_flux',
             TextType::class,
-            array('label' => $options['translation_route'].'.admin.create.form.social.flux', 'required' => false)
+            array(
+                'label' => $options['translation_route'].'.admin.create.form.social.flux',
+                'attr' => ['placeholder' => $options['translation_route'].'.admin.create.form.social.placeholder'],
+                'required' => false,
+            )
         )->remove('global')->remove('share');
     }
 

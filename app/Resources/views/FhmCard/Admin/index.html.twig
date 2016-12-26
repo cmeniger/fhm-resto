@@ -44,10 +44,10 @@
 {% block content_data_header %}
     <th>{{ (instance.translation ~ '.admin.index.table.header.image')|trans }}</th>
     {{ parent() }}
-    <th>{{ (instance.translation ~ '.admin.index.table.header.parent')|trans }}{{ macroSort.print('sort_parent', sort) }}</th>
-    <th>{{ (instance.translation ~ '.admin.index.table.header.categories')|trans }}{{ macroSort.print('sort_category', sort) }}</th>
-    <th>{{ (instance.translation ~ '.admin.index.table.header.products')|trans }}{{ macroSort.print('sort_product', sort) }}</th>
-    <th>{{ (instance.translation ~ '.admin.index.table.header.ingredients')|trans }}{{ macroSort.print('sort_ingredient', sort) }}</th>
+    <th>{{ (instance.translation ~ '.admin.index.table.header.parent')|trans }}</th>
+    <th>{{ (instance.translation ~ '.admin.index.table.header.categories')|trans }}</th>
+    <th>{{ (instance.translation ~ '.admin.index.table.header.products')|trans }}</th>
+    <th>{{ (instance.translation ~ '.admin.index.table.header.ingredients')|trans }}</th>
 {% endblock %}
 
 {% block content_data_body %}

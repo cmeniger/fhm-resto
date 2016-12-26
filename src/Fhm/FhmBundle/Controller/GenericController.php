@@ -49,11 +49,11 @@ abstract class GenericController extends Controller
      */
     protected function getUrl($route = null, $parameters = array(), $referenceType = null)
     {
-        $route = $route == null ? $this->get('request_stack')->getCurrentRequest()->get(
-            '_route'
-        ) : $route;
-
-        return $this->get('router')->generate($route, $parameters, $referenceType);
+        if ($this->routeExists($route)) {
+            return $this->get('router')->generate($route, $parameters, $referenceType);
+        } else {
+            $this->get('request_stack')->getCurrentRequest()->get('_route');
+        }
     }
 
     /**
@@ -80,4 +80,13 @@ abstract class GenericController extends Controller
         return get_class_vars(self::class);
     }
 
+    /**
+     * @param $name
+     * @return bool
+     */
+    public function routeExists($name)
+    {
+        $router = $this->get('router');
+        return (null === $router->getRouteCollection()->get($name)) ? false : true;
+    }
 }

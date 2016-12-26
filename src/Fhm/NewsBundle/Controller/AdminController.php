@@ -28,7 +28,7 @@ class AdminController extends FhmController
         self::$repository = "FhmNewsBundle:News";
         self::$source = "fhm";
         self::$domain = "FhmNewsBundle";
-        self::$translation = "News";
+        self::$translation = "news";
         self::$class = News::class;
         self::$route = "news";
         self::$form = new \stdClass();
