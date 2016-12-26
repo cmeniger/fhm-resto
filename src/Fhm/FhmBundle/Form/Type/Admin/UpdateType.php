@@ -67,43 +67,6 @@ class UpdateType extends AbstractType
             SubmitType::class,
             array('label' => $options['translation_route'].'.admin.update.form.submit.config')
         );
-        if ($options['lang_visible']) {
-            $builder->add(
-                'languages',
-                ChoiceType::class,
-                array(
-                    'choices' => $options['lang_available'],
-                    'multiple' => true,
-                )
-            );
-        }
-        if ($options['grouping_visible']) {
-            $builder->add(
-                'grouping',
-                ChoiceType::class,
-                array(
-                    'choices' => $options['grouping_available'],
-                    'multiple' => true,
-                )
-            )->add(
-                'share',
-                CheckboxType::class,
-                array(
-                    'label' => $options['translation_route'].'.admin.update.form.share',
-                    'required' => false,
-                )
-            );
-            if ($options['user_admin']) {
-                $builder->add(
-                    'global',
-                    CheckboxType::class,
-                    array(
-                        'label' => $options['translation_route'].'.admin.update.form.global',
-                        'required' => false,
-                    )
-                );
-            }
-        }
     }
 
     /**

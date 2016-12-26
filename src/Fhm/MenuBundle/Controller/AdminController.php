@@ -134,7 +134,7 @@ class AdminController extends FhmController
             'breadcrumbs' => array(
                 array(
                     'link' => $this->get('router')->generate('project_home'),
-                    'text' => $this->get('translator')->trans(
+                    'text' => $this->trans(
                         'project.home.breadcrumb',
                         array(),
                         'ProjectDefaultBundle'
@@ -142,11 +142,11 @@ class AdminController extends FhmController
                 ),
                 array(
                     'link' => $this->get('router')->generate('fhm_admin'),
-                    'text' => $this->get('translator')->trans('fhm.admin.breadcrumb', array(), 'FhmFhmBundle'),
+                    'text' => $this->trans('fhm.admin.breadcrumb', array(), 'FhmFhmBundle'),
                 ),
                 array(
                     'link' => $this->get('router')->generate(self::$source.'_admin_'.self::$route),
-                    'text' => $this->get('translator')->trans(
+                    'text' => $this->trans(
                         self::$translation.'.admin.index.breadcrumb',
                         array(),
                         self::$domain
@@ -154,7 +154,7 @@ class AdminController extends FhmController
                 ),
                 array(
                     'link' => $this->get('router')->generate(self::$source.'_admin_'.self::$route.'_create'),
-                    'text' => $this->get('translator')->trans(
+                    'text' => $this->trans(
                         self::$translation.'.admin.create.breadcrumb',
                         array(),
                         self::$domain

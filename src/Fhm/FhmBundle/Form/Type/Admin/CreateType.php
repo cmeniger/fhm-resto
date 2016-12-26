@@ -67,43 +67,6 @@ class CreateType extends AbstractType
             SubmitType::class,
             array('label' => $options['translation_route'].'.admin.create.form.submit.config')
         );
-        if ($options['lang_visible']) {
-            $builder->add(
-                'languages',
-                ChoiceType::class,
-                array(
-                    'choices' => $options['lang_available'],
-                    'multiple' => true,
-                )
-            );
-        }
-        if ($options['grouping_visible']) {
-            $builder->add(
-                'grouping',
-                ChoiceType::class,
-                array(
-                    'choices' => $options['grouping_available'],
-                    'multiple' => true,
-                )
-            )->add(
-                'share',
-                CheckboxType::class,
-                array(
-                    'label' => $options['translation_route'].'.admin.create.form.share',
-                    'required' => false,
-                )
-            );
-            if ($options['user_admin']) {
-                $builder->add(
-                    'global',
-                    CheckboxType::class,
-                    array(
-                        'label' => $options['translation_route'].'.admin.create.form.global',
-                        'required' => false,
-                    )
-                );
-            }
-        }
     }
 
     /**
@@ -126,10 +89,6 @@ class CreateType extends AbstractType
                 'cascade_validation' => true,
                 'translation_route' => '',
                 'filter' => '',
-                'lang_visible' => '',
-                'lang_available' => '',
-                'grouping_visible' => '',
-                'grouping_available' => '',
                 'user_admin' => '',
             )
         );

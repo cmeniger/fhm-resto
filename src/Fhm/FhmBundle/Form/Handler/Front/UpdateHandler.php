@@ -5,6 +5,10 @@ namespace Fhm\FhmBundle\Form\Handler\Front;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * Class UpdateHandler
+ * @package Fhm\FhmBundle\Form\Handler\Front
+ */
 class UpdateHandler
 {
     protected $request;
@@ -32,7 +36,7 @@ class UpdateHandler
     {
         if ('POST' == $this->request->getMethod()) {
             $this->form->handleRequest($this->request);
-            if ($this->form->isValid()) {
+            if ($this->form->isSubmitted() && $this->form->isValid()) {
                 return true;
             }
         }

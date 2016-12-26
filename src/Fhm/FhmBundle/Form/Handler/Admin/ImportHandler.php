@@ -5,6 +5,10 @@ namespace Fhm\FhmBundle\Form\Handler\Admin;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * Class ImportHandler
+ * @package Fhm\FhmBundle\Form\Handler\Admin
+ */
 class ImportHandler
 {
     protected $request;
@@ -30,7 +34,7 @@ class ImportHandler
     {
         if ('POST' == $this->request->getMethod()) {
             $this->form->handleRequest($this->request);
-            if ($this->form->isValid()) {
+            if ($this->form->isSubmitted() && $this->form->isValid()) {
                 $handle = fopen($this->form->get('file')->getData()->getRealPath(), 'r');
                 $datas  = array();
                 $final  = array();

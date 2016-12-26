@@ -65,7 +65,15 @@ class AdminController extends FhmController
     public function createAction(Request $request)
     {
         $document = new self::$class;
-        $form = $this->createForm(self::$form->createType, $document);
+        $form = $this->createForm(
+            self::$form->createType,
+            $document,
+            array(
+                'translation_route' => self::$translation,
+                'translation_domain' => self::$domain,
+                'data_class' => self::$class,
+            )
+        );
         $handler = new self::$form->createHandler($form, $request);
         $process = $handler->process();
         if ($process) {
@@ -94,12 +102,19 @@ class AdminController extends FhmController
             );
             $file = new UploadedFile($fileData['tmp_name'], $fileData['name'], $fileData['type']);
             $tab = explode('.', $fileData['name']);
-            $name = $data['name'] ? $this->get('fhm_tools')->getUnique(null, $data['name'], true) : $tab[0];
+            $name = $data['name'] ? $this->get('fhm_tools')->getUnique(
+                $document->getId(),
+                $data['name'],
+                true,
+                self::$repository
+            ) : $tab[0];
             // Persist
             $document->setName($name);
             $document->setFile($file);
             $document->setUserCreate($this->getUser());
-            $document->setAlias($this->get('fhm_tools')->getAlias($document->getId(), $document->getName()));
+            $document->setAlias(
+                $this->get('fhm_tools')->getAlias($document->getId(), $document->getName(), self::$repository)
+            );
             $document->setWatermark((array)$request->get('watermark'));
             $this->get('fhm_tools')->dmPersist($document);
             $this->get($this->get('fhm_tools')->getParameters('service', 'fhm_media'))->setDocument(
@@ -175,7 +190,11 @@ class AdminController extends FhmController
         if (!$this->getUser()->hasRole('ROLE_SUPER_ADMIN') && $document->getDelete()) {
             throw new HttpException(403, $this->trans(self::$translation.'.error.forbidden'));
         }
-        $form = $this->createForm(self::$form->updateType, $document);
+        $form = $this->createForm(
+            self::$form->updateType,
+            $document,
+            array('translation_route' => self::$translation, 'translation_domain' => self::$domain)
+        );
         $handler = new self::$form->updateHandler($form, $request);
         $process = $handler->process();
         if ($process) {

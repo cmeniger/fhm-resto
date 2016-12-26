@@ -2,6 +2,7 @@
 namespace Fhm\MediaBundle\Controller;
 
 use Fhm\FhmBundle\Controller\RefApiController as FhmController;
+use Fhm\FhmBundle\Form\Handler\Admin\UpdateHandler;
 use Fhm\MediaBundle\Document\Media;
 use Fhm\MediaBundle\Form\Handler\Api\CreateHandler;
 use Fhm\MediaBundle\Form\Type\Admin\Tag\UpdateType;
@@ -36,6 +37,8 @@ class ApiController extends FhmController
         self::$form->createType = CreateType::class;
         self::$form->createHandler = CreateHandler::class;
         self::$form->updateType = UpdateType::class;
+        self::$form->updateHandler = UpdateHandler::class;
+
     }
 
     /**
@@ -73,17 +76,18 @@ class ApiController extends FhmController
      */
     public function uploadedAction(Request $request)
     {
-        $counter = $request->get('counter');
+//        $counter = $request->get('counter');
+
         $response = new JsonResponse();
         $data = array();
         // Message
-        $this->get('session')->getFlashBag()->add(
-            'notice',
-            $this->trans(
-                self::$translation.'.admin.uploaded.flash.ok',
-                array('%accepted%' => $counter['accepted'], '%rejected%' => $counter['rejected'])
-            )
-        );
+//        $this->get('session')->getFlashBag()->add(
+//            'notice',
+//            $this->trans(
+//                self::$translation.'.admin.uploaded.flash.ok',
+//                array('%accepted%' => $counter['accepted'], '%rejected%' => $counter['rejected'])
+//            )
+//        );
 
         return $response->setData($data);
     }
@@ -221,7 +225,6 @@ class ApiController extends FhmController
         $tag = (isset($data['tag'])) ? $this->get('fhm_tools')->dmRepository('FhmMediaBundle:MediaTag')->find(
             $data['tag']
         ) : '';
-        $pagination = (isset($data['pagination'])) ? $data['pagination'] : 1;
         $search = (isset($data['search'])) ? $data['search'] : '';
         $documents = $this->get('fhm_tools')->dmRepository(self::$repository)->setTag(
             (isset($data['tag']) && $data['tag']) ? $data['tag'] : $root
@@ -252,11 +255,9 @@ class ApiController extends FhmController
     {
         $selector = $request->get('selector');
         $root = $this->get($this->get('fhm_tools')->getParameters('service', 'fhm_media'))->tagRoot($selector['root']);
-        $document = self::$document;
-        $classType = CreateType::class;
-        $classHandler = CreateHandler::class;
-        $form = $this->createForm($classType, $document);
-        $handler = new $classHandler($form, $request);
+        $document = new self::$class;
+        $form = $this->createForm(self::$form->createType, $document);
+        $handler = new self::$form->createHandler($form, $request);
         $process = $handler->process();
         if ($process) {
             $data = $request->get($form->getName());
@@ -334,11 +335,7 @@ class ApiController extends FhmController
      */
     public function dataPreviewAction(Request $request)
     {
-        $document = $this->get('fhm_tools')->dmRepository(self::$repository)->find($request->get('id'));
-
-        return array(
-            'document' => $document,
-        );
+        return ['document' => $this->get('fhm_tools')->dmRepository(self::$repository)->find($request->get('id'))];
     }
 
     /**
@@ -351,11 +348,7 @@ class ApiController extends FhmController
      */
     public function dataZoomAction(Request $request)
     {
-        $document = $this->get('fhm_tools')->dmRepository(self::$repository)->find($request->get('id'));
-
-        return array(
-            'document' => $document,
-        );
+        return ['document' => $this->get('fhm_tools')->dmRepository(self::$repository)->find($request->get('id'))];
     }
 
     /**
@@ -370,11 +363,9 @@ class ApiController extends FhmController
     {
         $selector = $request->get('selector');
         $root = $this->get($this->get('fhm_tools')->getParameters('service', 'fhm_media'))->tagRoot($selector['root']);
-        $document = self::$document;
-        $classType = CreateType::class;
-        $classHandler = CreateHandler::class;
-        $form = $this->createForm($classType, $document);
-        $handler = new $classHandler($form, $request);
+        $document = new self::$class;
+        $form = $this->createForm(self::$form->createType, $document);
+        $handler = new self::$form->createHandler($form, $request);
         $process = $handler->process();
         if ($process) {
             $data = $request->get($form->getName());

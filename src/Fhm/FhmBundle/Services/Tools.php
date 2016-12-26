@@ -120,11 +120,11 @@ class Tools
     /**
      * @param      $id
      * @param      $name
-     * @param null $repository
+     * @param      $repository
      *
      * @return mixed|string
      */
-    public function getAlias($id, $name, $repository = null)
+    public function getAlias($id, $name, $repository)
     {
         $alias = "";
         $unique = false;
@@ -200,13 +200,7 @@ class Tools
      *
      * @return string
      */
-    public function getUnique(
-        $id,
-        $name,
-        $multiple = false,
-        $repository = null,
-        $length = 4
-    )
+    public function getUnique($id, $name, $multiple = false, $repository = null, $length = 4)
     {
         $alias = "";
         $unique = false;

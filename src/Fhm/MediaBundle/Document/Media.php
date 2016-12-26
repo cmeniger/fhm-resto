@@ -63,7 +63,7 @@ class Media extends FhmFhm
     public function __construct()
     {
         parent::__construct();
-        $this->tags    = new ArrayCollection();
+        $this->tags = new ArrayCollection();
         $this->private = false;
     }
 
@@ -272,9 +272,7 @@ class Media extends FhmFhm
     }
 
     /**
-     * Get tags
-     *
-     * @return \Fhm\MediaBundle\Document\MediaTag $tag
+     * @return ArrayCollection
      */
     public function getTags()
     {
@@ -304,8 +302,7 @@ class Media extends FhmFhm
      */
     public function addTag(\Fhm\MediaBundle\Document\MediaTag $tag)
     {
-        if(!$this->tags->contains($tag))
-        {
+        if (!$this->tags->contains($tag)) {
             $this->tags->add($tag);
         }
 
@@ -321,8 +318,7 @@ class Media extends FhmFhm
      */
     public function removeTag(\Fhm\MediaBundle\Document\MediaTag $tag)
     {
-        if($this->tags->contains($tag))
-        {
+        if ($this->tags->contains($tag)) {
             $this->tags->removeElement($tag);
         }
 
@@ -335,9 +331,8 @@ class Media extends FhmFhm
     public function prePersist()
     {
         parent::prePersist();
-        if($this->file === null)
-        {
-            return;
+        if ($this->file === null) {
+            return $this->file;
         }
         $ext = explode('/', $this->file->getClientMimeType());
         $this->setExtension($this->file->getClientOriginalExtension());
@@ -356,9 +351,8 @@ class Media extends FhmFhm
     public function preUpdate()
     {
         parent::preUpdate();
-        if($this->file === null)
-        {
-            return;
+        if ($this->file === null) {
+            return $this->file;
         }
         $ext = explode('/', $this->file->getClientMimeType());
         $this->setExtension($this->file->getClientOriginalExtension());
