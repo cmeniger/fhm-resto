@@ -1,13 +1,12 @@
 services:
     fhm.twig.media_extension:
         class: Fhm\MediaBundle\Twig\MediaExtension
-        arguments: ["@service_container"]
+        arguments: ["@fhm_media_service"]
         tags:
             - { name: twig.extension }
 
     fhm.twig.media_tag_extension:
         class: Fhm\MediaBundle\Twig\MediaTagExtension
-        arguments: ["@fhm_tools"]
         tags:
             - { name: twig.extension }
 
@@ -23,8 +22,8 @@ services:
 
     fhm_media_local:
         class: Fhm\MediaBundle\Services\Local
-        arguments: ["@fhm_tools", "@kernel"]
+        arguments: ["@fhm_tools"]
 
     fhm_media_s3:
         class: Fhm\MediaBundle\Services\S3
-        arguments: ["@fhm_tools", "@kernel"]
+        arguments: ["@fhm_tools"]

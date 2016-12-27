@@ -1,5 +1,4 @@
 <?php
-
 namespace Fhm\MediaBundle\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -19,9 +18,18 @@ class FhmMediaExtension extends Extension
      */
     public function load(array $configs, ContainerBuilder $container)
     {
+        $this->setFhmMediaService($container);
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
-$loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
-$loader->load('services.yml');
-}
+        $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+        $loader->load('services.yml');
+    }
+
+    /**
+     * @param $container
+     */
+    public function setFhmMediaService($container)
+    {
+        $container->setAlias('fhm_media_service', $container->getParameter('fhm_media_service'));
+    }
 }

@@ -214,7 +214,9 @@ class AdminController extends FhmController
             }
             // Persist
             $document->setUserUpdate($this->getUser());
-            $document->setAlias($this->get('fhm_tools')->getAlias($document->getId(), $document->getName()));
+            $document->setAlias(
+                $this->get('fhm_tools')->getAlias($document->getId(), $document->getName(), self::$repository)
+            );
             $this->get('fhm_tools')->dmPersist($document);
             if ($document->getFile()) {
                 $this->get($this->get('fhm_tools')->getParameters('service', 'fhm_media'))->setDocument(

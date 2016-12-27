@@ -8,21 +8,6 @@ namespace Fhm\MediaBundle\Twig;
  */
 class MediaTagExtension extends \Twig_Extension
 {
-    protected $fhm_tools;
-    protected $template;
-
-    /**
-     * MapNoMap constructor.
-     *
-     * @param \Fhm\FhmBundle\Services\Tools $tools
-     */
-    public function __construct(\Fhm\FhmBundle\Services\Tools $tools)
-    {
-        $this->fhm_tools = $tools;
-        $this->template = new \Twig_Environment(
-            new \Twig_Loader_Filesystem($this->fhm_tools->getContainer()->getParameter('kernel.root_dir'))
-        );
-    }
 
     /**
      * {@inheritdoc}
@@ -30,20 +15,43 @@ class MediaTagExtension extends \Twig_Extension
     public function getFilters()
     {
         return array(
-            new \Twig_SimpleFilter('tagBreadcrumbs', array($this, 'getBreadcrumbs')),
-            new \Twig_SimpleFilter('tagRoute', array($this, 'getRoute')),
-            new \Twig_SimpleFilter('tagLabel', array($this, 'getTag')),
-            new \Twig_SimpleFilter('tagBlocAdmin', array($this, 'getBlocAdmin')),
-            new \Twig_SimpleFilter('tagBlocFront', array($this, 'getBlocFront')),
-            new \Twig_SimpleFilter('tagBlocSelector', array($this, 'getBlocSelector')),
-            new \Twig_SimpleFilter('tagBlocEditor', array($this, 'getBlocEditor')),
+            new \Twig_SimpleFilter(
+                'tagBreadcrumbs',
+                array($this, 'getBreadcrumbs')
+            ),
+            new \Twig_SimpleFilter(
+                'tagRoute',
+                array($this, 'getRoute')
+            ),
+            new \Twig_SimpleFilter(
+                'tagLabel',
+                array($this, 'getTag')
+            ),
+            new \Twig_SimpleFilter(
+                'tagBlocAdmin',
+                array($this, 'getBlocAdmin'),
+                array('needs_environment' => true)
+            ),
+            new \Twig_SimpleFilter(
+                'tagBlocFront',
+                array($this, 'getBlocFront'),
+                array('needs_environment' => true)
+            ),
+            new \Twig_SimpleFilter(
+                'tagBlocSelector',
+                array($this, 'getBlocSelector'),
+                array('needs_environment' => true)
+            ),
+            new \Twig_SimpleFilter(
+                'tagBlocEditor',
+                array($this, 'getBlocEditor'),
+                array('needs_environment' => true)
+            ),
         );
     }
 
     /**
-     * Returns the name of the extension.
-     *
-     * @return string The extension name
+     * @return string
      */
     public function getName()
     {
@@ -51,9 +59,8 @@ class MediaTagExtension extends \Twig_Extension
     }
 
     /**
-     * @param        $tag
+     * @param $tag
      * @param string $root
-     *
      * @return string
      */
     public function getBreadcrumbs($tag, $root = "")
@@ -74,8 +81,7 @@ class MediaTagExtension extends \Twig_Extension
     }
 
     /**
-     * @param \Fhm\MediaBundle\Document\MediaTag $tag
-     *
+     * @param $tag
      * @return string
      */
     public function getRoute($tag)
@@ -94,8 +100,7 @@ class MediaTagExtension extends \Twig_Extension
     }
 
     /**
-     * @param \Fhm\MediaBundle\Document\MediaTag $tag
-     *
+     * @param $tag
      * @return string
      */
     public function getTag($tag)
@@ -107,14 +112,14 @@ class MediaTagExtension extends \Twig_Extension
     }
 
     /**
-     * @param \Fhm\MediaBundle\Document\MediaTag $tag
-     * @param object $instance
-     *
-     * @return string
+     * @param \Twig_Environment $env
+     * @param $tag
+     * @param $instance
+     * @return mixed|string
      */
-    public function getBlocAdmin($tag, $instance)
+    public function getBlocAdmin(\Twig_Environment $env, $tag, $instance)
     {
-        return $this->template->render(
+        return $env->render(
             '::FhmMedia/Template/Bloc/admin.tag.html.twig',
             array(
                 'document' => $tag,
@@ -124,14 +129,14 @@ class MediaTagExtension extends \Twig_Extension
     }
 
     /**
-     * @param \Fhm\MediaBundle\Document\MediaTag $tag
-     * @param object $instance
-     *
-     * @return string
+     * @param \Twig_Environment $env
+     * @param $tag
+     * @param $instance
+     * @return mixed|string
      */
-    public function getBlocFront($tag, $instance)
+    public function getBlocFront(\Twig_Environment $env, $tag, $instance)
     {
-        return $this->template->render(
+        return $env->render(
             '::FhmMedia/Template/Bloc/front.tag.html.twig',
             array(
                 'document' => $tag,
@@ -141,14 +146,14 @@ class MediaTagExtension extends \Twig_Extension
     }
 
     /**
-     * @param \Fhm\MediaBundle\Document\MediaTag $tag
-     * @param object $instance
-     *
-     * @return string
+     * @param \Twig_Environment $env
+     * @param $tag
+     * @param $instance
+     * @return mixed|string
      */
-    public function getBlocSelector($tag, $instance)
+    public function getBlocSelector(\Twig_Environment $env, $tag, $instance)
     {
-        return $this->template->render(
+        return $env->render(
             '::FhmMedia/Template/Bloc/selector.tag.html.twig',
             array(
                 'document' => $tag,
@@ -158,14 +163,14 @@ class MediaTagExtension extends \Twig_Extension
     }
 
     /**
-     * @param \Fhm\MediaBundle\Document\MediaTag $tag
-     * @param object $instance
-     *
-     * @return string
+     * @param \Twig_Environment $env
+     * @param $tag
+     * @param $instance
+     * @return mixed|string
      */
-    public function getBlocEditor($tag, $instance)
+    public function getBlocEditor(\Twig_Environment $env, $tag, $instance)
     {
-        return $this->template->render(
+        return $env->render(
             '::FhmMedia/Template/Bloc/editor.tag.html.twig',
             array(
                 'document' => $tag,

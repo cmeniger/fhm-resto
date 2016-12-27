@@ -8,7 +8,9 @@
     <div id="header">
         {# Menu #}
         {% block menu %}
-            {{ render_hinclude(url('fhm_api_menu_detail', {'template':'front'})) }}
+            {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+                {{ render_hinclude(url('fhm_api_menu_detail', {'template':'front'})) }}
+            {% endif %}
         {% endblock %}
 
         {# Tagline #}

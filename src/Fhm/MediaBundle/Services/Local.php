@@ -1,6 +1,7 @@
 <?php
 namespace Fhm\MediaBundle\Services;
 
+use Fhm\FhmBundle\Services\Tools;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -20,18 +21,15 @@ class Local
      * Local constructor.
      *
      * @param \Fhm\FhmBundle\Services\Tools $tools
-     * @param \Symfony\Component\HttpKernel\KernelInterface $kernel
      */
-    public function __construct(
-        \Fhm\FhmBundle\Services\Tools $tools,
-        \Symfony\Component\HttpKernel\KernelInterface $kernel
-    ) {
+    public function __construct(Tools $tools)
+    {
         $this->fhm_tools = $tools;
         $this->files = $this->_filesInit($this->fhm_tools->getParameters('files', 'fhm_media'));
         $this->file = null;
         // Path
         $this->path = new \stdClass();
-        $this->path->root = $kernel->getRootDir().'/../';
+        $this->path->root = $this->fhm_tools->getContainer()->get('kernel')->getRootDir().'/../';
         $this->path->origin = 'media/';
         $this->path->media = '/datas/media/';
         $this->path->web = 'web'.$this->path->media;

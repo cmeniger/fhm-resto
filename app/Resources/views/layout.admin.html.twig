@@ -9,7 +9,9 @@
     <div id="header">
         {# Menu #}
         {% block menu %}
-            {{ render_hinclude(url('fhm_api_menu_detail', {'template':'admin'})) }}
+            {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+                {{ render_hinclude(url('fhm_api_menu_detail', {'template':'admin'})) }}
+            {% endif %}
         {% endblock %}
         {# Header #}
         {% block header %}{% endblock %}

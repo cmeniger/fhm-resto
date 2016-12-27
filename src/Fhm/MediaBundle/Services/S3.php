@@ -1,6 +1,7 @@
 <?php
 namespace Fhm\MediaBundle\Services;
 
+use Fhm\FhmBundle\Services\Tools;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -24,12 +25,9 @@ class S3
      * Local constructor.
      *
      * @param \Fhm\FhmBundle\Services\Tools $tools
-     * @param \Symfony\Component\HttpKernel\KernelInterface $kernel
      */
-    public function __construct(
-        \Fhm\FhmBundle\Services\Tools $tools,
-        \Symfony\Component\HttpKernel\KernelInterface $kernel
-    ) {
+    public function __construct(Tools $tools)
+    {
         $this->fhm_tools = $tools;
         $this->files = $this->_filesInit($this->fhm_tools->getParameters('files', 'fhm_media'));
         $this->file = null;
@@ -43,7 +41,7 @@ class S3
         $this->path->web = 'web/';
         $this->path->watermark = 'watermark.png';
         $this->path->files = '';
-        $this->path->localRoot = $kernel->getRootDir().'/../';
+        $this->path->root = $this->fhm_tools->getContainer()->get('kernel')->getRootDir().'/../';
         $this->path->local = $this->path->localRoot.$this->path->origin;
         $this->path->fullWeb = '';
         $this->path->fullOrigin = $this->path->root.$this->path->origin;
@@ -694,7 +692,8 @@ class S3
     }
 
     /**
-     * @return $this
+     * @param $file
+     * @return string
      */
     private function _awsPath($file)
     {
