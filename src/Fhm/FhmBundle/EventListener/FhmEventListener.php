@@ -52,17 +52,6 @@ class FhmEventListener implements EventSubscriberInterface
      */
     public function onKernelRequest(GetResponseEvent $event)
     {
-        // Locale
-        if ($event->getRequest()->hasPreviousSession()) {
-            if ($locale = $event->getRequest()->attributes->get('_locale')) {
-                $event->getRequest()->getSession()->set('_locale', $locale);
-            }
-            $event->getRequest()->setLocale($event->getRequest()->getSession()->get('_locale'));
-        }
-        // Construct / Maintenance
-        if (HttpKernel::MASTER_REQUEST != $event->getRequestType() || $event->getRequest()->isXmlHttpRequest()) {
-            return false;
-        }
         $parameters = $this->getContainer()->getParameter("project");
         $maintenance = isset($parameters['maintenance']) ? $parameters['maintenance'] : false;
         $construct = isset($parameters['construct']) ? $parameters['construct'] : false;
@@ -80,14 +69,36 @@ class FhmEventListener implements EventSubscriberInterface
             $this->getContainer()->get('kernel')->getEnvironment(),
             array('test', 'dev')
         ) ? true : $authorized;
+
         if ($construct && !$authorized) {
-            $event->setResponse(new Response("", 503));
+            $event->setResponse(
+                new Response(
+                    $this->container->get('templating')->render(
+                        '::ProjectDefault/Template/construct.html.twig',
+                        array(
+                            'date' => $date,
+                            'site' => null,
+                        )
+                    ),
+                    503
+                )
+            );
             $event->stopPropagation();
         } elseif ($maintenance && !$authorized) {
-            $event->setResponse( new Response("", 503));
+            $event->setResponse(
+                new Response(
+                    $this->container->get('templating')->render(
+                        '::ProjectDefault/Template/maintenance.html.twig',
+                        array(
+                            'date' => $date,
+                            'site' => null,
+                        )
+                    ),
+                    503
+                )
+            );
             $event->stopPropagation();
         }
-
         return false;
     }
 
@@ -97,7 +108,7 @@ class FhmEventListener implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return array(
-            'kernel.request' => 'onKernelRequest'
+            'kernel.request' => 'onKernelRequest',
         );
     }
 }

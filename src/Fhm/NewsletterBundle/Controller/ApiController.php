@@ -68,7 +68,7 @@ class ApiController extends FhmController
      */
     public function embedAction(Request $request)
     {
-        $document = self::$document;
+        $document = new self::$class;
         self::$form = new \stdClass();
         self::$form->type = CreateType::class;
         self::$form->handler = CreateHandler::class;
@@ -79,7 +79,7 @@ class ApiController extends FhmController
         if ($process) {
             // Persist
             $document->setUserCreate($this->getUser());
-            $document->setAlias($this->get('fhm_tools')->getAlias($document->getId(), $document->getName()));
+            $document->setAlias($this->get('fhm_tools')->getAlias($document->getId(), $document->getName(), self::$repository));
             $document->setActive(true);
             $this->get('fhm_tools')->dmPersist($document);
             // Response

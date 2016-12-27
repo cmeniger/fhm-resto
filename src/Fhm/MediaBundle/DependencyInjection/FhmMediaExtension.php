@@ -29,7 +29,7 @@ class FhmMediaExtension extends Extension
     /**
      * @param $container
      */
-    public function createMediaServiceAlias($container)
+    public function createMediaServiceAlias(ContainerBuilder $container)
     {
         $container->setAlias(self::MEDIA_SERVICE_ALIAS, $container->getParameter('fhm_media')['service']);
     }
