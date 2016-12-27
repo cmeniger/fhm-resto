@@ -13,12 +13,13 @@ use Symfony\Component\DependencyInjection\Loader;
  */
 class FhmMediaExtension extends Extension
 {
+    const MEDIA_SERVICE_ALIAS = "fhm_media_service";
     /**
      * {@inheritdoc}
      */
     public function load(array $configs, ContainerBuilder $container)
     {
-        $this->setFhmMediaService($container);
+        $this->createMediaServiceAlias($container);
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
@@ -28,8 +29,8 @@ class FhmMediaExtension extends Extension
     /**
      * @param $container
      */
-    public function setFhmMediaService($container)
+    public function createMediaServiceAlias($container)
     {
-        $container->setAlias('fhm_media_service', $container->getParameter('fhm_media_service'));
+        $container->setAlias(self::MEDIA_SERVICE_ALIAS, $container->getParameter('fhm_media')['service']);
     }
 }
