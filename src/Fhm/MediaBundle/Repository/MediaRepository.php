@@ -74,9 +74,7 @@ class MediaRepository extends FhmRepository
     /**
      * @param string $search
      * @param bool $roleSuperAdmin
-     *
-     * @return mixed
-     * @throws \Doctrine\ODM\MongoDB\MongoDBException
+     * @return \Doctrine\ODM\MongoDB\Query\Query
      */
     public function getAdminIndex($search = "", $roleSuperAdmin = false)
     {
@@ -100,7 +98,7 @@ class MediaRepository extends FhmRepository
         // Common
         $this->builderSort($builder);
 
-        return $builder->getQuery()->execute()->toArray();
+        return $builder->getQuery();
     }
 
 

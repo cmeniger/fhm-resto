@@ -76,18 +76,18 @@ class ApiController extends FhmController
      */
     public function uploadedAction(Request $request)
     {
-//        $counter = $request->get('counter');
+        $counter = $request->get('counter');
 
         $response = new JsonResponse();
         $data = array();
         // Message
-//        $this->get('session')->getFlashBag()->add(
-//            'notice',
-//            $this->trans(
-//                self::$translation.'.admin.uploaded.flash.ok',
-//                array('%accepted%' => $counter['accepted'], '%rejected%' => $counter['rejected'])
-//            )
-//        );
+        $this->get('session')->getFlashBag()->add(
+            'notice',
+            $this->trans(
+                self::$translation.'.admin.uploaded.flash.ok',
+                array('%accepted%' => $counter['accepted'], '%rejected%' => $counter['rejected'])
+            )
+        );
 
         return $response->setData($data);
     }
@@ -111,14 +111,19 @@ class ApiController extends FhmController
             $data['tag']
         ) : '';
         $search = (isset($data['search'])) ? $data['search'] : '';
-        $documents = $this->get('fhm_tools')->dmRepository(self::$repository)->setTag(
+        $query = $this->get('fhm_tools')->dmRepository(self::$repository)->setTag(
             (isset($data['tag'])) ? $data['tag'] : ''
         )->getAdminIndex(
-            $search
+            $search,
+            $this->getUser()->hasRole('ROLE_SUPER_ADMIN')
         );
-
+        $pagination = $this->get('knp_paginator')->paginate(
+            $query,
+            $request->query->getInt('page', 1),
+            $this->getParameters('pagination', 'fhm_fhm')
+        );
         return array(
-            'documents' => $documents,
+            'pagination' => $pagination,
             'tag' => $tag,
             'tagMains' => $tagMains,
             'tagSons' => $tagSons,

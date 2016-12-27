@@ -2,6 +2,7 @@
 namespace Fhm\MediaBundle\Services;
 
 use Fhm\FhmBundle\Services\Tools;
+use Fhm\MediaBundle\Document\Media;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -56,8 +57,10 @@ class Local
     public function setDocument($document)
     {
         $this->document = $document;
-        $this->file = $document->getFile();
-        $this->path->files = $document->getId().'/';
+        if ($document instanceof Media) {
+            $this->file = $document->getFile();
+            $this->path->files = $document->getId().'/';
+        }
         $this->path->fullWeb = $this->path->root.$this->path->web.$this->path->files;
 
         return $this;

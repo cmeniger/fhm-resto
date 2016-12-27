@@ -26,15 +26,21 @@
                 {% endfor %}
             </div>
         {% endif %}
-        {% if documents %}
+        {% if pagination %}
             <div class="row bloc medias">
-                {% for document in documents %}
+                {% for document in pagination %}
                     <div class="large-3 medium-4 small-6 columns end">
                         {{ document|blocAdmin(instance)|raw }}
                     </div>
                 {% endfor %}
             </div>
-            {{ macroPagination.print(pagination, true) }}
+            {#{{ macroPagination.print(pagination, true) }}#}
+            <div class="navigation">
+                <ul class="pagination-counter">
+                    <li class="arrow"><small>Total d'enrégistrements : {{ pagination.getTotalItemCount }}</small></li>
+                </ul>
+                {{ knp_pagination_render(pagination) }}
+            </div>
         {% else %}
             <div class="panel nodata bloc">
                 <p>{{ (instance.translation ~ '.admin.index.nodata')|trans }}</p>

@@ -117,11 +117,10 @@ class AdminController extends FhmController
             );
             $document->setWatermark((array)$request->get('watermark'));
             $this->get('fhm_tools')->dmPersist($document);
-            $this->get($this->get('fhm_tools')->getParameters('service', 'fhm_media'))->setDocument(
-                $document
-            )->setWatermark(
-                $request->get('watermark')
-            )->execute();
+            $this->get('fhm_media_service')
+                 ->setDocument($document)
+                 ->setWatermark($request->get('watermark'))
+                 ->execute();
         }
 
         return array(
