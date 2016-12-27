@@ -19,4 +19,4 @@
 /.idea/
 /media/
 /web/datas/
-*php~
+*.php~
