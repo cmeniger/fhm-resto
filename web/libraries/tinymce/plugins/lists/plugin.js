@@ -321,7 +321,7 @@ tinymce.PluginManager.add('lists', function(editor) {
 
 			sibling = listBlock.previousSibling;
 			if (sibling && isListNode(sibling) && sibling.nodeName == listBlock.nodeName && shouldMerge(listBlock, sibling)) {
-				while ((node = sibling.lastChild)) {
+				while ((node = sibling.firstChild)) {
 					listBlock.insertBefore(node, listBlock.firstChild);
 				}
 
@@ -676,27 +676,16 @@ tinymce.PluginManager.add('lists', function(editor) {
 
 		function removeList() {
 			var bookmark = createBookmark(selection.getRng(true)), root = editor.getBody();
-			var listItems = getSelectedListItems();
-			var emptyListItems = tinymce.util.Tools.grep(listItems, function (li) {
-				return isEmpty(li);
-			});
 
-			listItems = tinymce.util.Tools.grep(listItems, function (li) {
-				return !isEmpty(li);
-			});
-
-
-			tinymce.each(emptyListItems, function(li) {
-				if (isEmpty(li)) {
-					outdent(li);
-					return;
-				}
-			});
-
-			tinymce.each(listItems, function(li) {
+			tinymce.each(getSelectedListItems(), function(li) {
 				var node, rootList;
 
 				if (isEditorBody(li.parentNode)) {
+					return;
+				}
+
+				if (isEmpty(li)) {
+					outdent(li);
 					return;
 				}
 
@@ -939,36 +928,6 @@ tinymce.PluginManager.add('lists', function(editor) {
 			}
 		});
 	});
-
-	var listState = function (listName) {
-		return function () {
-			var self = this;
-
-			editor.on('NodeChange', function (e) {
-				var lists = tinymce.util.Tools.grep(e.parents, isListNode);
-				self.active(lists.length > 0 && lists[0].nodeName === listName);
-			});
-		};
-	};
-
-	var hasPlugin = function (editor, plugin) {
-		var plugins = editor.settings.plugins ? editor.settings.plugins : '';
-		return tinymce.util.Tools.inArray(plugins.split(/[ ,]/), plugin) !== -1;
-	};
-
-	if (!hasPlugin(editor, 'advlist')) {
-		editor.addButton('numlist', {
-			title: 'Numbered list',
-			cmd: 'InsertOrderedList',
-			onPostRender: listState('OL')
-		});
-
-		editor.addButton('bullist', {
-			title: 'Bullet list',
-			cmd: 'InsertUnorderedList',
-			onPostRender: listState('UL')
-		});
-	}
 
 	editor.addButton('indent', {
 		icon: 'indent',
