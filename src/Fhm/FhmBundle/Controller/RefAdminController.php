@@ -27,7 +27,7 @@ class RefAdminController extends GenericController
         );
         $pagination = $this->get('knp_paginator')->paginate(
             $query,
-            $request->query->getInt('page', 1),
+            $request->query->getInt('page', $request->get('page')),
             $this->getParameters('pagination', 'fhm_fhm')
         );
         if ($request->isXmlHttpRequest()) { /** Ajax request**/

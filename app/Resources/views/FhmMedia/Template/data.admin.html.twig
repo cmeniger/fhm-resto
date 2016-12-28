@@ -33,18 +33,18 @@
                     </div>
                 {% endfor %}
             </div>
-            <div class="navigation">
-                <ul class="pagination-counter">
-                    <li class="arrow"><small>Total d'enrégistrements : {{ pagination.getTotalItemCount }}</small></li>
-                </ul>
-                {{ knp_pagination_render(pagination) }}
-            </div>
         {% else %}
             <div class="panel nodata bloc">
                 <p>{{ (instance.translation ~ '.admin.index.nodata')|trans }}</p>
             </div>
         {% endif %}
     </div>
+</div>
+<div class="navigation">
+    <ul class="pagination-counter">
+        <li class="arrow"><small>Total d'enrégistrements : {{ pagination.getTotalItemCount }}</small></li>
+    </ul>
+    {{ knp_pagination_render(pagination) }}
 </div>
 <div id="modal-media-zoom" class="reveal-modal" data-reveal>
     <div class="media-zoom"></div>
