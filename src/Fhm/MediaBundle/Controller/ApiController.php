@@ -98,7 +98,7 @@ class ApiController extends FhmController
      *      path="/data/admin",
      *      name="fhm_api_media_data_admin"
      * )
-     * @Template("::FhmMedia/Template/data.admin.html.twig")
+     * @Template()
      */
     public function dataAdminAction(Request $request)
     {
@@ -119,14 +119,17 @@ class ApiController extends FhmController
         );
         $pagination = $this->get('knp_paginator')->paginate(
             $query,
-            $request->query->getInt('page', $request->get('page')),
+            $request->query->getInt('page', $request->get('page')?$request->get('page'):1),
             $this->getParameters('pagination', 'fhm_fhm')
         );
-        return array(
-            'pagination' => $pagination,
-            'tag' => $tag,
-            'tagMains' => $tagMains,
-            'tagSons' => $tagSons,
+        return $this->render(
+            "::FhmMedia/Template/data.admin.html.twig",
+            array(
+                'pagination' => $pagination,
+                'tag' => $tag,
+                'tagMains' => $tagMains,
+                'tagSons' => $tagSons,
+            )
         );
     }
 

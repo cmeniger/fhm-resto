@@ -22,12 +22,6 @@ services:
         tags:
           - { name: form.type, alias: FhmResetting }
 
-    fhm_user_activity_listener:
-        class: Fhm\UserBundle\EventListener\ActivityListener
-        arguments: ["@security.token_storage", "@doctrine_mongodb.odm.default_document_manager"]
-        tags:
-          - { name: kernel.event_listener, event: kernel.controller, method: onCoreController }
-
     fhm_user.mailer.twig_swift:
         class: Fhm\UserBundle\Mailer\TwigSwiftMailer
         arguments:
