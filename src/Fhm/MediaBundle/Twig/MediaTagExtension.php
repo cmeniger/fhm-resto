@@ -114,16 +114,14 @@ class MediaTagExtension extends \Twig_Extension
     /**
      * @param \Twig_Environment $env
      * @param $tag
-     * @param $instance
      * @return mixed|string
      */
-    public function getBlocAdmin(\Twig_Environment $env, $tag, $instance)
+    public function getBlocAdmin(\Twig_Environment $env, $tag)
     {
         return $env->render(
             '::FhmMedia/Template/Bloc/admin.tag.html.twig',
             array(
-                'document' => $tag,
-                'instance' => $instance,
+                'document' => $tag
             )
         );
     }
@@ -131,16 +129,14 @@ class MediaTagExtension extends \Twig_Extension
     /**
      * @param \Twig_Environment $env
      * @param $tag
-     * @param $instance
      * @return mixed|string
      */
-    public function getBlocFront(\Twig_Environment $env, $tag, $instance)
+    public function getBlocFront(\Twig_Environment $env, $tag)
     {
         return $env->render(
             '::FhmMedia/Template/Bloc/front.tag.html.twig',
             array(
-                'document' => $tag,
-                'instance' => $instance,
+                'document' => $tag
             )
         );
     }
@@ -148,16 +144,14 @@ class MediaTagExtension extends \Twig_Extension
     /**
      * @param \Twig_Environment $env
      * @param $tag
-     * @param $instance
      * @return mixed|string
      */
-    public function getBlocSelector(\Twig_Environment $env, $tag, $instance)
+    public function getBlocSelector(\Twig_Environment $env, $tag)
     {
         return $env->render(
             '::FhmMedia/Template/Bloc/selector.tag.html.twig',
             array(
-                'document' => $tag,
-                'instance' => $instance,
+                'document' => $tag
             )
         );
     }
@@ -165,16 +159,14 @@ class MediaTagExtension extends \Twig_Extension
     /**
      * @param \Twig_Environment $env
      * @param $tag
-     * @param $instance
      * @return mixed|string
      */
-    public function getBlocEditor(\Twig_Environment $env, $tag, $instance)
+    public function getBlocEditor(\Twig_Environment $env, $tag)
     {
         return $env->render(
             '::FhmMedia/Template/Bloc/editor.tag.html.twig',
             array(
-                'document' => $tag,
-                'instance' => $instance,
+                'document' => $tag
             )
         );
     }

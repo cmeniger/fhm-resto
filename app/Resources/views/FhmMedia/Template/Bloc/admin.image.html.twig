@@ -50,12 +50,5 @@
                 <a href="{{ path('fhm_admin_' ~ instance.route ~ '_delete', {'id': document.getId()}) }}" title="{{ (instance.translation ~ '.admin.index.table.action.delete')|trans }}" onclick="return confirm('{{ (instance.translation ~ '.admin.index.table.confirm.delete')|trans }}')"><i class="fa fa-trash-o"></i></a>
             {% endif %}
         </div>
-        <div>
-            {% if instance.grouping.visible %}
-                {% for data in document.getGrouping() %}
-                    <span class="status {{ data == instance.grouping.current ? 'success' : 'warning' }} radius label">{{ data }}</span>
-                {% endfor %}
-            {% endif %}
-        </div>
     </div>
 </div>

@@ -56,14 +56,22 @@ class Local
      */
     public function setDocument($document)
     {
-        $this->document = $document;
         if ($document instanceof Media) {
+            $this->document = $document;
             $this->file = $document->getFile();
             $this->path->files = $document->getId().'/';
+            $this->path->fullWeb = $this->path->root.$this->path->web.$this->path->files;
         }
-        $this->path->fullWeb = $this->path->root.$this->path->web.$this->path->files;
 
         return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isDocumentSet()
+    {
+        return $this->document instanceof Media;
     }
 
     /**
@@ -122,16 +130,24 @@ class Local
             $default = file_exists('../web/images/default.jpg') ? '/images/default.jpg' : $default;
             $default = file_exists('../web/images/default.png') ? '/images/default.png' : $default;
         }
-        if ($this->document->getType() == 'image') {
-            $file = $this->path->media.$this->document->getId().'/'.$format.'.'.$this->document->getExtension();
+        if ($this->isDocumentSet()) {
+            if ($this->document->getType() == 'image') {
+                $file = $this->path->media.
+                        $this->document->getId().
+                        '/'.$format.'.'.$this->document->getExtension();
 
-            return ($file && file_exists('../web'.$file)) ? $file : $default;
-        } else {
-            $file = $this->path->media.$this->document->getId().'/'.$this->document->getAlias(
-                ).'.'.$this->document->getExtension();
+                return ($file && file_exists('../web'.$file)) ? $file : $default;
+            } else {
+                $file = $this->path->media.
+                        $this->document->getId().
+                        '/'.$this->document->getAlias().
+                        '.'.$this->document->getExtension();
 
-            return ($file && file_exists('../web'.$file)) ? $file : '#';
+                return ($file && file_exists('../web'.$file)) ? $file : '#';
+            }
         }
+
+        return $default;
     }
 
     /**
@@ -142,13 +158,18 @@ class Local
     public function download($filename = '')
     {
         $response = new Response();
-        $response->setStatusCode(200);
-        $response->headers->set('Content-Type', $this->document->getMimeType());
-        $response->headers->set(
-            'Content-Disposition',
-            'attachment; filename="'.($filename ? $filename : $this->document->getName()).'"'
-        );
-        $response->setContent(file_get_contents($this->path->fullOrigin.$this->document->getId()));
+        if ($this->isDocumentSet()) {
+            $response->setStatusCode(200);
+            $response->headers->set('Content-Type', $this->document->getMimeType());
+            $response->headers->set(
+                'Content-Disposition',
+                'attachment; filename="'.($filename ? $filename : $this->document->getName()).'"'
+            );
+            $response->setContent(file_get_contents($this->path->fullOrigin.$this->document->getId()));
+        }
+        else {
+            $response->setStatusCode(404);
+        }
 
         return $response;
     }
@@ -239,13 +260,15 @@ class Local
      */
     public function remove()
     {
-        $files = array_diff(scandir($this->path->fullWeb), array('.', '..'));
-        foreach ($files as $file) {
-            unlink($this->path->fullWeb.$file);
-        }
-        rmdir($this->path->fullWeb);
-        if ($this->document->getType() == 'image') {
-            unlink($this->path->fullOrigin.$this->document->getId());
+        if ($this->isDocumentSet()) {
+            $files = array_diff(scandir($this->path->fullWeb), array('.', '..'));
+            foreach ($files as $file) {
+                unlink($this->path->fullWeb.$file);
+            }
+            rmdir($this->path->fullWeb);
+            if ($this->document->getType() == 'image') {
+                unlink($this->path->fullOrigin.$this->document->getId());
+            }
         }
 
         return;
@@ -265,7 +288,7 @@ class Local
             }
         }
         // Image
-        if ($this->document->getType() == 'image') {
+        if ($this->isDocumentSet() && $this->document->getType() == 'image') {
             $this->_uploadImage();
             $this->_generateImage();
         } // Other
@@ -279,7 +302,7 @@ class Local
      */
     private function _uploadImage()
     {
-        if ($this->file && $this->document->getType() == 'image') {
+        if ($this->isDocumentSet() && $this->file && $this->document->getType() == 'image') {
             $this->file->move($this->path->fullOrigin, $this->document->getId());
         }
     }
@@ -289,7 +312,7 @@ class Local
      */
     private function _uploadFile()
     {
-        if ($this->file && $this->document->getType() != 'image') {
+        if ($this->isDocumentSet() && $this->file && $this->document->getType() != 'image') {
             $this->file->move($this->path->fullWeb, $this->document->getAlias().'.'.$this->document->getExtension());
         }
     }
@@ -299,6 +322,9 @@ class Local
      */
     private function _generateImage()
     {
+        if (! $this->isDocumentSet()) {
+            return $this;
+        }
         if ($this->document->getType() == 'image') {
             // Copy image
             $source1 = $this->path->fullWeb.'tmp1.'.$this->document->getExtension();

@@ -29,7 +29,7 @@
         <div>
             <a href="{{ document|media }}" target="_blank" title="{{ ('media.bloc.download')|trans({},'FhmMediaBundle') }}" download="{{ document.getAlias() ~ '.' ~ document.getExtension() }}"><i class="fa fa-download"></i></a>
             <a href="{{ document|media }}" target="_blank" title="{{ ('media.bloc.detail')|trans({},'FhmMediaBundle') }}"><i class="fa fa-search-plus"></i></a>
-            {% if document.getShare() and not document.hasGrouping(instance.grouping.used) and not instance.user.admin %}
+            {% if document.getShare() and not instance.user.admin %}
                 <a href="{{ path('fhm_admin_' ~ instance.route ~ '_detail', {'id': document.getId()}) }}" title="{{ (instance.translation ~ '.admin.index.table.action.detail')|trans }}"><i class="fa fa-gear"></i></a>
                 <a href="{{ path('fhm_admin_' ~ instance.route ~ '_duplicate', {'id': document.getId()}) }}" title="{{ (instance.translation ~ '.admin.index.table.action.duplicate')|trans }}"><i class="fa fa-files-o"></i></a>
             {% elseif document.getDelete() %}
@@ -48,13 +48,6 @@
                     <a href="{{ path('fhm_admin_' ~ instance.route ~ '_activate', {'id': document.getId()}) }}" title="{{ (instance.translation ~ '.admin.index.table.action.activate')|trans }}" onclick="return confirm('{{ (instance.translation ~ '.admin.index.table.confirm.activate')|trans }}')"><i class="fa fa-eye"></i></a>
                 {% endif %}
                 <a href="{{ path('fhm_admin_' ~ instance.route ~ '_delete', {'id': document.getId()}) }}" title="{{ (instance.translation ~ '.admin.index.table.action.delete')|trans }}" onclick="return confirm('{{ (instance.translation ~ '.admin.index.table.confirm.delete')|trans }}')"><i class="fa fa-trash-o"></i></a>
-            {% endif %}
-        </div>
-        <div>
-            {% if instance.grouping.visible %}
-                {% for data in document.getGrouping() %}
-                    <span class="status {{ data == instance.grouping.current ? 'success' : 'warning' }} radius label">{{ data }}</span>
-                {% endfor %}
             {% endif %}
         </div>
     </div>

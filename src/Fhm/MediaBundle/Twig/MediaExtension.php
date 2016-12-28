@@ -1,6 +1,8 @@
 <?php
 namespace Fhm\MediaBundle\Twig;
 
+use Fhm\MediaBundle\Document\Media;
+
 /**
  * Class MediaExtension
  *
@@ -9,7 +11,6 @@ namespace Fhm\MediaBundle\Twig;
 class MediaExtension extends \Twig_Extension
 {
     protected $service;
-    protected $path;
 
     /**
      * MediaExtension constructor.
@@ -18,7 +19,6 @@ class MediaExtension extends \Twig_Extension
     public function __construct($service)
     {
         $this->service = $service;
-        $this->path = $this->service->getPath();
     }
 
     /**
@@ -33,13 +33,13 @@ class MediaExtension extends \Twig_Extension
             new \Twig_SimpleFilter('blocEditor', array($this, 'getBlocEditor'), array('needs_environment' => true)),
             new \Twig_SimpleFilter('download', array($this, 'getBlocDownload'), array('needs_environment' => true)),
             new \Twig_SimpleFilter('secure', array($this, 'getBlocSecure'), array('needs_environment' => true)),
-            new \Twig_SimpleFilter('image', array($this, 'getImage'), array('needs_environment' => true)),
-            new \Twig_SimpleFilter('video', array($this, 'getVideo'), array('needs_environment' => true)),
-            new \Twig_SimpleFilter('media', array($this, 'getMedia'), array('needs_environment' => true)),
-            new \Twig_SimpleFilter('small', array($this, 'getSmall'), array('needs_environment' => true)),
-            new \Twig_SimpleFilter('medium', array($this, 'getMedium'), array('needs_environment' => true)),
-            new \Twig_SimpleFilter('link', array($this, 'getLink'), array('needs_environment' => true)),
-            new \Twig_SimpleFilter('dimension', array($this, 'getDimension'), array('needs_environment' => true)),
+            new \Twig_SimpleFilter('image', array($this, 'getImage')),
+            new \Twig_SimpleFilter('video', array($this, 'getVideo')),
+            new \Twig_SimpleFilter('media', array($this, 'getMedia')),
+            new \Twig_SimpleFilter('small', array($this, 'getSmall')),
+            new \Twig_SimpleFilter('medium', array($this, 'getMedium')),
+            new \Twig_SimpleFilter('link', array($this, 'getLink')),
+            new \Twig_SimpleFilter('dimension', array($this, 'getDimension')),
         );
     }
 
@@ -56,16 +56,14 @@ class MediaExtension extends \Twig_Extension
     /**
      * @param \Twig_Environment $env
      * @param $media
-     * @param $instance
      * @return mixed|string
      */
-    public function getBlocAdmin(\Twig_Environment $env, $media, $instance)
+    public function getBlocAdmin(\Twig_Environment $env, Media $media)
     {
         return $env->render(
             '::FhmMedia/Template/Bloc/admin.'.($media->getType() == 'image' ? 'image' : 'file').'.html.twig',
             array(
-                'document' => $media,
-                'instance' => $instance,
+                'document' => $media
             )
         );
     }
@@ -73,16 +71,14 @@ class MediaExtension extends \Twig_Extension
     /**
      * @param \Twig_Environment $env
      * @param $media
-     * @param $instance
      * @return mixed|string
      */
-    public function getBlocFront(\Twig_Environment $env, $media, $instance)
+    public function getBlocFront(\Twig_Environment $env, $media)
     {
         return $env->render(
             '::FhmMedia/Template/Bloc/front.'.($media->getType() == 'image' ? 'image' : 'file').'.html.twig',
             array(
-                'document' => $media,
-                'instance' => $instance,
+                'document' => $media
             )
         );
     }
@@ -90,18 +86,16 @@ class MediaExtension extends \Twig_Extension
     /**
      * @param \Twig_Environment $env
      * @param $media
-     * @param $instance
      * @param string $selected
      * @return mixed|string
      */
-    public function getBlocSelector(\Twig_Environment $env, $media, $instance, $selected = '')
+    public function getBlocSelector(\Twig_Environment $env, $media, $selected = '')
     {
         return $env->render(
             '::FhmMedia/Template/Bloc/selector.'.($media->getType() == 'image' ? 'image' : 'file').'.html.twig',
             array(
                 'selected' => $selected,
                 'document' => $media,
-                'instance' => $instance,
             )
         );
     }
@@ -112,13 +106,12 @@ class MediaExtension extends \Twig_Extension
      * @param $instance
      * @return mixed|string
      */
-    public function getBlocEditor(\Twig_Environment $env, $media, $instance)
+    public function getBlocEditor(\Twig_Environment $env, $media)
     {
         return $env->render(
             '::FhmMedia/Template/Bloc/editor.'.($media->getType() == 'image' ? 'image' : 'file').'.html.twig',
             array(
-                'document' => $media,
-                'instance' => $instance,
+                'document' => $media
             )
         );
     }
@@ -126,18 +119,16 @@ class MediaExtension extends \Twig_Extension
     /**
      * @param \Twig_Environment $env
      * @param $media
-     * @param $instance
      * @param string $format
      * @return mixed|string
      */
-    public function getBlocDownload(\Twig_Environment $env, $media, $instance, $format = 'origin')
+    public function getBlocDownload(\Twig_Environment $env, $media, $format = 'origin')
     {
         return $env->render(
             '::FhmMedia/Template/Bloc/download.html.twig',
             array(
                 'format' => $format,
-                'document' => $media,
-                'instance' => $instance,
+                'document' => $media
             )
         );
     }
@@ -145,20 +136,18 @@ class MediaExtension extends \Twig_Extension
     /**
      * @param \Twig_Environment $env
      * @param $media
-     * @param $instance
      * @param $url
      * @param string $title
      * @return mixed|string
      */
-    public function getBlocSecure(\Twig_Environment $env, $media, $instance, $url, $title = '')
+    public function getBlocSecure(\Twig_Environment $env, $media, $url, $title = '')
     {
         return $env->render(
             '::FhmMedia/Template/Bloc/secure.'.($media->getType() == 'image' ? 'image' : 'file').'.html.twig',
             array(
                 'url' => $url,
                 'title' => $title ? $title : $media->getName(),
-                'document' => $media,
-                'instance' => $instance,
+                'document' => $media
             )
         );
     }

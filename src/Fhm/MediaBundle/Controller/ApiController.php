@@ -122,6 +122,7 @@ class ApiController extends FhmController
             $request->query->getInt('page', 1),
             $this->getParameters('pagination', 'fhm_fhm')
         );
+
         return array(
             'pagination' => $pagination,
             'tag' => $tag,

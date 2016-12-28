@@ -21,12 +21,13 @@ class FhmMediaExtension extends Extension
     {
         $this->createMediaServiceAlias($container);
         $configuration = new Configuration();
-        $config = $this->processConfiguration($configuration, $configs);
+        $this->processConfiguration($configuration, $configs);
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
     }
 
     /**
+     * Create an alias dynamically for the right media service. According to indication in parameter file
      * @param $container
      */
     public function createMediaServiceAlias(ContainerBuilder $container)
