@@ -2,8 +2,6 @@
 namespace Project\DefaultBundle\Controller;
 
 use Fhm\FhmBundle\Controller\RefFrontController;
-use Fhm\FhmBundle\Services\Tools;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -35,7 +33,7 @@ class FrontController extends RefFrontController
      */
     public function homeAction()
     {
-        $site = $this->get('fhm_tools')->dmRepository('FhmSiteBundle:Site')->getDefault();
+        $site = $this->get('fhm_tools')->dmRepository('FhmFhmBundle:Site')->getDefault();
         if ($site) {
             $menu = $site->getMenu();
             if ($menu) {

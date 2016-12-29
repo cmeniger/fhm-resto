@@ -65,15 +65,7 @@ class AdminController extends FhmController
     public function createAction(Request $request)
     {
         $document = new self::$class;
-        $form = $this->createForm(
-            self::$form->createType,
-            $document,
-            array(
-                'translation_route' => self::$translation,
-                'translation_domain' => self::$domain,
-                'data_class' => self::$class,
-            )
-        );
+        $form = $this->createForm(self::$form->createType, $document);
         $handler = new self::$form->createHandler($form, $request);
         $process = $handler->process();
         if ($process) {
@@ -91,7 +83,6 @@ class AdminController extends FhmController
                         $this->get('fhm_tools')->dmRepository('FhmMediaBundle:MediaTag')->find($data['parent'])
                     );
                 }
-                $this->get('fhm_tools')->dmPersist($tag);
                 $document->addTag($tag);
             }
             $fileData = array(
@@ -147,7 +138,6 @@ class AdminController extends FhmController
                 array(
                     'link' => $this->getUrl('fhm_admin_'.self::$route.'_create'),
                     'text' => $this->trans(self::$translation.'.admin.create.breadcrumb'),
-                    'current' => true,
                 ),
             ),
         );
@@ -189,11 +179,7 @@ class AdminController extends FhmController
         if (!$this->getUser()->hasRole('ROLE_SUPER_ADMIN') && $document->getDelete()) {
             throw new HttpException(403, $this->trans(self::$translation.'.error.forbidden'));
         }
-        $form = $this->createForm(
-            self::$form->updateType,
-            $document,
-            array('translation_route' => self::$translation, 'translation_domain' => self::$domain)
-        );
+        $form = $this->createForm(self::$form->updateType, $document);
         $handler = new self::$form->updateHandler($form, $request);
         $process = $handler->process();
         if ($process) {
@@ -208,7 +194,6 @@ class AdminController extends FhmController
                         $this->get('fhm_tools')->dmRepository('FhmMediaBundle:MediaTag')->find($data['parent'])
                     );
                 }
-                $this->get('fhm_tools')->dmPersist($tag);
                 $document->addTag($tag);
             }
             // Persist
@@ -216,15 +201,18 @@ class AdminController extends FhmController
             $document->setAlias(
                 $this->get('fhm_tools')->getAlias($document->getId(), $document->getName(), self::$repository)
             );
-            $this->get('fhm_tools')->dmPersist($document);
+
             if ($document->getFile()) {
-                $this->get($this->get('fhm_tools')->getParameters('service', 'fhm_media'))->setDocument(
-                    $document
-                )->setWatermark($request->get('watermark'))->execute();
+                $this->get('fhm_media_service')
+                     ->setDocument($document)
+                     ->setWatermark($request->get('watermark'))
+                     ->execute();
+
             } elseif ($request->get('generate') || $document->getWatermark() != $request->get('watermark')) {
-                $this->get($this->get('fhm_tools')->getParameters('service', 'fhm_media'))->setDocument(
-                    $document
-                )->setWatermark($request->get('watermark'))->generateImage();
+                $this->get('fhm_media_service')
+                     ->setDocument($document)
+                     ->setWatermark($request->get('watermark'))
+                     ->generateImage();
                 $document->setWatermark((array)$request->get('watermark'));
                 $this->get('fhm_tools')->dmPersist($document);
             }
@@ -234,21 +222,7 @@ class AdminController extends FhmController
                 $this->trans(self::$translation.'.admin.update.flash.ok')
             );
             // Redirect
-            $redirect = $this->redirect($this->getUrl('fhm_admin_'.self::$route));
-            $redirect = isset($data['submitSave']) ? $this->redirect(
-                $this->getUrl('fhm_admin_'.self::$route.'_update', array('id' => $document->getId()))
-            ) : $redirect;
-            $redirect = isset($data['submitDuplicate']) ? $this->redirect(
-                $this->getUrl('fhm_admin_'.self::$route.'_duplicate', array('id' => $document->getId()))
-            ) : $redirect;
-            $redirect = isset($data['submitNew']) ? $this->redirect(
-                $this->getUrl('fhm_admin_'.self::$route.'_create')
-            ) : $redirect;
-            $redirect = isset($data['submitConfig']) ? $this->redirect(
-                $this->getUrl('fhm_admin_'.self::$route.'_detail', array('id' => $document->getId()))
-            ) : $redirect;
-
-            return $redirect;
+            return $this->redirectUrl($data, $document);
         }
 
         return array(
@@ -283,7 +257,6 @@ class AdminController extends FhmController
                 array(
                     'link' => $this->getUrl('fhm_admin_'.self::$route.'_update', array('id' => $id)),
                     'text' => $this->trans('.admin.update.breadcrumb'),
-                    'current' => true,
                 ),
             ),
         );

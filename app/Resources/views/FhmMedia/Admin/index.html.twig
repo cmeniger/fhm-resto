@@ -23,7 +23,5 @@
 {% endblock %}
 
 {% block content_data %}
-    {{ render(path('fhm_api_media_data_admin')) }}
-    {#{{ render_hinclude(url('fhm_api_media_data_admin')) }}#}
-
+    {{ render(path('fhm_api_media_data_admin', {'page': app.request.get('page')})) }}
 {% endblock %}

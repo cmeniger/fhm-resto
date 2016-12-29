@@ -8,6 +8,7 @@ use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Class CreateType
@@ -50,7 +51,7 @@ class CreateType extends FhmType
                 'class' => 'FhmMediaBundle:MediaTag',
                 'choice_label' => 'route',
                 'query_builder' => function (MediaTagRepository $dr) use ($options) {
-                    return $dr->getFormFiltered($options['filter']);
+                    return $dr->getFormFiltered();
                 },
                 'mapped' => false,
                 'required' => false,
@@ -63,7 +64,7 @@ class CreateType extends FhmType
                 'class' => 'FhmMediaBundle:MediaTag',
                 'choice_label' => 'route',
                 'query_builder' => function (MediaTagRepository $dr) use ($options) {
-                    return $dr->getFormFiltered($options['filter']);
+                    return $dr->getFormFiltered();
                 },
                 'multiple' => true,
                 'required' => false,
@@ -74,5 +75,19 @@ class CreateType extends FhmType
         )->remove('share')->remove('global')->remove('submitNew')->remove('submitDuplicate')->remove(
             'submitQuit'
         )->remove('submitConfig');
+    }
+    /**
+     * @param OptionsResolver $resolver
+     */
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults(
+            array(
+                'data_class' => 'Fhm\MediaBundle\Document\Media',
+                'translation_domain' => 'FhmMediaBundle',
+                'cascade_validation' => true,
+                'translation_route' => 'media'
+            )
+        );
     }
 }

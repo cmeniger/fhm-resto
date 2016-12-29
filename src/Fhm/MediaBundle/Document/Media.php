@@ -13,7 +13,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Media extends FhmFhm
 {
     /**
-     * @MongoDB\ReferenceMany(targetDocument="Fhm\MediaBundle\Document\MediaTag", nullable=true)
+     * @MongoDB\ReferenceMany(targetDocument="Fhm\MediaBundle\Document\MediaTag", cascade={"persist"}, nullable=true)
      */
     protected $tags;
 

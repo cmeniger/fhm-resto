@@ -368,7 +368,8 @@ class RefAdminController extends GenericController
                 if (!isset($data['alias'])) {
                     $data['alias'] = $this->get('fhm_tools')->getAlias(
                         isset($data['id']) ? $data['id'] : null,
-                        $data['name']
+                        $data['name'],
+                        self::$repository
                     );
                 }
                 $document = $this->get('fhm_tools')->dmRepository(self::$repository)->getImport($data);
@@ -467,7 +468,7 @@ class RefAdminController extends GenericController
      * @param $data
      * @return mixed
      */
-    private function redirectUrl($data, $document)
+    protected function redirectUrl($data, $document)
     {
         $redirect = $this->redirect($this->getUrl(self::$source.'_admin_'.self::$route));
         $redirect = isset($data['submitSave']) ? $this->redirect(

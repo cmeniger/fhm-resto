@@ -188,10 +188,9 @@ class MediaExtension extends \Twig_Extension
     }
 
     /**
-     * @param        $media
-     * @param        $format
+     * @param $media
+     * @param string $format
      * @param string $default
-     *
      * @return string
      */
     public function getMedia($media, $format = 'origin', $default = 'default')

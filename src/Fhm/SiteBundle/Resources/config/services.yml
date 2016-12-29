@@ -1,4 +1,0 @@
-services:
-#    fhm_grouping_site:
-#        class: Fhm\SiteBundle\Services\Grouping
-#        arguments: ["@fhm_tools"]

@@ -24,7 +24,7 @@ class Grouping
     public function __construct(Tools $tools)
     {
         $this->fhm_tools = $tools;
-        $this->site    = $this->fhm_tools->dmRepository('FhmSiteBundle:Site')->getDefault();
+        $this->site    = $this->fhm_tools->dmRepository('FhmFhmBundle:Site')->getDefault();
         $this->menu    = ($this->site) ? $this->site->getMenu() : "";
         $this->visible = false;
         $session       = $this->fhm_tools->getContainer()->get('session');

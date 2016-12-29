@@ -2,6 +2,9 @@
 {% extends "::FhmFhm/Admin/update.html.twig" %}
 
 {% block content_data_seo %}{% endblock %}
+{% block content_data_form_attribut %}
+    enctype="multipart/form-data"
+{% endblock %}
 
 {% block content_data_fields_data %}
     <div class="large-6 medium-6 small-12 columns">
@@ -28,7 +31,7 @@
             <hr/>
             <div class="row">
                 <div class="columns small-6">
-                    {{ document|download(instance)|raw }}
+                    {{ document|download|raw }}
                 </div>
                 <div class="columns small-6">
                     {% if document.getType() == 'image' %}

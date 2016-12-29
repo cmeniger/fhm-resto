@@ -1,5 +1,3 @@
-{% trans_default_domain instance.domain %}
-
 <div class="media">
     {% if document.getType() == 'image' %}
         <a href="{{ document|media(format) }}" target="_blank" title="{{ document.getName() }}" download="{{ document.getAlias() ~ '.' ~ document.getExtension() }}">

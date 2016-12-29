@@ -37,7 +37,6 @@ class IntegrationController extends Controller
             '::ProjectDefault/Integration/default.html.twig';
 
         return $this->render($template, array(
-            'instance' => $this->tools->instanceData()
         ));
     }
 }

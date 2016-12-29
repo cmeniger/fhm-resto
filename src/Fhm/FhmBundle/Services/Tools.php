@@ -1,9 +1,6 @@
 <?php
 namespace Fhm\FhmBundle\Services;
 
-use Fhm\UserBundle\Document\User;
-use Symfony\Component\DependencyInjection\ContainerAwareInterface;
-use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;

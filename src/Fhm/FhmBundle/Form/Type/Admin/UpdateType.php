@@ -74,7 +74,7 @@ class UpdateType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'FhmCreate';
+        return 'FhmUpdate';
     }
 
     /**

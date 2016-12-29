@@ -95,12 +95,12 @@ class ApiController extends FhmController
     /**
      * @Route
      * (
-     *      path="/data/admin",
+     *      path="/data/admin/{page}",
+     *      requirements={"page": "\d+"},
      *      name="fhm_api_media_data_admin"
      * )
-     * @Template()
      */
-    public function dataAdminAction(Request $request)
+    public function dataAdminAction(Request $request, $page = 1)
     {
         $data = $request->get('media');
         $tagMains = $this->get('fhm_tools')->dmRepository('FhmMediaBundle:MediaTag')->setParent(true)->getAllFiltered();
@@ -117,9 +117,10 @@ class ApiController extends FhmController
             $search,
             $this->getUser()->hasRole('ROLE_SUPER_ADMIN')
         );
+
         $pagination = $this->get('knp_paginator')->paginate(
             $query,
-            $request->query->getInt('page', $request->get('page')?$request->get('page'):1),
+            $request->query->getInt('page', $page),
             $this->getParameters('pagination', 'fhm_fhm')
         );
         return $this->render(

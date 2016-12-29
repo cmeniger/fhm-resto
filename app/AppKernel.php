@@ -3,6 +3,9 @@
 use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\Config\Loader\LoaderInterface;
 
+/**
+ * Class AppKernel
+ */
 class AppKernel extends Kernel
 {
     public function registerBundles()
@@ -31,8 +34,6 @@ class AppKernel extends Kernel
             new Fhm\FhmBundle\FhmFhmBundle(),
             new Fhm\UserBundle\FhmUserBundle(),
             new Fhm\GeolocationBundle\FhmGeolocationBundle(),
-            new Fhm\SiteBundle\FhmSiteBundle(),
-            new Fhm\MenuBundle\FhmMenuBundle(),
             new Fhm\MapPickerBundle\FhmMapPickerBundle(),
             new Fhm\ContactBundle\FhmContactBundle(),
             new Fhm\NewsBundle\FhmNewsBundle(),
@@ -68,21 +69,33 @@ class AppKernel extends Kernel
         return $bundles;
     }
 
+    /**
+     * @return string
+     */
     public function getRootDir()
     {
         return __DIR__;
     }
 
+    /**
+     * @return string
+     */
     public function getCacheDir()
     {
         return dirname(__DIR__).'/var/cache/'.$this->getEnvironment();
     }
 
+    /**
+     * @return string
+     */
     public function getLogDir()
     {
         return dirname(__DIR__).'/var/logs';
     }
 
+    /**
+     * @param LoaderInterface $loader
+     */
     public function registerContainerConfiguration(LoaderInterface $loader)
     {
         $loader->load(__DIR__.'/config/config_'.$this->getEnvironment().'.yml');
