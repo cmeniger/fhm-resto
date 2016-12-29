@@ -8,6 +8,9 @@ use Symfony\Component\Config\Loader\LoaderInterface;
  */
 class AppKernel extends Kernel
 {
+    /**
+     * registering bundles
+     */
     public function registerBundles()
     {
         // When you install a third-party bundle or create a new bundle in your

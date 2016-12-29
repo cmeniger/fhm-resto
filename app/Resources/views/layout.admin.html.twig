@@ -1,4 +1,5 @@
 {% extends app.request.isxmlhttprequest ? "::ajax.html.twig" : "::layout.html.twig" %}
+{% import ":Macros:breadcrumbs.html.twig" as macroBreadcrumbs %}
 
 {% block body %}class="admin"{% endblock %}
 {% block css_main %}
