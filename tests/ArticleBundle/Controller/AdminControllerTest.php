@@ -3,17 +3,24 @@
 namespace Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 
 class AdminControllerTest extends WebTestCase
 {
     private $client = null;
+    private $container;
 
     public function setUp()
     {
+        $request = Request::createFromGlobals();
+        self::bootKernel();
+
+        $this->container = self::$kernel->getContainer();
+
         $this->client = static::createClient([],[
-                'HTTP_HOST'     => 'fhm-tools-v2.local',
+                'HTTP_HOST'     => $request->server->get('HTTP_HOST'),
                 'PHP_AUTH_USER' => 'admin',
                 'PHP_AUTH_PW'   => 'admin',
             ]
@@ -47,10 +54,10 @@ class AdminControllerTest extends WebTestCase
         return;
     }
 
-    public function testIndex()
-    {
-        $client  = static::createClient();
-        $crawler = $client->request('GET', '/hello/Fabien');
-$this->assertTrue($crawler->filter('html:contains("Hello Fabien")')->count() > 0);
-}
+//    public function testIndex()
+//    {
+//        $client  = static::createClient();
+//        $crawler = $client->request('GET', '/hello/Fabien');
+//$this->assertTrue($crawler->filter('html:contains("Hello Fabien")')->count() > 0);
+//}
 }
