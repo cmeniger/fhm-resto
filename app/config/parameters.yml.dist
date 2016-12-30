@@ -74,15 +74,7 @@ parameters:
     fhm_mailer.noreply: noreply@fhm-tools-v2.com
 
     fhm_fhm:
-        pagination:
-            admin:
-                page:  20
-                left:  5
-                right: 5
-            front:
-                page:  20
-                left:  5
-                right: 5
+        pagination: 5
         autocomplete:
             page:      10
             left:      2
