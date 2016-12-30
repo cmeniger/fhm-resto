@@ -21,7 +21,7 @@ class FrontController extends FhmController
     {
         self::$repository = "FhmFhmBundle:Site";
         self::$source = "fhm";
-        self::$domain = "FhmSiteBundle";
+        self::$domain = "FhmFhmSite";
         self::$translation = "site";
         self::$class = Site::class;
         self::$route = "site";
@@ -34,7 +34,7 @@ class FrontController extends FhmController
      *      name="fhm_site_detail",
      *      requirements={"id"=".+"}
      * )
-     * @Template("::FhmSite/Front/detail.html.twig")
+     * @Template("::FhmFhm/Site/Front/detail.html.twig")
      */
     public function detailAction($id)
     {
@@ -50,7 +50,7 @@ class FrontController extends FhmController
      *      name="fhm_site_lite",
      *      requirements={"id"=".+"}
      * )
-     * @Template("::FhmSite/Front/detail.html.twig")
+     * @Template("::FhmFhm/Site/Front/detail.html.twig")
      */
     public function liteAction($id)
     {

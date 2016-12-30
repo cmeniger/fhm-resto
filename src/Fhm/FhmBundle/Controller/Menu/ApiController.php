@@ -25,7 +25,7 @@ class ApiController extends FhmController
     {
         self::$repository = "FhmFhmBundle:Menu";
         self::$source = "fhm";
-        self::$domain = "FhmMenuBundle";
+        self::$domain = "FhmFhmMenu";
         self::$translation = "menu";
         self::$class = Menu::class;
         self::$route = "menu";
@@ -37,7 +37,7 @@ class ApiController extends FhmController
      *      path="/",
      *      name="fhm_api_menu"
      * )
-     * @Template("::FhmMenu/Api/index.html.twig")
+     * @Template("::FhmFhm/Menu/Api/index.html.twig")
      */
     public function indexAction()
     {
@@ -61,7 +61,7 @@ class ApiController extends FhmController
             $id = ($site && $site->getMenu()) ? $site->getMenu()->getId() : null;
             if (is_null($id)) {
                 return $this->render(
-                    "::FhmMenu/Template/".$template.".html.twig",
+                    "::FhmFhm/Menu/Template/".$template.".html.twig",
                     array(
                         'document' => null,
                         'tree' => null,
@@ -83,7 +83,7 @@ class ApiController extends FhmController
             );
         }
         return $this->render(
-            "::FhmMenu/Template/".$template.".html.twig",
+            "::FhmFhm/Menu/Template/".$template.".html.twig",
             array(
                 'document' => $document,
                 'tree' => $menuRepository->getTree($document->getId())
@@ -97,7 +97,7 @@ class ApiController extends FhmController
      *      path="/autocomplete/",
      *      name="fhm_api_menu_autocomplete"
      * )
-     * @Template("::FhmMenu/Api/autocomplete.html.twig")
+     * @Template("::FhmFhm/Menu/Api/autocomplete.html.twig")
      */
     public function autocompleteAction(Request $request)
     {

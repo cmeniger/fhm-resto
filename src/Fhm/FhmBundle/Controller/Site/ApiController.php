@@ -24,7 +24,7 @@ class ApiController extends FhmController
     {
         self::$repository = "FhmFhmBundle:Site";
         self::$source = "fhm";
-        self::$domain = "FhmSiteBundle";
+        self::$domain = "FhmFhmSite";
         self::$translation = "site";
         self::$class = Site::class;
         self::$route = "site";
@@ -36,7 +36,7 @@ class ApiController extends FhmController
      *      path="/",
      *      name="fhm_api_site"
      * )
-     * @Template("::FhmSite/Api/index.html.twig")
+     * @Template("::FhmFhm/Site/Api/index.html.twig")
      */
     public function indexAction()
     {
@@ -49,7 +49,7 @@ class ApiController extends FhmController
      *      path="/autocomplete/",
      *      name="fhm_api_site_autocomplete"
      * )
-     * @Template("::FhmSite/Api/autocomplete.html.twig")
+     * @Template("::FhmFhm/Site/Api/autocomplete.html.twig")
      */
     public function autocompleteAction(Request $request)
     {

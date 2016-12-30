@@ -27,7 +27,7 @@ class AdminController extends FhmController
     {
         self::$repository = "FhmFhmBundle:Site";
         self::$source = "fhm";
-        self::$domain = "FhmSiteBundle";
+        self::$domain = "FhmFhmSite";
         self::$translation = "site";
         self::$class = Site::class;
         self::$route = "site";
@@ -44,7 +44,7 @@ class AdminController extends FhmController
      *      path="/",
      *      name="fhm_admin_site"
      * )
-     * @Template("::FhmSite/Admin/index.html.twig")
+     * @Template("::FhmFhm/Site/Admin/index.html.twig")
      */
     public function indexAction()
     {
@@ -57,7 +57,7 @@ class AdminController extends FhmController
      *      path="/create",
      *      name="fhm_admin_site_create"
      * )
-     * @Template("::FhmSite/Admin/create.html.twig")
+     * @Template("::FhmFhm/Site/Admin/create.html.twig")
      */
     public function createAction(Request $request)
     {
@@ -80,7 +80,7 @@ class AdminController extends FhmController
      *      name="fhm_admin_site_detail",
      *      requirements={"id"="[a-z0-9]*"}
      * )
-     * @Template("::FhmSite/Admin/detail.html.twig")
+     * @Template("::FhmFhm/Site/Admin/detail.html.twig")
      */
     public function detailAction($id)
     {
@@ -113,7 +113,7 @@ class AdminController extends FhmController
      *      name="fhm_admin_site_update",
      *      requirements={"id"="[a-z0-9]*"}
      * )
-     * @Template("::FhmSite/Admin/update.html.twig")
+     * @Template("::FhmFhm/Site/Admin/update.html.twig")
      */
     public function updateAction(Request $request, $id)
     {
@@ -127,7 +127,7 @@ class AdminController extends FhmController
      *      name="fhm_admin_site_duplicate",
      *      requirements={"id"="[a-z0-9]*"}
      * )
-     * @Template("::FhmSite/Admin/create.html.twig")
+     * @Template("::FhmFhm/Site/Admin/create.html.twig")
      */
     public function duplicateAction(Request $request, $id)
     {
@@ -202,7 +202,7 @@ class AdminController extends FhmController
      *      path="/import",
      *      name="fhm_admin_site_import"
      * )
-     * @Template("::FhmSite/Admin/import.html.twig")
+     * @Template("::FhmFhm/Site/Admin/import.html.twig")
      */
     public function importAction(Request $request)
     {
@@ -215,7 +215,7 @@ class AdminController extends FhmController
      *      path="/export",
      *      name="fhm_admin_site_export"
      * )
-     * @Template("::FhmSite/Admin/export.html.twig")
+     * @Template("::FhmFhm/Site/Admin/export.html.twig")
      */
     public function exportAction(Request $request)
     {

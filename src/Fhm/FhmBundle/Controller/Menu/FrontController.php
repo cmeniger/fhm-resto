@@ -23,7 +23,7 @@ class FrontController extends FhmController
     {
         self::$repository = "FhmFhmBundle:Menu";
         self::$source = "fhm";
-        self::$domain = "FhmMenuBundle";
+        self::$domain = "FhmFhmMenu";
         self::$translation = "menu";
         self::$class = Menu::class;
         self::$route = "menu";
@@ -36,7 +36,7 @@ class FrontController extends FhmController
      *      name="fhm_menu_detail",
      *      requirements={"id"=".+"}
      * )
-     * @Template("::FhmMenu/Front/detail.html.twig")
+     * @Template("::FhmFhm/Menu/Front/detail.html.twig")
      */
     public function detailAction($id)
     {
@@ -75,7 +75,7 @@ class FrontController extends FhmController
      *      name="fhm_menu_lite",
      *      requirements={"string"=".+"}
      * )
-     * @Template("::FhmMenu/Front/detail.html.twig")
+     * @Template("::FhmFhm/Menu/Front/detail.html.twig")
      */
     public function liteAction($id)
     {

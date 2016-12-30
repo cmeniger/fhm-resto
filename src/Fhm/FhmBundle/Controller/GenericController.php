@@ -23,6 +23,7 @@ abstract class GenericController extends Controller
     protected static $form;
     protected static $route;
     protected static $domain;
+    protected static $document;
 
     /**
      * @param $route

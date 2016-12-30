@@ -28,7 +28,7 @@ class AdminController extends FhmController
     {
         self::$repository = "FhmFhmBundle:Menu";
         self::$source = "fhm";
-        self::$domain = "FhmMenuBundle";
+        self::$domain = "FhmFhmMenu";
         self::$translation = "menu";
         self::$class = Menu::class;
         self::$route = "menu";
@@ -45,7 +45,7 @@ class AdminController extends FhmController
      *      path="/",
      *      name="fhm_admin_menu"
      * )
-     * @Template("::FhmMenu/Admin/index.html.twig")
+     * @Template("::FhmFhm/Menu/Admin/index.html.twig")
      */
     public function indexAction()
     {
@@ -58,7 +58,7 @@ class AdminController extends FhmController
      *      path="/create",
      *      name="fhm_admin_menu_create"
      * )
-     * @Template("::FhmMenu/Admin/create.html.twig")
+     * @Template("::FhmFhm/Menu/Admin/create.html.twig")
      */
     public function createAction(Request $request)
     {
@@ -171,7 +171,7 @@ class AdminController extends FhmController
      *      name="fhm_admin_menu_detail",
      *      requirements={"id"="[a-z0-9]*"}
      * )
-     * @Template("::FhmMenu/Admin/detail.html.twig")
+     * @Template("::FhmFhm/Menu/Admin/detail.html.twig")
      */
     public function detailAction($id)
     {
@@ -195,7 +195,7 @@ class AdminController extends FhmController
      *      name="fhm_admin_menu_update",
      *      requirements={"id"="[a-z0-9]*"}
      * )
-     * @Template("::FhmMenu/Admin/update.html.twig")
+     * @Template("::FhmFhm/Menu/Admin/update.html.twig")
      */
     public function updateAction(Request $request, $id)
     {
@@ -215,7 +215,7 @@ class AdminController extends FhmController
      *      name="fhm_admin_menu_duplicate",
      *      requirements={"id"="[a-z0-9]*"}
      * )
-     * @Template("::FhmMenu/Admin/create.html.twig")
+     * @Template("::FhmFhm/Menu/Admin/create.html.twig")
      */
     public function duplicateAction(Request $request, $id)
     {
@@ -294,7 +294,7 @@ class AdminController extends FhmController
      *      path="/import",
      *      name="fhm_admin_menu_import"
      * )
-     * @Template("::FhmMenu/Admin/import.html.twig")
+     * @Template("::FhmFhm/Menu/Admin/import.html.twig")
      */
     public function importAction(Request $request)
     {
@@ -307,7 +307,7 @@ class AdminController extends FhmController
      *      path="/export",
      *      name="fhm_admin_menu_export"
      * )
-     * @Template("::FhmMenu/Admin/export.html.twig")
+     * @Template("::FhmFhm/Menu/Admin/export.html.twig")
      */
     public function exportAction(Request $request)
     {
@@ -437,7 +437,7 @@ class AdminController extends FhmController
      *      path="/module",
      *      name="fhm_admin_menu_module"
      * )
-     * @Template("::FhmMenu/Admin/data.html.twig")
+     * @Template("::FhmFhm/Menu/Admin/data.html.twig")
      */
     public function moduleAction(Request $request)
     {

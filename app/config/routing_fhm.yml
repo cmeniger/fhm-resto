@@ -78,11 +78,6 @@ fhm_map_picker:
     type:     annotation
     prefix:   /
 
-fhm_fhm:
-    resource: "@FhmFhmBundle/Controller/"
-    type:     annotation
-    prefix:   /
-
 fhm_geolocation:
     resource: "@FhmGeolocationBundle/Controller/"
     type:     annotation
@@ -90,5 +85,10 @@ fhm_geolocation:
 
 fhm_user:
     resource: "@FhmUserBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+fhm_fhm:
+    resource: "@FhmFhmBundle/Controller/"
     type:     annotation
     prefix:   /
