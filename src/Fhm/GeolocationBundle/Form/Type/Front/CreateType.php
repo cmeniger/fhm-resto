@@ -5,6 +5,7 @@ use Fhm\FhmBundle\Form\Type\Front\CreateType as FhmType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Class CreateType
@@ -58,6 +59,23 @@ class CreateType extends FhmType
             'longitude',
             HiddenType::class,
             array('label' => $options['translation_route'].'.front.create.form.longitude', 'required' => false)
+        );
+    }
+
+    /**
+     * @param OptionsResolver $resolver
+     */
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults(
+            array(
+                'data_class' => 'Fhm\GalleryBundle\Document\Geolocation',
+                'translation_domain' => 'FhmGeolocationBundle',
+                'cascade_validation' => true,
+                'translation_route' => 'gealocation',
+                'filter' => '',
+                'user_admin' => '',
+            )
         );
     }
 }

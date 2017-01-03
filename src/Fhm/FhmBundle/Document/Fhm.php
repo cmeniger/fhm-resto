@@ -99,29 +99,17 @@ class Fhm
      */
     protected $seo_description;
 
-
-    /**
-     * @MongoDB\ReferenceOne(nullable=true, cascade={"persist"})
-     */
-    protected $historic_parent;
-
-    /**
-     * @MongoDB\ReferenceMany(nullable=true, cascade={"persist"})
-     */
-    protected $historic_sons;
-
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->active        = false;
-        $this->delete        = false;
-        $this->share         = false;
-        $this->global        = false;
-        $this->order         = 0;
-        $this->alias         = null;
-        $this->historic_sons = new ArrayCollection();
+        $this->active = false;
+        $this->delete = false;
+        $this->share = false;
+        $this->global = false;
+        $this->order = 0;
+        $this->alias = null;
     }
 
     /**
@@ -483,175 +471,6 @@ class Fhm
     }
 
     /**
-     * Get historic sons
-     *
-     * @return mixed
-     */
-    public function getHistoricSons()
-    {
-        return $this->historic_sons;
-    }
-
-    /**
-     * Set historic sons
-     *
-     * @param ArrayCollection $sons
-     *
-     * @return $this
-     */
-    public function setHistoricSons(ArrayCollection $sons)
-    {
-        $this->resetHistoricSons();
-        foreach($sons as $son)
-        {
-            $son->setHistoricParent($this);
-        }
-        $this->historic_sons = $sons;
-
-        return $this;
-    }
-
-    /**
-     * Add historic son
-     *
-     * @param $son
-     *
-     * @return $this
-     */
-    public function addHistoricSon($son)
-    {
-        if(!$this->historic_sons->contains($son))
-        {
-            $this->historic_sons->add($son);
-        }
-
-        return $this;
-    }
-
-    /**
-     * Remove historic son
-     *
-     * @param $son
-     *
-     * @return $this
-     */
-    public function removeHistoricSon($son)
-    {
-        if($this->historic_sons->contains($son))
-        {
-            $this->historic_sons->removeElement($son);
-        }
-
-        return $this;
-    }
-
-    /**
-     * Reset historic sons
-     *
-     * @return $this
-     */
-    public function resetHistoricSons()
-    {
-        foreach($this->historic_sons as $son)
-        {
-            $son->removeHistoricParent($this);
-        }
-        $this->historic_sons = new ArrayCollection();
-
-        return $this;
-    }
-
-    /**
-     * Get historic parent
-     *
-     * @return mixed
-     */
-    public function getHistoricParent()
-    {
-        return $this->historic_parent;
-    }
-
-    /**
-     * Set historic parent
-     *
-     * @param $parent
-     *
-     * @return self
-     */
-    public function setHistoricParent($parent)
-    {
-        $this->removeHistoricParent();
-        $this->historic_parent = $parent;
-
-        return $this;
-    }
-
-    /**
-     * Remove historic parent
-     *
-     * @return self
-     */
-    public function removeHistoricParent()
-    {
-        if($this->historic_parent)
-        {
-            $this->historic_parent->removeHistoricSon($this);
-        }
-        $this->historic_parent = null;
-
-        return $this;
-    }
-
-    /**
-     * Historic merge
-     */
-    public function historicMerge($dm, $document)
-    {
-        // ReferenceOne
-        $this->user_create = $document->getUserCreate() ? $dm->getRepository('FhmUserBundle:User')->find($document->getUserCreate()->getId()) : null;
-        $this->user_update = $document->getUserUpdate() ? $dm->getRepository('FhmUserBundle:User')->find($document->getUserUpdate()->getId()) : null;
-        // Rest
-        $this->name            = $document->getName();
-        $this->alias           = $document->getAlias();
-        $this->description     = $document->getDescription();
-        $this->delete          = $document->getDelete();
-        $this->active          = $document->getActive();
-        $this->share           = $document->getShare();
-        $this->global          = $document->getGlobal();
-        $this->order           = $document->getOrder();
-        $this->date_create     = $document->getDateCreate();
-        $this->date_update     = $document->getDateUpdate();
-        $this->seo_title       = $document->getSeoTitle();
-        $this->seo_description = $document->getSeoDescription();
-        $this->seo_keywords    = $document->getSeoKeywords();
-
-        return $this;
-    }
-
-    /**
-     * Historic difference
-     */
-    public function historicDifference()
-    {
-        $count = 0;
-        if($this->historic_parent)
-        {
-            $count += $this->getName() != $this->getHistoricParent()->getName() ? 1 : 0;
-            $count += $this->getDescription() != $this->getHistoricParent()->getDescription() ? 1 : 0;
-            $count += $this->getDelete() != $this->getHistoricParent()->getDelete() ? 1 : 0;
-            $count += $this->getActive() != $this->getHistoricParent()->getActive() ? 1 : 0;
-            $count += $this->getShare() != $this->getHistoricParent()->getShare() ? 1 : 0;
-            $count += $this->getOrder() != $this->getHistoricParent()->getOrder() ? 1 : 0;
-            $count += $this->getGlobal() != $this->getHistoricParent()->getGlobal() ? 1 : 0;
-            $count += $this->getSeoTitle() != $this->getHistoricParent()->getSeoTitle() ? 1 : 0;
-            $count += $this->getSeoDescription() != $this->getHistoricParent()->getSeoDescription() ? 1 : 0;
-            $count += $this->getSeoKeywords() != $this->getHistoricParent()->getSeoKeywords() ? 1 : 0;
-        }
-
-        return $count;
-    }
-
-    /**
      * @return bool
      */
     public function isEnable()
@@ -674,7 +493,7 @@ class Fhm
             'date_create',
             'date_update',
             'delete',
-            'active'
+            'active',
         );
     }
 
@@ -693,7 +512,7 @@ class Fhm
             ($this->date_create) ? $this->date_create->format('d/m/Y H:i:s') : '',
             ($this->date_update) ? $this->date_update->format('d/m/Y H:i:s') : '',
             $this->delete,
-            $this->active
+            $this->active,
         );
     }
 
@@ -706,11 +525,11 @@ class Fhm
      */
     public function setCsvData($data)
     {
-        $this->name        = (isset($data['name'])) ? $data['name'] : $this->name;
+        $this->name = (isset($data['name'])) ? $data['name'] : $this->name;
         $this->description = (isset($data['description'])) ? $data['description'] : $this->description;
-        $this->alias       = (isset($data['alias'])) ? $data['alias'] : $this->alias;
-        $this->delete      = (isset($data['delete'])) ? $data['delete'] : $this->delete;
-        $this->active      = (isset($data['active'])) ? $data['active'] : $this->active;
+        $this->alias = (isset($data['alias'])) ? $data['alias'] : $this->alias;
+        $this->delete = (isset($data['delete'])) ? $data['delete'] : $this->delete;
+        $this->active = (isset($data['active'])) ? $data['active'] : $this->active;
 
         return $this;
     }
@@ -724,18 +543,15 @@ class Fhm
      */
     public function getVarSort($index = '')
     {
-        if($index)
-        {
-            $index = substr($index, 0, 5) === 'sort_' ? $index : 'sort_' . $index;
+        if ($index) {
+            $index = substr($index, 0, 5) === 'sort_' ? $index : 'sort_'.$index;
 
             return isset($this->$index) ? $this->$index : 0;
         }
         $response = array();
-        $vars     = get_object_vars($this);
-        foreach($vars as $key => $value)
-        {
-            if(substr($key, 0, 5) === 'sort_')
-            {
+        $vars = get_object_vars($this);
+        foreach ($vars as $key => $value) {
+            if (substr($key, 0, 5) === 'sort_') {
                 $response[substr($key, 5)] = $value;
             }
         }
@@ -750,16 +566,6 @@ class Fhm
      */
     public function sortUpdate()
     {
-        return $this;
-    }
-
-    /**
-     * @MongoDB\PreRemove()
-     */
-    public function preRemove()
-    {
-        $this->resetHistoricSons();
-
         return $this;
     }
 

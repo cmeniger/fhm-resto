@@ -1,3 +1,27 @@
+fhm:
+    breadcrumb:                                 Accueil
+    admin:
+        breadcrumb:                             Admin
+        site:
+            breadcrumb:                         Article
+            create:
+                breadcrumb:                     Ajouter un article
+            update:
+                breadcrumb:                     Modifier
+            detail:
+                breadcrumb:                     Détails
+project:
+    breadcrump:                                 Accueil
+    admin:
+        breadcrump:                             Admin
+        site:
+            breadcrump:                         Article
+            create:
+                breadcrumb:                     Ajouter un article
+            update:
+                breadcrumb:                     Modifier
+            detail:
+                breadcrumb:                     Détails
 site:
     admin:
         index:

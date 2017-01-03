@@ -29,7 +29,6 @@ class FrontController extends FhmController
         self::$translation = "article";
         self::$route       = "article";
         self::$source      = "fhm";
-
         self::$class = Article::class;
     }
 

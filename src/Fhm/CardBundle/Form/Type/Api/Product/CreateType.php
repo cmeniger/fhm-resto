@@ -117,6 +117,7 @@ class CreateType extends AbstractType
                 'data_class' => 'Fhm\FhmCardBundle\Document\CardProduct',
                 'translation_domain' => 'FhmCardBundle',
                 'cascade_validation' => true,
+                'translation_route' => 'card.product',
             )
         );
     }

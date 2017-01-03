@@ -103,5 +103,21 @@ class UpdateType extends GeolocationType
         )->remove('share')->remove('global');
     }
 
+    /**
+     * @param OptionsResolver $resolver
+     */
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults(
+            array(
+                'data_class' => 'Fhm\ContactBundle\Document\Contact',
+                'translation_domain' => 'FhmContactBundle',
+                'cascade_validation' => true,
+                'translation_route' => 'contact',
+                'filter' => '',
+                'user_admin' => '',
+            )
+        );
+    }
 }
 

@@ -106,5 +106,22 @@ class UpdateType extends FhmType
             "date_update desc" => $options['translation_route'].'.admin.sort.update.desc',
         );
     }
+    /**
+     * @param OptionsResolver $resolver
+     */
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults(
+            array(
+                'data_class' => 'Fhm\SliderBundle\Document\Slider',
+                'translation_domain' => 'FhmSliderBundle',
+                'cascade_validation' => true,
+                'translation_route' => 'slider',
+                'filter' => '',
+                'user_admin' => '',
+                'map' => '',
+            )
+        );
+    }
 
 }

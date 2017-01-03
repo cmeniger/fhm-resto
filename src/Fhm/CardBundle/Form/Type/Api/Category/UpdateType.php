@@ -130,6 +130,7 @@ class UpdateType extends AbstractType
                 'data_class' => 'Fhm\FhmCardBundle\Document\CardCategory',
                 'translation_domain' => 'FhmCardBundle',
                 'cascade_validation' => true,
+                'translation_route' => 'card.category',
             )
         );
     }

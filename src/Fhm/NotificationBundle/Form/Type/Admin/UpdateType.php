@@ -43,4 +43,22 @@ class UpdateType extends FhmType
             'seo_keywords'
         )->remove('languages')->remove('grouping')->remove('share')->remove('global')->remove('active');
     }
+
+    /**
+     * @param OptionsResolver $resolver
+     */
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults(
+            array(
+                'data_class' => 'Fhm\NotificationBundle\Document\Notification',
+                'translation_domain' => 'FhmNotificationBundle',
+                'cascade_validation' => true,
+                'translation_route' => 'notification',
+                'filter' => '',
+                'user_admin' => '',
+                'map' => '',
+            )
+        );
+    }
 }

@@ -1,3 +1,27 @@
+fhm:
+    breadcrumb:                                 Accueil
+    admin:
+        breadcrumb:                             Admin
+        geolocation:
+            breadcrumb:                         Article
+            create:
+                breadcrumb:                     Ajouter un article
+            update:
+                breadcrumb:                     Modifier
+            detail:
+                breadcrumb:                     Détails
+project:
+    breadcrump:                                 Accueil
+    admin:
+        breadcrump:                             Admin
+        geolocation:
+            breadcrump:                         Article
+            create:
+                breadcrumb:                     Ajouter un article
+            update:
+                breadcrumb:                     Modifier
+            detail:
+                breadcrumb:                     Détails
 geolocation:
     aroundme:                                   Autour de moi
     here:                                       Vous êtes ici.

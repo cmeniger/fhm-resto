@@ -155,4 +155,20 @@ class CreateType extends FhmType
         );
     }
 
+    /**
+     * @param OptionsResolver $resolver
+     */
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults(
+            array(
+                'data_class' => 'Fhm\GalleryBundle\Document\Gallery',
+                'translation_domain' => 'FhmGalleryBundle',
+                'cascade_validation' => true,
+                'translation_route' => 'gallery',
+                'filter' => '',
+                'user_admin' => '',
+            )
+        );
+    }
 }

@@ -29,6 +29,11 @@ class FrontController extends RefFrontController
      *      path="/",
      *      name="project_home"
      * )
+     * @Route
+     * (
+     *      path="/",
+     *      name="fhm"
+     * )
      * @Template("::ProjectDefault/Front/home.html.twig")
      */
     public function homeAction()

@@ -27,28 +27,20 @@ class RefAdminController extends GenericController
         );
         $pagination = $this->get('knp_paginator')->paginate(
             $query,
-            $request->query->getInt('page', $request->get('')),
+            $request->query->getInt('page', 1),
             $this->getParameters('pagination', 'fhm_fhm')
         );
-        if ($request->isXmlHttpRequest()) { /** Ajax request**/
+        if ($request->isXmlHttpRequest()) {
             return array('documents' => $query->execute()->toArray());
         } else {
             return array(
                 'form' => $this->createForm(SearchType::class)->createView(),
                 'pagination' => $pagination,
-                'breadcrumbs' => array(
+                'breadcrumbs' => $this->get('fhm_tools')->generateBreadcrumbs(
                     array(
-                        'link' => $this->getUrl('project_home'),
-                        'text' => $this->trans('project.home.breadcrumb', array(), 'ProjectDefaultBundle'),
-                    ),
-                    array(
-                        'link' => $this->getUrl('fhm_admin'),
-                        'text' => $this->trans('fhm.admin.breadcrumb', array(), 'FhmFhmBundle'),
-                    ),
-                    array(
-                        'link' => $this->getUrl(self::$source.'_admin_'.self::$route),
-                        'text' => $this->trans(self::$translation.'.admin.index.breadcrumb'),
-                    ),
+                        'domain' => self::$domain,
+                        '_route' => $this->get('request_stack')->getCurrentRequest()->get('_route'),
+                    )
                 ),
             );
         }
@@ -65,53 +57,28 @@ class RefAdminController extends GenericController
         $form = $this->createForm(
             self::$form->createType,
             $document,
-            array(
-                'data_class' => self::$class,
-                'translation_domain' => self::$domain,
-                'translation_route' => self::$translation,
-                'user_admin' => $this->getUser()->hasRole('ROLE_SUPER_ADMIN'),
-            )
+            array('user_admin' => $this->getUser()->hasRole('ROLE_SUPER_ADMIN'))
         );
         $handler = new self::$form->createHandler($form, $request);
         $process = $handler->process();
         if ($process) {
-            $data = $request->get($form->getName());
-            $document->setUserCreate($this->getUser());
-            $document->setAlias(
-                $this->get('fhm_tools')->getAlias(
-                    $document->getId(),
-                    $document->getName(),
-                    self::$repository
-                )
-            );
             $this->get('fhm_tools')->dmPersist($document);
             $this->get('session')->getFlashBag()->add(
                 'notice',
                 $this->trans(self::$translation.'.admin.create.flash.ok')
             );
 
+            $data = $request->get($form->getName());
             return $this->redirectUrl($data, $document);
         }
 
         return array(
             'form' => $form->createView(),
-            'breadcrumbs' => array(
+            'breadcrumbs' => $this->get('fhm_tools')->generateBreadcrumbs(
                 array(
-                    'link' => $this->getUrl('project_home'),
-                    'text' => $this->trans('project.home.breadcrumb', array(), 'ProjectDefaultBundle'),
-                ),
-                array(
-                    'link' => $this->getUrl('fhm_admin'),
-                    'text' => $this->trans('fhm.admin.breadcrumb', array(), 'FhmFhmBundle'),
-                ),
-                array(
-                    'link' => $this->getUrl(self::$source.'_admin_'.self::$route),
-                    'text' => $this->trans(self::$translation.'.admin.index.breadcrumb'),
-                ),
-                array(
-                    'link' => $this->getUrl(self::$source.'_admin_'.self::$route.'_create'),
-                    'text' => $this->trans(self::$translation.'.admin.create.breadcrumb'),
-                ),
+                    'domain' => self::$domain,
+                    '_route' => $this->get('request_stack')->getCurrentRequest()->get('_route'),
+                )
             ),
         );
     }
@@ -126,7 +93,7 @@ class RefAdminController extends GenericController
     public function duplicateAction(Request $request, $id)
     {
         $document = $this->get('fhm_tools')->dmRepository(self::$repository)->find($id);
-        if (! is_object($document)) {
+        if (!is_object($document)) {
             throw $this->createNotFoundException(
                 $this->trans(self::$translation.'.error.unknown', self::$domain)
             );
@@ -145,7 +112,6 @@ class RefAdminController extends GenericController
     public function updateAction(Request $request, $id)
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN', null, $this->trans(self::$translation.'.error.forbidden'));
-
         $document = $this->get('fhm_tools')->dmRepository(self::$repository)->find($id);
         if (!is_object($document)) {
             throw $this->createNotFoundException($this->trans(self::$translation.'.error.unknown'));
@@ -153,18 +119,11 @@ class RefAdminController extends GenericController
         $form = $this->createForm(
             self::$form->updateType,
             $document,
-            array(
-                'data_class' => self::$class,
-                'translation_domain' => self::$domain,
-                'translation_route' => self::$translation,
-                'user_admin' => $this->get('security.authorization_checker')->isGranted('ROLE_SUPER_ADMIN'),
-            )
+            array('user_admin' => $this->get('security.authorization_checker')->isGranted('ROLE_SUPER_ADMIN'))
         );
         $handler = new self::$form->updateHandler($form, $request);
         $process = $handler->process();
         if ($process) {
-            $data = $request->get($form->getName());
-            $document->setUserUpdate($this->getUser());
             $this->get('fhm_tools')->dmPersist($document);
             $this->get('session')->getFlashBag()->add(
                 'notice',
@@ -172,42 +131,19 @@ class RefAdminController extends GenericController
             );
 
             /** Redirect **/
+            $data = $request->get($form->getName());
             return $this->redirectUrl($data, $document);
         }
 
         return array(
             'document' => $document,
             'form' => $form->createView(),
-            'breadcrumbs' => array(
+            'breadcrumbs' => $this->get('fhm_tools')->generateBreadcrumbs(
                 array(
-                    'link' => $this->getUrl('project_home'),
-                    'text' => $this->trans('project.home.breadcrumb', array(), 'ProjectDefaultBundle'),
+                    'domain' => self::$domain,
+                    '_route' => $this->get('request_stack')->getCurrentRequest()->get('_route'),
                 ),
-                array(
-                    'link' => $this->getUrl('fhm_admin'),
-                    'text' => $this->trans('fhm.admin.breadcrumb', array(), 'FhmFhmBundle'),
-                ),
-                array(
-                    'link' => $this->getUrl(self::$source.'_admin_'.self::$route),
-                    'text' => $this->trans(self::$translation.'.admin.index.breadcrumb'),
-                ),
-                array(
-                    'link' => $this->getUrl(
-                        self::$source.'_admin_'.self::$route.'_detail',
-                        array('id' => $id)
-                    ),
-                    'text' => $this->trans(
-                        self::$translation.'.admin.detail.breadcrumb',
-                        array('%name%' => $document->getName())
-                    ),
-                ),
-                array(
-                    'link' => $this->getUrl(
-                        self::$source.'_admin_'.self::$route.'_update',
-                        array('id' => $id)
-                    ),
-                    'text' => $this->trans(self::$translation.'.admin.update.breadcrumb'),
-                ),
+                $document
             ),
         );
     }
@@ -220,37 +156,18 @@ class RefAdminController extends GenericController
     public function detailAction($id)
     {
         $document = $this->get('fhm_tools')->dmRepository(self::$repository)->find($id);
-        if (! is_object($document)) {
+        if (!is_object($document)) {
             throw $this->createNotFoundException($this->trans(self::$translation.'.error.unknown'));
         }
-
         return array(
             'document' => $document,
             'historics' => $this->get('fhm_historic')->getAllHistoricsByObject($document),
-            'breadcrumbs' => array(
+            'breadcrumbs' => $this->get('fhm_tools')->generateBreadcrumbs(
                 array(
-                    'link' => $this->getUrl('project_home'),
-                    'text' => $this->trans('project.home.breadcrumb', array(), 'ProjectDefaultBundle'),
+                    'domain' => self::$domain,
+                    '_route' => $this->get('request_stack')->getCurrentRequest()->get('_route'),
                 ),
-                array(
-                    'link' => $this->getUrl('fhm_admin'),
-                    'text' => $this->trans('fhm.admin.breadcrumb', array(), 'FhmFhmBundle'),
-                ),
-                array(
-                    'link' => $this->getUrl(self::$source.'_admin_'.self::$route),
-                    'text' => $this->trans(self::$translation.'.admin.index.breadcrumb'),
-                ),
-                array(
-                    'link' => $this->getUrl(
-                        self::$source.'_admin_'.self::$route.'_detail',
-                        array('id' => $id)
-                    ),
-                    'text' => $this->trans(
-                        self::$translation.'.admin.detail.breadcrumb',
-                        array('%name%' => $document->getName())
-                    ),
-                    'current' => true,
-                ),
+                $document
             ),
         );
     }
@@ -264,7 +181,7 @@ class RefAdminController extends GenericController
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN', null, $this->trans(self::$translation.'.error.forbidden'));
         $document = $this->get('fhm_tools')->dmRepository(self::$repository)->find($id);
-        if (! is_object($document)) {
+        if (!is_object($document)) {
             throw $this->createNotFoundException($this->trans(self::$translation.'.error.unknown'));
         }
         if ($document->getDelete()) {
@@ -316,7 +233,7 @@ class RefAdminController extends GenericController
     public function activateAction($id)
     {
         $document = $this->get('fhm_tools')->dmRepository(self::$repository)->find($id);
-        if (! is_object($document)) {
+        if (!is_object($document)) {
             throw $this->createNotFoundException($this->trans(self::$translation.'.error.unknown'));
         }
         $document->setActive(true);
@@ -337,7 +254,7 @@ class RefAdminController extends GenericController
     public function deactivateAction($id)
     {
         $document = $this->get('fhm_tools')->dmRepository(self::$repository)->find($id);
-        if (! is_object($document)) {
+        if (!is_object($document)) {
             throw $this->createNotFoundException($this->trans(self::$translation.'.error.unknown'));
         }
         $document->setActive(false);
@@ -399,24 +316,11 @@ class RefAdminController extends GenericController
 
         return array(
             'form' => $form->createView(),
-            'breadcrumbs' => array(
+            'breadcrumbs' => $this->get('fhm_tools')->generateBreadcrumbs(
                 array(
-                    'link' => $this->getUrl('project_home'),
-                    'text' => $this->trans('project.home.breadcrumb', array(), 'ProjectDefaultBundle'),
-                ),
-                array(
-                    'link' => $this->getUrl('fhm_admin'),
-                    'text' => $this->trans('fhm.admin.breadcrumb', array(), 'FhmFhmBundle'),
-                ),
-                array(
-                    'link' => $this->getUrl(self::$source.'_admin_'.self::$source),
-                    'text' => $this->trans('.admin.index.breadcrumb'),
-                ),
-                array(
-                    'link' => $this->getUrl(self::$source.'_admin_'.self::$source.'_import'),
-                    'text' => $this->trans(self::$source.'.admin.import.breadcrumb'),
-                    'current' => true,
-                ),
+                    'domain' => self::$domain,
+                    '_route' => $this->get('request_stack')->getCurrentRequest()->get('_route'),
+                )
             ),
         );
     }
@@ -442,57 +346,12 @@ class RefAdminController extends GenericController
 
         return array(
             'form' => $form->createView(),
-            'breadcrumbs' => array(
+            'breadcrumbs' => $this->get('fhm_tools')->generateBreadcrumbs(
                 array(
-                    'link' => $this->getUrl('project_home'),
-                    'text' => $this->trans('project.home.breadcrumb', array(), 'ProjectDefaultBundle'),
-                ),
-                array(
-                    'link' => $this->getUrl('fhm_admin'),
-                    'text' => $this->trans('fhm.admin.breadcrumb', array(), 'FhmFhmBundle'),
-                ),
-                array(
-                    'link' => $this->getUrl(self::$source.'_admin_'.self::$source),
-                    'text' => $this->trans(self::$translation.'.admin.index.breadcrumb'),
-                ),
-                array(
-                    'link' => $this->getUrl(self::$source.'_admin_'.self::$source.'_export'),
-                    'text' => $this->trans(self::$translation.'.admin.export.breadcrumb'),
-                    'current' => true,
-                ),
+                    'domain' => self::$domain,
+                    '_route' => $this->get('request_stack')->getCurrentRequest()->get('_route'),
+                )
             ),
         );
-    }
-
-    /**
-     * @param $data
-     * @return mixed
-     */
-    private function redirectUrl($data, $document)
-    {
-        $redirect = $this->redirect($this->getUrl(self::$source.'_admin_'.self::$route));
-        $redirect = isset($data['submitSave']) ? $this->redirect(
-            $this->getUrl(
-                self::$source.'_admin_'.self::$route.'_update',
-                array('id' => $document->getId())
-            )
-        ) : $redirect;
-        $redirect = isset($data['submitDuplicate']) ? $this->redirect(
-            $this->getUrl(
-                self::$source.'_admin_'.self::$route.'_duplicate',
-                array('id' => $document->getId())
-            )
-        ) : $redirect;
-        $redirect = isset($data['submitNew']) ? $this->redirect(
-            $this->getUrl(self::$source.'_admin_'.self::$route.'_create')
-        ) : $redirect;
-        $redirect = isset($data['submitConfig']) ? $this->redirect(
-            $this->getUrl(
-                self::$source.'_admin_'.self::$route.'_detail',
-                array('id' => $document->getId())
-            )
-        ) : $redirect;
-
-        return $redirect;
     }
 }

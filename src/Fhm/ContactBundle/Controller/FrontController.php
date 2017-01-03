@@ -40,29 +40,7 @@ class FrontController extends FhmController
      */
     public function indexAction()
     {
-        $classType = SearchType::class;
-        $form = $this->createForm($classType);
-        $form->setData($this->get('request_stack')->get($form->getName()));
-        $dataSearch = $form->getData();
-        $documents = $this->get('fhm_tools')->dmRepository(self::$repository)->getFrontIndex(
-            $dataSearch['search']
-        );
-
-        return array(
-            'documents' => $documents,
-            'form' => $form->createView(),
-            'breadcrumbs' => array(
-                array(
-                    'link' => $this->getUrl('project_home'),
-                    'text' => $this->trans('project.home.breadcrumb', array(), 'ProjectDefaultBundle'),
-                ),
-                array(
-                    'link' => $this->getUrl(self::$source.'_'.self::$route),
-                    'text' => $this->trans(self::$translation.'.front.index.breadcrumb'),
-                    'current' => true,
-                ),
-            ),
-        );
+        return parent::indexAction();
     }
 
     /**

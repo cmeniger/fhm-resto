@@ -18,12 +18,18 @@ class RefFrontController extends GenericController
     public function indexAction()
     {
         $form = $this->createForm(SearchType::class);
-        $form->setData($this->get('request_stack')->getCurrentRequest()->get($form->getName()));
-        $dataSearch = $form->getData();
-        $documents = $this->get('fhm_tools')->dmRepository(self::$repository)->getFrontIndex($dataSearch['search']);
-
+        $request = $this->get('request_stack')->getCurrentRequest();
+        $dataSearch = $request->request->get('FhmSearch');
+        $query = $this->get('fhm_tools')->dmRepository(self::$repository)->getFrontIndex(
+            $dataSearch['search']
+        );
+        $pagination = $this->get('knp_paginator')->paginate(
+            $query,
+            $request->query->getInt('page', 1),
+            $this->getParameters('pagination', 'fhm_fhm')
+        );
         return array(
-            'documents' => $documents,
+            'pagination' => $pagination,
             'form' => $form->createView(),
             'breadcrumbs' => array(
                 array(
@@ -33,7 +39,6 @@ class RefFrontController extends GenericController
                 array(
                     'link' => $this->getUrl(self::$source.'_'.self::$route),
                     'text' => $this->trans(self::$translation.'.front.index.breadcrumb'),
-                    'current' => true,
                 ),
             ),
         );
@@ -46,19 +51,9 @@ class RefFrontController extends GenericController
      */
     public function createAction(Request $request)
     {
-        $document = self::$document;
-        $classHandler = self::$form->handler;
-        $form = $this->createForm(
-            self::$form->type,
-            $document,
-            array(
-                'data_class' => self::$class,
-                'translation_domain' => self::$domain,
-                'translation_route' => self::$translation,
-                'user_admin' => $this->get('security.authorization_checker')->isGranted('ROLE_ADMIN'),
-            )
-        );
-        $handler = new $classHandler($form, $request);
+        $document = new self::$class;
+        $form = $this->createForm(self::$form->createType, $document);
+        $handler = new self::$form->createHandler($form, $request);
         $process = $handler->process();
         if ($process) {
             $data = $request->get($form->getName());
@@ -67,24 +62,11 @@ class RefFrontController extends GenericController
                 $this->get('fhm_tools')->getAlias($document->getId(), $document->getName(), self::$repository)
             );
             $this->get('fhm_tools')->dmPersist($document);
-            // Message
             $this->get('session')->getFlashBag()->add(
                 'notice',
                 $this->trans(self::$translation.'.front.create.flash.ok')
             );
-            // Redirect
-            $redirect = $this->redirect($this->getUrl(self::$source.'_'.self::$route));
-            $redirect = isset($data['submitDuplicate']) ? $this->redirect(
-                $this->getUrl(
-                    self::$source.'_'.self::$route.'_duplicate',
-                    array('id' => $document->getId())
-                )
-            ) : $redirect;
-            $redirect = isset($data['submitNew']) ? $this->redirect(
-                $this->getUrl(self::$source.'_'.self::$route.'_create')
-            ) : $redirect;
-
-            return $redirect;
+            return $this->redirectUrl($data, $document, 'front');
         }
 
         return array(
@@ -119,7 +101,7 @@ class RefFrontController extends GenericController
         if ($document == "") {
             throw $this->createNotFoundException($this->trans(self::$translation.'.error.unknown'));
         }
-        $this->document = $document;
+        self::$document = $document;
 
         return $this->createAction($request);
     }
@@ -134,49 +116,27 @@ class RefFrontController extends GenericController
     public function updateAction(Request $request, $id)
     {
         $document = $this->get('fhm_tools')->dmRepository(self::$repository)->find($id);
-        $classHandler = self::$form->handler;
         if ($document == "") {
             throw $this->createNotFoundException($this->trans(self::$translation.'.error.unknown'));
         }
         if (!$this->get('security.authorization_checker')->isGranted('ROLE_SUPER_ADMIN') && $document->getDelete()) {
             throw new HttpException(403, $this->trans(self::$translation.'.error.forbidden'));
         }
-        $form = $this->createForm(
-            self::$form->type,
-            $document,
-            array(
-                'data_class' => self::$class,
-                'translation_domain' => self::$domain,
-                'translation_route' => self::$translation,
-                'user_admin' => $this->get('security.authorization_checker')->isGranted('ROLE_ADMIN'),
-            )
-        );
-        $handler = new $classHandler($form, $request);
-        $process = $handler->process($document, $this->get('fhm_tools')->dm(), self::$bundle);
+        $form = $this->createForm(self::$form->updateType, $document);
+        $handler = new self::$form->updateHandler($form, $request);
+        $process = $handler->process();
         if ($process) {
             $document->setUserUpdate($this->getUser());
-            $document->setAlias($this->getAlias($document->getId(), $document->getName()));
+            $document->setAlias($this->getAlias($document->getId(), $document->getName(), self::$repository));
             $document->setActive(false);
             $this->get('fhm_tools')->dmPersist($document);
             $this->get('session')->getFlashBag()->add(
                 'notice',
                 $this->trans(self::$translation.'.front.update.flash.ok')
             );
-            // Redirect
-            $redirect = $this->redirect($this->getUrl(self::$source.'_'.self::$route));
-            $redirect = isset($data['submitDuplicate']) ? $this->redirect(
-                $this->getUrl(
-                    self::$source.'_'.self::$route.'_duplicate',
-                    array('id' => $document->getId())
-                )
-            ) : $redirect;
-            $redirect = isset($data['submitNew']) ? $this->redirect(
-                $this->getUrl(self::$source.'_'.self::$route.'_create')
-            ) : $redirect;
 
-            return $redirect;
+            return $this->redirectUrl($form->getData(), $document, 'front');
         }
-
         return array(
             'document' => $document,
             'form' => $form->createView(),
@@ -205,7 +165,6 @@ class RefFrontController extends GenericController
                         array('id' => $id)
                     ),
                     'text' => $this->trans(self::$translation.'.front.update.breadcrumb'),
-                    'current' => true,
                 ),
             ),
         );
@@ -249,7 +208,6 @@ class RefFrontController extends GenericController
                         self::$translation.'.front.detail.breadcrumb',
                         array('%name%' => $document->getName())
                     ),
-                    'current' => true,
                 ),
             ),
         );

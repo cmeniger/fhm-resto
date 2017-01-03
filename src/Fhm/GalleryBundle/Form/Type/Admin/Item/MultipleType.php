@@ -121,15 +121,11 @@ class MultipleType extends FhmType
     {
         $resolver->setDefaults(
             array(
-                'data_class' => '',
-                'translation_domain' => '',
-                'translation_route' => '',
+                'data_class' => 'Fhm\GalleryBundle\Document\GalleryItem',
+                'translation_domain' => 'FhmGalleryBundle',
                 'cascade_validation' => true,
+                'translation_route' => 'gallery.item',
                 'filter' => '',
-                'lang_visible' => '',
-                'lang_available' => '',
-                'grouping_visible' => '',
-                'grouping_available' => '',
                 'user_admin' => '',
             )
         );

@@ -128,4 +128,21 @@ class UpdateType extends FhmType
             )
         );
     }
+
+    /**
+     * @param OptionsResolver $resolver
+     */
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults(
+            array(
+                'data_class' => 'Fhm\CardBundle\Document\CardCategory',
+                'translation_domain' => 'FhmCardBundle',
+                'cascade_validation' => true,
+                'translation_route' => 'card.category',
+                'filter' => '',
+                'user_admin' => '',
+            )
+        );
+    }
 }

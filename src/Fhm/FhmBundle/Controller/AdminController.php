@@ -37,20 +37,11 @@ class AdminController extends RefAdminController
         return $this->render(
             'FhmFhm/Admin/admin.html.twig',
             array(
-                'breadcrumbs' => array(
+                'breadcrumbs' => $this->get('fhm_tools')->generateBreadcrumbs(
                     array(
-                        'link' => $this->get('router')->generate('project_home'),
-                        'text' => $this->get('translator')->trans(
-                            'project.home.breadcrumb',
-                            array(),
-                            'ProjectDefaultBundle'
-                        ),
-                    ),
-                    array(
-                        'link' => $this->get('router')->generate('fhm_admin'),
-                        'text' => $this->get('translator')->trans('fhm.admin.breadcrumb', array(), 'FhmFhmBundle'),
-                        'current' => true,
-                    ),
+                        'domain' => self::$domain,
+                        '_route' => $this->get('request_stack')->getCurrentRequest()->get('_route'),
+                    )
                 ),
             )
         );

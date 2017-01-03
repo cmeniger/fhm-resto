@@ -19,15 +19,33 @@ class UpdateType extends FhmType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         parent::buildForm($builder, $options);
-        $builder
-            ->add('email', EmailType::class, array(
-                'label' => $options['translation_route'] . '.admin.update.form.email'))
-            ->remove('name')
-            ->remove('description')
-            ->remove('seo_title')
-            ->remove('seo_description')
-            ->remove('seo_keywords')
-            ->remove('languages');
+        $builder->add(
+            'email',
+            EmailType::class,
+            array(
+                'label' => $options['translation_route'].'.admin.update.form.email',
+            )
+        )->remove('name')->remove('description')->remove('seo_title')->remove('seo_description')->remove(
+            'seo_keywords'
+        )->remove('languages');
+    }
+
+    /**
+     * @param OptionsResolver $resolver
+     */
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults(
+            array(
+                'data_class' => 'Fhm\NewsletterBundle\Document\Newsletter',
+                'translation_domain' => 'FhmNewsletterBundle',
+                'cascade_validation' => true,
+                'translation_route' => 'newsletter',
+                'filter' => '',
+                'user_admin' => '',
+                'map' => '',
+            )
+        );
     }
 
 }

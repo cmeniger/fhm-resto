@@ -24,14 +24,15 @@ class CreateType extends FhmType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         parent::buildForm($builder, $options);
-        $builder
-            ->add('title', TextType::class, array('label' => $options['translation_route'].'.admin.create.form.title'))
-            ->add(
+        $builder->add(
+                'title',
+                TextType::class,
+                array('label' => $options['translation_route'].'.admin.create.form.title')
+            )->add(
                 'subtitle',
                 TextType::class,
                 array('label' => $options['translation_route'].'.admin.create.form.subtitle', 'required' => false)
-            )
-            ->add(
+            )->add(
                 'content',
                 TextareaType::class,
                 array(
@@ -39,26 +40,22 @@ class CreateType extends FhmType
                     'attr' => array('class' => 'editor'),
                     'required' => false,
                 )
-            )
-            ->add(
+            )->add(
                 'link',
                 TextType::class,
                 array('label' => $options['translation_route'].'.admin.create.form.link', 'required' => false)
-            )
-            ->add(
+            )->add(
                 'order',
                 NumberType::class,
                 array('label' => $options['translation_route'].'.admin.create.form.order', 'required' => false)
-            )
-            ->add(
+            )->add(
                 'image',
                 MediaType::class,
                 array(
                     'label' => $options['translation_route'].'.admin.create.form.image',
                     'filter' => 'image/*',
                 )
-            )
-            ->add(
+            )->add(
                 'sliders',
                 DocumentType::class,
                 array(
@@ -72,9 +69,24 @@ class CreateType extends FhmType
                     'multiple' => true,
                     'by_reference' => false,
                 )
-            )
-            ->remove('name')
-            ->remove('description');
+            )->remove('name')->remove('description');
     }
 
+    /**
+     * @param OptionsResolver $resolver
+     */
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults(
+            array(
+                'data_class' => 'Fhm\SliderBundle\Document\SliderItem',
+                'translation_domain' => 'FhmSliderBundle',
+                'cascade_validation' => true,
+                'translation_route' => 'slider.item',
+                'filter' => '',
+                'user_admin' => '',
+                'map' => '',
+            )
+        );
+    }
 }

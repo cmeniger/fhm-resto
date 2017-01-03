@@ -85,5 +85,20 @@ class UpdateType extends FhmType
             )
         )->remove('global')->remove('name')->remove('description');
     }
-
+    /**
+     * @param OptionsResolver $resolver
+     */
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults(
+            array(
+                'data_class' => 'Fhm\ArticleBundle\Document\Article',
+                'translation_domain' => 'FhmArticleBundle',
+                'cascade_validation' => true,
+                'translation_route' => 'article',
+                'filter' => '',
+                'user_admin' => '',
+            )
+        );
+    }
 }

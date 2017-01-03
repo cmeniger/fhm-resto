@@ -39,5 +39,20 @@ class CreateType extends FhmType
             )
         )->remove('global');
     }
-
+    /**
+     * @param OptionsResolver $resolver
+     */
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults(
+            array(
+                'data_class' => 'Fhm\EventBundle\Document\EventGroup',
+                'translation_domain' => 'FhmEventBundle',
+                'cascade_validation' => true,
+                'translation_route' => 'event.group',
+                'filter' => '',
+                'user_admin' => '',
+            )
+        );
+    }
 }

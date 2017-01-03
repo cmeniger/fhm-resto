@@ -102,4 +102,21 @@ class CreateType extends GeolocationType
             array('label' => $options['translation_route'].'.admin.create.form.social.site', 'required' => false)
         )->remove('share')->remove('global');
     }
+
+    /**
+     * @param OptionsResolver $resolver
+     */
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults(
+            array(
+                'data_class' => 'Fhm\ContactBundle\Document\Contact',
+                'translation_domain' => 'FhmContactBundle',
+                'cascade_validation' => true,
+                'translation_route' => 'contact',
+                'filter' => '',
+                'user_admin' => '',
+            )
+        );
+    }
 }

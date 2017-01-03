@@ -95,4 +95,20 @@ class UpdateType extends FhmType
         );
     }
 
+    /**
+     * @param OptionsResolver $resolver
+     */
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults(
+            array(
+                'data_class' => 'Fhm\GalleryBundle\Document\GalleryAlbum',
+                'translation_domain' => 'FhmGalleryBundle',
+                'cascade_validation' => true,
+                'translation_route' => 'gallery.album',
+                'filter' => '',
+                'user_admin' => '',
+            )
+        );
+    }
 }

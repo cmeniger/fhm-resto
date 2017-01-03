@@ -3,7 +3,6 @@
 namespace Project\DefaultBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Session\Session;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
@@ -12,17 +11,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
  */
 class IntegrationController extends Controller
 {
-    private $tools;
-
-    /**
-     *
-     * @param \Fhm\FhmBundle\Services\Tools $tools
-     */
-    public function __construct(\Fhm\FhmBundle\Services\Tools $tools)
-    {
-        $this->tools = $tools;
-    }
-
     /**
      * @Route
      * (
@@ -36,7 +24,6 @@ class IntegrationController extends Controller
             '::ProjectDefault/Integration/' . $name . '.html.twig' :
             '::ProjectDefault/Integration/default.html.twig';
 
-        return $this->render($template, array(
-        ));
+        return $this->render($template);
     }
 }

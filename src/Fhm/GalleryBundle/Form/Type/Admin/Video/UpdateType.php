@@ -81,5 +81,21 @@ class UpdateType extends FhmType
         )->remove('name')->remove('description');
     }
 
+    /**
+     * @param OptionsResolver $resolver
+     */
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults(
+            array(
+                'data_class' => 'Fhm\GalleryBundle\Document\GalleryVideo',
+                'translation_domain' => 'FhmGalleryBundle',
+                'cascade_validation' => true,
+                'translation_route' => 'gallery.video',
+                'filter' => '',
+                'user_admin' => '',
+            )
+        );
+    }
 
 }

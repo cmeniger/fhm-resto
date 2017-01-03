@@ -8,7 +8,6 @@ use Fhm\GalleryBundle\Repository\GalleryRepository;
 use Fhm\FhmBundle\Repository\MenuRepository;
 use Fhm\NewsBundle\Repository\NewsGroupRepository;
 use Fhm\PartnerBundle\Repository\PartnerGroupRepository;
-use Fhm\FhmBundle\Document\Site;
 use Fhm\SliderBundle\Repository\SliderRepository;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;

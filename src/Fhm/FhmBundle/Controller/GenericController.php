@@ -33,8 +33,8 @@ abstract class GenericController extends Controller
     protected function getParameters($route, $parent)
     {
         $parameters = $this->getParameter($parent);
-        $value      = $parameters;
-        foreach ((array) $route as $sub) {
+        $value = $parameters;
+        foreach ((array)$route as $sub) {
             $value = $value[$sub];
         }
 
@@ -43,8 +43,8 @@ abstract class GenericController extends Controller
 
     /**
      * @param array $parameters
-     * @param null  $route
-     * @param null  $referenceType
+     * @param null $route
+     * @param null $referenceType
      *
      * @return string
      */
@@ -60,7 +60,7 @@ abstract class GenericController extends Controller
     /**
      * @param       $key
      * @param array $parameters
-     * @param null  $domain
+     * @param null $domain
      *
      * @return string
      */
@@ -88,6 +88,39 @@ abstract class GenericController extends Controller
     public function routeExists($name)
     {
         $router = $this->get('router');
+
         return (null === $router->getRouteCollection()->get($name)) ? false : true;
+    }
+
+    /**
+     * @param $data
+     * @return mixed
+     */
+    public function redirectUrl($data, $document, $side = "admin")
+    {
+        $redirect = $this->redirect($this->getUrl(self::$source.'_admin_'.self::$route));
+        $redirect = isset($data['submitSave']) ? $this->redirect(
+            $this->getUrl(
+                self::$source.'_'.$side.'_'.self::$route.'_update',
+                array('id' => $document->getId())
+            )
+        ) : $redirect;
+        $redirect = isset($data['submitDuplicate']) ? $this->redirect(
+            $this->getUrl(
+                self::$source.'_'.$side.'_'.self::$route.'_duplicate',
+                array('id' => $document->getId())
+            )
+        ) : $redirect;
+        $redirect = isset($data['submitNew']) ? $this->redirect(
+            $this->getUrl(self::$source.'_'.$side.'_'.self::$route.'_create')
+        ) : $redirect;
+        $redirect = isset($data['submitConfig']) ? $this->redirect(
+            $this->getUrl(
+                self::$source.'_'.$side.'_'.self::$route.'_detail',
+                array('id' => $document->getId())
+            )
+        ) : $redirect;
+
+        return $redirect;
     }
 }

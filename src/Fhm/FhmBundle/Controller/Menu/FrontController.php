@@ -62,7 +62,7 @@ class FrontController extends FhmController
 
         return array(
             'document' => $document,
-            'sites' => $this->get('fhm_tools')->dmRepository("FhmSiteBundle:Site")->getFrontIndex(),
+            'sites' => $this->get('fhm_tools')->dmRepository("FhmFhmBundle:Site")->getFrontIndex(),
             'modules' => $modules,
             'submenu' => $this->get('fhm_tools')->dmRepository("FhmFhmBundle:Menu")->getTree($document->getId())
         );

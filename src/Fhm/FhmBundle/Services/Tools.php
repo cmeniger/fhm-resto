@@ -107,9 +107,11 @@ class Tools
         $referer = $request->headers->get('referer');
         $route = ($referer && $request->getBaseUrl() == '') ? $referer : '';
         $route = ($referer == '' && $request->getBaseUrl()) ? $request->getBaseUrl() : $route;
-        $route = ($referer && $request->getBaseUrl()) ?
-            str_replace($request->getBaseUrl(), '', substr($referer, strpos($referer, $request->getBaseUrl()))) :
-            $route;
+        $route = ($referer && $request->getBaseUrl()) ? str_replace(
+            $request->getBaseUrl(),
+            '',
+            substr($referer, strpos($referer, $request->getBaseUrl()))
+        ) : $route;
 
         return $route;
     }
@@ -307,6 +309,7 @@ class Tools
     public function trans($key, $parameters, $domain, $translation)
     {
         $key = $key[0] == '.' ? $translation.$key : $key;
+
         return $this->container->get('translator')->trans($key, $parameters, $domain);
     }
 
@@ -349,5 +352,36 @@ class Tools
         $router = $this->container->get('router');
 
         return ($router->getRouteCollection()->get($name) === null) ? false : true;
+    }
+
+    /**
+     * @param $options
+     * @param null $element
+     * @return array
+     */
+    public function generateBreadcrumbs($options, $element = null)
+    {
+        $breaCrumps = [];
+        $route = $options['_route'];
+        $steps = explode('_', $route);
+        end($steps);
+        $endkey = key($steps);
+        reset($steps);
+        $lastText = $lastUrl = '';
+        foreach ($steps as $key => $step) {
+            $lastText .= $step;
+            $lastUrl .= $step;
+            $breaCrumps[] = array(
+                'link' => $this->getUrl($lastUrl, ($key == $endkey and $element) ? ['id' => $element->getId()] : []),
+                'text' => $this->trans($lastText.'.breadcrumb', [], $options['domain'], ''),
+            );
+            $lastText .= '.';
+            $lastUrl .= '_';
+        }
+        if ($element) {
+            $breaCrumps[] = array('link' => '#', 'text' => $element->getName());
+        }
+
+        return $breaCrumps;
     }
 }

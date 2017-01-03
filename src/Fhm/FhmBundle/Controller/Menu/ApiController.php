@@ -79,7 +79,7 @@ class ApiController extends FhmController
         } elseif (!$this->getUser()->isSuperAdmin() && ($document->getDelete() || !$document->getActive())) {
             throw new HttpException(
                 403,
-                $this->trans('menu.error.forbidden', array(), 'FhmMenuBundle')
+                $this->trans('menu.error.forbidden', array(), 'FhmFhmMenu')
             );
         }
         return $this->render(

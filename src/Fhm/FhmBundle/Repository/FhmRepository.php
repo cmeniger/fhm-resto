@@ -98,7 +98,7 @@ class FhmRepository extends DocumentRepository
 
     /**
      * @param string $search
-     * @return mixed
+     * @return \Doctrine\ODM\MongoDB\Query\Query
      */
     public function getFrontIndex($search = "")
     {
@@ -112,7 +112,7 @@ class FhmRepository extends DocumentRepository
         $builder->field('delete')->equals(false);
         $this->builderSort($builder);
 
-        return $builder->getQuery()->execute()->toArray();
+        return $builder->getQuery();
     }
 
     /**

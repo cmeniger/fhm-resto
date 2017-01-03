@@ -1,4 +1,5 @@
 fhm:
+    breadcrump:                                 Accueil
     admin:
         breadcrumb:                             Admin
         link:                                   Console
@@ -9,6 +10,10 @@ fhm:
         index:
             form:
                 search:                         Rechercher
+    front:
+        index:
+             form:
+                 search:                        Rechercher
 
     menu:
         title:                                  Administration

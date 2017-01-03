@@ -48,15 +48,11 @@ class CreateType extends FhmType
     {
         $resolver->setDefaults(
             array(
-                'data_class' => 'Fhm\FhmBundle\Document\Fhm',
-                'translation_domain' => 'FhmFhmBundle',
+                'data_class' => 'Fhm\MapPickerBundle\Document\MapPicker',
+                'translation_domain' => 'FhmMapPickerBundle',
                 'cascade_validation' => true,
-                'translation_route' => '',
+                'translation_route' => 'mappicker',
                 'filter' => '',
-                'lang_visible' => '',
-                'lang_available' => '',
-                'grouping_visible' => '',
-                'grouping_available' => '',
                 'user_admin' => '',
                 'map' => '',
             )

@@ -19,15 +19,32 @@ class CreateType extends FhmType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         parent::buildForm($builder, $options);
-        $builder
-            ->add(
-                'image',
-                MediaType::class,
-                array(
-                    'label' => $options['translation_route'].'.admin.create.form.image',
-                    'filter' => 'image/*',
-                    'required' => false,
-                )
-            );
+        $builder->add(
+            'image',
+            MediaType::class,
+            array(
+                'label' => $options['translation_route'].'.admin.create.form.image',
+                'filter' => 'image/*',
+                'required' => false,
+            )
+        );
+    }
+
+    /**
+     * @param OptionsResolver $resolver
+     */
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults(
+            array(
+                'data_class' => 'Fhm\TestimonyBundle\Document\Testimony',
+                'translation_domain' => 'FhmTestimonyBundle',
+                'cascade_validation' => true,
+                'translation_route' => 'testimony',
+                'filter' => '',
+                'user_admin' => '',
+                'map' => '',
+            )
+        );
     }
 }

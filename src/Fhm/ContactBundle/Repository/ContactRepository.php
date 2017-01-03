@@ -30,6 +30,6 @@ class ContactRepository extends FhmRepository
      */
     public function getFrontIndex($search = "")
     {
-        return parent::getFrontIndex('');
+        return parent::getFrontIndex($search);
     }
 }
