@@ -1,8 +1,9 @@
 <?php
 namespace Fhm\FhmBundle\Twig;
 
-use Symfony\Component\HttpKernel\KernelInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Fhm\FhmBundle\Services\Schedules;
+use Symfony\Bundle\FrameworkBundle\Translation\Translator;
+use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Intl\Intl;
 
 /**
@@ -11,16 +12,20 @@ use Symfony\Component\Intl\Intl;
  */
 class FhmExtension extends \Twig_Extension
 {
-    protected $container;
-
-    protected $instance;
+    protected $session;
+    protected $translator;
 
     /**
-     * @param ContainerInterface $container
+     * FhmExtension constructor.
+     * @param Session $session
+     * @param Translator $translator
+     * @param Schedules $schedules
      */
-    public function __construct(ContainerInterface $container)
+    public function __construct(Session $session, Translator $translator)
     {
-        $this->container = $container;
+        $this->session = $session;
+        $this->translator = $translator;
+//        $this->fhmSchedule= $schedules;
     }
 
     /**
@@ -35,22 +40,30 @@ class FhmExtension extends \Twig_Extension
             new \Twig_SimpleFilter('schedules', array($this, 'getSchedules')),
             new \Twig_SimpleFilter('schedulesClose', array($this, 'getSchedulesClose')),
             new \Twig_SimpleFilter('schedulesState', array($this, 'getSchedulesState')),
-            new \Twig_SimpleFilter('schedulesStateHtml', array($this, 'getSchedulesStateHtml')),
+            new \Twig_SimpleFilter(
+                'schedulesStateHtml',
+                array($this, 'getSchedulesStateHtml'),
+                array('needs_environment' => true)
+            ),
         );
     }
 
     /**
      * @param $code
-     *
+     * @param null $height
      * @return string
      */
     public function getFlag($code, $height = null)
     {
         $code = strtolower($code);
         $trans = $this->getCountry($code);
-        $html = "<img src='".$this->getFlagUrl(
-                $code
-            )."' alt='".$trans."' title='".$trans."' class='flag' style='".($height ? "height:".$height."px" : "")."'/>";
+        $html = "<img 
+                    src='".$this->getFlagUrl($code)."'
+                    alt='".$trans."' 
+                    title='".$trans."' 
+                    class='flag' 
+                    style='".($height ? "height:".$height."px" : "")."'
+                 />";
 
         return $html;
     }
@@ -81,7 +94,7 @@ class FhmExtension extends \Twig_Extension
         $code = strtoupper($code);
         $code = $code == 'EN' ? 'GB' : $code;
 
-        return $code ? Intl::getRegionBundle()->getCountryName($code) : $this->container->get('translator')->trans(
+        return $code ? Intl::getRegionBundle()->getCountryName($code) : $this->translator->trans(
             'fhm.language.code.all',
             array(),
             'FhmFhmBundle'
@@ -96,13 +109,14 @@ class FhmExtension extends \Twig_Extension
      */
     public function getSchedules($data, $key = '')
     {
-        return $data ? $this->container->get('fhm_schedules')->setData($data)->getValue(
+        return $data ? $this->fhmSchedule->setData($data)->getValue(
             $key
-        ) : "<span class='schedules nodata'>".$this->container->get('translator')->trans(
-                'fhm.schedules.nodata',
-                array(),
-                'FhmFhmBundle'
-            )."</span>";
+        ) : "<span class='schedules nodata'>".$this->translator->trans(
+            'fhm.schedules.nodata',
+            array(),
+            'FhmFhmBundle'
+        )
+            ."</span>";
     }
 
     /**
@@ -122,19 +136,25 @@ class FhmExtension extends \Twig_Extension
      */
     public function getSchedulesState($data)
     {
-        return $this->container->get('fhm_schedules')->setData($data)->getState();
+        return $this->fhmSchedule->setData($data)->getState();
     }
 
     /**
+     * @param \Twig_Environment $env
      * @param $data
-     *
-     * @return string
+     * @param bool $class
+     * @param bool $text
+     * @param bool $indicator
+     * @return mixed|string
      */
-    public function getSchedulesStateHtml($data, $class = true, $text = true, $indicator = false)
-    {
-        $twig = new \Twig_Environment(new \Twig_Loader_Filesystem($this->container->getParameter('kernel.root_dir')));
-
-        return $twig->render(
+    public function getSchedulesStateHtml(
+        \Twig_Environment $env,
+        $data,
+        $class = true,
+        $text = true,
+        $indicator = false
+    ) {
+        return $env->render(
             '::FhmFhm/Template/schedules.state.html.twig',
             array(
                 'show_class' => $class,
@@ -150,7 +170,7 @@ class FhmExtension extends \Twig_Extension
      */
     protected function getLocale()
     {
-        return $this->container->get('session')->get('_locale');
+        return $this->session->get('_locale');
     }
 
     /**
@@ -162,13 +182,4 @@ class FhmExtension extends \Twig_Extension
     {
         return 'fhm_extension';
     }
-
-    /**
-     * @return mixed
-     */
-    public function getInstance()
-    {
-        return $this->instance;
-    }
-
 }

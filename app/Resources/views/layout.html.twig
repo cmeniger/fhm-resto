@@ -80,12 +80,9 @@
             <script src="{{ asset('js/jquery.formcollection.js') }}"></script>
             <script src="{{ asset('js/jquery.media.js') }}"></script>
             <script src="{{ asset('js/jquery.autocomplete.js') }}"></script>
-            <script src="{{ asset('js/jquery.list.js') }}"></script>
             <script src="{{ asset('js/jquery.vmap.js') }}"></script>
             <script src="{{ asset('js/jquery.workflow.js') }}"></script>
             <script src="{{ asset('js/jquery.contact.js') }}"></script>
-            <script src="{{ asset('js/jquery.notification.js') }}"></script>
-            <script src="{{ asset('js/jquery.historic.js') }}"></script>
             <script src="{{ asset('js/jquery.timer.js') }}"></script>
             <script src="{{ asset('js/jquery.card.js') }}"></script>
             <script src="{{ asset('js/jquery.note.js') }}"></script>
@@ -103,17 +100,10 @@
                 $(document).formcollection();
                 $(document).media();
                 $(document).autocomplete();
-                $(document).list();
                 $(document).workflow();
                 $(document).contact();
-                $(document).historic();
                 $(document).card();
                 $(document).note();
-                $(document).notification({
-                    project: {
-                        construct:{{ project.construct ? 1 : 0 }},
-                        maintenance:{{ project.maintenance ? 1 : 0 }}}
-                });
                 $(document).timer({
                     translate: {
                         days:    '{{ 'project.timer.days'|trans({},'ProjectDefaultBundle') }}',
@@ -188,6 +178,7 @@
                     ga('send', 'pageview');
                     {% endif %}
                 });
+
             </script>
         {% endblock %}
         {% endblock %}

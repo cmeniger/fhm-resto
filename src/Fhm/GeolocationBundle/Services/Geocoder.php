@@ -1,6 +1,10 @@
 <?php
 namespace Fhm\GeolocationBundle\Services;
 
+use Ivory\GoogleMap\Service\Geocoder\GeocoderService;
+use Ivory\GoogleMap\Service\Geocoder\Request\GeocoderAddressRequest;
+use Ivory\GoogleMap\Service\Geocoder\Request\GeocoderComponentType;
+use Ivory\GoogleMap\Service\Geocoder\Request\GeocoderRequestInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -14,15 +18,14 @@ class Geocoder
 
     /**
      * Geocoder constructor.
-     *
-     * @param ContainerInterface $container
+     * @param GeocoderAddressRequest $request
+     * @param GeocoderService $geodecoder
      */
-    public function __construct(ContainerInterface $container)
-    {
-        $this->container = $container;
-        $this->geocoder = $this->container->get('ivory.google_map.geocoder');
-        $this->request = $this->container->get('ivory.google_map.geocoder');
-    }
+//    public function __construct(GeocoderAddressRequest $request, GeocoderService $geodecoder)
+//    {
+//        $this->geocoder = $geodecoder;
+//        $this->request  = $request;
+//    }
 
     /**
      * @param $address

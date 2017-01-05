@@ -2,10 +2,12 @@
 namespace Fhm\GeolocationBundle\Form\Type\Admin;
 
 use Fhm\FhmBundle\Form\Type\Admin\CreateType as FhmType;
+use Ivory\GoogleMap\Place\AutocompleteComponentType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Ivory\GoogleMapBundle\Form\Type\PlaceAutocompleteType;
 
 /**
  * Class CreateType
@@ -22,12 +24,13 @@ class CreateType extends FhmType
         parent::buildForm($builder, $options);
         $builder->add(
             'address_search',
-            TextType::class,
-            array(
+            PlaceAutocompleteType::class,
+            [
+                AutocompleteComponentType::COUNTRY => 'fr',
                 'label' => $options['translation_route'].'.admin.create.form.address_search',
                 'mapped' => false,
                 'required' => false,
-            )
+            ]
         )->add(
             'address_main',
             TextType::class,

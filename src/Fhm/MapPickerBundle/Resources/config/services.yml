@@ -1,24 +1,12 @@
 services:
     mappicker.nomap:
         class: Fhm\MapPickerBundle\Services\MapNoMap
-        arguments: ["@templating", "@fhm_tools"]
+        arguments: ["@templating", "%fhm_mappicker%"]
 
     mappicker.france_domtom:
         class: Fhm\MapPickerBundle\Services\MapFranceDomtom
-        arguments: ["@templating", "@fhm_tools"]
+        arguments: ["@templating", "%fhm_mappicker%"]
 
     mappicker.france_region:
         class: Fhm\MapPickerBundle\Services\MapFranceRegion
-        arguments: ["@templating", "@fhm_tools"]
-
-    fhm_mappicker_controller_admin:
-        class: Fhm\MapPickerBundle\Controller\AdminController
-        arguments: ["@fhm_tools"]
-
-    fhm_mappicker_controller_front:
-        class: Fhm\MapPickerBundle\Controller\FrontController
-        arguments: ["@fhm_tools"]
-
-    fhm_mappicker_controller_api:
-        class: Fhm\MapPickerBundle\Controller\ApiController
-        arguments: ["@fhm_tools"]
+        arguments: ["@templating", "%fhm_mappicker%"]

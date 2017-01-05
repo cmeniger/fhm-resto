@@ -10,13 +10,12 @@ class MapNoMap extends AbstractMap
 {
     /**
      * MapNoMap constructor.
-     *
      * @param \Symfony\Component\Templating\EngineInterface $template
-     * @param \Fhm\FhmBundle\Services\Tools                 $tools
+     * @param $parameters
      */
-    public function __construct(\Symfony\Component\Templating\EngineInterface $template, \Fhm\FhmBundle\Services\Tools $tools)
+    public function __construct(\Symfony\Component\Templating\EngineInterface $template, $parameters)
     {
-        $this->fhm_tools = $tools;
+        $this->parameters = $parameters;
         $this->template  = $template;
         $this->setName("nomap");
         $this->setWidth(0);

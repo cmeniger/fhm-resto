@@ -28,20 +28,23 @@ class UpdateType extends FhmType
             'map',
             ChoiceType::class,
             array(
-                'choices' => array(
-                    'choices' => function () use ($options) {
-                        $mapsArray['nomap'] = $options['translation_route'].'.nomap.choice';
-                        foreach ($options['map'] as $map) {
-                            $mapsArray[$map] = $options['translation_route'].'.'.$map.'.choice';
-                        }
-
-                        return $mapsArray;
-                    },
-                    'label' => $options['translation_route'].'.admin.create.form.map',
-                ),
-                'label' => $options['translation_route'].'.admin.create.form.map',
+                'choices' => $this->getMapChoices($options),
             )
         )->remove('global');
+    }
+
+    /***
+     * @param $options
+     * @return mixed
+     */
+    public function getMapChoices($options)
+    {
+        $mapsArray['nomap'] = $options['translation_route'].'.nomap.choice';
+        foreach ($options['map'] as $map) {
+            $mapsArray[$map] = $options['translation_route'].'.'.$map.'.choice';
+        }
+
+        return $mapsArray;
     }
 
     /**

@@ -8,7 +8,7 @@ namespace Fhm\MapPickerBundle\Services;
 abstract class AbstractMap
 {
     protected $template;
-    protected $fhm_tools;
+    protected $parameters;
     private $name;
     private $width;
     private $height;
@@ -159,6 +159,6 @@ abstract class AbstractMap
      */
     private function _parameter()
     {
-        return $this->fhm_tools->getParameter(array(), 'fhm_mappicker');
+        return $this->parameters;
     }
 }

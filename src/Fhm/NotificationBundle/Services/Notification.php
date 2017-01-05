@@ -1,6 +1,9 @@
 <?php
 namespace Fhm\NotificationBundle\Services;
 
+use Doctrine\ODM\MongoDB\DocumentManager;
+use Fhm\UserBundle\Document\User;
+
 /**
  * Class Notification
  *
@@ -8,16 +11,15 @@ namespace Fhm\NotificationBundle\Services;
  */
 class Notification
 {
-    private $fhm_tools;
+    private $dm;
 
     /**
      * Notification constructor.
-     *
-     * @param \Fhm\FhmBundle\Services\Tools $tools
+     * @param $dm
      */
-    public function __construct(\Fhm\FhmBundle\Services\Tools $tools)
+    public function __construct(DocumentManager $dm)
     {
-        $this->fhm_tools = $tools;
+        $this->dm = $dm;
     }
 
     /**
@@ -28,19 +30,16 @@ class Notification
      *
      * @return $this
      */
-    public function create(
-        \Fhm\UserBundle\Document\User $user,
-        $content = '',
-        $template = 'default',
-        $parameter = array()
-    ) {
+    public function create(User $user, $content = '', $template = 'default', $parameter = array())
+    {
         $document = new \Fhm\NotificationBundle\Document\Notification();
-        $document->setUserCreate($this->fhm_tools->getUser());
+        $document->setUserCreate($user);
         $document->setUser($user);
         $document->setContent($content);
         $document->setTemplate($template);
         $document->setParameter($parameter);
-        $this->fhm_tools->dmPersist($document);
+        $this->dm->persist($document);
+        $this->dm->flush();
 
         return $this;
     }

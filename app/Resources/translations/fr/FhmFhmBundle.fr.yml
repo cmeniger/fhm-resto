@@ -1,5 +1,5 @@
 fhm:
-    breadcrump:                                 Accueil
+    breadcrumb:                                 Accueil
     admin:
         breadcrumb:                             Admin
         link:                                   Console

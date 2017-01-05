@@ -1,7 +1,7 @@
 services:
     fhm_geocoder:
         class: Fhm\GeolocationBundle\Services\Geocoder
-        arguments: ["@service_container"]
+#        arguments: ["@ivory.google_map.", "@ivory.google_map.geocoder"]
 
     fhm.twig.geolocation_extension:
         class: Fhm\GeolocationBundle\Twig\GeolocationExtension

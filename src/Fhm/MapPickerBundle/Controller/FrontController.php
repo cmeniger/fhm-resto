@@ -45,7 +45,7 @@ class FrontController extends FhmController
             foreach ($document->getZone() as $zone) {
                 $document->addZone(
                     $zone['code'],
-                    $this->get('fhm_tools')->dm()->getRepository('FhmSiteBundle:Site')->find($zone['site'])
+                    $this->get('fhm_tools')->dmRepository('FhmSiteBundle:Site')->find($zone['site'])
                 );
             }
         }

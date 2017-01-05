@@ -1,20 +1,9 @@
 <?php
 namespace Fhm\FhmBundle\EventListener;
 
-use Symfony\Component\DependencyInjection\ContainerAwareInterface;
-use Symfony\Component\DependencyInjection\ContainerAwareTrait;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
-use Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent;
-use Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent;
-use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
-use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
-use Symfony\Component\HttpKernel\Event\FinishRequestEvent;
-use Symfony\Component\HttpKernel\Event\PostResponseEvent;
-use Symfony\Component\HttpKernel\HttpKernel;
 
 /**
  * Class FhmEventListener
@@ -22,27 +11,32 @@ use Symfony\Component\HttpKernel\HttpKernel;
  */
 class FhmEventListener implements EventSubscriberInterface
 {
-    /**
-     * @var ContainerInterface
-     */
-    protected $container;
+    /** template to display when app is on maintain mode */
+    const MAINTENANCE_TEMPLATE = '::ProjectDefault/Template/maintenance.html.twig';
+
+    /** template to display when app is building mode */
+    const CONSTRUCT_TEMPLATE = '::ProjectDefault/Template/construct.html.twig';
+
+    private $template;
+    private $securityToken;
+    private $securityAuthorization;
+
+    /** @parameters must be configured in parameter file and it is compulsory */
+    private $parameters;
 
     /**
-     * Sets the container.
-     *
-     * @param ContainerInterface|null $container A ContainerInterface instance or null
+     * FhmEventListener constructor.
+     * @param $templating
+     * @param $securityToken
+     * @param $securityAuthorization
+     * @param $project
      */
-    public function setContainer(ContainerInterface $container = null)
+    public function __construct($templating, $securityToken, $securityAuthorization, $project)
     {
-        $this->container = $container;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getContainer()
-    {
-        return $this->container;
+        $this->template = $templating;
+        $this->securityAuthorization = $securityAuthorization;
+        $this->securityToken = $securityToken;
+        $this->parameters = $project;
     }
 
     /**
@@ -52,53 +46,44 @@ class FhmEventListener implements EventSubscriberInterface
      */
     public function onKernelRequest(GetResponseEvent $event)
     {
-        $parameters = $this->getContainer()->getParameter("project");
-        $maintenance = isset($parameters['maintenance']) ? $parameters['maintenance'] : false;
-        $construct = isset($parameters['construct']) ? $parameters['construct'] : false;
-        $firewall = isset($parameters['firewall']) ? $parameters['firewall'] : array();
-        $date = isset($parameters['date']) ? new \DateTime($parameters['date']) : '';
+        $date = new \DateTime($this->parameters['date']);
         $route = $event->getRequest()->attributes->get('_route');
         $authorized = false;
-        $authorized = in_array($route, $firewall) ? true : $authorized;
-        if ($this->getContainer()->get('security.token_storage')->getToken()) {
-            $authorized = $this->getContainer()->get('security.authorization_checker')->isGranted(
+        $authorized = in_array($route, $this->parameters['firewall']) ? true : $authorized;
+        if ($this->securityToken->getToken()) {
+            $authorized = $this->securityAuthorization->isGranted(
                 'ROLE_ADMIN'
             ) ? true : $authorized;
         }
+
         $authorized = in_array(
-            $this->getContainer()->get('kernel')->getEnvironment(),
+            getenv('SYMFONY_ENV'),
             array('test', 'dev')
         ) ? true : $authorized;
-
-        if ($construct && !$authorized) {
+        if ($this->parameters['construct'] && !$authorized) {
             $event->setResponse(
                 new Response(
-                    $this->container->get('templating')->render(
-                        '::ProjectDefault/Template/construct.html.twig',
-                        array(
-                            'date' => $date,
-                            'site' => null,
-                        )
+                    $this->template->render(
+                        self::CONSTRUCT_TEMPLATE,
+                        array('date' => $date, 'site' => null)
                     ),
                     503
                 )
             );
             $event->stopPropagation();
-        } elseif ($maintenance && !$authorized) {
+        } elseif ($this->parameters['maintenance'] && !$authorized) {
             $event->setResponse(
                 new Response(
-                    $this->container->get('templating')->render(
-                        '::ProjectDefault/Template/maintenance.html.twig',
-                        array(
-                            'date' => $date,
-                            'site' => null,
-                        )
+                    $this->template->render(
+                        self::MAINTENANCE_TEMPLATE,
+                        array('date' => $date, 'site' => null)
                     ),
                     503
                 )
             );
             $event->stopPropagation();
         }
+
         return false;
     }
 
