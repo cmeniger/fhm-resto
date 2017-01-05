@@ -59,7 +59,7 @@ class GeolocationWithUser extends FhmWithUser
         parent::__construct();
         global $kernel;
         $kernel         = (get_class($kernel) == 'AppCache') ? $kernel->getKernel() : $kernel;
-        $this->geocoder = $kernel->getContainer()->get('fhm_geocoder');
+//        $this->geocoder = $kernel->getContainer()->get('fhm_geocoder');
     }
 
     /**
