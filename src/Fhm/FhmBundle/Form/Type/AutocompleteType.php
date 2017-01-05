@@ -36,9 +36,6 @@ class AutocompleteType extends AbstractType
                 'choice_label' => 'name',
                 'cascade_validation' => true,
                 'url' => '',
-                'attr' => array(
-                    'placeholder' => 'fhm.autocomplete.placeholder',
-                ),
             )
         );
     }
@@ -51,9 +48,9 @@ class AutocompleteType extends AbstractType
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
         if (array_key_exists('url', $options)) {
-            $route              = is_array($options['url']) ? $options['url'][0] : $options['url'];
-            $parameters         = is_array($options['url']) ? $options['url'][1] : array();
-            $view->vars['url']  = $this->router->generate($route, $parameters);
+            $route = is_array($options['url']) ? $options['url'][0] : $options['url'];
+            $parameters = is_array($options['url']) ? $options['url'][1] : array();
+            $view->vars['url'] = $this->router->generate($route, $parameters);
         }
     }
 

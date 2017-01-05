@@ -88,6 +88,9 @@ news:
                     media:                      Médias
                     newsgroups:                 Journaux rattachés
                     options:                    Options
+                autocomplete:
+                    author:
+                        placeholder:            Choisir un utilisateur
 
         update:
             title:                              Modifier

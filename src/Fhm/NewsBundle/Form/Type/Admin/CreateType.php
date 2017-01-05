@@ -87,7 +87,7 @@ class CreateType extends FhmType
                 'class' => 'FhmGalleryBundle:Gallery',
                 'choice_label' => 'name',
                 'query_builder' => function (GalleryRepository $dr) use ($options) {
-                    return $dr->getFormEnable($options['filter']);
+                    return $dr->getFormEnable();
                 },
                 'required' => false,
             )
@@ -99,7 +99,7 @@ class CreateType extends FhmType
                 'class' => 'FhmNewsBundle:NewsGroup',
                 'choice_label' => 'name',
                 'query_builder' => function (NewsGroupRepository $dr) use ($options) {
-                    return $dr->getFormEnable($options['filter']);
+                    return $dr->getFormEnable();
                 },
                 'multiple' => true,
                 'required' => false,
@@ -112,7 +112,9 @@ class CreateType extends FhmType
                 'label' => $options['translation_route'].'.admin.create.form.author',
                 'class' => 'FhmUserBundle:User',
                 'url' => 'fhm_api_user_autocomplete',
+                'translation_domain'=>$options['translation_domain'],
                 'required' => false,
+                'placeholder' => 'news.admin.create.form.autocomplete.author.placeholder',
             )
         )->remove('name')->remove('description');
     }
@@ -128,9 +130,7 @@ class CreateType extends FhmType
                 'translation_domain' => 'FhmNewsBundle',
                 'cascade_validation' => true,
                 'translation_route' => 'news',
-                'filter' => '',
-                'user_admin' => '',
-                'map' => '',
+                'user_admin' => ''
             )
         );
     }

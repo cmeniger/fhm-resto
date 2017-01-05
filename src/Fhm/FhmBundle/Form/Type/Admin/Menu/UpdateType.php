@@ -30,5 +30,19 @@ class UpdateType extends FhmType
             array('label' => $options['translation_route'].'.admin.update.form.route', 'required' => false)
         )->remove('share')->remove('global');
     }
-
+    /**
+     * @param OptionsResolver $resolver
+     */
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults(
+            array(
+                'data_class' => 'Fhm\FhmBundle\Document\Menu',
+                'translation_domain' => 'FhmFhmMenu',
+                'cascade_validation' => true,
+                'translation_route' => 'menu',
+                'user_admin' => '',
+            )
+        );
+    }
 }

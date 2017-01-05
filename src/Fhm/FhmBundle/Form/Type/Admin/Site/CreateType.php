@@ -200,4 +200,19 @@ class CreateType extends FhmType
         )->remove('global')->remove('share');
     }
 
+    /**
+     * @param OptionsResolver $resolver
+     */
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults(
+            array(
+                'data_class' => 'Fhm\FhmBundle\Document\Site',
+                'translation_domain' => 'FhmFhmSite',
+                'cascade_validation' => true,
+                'translation_route' => 'site',
+                'user_admin' => '',
+            )
+        );
+    }
 }
