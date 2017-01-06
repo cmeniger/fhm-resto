@@ -42,21 +42,21 @@ class FunctionalTest extends WebTestCase
 
     public function testCreate()
     {
-        $this->client->request('GET', '/admin/article/create');
+        $this->client->request('GET', '/admin/news/create');
         $this->client->followRedirect();
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
     }
 
     public function testUpdate()
     {
-        $this->client->request('POST', '/admin/article/update/12');
+        $this->client->request('POST', '/admin/news/update/12');
         $this->client->followRedirect();
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
     }
 
     public function testDelete()
     {
-        $this->client->request('DELETE', '/admin/article/delete/12');
+        $this->client->request('DELETE', '/admin/news/delete/12');
         $this->client->followRedirect();
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
     }
