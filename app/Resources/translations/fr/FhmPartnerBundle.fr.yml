@@ -3,9 +3,13 @@ fhm:
     admin:
         breadcrumb:                             Admin
         partner:
-            breadcrumb:                         Article
+            breadcrumb:                         Partner
+            group:
+                breadcrumb:                     Group
+                update:
+                    breadcrumb:                  Modifier
             create:
-                breadcrumb:                     Ajouter un article
+                breadcrumb:                     Ajouter un partner
             update:
                 breadcrumb:                     Modifier
             detail:
@@ -15,9 +19,9 @@ project:
     admin:
         breadcrump:                             Admin
         partner:
-            breadcrump:                         Article
+            breadcrump:                         Partner
             create:
-                breadcrumb:                     Ajouter un article
+                breadcrumb:                     Ajouter un partner
             update:
                 breadcrumb:                     Modifier
             detail:

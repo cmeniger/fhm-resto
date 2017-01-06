@@ -3,9 +3,9 @@ fhm:
     admin:
         breadcrumb:                             Admin
         event:
-            breadcrumb:                         Article
+            breadcrumb:                         événement
             create:
-                breadcrumb:                     Ajouter un article
+                breadcrumb:                     Ajouter un évènement
             update:
                 breadcrumb:                     Modifier
             detail:
@@ -15,9 +15,9 @@ project:
     admin:
         breadcrump:                             Admin
         event:
-            breadcrump:                         Article
+            breadcrump:                         Evenement
             create:
-                breadcrumb:                     Ajouter un article
+                breadcrumb:                     Ajouter un évènement
             update:
                 breadcrumb:                     Modifier
             detail:

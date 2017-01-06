@@ -72,14 +72,14 @@ class CreateType extends FhmType
             ChoiceType::class,
             array(
                 'label' => $options['translation_route'].'.admin.create.form.order_item',
-                'choices' => $this->_sortChoices($options),
+                'choices' => $this->sortChoices($options),
             )
         )->add(
             'order_video',
             ChoiceType::class,
             array(
                 'label' => $options['translation_route'].'.admin.create.form.order_video',
-                'choices' => $this->_sortChoices($options),
+                'choices' => $this->sortChoices($options),
             )
         )->add(
             'order',
@@ -101,7 +101,7 @@ class CreateType extends FhmType
                 'class' => 'FhmGalleryBundle:GalleryAlbum',
                 'choice_label' => 'name',
                 'query_builder' => function (GalleryAlbumRepository $dr) use ($options) {
-                    return $dr->getFormEnable($options['filter']);
+                    return $dr->getFormEnable();
                 },
                 'required' => false,
                 'multiple' => true,
@@ -115,7 +115,7 @@ class CreateType extends FhmType
                 'class' => 'FhmGalleryBundle:GalleryItem',
                 'choice_label' => 'name',
                 'query_builder' => function (GalleryItemRepository $dr) use ($options) {
-                    return $dr->getFormEnable($options['filter']);
+                    return $dr->getFormEnable();
                 },
                 'required' => false,
                 'multiple' => true,
@@ -129,7 +129,7 @@ class CreateType extends FhmType
                 'class' => 'FhmGalleryBundle:GalleryVideo',
                 'choice_label' => 'name',
                 'query_builder' => function (GalleryVideoRepository $dr) use ($options) {
-                    return $dr->getFormEnable($options['filter']);
+                    return $dr->getFormEnable();
                 },
                 'required' => false,
                 'multiple' => true,
@@ -141,17 +141,17 @@ class CreateType extends FhmType
     /**
      * @return array
      */
-    private function _sortChoices($options)
+    private function sortChoices($options)
     {
         return array(
-            "title" => $options['translation_route'].'.admin.sort.title.asc',
-            "title desc" => $options['translation_route'].'.admin.sort.title.desc',
-            "order" => $options['translation_route'].'.admin.sort.order.asc',
-            "order desc" => $options['translation_route'].'.admin.sort.order.desc',
-            "date_create" => $options['translation_route'].'.admin.sort.create.asc',
-            "date_create desc" => $options['translation_route'].'.admin.sort.create.desc',
-            "date_update" => $options['translation_route'].'.admin.sort.update.asc',
-            "date_update desc" => $options['translation_route'].'.admin.sort.update.desc',
+            $options['translation_route'].'.admin.sort.title.asc' => "title",
+            $options['translation_route'].'.admin.sort.title.desc' => "title desc",
+            $options['translation_route'].'.admin.sort.order.asc' => "order",
+            $options['translation_route'].'.admin.sort.order.desc' => "order desc",
+            $options['translation_route'].'.admin.sort.create.asc' => "date_create",
+            $options['translation_route'].'.admin.sort.create.desc' => "date_create desc",
+            $options['translation_route'].'.admin.sort.update.asc' => "date_update",
+            $options['translation_route'].'.admin.sort.update.desc' => "date_update desc",
         );
     }
 

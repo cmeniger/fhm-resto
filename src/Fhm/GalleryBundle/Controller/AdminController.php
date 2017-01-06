@@ -5,7 +5,7 @@ use Fhm\FhmBundle\Controller\RefAdminController as FhmController;
 use Fhm\FhmBundle\Form\Handler\Admin\CreateHandler;
 use Fhm\FhmBundle\Form\Handler\Admin\UpdateHandler;
 use Fhm\GalleryBundle\Document\Gallery;
-use Fhm\GalleryBundle\Form\Type\Admin\Album\CreateType;
+use Fhm\GalleryBundle\Form\Type\Admin\CreateType;
 use Fhm\GalleryBundle\Form\Type\Admin\UpdateType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -35,6 +35,7 @@ class AdminController extends FhmController
         self::$form->createType = CreateType::class;
         self::$form->createHandler = CreateHandler::class;
         self::$form->updateType = UpdateType::class;
+        self::$form->updateHandler = UpdateHandler::class;
     }
 
     /**

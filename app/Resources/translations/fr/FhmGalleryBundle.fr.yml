@@ -3,9 +3,9 @@ fhm:
     admin:
         breadcrumb:                             Admin
         gallery:
-            breadcrumb:                         Article
+            breadcrumb:                         Gallery
             create:
-                breadcrumb:                     Ajouter un article
+                breadcrumb:                     Ajouter un gallery
             update:
                 breadcrumb:                     Modifier
             detail:
@@ -15,9 +15,9 @@ project:
     admin:
         breadcrump:                             Admin
         gallery:
-            breadcrump:                         Article
+            breadcrump:                         Gallery
             create:
-                breadcrumb:                     Ajouter un article
+                breadcrumb:                     Ajouter un gallery
             update:
                 breadcrumb:                     Modifier
             detail:

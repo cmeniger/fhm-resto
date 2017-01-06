@@ -72,34 +72,56 @@ class CreateType extends GeolocationType
             array(
                 'label' => $options['translation_route'].'.admin.create.form.social.facebook',
                 'required' => false,
+                'attr' => array('placeholder' => $options['translation_route'].'.admin.create.form.social.http'),
             )
         )->add(
             'social_twitter',
             TextType::class,
-            array('label' => $options['translation_route'].'.admin.create.form.social.twitter', 'required' => false)
+            array(
+                'label' => $options['translation_route'].'.admin.create.form.social.twitter',
+                'required' => false,
+                'attr' => array('placeholder' => $options['translation_route'].'.admin.create.form.social.http'),
+            )
         )->add(
             'social_google',
             TextType::class,
-            array('label' => $options['translation_route'].'.admin.create.form.social.google', 'required' => false)
+            array(
+                'label' => $options['translation_route'].'.admin.create.form.social.google',
+                'required' => false,
+                'attr' => array('placeholder' => $options['translation_route'].'.admin.create.form.social.http'),
+            )
         )->add(
             'social_instagram',
             TextType::class,
             array(
                 'label' => $options['translation_route'].'.admin.create.form.social.instagram',
                 'required' => false,
+                'attr' => array('placeholder' => $options['translation_route'].'.admin.create.form.social.http'),
             )
         )->add(
             'social_youtube',
             TextType::class,
-            array('label' => $options['translation_route'].'.admin.create.form.social.youtube', 'required' => false)
+            array(
+                'label' => $options['translation_route'].'.admin.create.form.social.youtube',
+                'required' => false,
+                'attr' => array('placeholder' => $options['translation_route'].'.admin.create.form.social.http'),
+            )
         )->add(
             'social_flux',
             TextType::class,
-            array('label' => $options['translation_route'].'.admin.create.form.social.flux', 'required' => false)
+            array(
+                'label' => $options['translation_route'].'.admin.create.form.social.flux',
+                'required' => false,
+                'attr' => array('placeholder' => $options['translation_route'].'.admin.create.form.social.http'),
+            )
         )->add(
             'social_site',
             TextType::class,
-            array('label' => $options['translation_route'].'.admin.create.form.social.site', 'required' => false)
+            array(
+                'label' => $options['translation_route'].'.admin.create.form.social.site',
+                'required' => false,
+                'attr' => array('placeholder' => $options['translation_route'].'.admin.create.form.social.http'),
+            )
         )->remove('share')->remove('global');
     }
 
@@ -114,7 +136,6 @@ class CreateType extends GeolocationType
                 'translation_domain' => 'FhmContactBundle',
                 'cascade_validation' => true,
                 'translation_route' => 'contact',
-                'filter' => '',
                 'user_admin' => '',
             )
         );

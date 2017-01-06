@@ -3,9 +3,9 @@ fhm:
     admin:
         breadcrumb:                             Admin
         notification:
-            breadcrumb:                         Article
+            breadcrumb:                         Notification
             create:
-                breadcrumb:                     Ajouter un article
+                breadcrumb:                     Ajouter une notification
             update:
                 breadcrumb:                     Modifier
             detail:
@@ -15,9 +15,9 @@ project:
     admin:
         breadcrump:                             Admin
         notification:
-            breadcrump:                         Article
+            breadcrump:                         Notification
             create:
-                breadcrumb:                     Ajouter un article
+                breadcrumb:                     Ajouter une notification
             update:
                 breadcrumb:                     Modifier
             detail:

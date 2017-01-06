@@ -25,14 +25,15 @@ class CreateType extends FhmType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         parent::buildForm($builder, $options);
-        $builder
-            ->add('title', TextType::class, array('label' => $options['translation_route'].'.admin.create.form.title'))
-            ->add(
+        $builder->add(
+                'title',
+                TextType::class,
+                array('label' => $options['translation_route'].'.admin.create.form.title')
+            )->add(
                 'subtitle',
                 TextType::class,
                 array('label' => $options['translation_route'].'.admin.create.form.subtitle', 'required' => false)
-            )
-            ->add(
+            )->add(
                 'resume',
                 TextareaType::class,
                 array(
@@ -40,8 +41,7 @@ class CreateType extends FhmType
                     'attr' => array('class' => 'editor'),
                     'required' => false,
                 )
-            )
-            ->add(
+            )->add(
                 'content',
                 TextareaType::class,
                 array(
@@ -49,19 +49,18 @@ class CreateType extends FhmType
                     'attr' => array('class' => 'editor'),
                     'required' => false,
                 )
-            )
-            ->add(
+            )->add(
                 'add_global',
                 CheckboxType::class,
                 array('label' => $options['translation_route'].'.admin.create.form.add_global', 'required' => false)
-            )
-            ->add(
+            )->add(
                 'sort',
                 ChoiceType::class,
-                array('label' => $options['translation_route'].'.admin.create.form.sort',
-                      'choices' => $this->_sortChoices($options))
-            )
-            ->add(
+                array(
+                    'label' => $options['translation_route'].'.admin.create.form.sort',
+                    'choices' => $this->sortChoices($options),
+                )
+            )->add(
                 'image',
                 MediaType::class,
                 array(
@@ -69,8 +68,7 @@ class CreateType extends FhmType
                     'filter' => 'image/*',
                     'required' => false,
                 )
-            )
-            ->add(
+            )->add(
                 'items',
                 DocumentType::class,
                 array(
@@ -78,34 +76,32 @@ class CreateType extends FhmType
                     'class' => 'FhmSliderBundle:SliderItem',
                     'choice_label' => 'name',
                     'query_builder' => function (SliderItemRepository $dr) use ($options) {
-                        return $dr->getFormEnable($options['filter']);
+                        return $dr->getFormEnable();
                     },
                     'required' => false,
                     'multiple' => true,
                     'by_reference' => false,
                 )
-            )
-            ->remove('name')
-            ->remove('description');
+            )->remove('name')->remove('description');
     }
 
     /**
      * @return array
      */
-    private function _sortChoices($options)
+    private function sortChoices($options)
     {
-        return array
-        (
-            "title" => $options['translation_route'].'.admin.sort.title.asc',
-            "title desc" => $options['translation_route'].'.admin.sort.title.desc',
-            "order" => $options['translation_route'].'.admin.sort.order.asc',
-            "order desc" => $options['translation_route'].'.admin.sort.order.desc',
-            "date_create" => $options['translation_route'].'.admin.sort.create.asc',
-            "date_create desc" => $options['translation_route'].'.admin.sort.create.desc',
-            "date_update" => $options['translation_route'].'.admin.sort.update.asc',
-            "date_update desc" => $options['translation_route'].'.admin.sort.update.desc',
+        return array(
+            $options['translation_route'].'.admin.sort.title.asc' => "title",
+            $options['translation_route'].'.admin.sort.title.desc' => "title desc",
+            $options['translation_route'].'.admin.sort.order.asc' => "order",
+            $options['translation_route'].'.admin.sort.order.desc' => "order desc",
+            $options['translation_route'].'.admin.sort.create.asc' => "date_create",
+            $options['translation_route'].'.admin.sort.create.desc' => "date_create desc",
+            $options['translation_route'].'.admin.sort.update.asc' => "date_update",
+            $options['translation_route'].'.admin.sort.update.desc' => "date_update desc",
         );
     }
+
     /**
      * @param OptionsResolver $resolver
      */

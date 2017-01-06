@@ -3,9 +3,9 @@ fhm:
     admin:
         breadcrumb:                             Admin
         mail:
-            breadcrumb:                         Article
+            breadcrumb:                         Mail
             create:
-                breadcrumb:                     Ajouter un article
+                breadcrumb:                     Ajouter un mail
             update:
                 breadcrumb:                     Modifier
             detail:
@@ -15,9 +15,9 @@ project:
     admin:
         breadcrump:                             Admin
         mail:
-            breadcrump:                         Article
+            breadcrump:                         Mail
             create:
-                breadcrumb:                     Ajouter un article
+                breadcrumb:                     Ajouter un mail
             update:
                 breadcrumb:                     Modifier
             detail:

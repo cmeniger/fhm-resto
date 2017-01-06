@@ -3,9 +3,13 @@ fhm:
     admin:
         breadcrumb:                             Admin
         contact:
-            breadcrumb:                         Article
+            breadcrumb:                         Contact
+            message:
+                breadcrumb:                     Message
+                update:
+                    breadcrumb:                  Modifier
             create:
-                breadcrumb:                     Ajouter un article
+                breadcrumb:                     Ajouter un contact
             update:
                 breadcrumb:                     Modifier
             detail:
@@ -15,9 +19,9 @@ project:
     admin:
         breadcrump:                             Admin
         contact:
-            breadcrump:                         Article
+            breadcrump:                         Contact
             create:
-                breadcrumb:                     Ajouter un article
+                breadcrumb:                     Ajouter un contact
             update:
                 breadcrumb:                     Modifier
             detail:
@@ -90,6 +94,18 @@ contact:
                 active:                         Activer
                 share:                          Partager
                 global:                         Globale
+                social:
+                    http:                       http://
+                    facebook:                   Facebook
+                    facebookId:                 ID Facebook
+                    twitter:                    Twitter
+                    twitterId:                  ID Twitter
+                    google:                     Google
+                    googleId:                   ID Google
+                    instagram:                  Instagram
+                    youtube:                    Youtube
+                    flux:                       Flux RSS
+                    site:                       Site internet
                 submit:
                     save:                       Sauvegarder
                     new:                        Sauvegarder et ajouter
@@ -139,6 +155,18 @@ contact:
                 active:                         Activer
                 share:                          Partager
                 global:                         Globale
+                social:
+                    http:                       http://
+                    facebook:                   Facebook
+                    facebookId:                 ID Facebook
+                    twitter:                    Twitter
+                    twitterId:                  ID Twitter
+                    google:                     Google
+                    googleId:                   ID Google
+                    instagram:                  Instagram
+                    youtube:                    Youtube
+                    flux:                       Flux RSS
+                    site:                       Site internet
                 submit:
                     save:                       Sauvegarder
                     new:                        Sauvegarder et ajouter
@@ -148,6 +176,7 @@ contact:
                     cancel:                     Annuler
                     import:                     Importer
                     export:                     Exporter
+                    delete:                     Supprimer
                 fieldset:
                     informations:               Informations générales
                     map:                        Géolocalisation

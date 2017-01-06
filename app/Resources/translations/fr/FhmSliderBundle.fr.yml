@@ -3,9 +3,9 @@ fhm:
     admin:
         breadcrumb:                             Admin
         slider:
-            breadcrumb:                         Article
+            breadcrumb:                         Slider
             create:
-                breadcrumb:                     Ajouter un article
+                breadcrumb:                     Ajouter un slider
             update:
                 breadcrumb:                     Modifier
             detail:
@@ -15,9 +15,9 @@ project:
     admin:
         breadcrump:                             Admin
         slider:
-            breadcrump:                         Article
+            breadcrump:                         Slider
             create:
-                breadcrumb:                     Ajouter un article
+                breadcrumb:                     Ajouter un slider
             update:
                 breadcrumb:                     Modifier
             detail:

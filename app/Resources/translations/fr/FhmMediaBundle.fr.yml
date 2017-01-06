@@ -3,9 +3,9 @@ fhm:
     admin:
         breadcrumb:                             Admin
         media:
-            breadcrumb:                         Article
+            breadcrumb:                         Média
             create:
-                breadcrumb:                     Ajouter un article
+                breadcrumb:                     Ajouter un média
             update:
                 breadcrumb:                     Modifier
             detail:
@@ -15,9 +15,9 @@ project:
     admin:
         breadcrump:                             Admin
         media:
-            breadcrump:                         Article
+            breadcrump:                         Média
             create:
-                breadcrumb:                     Ajouter un article
+                breadcrumb:                     Ajouter un média
             update:
                 breadcrumb:                     Modifier
             detail:

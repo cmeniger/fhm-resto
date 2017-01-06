@@ -3,9 +3,9 @@ fhm:
     admin:
         breadcrumb:                             Admin
         geolocation:
-            breadcrumb:                         Article
+            breadcrumb:                         Gealocation
             create:
-                breadcrumb:                     Ajouter un article
+                breadcrumb:                     Ajouter un géolocation
             update:
                 breadcrumb:                     Modifier
             detail:
@@ -15,9 +15,9 @@ project:
     admin:
         breadcrump:                             Admin
         geolocation:
-            breadcrump:                         Article
+            breadcrump:                         Géolocation
             create:
-                breadcrumb:                     Ajouter un article
+                breadcrumb:                     Ajouter un géolocation
             update:
                 breadcrumb:                     Modifier
             detail:

@@ -3,9 +3,9 @@ fhm:
     admin:
         breadcrumb:                             Admin
         card:
-            breadcrumb:                         Article
+            breadcrumb:                         Carte Menu
             create:
-                breadcrumb:                     Ajouter
+                breadcrumb:                     Ajouter une Carte Menu
             update:
                 breadcrumb:                     Modifier
             detail:
@@ -15,7 +15,7 @@ project:
     admin:
         breadcrump:                             Admin
         card:
-            breadcrump:                         Article
+            breadcrump:                         Carte Menu
             create:
                 breadcrumb:                     Ajouter
             update:
@@ -26,8 +26,8 @@ card:
     admin:
         index:
             title:                              Gestion des cartes
-            link:                               Cartes
-            breadcrumb:                         Cartes
+            link:                               Cartes Menu
+            breadcrumb:                         Cartes Menu
             nodata:                             Aucune donnée
             form:
                 search:                         Rechercher
@@ -59,7 +59,7 @@ card:
         create:
             title:                              Ajouter
             link:                               Ajouter
-            breadcrumb:                         Ajouter une carte
+            breadcrumb:                         Ajouter une carte menu
             flash:
                 ok:                             La carte a bien été créée.
                 ko:                             La carte n'a pas été créée.

@@ -55,7 +55,7 @@ class CreateType extends FhmType
                 'class' => 'FhmPartnerBundle:PartnerGroup',
                 'choice_label' => 'name',
                 'query_builder' => function (PartnerGroupRepository $dr) use ($options) {
-                    return $dr->getFormEnable($options['filter']);
+                    return $dr->getFormEnable();
                 },
                 'multiple' => true,
                 'required' => false,
@@ -74,9 +74,7 @@ class CreateType extends FhmType
                 'translation_domain' => 'FhmPartnerBundle',
                 'cascade_validation' => true,
                 'translation_route' => 'partner',
-                'filter' => '',
-                'user_admin' => '',
-                'map' => '',
+                'user_admin' => ''
             )
         );
     }

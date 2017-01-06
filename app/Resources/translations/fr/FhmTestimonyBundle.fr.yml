@@ -3,9 +3,9 @@ fhm:
     admin:
         breadcrumb:                             Admin
         testimoney:
-            breadcrumb:                         Article
+            breadcrumb:                         Témoignages
             create:
-                breadcrumb:                     Ajouter un article
+                breadcrumb:                     Ajouter un témoignage
             update:
                 breadcrumb:                     Modifier
             detail:
@@ -15,9 +15,9 @@ project:
     admin:
         breadcrump:                             Admin
         testimoney:
-            breadcrump:                         Article
+            breadcrump:                         Témoignage
             create:
-                breadcrumb:                     Ajouter un article
+                breadcrumb:                     Ajouter un témoignage
             update:
                 breadcrumb:                     Modifier
             detail:

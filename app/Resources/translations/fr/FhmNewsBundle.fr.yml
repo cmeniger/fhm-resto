@@ -3,9 +3,9 @@ fhm:
     admin:
         breadcrumb:                             Admin
         news:
-            breadcrumb:                         Article
+            breadcrumb:                         Actualités
             create:
-                breadcrumb:                     Ajouter un article
+                breadcrumb:                     Ajouter une actualité
             update:
                 breadcrumb:                     Modifier
             detail:
@@ -15,9 +15,9 @@ project:
     admin:
         breadcrump:                             Admin
         news:
-            breadcrump:                         Article
+            breadcrump:                         Actualité
             create:
-                breadcrumb:                     Ajouter un article
+                breadcrumb:                     Ajouter une actualité
             update:
                 breadcrumb:                     Modifier
             detail:

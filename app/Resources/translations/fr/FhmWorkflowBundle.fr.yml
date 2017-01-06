@@ -3,9 +3,9 @@ fhm:
     admin:
         breadcrumb:                             Admin
         workflow:
-            breadcrumb:                         Article
+            breadcrumb:                         Workflow
             create:
-                breadcrumb:                     Ajouter un article
+                breadcrumb:                     Ajouter un workflow
             update:
                 breadcrumb:                     Modifier
             detail:
@@ -15,9 +15,9 @@ project:
     admin:
         breadcrump:                             Admin
         workflow:
-            breadcrump:                         Article
+            breadcrump:                         Workflow
             create:
-                breadcrumb:                     Ajouter un article
+                breadcrumb:                     Ajouter un workflow
             update:
                 breadcrumb:                     Modifier
             detail:

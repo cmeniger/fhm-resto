@@ -3,9 +3,9 @@ fhm:
     admin:
         breadcrumb:                             Admin
         site:
-            breadcrumb:                         Article
+            breadcrumb:                         Site
             create:
-                breadcrumb:                     Ajouter un article
+                breadcrumb:                     Ajouter un site
             update:
                 breadcrumb:                     Modifier
             detail:
@@ -15,9 +15,9 @@ project:
     admin:
         breadcrump:                             Admin
         site:
-            breadcrump:                         Article
+            breadcrump:                         Site
             create:
-                breadcrumb:                     Ajouter un article
+                breadcrumb:                     Ajouter un site
             update:
                 breadcrumb:                     Modifier
             detail:

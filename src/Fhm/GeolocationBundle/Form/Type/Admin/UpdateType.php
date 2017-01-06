@@ -26,7 +26,6 @@ class UpdateType extends FhmType
             'address_search',
             PlaceAutocompleteType::class,
             [
-                AutocompleteComponentType::COUNTRY => 'fr',
                 'label' => $options['translation_route'].'.admin.create.form.address_search',
                 'mapped' => false,
                 'required' => false,
@@ -72,11 +71,10 @@ class UpdateType extends FhmType
     {
         $resolver->setDefaults(
             array(
-                'data_class' => 'Fhm\GalleryBundle\Document\Geolocation',
+                'data_class' => 'Fhm\GeolocationBundle\Document\Geolocation',
                 'translation_domain' => 'FhmGeolocationBundle',
                 'cascade_validation' => true,
                 'translation_route' => 'gealocation',
-                'filter' => '',
                 'user_admin' => '',
             )
         );

@@ -70,8 +70,8 @@ class UpdateType extends GeolocationType
             ChoiceType::class,
             array(
                 'choices' => array(
-                    'm' => 'fhm.sex.m',
-                    'f' => 'fhm.sex.f',
+                    'fhm.sex.m'=>'m',
+                    'fhm.sex.f'=>'f',
                 ),
                 'label' => 'fhm.sex.label',
                 'translation_domain' => 'FhmFhmBundle',
@@ -81,7 +81,7 @@ class UpdateType extends GeolocationType
             'avatar',
             MediaType::class,
             array(
-                'label' => $options['translation_route'].'.admin.update.form.avatar',
+                'label' => $options['translation_route'].'.admin.create.form.avatar',
                 'filter' => 'image/*',
                 'required' => false,
             )
@@ -89,57 +89,82 @@ class UpdateType extends GeolocationType
             'social_facebook',
             TextType::class,
             array(
-                'label' => $options['translation_route'].'.admin.update.form.social.facebook',
+                'label' => $options['translation_route'].'.admin.create.form.social.facebook',
                 'required' => false,
+                'attr' => array('placeholder' => $options['translation_route'].'.admin.create.form.social.http'),
             )
         )->add(
             'social_facebook_id',
             TextType::class,
             array(
-                'label' => $options['translation_route'].'.admin.update.form.social.facebookId',
+                'label' => $options['translation_route'].'.admin.create.form.social.facebookId',
                 'required' => false,
+                'attr' => array('placeholder' => $options['translation_route'].'.admin.create.form.social.facebookId'),
             )
         )->add(
             'social_twitter',
             TextType::class,
-            array('label' => $options['translation_route'].'.admin.update.form.social.twitter', 'required' => false)
+            array(
+                'label' => $options['translation_route'].'.admin.create.form.social.twitter',
+                'required' => false,
+                'attr' => array('placeholder' => $options['translation_route'].'.admin.create.form.social.http'),
+            )
         )->add(
             'social_twitter_id',
             TextType::class,
             array(
-                'label' => $options['translation_route'].'.admin.update.form.social.twitterId',
+                'label' => $options['translation_route'].'.admin.create.form.social.twitterId',
                 'required' => false,
+                'attr' => array('placeholder' => $options['translation_route'].'.admin.create.form.social.twitterId'),
             )
         )->add(
             'social_google',
             TextType::class,
-            array('label' => $options['translation_route'].'.admin.update.form.social.google', 'required' => false)
+            array(
+                'label' => $options['translation_route'].'.admin.create.form.social.google',
+                'required' => false,
+                'attr' => array('placeholder' => $options['translation_route'].'.admin.create.form.social.http'),
+            )
         )->add(
             'social_google_id',
             TextType::class,
             array(
-                'label' => $options['translation_route'].'.admin.update.form.social.googleId',
+                'label' => $options['translation_route'].'.admin.create.form.social.googleId',
                 'required' => false,
+                'attr' => array('placeholder' => $options['translation_route'].'.admin.create.form.social.googleId'),
             )
         )->add(
             'social_instagram',
             TextType::class,
             array(
-                'label' => $options['translation_route'].'.admin.update.form.social.instagram',
+                'label' => $options['translation_route'].'.admin.create.form.social.instagram',
                 'required' => false,
+                'attr' => array('placeholder' => $options['translation_route'].'.admin.create.form.social.http'),
             )
         )->add(
             'social_youtube',
             TextType::class,
-            array('label' => $options['translation_route'].'.admin.update.form.social.youtube', 'required' => false)
+            array(
+                'label' => $options['translation_route'].'.admin.create.form.social.youtube',
+                'required' => false,
+                'attr' => array('placeholder' => $options['translation_route'].'.admin.create.form.social.http'),
+            )
         )->add(
             'social_flux',
             TextType::class,
-            array('label' => $options['translation_route'].'.admin.update.form.social.flux', 'required' => false)
+            array(
+                'label' => $options['translation_route'].'.admin.create.form.social.flux',
+                'required' => false,
+                'attr' => array('placeholder' => $options['translation_route'].'.admin.create.form.social.http'),
+            )
         )->add(
             'social_site',
             TextType::class,
-            array('label' => $options['translation_route'].'.admin.update.form.social.site', 'required' => false)
+            array(
+                'label' => $options['translation_route'].'.admin.create.form.social.site',
+                'required' => false,
+                'attr' => array('placeholder' => $options['translation_route'].'.admin.create.form.social.http'),
+            )
         )->remove('name')->remove('description')->remove('active')->remove('share')->remove('global')->remove(
             'grouping'
         );

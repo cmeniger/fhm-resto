@@ -9,6 +9,6 @@
 
 {% block content_data_body %}
     <td>{{ document.getName() }}</td>
-    <td>{{ (instance.translation ~ '.' ~ document.getMap() ~ '.choice')|trans }}</td>
+    <td>{{ (document.getMap())|trans}}</td>
     <td>{{ document.getOrder() }}</td>
 {% endblock %}

@@ -35,6 +35,8 @@ class AdminController extends FhmController
         self::$form->createType    = CreateType::class;
         self::$form->createHandler = CreateHandler::class;
         self::$form->updateType    = UpdateType::class;
+        self::$form->updateHandler = UpdateHandler::class;
+
     }
 
     /**

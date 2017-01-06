@@ -3,9 +3,9 @@ fhm:
     admin:
         breadcrumb:                             Admin
         mappicker:
-            breadcrumb:                         Article
+            breadcrumb:                         Map
             create:
-                breadcrumb:                     Ajouter un article
+                breadcrumb:                     Ajouter une map
             update:
                 breadcrumb:                     Modifier
             detail:
@@ -15,26 +15,28 @@ project:
     admin:
         breadcrump:                             Admin
         mappicker:
-            breadcrump:                         Article
+            breadcrump:                         Map
             create:
-                breadcrumb:                     Ajouter un article
+                breadcrumb:                     Ajouter une map
             update:
                 breadcrumb:                     Modifier
             detail:
                 breadcrumb:                     Détails
 mappicker:
+    mappicker:
+        france_region:choice.choice
     admin:
         index:
-            title:                              Gestion des cartes
-            link:                               Cartes
-            breadcrumb:                         Cartes
+            title:                              Gestion des maps
+            link:                               Maps
+            breadcrumb:                         Maps
             nodata:                             Aucune donnée
             form:
                 search:                         Rechercher
             table:
                 header:
                     name:                       Nom
-                    map:                        Carte
+                    map:                        Map
                     order:                      Ordre
                     action:                     Actions
                     status:                     Statut
@@ -47,18 +49,18 @@ mappicker:
                     undelete:                   Restaurer
                     update:                     Modifier
                 confirm:
-                    activate:                   Confirmer l'activation de la carte ?
-                    deactivate:                 Confirmer la désactivation de la carte ?
-                    delete:                     Confirmer la suppression de la carte ?
-                    undelete:                   Confirmer le déblocage de la carte ?
+                    activate:                   Confirmer l'activation de la map ?
+                    deactivate:                 Confirmer la désactivation de la map ?
+                    delete:                     Confirmer la suppression de la map ?
+                    undelete:                   Confirmer le déblocage de la map ?
 
         create:
             title:                              Ajouter
             link:                               Ajouter
-            breadcrumb:                         Ajouter une carte
+            breadcrumb:                         Ajouter une map
             flash:
-                ok:                             La carte a bien été créée.
-                ko:                             La carte n'a pas été créée.
+                ok:                             La map a bien été créée.
+                ko:                             La map n'a pas été créée.
             form:
                 name:                           Nom
                 description:                    Description
@@ -85,8 +87,8 @@ mappicker:
             link:                               Modifier
             breadcrumb:                         Modifier
             flash:
-                ok:                             La carte a bien été modifiée.
-                ko:                             La carte n'a pas été modifiée.
+                ok:                             La map a bien été modifiée.
+                ko:                             La map n'a pas été modifiée.
             form:
                 name:                           Nom
                 description:                    Description
@@ -165,22 +167,22 @@ mappicker:
 
         activate:
             flash:
-                ok:                             La carte a bien été activée.
+                ok:                             La map a bien été activée.
 
         deactivate:
             flash:
-                ok:                             La carte a bien été désactivée.
+                ok:                             La map a bien été désactivée.
 
         delete:
             flash:
-                ok:                             La carte a bien été supprimée.
+                ok:                             La map a bien été supprimée.
 
     pagination:
-        counter:                                Nombre de cartes:
+        counter:                                Nombre de maps:
 
     error:
-        unknown:                                La carte n'existe pas.
-        delete:                                 La carte n'existe pas.
+        unknown:                                La map n'existe pas.
+        delete:                                 La map n'existe pas.
         forbidden:                              Droits insuffisants.
 
     nomap:
@@ -188,7 +190,7 @@ mappicker:
             name:                               Région
             code:                               Code
             site:                               Site
-        choice:                                 Aucune carte
+        choice:                                 Aucune map
         count:                                  1
         zone-01:                                Tout
 

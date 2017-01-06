@@ -1,7 +1,9 @@
 <?php
 namespace Fhm\PartnerBundle\Form\Type\Admin\Group;
 
+use Doctrine\Bundle\MongoDBBundle\Form\Type\DocumentType;
 use Fhm\FhmBundle\Form\Type\Admin\UpdateType as FhmType;
+use Fhm\PartnerBundle\Repository\PartnerRepository;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -25,12 +27,12 @@ class UpdateType extends FhmType
             array('label' => $options['translation_route'].'.admin.update.form.add_global', 'required' => false)
         )->add(
             'partners',
-            'document',
+            DocumentType::class,
             array(
-                'label' => $options['translation_route'].'.admin.update.form.partners',
+                'label' => $options['translation_route'].'.admin.create.form.partners',
                 'class' => 'FhmPartnerBundle:Partner',
                 'choice_label' => 'name',
-                'query_builder' => function (\Fhm\PartnerBundle\Repository\PartnerRepository $dr) {
+                'query_builder' => function (PartnerRepository $dr) use ($options) {
                     return $dr->getFormEnable();
                 },
                 'required' => false,
@@ -50,6 +52,8 @@ class UpdateType extends FhmType
                 'data_class' => 'Fhm\PartnerBundle\Document\PartnerGroup',
                 'translation_domain' => 'FhmPartnerBundle',
                 'cascade_validation' => true,
+                'translation_route' => 'partner.group',
+                'user_admin' => ''
             )
         );
     }

@@ -40,9 +40,9 @@ class CreateType extends FhmType
      */
     public function getMapChoices($options)
     {
-        $mapsArray['nomap'] = $options['translation_route'].'.nomap.choice';
+        $mapsArray[$options['translation_route'].'.nomap.choice'] = 'nomap';
         foreach ($options['map'] as $map) {
-            $mapsArray[$map] = $options['translation_route'].'.'.$map.'.choice';
+            $mapsArray[$options['translation_route'].'.'.$map.'.choice'] = $map;
         }
 
         return $mapsArray;
