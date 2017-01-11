@@ -186,7 +186,6 @@ class Tools
             $unique = $this->dmRepository($repository)->isUnique($id, $alias);
             $code++;
         }
-
         return $alias;
     }
 

@@ -1,14 +1,12 @@
 <?php
 namespace Fhm\CardBundle\Controller\Category;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Fhm\CardBundle\Form\Type\Admin\Category\CreateType;
 use Fhm\CardBundle\Form\Type\Admin\Category\UpdateType;
 use Fhm\FhmBundle\Controller\RefAdminController as FhmController;
 use Fhm\CardBundle\Document\CardCategory;
 use Fhm\FhmBundle\Form\Handler\Admin\CreateHandler;
 use Fhm\FhmBundle\Form\Handler\Admin\UpdateHandler;
-use Fhm\FhmBundle\Services\Tools;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
@@ -38,6 +36,7 @@ class AdminController extends FhmController
         self::$form->createType    = CreateType::class;
         self::$form->createHandler = CreateHandler::class;
         self::$form->updateType    = UpdateType::class;
+        self::$form->updateHandler = CreateHandler::class;
     }
 
     /**
@@ -63,9 +62,6 @@ class AdminController extends FhmController
      */
     public function createAction(Request $request)
     {
-        self::$form = new \stdClass();
-        self::$form->type = CreateType::class;
-        self::$form->handler = CreateHandler::class;
         return parent::createAction($request);
     }
 
@@ -80,9 +76,6 @@ class AdminController extends FhmController
      */
     public function duplicateAction(Request $request, $id)
     {
-        self::$form = new \stdClass();
-        self::$form->type = CreateType::class;
-        self::$form->handler = CreateHandler::class;
         return parent::duplicateAction($request, $id);
     }
 
@@ -97,9 +90,6 @@ class AdminController extends FhmController
      */
     public function updateAction(Request $request, $id)
     {
-        self::$form = new \stdClass();
-        self::$form->type = UpdateType::class;
-        self::$form->handler = UpdateHandler::class;
         return parent::updateAction($request, $id);
     }
 
@@ -206,7 +196,7 @@ class AdminController extends FhmController
     {
         $id   = $request->get('master');
         $list = json_decode($request->get('list'));
-        $this->fhm_tools->_treeSort($id, $list);
+        $this->get('fhm_tools')->_treeSort($id, $list);
 
         return new Response();
     }

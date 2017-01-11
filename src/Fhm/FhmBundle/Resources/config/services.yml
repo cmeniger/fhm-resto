@@ -36,7 +36,3 @@ services:
         arguments: ["@translator.default", "@templating"]
         tags:
             - { name: form.type, alias: schedules }
-
-    fhm_historic:
-            class: Fhm\FhmBundle\Services\HistoricService
-            arguments: ["@serializer", "@doctrine_mongodb.odm.default_document_manager"]

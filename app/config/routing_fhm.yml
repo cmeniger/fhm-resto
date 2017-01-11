@@ -87,3 +87,8 @@ fhm_fhm:
     resource: "@FhmFhmBundle/Controller/"
     type:     annotation
     prefix:   /
+
+fhm_historic:
+    resource: "@FhmHistoricBundle/Controller/"
+    type: annotation
+    prefix:   /

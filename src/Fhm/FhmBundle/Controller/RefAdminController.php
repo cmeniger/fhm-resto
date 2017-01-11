@@ -161,7 +161,7 @@ class RefAdminController extends GenericController
         }
         return array(
             'document' => $document,
-            'historics' => $this->get('fhm_historic')->getAllHistoricsByObject($document),
+//            'historics' => $this->get('fhm_historic')->getAllHistoricsByObject($document),
             'breadcrumbs' => $this->get('fhm_tools')->generateBreadcrumbs(
                 array(
                     'domain' => self::$domain,

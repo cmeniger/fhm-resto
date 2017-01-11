@@ -180,8 +180,6 @@ class ApiController extends FhmController
             $media = new \Fhm\MediaBundle\Document\Media();
             $media->setName($name);
             $media->setFile($file);
-            $media->setUserCreate($this->getUser());
-            $media->setAlias($this->get('fhm_tools')->getAlias('', $name));
             $media->setActive(true);
             $media->addTag($tagWorkflow);
             $media->addTag($tagTask);
@@ -228,51 +226,47 @@ class ApiController extends FhmController
      */
     public function addCommentAction(Request $request, $wid, $tid)
     {
-        $document = $this->fhm_tools->dmRepository()->find($tid);
-        $workflow = $this->fhm_tools->dmRepository('FhmWorkflowBundle:Workflow')->find($wid);
-        $instance = $this->fhm_tools->instanceData($document);
+        $document = $this->get('fhm_tools')->dmRepository(self::$repository)->find($tid);
+        $workflow = $this->get('fhm_tools')->dmRepository('FhmWorkflowBundle:Workflow')->find($wid);
         if ($request->get('comment') && $document->getAction() && $document->getAction()->getCommentCheck(
             ) && $document->getAction()->hasUserComment($this->getUser())
         ) {
             // Comment
             $comment = new \Fhm\WorkflowBundle\Document\WorkflowComment();
-            $comment->setUserCreate($this->getUser());
             $comment->setActive(true);
             $comment->setTask($document);
             $comment->setName($document->getName());
             $comment->setDescription($request->get('comment'));
-            $this->fhm_tools->dmPersist($comment);
+            $this->get('fhm_tools')->dmPersist($comment);
             // Log
             $log = new \Fhm\WorkflowBundle\Document\WorkflowLog();
             $log->setType(5);
-            $log->setUserCreate($this->getUser());
             $log->setActive(true);
             $log->setTask($document);
             $log->setName($document->getName());
             $log->setDescription($request->get('comment'));
-            $this->fhm_tools->dmPersist($log);
+            $this->get('fhm_tools')->dmPersist($log);
             // Task
             $document->addComment($comment);
             $document->addLog($log);
-            $this->fhm_tools->dmPersist($document);
+            $this->get('fhm_tools')->dmPersist($document);
             // Workflow
             if ($workflow) {
                 $workflow->sortUpdate();
-                $this->fhm_tools->dmPersist($workflow);
+                $this->get('fhm_tools')->dmPersist($workflow);
             }
             // Message
-            $this->get('session')->getFlashBag()->add('workflow', $this->fhm_tools->trans('workflow.events.comment'));
+            $this->get('session')->getFlashBag()->add('workflow', $this->trans('workflow.events.comment'));
         } else {
             $this->get('session')->getFlashBag()->add(
                 'workflow-error',
-                $this->fhm_tools->trans('workflow.events.error')
+                $this->trans('workflow.events.error')
             );
         }
 
         return array(
             'document' => $document,
             'workflow' => $workflow,
-            'instance' => $instance,
         );
     }
 
@@ -288,67 +282,63 @@ class ApiController extends FhmController
     public function actionValidateAction(Request $request, $wid, $tid)
     {
         $this->_init();
-        $document = $this->fhm_tools->dmRepository()->find($tid);
-        $workflow = $this->fhm_tools->dmRepository('FhmWorkflowBundle:Workflow')->find($wid);
-        $instance = $this->fhm_tools->instanceData($document);
+        $document = $this->get('fhm_tools')->dmRepository(self::$repository)->find($tid);
+        $workflow = $this->get('fhm_tools')->dmRepository('FhmWorkflowBundle:Workflow')->find($wid);
         if (($document->getStatus() == 1 || ($document->getStatus() == 0 && $document->getParents()->count(
                     ) == 0)) && $document->getAction() && $document->getAction()->getValidateCheck(
             ) && $document->getAction()->hasUserValidate($this->getUser())
         ) {
             // Task
             $document->setStatus(2);
-            $this->fhm_tools->dmPersist($document);
+            $this->get('fhm_tools')->dmPersist($document);
             // Sons
             foreach ($document->getSons() as $son) {
                 $before = $son->getStatus();
                 $son->checkStatus();
-                $this->fhm_tools->dmPersist($son);
+                $this->get('fhm_tools')->dmPersist($son);
                 $after = $son->getStatus();
                 if ($before != $after) {
                     $log = new \Fhm\WorkflowBundle\Document\WorkflowLog();
                     $log->setType(1);
-                    $log->setUserCreate($this->getUser());
                     $log->setActive(true);
                     $log->setTask($son);
                     $log->setName($son->getName());
                     $log->setDescription(
-                        $this->_textStatus($before, $after).$document->getName().' : '.$this->fhm_tools->trans(
+                        $this->_textStatus($before, $after).$document->getName().' : '.$this->trans(
                             'workflow.events.validate'
                         )
                     );
-                    $this->fhm_tools->dmPersist($log);
+                    $this->get('fhm_tools')->dmPersist($log);
                     $son->addLog($log);
-                    $this->fhm_tools->dmPersist($son);
+                    $this->get('fhm_tools')->dmPersist($son);
                 }
             }
             // Log
             $log = new \Fhm\WorkflowBundle\Document\WorkflowLog();
             $log->setType(2);
-            $log->setUserCreate($this->getUser());
             $log->setActive(true);
             $log->setTask($document);
             $log->setName($document->getName());
             $log->setDescription($this->_textStatus(1, 2));
-            $this->fhm_tools->dmPersist($log);
+            $this->get('fhm_tools')->dmPersist($log);
             $document->addLog($log);
-            $this->fhm_tools->dmPersist($document);
+            $this->get('fhm_tools')->dmPersist($document);
             // Workflow
             if ($workflow) {
                 $workflow->sortUpdate();
-                $this->fhm_tools->dmPersist($workflow);
+                $this->get('fhm_tools')->dmPersist($workflow);
             }
             // Message
-            $this->get('session')->getFlashBag()->add('workflow', $this->fhm_tools->trans('workflow.events.validate'));
+            $this->get('session')->getFlashBag()->add('workflow', $this->trans('workflow.events.validate'));
         } else {
             $this->get('session')->getFlashBag()->add(
                 'workflow-error',
-                $this->fhm_tools->trans('workflow.events.error')
+                $this->trans('workflow.events.error')
             );
         }
 
         return array(
             'document' => $workflow,
-            'instance' => $instance,
         );
     }
 
@@ -364,22 +354,20 @@ class ApiController extends FhmController
     public function actionDismissAction(Request $request, $wid, $tid)
     {
         $this->_init();
-        $document = $this->fhm_tools->dmRepository()->find($tid);
-        $workflow = $this->fhm_tools->dmRepository('FhmWorkflowBundle:Workflow')->find($wid);
-        $instance = $this->fhm_tools->instanceData($document);
+        $document = $this->get('fhm_tools')->dmRepository(self::$repository)->find($tid);
+        $workflow = $this->get('fhm_tools')->dmRepository('FhmWorkflowBundle:Workflow')->find($wid);
         if ($document->getStatus() == 1 && $document->getAction() && $document->getAction()->getDismissCheck(
             ) && $document->getAction()->hasUserDismiss($this->getUser())
         ) {
             // Task
             $document->setStatus(0);
-            $this->fhm_tools->dmPersist($document);
+            $this->get('fhm_tools')->dmPersist($document);
             // Parents
             foreach ($document->getParents() as $parent) {
                 $parent->setStatus(1);
-                $this->fhm_tools->dmPersist($parent);
+                $this->get('fhm_tools')->dmPersist($parent);
                 $log = new \Fhm\WorkflowBundle\Document\WorkflowLog();
                 $log->setType(1);
-                $log->setUserCreate($this->getUser());
                 $log->setActive(true);
                 $log->setTask($parent);
                 $log->setName($parent->getName());
@@ -388,13 +376,13 @@ class ApiController extends FhmController
                         'workflow.events.dismiss'
                     )
                 );
-                $this->fhm_tools->dmPersist($log);
+                $this->get('fhm_tools')->dmPersist($log);
                 $parent->addLog($log);
-                $this->fhm_tools->dmPersist($parent);
+                $this->get('fhm_tools')->dmPersist($parent);
                 foreach ($parent->getSons() as $son) {
                     $before = $son->getStatus();
                     $son->checkStatus();
-                    $this->fhm_tools->dmPersist($son);
+                    $this->get('fhm_tools')->dmPersist($son);
                     $after = $son->getStatus();
                     if ($before != $after) {
                         $log = new \Fhm\WorkflowBundle\Document\WorkflowLog();
@@ -408,43 +396,41 @@ class ApiController extends FhmController
                                 'workflow.events.dismiss'
                             )
                         );
-                        $this->fhm_tools->dmPersist($log);
+                        $this->get('fhm_tools')->dmPersist($log);
                         $son->addLog($log);
-                        $this->fhm_tools->dmPersist($son);
+                        $this->get('fhm_tools')->dmPersist($son);
                     }
                 }
             }
             // Log
             $log = new \Fhm\WorkflowBundle\Document\WorkflowLog();
             $log->setType(3);
-            $log->setUserCreate($this->getUser());
             $log->setActive(true);
             $log->setTask($document);
             $log->setName($document->getName());
             $log->setDescription($this->_textStatus(1, 0));
-            $this->fhm_tools->dmPersist($log);
+            $this->get('fhm_tools')->dmPersist($log);
             $document->addLog($log);
-            $this->fhm_tools->dmPersist($document);
+            $this->get('fhm_tools')->dmPersist($document);
             // Workflow
             if ($workflow) {
                 $workflow->sortUpdate();
-                $this->fhm_tools->dmPersist($workflow);
+                $this->get('fhm_tools')->dmPersist($workflow);
             }
             // Message
             $this->get('session')->getFlashBag()->add(
                 'workflow-warning',
-                $this->fhm_tools->trans('workflow.events.dismiss')
+                $this->trans('workflow.events.dismiss')
             );
         } else {
             $this->get('session')->getFlashBag()->add(
                 'workflow-error',
-                $this->fhm_tools->trans('workflow.events.error')
+                $this->trans('workflow.events.error')
             );
         }
 
         return array(
             'document' => $workflow,
-            'instance' => $instance,
         );
     }
 
@@ -460,46 +446,43 @@ class ApiController extends FhmController
     public function actionCancelAction(Request $request, $wid, $tid)
     {
         $this->_init();
-        $document = $this->fhm_tools->dmRepository()->find($tid);
-        $workflow = $this->fhm_tools->dmRepository('FhmWorkflowBundle:Workflow')->find($wid);
-        $instance = $this->fhm_tools->instanceData($document);
+        $document = $this->get('fhm_tools')->dmRepository(self::$repository)->find($tid);
+        $workflow = $this->get('fhm_tools')->dmRepository('FhmWorkflowBundle:Workflow')->find($wid);
         if ($document->getStatus() == 1 && $document->getAction() && $document->getAction()->getCancelCheck(
             ) && $document->getAction()->hasUserCancel($this->getUser())
         ) {
             // Task
             $document->setStatus(3);
-            $this->fhm_tools->dmPersist($document);
+            $this->get('fhm_tools')->dmPersist($document);
             // Log
             $log = new \Fhm\WorkflowBundle\Document\WorkflowLog();
             $log->setType(4);
-            $log->setUserCreate($this->getUser());
             $log->setActive(true);
             $log->setTask($document);
             $log->setName($document->getName());
             $log->setDescription($this->_textStatus(1, 3));
-            $this->fhm_tools->dmPersist($log);
+            $this->get('fhm_tools')->dmPersist($log);
             $document->addLog($log);
-            $this->fhm_tools->dmPersist($document);
+            $this->get('fhm_tools')->dmPersist($document);
             // Workflow
             if ($workflow) {
                 $workflow->sortUpdate();
-                $this->fhm_tools->dmPersist($workflow);
+                $this->get('fhm_tools')->dmPersist($workflow);
             }
             // Message
             $this->get('session')->getFlashBag()->add(
                 'workflow-error',
-                $this->fhm_tools->trans('workflow.events.cancel')
+                $this->trans('workflow.events.cancel')
             );
         } else {
             $this->get('session')->getFlashBag()->add(
                 'workflow-error',
-                $this->fhm_tools->trans('workflow.events.error')
+                $this->trans('workflow.events.error')
             );
         }
 
         return array(
             'document' => $workflow,
-            'instance' => $instance,
         );
     }
 
@@ -514,14 +497,14 @@ class ApiController extends FhmController
     public function statusWait($id)
     {
         $this->_init();
-        $document = $this->fhm_tools->dmRepository()->find($id);
+        $document = $this->get('fhm_tools')->dmRepository(self::$repository)->find($id);
         if ($document->getStatus() != 0 && $document->getAction() && $document->getAction()->getDismissCheck(
             ) && $document->getAction()->hasUserDismiss($this->getUser())
         ) {
             $this->_updateStatus($document, 0);
         }
 
-        return $this->redirect($this->fhm_tools->getLastRoute());
+        return $this->redirect($this->get('fhm_tools')->getLastRoute($this->get('request_stack')->getCurrentRequest()));
     }
 
     /**
@@ -535,14 +518,14 @@ class ApiController extends FhmController
     public function statusRun($id)
     {
         $this->_init();
-        $document = $this->fhm_tools->dmRepository()->find($id);
+        $document = $this->get('fhm_tools')->dmRepository(self::$repository)->find($id);
         if ($document->getStatus() != 1 && $document->getAction() && $document->getAction()->getValidateCheck(
             ) && $document->getAction()->hasUserValidate($this->getUser())
         ) {
             $this->_updateStatus($document, 1);
         }
 
-        return $this->redirect($this->fhm_tools->getLastRoute());
+        return $this->redirect($this->get('fhm_tools')->getLastRoute($this->get('request_stack')->getCurrentRequest()));
     }
 
     /**
@@ -556,14 +539,14 @@ class ApiController extends FhmController
     public function statusFinish($id)
     {
         $this->_init();
-        $document = $this->fhm_tools->dmRepository()->find($id);
+        $document = $this->get('fhm_tools')->dmRepository(self::$repository)->find($id);
         if ($document->getStatus() != 2 && $document->getAction() && $document->getAction()->getValidateCheck(
             ) && $document->getAction()->hasUserValidate($this->getUser())
         ) {
             $this->_updateStatus($document, 2);
         }
 
-        return $this->redirect($this->fhm_tools->getLastRoute());
+        return $this->redirect($this->get('fhm_tools')->getLastRoute($this->get('request_stack')->getCurrentRequest()));
     }
 
     /**

@@ -1,0 +1,48 @@
+{% trans_default_domain instance.domain %}
+{% extends "::FhmFhm/Admin/index.html.twig" %}
+
+{% block content_data_header_status %}{% endblock %}
+{% block content_data_status %}{% endblock %}
+{% block content_data_action_share_links %}{% endblock %}
+{% block content_data_action_delete_links %}{% endblock %}
+{% block content_data_action_links %}{% endblock %}
+
+{% block content_link_data %}
+    <li>
+        <a href="{{ path('fhm_admin') }}" class="button small secondary"><i class="fa fa-angle-double-left"></i></a>
+    </li>
+    <li>
+        <a href="{{ path(instance.source ~ '_admin_' ~ instance.route ~ '_create') }}" class="button small success"><i class="fa fa-plus"></i> {{ (instance.translation ~ '.admin.create.link')|trans }}
+        </a>
+    </li>
+    <li>
+        <a href="{{ path(instance.source ~ '_admin_' ~ instance.route ~ '_model') }}" class="button small"><i class="fa fa-picture-o"></i> {{ (instance.translation ~ '.admin.model.link')|trans }}
+        </a>
+    </li>
+{% endblock %}
+
+{% block content_data_header %}
+    <th {% if pagination.isSorted('date') %} class="sorted" {% endif %}>{{ knp_pagination_sortable(pagination,  (instance.translation ~ '.admin.index.table.header.date')|trans, 'date')|raw }}</th>
+    <th {% if pagination.isSorted('model') %} class="sorted" {% endif %}>{{ knp_pagination_sortable(pagination,  (instance.translation ~ '.admin.index.table.header.model')|trans, 'model')|raw }}</th>
+    <th {% if pagination.isSorted('to') %} class="sorted" {% endif %}>{{ knp_pagination_sortable(pagination,  (instance.translation ~ '.admin.index.table.header.to')|trans, 'to')|raw }}</th>
+    <th {% if pagination.isSorted('subject') %} class="sorted" {% endif %}>{{ knp_pagination_sortable(pagination,  (instance.translation ~ '.admin.index.table.header.subject')|trans, 'subject')|raw }}</th>
+    <th {% if pagination.isSorted('type') %} class="sorted" {% endif %}>{{ knp_pagination_sortable(pagination,  (instance.translation ~ '.admin.index.table.header.type')|trans, 'type')|raw }}</th>
+{% endblock %}
+
+{% block content_data_body %}
+    <td>{{ document.getDateCreate() | localizeddate('short', 'medium', app.request.locale) }}</td>
+    <td>{{ document.getModel() }}</td>
+    <td>{{ document.getTo() }}</td>
+    <td>{{ document.getSubject() }}</td>
+    <td><span class="radius label {{ (instance.translation ~ '.type.' ~ document.getType())|trans }}">{{ document.getType() }}</span></td>
+{% endblock %}
+
+{% block content_data_action_button %}
+    <a href="{{ path(instance.source ~ '_admin_' ~ instance.route ~ '_detail', {'id': document.getId()}) }}" class="tiny radius button split no-pip"><i class="fa fa-search"></i> {{ (instance.translation ~ '.admin.index.table.action.detail')|trans }}
+        <span data-dropdown="action{{ document.getId() }}"><i class="fa fa-angle-down"></i></span></a><br>
+{% endblock %}
+
+{% block content_data_action_delete_button %}
+    <a href="{{ path(instance.source ~ '_admin_' ~ instance.route ~ '_detail', {'id': document.getId()}) }}" class="tiny radius button split no-pip alert"><i class="fa fa-search"></i> {{ (instance.translation ~ '.admin.index.table.action.detail')|trans }}
+        <span data-dropdown="action{{ document.getId() }}"><i class="fa fa-angle-down"></i></span></a><br>
+{% endblock %}

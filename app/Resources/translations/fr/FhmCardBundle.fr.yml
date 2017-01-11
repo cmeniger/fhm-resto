@@ -10,6 +10,24 @@ fhm:
                 breadcrumb:                     Modifier
             detail:
                 breadcrumb:                     Détails
+            category:
+                breadcrumb:                     Catégorie
+                create:
+                    breadcrumb:                 Ajouter une catégorie
+                update:
+                    breadcrumb:                 Modifier
+            product:
+                breadcrumb:                     Produits
+                create:
+                    breadcrumb:                 Ajouter un produit
+                update:
+                    breadcrumb:                 Modifier
+            ingredient:
+                breadcrumb:                     Ingrédient
+                create:
+                    breadcrumb:                 Ajouter un ingrédient
+                update:
+                    breadcrumb:                 Modifier
 project:
     breadcrump:                                 Accueil
     admin:
@@ -327,7 +345,7 @@ card:
     category:
         admin:
             index:
-                title:                          Gestion des cartes ':' catégories
+                title:                          Gestion des catégories de carte
                 link:                           Catégories
                 breadcrumb:                     Catégories
                 nodata:                         Aucune donnée
@@ -391,6 +409,7 @@ card:
                         cancel:                 Annuler
                         import:                 Importer
                         export:                 Exporter
+                        delete:                 Supprimer
                     fieldset:
                         data:                   Données
                         options:                Options
@@ -430,6 +449,7 @@ card:
                         cancel:                 Annuler
                         import:                 Importer
                         export:                 Exporter
+                        delete:                 Supprimer
                     fieldset:
                         data:                   Données
                         options:                Options
@@ -513,7 +533,7 @@ card:
 
         front:
             index:
-                title:                          Card ':' catégories
+                title:                          Catégories de produit
                 link:                           Catégories
                 breadcrumb:                     Catégories
                 nodata:                         Aucune donnée
@@ -587,7 +607,7 @@ card:
 
         api:
             index:
-                title:                          Cartes ':' catégories
+                title:                          Catégories de produits
 
             create:
                 form:
@@ -639,7 +659,7 @@ card:
     product:
         admin:
             index:
-                title:                          Gestion des cartes ':' produits
+                title:                          Gestion des produits d'une carte
                 link:                           Produits
                 breadcrumb:                     Produits
                 nodata:                         Aucune donnée
@@ -944,7 +964,7 @@ card:
     ingredient:
         admin:
             index:
-                title:                          Gestion des cartes ':' ingrédients
+                title:                          Gestion des ingrédients
                 link:                           Ingrédients
                 breadcrumb:                     Ingrédients
                 nodata:                         Aucune donnée

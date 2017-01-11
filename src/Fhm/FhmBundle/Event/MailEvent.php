@@ -3,6 +3,10 @@ namespace Fhm\FhmBundle\Event;
 
 use Symfony\Component\EventDispatcher\Event;
 
+/**
+ * Class MailEvent
+ * @package Fhm\FhmBundle\Event
+ */
 class MailEvent extends Event
 {
     protected $data;

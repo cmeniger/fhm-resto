@@ -180,7 +180,6 @@ class ApiController extends FhmController
     public function sortAction(Request $request, $idCard, $idCategory)
     {
         $card = $this->get('fhm_tools')->dmRepository('FhmCardBundle:Card')->find($idCard);
-        $category = $this->get('fhm_tools')->dmRepository('FhmCardBundle:CardCategory')->find($idCategory);
         $this->__authorized($card);
         $list = json_decode($request->get('list'));
         $order = 1;
