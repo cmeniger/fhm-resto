@@ -48,8 +48,35 @@ class CreateType extends FhmType
                 'label' => $options['translation_route'].'.admin.create.form.content',
                 'attr' => array('class' => 'editor'),
             )
-        )
-        ->remove('global')->remove('name')->remove('description');
+        )->add(
+            'image',
+            MediaType::class,
+            array(
+                'label' => $options['translation_route'].'.admin.create.form.image',
+                'filter' => 'image/*',
+                'required' => false,
+            )
+        )->add(
+            'gallery',
+            DocumentType::class,
+            array(
+                'label' => $options['translation_route'].'.admin.create.form.gallery',
+                'class' => 'FhmGalleryBundle:Gallery',
+                'query_builder' => function (GalleryRepository $dr) use ($options) {
+                    return $dr->getFormEnable($options['filter']);
+                },
+                'required' => false,
+            )
+        )->add(
+            'author',
+            AutocompleteType::class,
+            array(
+                'label' => $options['translation_route'].'.admin.create.form.author',
+                'class' => 'FhmUserBundle:User',
+                'url' => 'fhm_api_user_autocomplete',
+                'required' => false,
+            )
+        )->remove('global')->remove('name')->remove('description');
     }
     /**
      * @param OptionsResolver $resolver
