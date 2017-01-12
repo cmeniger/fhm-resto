@@ -27,6 +27,7 @@ class AdminController extends RefAdminController
         self::$class = Historic::class;
         self::$route = 'historic';
     }
+
     /**
      * @Route
      * (
@@ -61,9 +62,17 @@ class AdminController extends RefAdminController
      */
     public function restoreAction($id)
     {
-        $this->get('fhm.historic.manager')->restore($id);
+        $ret = $this->get('fhm.historic.manager')->restore($id);
+        if ($ret) {
+            $this->get('session')->getFlashBag()->add(
+                'notice',
+                $this->trans(self::$translation.'.admin.restore.flash.ok')
+            );
+        }
+
         return $this->redirect($this->getUrl('fhm_admin_historic'));
     }
+
     /**
      * @Route
      * (
