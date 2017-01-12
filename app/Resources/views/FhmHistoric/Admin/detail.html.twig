@@ -1,0 +1,61 @@
+{% extends "::layout.admin.html.twig" %}
+{% trans_default_domain instance.domain %}
+{% import "::Macros/dd.list.html.twig" as macroList %}
+
+{% block tagline %}
+    <div class="row">
+        <h1>
+            {% block tagline_data %}
+                {% block tagline_data_title %}
+                    {{ (instance.translation ~ '.admin.index.title')|trans }}
+                {% endblock %}
+                <br/>
+                <small>
+                    {% block tagline_data_subtitle %}
+                        {{ (instance.translation ~ '.admin.detail.title')|trans({'%name%': document.getName()}) }}
+                    {% endblock %}
+                </small>
+            {% endblock %}
+        </h1>
+    </div>
+{% endblock %}
+
+{% block content %}
+
+    {# Document #}
+    {% block content_data %}
+        <div class="row">
+            <h2 id="anchor-admin-data">{{ (instance.translation ~ '.admin.detail.data.title')|trans }}</h2>
+            <table class="fullwidth">
+                <tbody>
+                {% block content_data_information %}
+                    <tr>
+                        <td><strong>{{ (instance.translation ~ '.admin.detail.data.id')|trans }}</strong></td>
+                        <td>{{ document.getId() }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>{{ (instance.translation ~ '.admin.detail.data.name')|trans }}</strong></td>
+                        <td>{{ document.getName() }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>{{ (instance.translation ~ '.admin.detail.data.type')|trans }}</strong></td>
+                        <td>{{ document.getType() }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>{{ (instance.translation ~ '.admin.detail.data.objectid')|trans }}</strong></td>
+                        <td>{{ document.getObjectID() }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>{{ (instance.translation ~ '.admin.detail.data.date_create')|trans }}</strong></td>
+                        <td>{{ document.getDateCreate()| localizeddate('short', 'medium', app.request.locale) }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>{{ (instance.translation ~ '.admin.detail.data.objectStatut')|trans }}</strong></td>
+                        <td>{{ dump(document.getArrayStatut()) }}</td>
+                    </tr>
+                {% endblock %}
+                </tbody>
+            </table>
+        </div>
+    {% endblock %}
+{% endblock %}

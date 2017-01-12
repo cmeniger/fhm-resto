@@ -7,7 +7,6 @@ use Doctrine\ODM\MongoDB\Events;
 use Fhm\HistoricBundle\Document\Historic;
 use Doctrine\Common\Persistence\Event\LifecycleEventArgs;
 use Symfony\Component\HttpFoundation\RequestStack;
-use Symfony\Component\Serializer\Serializer;
 
 /**
  * Created by PhpStorm.
@@ -17,18 +16,15 @@ use Symfony\Component\Serializer\Serializer;
  */
 class HistoricService implements EventSubscriber
 {
-    private $serailizer;
     private $request;
     private $elementToFlush = [];
 
     /**
      * HistoricService constructor.
-     * @param Serializer $serializer
      * @param RequestStack $requestStack
      */
-    public function __construct(Serializer $serializer, RequestStack $requestStack)
+    public function __construct(RequestStack $requestStack)
     {
-        $this->serailizer = $serializer;
         $this->request = $requestStack->getCurrentRequest();
     }
 
@@ -76,7 +72,7 @@ class HistoricService implements EventSubscriber
         $class = get_class($object);
         $collection = $manager->getDocumentCollection($class);
         $objectData = $collection->findOne(array('_id' => new \MongoId($object->getId())));
-        $json = $this->serailizer->serialize($objectData, 'json');
+        $json = serialize($objectData);
         if (!in_array($object, $this->elementToFlush)) {
             $historic = new Historic();
             $historic->setName($object->getName());
@@ -170,13 +166,13 @@ class HistoricService implements EventSubscriber
             '$' => 's',
         );
         while ($alias == "" || !$unique) {
-            $alias = method_exists($object, 'getName')? $object->getName(): "";
+            $alias = method_exists($object, 'getName') ? $object->getName() : "";
             $alias = strtr($alias, $replace);
             $alias = preg_replace('#[^A-Za-z0-9]+#', '-', $alias);
             $alias = trim($alias, '-');
             $alias = strtolower($alias);
             $alias = ($code > 0) ? $alias.'-'.$code : $alias;
-            $unique = method_exists($repository, 'isUnique')?$repository->isUnique($object->getId(), $alias):$alias;
+            $unique = method_exists($repository, 'isUnique') ? $repository->isUnique($object->getId(), $alias) : $alias;
             $code++;
         }
 

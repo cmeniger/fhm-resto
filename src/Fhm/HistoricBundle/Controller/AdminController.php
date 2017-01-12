@@ -2,7 +2,7 @@
 namespace Fhm\HistoricBundle\Controller;
 
 use Fhm\FhmBundle\Controller\RefAdminController;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Fhm\HistoricBundle\Document\Historic;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -15,7 +15,18 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
  */
 class AdminController extends RefAdminController
 {
-
+    /**
+     * AdminController constructor.
+     */
+    public function __construct()
+    {
+        self::$repository = "FhmHistoricBundle:Historic";
+        self::$source = "fhm";
+        self::$domain = "FhmHistoricBundle";
+        self::$translation = "historic";
+        self::$class = Historic::class;
+        self::$route = 'historic';
+    }
     /**
      * @Route
      * (
@@ -48,8 +59,22 @@ class AdminController extends RefAdminController
      *      requirements={"id"="[a-z0-9]*"}
      * )
      */
-    public function restoreAction(Request $request, $id)
+    public function restoreAction($id)
     {
+        $this->get('fhm.historic.manager')->restore($id);
+        return $this->redirect($this->getUrl('fhm_admin_historic'));
     }
-
+    /**
+     * @Route
+     * (
+     *      path="/detail/{id}",
+     *      name="fhm_admin_historic_detail",
+     *      requirements={"id"="[a-z0-9]*"}
+     * )
+     * @Template("::FhmHistoric/Admin/detail.html.twig")
+     */
+    public function detailAction($id)
+    {
+        return parent::detailAction($id);
+    }
 }

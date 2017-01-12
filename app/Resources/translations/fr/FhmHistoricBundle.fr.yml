@@ -1,0 +1,54 @@
+fhm:
+    breadcrumb:                                 Accueil
+    admin:
+        breadcrumb:                             Admin
+        historic:
+            breadcrumb:                         Historique
+            detail:
+                breadcrumb:                     Détails
+project:
+    breadcrump:                                 Accueil
+    admin:
+        breadcrump:                             Admin
+        historic:
+            breadcrump:                         Historique
+            detail:
+                breadcrumb:                     Détails
+historic:
+    admin:
+        index:
+            title:                              Gestion de l'historique
+            link:                               Historique
+            breadcrumb:                         Historique
+            nodata:                             Aucune donnée
+            form:
+                search:                         Rechercher
+            table:
+                header:
+                    name:                       Nom
+                    action:                     Actions
+                    status:                     Statut
+                    objectid:                   Identifiant Objet
+                    type:                       Type Object
+                    date_create:                Date de création
+                action:
+                    delete:                     Supprimer
+                    detail:                     Détail
+                    restore:                    Restaurer
+                confirm:
+                    activate:                   Confirmer l'activation du historic ?
+                    deactivate:                 Confirmer la désactivation du historic ?
+                    delete:                     Confirmer la suppression du historic ?
+                    undelete:                   Confirmer le déblocage du historic ?
+        detail:
+            title:                              '%name%'
+            link:                               Détail
+            breadcrumb:                         '%name%'
+            data:
+                title:                          Informations
+                id:                             ID
+                date_create:                         Création
+                name:                           Nom
+                type:                           Type
+                objectid:                       Identifiant de l'objet archivé
+                objectStatut:                   Etat de l'objet

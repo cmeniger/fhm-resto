@@ -7,7 +7,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Fhm Hisrotic
- * @MongoDB\Document()
+ * @MongoDB\Document(repositoryClass="Fhm\HistoricBundle\Repository\HistoricRepository")
  */
 class Historic
 {
@@ -152,6 +152,12 @@ class Historic
         return $this;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getArrayStatut(){
+        return unserialize($this->getObjectStatut());
+    }
     /**
      * @return string
      */

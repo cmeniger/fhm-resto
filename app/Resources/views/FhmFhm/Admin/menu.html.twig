@@ -201,6 +201,12 @@
                 <a href="{{ path("fhm_admin_note_export") }}" title="{{ ('note.admin.export.link')|trans({}, 'FhmNoteBundle') }}"><i class="fa fa-fw fa-upload"></i></a>
             </span>
         </div>
+        <hr>
+        <div class="link">
+            <a href="{{ path("fhm_admin_historic") }}" title="{{ ('historic.admin.index.link')|trans({}, 'FhmHistoricBundle') }}" class="action button tiny radius secondary">
+                {{ ('historic.admin.index.link')|trans({}, 'FhmHistoricBundle') }}
+            </a>
+        </div>
     {% endblock %}
     {% block menu_project %}{% endblock %}
     {% block menu_action %}

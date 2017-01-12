@@ -99,7 +99,7 @@
                                         {% endblock %}
                                     </td>
                                 {% endblock %}
-                                {% if document.getShare()  and not is_granted('ROLE_ADMIN') %}
+                                {% if document.getShare is defined  and not is_granted('ROLE_ADMIN') %}
                                     {% block content_data_action_share %}
                                         <td>
                                             <div class="actions">
@@ -119,7 +119,7 @@
                                             </div>
                                         </td>
                                     {% endblock %}
-                                {% elseif document.getDelete() %}
+                                {% elseif document.getDelete is defined  %}
                                     {% block content_data_action_delete %}
                                         <td>
                                             <div class="actions">
