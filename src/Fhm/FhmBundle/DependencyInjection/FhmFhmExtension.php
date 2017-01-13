@@ -15,7 +15,9 @@ use Symfony\Component\DependencyInjection\Loader;
 class FhmFhmExtension extends Extension
 {
     const ORM = "doctrine.orm.entity_manager";
+    const EntityManager = "fhm.entity.manager";
     const ODM = "doctrine.odm.mongodb.document_manager";
+    const DocumentManager = "fhm.document.manager";
 
     /**
      * {@inheritdoc}
@@ -32,12 +34,17 @@ class FhmFhmExtension extends Extension
 
     public function selectDatabase(ContainerBuilder $container)
     {
-        $container->getParameter('fhm_database') == 'orm' ?
-            $container->setAlias('fhm_database_manager', self::ORM) :
-            null;
+        switch ($container->getParameter('fhm_database'))
+        {
+            case 'odm':
+                $container->setAlias('fhm_database_manager', self::ODM);
+                $container->setAlias('fhm_object_manager', self::DocumentManager);
+                break;
 
-        $container->getParameter('fhm_database') == 'odm' ?
-            $container->setAlias('fhm_database_manager', self::ODM) :
-            null;
+            case 'orm':
+                $container->setAlias('fhm_database_manager', self::ORM);
+                $container->setAlias('fhm_object_manager', self::EntityManager);
+                break;
+        }
     }
 }

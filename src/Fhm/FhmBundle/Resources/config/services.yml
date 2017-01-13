@@ -36,3 +36,11 @@ services:
         arguments: ["@translator.default", "@templating"]
         tags:
             - { name: form.type, alias: schedules }
+
+    fhm.entity.manager:
+        class: Fhm\Manager\FhmEntityManager
+        arguments: ["@fhm_database_manager"]
+
+    fhm.document.manager:
+        class: Fhm\Manager\FhmDocumentManager
+        arguments: ["@fhm_database_manager"]
