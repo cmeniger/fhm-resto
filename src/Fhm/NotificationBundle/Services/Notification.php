@@ -1,7 +1,7 @@
 <?php
 namespace Fhm\NotificationBundle\Services;
 
-use Doctrine\ODM\MongoDB\DocumentManager;
+use Doctrine\Common\Persistence\ObjectManager;
 use Fhm\UserBundle\Document\User;
 
 /**
@@ -17,7 +17,7 @@ class Notification
      * Notification constructor.
      * @param $dm
      */
-    public function __construct(DocumentManager $dm)
+    public function __construct(ObjectManager $dm)
     {
         $this->dm = $dm;
     }
