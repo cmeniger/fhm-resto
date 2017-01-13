@@ -1,6 +1,7 @@
 <?php
 
 namespace Fhm\Manager;
+
 use Doctrine\ORM\EntityManager;
 use Fhm\FhmBundle\Entity\Fhm;
 
@@ -10,10 +11,8 @@ use Fhm\FhmBundle\Entity\Fhm;
  * Date: 13/01/17
  * Time: 14:36
  */
-class FhmEntityManager implements ManagerInterface
+class FhmEntityManager extends AbstractManager
 {
-
-    protected $manager;
 
     /**
      * FhmEntityManager constructor.

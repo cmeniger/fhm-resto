@@ -1,6 +1,7 @@
 <?php
 
 namespace Fhm\Manager;
+
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Fhm\FhmBundle\Document\Fhm;
 
@@ -10,9 +11,8 @@ use Fhm\FhmBundle\Document\Fhm;
  * Date: 13/01/17
  * Time: 14:36
  */
-class FhmDocumentManager implements ManagerInterface
+class FhmDocumentManager extends AbstractManager
 {
-    protected $manager;
 
     /**
      * FhmDocumentManager constructor.
