@@ -13,7 +13,6 @@ use Doctrine\Common\Collections\ArrayCollection;
  */
 class Tools
 {
-
     /**
      * Tools constructor.
      * @param ContainerInterface $container
@@ -317,7 +316,7 @@ class Tools
      */
     public function dm()
     {
-        return $this->container->get('doctrine_mongodb')->getManager();
+        return $this->container->get('fhm_database_manager');
     }
 
     /**

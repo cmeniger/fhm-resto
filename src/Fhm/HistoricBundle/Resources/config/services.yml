@@ -9,4 +9,4 @@ services:
 
     fhm.historic.manager:
         class: Fhm\HistoricBundle\Service\HistoricManager
-        arguments: ["@doctrine.odm.mongodb.document_manager"]
+        arguments: ["@fhm_database_manager"]

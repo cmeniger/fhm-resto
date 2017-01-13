@@ -124,6 +124,8 @@ parameters:
             - france_region
             - france_domtom
 
+    fhm_database: 'odm'
+
     fhm_media:
         service:    fhm_media_local
         watermark:  0
