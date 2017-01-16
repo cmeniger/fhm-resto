@@ -9,4 +9,7 @@ services:
 
     fhm.historic.manager:
         class: Fhm\HistoricBundle\Service\HistoricManager
-        arguments: ["@fhm_database_manager"]
+        arguments: ["@fhm_database_manager", "@fhm.hydrator"]
+
+    fhm.hydrator:
+        class: Fhm\HistoricBundle\Hydrator\Hydrator

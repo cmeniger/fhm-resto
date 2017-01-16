@@ -44,17 +44,6 @@ class AdminController extends RefAdminController
     /**
      * @Route
      * (
-     *      path="/save",
-     *      name="fhm_admin_historic_save"
-     * )
-     */
-    public function saveAction(Request $request)
-    {
-    }
-
-    /**
-     * @Route
-     * (
      *      path="/restore/{id}",
      *      name="fhm_admin_historic_restore",
      *      requirements={"id"="[a-z0-9]*"}
@@ -69,7 +58,12 @@ class AdminController extends RefAdminController
                 $this->trans(self::$translation.'.admin.restore.flash.ok')
             );
         }
-
+        if ($ret) {
+            $this->get('session')->getFlashBag()->add(
+                'error',
+                $this->trans(self::$translation.'.admin.restore.flash.ko')
+            );
+        }
         return $this->redirect($this->getUrl('fhm_admin_historic'));
     }
 
