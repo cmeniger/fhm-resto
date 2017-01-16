@@ -26,7 +26,6 @@ class AdminController extends RefAdminController
         self::$source = "fhm";
         self::$domain = "FhmFhmBundle";
         self::$translation = "fhm";
-        self::$class = Fhm::class;
         self::$route = 'fhm';
     }
     /**

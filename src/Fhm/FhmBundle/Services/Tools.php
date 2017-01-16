@@ -312,11 +312,11 @@ class Tools
     }
 
     /**
-     * @return \Doctrine\Common\Persistence\ObjectManager|object
+     * @return \Doctrine\Common\Persistence\ObjectManager
      */
     public function dm()
     {
-        return $this->container->get('fhm_database_manager');
+        return $this->container->get('fhm.object.manager')->getManager();
     }
 
     /**
@@ -333,11 +333,11 @@ class Tools
 
     /**
      * @param $repository
-     * @return \Doctrine\Common\Persistence\ObjectRepository|null
+     * @return \Doctrine\Common\Persistence\ObjectRepository
      */
     public function dmRepository($repository)
     {
-        return $this->dm()->getRepository($repository);
+        return $this->container->get('fhm.object.manager')->getCurrentRepository($repository);
     }
 
     /**

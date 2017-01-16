@@ -25,14 +25,14 @@ class RefApiController extends GenericController
     public function autocompleteAction(Request $request)
     {
         $dataSearch = $request->get('text');
-        $documents = $this->get('fhm_tools')->dmRepository(self::$repository)->getFrontIndex(
+        $objects = $this->get('fhm_tools')->dmRepository(self::$repository)->getFrontIndex(
             $dataSearch
         );
 
         return array(
             'text' => $dataSearch,
             'field' => $request->get('field'),
-            'documents' => $documents,
+            'objects' => $objects,
         );
     }
 }

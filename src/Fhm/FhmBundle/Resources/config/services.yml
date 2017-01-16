@@ -37,10 +37,6 @@ services:
         tags:
             - { name: form.type, alias: schedules }
 
-    fhm.entity.manager:
-        class: Fhm\Manager\FhmEntityManager
-        arguments: ["@fhm_database_manager"]
-
-    fhm.document.manager:
-        class: Fhm\Manager\FhmDocumentManager
-        arguments: ["@fhm_database_manager"]
+    fhm.object.manager:
+        class: Fhm\FhmBundle\Manager\FhmObjectManager
+        arguments: ["@fhm.database.manager"]

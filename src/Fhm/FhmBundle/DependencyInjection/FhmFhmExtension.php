@@ -1,5 +1,4 @@
 <?php
-
 namespace Fhm\FhmBundle\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -15,9 +14,7 @@ use Symfony\Component\DependencyInjection\Loader;
 class FhmFhmExtension extends Extension
 {
     const ORM = "doctrine.orm.entity_manager";
-    const EntityManager = "fhm.entity.manager";
     const ODM = "doctrine.odm.mongodb.document_manager";
-    const DocumentManager = "fhm.document.manager";
 
     /**
      * {@inheritdoc}
@@ -27,23 +24,21 @@ class FhmFhmExtension extends Extension
         $this->selectDatabase($container);
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
-
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
     }
 
+    /**
+     * @param ContainerBuilder $container
+     */
     public function selectDatabase(ContainerBuilder $container)
     {
-        switch ($container->getParameter('fhm_database'))
-        {
+        switch ($container->getParameter('fhm_database')) {
             case 'odm':
-                $container->setAlias('fhm_database_manager', self::ODM);
-                $container->setAlias('fhm_object_manager', self::DocumentManager);
+                $container->setAlias('fhm.database.manager', self::ODM);
                 break;
-
             case 'orm':
-                $container->setAlias('fhm_database_manager', self::ORM);
-                $container->setAlias('fhm_object_manager', self::EntityManager);
+                $container->setAlias('fhm.database.manager', self::ORM);
                 break;
         }
     }

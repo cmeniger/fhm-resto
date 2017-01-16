@@ -31,7 +31,7 @@ class RefAdminController extends GenericController
             $this->getParameters('pagination', 'fhm_fhm')
         );
         if ($request->isXmlHttpRequest()) {
-            return array('documents' => $query->execute()->toArray());
+            return array('objects' => $query->execute()->toArray());
         } else {
             return array(
                 'form' => $this->createForm(SearchType::class)->createView(),
@@ -53,6 +53,7 @@ class RefAdminController extends GenericController
      */
     public function createAction(Request $request)
     {
+        self::$class = $this->get('fhm.object.manager')->getCurrentModelName(self::$repository);
         $document = new self::$class;
         $form = $this->createForm(
             self::$form->createType,
@@ -112,19 +113,19 @@ class RefAdminController extends GenericController
     public function updateAction(Request $request, $id)
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN', null, $this->trans(self::$translation.'.error.forbidden'));
-        $document = $this->get('fhm_tools')->dmRepository(self::$repository)->find($id);
-        if (!is_object($document)) {
+        $object = $this->get('fhm_tools')->dmRepository(self::$repository)->find($id);
+        if (!is_object($object)) {
             throw $this->createNotFoundException($this->trans(self::$translation.'.error.unknown'));
         }
         $form = $this->createForm(
             self::$form->updateType,
-            $document,
+            $object,
             array('user_admin' => $this->get('security.authorization_checker')->isGranted('ROLE_SUPER_ADMIN'))
         );
         $handler = new self::$form->updateHandler($form, $request);
         $process = $handler->process();
         if ($process) {
-            $this->get('fhm_tools')->dmPersist($document);
+            $this->get('fhm_tools')->dmPersist($object);
             $this->get('session')->getFlashBag()->add(
                 'notice',
                 $this->trans(self::$translation.'.admin.update.flash.ok')
@@ -132,18 +133,18 @@ class RefAdminController extends GenericController
 
             /** Redirect **/
             $data = $request->get($form->getName());
-            return $this->redirectUrl($data, $document);
+            return $this->redirectUrl($data, $object);
         }
 
         return array(
-            'document' => $document,
+            'object' => $object,
             'form' => $form->createView(),
             'breadcrumbs' => $this->get('fhm_tools')->generateBreadcrumbs(
                 array(
                     'domain' => self::$domain,
                     '_route' => $this->get('request_stack')->getCurrentRequest()->get('_route'),
                 ),
-                $document
+                $object
             ),
         );
     }
@@ -155,18 +156,18 @@ class RefAdminController extends GenericController
      */
     public function detailAction($id)
     {
-        $document = $this->get('fhm_tools')->dmRepository(self::$repository)->find($id);
-        if (!is_object($document)) {
+        $object = $this->get('fhm_tools')->dmRepository(self::$repository)->find($id);
+        if (!is_object($object)) {
             throw $this->createNotFoundException($this->trans(self::$translation.'.error.unknown'));
         }
         return array(
-            'document' => $document,
+            'object' => $object,
             'breadcrumbs' => $this->get('fhm_tools')->generateBreadcrumbs(
                 array(
                     'domain' => self::$domain,
                     '_route' => $this->get('request_stack')->getCurrentRequest()->get('_route'),
                 ),
-                $document
+                $object
             ),
         );
     }
@@ -179,19 +180,19 @@ class RefAdminController extends GenericController
     public function deleteAction($id)
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN', null, $this->trans(self::$translation.'.error.forbidden'));
-        $document = $this->get('fhm_tools')->dmRepository(self::$repository)->find($id);
-        if (!is_object($document)) {
+        $object = $this->get('fhm_tools')->dmRepository(self::$repository)->find($id);
+        if (!is_object($object)) {
             throw $this->createNotFoundException($this->trans(self::$translation.'.error.unknown'));
         }
-        if ($document->getDelete()) {
-            $this->get('fhm_tools')->dm()->remove($document);
+        if ($object->getDelete()) {
+            $this->get('fhm_tools')->dm()->remove($object);
             $this->get('session')->getFlashBag()->add(
                 'notice',
                 $this->trans(self::$translation.'.admin.delete.flash.ok')
             );
         } else {
-            $document->setDelete(true);
-            $this->get('fhm_tools')->dm()->persist($document);
+            $object->setDelete(true);
+            $this->get('fhm_tools')->dm()->persist($object);
             $this->get('session')->getFlashBag()->add(
                 'notice',
                 $this->trans(self::$translation.'.admin.delete.flash.ok')
@@ -210,12 +211,12 @@ class RefAdminController extends GenericController
     public function undeleteAction($id)
     {
         $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN', null, $this->trans(self::$translation.'.error.forbidden'));
-        $document = $this->get('fhm_tools')->dmRepository(self::$repository)->find($id);
-        if (!is_object($document)) {
+        $object = $this->get('fhm_tools')->dmRepository(self::$repository)->find($id);
+        if (!is_object($object)) {
             throw $this->createNotFoundException($this->trans(self::$translation.'.error.unknown'));
         }
-        $document->setDelete(false);
-        $this->get('fhm_tools')->dmPersist($document);
+        $object->setDelete(false);
+        $this->get('fhm_tools')->dmPersist($object);
         $this->get('session')->getFlashBag()->add(
             'notice',
             $this->trans(self::$translation.'.admin.undelete.flash.ok')
@@ -231,12 +232,12 @@ class RefAdminController extends GenericController
      */
     public function activateAction($id)
     {
-        $document = $this->get('fhm_tools')->dmRepository(self::$repository)->find($id);
-        if (!is_object($document)) {
+        $object = $this->get('fhm_tools')->dmRepository(self::$repository)->find($id);
+        if (!is_object($object)) {
             throw $this->createNotFoundException($this->trans(self::$translation.'.error.unknown'));
         }
-        $document->setActive(true);
-        $this->get('fhm_tools')->dmPersist($document);
+        $object->setActive(true);
+        $this->get('fhm_tools')->dmPersist($object);
         $this->get('session')->getFlashBag()->add(
             'notice',
             $this->trans(self::$translation.'.admin.activate.flash.ok')
@@ -252,11 +253,11 @@ class RefAdminController extends GenericController
      */
     public function deactivateAction($id)
     {
-        $document = $this->get('fhm_tools')->dmRepository(self::$repository)->find($id);
-        if (!is_object($document)) {
+        $object = $this->get('fhm_tools')->dmRepository(self::$repository)->find($id);
+        if (!is_object($object)) {
             throw $this->createNotFoundException($this->trans(self::$translation.'.error.unknown'));
         }
-        $document->setActive(false);
+        $object->setActive(false);
         $this->get('fhm_tools')->dmPersist($document);
         $this->get('session')->getFlashBag()->add(
             'notice',
