@@ -5,6 +5,10 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Fhm\FhmBundle\Entity\Fhm;
 
+/**
+ * @ORM\Entity
+ * @ORM\Table()
+ */
 class Card extends Fhm
 {
     /**
