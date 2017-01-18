@@ -5,6 +5,10 @@ namespace Fhm\GalleryBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Fhm\FhmBundle\Entity\Fhm;
 
+/**
+ * @ORM\Entity
+ * @ORM\Table()
+ */
 class GalleryVideo extends Fhm
 {
     /**
