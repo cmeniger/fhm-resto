@@ -11,7 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Notification extends Fhm
 {
     /**
-     * @ORM\OneToOne(targetEntity="Fhm\UserBundle\Document\User")
+     * @ORM\OneToOne(targetEntity="Fhm\UserBundle\Entity\User")
      */
     protected $user;
 
@@ -179,7 +179,7 @@ class Notification extends Fhm
     }
 
     /**
-     * @MongoDB\PrePersist()
+     * @ORM\PrePersist()
      */
     public function prePersist()
     {
@@ -189,7 +189,7 @@ class Notification extends Fhm
     }
 
     /**
-     * @MongoDB\PreUpdate()
+     * @ORM\PreUpdate()
      */
     public function preUpdate()
     {

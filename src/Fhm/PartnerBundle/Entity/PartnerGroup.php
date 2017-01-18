@@ -156,7 +156,7 @@ class PartnerGroup extends Fhm
     }
 
     /**
-     * @MongoDB\PreRemove()
+     * @ORM\PreRemove()
      */
     public function preRemove()
     {

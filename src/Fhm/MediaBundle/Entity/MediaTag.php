@@ -169,7 +169,7 @@ class MediaTag extends Fhm
     }
 
     /**
-     * @MongoDB\PrePersist()
+     * @ORM\PrePersist()
      */
     public function prePersist()
     {
@@ -180,7 +180,7 @@ class MediaTag extends Fhm
     }
 
     /**
-     * @MongoDB\PreUpdate()
+     * @ORM\PreUpdate()
      */
     public function preUpdate()
     {

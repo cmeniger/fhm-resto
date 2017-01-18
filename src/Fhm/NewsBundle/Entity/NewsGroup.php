@@ -12,7 +12,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 class NewsGroup extends Fhm
 {
     /**
-     * @ORM\OneToMany(targetEntity="Fhm\NewsBundle\Document\News", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="Fhm\NewsBundle\Entity\News", cascade={"persist"})
      */
     protected $news;
 
@@ -165,7 +165,7 @@ class NewsGroup extends Fhm
     /**
      * Remove news
      *
-     * @param \Fhm\NewsBundle\Document\News $news
+     * @param \Fhm\NewsBundle\Entity\News $news
      *
      * @return $this
      */
@@ -209,7 +209,7 @@ class NewsGroup extends Fhm
     }
 
     /**
-     * @MongoDB\PreRemove()
+     * @ORM\PreRemove()
      */
     public function preRemove()
     {

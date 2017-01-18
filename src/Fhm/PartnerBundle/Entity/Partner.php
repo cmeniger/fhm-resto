@@ -22,12 +22,12 @@ class Partner extends Fhm
     protected $content;
 
     /**
-     * @ORM\OneToOne(targetEntity="Fhm\MediaBundle\Document\Media", length=100)
+     * @ORM\OneToOne(targetEntity="Fhm\MediaBundle\Entity\Media", length=100)
      */
     protected $image;
 
     /**
-     * @ORM\OneToMany(targetEntity="Fhm\PartnerBundle\Document\PartnerGroup", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="Fhm\PartnerBundle\Entity\PartnerGroup", cascade={"persist"})
      */
     protected $partnergroups;
 
@@ -208,7 +208,7 @@ class Partner extends Fhm
     }
 
     /**
-     * @MongoDB\PreRemove()
+     * @ORM\PreRemove()
      */
     public function preRemove()
     {

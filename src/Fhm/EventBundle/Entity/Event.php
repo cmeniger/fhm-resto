@@ -44,12 +44,12 @@ class Event extends Fhm
     protected $date_end;
 
     /**
-     * @ORM\OneToOne(targetEntity="Media")
+     * @ORM\OneToOne(targetEntity="Fhm\MediaBundle\Media")
      */
     protected $image;
 
     /**
-     * @ORM\OneToMany(targetEntity="EventGroup")
+     * @ORM\OneToMany(targetEntity="Fhm\Event\EventGroup")
      */
     protected $eventgroups;
 
@@ -332,7 +332,7 @@ class Event extends Fhm
     }
 
     /**
-     * @MongoDB\PreRemove()
+     * @ORM\PreRemove()
      */
     public function preRemove()
     {

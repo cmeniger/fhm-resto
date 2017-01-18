@@ -27,7 +27,7 @@ class GalleryAlbum extends Fhm
     protected $content;
 
     /**
-     * @ORM\OneToOne(targetEntity="Media")
+     * @ORM\OneToOne(targetEntity="Fhm\MediaBundle\Media")
      */
     protected $image;
 
@@ -42,7 +42,7 @@ class GalleryAlbum extends Fhm
     protected $sort;
 
     /**
-     * @ORM\OneToMany(targetEntity="Gallery")
+     * @ORM\OneToMany(targetEntity="Fhm\GalleryBundle\Gallery")
      */
     protected $galleries;
 
@@ -326,7 +326,7 @@ class GalleryAlbum extends Fhm
     }
 
     /**
-     * @MongoDB\PreRemove()
+     * @ORM\PreRemove()
      */
     public function preRemove()
     {

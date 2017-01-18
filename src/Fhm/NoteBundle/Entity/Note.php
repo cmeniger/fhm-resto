@@ -27,7 +27,7 @@ class Note extends Fhm
     protected $parent;
 
     /**
-     * @MongoDB\Field(type="int")
+     * @ORM\Column(type="integer")
      * @Assert\Range(min=0)
      */
     protected $note;
@@ -43,7 +43,7 @@ class Note extends Fhm
     protected $sort_parent;
 
     /**
-     * @MongoDB\Field(type="string")
+     * @ORM\Column(type="string", length=100)
      */
     protected $sort_user;
 

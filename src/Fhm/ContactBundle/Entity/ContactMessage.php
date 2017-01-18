@@ -20,7 +20,7 @@ class ContactMessage extends FhmFhm
     protected $field;
 
     /**
-     * @ORM\OneToOne(targetEntity="Contact")
+     * @ORM\OneToOne(targetEntity="Fhm\ContactBundle\Contact")
      */
     protected $contact;
 
@@ -82,7 +82,7 @@ class ContactMessage extends FhmFhm
     /**
      * Get contact
      *
-     * @return \Fhm\ContactBundle\Document\Contact
+     * @return \Fhm\ContactBundle\Entity\Contact
      */
     public function getContact()
     {
@@ -128,7 +128,7 @@ class ContactMessage extends FhmFhm
     }
 
     /**
-     * @MongoDB\PreRemove()
+     * @ORM\PreRemove()
      */
     public function preRemove()
     {

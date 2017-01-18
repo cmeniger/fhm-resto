@@ -22,17 +22,17 @@ class CardIngredient extends Fhm
     protected $default;
 
     /**
-     * @ORM\OneToOne(targetEntity="Media")
+     * @ORM\OneToOne(targetEntity="Fhm\MediaBundle\Media")
      */
     protected $image;
 
     /**
-     * @ORM\OneToOne(targetEntity="Card")
+     * @ORM\OneToOne(targetEntity="Fhm\CardBundle\Card")
      */
     protected $card;
 
     /**
-     * @ORM\OneToMany(targetEntity="CardProduct")
+     * @ORM\OneToMany(targetEntity="Fhm\CardBundle\CardProduct")
      */
     protected $products;
 
@@ -226,7 +226,7 @@ class CardIngredient extends Fhm
     }
 
     /**
-     * @MongoDB\PreRemove()
+     * @ORM\PreRemove()
      */
     public function preRemove()
     {

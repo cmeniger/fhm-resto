@@ -19,37 +19,37 @@ class WorkflowTask extends Fhm
     protected $status;
 
     /**
-     * @ORM\OneToOne(targetEntity="Fhm\WorkflowBundle\Document\WorkflowStep", nullable=true)
+     * @ORM\OneToOne(targetEntity="Fhm\WorkflowBundle\Entity\WorkflowStep", nullable=true)
      */
     protected $step;
 
     /**
-     * @ORM\OneToOne(targetEntity="Fhm\WorkflowBundle\Document\WorkflowAction", nullable=true)
+     * @ORM\OneToOne(targetEntity="Fhm\WorkflowBundle\Entity\WorkflowAction", nullable=true)
      */
     protected $action;
 
     /**
-     * @ORM\OneToMany(targetEntity="Fhm\WorkflowBundle\Document\WorkflowTask", nullable=true, cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="Fhm\WorkflowBundle\Entity\WorkflowTask", nullable=true, cascade={"persist"})
      */
     protected $parents;
 
     /**
-     * @ORM\OneToMany(targetDocument="Fhm\WorkflowBundle\Document\WorkflowTask", nullable=true, cascade={"persist"})
+     * @ORM\OneToMany(targetDocument="Fhm\WorkflowBundle\Entity\WorkflowTask", nullable=true, cascade={"persist"})
      */
     protected $sons;
 
     /**
-     * @ORM\OneToMany(targetDocument="Fhm\WorkflowBundle\Document\WorkflowLog", nullable=true, cascade={"persist"})
+     * @ORM\OneToMany(targetDocument="Fhm\WorkflowBundle\Entity\WorkflowLog", nullable=true, cascade={"persist"})
      */
     protected $logs;
 
     /**
-     * @ORM\OneToMany(targetDocument="Fhm\WorkflowBundle\Document\WorkflowComment", nullable=true, cascade={"persist"})
+     * @ORM\OneToMany(targetDocument="Fhm\WorkflowBundle\Entity\WorkflowComment", nullable=true, cascade={"persist"})
      */
     protected $comments;
 
     /**
-     * @ORM\OneToMany(targetDocument="Fhm\MediaBundle\Document\Media", nullable=true, cascade={"persist"})
+     * @ORM\OneToMany(targetDocument="Fhm\MediaBundle\Entity\Media", nullable=true, cascade={"persist"})
      */
     protected $medias;
 

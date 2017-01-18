@@ -1,7 +1,6 @@
 <?php
 namespace Fhm\TestimonyBundle\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Fhm\FhmBundle\Entity\Fhm;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -13,7 +12,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Testimony extends Fhm
 {
     /**
-     * @ORM\OneToOne(targetEntity="Fhm\MediaBundle\Document\Media", nullable=true)
+     * @ORM\OneToOne(targetEntity="Fhm\MediaBundle\Entity\Media", nullable=true)
      */
     protected $image;
 

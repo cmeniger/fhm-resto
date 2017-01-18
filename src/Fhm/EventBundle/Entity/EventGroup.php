@@ -12,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
 class EventGroup extends Fhm
 {
     /**
-     * @ORM\OneToMany(targetEntity="Event")
+     * @ORM\OneToMany(targetEntity="Fhm\EventBundle\Event")
      */
     protected $events;
 
@@ -155,7 +155,7 @@ class EventGroup extends Fhm
     }
 
     /**
-     * @MongoDB\PreRemove()
+     * @ORM\PreRemove()
      */
     public function preRemove()
     {

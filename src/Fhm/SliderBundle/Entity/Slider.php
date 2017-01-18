@@ -33,7 +33,7 @@ class Slider extends Fhm
     protected $content;
 
     /**
-     * @ORM\OneToOne(targetEntity="Fhm\MediaBundle\Document\Media")
+     * @ORM\OneToOne(targetEntity="Fhm\MediaBundle\Entity\Media")
      */
     protected $image;
 
@@ -48,7 +48,7 @@ class Slider extends Fhm
     protected $sort;
 
     /**
-     * @ORM\OneToMany(targetDocument="Fhm\SliderBundle\Document\SliderItem", cascade={"persist"})
+     * @ORM\OneToMany(targetDocument="Fhm\SliderBundle\Entity\SliderItem", cascade={"persist"})
      */
     protected $items;
 
@@ -356,7 +356,7 @@ class Slider extends Fhm
     }
 
     /**
-     * @MongoDB\PreRemove()
+     * @ORM\PreRemove()
      */
     public function preRemove()
     {

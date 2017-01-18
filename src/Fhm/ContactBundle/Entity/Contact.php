@@ -1,14 +1,14 @@
 <?php
 namespace Fhm\ContactBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
-use Fhm\GeolocationBundle\Document\Geolocation as FhmGeolocation;
 use Doctrine\ORM\Mapping as ORM;
+use Fhm\GeolocationBundle\Entity\Geolocation;
 
 /**
  * @ORM\Entity
  * @ORM\Table()
  */
-class Contact extends FhmGeolocation
+class Contact extends Geolocation
 {
     /**
      * @ORM\Column(type="string", length=100)
@@ -41,7 +41,7 @@ class Contact extends FhmGeolocation
     protected $profile;
 
     /**
-     * @ORM\OneToOne(targetEntity="Media")
+     * @ORM\OneToOne(targetEntity="Fhm\MediaBundle\Media")
      */
     protected $profile_image;
 
@@ -86,7 +86,7 @@ class Contact extends FhmGeolocation
     protected $social_site;
 
     /**
-     * @ORM\OneToMany(targetEntity="ContactMessage")
+     * @ORM\OneToMany(targetEntity="Fhm\ContactBundle\ContactMessage")
      */
     protected $messages;
 
@@ -564,7 +564,7 @@ class Contact extends FhmGeolocation
     }
 
     /**
-     * @MongoDB\PreRemove()
+     * @ORM\PreRemove()
      */
     public function preRemove()
     {

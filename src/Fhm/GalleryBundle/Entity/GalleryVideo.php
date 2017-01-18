@@ -38,7 +38,7 @@ class GalleryVideo extends Fhm
     protected $link;
 
     /**
-     * @ORM\OneToMany(targetEntity="Gallery")
+     * @ORM\OneToMany(targetEntity="Fhm\GalleryBundle\Gallery")
      */
     protected $galleries;
 
@@ -272,7 +272,7 @@ class GalleryVideo extends Fhm
     }
 
     /**
-     * @MongoDB\PreRemove()
+     * @ORM\PreRemove()
      */
     public function preRemove()
     {

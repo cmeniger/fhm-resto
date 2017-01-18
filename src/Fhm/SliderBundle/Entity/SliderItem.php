@@ -27,7 +27,7 @@ class SliderItem extends Fhm
     protected $content;
 
     /**
-     * @ORM\OneToOne(targetEntity="Fhm\MediaBundle\Document\Media")
+     * @ORM\OneToOne(targetEntity="Fhm\MediaBundle\Entity\Media")
      */
     protected $image;
 
@@ -37,7 +37,7 @@ class SliderItem extends Fhm
     protected $link;
 
     /**
-     * @ORM\OneToMany(targetEntity="Fhm\SliderBundle\Document\Slider", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="Fhm\SliderBundle\Entity\Slider", cascade={"persist"})
      */
     protected $sliders;
 
@@ -271,7 +271,7 @@ class SliderItem extends Fhm
     }
 
     /**
-     * @MongoDB\PreRemove()
+     * @ORM\PreRemove()
      */
     public function preRemove()
     {

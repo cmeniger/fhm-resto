@@ -1,20 +1,14 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: reap
- * Date: 17/01/17
- * Time: 12:17
- */
-
 namespace Fhm\CardBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Fhm\FhmBundle\Entity\Fhm;
 
 /**
  * @ORM\Entity
  * @ORM\Table()
  */
-class CardProduct
+class CardProduct extends Fhm
 {
     /**
      * @ORM\Column(type="string", length=100)
@@ -37,37 +31,37 @@ class CardProduct
     protected $default;
 
     /**
-     * @ORM\OneToOne(targetEntity="Media")
+     * @ORM\OneToOne(targetEntity="Fhm\MediaBundle\Media")
      */
     protected $image;
 
     /**
-     * @ORM\OneToOne(targetEntity="Card")
+     * @ORM\OneToOne(targetEntity="Fhm\CardBundle\Card")
      */
     protected $card;
 
     /**
-     * @ORM\OneToMany(targetEntity="CardCategory")
+     * @ORM\OneToMany(targetEntity="Fhm\CardBundle\CardCategory")
      */
     protected $categories;
 
     /**
-     * @ORM\OneToMany(targetEntity="CardIngredient")
+     * @ORM\OneToMany(targetEntity="Fhm\CardBundle\CardIngredient")
      */
     protected $ingredients;
 
     /**
-     * @MongoDB\Field(type="string")
+     * @ORM\Column(type="string", length=100)
      */
     protected $sort_card;
 
     /**
-     * @MongoDB\Field(type="int")
+     * @ORM\Column(type="integer")
      */
     protected $sort_category;
 
     /**
-     * @MongoDB\Field(type="int")
+     * @ORM\Column(type="integer")
      */
     protected $sort_ingredient;
 
@@ -405,7 +399,7 @@ class CardProduct
     }
 
     /**
-     * @MongoDB\PreRemove()
+     * @ORM\PreRemove()
      */
     public function preRemove()
     {

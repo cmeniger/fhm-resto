@@ -33,7 +33,7 @@ class Gallery extends Fhm
     protected $content;
 
     /**
-     * @ORM\OneToOne(targetEntity="Media")
+     * @ORM\OneToOne(targetEntity="Fhm\MediaBundle\Media")
      */
     protected $image;
 
@@ -58,17 +58,17 @@ class Gallery extends Fhm
     protected $order_video;
 
     /**
-     * @ORM\OneToMany(targetEntity="GalleryItem")
+     * @ORM\OneToMany(targetEntity="Fhm\GalleryBundle\GalleryItem")
      */
     protected $items;
 
     /**
-     * @ORM\OneToMany(targetEntity="GalleryVideo")
+     * @ORM\OneToMany(targetEntity="Fhm\GalleryBundle\GalleryVideo")
      */
     protected $videos;
 
     /**
-     * @ORM\OneToMany(targetEntity="GalleryAlbum")
+     * @ORM\OneToMany(targetEntity="Fhm\GalleryBundle\GalleryAlbum")
      */
     protected $albums;
 
@@ -660,7 +660,7 @@ class Gallery extends Fhm
     }
 
     /**
-     * @MongoDB\PreRemove()
+     * @ORM\PreRemove()
      */
     public function preRemove()
     {

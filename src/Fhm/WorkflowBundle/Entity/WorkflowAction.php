@@ -17,7 +17,7 @@ class WorkflowAction extends Fhm
     protected $validate_check;
 
     /**
-     * @ORM\OneToMany(targetEntity="Fhm\UserBundle\Document\User", nullable=true, cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="Fhm\UserBundle\Entity\User", nullable=true, cascade={"persist"})
      */
     protected $validate_users;
 
@@ -27,7 +27,7 @@ class WorkflowAction extends Fhm
     protected $dismiss_check;
 
     /**
-     * @ORM\OneToMany(targetEntity="Fhm\UserBundle\Document\User", nullable=true, cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="Fhm\UserBundle\Entity\User", nullable=true, cascade={"persist"})
      */
     protected $dismiss_users;
 
@@ -37,7 +37,7 @@ class WorkflowAction extends Fhm
     protected $cancel_check;
 
     /**
-     * @ORM\OneToMany(targetEntity="Fhm\UserBundle\Document\User", nullable=true, cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="Fhm\UserBundle\Entity\User", nullable=true, cascade={"persist"})
      */
     protected $cancel_users;
 
@@ -47,7 +47,7 @@ class WorkflowAction extends Fhm
     protected $upload_check;
 
     /**
-     * @ORM\OneToMany(targetEntity="Fhm\UserBundle\Document\User", nullable=true, cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="Fhm\UserBundle\Entity\User", nullable=true, cascade={"persist"})
      */
     protected $upload_users;
 
@@ -57,7 +57,7 @@ class WorkflowAction extends Fhm
     protected $download_check;
 
     /**
-     * @ORM\OneToMany(targetEntity="Fhm\UserBundle\Document\User", nullable=true, cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="Fhm\UserBundle\Entity\User", nullable=true, cascade={"persist"})
      */
     protected $download_users;
 
@@ -67,12 +67,12 @@ class WorkflowAction extends Fhm
     protected $comment_check;
 
     /**
-     * @ORM\OneToMany(targetEntity="Fhm\UserBundle\Document\User", nullable=true, cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="Fhm\UserBundle\Entity\User", nullable=true, cascade={"persist"})
      */
     protected $comment_users;
 
     /**
-     * @ORM\OneToMany(targetEntity="Fhm\WorkflowBundle\Document\WorkflowTask", nullable=true, cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="Fhm\WorkflowBundle\Entity\WorkflowTask", nullable=true, cascade={"persist"})
      */
     protected $tasks;
 
@@ -887,7 +887,7 @@ class WorkflowAction extends Fhm
     }
 
     /**
-     * @MongoDB\PreRemove()
+     * @ORM\PreRemove()
      */
     public function preRemove()
     {

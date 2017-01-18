@@ -1,11 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: reap
- * Date: 17/01/17
- * Time: 11:21
- */
-
 namespace Fhm\CardBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
@@ -44,27 +37,27 @@ class CardCategory extends Fhm
     protected $default;
 
     /**
-     * @ORM\OneToOne(targetEntity="Media")
+     * @ORM\OneToOne(targetEntity="Fhm\MediaBundle\Media")
      */
     protected $image;
 
     /**
-     * @ORM\OneToOne(targetEntity="Card")
+     * @ORM\OneToOne(targetEntity="Fhm\CardBundle\Card")
      */
     protected $card;
 
     /**
-     * @ORM\OneToMany(targetEntity="CardCategory")
+     * @ORM\OneToMany(targetEntity="Fhm\CardBundle\CardCategory")
      */
     protected $parents;
 
     /**
-     * @ORM\OneToMany(targetEntity="CardCategory")
+     * @ORM\OneToMany(targetEntity="Fhm\CardBundle\CardCategory")
      */
     protected $sons;
 
     /**
-     * @ORM\OneToMany(targetEntity="CardProduct")
+     * @ORM\OneToMany(targetEntity="Fhm\CardBundle\CardProduct")
      */
     protected $products;
 
@@ -541,7 +534,7 @@ class CardCategory extends Fhm
     }
 
     /**
-     * @MongoDB\PrePersist()
+     * @ORM\PrePersist()
      */
     public function prePersist()
     {
@@ -552,7 +545,7 @@ class CardCategory extends Fhm
     }
 
     /**
-     * @MongoDB\PreUpdate()
+     * @ORM\PreUpdate()
      */
     public function preUpdate()
     {
@@ -563,7 +556,7 @@ class CardCategory extends Fhm
     }
 
     /**
-     * @MongoDB\PreRemove()
+     * @ORM\PreRemove()
      */
     public function preRemove()
     {

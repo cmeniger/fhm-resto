@@ -325,7 +325,7 @@ class Media extends Fhm
     }
 
     /**
-     * @MongoDB\PrePersist()
+     * @ORM\PrePersist()
      */
     public function prePersist()
     {
@@ -345,7 +345,7 @@ class Media extends Fhm
 
 
     /**
-     * @MongoDB\PreUpdate()
+     * @ORM\PreUpdate()
      */
     public function preUpdate()
     {
