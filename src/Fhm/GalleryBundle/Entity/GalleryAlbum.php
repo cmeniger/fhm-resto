@@ -3,6 +3,7 @@ namespace Fhm\GalleryBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Fhm\FhmBundle\Entity\Fhm;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity

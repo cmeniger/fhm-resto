@@ -1,12 +1,13 @@
 <?php
 namespace Fhm\GeolocationBundle\Entity;
 
-use Doctrine\Bundle\MongoDBBundle\Validator\Constraints\UniqueEntity as Unique;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Fhm\FhmBundle\Entity\Fhm;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Geolocation
- * @Unique(fields="unique_position", message="geolocation.unique")
+ * @UniqueEntity(fields="unique_position", message="geolocation.unique")
  */
 class Geolocation extends Fhm
 {

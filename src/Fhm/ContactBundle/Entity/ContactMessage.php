@@ -1,6 +1,7 @@
 <?php
 namespace Fhm\ContactBundle\Entity;
 use Fhm\FhmBundle\Entity\Fhm as FhmFhm;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
