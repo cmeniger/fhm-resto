@@ -44,22 +44,22 @@ class News extends Fhm
     protected $date_end;
 
     /**
-     * @ORM\OneToOne(targetEntity="Fhm\MediaBundle\Document\Media", cascade={"all"})
+     * @ORM\OneToOne(targetEntity="Fhm\MediaBundle\Entity\Media", cascade={"all"})
      */
     protected $image;
 
     /**
-     * @ORM\OneToOne(targetEntity="Fhm\GalleryBundle\Document\Gallery", cascade={"all"})
+     * @ORM\OneToOne(targetEntity="Fhm\GalleryBundle\Entity\Gallery", cascade={"all"})
      */
     protected $gallery;
 
     /**
-     * @ORM\OneToOne(targetEntity="Fhm\UserBundle\Document\User", cascade={"all"})
+     * @ORM\OneToOne(targetEntity="Fhm\UserBundle\Entity\User", cascade={"all"})
      */
     protected $author;
 
     /**
-     * @ORM\OneToMany(targetEntity="Fhm\NewsBundle\Document\NewsGroup", cascade={"all"})
+     * @ORM\OneToMany(targetEntity="Fhm\NewsBundle\Entity\NewsGroup", cascade={"all"})
      */
     protected $newsgroups;
 

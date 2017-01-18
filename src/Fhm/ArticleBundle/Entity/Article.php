@@ -31,17 +31,17 @@ class Article extends Fhm
     protected $content;
 
     /**
-     * @ORM\OneToOne(targetEntity="Fhm\MediaBundle\Media")
+     * @ORM\OneToOne(targetEntity="Fhm\MediaBundle\Entity\Media")
      */
     protected $image;
 
     /**
-     * @ORM\OneToOne(targetEntity="Fhm\GalleryBundle\Gallery")
+     * @ORM\OneToOne(targetEntity="Fhm\GalleryBundle\Entity\Gallery")
      */
     protected $gallery;
 
     /**
-     * @ORM\OneToOne(targetEntity="Fhm\UserBundle\User")
+     * @ORM\OneToOne(targetEntity="Fhm\UserBundle\Entity\User")
      */
     protected $author;
 

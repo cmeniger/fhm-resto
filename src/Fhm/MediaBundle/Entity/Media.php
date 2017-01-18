@@ -295,11 +295,11 @@ class Media extends Fhm
     /**
      * Add tag
      *
-     * @param \Fhm\MediaBundle\Document\MediaTag $tag
+     * @param \Fhm\MediaBundle\Entity\MediaTag $tag
      *
      * @return $this
      */
-    public function addTag(\Fhm\MediaBundle\Document\MediaTag $tag)
+    public function addTag(\Fhm\MediaBundle\Entity\MediaTag $tag)
     {
         if (!$this->tags->contains($tag)) {
             $this->tags->add($tag);

@@ -33,7 +33,7 @@ class Gallery extends Fhm
     protected $content;
 
     /**
-     * @ORM\OneToOne(targetEntity="Fhm\MediaBundle\Media")
+     * @ORM\OneToOne(targetEntity="Fhm\MediaBundle\Entity\Media")
      */
     protected $image;
 
@@ -58,17 +58,17 @@ class Gallery extends Fhm
     protected $order_video;
 
     /**
-     * @ORM\OneToMany(targetEntity="Fhm\GalleryBundle\GalleryItem")
+     * @ORM\OneToMany(targetEntity="Fhm\GalleryBundle\Entity\GalleryItem")
      */
     protected $items;
 
     /**
-     * @ORM\OneToMany(targetEntity="Fhm\GalleryBundle\GalleryVideo")
+     * @ORM\OneToMany(targetEntity="Fhm\GalleryBundle\Entity\GalleryVideo")
      */
     protected $videos;
 
     /**
-     * @ORM\OneToMany(targetEntity="Fhm\GalleryBundle\GalleryAlbum")
+     * @ORM\OneToMany(targetEntity="Fhm\GalleryBundle\Entity\GalleryAlbum")
      */
     protected $albums;
 

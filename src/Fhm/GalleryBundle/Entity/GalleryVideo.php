@@ -38,7 +38,7 @@ class GalleryVideo extends Fhm
     protected $link;
 
     /**
-     * @ORM\OneToMany(targetEntity="Fhm\GalleryBundle\Gallery")
+     * @ORM\OneToMany(targetEntity="Fhm\GalleryBundle\Entity\Gallery")
      */
     protected $galleries;
 

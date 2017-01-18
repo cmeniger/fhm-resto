@@ -31,22 +31,22 @@ class CardProduct extends Fhm
     protected $default;
 
     /**
-     * @ORM\OneToOne(targetEntity="Fhm\MediaBundle\Media")
+     * @ORM\OneToOne(targetEntity="Fhm\MediaBundle\Entity\Media")
      */
     protected $image;
 
     /**
-     * @ORM\OneToOne(targetEntity="Fhm\CardBundle\Card")
+     * @ORM\OneToOne(targetEntity="Fhm\CardBundle\Entity\Card")
      */
     protected $card;
 
     /**
-     * @ORM\OneToMany(targetEntity="Fhm\CardBundle\CardCategory")
+     * @ORM\OneToMany(targetEntity="Fhm\CardBundle\Entity\CardCategory")
      */
     protected $categories;
 
     /**
-     * @ORM\OneToMany(targetEntity="Fhm\CardBundle\CardIngredient")
+     * @ORM\OneToMany(targetEntity="Fhm\CardBundle\Entity\CardIngredient")
      */
     protected $ingredients;
 
