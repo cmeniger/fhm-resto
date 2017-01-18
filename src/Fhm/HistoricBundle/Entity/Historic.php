@@ -1,36 +1,42 @@
 <?php
 namespace Fhm\HistoricBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
+/**
+ * @ORM\Entity
+ * @ORM\Table()
+ */
 class Historic
 {
     /**
-     * @MongoDB\Id(strategy="auto")
+     * @ORM\Id
+     * @Column(type="integer")
      */
     protected $id;
 
     /**
-     * @MongoDB\Field(type="string")
+     * @ORM\Column(type="string", length=100)
      */
     protected $name;
 
     /**
-     * @MongoDB\Field(type="string")
+     * @ORM\Column(type="string", length=100)
      */
     protected $type;
     /**
-     * @MongoDB\Field(type="date")
+     * @ORM\Column(type="date")
      * @Assert\Type("\DateTime")
      */
     protected $date_create;
 
     /**
-     * @MongoDB\Field(type="string")
+     * @ORM\Column(type="string", length=100)
      */
     protected $objectId;
 
     /**
-     * @MongoDB\Field(type="string")
+     * @ORM\Column(type="string", length=100)
      */
     protected $objectStatut;
 

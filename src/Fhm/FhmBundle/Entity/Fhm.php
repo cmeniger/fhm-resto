@@ -21,6 +21,11 @@ class Fhm
      */
     protected $name;
 
+    public function __construct()
+    {
+
+    }
+
     /**
      * @return mixed
      */
