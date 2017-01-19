@@ -1,6 +1,7 @@
 <?php
 
 namespace Fhm\GeolocationBundle\Entity;
+use Fhm\FhmBundle\Entity\FhmWithUser;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 

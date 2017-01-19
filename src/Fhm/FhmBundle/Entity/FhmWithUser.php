@@ -1,21 +1,20 @@
 <?php
 namespace Fhm\FhmBundle\Entity;
 
-use Symfony\Component\Validator\Constraints as Assert;
+use FOS\UserBundle\Model\User;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Bundle\MongoDBBundle\Validator\Constraints\Unique as MongoDBUnique;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Fhm
- * @ORM\Entity
- * @ORM\Table()
  * @ORM\HasLifecycleCallbacks
  */
-class Fhm
+class FhmWithUser extends User
 {
     /**
-     * @ORM\Column(type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\Id(strategy="auto")
      */
     protected $id;
 
@@ -32,12 +31,12 @@ class Fhm
     protected $date_update;
 
     /**
-     * @ORM\OneToOne(targetEntity="Fhm\UserBundle\Entity\User", nullable=true, cascade={"persist"})
+     * @ORM\OneToOne(targetEntity="Fhm\UserBundle\Document\User", nullable=true, cascade={"persist"})
      */
     protected $user_create;
 
     /**
-     * @ORM\OneToOne(targetEntity="Fhm\UserBundle\Entity\User", nullable=true, cascade={"persist"})
+     * @ORM\OneToOne(targetEntity="Fhm\UserBundle\Document\User", nullable=true, cascade={"persist"})
      */
     protected $user_update;
 
@@ -100,16 +99,28 @@ class Fhm
     protected $seo_description;
 
     /**
+     * @ORM\OneToOne(nullable=true, cascade={"persist"})
+     */
+    protected $historic_parent;
+
+    /**
+     * @ORM\OneToMany(nullable=true, cascade={"persist"})
+     */
+    protected $historic_sons;
+
+    /**
      * Constructor
      */
     public function __construct()
     {
+        parent::__construct();
         $this->active = false;
         $this->delete = false;
         $this->share = false;
         $this->global = false;
         $this->order = 0;
         $this->alias = null;
+        $this->historic_sons = new ArrayCollection();
     }
 
     /**
@@ -471,6 +482,175 @@ class Fhm
     }
 
     /**
+     * Get historic sons
+     *
+     * @return mixed
+     */
+    public function getHistoricSons()
+    {
+        return $this->historic_sons;
+    }
+
+    /**
+     * Set historic sons
+     *
+     * @param ArrayCollection $sons
+     *
+     * @return $this
+     */
+    public function setHistoricSons(ArrayCollection $sons)
+    {
+        $this->resetHistoricSons();
+        foreach ($sons as $son) {
+            $son->setHistoricParent($this);
+        }
+        $this->historic_sons = $sons;
+
+        return $this;
+    }
+
+    /**
+     * Add historic son
+     *
+     * @param $son
+     *
+     * @return $this
+     */
+    public function addHistoricSon($son)
+    {
+        if (!$this->historic_sons->contains($son)) {
+            $this->historic_sons->add($son);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Remove historic son
+     *
+     * @param $son
+     *
+     * @return $this
+     */
+    public function removeHistoricSon($son)
+    {
+        if ($this->historic_sons->contains($son)) {
+            $this->historic_sons->removeElement($son);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Reset historic sons
+     *
+     * @return $this
+     */
+    public function resetHistoricSons()
+    {
+        foreach ($this->historic_sons as $son) {
+            $son->removeHistoricParent($this);
+        }
+        $this->historic_sons = new ArrayCollection();
+
+        return $this;
+    }
+
+    /**
+     * Get historic parent
+     *
+     * @return mixed
+     */
+    public function getHistoricParent()
+    {
+        return $this->historic_parent;
+    }
+
+    /**
+     * Set historic parent
+     *
+     * @param $parent
+     *
+     * @return self
+     */
+    public function setHistoricParent($parent)
+    {
+        $this->removeHistoricParent();
+        $this->historic_parent = $parent;
+
+        return $this;
+    }
+
+    /**
+     * Remove historic parent
+     *
+     * @return self
+     */
+    public function removeHistoricParent()
+    {
+        if ($this->historic_parent) {
+            $this->historic_parent->removeHistoricSon($this);
+        }
+        $this->historic_parent = null;
+
+        return $this;
+    }
+
+    /**
+     * Historic merge
+     */
+    public function historicMerge($dm, $document)
+    {
+        // ReferenceOne
+        $this->user_create = $document->getUserCreate() ? $dm->getRepository('FhmUserBundle:User')->find(
+            $document->getUserCreate()->getId()
+        ) : null;
+        $this->user_update = $document->getUserUpdate() ? $dm->getRepository('FhmUserBundle:User')->find(
+            $document->getUserUpdate()->getId()
+        ) : null;
+        // Rest
+        $this->name = $document->getName();
+        $this->alias = $document->getAlias();
+        $this->description = $document->getDescription();
+        $this->delete = $document->getDelete();
+        $this->active = $document->getActive();
+        $this->share = $document->getShare();
+        $this->global = $document->getGlobal();
+        $this->order = $document->getOrder();
+        $this->date_create = $document->getDateCreate();
+        $this->date_update = $document->getDateUpdate();
+        $this->seo_title = $document->getSeoTitle();
+        $this->seo_description = $document->getSeoDescription();
+        $this->seo_keywords = $document->getSeoKeywords();
+
+        return $this;
+    }
+
+    /**
+     * Historic difference
+     */
+    public function historicDifference()
+    {
+        $count = 0;
+        if ($this->historic_parent) {
+            $count += $this->name != $this->historic_parent->name ? 1 : 0;
+            $count += $this->alias != $this->historic_parent->alias ? 1 : 0;
+            $count += $this->description != $this->historic_parent->description ? 1 : 0;
+            $count += $this->delete != $this->historic_parent->delete ? 1 : 0;
+            $count += $this->active != $this->historic_parent->active ? 1 : 0;
+            $count += $this->share != $this->historic_parent->share ? 1 : 0;
+            $count += $this->global != $this->historic_parent->global ? 1 : 0;
+            $count += $this->order != $this->historic_parent->order ? 1 : 0;
+            $count += $this->seo_title != $this->historic_parent->seo_title ? 1 : 0;
+            $count += $this->seo_description != $this->historic_parent->seo_description ? 1 : 0;
+            $count += $this->seo_keywords != $this->historic_parent->seo_keywords ? 1 : 0;
+        }
+
+        return $count;
+    }
+
+
+    /**
      * @return bool
      */
     public function isEnable()
@@ -528,35 +708,8 @@ class Fhm
         $this->name = (isset($data['name'])) ? $data['name'] : $this->name;
         $this->description = (isset($data['description'])) ? $data['description'] : $this->description;
         $this->alias = (isset($data['alias'])) ? $data['alias'] : $this->alias;
-        $this->delete = (isset($data['delete'])) ? $data['delete'] : $this->delete;
-        $this->active = (isset($data['active'])) ? $data['active'] : $this->active;
 
         return $this;
-    }
-
-    /**
-     * Get sort var
-     *
-     * @param string $index
-     *
-     * @return array
-     */
-    public function getVarSort($index = '')
-    {
-        if ($index) {
-            $index = substr($index, 0, 5) === 'sort_' ? $index : 'sort_'.$index;
-
-            return isset($this->$index) ? $this->$index : 0;
-        }
-        $response = array();
-        $vars = get_object_vars($this);
-        foreach ($vars as $key => $value) {
-            if (substr($key, 0, 5) === 'sort_') {
-                $response[substr($key, 5)] = $value;
-            }
-        }
-
-        return $response;
     }
 
     /**
@@ -566,6 +719,16 @@ class Fhm
      */
     public function sortUpdate()
     {
+        return $this;
+    }
+
+    /**
+     * @ORM\PreRemove()
+     */
+    public function preRemove()
+    {
+        $this->resetHistoricSons();
+
         return $this;
     }
 
@@ -622,13 +785,5 @@ class Fhm
     public function postLoad()
     {
         return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function __toString()
-    {
-        return (string)$this->getName();
     }
 }
