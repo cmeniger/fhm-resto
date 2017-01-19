@@ -22,12 +22,12 @@ class Partner extends Fhm
     protected $content;
 
     /**
-     * @ORM\OneToOne(targetEntity="Fhm\MediaBundle\Entity\Media", length=100)
+     * @ORM\OneToOne(targetEntity="Fhm\MediaBundle\Entity\Media", nullable=true)
      */
     protected $image;
 
     /**
-     * @ORM\OneToMany(targetEntity="Fhm\PartnerBundle\Entity\PartnerGroup", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="Fhm\PartnerBundle\Entity\PartnerGroup", nullable=true, cascade={"persist"})
      */
     protected $partnergroups;
 

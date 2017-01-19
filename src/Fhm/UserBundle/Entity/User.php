@@ -3,10 +3,16 @@ namespace Fhm\UserBundle\Entity;
 use Fhm\GeolocationBundle\Entity\GeolocationWithUser;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity
  * @ORM\Table()
+ * @ORM\HasLifecycleCallbacks
+ * @UniqueEntity(fields="email")
+ * @UniqueEntity(fields="emailCanonical")
+ * @UniqueEntity(fields="username")
+ * @UniqueEntity(fields="usernameCanonical")
  */
 class User extends GeolocationWithUser
 {

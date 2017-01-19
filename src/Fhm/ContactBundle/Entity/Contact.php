@@ -41,7 +41,7 @@ class Contact extends Geolocation
     protected $profile;
 
     /**
-     * @ORM\OneToOne(targetEntity="Fhm\MediaBundle\Entity\Media")
+     * @ORM\OneToOne(targetEntity="Fhm\MediaBundle\Entity\Media", nullable=true, cascade={"persist"})
      */
     protected $profile_image;
 

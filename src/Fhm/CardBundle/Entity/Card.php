@@ -17,22 +17,22 @@ class Card extends Fhm
     protected $parent;
 
     /**
-     * @ORM\OneToOne(targetEntity="Fhm\MediaBundle\Entity\Media")
+     * @ORM\OneToOne(targetEntity="Fhm\MediaBundle\Entity\Media", nullable=true)
      */
     protected $image;
 
     /**
-     * @ORM\OneToMany(targetEntity="Fhm\CardBundle\Entity\CardCategory")
+     * @ORM\OneToMany(targetEntity="Fhm\CardBundle\Entity\CardCategory", nullable=true, cascade={"all"})
      */
     protected $categories;
 
     /**
-     * @ORM\OneToMany(targetEntity="Fhm\CardBundle\Entity\CardProduct")
+     * @ORM\OneToMany(targetEntity="Fhm\CardBundle\Entity\CardProduct", nullable=true, cascade={"all"})
      */
     protected $products;
 
     /**
-     * @ORM\OneToMany(targetEntity="Fhm\CardBundle\Entity\CardIngredient")
+     * @ORM\OneToMany(targetEntity="Fhm\CardBundle\Entity\CardIngredient", nullable=true, cascade={"all"})
      */
     protected $ingredients;
 

@@ -20,7 +20,7 @@ class ContactMessage extends FhmFhm
     protected $field;
 
     /**
-     * @ORM\OneToOne(targetEntity="Fhm\ContactBundle\Entity\Contact")
+     * @ORM\OneToOne(targetEntity="Fhm\ContactBundle\Entity\Contact", nullable=true, cascade={"persist"})
      */
     protected $contact;
 

@@ -27,7 +27,7 @@ class SliderItem extends Fhm
     protected $content;
 
     /**
-     * @ORM\OneToOne(targetEntity="Fhm\MediaBundle\Entity\Media")
+     * @ORM\OneToOne(targetEntity="Fhm\MediaBundle\Entity\Media", nullable=true)
      */
     protected $image;
 
@@ -37,7 +37,7 @@ class SliderItem extends Fhm
     protected $link;
 
     /**
-     * @ORM\OneToMany(targetEntity="Fhm\SliderBundle\Entity\Slider", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="Fhm\SliderBundle\Entity\Slider", nullable=true, cascade={"persist"})
      */
     protected $sliders;
 

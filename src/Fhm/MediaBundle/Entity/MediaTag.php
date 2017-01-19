@@ -11,7 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 class MediaTag extends Fhm
 {
     /**
-     * @ORM\OneToOne(targetEntity="Fhm\MediaBundle\Entity\MediaTag")
+     * @ORM\OneToOne(targetEntity="Fhm\MediaBundle\Entity\MediaTag", nullable=true)
      */
     protected $parent;
 

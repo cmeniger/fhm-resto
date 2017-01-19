@@ -37,27 +37,27 @@ class CardCategory extends Fhm
     protected $default;
 
     /**
-     * @ORM\OneToOne(targetEntity="Fhm\MediaBundle\Entity\Media")
+     * @ORM\OneToOne(targetEntity="Fhm\MediaBundle\Entity\Media", nullable=true)
      */
     protected $image;
 
     /**
-     * @ORM\OneToOne(targetEntity="Fhm\CardBundle\Entity\Card")
+     * @ORM\OneToOne(targetEntity="Fhm\CardBundle\Entity\Card", nullable=true, cascade={"persist"})
      */
     protected $card;
 
     /**
-     * @ORM\OneToMany(targetEntity="Fhm\CardBundle\Entity\CardCategory")
+     * @ORM\OneToMany(targetEntity="Fhm\CardBundle\Entity\CardCategory", nullable=true, cascade={"persist"})
      */
     protected $parents;
 
     /**
-     * @ORM\OneToMany(targetEntity="Fhm\CardBundle\Entity\CardCategory")
+     * @ORM\OneToMany(targetEntity="Fhm\CardBundle\Entity\CardCategory", nullable=true, cascade={"persist"})
      */
     protected $sons;
 
     /**
-     * @ORM\OneToMany(targetEntity="Fhm\CardBundle\Entity\CardProduct")
+     * @ORM\OneToMany(targetEntity="Fhm\CardBundle\Entity\CardProduct", nullable=true, cascade={"persist"})
      */
     protected $products;
 

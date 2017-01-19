@@ -13,7 +13,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 class PartnerGroup extends Fhm
 {
     /**
-     * @ORM\OneToMany(targetDocument="Fhm\PartnerBundle\Entity\Partner", cascade={"persist"})
+     * @ORM\OneToMany(targetDocument="Fhm\PartnerBundle\Entity\Partner", nullable=true, cascade={"persist"})
      */
     protected $partners;
 

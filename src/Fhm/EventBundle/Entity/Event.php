@@ -44,12 +44,12 @@ class Event extends Fhm
     protected $date_end;
 
     /**
-     * @ORM\OneToOne(targetEntity="Fhm\MediaBundle\Entity\Media")
+     * @ORM\OneToOne(targetEntity="Fhm\MediaBundle\Entity\Media", nullable=true)
      */
     protected $image;
 
     /**
-     * @ORM\OneToMany(targetEntity="Fhm\Event\Entity\EventGroup")
+     * @ORM\OneToMany(targetEntity="Fhm\Event\Entity\EventGroup", nullable=true, cascade={"persist"})
      */
     protected $eventgroups;
 

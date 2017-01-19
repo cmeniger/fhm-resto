@@ -11,7 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Notification extends Fhm
 {
     /**
-     * @ORM\OneToOne(targetEntity="Fhm\UserBundle\Entity\User")
+     * @ORM\OneToOne(targetEntity="Fhm\UserBundle\Entity\User", nullable=true)
      */
     protected $user;
 

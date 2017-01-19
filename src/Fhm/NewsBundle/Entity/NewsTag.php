@@ -12,12 +12,12 @@ use Symfony\Component\Validator\Constraints as Assert;
 class NewsTag extends Fhm
 {
     /**
-     * @ORM\OneToMany(targetEntity="Fhm\NewsBundle\Entity\News", cascade={"all"})
+     * @ORM\OneToMany(targetEntity="Fhm\NewsBundle\Entity\News", nullable=true, cascade={"all"})
      */
     protected $primaries;
 
     /**
-     * @ORM\OneToMany(targetEntity="Fhm\NewsBundle\Entity\News", cascade={"all"})
+     * @ORM\OneToMany(targetEntity="Fhm\NewsBundle\Entity\News", nullable=true, cascade={"all"})
      */
     protected $secondaries;
 
