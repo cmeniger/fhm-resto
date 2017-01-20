@@ -1,7 +1,7 @@
 <?php
 namespace Fhm\CardBundle\Form\Type\Api\Product;
 
-use Doctrine\Bundle\MongoDBBundle\Form\Type\DocumentType;
+use Fhm\FhmBundle\Manager\TypeManager;
 use Fhm\MediaBundle\Form\Type\MediaType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -65,28 +65,22 @@ class UpdateType extends AbstractType
             )
         )->add(
             'categories',
-            DocumentType::class,
+            TypeManager::getType($options['object_manager']->getDBDriver()),
             array(
                 'label' => $options['translation_route'].'.api.update.form.categories',
                 'class' => 'FhmCardBundle:CardCategory',
                 'choice_label' => 'route',
-                'query_builder' => function (\Fhm\CardBundle\Repository\CardCategoryRepository $dr) {
-                    //                    return $dr->setSort('route')->getFormCard($this->card, $this->instance->grouping->filtered);
-                },
                 'multiple' => true,
                 'by_reference' => false,
                 'required' => false,
             )
         )->add(
             'ingredients',
-            DocumentType::class,
+            TypeManager::getType($options['object_manager']->getDBDriver()),
             array(
                 'label' => $options['translation_route'].'.api.update.form.ingredients',
                 'class' => 'FhmCardBundle:CardIngredient',
                 'choice_label' => 'name',
-                'query_builder' => function (\Fhm\CardBundle\Repository\CardIngredientRepository $dr) {
-                    //                    return $dr->getFormCard($this->card, $this->instance->grouping->filtered);
-                },
                 'multiple' => true,
                 'required' => false,
                 'by_reference' => false,
@@ -113,10 +107,12 @@ class UpdateType extends AbstractType
     {
         $resolver->setDefaults(
             array(
-                'data_class' => 'Fhm\FhmCardBundle\Document\CardProduct',
+                'data_class' => '',
                 'translation_domain' => 'FhmCardBundle',
                 'cascade_validation' => true,
                 'translation_route' => 'card.product',
+                'object_manager'=>'',
+                'user_admin' => '',
             )
         );
     }

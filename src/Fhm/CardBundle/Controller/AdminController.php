@@ -1,22 +1,15 @@
 <?php
 namespace Fhm\CardBundle\Controller;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Fhm\CardBundle\Document\CardCategory;
 use Fhm\CardBundle\Form\Type\Admin\CreateType;
 use Fhm\CardBundle\Form\Type\Admin\UpdateType;
 use Fhm\FhmBundle\Controller\RefAdminController as FhmController;
-use Fhm\CardBundle\Controller\Category\ApiController as ApiCategory;
-use Fhm\CardBundle\Document\Card;
 use Fhm\FhmBundle\Form\Handler\Admin\CreateHandler;
 use Fhm\FhmBundle\Form\Handler\Admin\UpdateHandler;
-use Fhm\FhmBundle\Services\Tools;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\HttpException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Component\Serializer\Tests\Fixtures\ToBeProxyfiedDummy;
 
 /**
  * @Route("/admin/card")
@@ -35,7 +28,6 @@ class AdminController extends FhmController
         self::$source = "fhm";
         self::$domain = "FhmCardBundle";
         self::$translation = "card";
-        self::$class = Card::class;
         self::$route = 'card';
         self::$form = new \stdClass();
         self::$form->createType    = CreateType::class;

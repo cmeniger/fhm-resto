@@ -1,9 +1,7 @@
 <?php
 namespace Fhm\EventBundle\Controller\Group;
 
-use Fhm\EventBundle\Document\EventGroup;
 use Fhm\FhmBundle\Controller\RefFrontController as FhmController;
-use Fhm\EventBundle\Document\Event;
 use Fhm\FhmBundle\Form\Type\Admin\SearchType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -27,7 +25,6 @@ class FrontController extends FhmController
         self::$source = "fhm";
         self::$domain = "FhmEventBundle";
         self::$translation = "event.group";
-        self::$class = EventGroup::class;
         self::$route = "event_group";
     }
 
@@ -42,10 +39,10 @@ class FrontController extends FhmController
     public function indexAction()
     {
         $response = parent::indexAction();
-        foreach ($response['documents'] as $key => $document) {
-            $response['documents'][$key]->allevent = $this->get('fhm_tools')->dmRepository(
+        foreach ($response['objects'] as $key => $object) {
+            $response['objects'][$key]->allevent = $this->get('fhm_tools')->dmRepository(
                 "FhmEventBundle:Event"
-            )->getEventByGroupAll($document);
+            )->getEventByGroupAll($object);
         }
 
         return $response;
@@ -63,19 +60,19 @@ class FrontController extends FhmController
     public function detailAction($id)
     {
         $response = parent::detailAction($id);
-        $document = $response['document'];
+        $object = $response['object'];
         $form = $this->createForm(SearchType::class);
         $form->setData($this->get('request_stack')->getCurrentRequest()->get($form->getName()));
         $dataSearch = $form->getData();
-        $documents = $this->get('fhm_tools')->dmRepository("FhmEventBundle:Event")->getEventByGroupIndex(
-            $document,
+        $objects = $this->get('fhm_tools')->dmRepository("FhmEventBundle:Event")->getEventByGroupIndex(
+            $object,
             $dataSearch['search']
         );
 
         return array_merge(
             $response,
             array(
-                'documents' => $documents,
+                'objects' => $objects,
                 'form' => $form->createView(),
             )
         );

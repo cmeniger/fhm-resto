@@ -54,23 +54,27 @@ class RefAdminController extends GenericController
     public function createAction(Request $request)
     {
         self::$class = $this->get('fhm.object.manager')->getCurrentModelName(self::$repository);
-        $document = new self::$class;
+        $object = new self::$class;
         $form = $this->createForm(
             self::$form->createType,
-            $document,
-            array('user_admin' => $this->getUser()->hasRole('ROLE_SUPER_ADMIN'))
+            $object,
+            array(
+                'user_admin' => $this->getUser()->hasRole('ROLE_SUPER_ADMIN'),
+                'data_class' => self::$class,
+                'object_manager' => $this->get('fhm.object.manager'),
+            )
         );
         $handler = new self::$form->createHandler($form, $request);
         $process = $handler->process();
         if ($process) {
-            $this->get('fhm_tools')->dmPersist($document);
+            $this->get('fhm_tools')->dmPersist($object);
             $this->get('session')->getFlashBag()->add(
                 'notice',
                 $this->trans(self::$translation.'.admin.create.flash.ok')
             );
-
             $data = $request->get($form->getName());
-            return $this->redirectUrl($data, $document);
+
+            return $this->redirectUrl($data, $object);
         }
 
         return array(
@@ -93,13 +97,13 @@ class RefAdminController extends GenericController
      */
     public function duplicateAction(Request $request, $id)
     {
-        $document = $this->get('fhm_tools')->dmRepository(self::$repository)->find($id);
-        if (!is_object($document)) {
+        $object = $this->get('fhm_tools')->dmRepository(self::$repository)->find($id);
+        if (!is_object($object)) {
             throw $this->createNotFoundException(
                 $this->trans(self::$translation.'.error.unknown', self::$domain)
             );
         }
-        $this->document = $document;
+        $this->object = $object;
 
         return $this->createAction($request);
     }
@@ -117,10 +121,15 @@ class RefAdminController extends GenericController
         if (!is_object($object)) {
             throw $this->createNotFoundException($this->trans(self::$translation.'.error.unknown'));
         }
+        self::$class = $this->get('fhm.object.manager')->getCurrentModelName(self::$repository);
         $form = $this->createForm(
             self::$form->updateType,
             $object,
-            array('user_admin' => $this->get('security.authorization_checker')->isGranted('ROLE_SUPER_ADMIN'))
+            array(
+                'user_admin' => $this->getUser()->hasRole('ROLE_SUPER_ADMIN'),
+                'data_class' => self::$class,
+                'object_manager' => $this->get('fhm.object.manager'),
+            )
         );
         $handler = new self::$form->updateHandler($form, $request);
         $process = $handler->process();
@@ -130,9 +139,9 @@ class RefAdminController extends GenericController
                 'notice',
                 $this->trans(self::$translation.'.admin.update.flash.ok')
             );
-
             /** Redirect **/
             $data = $request->get($form->getName());
+
             return $this->redirectUrl($data, $object);
         }
 
@@ -160,6 +169,7 @@ class RefAdminController extends GenericController
         if (!is_object($object)) {
             throw $this->createNotFoundException($this->trans(self::$translation.'.error.unknown'));
         }
+
         return array(
             'object' => $object,
             'breadcrumbs' => $this->get('fhm_tools')->generateBreadcrumbs(
@@ -258,7 +268,7 @@ class RefAdminController extends GenericController
             throw $this->createNotFoundException($this->trans(self::$translation.'.error.unknown'));
         }
         $object->setActive(false);
-        $this->get('fhm_tools')->dmPersist($document);
+        $this->get('fhm_tools')->dmPersist($object);
         $this->get('session')->getFlashBag()->add(
             'notice',
             $this->trans(self::$translation.'.admin.deactivate.flash.ok')
@@ -289,18 +299,18 @@ class RefAdminController extends GenericController
                         self::$repository
                     );
                 }
-                $document = $this->get('fhm_tools')->dmRepository(self::$repository)->getImport($data);
-                if ($document === 'error') {
+                $object = $this->get('fhm_tools')->dmRepository(self::$repository)->getImport($data);
+                if ($object === 'error') {
                     $count[2]++;
-                } elseif ($document) {
+                } elseif ($object) {
                     $count[1]++;
-                    $document->setCsvData($data);
-                    $this->get('fhm_tools')->dm()->persist($document);
+                    $object->setCsvData($data);
+                    $this->get('fhm_tools')->dm()->persist($object);
                 } else {
                     $count[0]++;
-                    $document = new self::$class;
-                    $document->setCsvData($data);
-                    $this->get('fhm_tools')->dm()->persist($document);
+                    $object = new self::$class;
+                    $object->setCsvData($data);
+                    $this->get('fhm_tools')->dm()->persist($object);
                 }
             }
             $this->get('fhm_tools')->dm()->flush();
@@ -335,10 +345,10 @@ class RefAdminController extends GenericController
         $form = $this->createForm(ExportType::class);
         $process = $form->handleRequest($request);
         if ($process) {
-            $documents = $this->get('fhm_tools')->dmRepository(self::$repository)->getExport();
-            $datas = array(self::$document->getCsvHeader());
-            foreach ($documents as $document) {
-                $datas[] = $document->getCsvData();
+            $objects = $this->get('fhm_tools')->dmRepository(self::$repository)->getExport();
+            $datas = array(self::$object->getCsvHeader());
+            foreach ($objects as $object) {
+                $datas[] = $object->getCsvData();
             }
 
             return $this->get('fhm_tools')->csvExport($datas, '', ',');

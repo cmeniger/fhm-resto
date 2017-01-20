@@ -2,8 +2,6 @@
 namespace Fhm\GalleryBundle\Controller\Album;
 
 use Fhm\FhmBundle\Controller\RefFrontController as FhmController;
-use Fhm\GalleryBundle\Document\Gallery;
-use Fhm\GalleryBundle\Document\GalleryAlbum;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -26,7 +24,6 @@ class FrontController extends FhmController
         self::$source = "fhm";
         self::$domain = "FhmGalleryBundle";
         self::$translation = "gallery.album";
-        self::$class = GalleryAlbum::class;
         self::$route = "gallery_album";
     }
 

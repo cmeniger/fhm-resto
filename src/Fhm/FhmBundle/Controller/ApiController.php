@@ -1,7 +1,6 @@
 <?php
 namespace Fhm\FhmBundle\Controller;
 
-use Fhm\FhmBundle\Document\Fhm;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;

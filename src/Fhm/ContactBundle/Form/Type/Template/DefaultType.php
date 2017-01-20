@@ -75,7 +75,7 @@ class DefaultType extends AbstractType
     {
         $resolver->setDefaults(
             array(
-                'data_class' => 'Fhm\ContactBundle\Document\Contact',
+                'data_class' => '',
                 'translation_domain' => 'FhmContactBundle',
                 'cascade_validation' => true,
             )

@@ -1,10 +1,8 @@
 <?php
 namespace Fhm\CardBundle\Form\Type\Admin\Ingredient;
 
-use Doctrine\Bundle\MongoDBBundle\Form\Type\DocumentType;
-use Fhm\CardBundle\Repository\CardProductRepository;
-use Fhm\CardBundle\Repository\CardRepository;
 use Fhm\FhmBundle\Form\Type\Admin\UpdateType as FhmType;
+use Fhm\FhmBundle\Manager\TypeManager;
 use Fhm\MediaBundle\Form\Type\MediaType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
@@ -49,24 +47,26 @@ class UpdateType extends FhmType
             )
         )->add(
             'card',
-            DocumentType::class,
+            TypeManager::getType($options['object_manager']->getDBDriver()),
             array(
                 'label' => $options['translation_route'].'.admin.update.form.card',
                 'class' => 'FhmCardBundle:Card',
                 'choice_label' => 'name',
-                'query_builder' => function (CardRepository $dr) use ($options) {
+                'query_builder' => function () use ($options) {
+                    $dr = $options['object_manager']->getCurrentRepository('FhmCardBundle:Card');
                     return $dr->getFormEnable($options['filter']);
                 },
                 'required' => false,
             )
         )->add(
             'products',
-            DocumentType::class,
+            TypeManager::getType($options['object_manager']->getDBDriver()),
             array(
                 'label' => $options['translation_route'].'.admin.update.form.products',
                 'class' => 'FhmCardBundle:CardProduct',
                 'choice_label' => 'name',
-                'query_builder' => function (CardProductRepository $dr) use ($options) {
+                'query_builder' => function () use ($options) {
+                    $dr = $options['object_manager']->getCurrentRepository('FhmCardBundle:CardProduct');
                     return $dr->getFormEnable($options['filter']);
                 },
                 'multiple' => true,
@@ -83,12 +83,12 @@ class UpdateType extends FhmType
     {
         $resolver->setDefaults(
             array(
-                'data_class' => 'Fhm\CardBundle\Document\CardIngredient',
+                'data_class' => '',
                 'translation_domain' => 'FhmCardBundle',
                 'cascade_validation' => true,
                 'translation_route' => 'card.ingredient',
-                'filter' => '',
                 'user_admin' => '',
+                'object_manager'=>''
             )
         );
     }

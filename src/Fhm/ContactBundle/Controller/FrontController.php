@@ -26,7 +26,6 @@ class FrontController extends FhmController
         self::$source = "fhm";
         self::$domain = "FhmContactBundle";
         self::$translation = "contact";
-        self::$class = Contact::class;
         self::$route = "contact";
     }
 

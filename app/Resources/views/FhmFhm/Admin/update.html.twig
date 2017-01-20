@@ -11,7 +11,7 @@
                 <br/>
                 <small>
                     {% block tagline_data_subtitle %}
-                        {{ (instance.translation ~ '.admin.update.title')|trans({'%name%': document.getName()}) }}
+                        {{ (instance.translation ~ '.admin.update.title')|trans({'%name%': object.getName()}) }}
                     {% endblock %}
                 </small>
             {% endblock %}
@@ -23,7 +23,7 @@
     {% block content_data %}
         <div class="form form-update">
             {% block content_data_form %}
-            <form action="{% block content_data_form_action %}{{ path(instance.source ~ '_admin_' ~ instance.route ~ '_update', {id: document.getId()}) }}{% endblock %}" {% block content_data_form_attribut %}{% endblock %} method="POST"  >
+            <form action="{% block content_data_form_action %}{{ path(instance.source ~ '_admin_' ~ instance.route ~ '_update', {id: object.getId()}) }}{% endblock %}" {% block content_data_form_attribut %}{% endblock %} method="POST"  >
                 {% endblock %}
                 {% block content_data_errors %}
                     {% if form.vars.errors|length > 0 %}
@@ -169,7 +169,7 @@
                                             </li>
                                             {% block content_data_submit_list_delete %}
                                                 <li>
-                                                    <a href="{{ path(instance.source ~ '_admin_' ~ instance.route ~ '_delete', {'id': document.getId()}) }}" onclick="return confirm('{{ (instance.translation ~ '.admin.index.table.confirm.delete')|trans }}')" class="button small alert button-icon button-delete">{{ (instance.translation ~ '.admin.update.form.submit.delete')|trans }}</a>
+                                                    <a href="{{ path(instance.source ~ '_admin_' ~ instance.route ~ '_delete', {'id': object.getId()}) }}" onclick="return confirm('{{ (instance.translation ~ '.admin.index.table.confirm.delete')|trans }}')" class="button small alert button-icon button-delete">{{ (instance.translation ~ '.admin.update.form.submit.delete')|trans }}</a>
                                                 </li>
                                             {% endblock %}
                                         {% endblock %}

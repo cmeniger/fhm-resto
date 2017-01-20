@@ -4,7 +4,6 @@ namespace Fhm\EventBundle\Controller;
 use Fhm\EventBundle\Form\Type\Admin\CreateType;
 use Fhm\EventBundle\Form\Type\Admin\UpdateType;
 use Fhm\FhmBundle\Controller\RefAdminController as FhmController;
-use Fhm\EventBundle\Document\Event;
 use Fhm\FhmBundle\Form\Handler\Admin\CreateHandler;
 use Fhm\FhmBundle\Form\Handler\Admin\UpdateHandler;
 use Symfony\Component\HttpFoundation\Request;
@@ -29,14 +28,12 @@ class AdminController extends FhmController
         self::$source = "fhm";
         self::$domain = "FhmEventBundle";
         self::$translation = "event";
-        self::$class = Event::class;
         self::$route = "event";
         self::$form = new \stdClass();
         self::$form->createType    = CreateType::class;
         self::$form->createHandler = CreateHandler::class;
         self::$form->updateType    = UpdateType::class;
         self::$form->updateHandler = UpdateHandler::class;
-
     }
 
     /**
@@ -104,12 +101,12 @@ class AdminController extends FhmController
      */
     public function detailAction($id)
     {
-        $document = $this->get('fhm_tools')->dmRepository(self::$repository)->find($id);
+        $object = $this->get('fhm_tools')->dmRepository(self::$repository)->find($id);
         return array_merge(
             array(
                 'eventgroups1' => $this->get('fhm_tools')->dmRepository('FhmEventBundle:EventGroup')->getListEnable(
                 ),
-                'eventgroups2' => $this->get('fhm_tools')->getList($document->getEventgroups()),
+                'eventgroups2' => $this->get('fhm_tools')->getList($object->getEventgroups()),
             ),
             parent::detailAction($id)
         );
@@ -218,15 +215,15 @@ class AdminController extends FhmController
     public function eventgroupAction(Request $request)
     {
         $eventgroups = json_decode($request->get('list'));
-        $document = $this->get('fhm_tools')->dmRepository(self::$repository)->find($request->get('id'));
-        foreach ($document->getEventgroups() as $eventgroup) {
-            $document->removeEventgroup($eventgroup);
+        $object = $this->get('fhm_tools')->dmRepository(self::$repository)->find($request->get('id'));
+        foreach ($object->getEventgroups() as $eventgroup) {
+            $object->removeEventgroup($eventgroup);
         }
         foreach ($eventgroups as $key => $data) {
             $eventgroup = $this->get('fhm_tools')->dmRepository('FhmEventBundle:EventGroup')->find($data->id);
-            $document->addEventgroup($eventgroup);
+            $object->addEventgroup($eventgroup);
         }
-        $this->get('fhm_tools')->dmPersist($document);
+        $this->get('fhm_tools')->dmPersist($object);
 
         return new Response();
     }

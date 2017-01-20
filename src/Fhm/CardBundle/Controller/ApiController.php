@@ -1,12 +1,8 @@
 <?php
 namespace Fhm\CardBundle\Controller;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Fhm\FhmBundle\Controller\RefApiController as FhmController;
-use Fhm\CardBundle\Document\Card;
-use Fhm\FhmBundle\Services\Tools;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -29,7 +25,6 @@ class ApiController extends FhmController
         self::$source = "fhm";
         self::$domain = "FhmCardBundle";
         self::$translation = "card";
-        self::$class = Card::class;
         self::$route = 'card';
     }
 
@@ -70,8 +65,8 @@ class ApiController extends FhmController
      */
     public function embedAction(Request $request, $id, $template)
     {
-        $document = $this->get('fhm_tools')->dmRepository(self::$repository)->find($id);
-        if ($document == "") {
+        $object = $this->get('fhm_tools')->dmRepository(self::$repository)->find($id);
+        if ($object == "") {
             throw $this->createNotFoundException(
                 $this->get('translator')->trans(self::$translation.'.error.unknown', array(), self::$domain)
             );
@@ -81,9 +76,9 @@ class ApiController extends FhmController
             $this->renderView(
                 "::FhmCard/Template/".ucfirst(strtolower($template))."/index.html.twig",
                 array(
-                    "document" => $document,
-                    "documents" => $this->get('fhm_tools')->dmRepository('FhmCardBundle:CardCategory')->getByCard(
-                        $document
+                    "object" => $object,
+                    "objects" => $this->get('fhm_tools')->dmRepository('FhmCardBundle:CardCategory')->getByCard(
+                        $object
                     ),
                 )
             )
@@ -100,14 +95,14 @@ class ApiController extends FhmController
      */
     public function editorAction(Request $request, $id)
     {
-        $document = $this->get('fhm_tools')->dmRepository(self::$repository)->find($id);
-        $this->__authorized($document);
+        $object = $this->get('fhm_tools')->dmRepository(self::$repository)->find($id);
+        $this->__authorized($object);
 
         return new Response(
             $this->renderView(
                 "::FhmCard/Template/Editor/index.html.twig",
                 array(
-                    "document" => $document,
+                    "object" => $object,
                 )
             )
         );
@@ -123,14 +118,14 @@ class ApiController extends FhmController
      */
     public function editorPreviewAction(Request $request, $id)
     {
-        $document = $this->get('fhm_tools')->dmRepository(self::$repository)->find($id);
-        $this->__authorized($document);
+        $object = $this->get('fhm_tools')->dmRepository(self::$repository)->find($id);
+        $this->__authorized($object);
 
         return new Response(
             $this->renderView(
                 "::FhmCard/Template/Editor/preview.html.twig",
                 array(
-                    "document" => $document,
+                    "object" => $object,
                 )
             )
         );

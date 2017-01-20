@@ -16,14 +16,17 @@ use Doctrine\Common\Persistence\ObjectManager;
 class FhmObjectManager
 {
     protected $manager;
+    protected $driver;
 
     /**
      * FhmObjectManager constructor.
      * @param ObjectManager $manager
+     * @param $driver
      */
-    public function __construct(ObjectManager $manager)
+    public function __construct(ObjectManager $manager, $driver)
     {
         $this->manager = $manager;
+        $this->driver  = $driver;
     }
 
     /**
@@ -52,5 +55,13 @@ class FhmObjectManager
     public function getManager()
     {
         return $this->manager;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDBDriver()
+    {
+        return $this->driver;
     }
 }

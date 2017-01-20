@@ -1,7 +1,7 @@
 <?php
 namespace Fhm\CardBundle\Form\Type\Api\Category;
 
-use Doctrine\Bundle\MongoDBBundle\Form\Type\DocumentType;
+use Fhm\FhmBundle\Manager\TypeManager;
 use Fhm\MediaBundle\Form\Type\MediaType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -65,28 +65,22 @@ class CreateType extends AbstractType
             )
         )->add(
             'parents',
-            DocumentType::class,
+            TypeManager::getType($options['object_manager']->getDBDriver()),
             array(
                 'label' => $options['translation_route'].'.api.create.form.parents',
                 'class' => 'FhmCardBundle:CardCategory',
                 'choice_label' => 'route',
-                'query_builder' => function (\Fhm\CardBundle\Repository\CardCategoryRepository $dr) {
-//                    return $dr->setSort('route')->getFormParents($this->card, $this->instance->grouping->filtered);
-                },
                 'multiple' => true,
                 'by_reference' => false,
                 'required' => false,
             )
         )->add(
             'products',
-            DocumentType::class,
+            TypeManager::getType($options['object_manager']->getDBDriver()),
             array(
                 'label' => $options['translation_route'].'.api.create.form.products',
                 'class' => 'FhmCardBundle:CardProduct',
                 'choice_label' => 'name',
-                'query_builder' => function (\Fhm\CardBundle\Repository\CardProductRepository $dr) {
-//                    return $dr->setSort('alias')->getFormCard($this->card, $this->instance->grouping->filtered);
-                },
                 'multiple' => true,
                 'by_reference' => false,
                 'required' => false,
@@ -113,10 +107,12 @@ class CreateType extends AbstractType
     {
         $resolver->setDefaults(
             array(
-                'data_class' => 'Fhm\FhmCardBundle\Document\CardCategory',
+                'data_class' => '',
                 'translation_domain' => 'FhmCardBundle',
                 'cascade_validation' => true,
                 'translation_route' => 'card.category',
+                'object_manager'=>'',
+                'user_admin' => '',
             )
         );
     }

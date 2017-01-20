@@ -2,7 +2,6 @@
 namespace Fhm\CardBundle\Controller\Product;
 
 use Fhm\FhmBundle\Controller\RefFrontController as FhmController;
-use Fhm\CardBundle\Document\CardProduct;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -25,7 +24,6 @@ class FrontController extends FhmController
         self::$source = "fhm";
         self::$domain = "FhmCardBundle";
         self::$translation = "card.product";
-        self::$class = CardProduct::class;
         self::$route = "card_product";
     }
 
@@ -66,17 +64,14 @@ class FrontController extends FhmController
      */
     public function deleteAction($id)
     {
-        $document = $this->get('fhm_tools')->dmRepository(self::$repository)->find($id);
-        // ERROR - Unknown
-        if ($document == "") {
+        $object = $this->get('fhm_tools')->dmRepository(self::$repository)->find($id);
+        if ($object == "") {
             throw $this->createNotFoundException(
                 $this->get('translator')->trans(self::$translation.'.error.unknown', array(), self::$domain)
             );
         }
-        // Deactivate
-        $document->setDelete(true);
-        $this->get('fhm_tools')->dmPersist($document);
-        // Message
+        $object->setDelete(true);
+        $this->get('fhm_tools')->dmPersist($object);
         $this->get('session')->getFlashBag()->add(
             'notice',
             $this->get('translator')->trans(
@@ -99,17 +94,14 @@ class FrontController extends FhmController
      */
     public function undeleteAction($id)
     {
-        $document = $this->get('fhm_tools')->dmRepository(self::$repository)->find($id);
-        // ERROR - Unknown
-        if ($document == "") {
+        $object = $this->get('fhm_tools')->dmRepository(self::$repository)->find($id);
+        if ($object == "") {
             throw $this->createNotFoundException(
                 $this->get('translator')->trans(self::$translation.'.error.unknown', array(), self::$domain)
             );
         }
-        // Undelete
-        $document->setDelete(false);
-        $this->get('fhm_tools')->dmPersist($document);
-        // Message
+        $object->setDelete(false);
+        $this->get('fhm_tools')->dmPersist($object);
         $this->get('session')->getFlashBag()->add(
             'notice',
             $this->get('translator')->trans(
@@ -133,17 +125,14 @@ class FrontController extends FhmController
      */
     public function activateAction($id)
     {
-        $document = $this->get('fhm_tools')->dmRepository(self::$repository)->find($id);
-        // ERROR - Unknown
-        if ($document == "") {
+        $object = $this->get('fhm_tools')->dmRepository(self::$repository)->find($id);
+        if ($object == "") {
             throw $this->createNotFoundException(
                 $this->get('translator')->trans(self::$translation.'.error.unknown', array(), self::$domain)
             );
         }
-        // activate
-        $document->setActive(true);
-        $this->get('fhm_tools')->dmPersist($document);
-        // Message
+        $object->setActive(true);
+        $this->get('fhm_tools')->dmPersist($object);
         $this->get('session')->getFlashBag()->add(
             'notice',
             $this->get('translator')->trans(
@@ -166,17 +155,14 @@ class FrontController extends FhmController
      */
     public function deactivateAction($id)
     {
-        $document = $this->get('fhm_tools')->dmRepository(self::$repository)->find($id);
-        // ERROR - Unknown
-        if ($document == "") {
+        $object = $this->get('fhm_tools')->dmRepository(self::$repository)->find($id);
+        if ($object == "") {
             throw $this->createNotFoundException(
                 $this->get('translator')->trans(self::$translation.'.error.unknown', array(), self::$domain)
             );
         }
-        // Deactivate
-        $document->setActive(false);
-        $this->get('fhm_tools')->dmPersist($document);
-        // Message
+        $object->setActive(false);
+        $this->get('fhm_tools')->dmPersist($object);
         $this->get('session')->getFlashBag()->add(
             'notice',
             $this->get('translator')->trans(

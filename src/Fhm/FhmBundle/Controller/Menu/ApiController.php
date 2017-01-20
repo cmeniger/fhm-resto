@@ -5,7 +5,6 @@ use Fhm\FhmBundle\Controller\RefApiController as FhmController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Fhm\FhmBundle\Document\Menu;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpKernel\Exception\HttpException;
@@ -27,7 +26,6 @@ class ApiController extends FhmController
         self::$source = "fhm";
         self::$domain = "FhmFhmMenu";
         self::$translation = "menu";
-        self::$class = Menu::class;
         self::$route = "menu";
     }
 
@@ -63,20 +61,20 @@ class ApiController extends FhmController
                 return $this->render(
                     "::FhmFhm/Menu/Template/".$template.".html.twig",
                     array(
-                        'document' => null,
+                        'object' => null,
                         'tree' => null,
                     )
                 );
             }
         }
-        $menuRepository = $this->get('doctrine.odm.mongodb.document_manager')->getRepository("FhmFhmBundle:Menu");
-        $document = $menuRepository->find($id);
-        $document = ($document) ? $document : $menuRepository->findOneBy(array("alias" => $id));
-        $document = ($document) ? $document : $menuRepository->findOneBy(array("name" => $id));
+        $menuRepository = $this->get('fhm.object.manager')->getCurrentRepository(self::$repository);
+        $object = $menuRepository->find($id);
+        $object = ($object) ? $object : $menuRepository->findOneBy(array("alias" => $id));
+        $object = ($object) ? $object : $menuRepository->findOneBy(array("name" => $id));
         // ERROR - unknown
-        if (!is_object($document)) {
+        if (!is_object($object)) {
             throw $this->createNotFoundException($this->trans('menu.error.unknown'));
-        } elseif (!$this->getUser()->isSuperAdmin() && ($document->getDelete() || !$document->getActive())) {
+        } elseif (!$this->getUser()->isSuperAdmin() && ($object->getDelete() || !$object->getActive())) {
             throw new HttpException(
                 403,
                 $this->trans('menu.error.forbidden', array(), 'FhmFhmMenu')
@@ -85,8 +83,8 @@ class ApiController extends FhmController
         return $this->render(
             "::FhmFhm/Menu/Template/".$template.".html.twig",
             array(
-                'document' => $document,
-                'tree' => $menuRepository->getTree($document->getId())
+                'object' => $object,
+                'tree' => $menuRepository->getTree($object->getId())
             )
         );
     }
@@ -117,15 +115,15 @@ class ApiController extends FhmController
         $data = array();
         if ($datas['module'] != '' && $datas['data'] != '') {
             if ($datas['module'] == "newsGroup") {
-                $documentMenu = $this->getDoctrine()->getManager()->getRepository(
+                $objectMenu = $this->getDoctrine()->getManager()->getRepository(
                     'FhmNewsBundle:'.ucfirst($datas['module'])
                 )->find($datas['data']);
             } else {
-                $documentMenu = $this->getDoctrine()->getManager()->getRepository(
+                $objectMenu = $this->getDoctrine()->getManager()->getRepository(
                     'Fhm'.ucfirst($datas['module']).'Bundle:'.ucfirst($datas['module'])
                 )->find($datas['data']);
             }
-            $data['link'] = utf8_encode($this->getRoute($datas['module'], $documentMenu));
+            $data['link'] = utf8_encode($this->getRoute($datas['module'], $objectMenu));
             $data['module'] = utf8_encode($datas['module']);
             $data['id'] = utf8_encode($datas['data']);
         }
@@ -136,15 +134,15 @@ class ApiController extends FhmController
 
     /**
      * @param $module
-     * @param $document
+     * @param $object
      * @return string
      */
-    private function getRoute($module, $document)
+    private function getRoute($module, $object)
     {
         if ($module === "media") {
-            $route = $this->get('fhm_media_service')->setDocument($document)->getPathWeb();
+            $route = $this->get('fhm_media_service')->setDocument($object)->getPathWeb();
         } else {
-            $route = '/'.$module.'/detail/'.$document->getAlias();
+            $route = '/'.$module.'/detail/'.$object->getAlias();
         }
 
         return $route;

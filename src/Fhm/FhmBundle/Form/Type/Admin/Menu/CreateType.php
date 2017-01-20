@@ -43,11 +43,12 @@ class CreateType extends FhmType
     {
         $resolver->setDefaults(
             array(
-                'data_class' => 'Fhm\FhmBundle\Document\Menu',
+                'data_class' => '',
                 'translation_domain' => 'FhmFhmMenu',
                 'cascade_validation' => true,
                 'translation_route' => 'menu',
                 'user_admin' => '',
+                'object_manager'=>''
             )
         );
     }

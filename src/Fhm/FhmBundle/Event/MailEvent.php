@@ -13,11 +13,18 @@ class MailEvent extends Event
 
     const MAILUSER      = 'fhm.fhm.mail';
 
+    /**
+     * MailEvent constructor.
+     * @param $data
+     */
     public function __construct($data)
     {
         $this->data = $data;
     }
 
+    /**
+     * @return mixed
+     */
     public function getData()
     {
         return $this->data;

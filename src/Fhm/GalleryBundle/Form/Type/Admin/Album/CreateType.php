@@ -102,12 +102,12 @@ class CreateType extends FhmType
     {
         $resolver->setDefaults(
             array(
-                'data_class' => 'Fhm\GalleryBundle\Document\GalleryAlbum',
+                'data_class' => '',
                 'translation_domain' => 'FhmGalleryBundle',
                 'cascade_validation' => true,
                 'translation_route' => 'gallery.album',
-                'filter' => '',
                 'user_admin' => '',
+                'object_manager'=>''
             )
         );
     }

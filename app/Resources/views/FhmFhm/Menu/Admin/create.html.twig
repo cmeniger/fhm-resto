@@ -42,7 +42,7 @@
 
 {% block authers_content %}
     {% set element = form.route.vars.id %}
-    {{ macroTree.moduleAjax(document, modules,element,instance.translation ~ '.admin.detail.menu', instance) }}
+    {{ macroTree.moduleAjax(object, modules,element,instance.translation ~ '.admin.detail.menu', instance) }}
 {% endblock %}
 
 

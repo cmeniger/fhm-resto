@@ -1,7 +1,7 @@
 <?php
 namespace Fhm\CardBundle\Form\Type\Api\Ingredient;
 
-use Doctrine\Bundle\MongoDBBundle\Form\Type\DocumentType;
+use Fhm\FhmBundle\Manager\TypeManager;
 use Fhm\MediaBundle\Form\Type\MediaType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
@@ -10,7 +10,6 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
  * Class CreateType
@@ -41,20 +40,17 @@ class CreateType extends AbstractType
             'image',
             MediaType::class,
             array(
-                'label' => $this->instance->translation.'.api.create.form.image',
+                'label' => $options['translation_route'].'.api.create.form.image',
                 'filter' => 'image/*',
                 'required' => false,
             )
         )->add(
             'products',
-            DocumentType::class,
+            TypeManager::getType($options['object_manager']->getDBDriver()),
             array(
                 'label' => $options['translation_route'].'.api.create.form.products',
                 'class' => 'FhmCardBundle:CardProduct',
                 'choice_label' => 'name',
-                'query_builder' => function (\Fhm\CardBundle\Repository\CardProductRepository $dr) {
-//                    return $dr->setSort('alias')->getFormCard($this->card, $this->instance->grouping->filtered);
-                },
                 'multiple' => true,
                 'by_reference' => false,
                 'required' => false,
@@ -81,10 +77,12 @@ class CreateType extends AbstractType
     {
         $resolver->setDefaults(
             array(
-                'data_class' => 'Fhm\FhmCardBundle\Document\CardIngredient',
+                'data_class' => '',
                 'translation_domain' => 'FhmCardBundle',
                 'cascade_validation' => true,
                 'translation_route' => 'card.ingredient',
+                'object_manager'=>'',
+                'user_admin' => '',
             )
         );
     }

@@ -2,8 +2,7 @@
 namespace Fhm\EventBundle\Controller;
 
 use Fhm\FhmBundle\Controller\RefApiController as FhmController;
-use Fhm\EventBundle\Document\Event;
-use Fhm\FhmBundle\Form\Type\Admin\SearchType;
+ use Fhm\FhmBundle\Form\Type\Admin\SearchType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -28,7 +27,6 @@ class ApiController extends FhmController
         self::$source = "fhm";
         self::$domain = "FhmEventBundle";
         self::$translation = "event";
-        self::$class = Event::class;
         self::$route = "event";
     }
 

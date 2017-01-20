@@ -31,15 +31,11 @@ class RefFrontController extends GenericController
         return array(
             'pagination' => $pagination,
             'form' => $form->createView(),
-            'breadcrumbs' => array(
+            'breadcrumbs' => $this->get('fhm_tools')->generateBreadcrumbs(
                 array(
-                    'link' => $this->getUrl('project_home'),
-                    'text' => $this->trans('project.home.breadcrumb', array(), 'ProjectDefaultBundle'),
-                ),
-                array(
-                    'link' => $this->getUrl(self::$source.'_'.self::$route),
-                    'text' => $this->trans(self::$translation.'.front.index.breadcrumb'),
-                ),
+                    'domain' => self::$domain,
+                    '_route' => $this->get('request_stack')->getCurrentRequest()->get('_route'),
+                )
             ),
         );
     }
@@ -51,40 +47,32 @@ class RefFrontController extends GenericController
      */
     public function createAction(Request $request)
     {
-        $document = new self::$class;
-        $form = $this->createForm(self::$form->createType, $document);
+        self::$class = $this->get('fhm.object.manager')->getCurrentModelName(self::$repository);
+        $object = new self::$class;
+        $form = $this->createForm(self::$form->createType, $object);
         $handler = new self::$form->createHandler($form, $request);
         $process = $handler->process();
         if ($process) {
             $data = $request->get($form->getName());
-            $document->setUserCreate($this->getUser());
-            $document->setAlias(
-                $this->get('fhm_tools')->getAlias($document->getId(), $document->getName(), self::$repository)
+            $object->setUserCreate($this->getUser());
+            $object->setAlias(
+                $this->get('fhm_tools')->getAlias($object->getId(), $object->getName(), self::$repository)
             );
-            $this->get('fhm_tools')->dmPersist($document);
+            $this->get('fhm_tools')->dmPersist($object);
             $this->get('session')->getFlashBag()->add(
                 'notice',
                 $this->trans(self::$translation.'.front.create.flash.ok')
             );
-            return $this->redirectUrl($data, $document, 'front');
+            return $this->redirectUrl($data, $object, 'front');
         }
 
         return array(
             'form' => $form->createView(),
-            'breadcrumbs' => array(
+            'breadcrumbs' => $this->get('fhm_tools')->generateBreadcrumbs(
                 array(
-                    'link' => $this->getUrl('project_home'),
-                    'text' => $this->trans('project.home.breadcrumb', array(), 'ProjectDefaultBundle'),
-                ),
-                array(
-                    'link' => $this->getUrl(self::$source.'_'.self::$route),
-                    'text' => $this->trans(self::$translation.'.front.index.breadcrumb'),
-                ),
-                array(
-                    'link' => $this->getUrl(self::$source.'_'.self::$route.'_create'),
-                    'text' => $this->trans(self::$translation.'.front.create.breadcrumb'),
-                    'current' => true,
-                ),
+                    'domain' => self::$domain,
+                    '_route' => $this->get('request_stack')->getCurrentRequest()->get('_route'),
+                )
             ),
         );
     }
@@ -97,11 +85,11 @@ class RefFrontController extends GenericController
      */
     public function duplicateAction(Request $request, $id)
     {
-        $document = $this->get('fhm_tools')->dmRepository(self::$repository)->find($id);
-        if ($document == "") {
+        $object = $this->get('fhm_tools')->dmRepository(self::$repository)->find($id);
+        if ($object == "") {
             throw $this->createNotFoundException($this->trans(self::$translation.'.error.unknown'));
         }
-        self::$document = $document;
+        self::$object = $object;
 
         return $this->createAction($request);
     }
@@ -115,57 +103,36 @@ class RefFrontController extends GenericController
      */
     public function updateAction(Request $request, $id)
     {
-        $document = $this->get('fhm_tools')->dmRepository(self::$repository)->find($id);
-        if ($document == "") {
+        $object = $this->get('fhm_tools')->dmRepository(self::$repository)->find($id);
+        if ($object == "") {
             throw $this->createNotFoundException($this->trans(self::$translation.'.error.unknown'));
         }
-        if (!$this->get('security.authorization_checker')->isGranted('ROLE_SUPER_ADMIN') && $document->getDelete()) {
+        if (!$this->get('security.authorization_checker')->isGranted('ROLE_SUPER_ADMIN') && $object->getDelete()) {
             throw new HttpException(403, $this->trans(self::$translation.'.error.forbidden'));
         }
-        $form = $this->createForm(self::$form->updateType, $document);
+        $form = $this->createForm(self::$form->updateType, $object);
         $handler = new self::$form->updateHandler($form, $request);
         $process = $handler->process();
         if ($process) {
-            $document->setUserUpdate($this->getUser());
-            $document->setAlias($this->getAlias($document->getId(), $document->getName(), self::$repository));
-            $document->setActive(false);
-            $this->get('fhm_tools')->dmPersist($document);
+            $object->setUserUpdate($this->getUser());
+            $object->setAlias($this->getAlias($object->getId(), $object->getName(), self::$repository));
+            $object->setActive(false);
+            $this->get('fhm_tools')->dmPersist($object);
             $this->get('session')->getFlashBag()->add(
                 'notice',
                 $this->trans(self::$translation.'.front.update.flash.ok')
             );
 
-            return $this->redirectUrl($form->getData(), $document, 'front');
+            return $this->redirectUrl($form->getData(), $object, 'front');
         }
         return array(
-            'document' => $document,
+            'document' => $object,
             'form' => $form->createView(),
-            'breadcrumbs' => array(
+            'breadcrumbs' => $this->get('fhm_tools')->generateBreadcrumbs(
                 array(
-                    'link' => $this->getUrl('project_home'),
-                    'text' => $this->trans('project.home.breadcrumb', array(), 'ProjectDefaultBundle'),
-                ),
-                array(
-                    'link' => $this->getUrl(self::$source.'_'.self::$route),
-                    'text' => $this->trans(self::$translation.'.front.index.breadcrumb'),
-                ),
-                array(
-                    'link' => $this->getUrl(
-                        self::$source.'_'.self::$route.'_detail',
-                        array('id' => $id)
-                    ),
-                    'text' => $this->trans(
-                        self::$translation.'.front.detail.breadcrumb',
-                        array('%name%' => $document->getName())
-                    ),
-                ),
-                array(
-                    'link' => $this->getUrl(
-                        self::$source.'_'.self::$route.'_update',
-                        array('id' => $id)
-                    ),
-                    'text' => $this->trans(self::$translation.'.front.update.breadcrumb'),
-                ),
+                    'domain' => self::$domain,
+                    '_route' => $this->get('request_stack')->getCurrentRequest()->get('_route'),
+                )
             ),
         );
     }
@@ -177,38 +144,24 @@ class RefFrontController extends GenericController
      */
     public function detailAction($id)
     {
-        $document = $this->get('fhm_tools')->dmRepository(self::$repository)->getById($id);
-        $document = ($document) ? $document : $this->get('fhm_tools')->dmRepository(self::$repository)->getByAlias($id);
-        $document = ($document) ? $document : $this->get('fhm_tools')->dmRepository(self::$repository)->getByName($id);
-        if (!is_object($document)) {
+        $object = $this->get('fhm_tools')->dmRepository(self::$repository)->getById($id);
+        $object = ($object) ? $object : $this->get('fhm_tools')->dmRepository(self::$repository)->getByAlias($id);
+        $object = ($object) ? $object : $this->get('fhm_tools')->dmRepository(self::$repository)->getByName($id);
+        if (!is_object($object)) {
             throw $this->createNotFoundException($this->trans(self::$translation.'.error.unknown'));
-        } elseif (!$this->get('security.authorization_checker')->isGranted('ROLE_ADMIN') && ($document->getDelete(
-                ) || !$document->getActive())
+        } elseif (!$this->get('security.authorization_checker')->isGranted('ROLE_ADMIN') && ($object->getDelete(
+                ) || !$object->getActive())
         ) {
             throw new HttpException(403, $this->trans(self::$translation.'.error.forbidden'));
         }
 
         return array(
-            'document' => $document,
-            'breadcrumbs' => array(
+            'document' => $object,
+            'breadcrumbs' => $this->get('fhm_tools')->generateBreadcrumbs(
                 array(
-                    'link' => $this->getUrl('project_home'),
-                    'text' => $this->trans('project.home.breadcrumb', array(), 'ProjectDefaultBundle'),
-                ),
-                array(
-                    'link' => $this->getUrl(self::$source.'_'.self::$route),
-                    'text' => $this->trans(self::$translation.'.front.index.breadcrumb'),
-                ),
-                array(
-                    'link' => $this->getUrl(
-                        self::$source.'_'.self::$route.'_detail',
-                        array('id' => $id)
-                    ),
-                    'text' => $this->trans(
-                        self::$translation.'.front.detail.breadcrumb',
-                        array('%name%' => $document->getName())
-                    ),
-                ),
+                    'domain' => self::$domain,
+                    '_route' => $this->get('request_stack')->getCurrentRequest()->get('_route'),
+                )
             ),
         );
     }
@@ -220,14 +173,14 @@ class RefFrontController extends GenericController
      */
     public function deleteAction($id)
     {
-        $document = $this->get('fhm_tools')->dmRepository(self::$repository)->find($id);
-        if ($document == "") {
+        $object = $this->get('fhm_tools')->dmRepository(self::$repository)->find($id);
+        if ($object == "") {
             throw $this->createNotFoundException($this->trans(self::$source.'.error.unknown'));
         } elseif (!$this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
             throw new HttpException(403, $this->trans(self::$translation.'.error.forbidden'));
         }
-        $document->setDelete(true);
-        $this->get('fhm_tools')->dmPersist($document);
+        $object->setDelete(true);
+        $this->get('fhm_tools')->dmPersist($object);
         $this->get('session')->getFlashBag()->add('notice', $this->trans(self::$translation.'.front.delete.flash.ok'));
 
         return $this->redirect($this->getUrl(self::$source.'_'.self::$route));

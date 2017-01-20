@@ -7,6 +7,8 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\FormBuilderInterface;
+
 
 /**
  * Class AutocompleteType
@@ -36,6 +38,9 @@ class AutocompleteType extends AbstractType
                 'choice_label' => 'name',
                 'cascade_validation' => true,
                 'url' => '',
+                'class'=>'',
+                'label'=>'',
+                'required'=>''
             )
         );
     }
@@ -67,7 +72,7 @@ class AutocompleteType extends AbstractType
      */
     public function getParent()
     {
-        return DocumentType::class;
+       DocumentType::class;
     }
 
 }

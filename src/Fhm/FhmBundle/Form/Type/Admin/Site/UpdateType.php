@@ -1,14 +1,8 @@
 <?php
 namespace Fhm\FhmBundle\Form\Type\Admin\Site;
 
-use Doctrine\Bundle\MongoDBBundle\Form\Type\DocumentType;
-use Fhm\ContactBundle\Repository\ContactRepository;
 use Fhm\FhmBundle\Form\Type\Admin\UpdateType as FhmType;
-use Fhm\GalleryBundle\Repository\GalleryRepository;
-use Fhm\FhmBundle\Repository\MenuRepository;
-use Fhm\NewsBundle\Repository\NewsGroupRepository;
-use Fhm\PartnerBundle\Repository\PartnerGroupRepository;
-use Fhm\SliderBundle\Repository\SliderRepository;
+use Fhm\FhmBundle\Manager\TypeManager;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Fhm\MediaBundle\Form\Type\MediaType;
@@ -45,55 +39,64 @@ class UpdateType extends FhmType
             )
         )->add(
             'menu',
-            DocumentType::class,
+            TypeManager::getType($options['object_manager']->getDBDriver()),
             array(
                 'label' => $options['translation_route'].'.admin.update.form.menu',
                 'class' => 'FhmFhmBundle:Menu',
-                'query_builder' => function (MenuRepository $dr) use ($options) {
+                'query_builder' => function () use ($options) {
+                    $dr = $options['object_manager']->getCurrentRepository('FhmFhmBundle:Menu');
                     return $dr->getFormEnable();
                 },
                 'required' => false,
             )
         )->add(
             'news',
-            DocumentType::class,
+            TypeManager::getType($options['object_manager']->getDBDriver()),
             array(
                 'label' => $options['translation_route'].'.admin.update.form.news',
                 'class' => 'FhmNewsBundle:NewsGroup',
-                'query_builder' => function (NewsGroupRepository $dr) use ($options) {
+                'query_builder' => function () use ($options) {
+                    $dr = $options['object_manager']->getCurrentRepository('FhmNewsBundle:NewsGroup');
+
                     return $dr->getFormEnable();
                 },
                 'required' => false,
             )
         )->add(
             'partner',
-            DocumentType::class,
+            TypeManager::getType($options['object_manager']->getDBDriver()),
             array(
                 'label' => $options['translation_route'].'.admin.update.form.partner',
                 'class' => 'FhmPartnerBundle:PartnerGroup',
-                'query_builder' => function (PartnerGroupRepository $dr) use ($options) {
+                'query_builder' => function () use ($options) {
+                    $dr = $options['object_manager']->getCurrentRepository('FhmPartnerBundle:PartnerGroup');
+
                     return $dr->getFormEnable();
                 },
                 'required' => false,
             )
         )->add(
             'slider',
-            DocumentType::class,
+            TypeManager::getType($options['object_manager']->getDBDriver()),
             array(
                 'label' => $options['translation_route'].'.admin.update.form.slider',
                 'class' => 'FhmSliderBundle:Slider',
-                'query_builder' => function (SliderRepository $dr) use ($options) {
+                'query_builder' => function () use ($options) {
+                    $dr = $options['object_manager']->getCurrentRepository('FhmSliderBundle:Slider');
+
                     return $dr->getFormEnable();
                 },
                 'required' => false,
             )
         )->add(
             'gallery',
-            DocumentType::class,
+            TypeManager::getType($options['object_manager']->getDBDriver()),
             array(
                 'label' => $options['translation_route'].'.admin.update.form.gallery',
                 'class' => 'FhmGalleryBundle:Gallery',
-                'query_builder' => function (GalleryRepository $dr) use ($options) {
+                'query_builder' => function () use ($options) {
+                    $dr = $options['object_manager']->getCurrentRepository('FhmGalleryBundle:Gallery');
+
                     return $dr->getFormEnable();
                 },
                 'required' => false,
@@ -116,11 +119,13 @@ class UpdateType extends FhmType
             )
         )->add(
             'contact',
-            DocumentType::class,
+            TypeManager::getType($options['object_manager']->getDBDriver()),
             array(
                 'label' => $options['translation_route'].'.admin.update.form.contact',
                 'class' => 'FhmContactBundle:Contact',
-                'query_builder' => function (ContactRepository $dr) use ($options) {
+                'query_builder' => function () use ($options) {
+                    $dr = $options['object_manager']->getCurrentRepository('FhmContactBundle:Contact');
+
                     return $dr->getFormEnable();
                 },
                 'required' => false,
@@ -130,6 +135,7 @@ class UpdateType extends FhmType
             TextType::class,
             array(
                 'label' => $options['translation_route'].'.admin.update.form.social.facebook',
+                'attr' => ['placeholder' => $options['translation_route'].'.admin.create.form.social.placeholder'],
                 'required' => false,
             )
         )->add(
@@ -137,28 +143,39 @@ class UpdateType extends FhmType
             TextType::class,
             array(
                 'label' => $options['translation_route'].'.admin.update.form.social.facebookId',
+                'attr' => ['placeholder' => $options['translation_route'].'.admin.create.form.social.facebookId'],
                 'required' => false,
             )
         )->add(
             'social_twitter',
             TextType::class,
-            array('label' => $options['translation_route'].'.admin.update.form.social.twitter', 'required' => false)
+            array(
+                'label' => $options['translation_route'].'.admin.update.form.social.twitter',
+                'attr' => ['placeholder' => $options['translation_route'].'.admin.create.form.social.placeholder'],
+                'required' => false,
+            )
         )->add(
             'social_twitter_id',
             TextType::class,
             array(
                 'label' => $options['translation_route'].'.admin.update.form.social.twitterId',
+                'attr' => ['placeholder' => $options['translation_route'].'.admin.create.form.social.twitterId'],
                 'required' => false,
             )
         )->add(
             'social_google',
             TextType::class,
-            array('label' => $options['translation_route'].'.admin.update.form.social.google', 'required' => false)
+            array(
+                'label' => $options['translation_route'].'.admin.update.form.social.google',
+                'attr' => ['placeholder' => $options['translation_route'].'.admin.create.form.social.placeholder'],
+                'required' => false,
+            )
         )->add(
             'social_google_id',
             TextType::class,
             array(
                 'label' => $options['translation_route'].'.admin.update.form.social.googleId',
+                'attr' => ['placeholder' => $options['translation_route'].'.admin.create.form.social.googleId'],
                 'required' => false,
             )
         )->add(
@@ -166,16 +183,25 @@ class UpdateType extends FhmType
             TextType::class,
             array(
                 'label' => $options['translation_route'].'.admin.update.form.social.instagram',
+                'attr' => ['placeholder' => $options['translation_route'].'.admin.create.form.social.placeholder'],
                 'required' => false,
             )
         )->add(
             'social_youtube',
             TextType::class,
-            array('label' => $options['translation_route'].'.admin.update.form.social.youtube', 'required' => false)
+            array(
+                'label' => $options['translation_route'].'.admin.update.form.social.youtube',
+                'attr' => ['placeholder' => $options['translation_route'].'.admin.create.form.social.placeholder'],
+                'required' => false,
+            )
         )->add(
             'social_flux',
             TextType::class,
-            array('label' => $options['translation_route'].'.admin.update.form.social.flux', 'required' => false)
+            array(
+                'label' => $options['translation_route'].'.admin.update.form.social.flux',
+                'attr' => ['placeholder' => $options['translation_route'].'.admin.create.form.social.placeholder'],
+                'required' => false,
+            )
         )->remove('global')->remove('share');
     }
 
@@ -186,11 +212,12 @@ class UpdateType extends FhmType
     {
         $resolver->setDefaults(
             array(
-                'data_class' => 'Fhm\FhmBundle\Document\Site',
+                'data_class' => '',
                 'translation_domain' => 'FhmFhmSite',
                 'cascade_validation' => true,
                 'translation_route' => 'site',
                 'user_admin' => '',
+                'object_manager' => '',
             )
         );
     }

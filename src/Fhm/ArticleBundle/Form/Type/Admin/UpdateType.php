@@ -1,10 +1,8 @@
 <?php
 namespace Fhm\ArticleBundle\Form\Type\Admin;
 
-use Doctrine\Bundle\MongoDBBundle\Form\Type\DocumentType;
 use Fhm\FhmBundle\Form\Type\Admin\UpdateType as FhmType;
-use Doctrine\Bundle\MongoDBBundle\Tests\Fixtures\Form\Document;
-use Fhm\GalleryBundle\Repository\GalleryRepository;
+use Fhm\FhmBundle\Manager\TypeManager;
 use Fhm\MediaBundle\Form\Type\MediaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Fhm\FhmBundle\Form\Type\AutocompleteType;
@@ -65,12 +63,13 @@ class UpdateType extends FhmType
             )
         )->add(
             'gallery',
-            DocumentType::class,
+            TypeManager::getType($options['object_manager']->getDBDriver()),
             array(
                 'label' => $options['translation_route'].'.admin.update.form.gallery',
                 'class' => 'FhmGalleryBundle:Gallery',
-                'query_builder' => function (GalleryRepository $dr) use ($options) {
-                    return $dr->getFormEnable($options['filter']);
+                'query_builder' => function () use ($options) {
+                    $dr = $options['object_manager']->getCurrentRepository('FhmGalleryBundle:Gallery');
+                    return $dr->getFormEnable();
                 },
                 'required' => false,
             )
@@ -82,9 +81,11 @@ class UpdateType extends FhmType
                 'class' => 'FhmUserBundle:User',
                 'url' => 'fhm_api_user_autocomplete',
                 'required' => false,
+                'ObjectType' => TypeManager::getType($options['object_manager']->getDBDriver())
             )
         )->remove('global')->remove('name')->remove('description');
     }
+
     /**
      * @param OptionsResolver $resolver
      */
@@ -92,12 +93,12 @@ class UpdateType extends FhmType
     {
         $resolver->setDefaults(
             array(
-                'data_class' => 'Fhm\ArticleBundle\Document\Article',
+                'data_class' => '',
                 'translation_domain' => 'FhmArticleBundle',
                 'cascade_validation' => true,
                 'translation_route' => 'article',
-                'filter' => '',
                 'user_admin' => '',
+                'object_manager' => '',
             )
         );
     }

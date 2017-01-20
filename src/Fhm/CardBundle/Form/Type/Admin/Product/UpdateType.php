@@ -1,11 +1,8 @@
 <?php
 namespace Fhm\CardBundle\Form\Type\Admin\Product;
 
-use Doctrine\Bundle\MongoDBBundle\Form\Type\DocumentType;
-use Fhm\CardBundle\Repository\CardCategoryRepository;
-use Fhm\CardBundle\Repository\CardIngredientRepository;
-use Fhm\CardBundle\Repository\CardRepository;
 use Fhm\FhmBundle\Form\Type\Admin\UpdateType as FhmType;
+use Fhm\FhmBundle\Manager\TypeManager;
 use Fhm\MediaBundle\Form\Type\MediaType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
@@ -74,25 +71,27 @@ class UpdateType extends FhmType
             )
         )->add(
             'card',
-            DocumentType::class,
+            TypeManager::getType($options['object_manager']->getDBDriver()),
             array(
                 'label' => $options['translation_route'].'.admin.update.form.card',
                 'class' => 'FhmCardBundle:Card',
                 'choice_label' => 'name',
-                'query_builder' => function (CardRepository $dr) use ($options) {
-                    return $dr->getFormEnable($options['filter']);
+                'query_builder' => function () use ($options) {
+                    $dr = $options['object_manager']->getCurrentRepository('FhmCardBundle:Card');
+                    return $dr->getFormEnable();
                 },
                 'required' => false,
             )
         )->add(
             'categories',
-            DocumentType::class,
+            TypeManager::getType($options['object_manager']->getDBDriver()),
             array(
                 'label' => $options['translation_route'].'.admin.update.form.categories',
                 'class' => 'FhmCardBundle:CardCategory',
                 'choice_label' => 'name',
-                'query_builder' => function (CardCategoryRepository $dr) use ($options) {
-                    return $dr->getFormEnable($options['filter']);
+                'query_builder' => function () use ($options) {
+                    $dr = $options['object_manager']->getCurrentRepository('FhmCardBundle:CardCategory');
+                    return $dr->getFormEnable();
                 },
                 'multiple' => true,
                 'required' => false,
@@ -100,13 +99,14 @@ class UpdateType extends FhmType
             )
         )->add(
             'ingredients',
-            DocumentType::class,
+            TypeManager::getType($options['object_manager']->getDBDriver()),
             array(
                 'label' => $options['translation_route'].'.admin.update.form.ingredients',
                 'class' => 'FhmCardBundle:CardIngredient',
                 'choice_label' => 'name',
-                'query_builder' => function (CardIngredientRepository $dr) use ($options) {
-                    return $dr->getFormEnable($options['filter']);
+                'query_builder' => function () use ($options) {
+                    $dr = $options['object_manager']->getCurrentRepository('FhmCardBundle:CardIngredient');
+                    return $dr->getFormEnable();
                 },
                 'multiple' => true,
                 'required' => false,
@@ -121,12 +121,12 @@ class UpdateType extends FhmType
     {
         $resolver->setDefaults(
             array(
-                'data_class' => 'Fhm\CardBundle\Document\CardProduct',
+                'data_class' => '',
                 'translation_domain' => 'FhmCardBundle',
                 'cascade_validation' => true,
                 'translation_route' => 'card.product',
-                'filter' => '',
                 'user_admin' => '',
+                'object_manager'=>''
             )
         );
     }

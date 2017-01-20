@@ -3,7 +3,6 @@ namespace Fhm\GalleryBundle\Controller\Item;
 
 use Fhm\FhmBundle\Controller\RefAdminController as FhmController;
 use Fhm\FhmBundle\Form\Handler\Admin\CreateHandler;
-use Fhm\GalleryBundle\Document\GalleryItem;
 use Fhm\GalleryBundle\Form\Type\Admin\Item\CreateType;
 use Fhm\GalleryBundle\Form\Type\Admin\Item\MultipleType;
 use Fhm\GalleryBundle\Form\Type\Admin\Item\UpdateType;
@@ -30,7 +29,6 @@ class AdminController extends FhmController
         self::$source = "fhm";
         self::$domain = "FhmGalleryBundle";
         self::$translation = "gallery.item";
-        self::$class = GalleryItem::class;
         self::$route = "gallery_item";
         self::$form = new \stdClass();
         self::$form->createType    = CreateType::class;
@@ -74,17 +72,19 @@ class AdminController extends FhmController
      */
     public function multipleAction(Request $request)
     {
-        $document = new self::$class;
+        self::$class = $this->get('fhm.object.manager')->getCurrentModelName(self::$repository);
+        $object = new self::$class;
         $classType = MultipleType::class;
         $classHandler = CreateHandler::class;
         $form = $this->createForm(
             $classType,
-            $document,
+            $object,
             array(
                 'data_class' => self::$class,
                 'translation_domain' => self::$domain,
                 'translation_route' => self::$translation,
                 'user_admin' => $this->getUser()->hasRole('ROLE_ADMIN'),
+
             )
         );
         $handler = new $classHandler($form, $request);
@@ -136,11 +136,11 @@ class AdminController extends FhmController
             )->setWatermark(
                 $request->get('watermark')
             )->execute();
-            $document->setTitle($name);
-            $document->setUserCreate($this->getUser());
-            $document->setAlias($this->get('fhm_tools')->getAlias($document->getId(), $document->getName()));
-            $document->setImage($media);
-            $this->get('fhm_tools')->dmPersist($document);
+            $object->setTitle($name);
+            $object->setUserCreate($this->getUser());
+            $object->setAlias($this->get('fhm_tools')->getAlias($object->getId(), $object->getName()));
+            $object->setImage($media);
+            $this->get('fhm_tools')->dmPersist($object);
         }
 
         return array(
@@ -212,12 +212,12 @@ class AdminController extends FhmController
      */
     public function detailAction($id)
     {
-        $document = $this->get('fhm_tools')->dmRepository(self::$repository)->find($id);
+        $object = $this->get('fhm_tools')->dmRepository(self::$repository)->find($id);
 
         return array_merge(
             array(
                 'gallery1' => $this->get('fhm_tools')->dmRepository('FhmGalleryBundle:Gallery')->getAllEnable(),
-                'gallery2' => $this->getList($document->getGalleries()),
+                'gallery2' => $this->getList($object->getGalleries()),
             ),
             parent::detailAction($id)
         );
@@ -312,14 +312,14 @@ class AdminController extends FhmController
     public function listGalleryAction(Request $request)
     {
         $datas = json_decode($request->get('list'));
-        $document = $this->get('fhm_tools')->dmRepository(self::$repository)->find($request->get('id'));
-        foreach ($document->getGalleries() as $gallery) {
-            $document->removeGallery($gallery);
+        $object = $this->get('fhm_tools')->dmRepository(self::$repository)->find($request->get('id'));
+        foreach ($object->getGalleries() as $gallery) {
+            $object->removeGallery($gallery);
         }
         foreach ($datas as $key => $data) {
-            $document->addGallery($this->get('fhm_tools')->dmRepository('FhmGalleryBundle:Gallery')->find($data->id));
+            $object->addGallery($this->get('fhm_tools')->dmRepository('FhmGalleryBundle:Gallery')->find($data->id));
         }
-        $this->get('fhm_tools')->dmPersist($document);
+        $this->get('fhm_tools')->dmPersist($object);
 
         return new Response();
     }

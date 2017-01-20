@@ -4,7 +4,6 @@ namespace Fhm\FhmBundle\Controller\Site;
 use Fhm\FhmBundle\Controller\RefAdminController as FhmController;
 use Fhm\FhmBundle\Form\Handler\Admin\CreateHandler;
 use Fhm\FhmBundle\Form\Handler\Admin\UpdateHandler;
-use Fhm\FhmBundle\Document\Site;
 use Fhm\FhmBundle\Form\Type\Admin\Site\CreateType;
 use Fhm\FhmBundle\Form\Type\Admin\Site\UpdateType;
 use Symfony\Component\HttpFoundation\Request;
@@ -29,7 +28,6 @@ class AdminController extends FhmController
         self::$source = "fhm";
         self::$domain = "FhmFhmSite";
         self::$translation = "site";
-        self::$class = Site::class;
         self::$route = "site";
         self::$form = new \stdClass();
         self::$form->createType = CreateType::class;
@@ -62,12 +60,12 @@ class AdminController extends FhmController
     public function createAction(Request $request)
     {
         $response = parent::createAction($request);
-        $documents = $this->get('fhm_tools')->dmRepository(self::$repository)->findAll();
-        if (count($documents) == 1) {
-            $document = $documents[0];
-            $document->setDefault(true);
-            $document->setActive(true);
-            $this->get('fhm_tools')->dmPersist($document);
+        $objects = $this->get('fhm_tools')->dmRepository(self::$repository)->findAll();
+        if (count($objects) == 1) {
+            $object = $objects[0];
+            $object->setDefault(true);
+            $object->setActive(true);
+            $this->get('fhm_tools')->dmPersist($object);
         }
 
         return $response;
@@ -96,10 +94,10 @@ class AdminController extends FhmController
      */
     public function updateDefaultAction(Request $request)
     {
-        $document = $this->get('fhm_tools')->dmRepository(self::$repository)->getDefault();
-        if ($document) {
+        $object = $this->get('fhm_tools')->dmRepository(self::$repository)->getDefault();
+        if ($object) {
             return $this->redirect(
-                $this->getUrl(array('id' => $document->getId()), 'fhm_admin_site_update')
+                $this->getUrl(array('id' => $object->getId()), 'fhm_admin_site_update')
             );
         } else {
             return $this->redirect($this->getUrl(array(), 'fhm_admin_site'));
@@ -144,8 +142,8 @@ class AdminController extends FhmController
      */
     public function deleteAction($id)
     {
-        $document = $this->get('fhm_tools')->dmRepository(self::$repository)->find($id);
-        if ($document && $document->getDefault()) {
+        $object = $this->get('fhm_tools')->dmRepository(self::$repository)->find($id);
+        if ($object && $object->getDefault()) {
             throw new HttpException(403, $this->trans(self::$source.'.error.forbidden'));
         }
 
@@ -188,8 +186,8 @@ class AdminController extends FhmController
      */
     public function deactivateAction($id)
     {
-        $document = $this->get('fhm_tools')->dmRepository(self::$repository)->find($id);
-        if ($document && $document->getDefault()) {
+        $object = $this->get('fhm_tools')->dmRepository(self::$repository)->find($id);
+        if ($object && $object->getDefault()) {
             throw new HttpException(403, $this->trans(self::$source.'.error.forbidden'));
         }
 
@@ -232,9 +230,9 @@ class AdminController extends FhmController
      */
     public function defaultAction($id)
     {
-        $document = $this->get('fhm_tools')->dmRepository(self::$repository)->find($id);
+        $object = $this->get('fhm_tools')->dmRepository(self::$repository)->find($id);
         // ERROR - Unknown
-        if ($document == "") {
+        if ($object == "") {
             throw $this->createNotFoundException($this->trans(self::$translation.'.error.unknown'));
         }
         if (!$this->get('security.authorization_checker')->isGranted('ROLE_SUPER_ADMIN')) {
@@ -242,9 +240,9 @@ class AdminController extends FhmController
         }
         // Deactivate
         $this->get('fhm_tools')->dmRepository(self::$repository)->resetDefault();
-        $document->setDefault(true);
-        $document->setActive(true);
-        $this->get('fhm_tools')->dmPersist($document);
+        $object->setDefault(true);
+        $object->setActive(true);
+        $this->get('fhm_tools')->dmPersist($object);
         // Message
         $this->get('session')->getFlashBag()->add('notice', $this->trans(self::$translation.'.admin.default.flash.ok'));
 

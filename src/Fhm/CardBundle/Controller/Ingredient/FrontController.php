@@ -4,8 +4,6 @@ namespace Fhm\CardBundle\Controller\Ingredient;
 use Fhm\CardBundle\Form\Type\Front\Ingredient\CreateType;
 use Fhm\CardBundle\Form\Type\Front\Ingredient\UpdateType;
 use Fhm\FhmBundle\Controller\RefFrontController as FhmController;
-use Fhm\CardBundle\Document\CardIngredient;
-use Fhm\FhmBundle\Services\Tools;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -27,7 +25,6 @@ class FrontController extends FhmController
         self::$source = "fhm";
         self::$domain = "FhmCardBundle";
         self::$translation = "card.ingredient";
-        self::$class = CardIngredient::class;
         self::$route = "card_ingredient";
     }
 

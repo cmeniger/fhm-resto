@@ -2,8 +2,6 @@
 namespace Fhm\CardBundle\Controller;
 
 use Fhm\FhmBundle\Controller\RefFrontController as FhmController;
-use Fhm\CardBundle\Document\Card;
-use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
@@ -24,7 +22,6 @@ class FrontController extends FhmController
         self::$source = "fhm";
         self::$domain = "FhmCardBundle";
         self::$translation = "card";
-        self::$class = Card::class;
         self::$route = 'card';
     }
 

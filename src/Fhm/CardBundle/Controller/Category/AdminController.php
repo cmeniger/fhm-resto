@@ -4,7 +4,6 @@ namespace Fhm\CardBundle\Controller\Category;
 use Fhm\CardBundle\Form\Type\Admin\Category\CreateType;
 use Fhm\CardBundle\Form\Type\Admin\Category\UpdateType;
 use Fhm\FhmBundle\Controller\RefAdminController as FhmController;
-use Fhm\CardBundle\Document\CardCategory;
 use Fhm\FhmBundle\Form\Handler\Admin\CreateHandler;
 use Fhm\FhmBundle\Form\Handler\Admin\UpdateHandler;
 use Symfony\Component\HttpFoundation\Request;
@@ -30,13 +29,12 @@ class AdminController extends FhmController
         self::$source = "fhm";
         self::$domain = "FhmCardBundle";
         self::$translation = "card.category";
-        self::$class = CardCategory::class;
         self::$route = "card_category";
         self::$form = new \stdClass();
         self::$form->createType    = CreateType::class;
         self::$form->createHandler = CreateHandler::class;
         self::$form->updateType    = UpdateType::class;
-        self::$form->updateHandler = CreateHandler::class;
+        self::$form->updateHandler = UpdateHandler::class;
     }
 
     /**

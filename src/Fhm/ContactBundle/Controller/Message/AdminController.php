@@ -1,11 +1,9 @@
 <?php
 namespace Fhm\ContactBundle\Controller\Message;
 
-use Fhm\ContactBundle\Document\ContactMessage;
 use Fhm\ContactBundle\Form\Type\Admin\CreateType;
 use Fhm\ContactBundle\Form\Type\Admin\UpdateType;
 use Fhm\FhmBundle\Controller\RefAdminController as FhmController;
-use Fhm\ContactBundle\Document\Message;
 use Fhm\FhmBundle\Form\Handler\Admin\CreateHandler;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -29,7 +27,6 @@ class AdminController extends FhmController
         self::$source = "fhm";
         self::$domain = "FhmContactBundle";
         self::$translation = "contact.message";
-        self::$class = ContactMessage::class;
         self::$route = "contact_message";
         self::$form = new \stdClass();
         self::$form->createType    = CreateType::class;

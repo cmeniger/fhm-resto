@@ -2,7 +2,6 @@
 namespace Fhm\FhmBundle\Controller\Menu;
 
 use Fhm\FhmBundle\Controller\RefFrontController as FhmController;
-use Fhm\FhmBundle\Document\Menu;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -25,7 +24,6 @@ class FrontController extends FhmController
         self::$source = "fhm";
         self::$domain = "FhmFhmMenu";
         self::$translation = "menu";
-        self::$class = Menu::class;
         self::$route = "menu";
     }
 
@@ -42,10 +40,10 @@ class FrontController extends FhmController
     {
         $parent = parent::detailAction($id);
         $session = $this->get('session');
-        $document = $parent['document'];
+        $object = $parent['object'];
         $modules = '';
-        if ($document->getRoute()) {
-            $route = $this->get('router')->match($document->getRoute());
+        if ($object->getRoute()) {
+            $route = $this->get('router')->match($object->getRoute());
             $variables = array();
             foreach ($route as $key => $value) {
                 if (substr($key, 0, 1) !== '_') {
@@ -61,10 +59,10 @@ class FrontController extends FhmController
         }
 
         return array(
-            'document' => $document,
+            'object' => $object,
             'sites' => $this->get('fhm_tools')->dmRepository("FhmFhmBundle:Site")->getFrontIndex(),
             'modules' => $modules,
-            'submenu' => $this->get('fhm_tools')->dmRepository("FhmFhmBundle:Menu")->getTree($document->getId())
+            'submenu' => $this->get('fhm_tools')->dmRepository(self::$repository)->getTree($object->getId())
         );
     }
 

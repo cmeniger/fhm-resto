@@ -1,9 +1,7 @@
 <?php
 namespace Fhm\EventBundle\Controller\Group;
 
-use Fhm\EventBundle\Document\EventGroup;
 use Fhm\FhmBundle\Controller\RefApiController as FhmController;
-use Fhm\EventBundle\Document\Event;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
@@ -27,7 +25,6 @@ class ApiController extends FhmController
         self::$source = "fhm";
         self::$domain = "FhmEventBundle";
         self::$translation = "event.group";
-        self::$class = EventGroup::class;
         self::$route = "event_group";
     }
 

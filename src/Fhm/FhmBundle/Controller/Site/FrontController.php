@@ -2,7 +2,6 @@
 namespace Fhm\FhmBundle\Controller\Site;
 
 use Fhm\FhmBundle\Controller\RefFrontController as FhmController;
-use Fhm\FhmBundle\Document\Site;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
@@ -23,7 +22,6 @@ class FrontController extends FhmController
         self::$source = "fhm";
         self::$domain = "FhmFhmSite";
         self::$translation = "site";
-        self::$class = Site::class;
         self::$route = "site";
     }
 

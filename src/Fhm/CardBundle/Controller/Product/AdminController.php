@@ -4,7 +4,6 @@ namespace Fhm\CardBundle\Controller\Product;
 use Fhm\CardBundle\Form\Type\Admin\Product\CreateType;
 use Fhm\CardBundle\Form\Type\Admin\Product\UpdateType;
 use Fhm\FhmBundle\Controller\RefAdminController as FhmController;
-use Fhm\CardBundle\Document\CardProduct;
 use Fhm\FhmBundle\Form\Handler\Admin\CreateHandler;
 use Fhm\FhmBundle\Form\Handler\Admin\UpdateHandler;
 use Symfony\Component\HttpFoundation\Request;
@@ -30,7 +29,6 @@ class AdminController extends FhmController
         self::$source = "fhm";
         self::$domain = "FhmCardBundle";
         self::$translation = "card.product";
-        self::$class = CardProduct::class;
         self::$route = "card_product";
         self::$form = new \stdClass();
         self::$form->createType    = CreateType::class;

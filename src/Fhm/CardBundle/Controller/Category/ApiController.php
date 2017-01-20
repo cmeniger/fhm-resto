@@ -4,7 +4,6 @@ namespace Fhm\CardBundle\Controller\Category;
 use Fhm\CardBundle\Form\Type\Api\Category\CreateType;
 use Fhm\CardBundle\Form\Type\Api\Category\UpdateType;
 use Fhm\FhmBundle\Controller\RefApiController as FhmController;
-use Fhm\CardBundle\Document\CardCategory;
 use Fhm\FhmBundle\Form\Handler\Admin\CreateHandler;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -31,7 +30,6 @@ class ApiController extends FhmController
         self::$source = "fhm";
         self::$domain = "FhmCardBundle";
         self::$translation = "card.category";
-        self::$class = CardCategory::class;
         self::$route = "card_category";
         self::$form = new \stdClass();
         self::$form->createType    = CreateType::class;
@@ -77,14 +75,14 @@ class ApiController extends FhmController
     public function embedAction(Request $request, $idCard, $idCategory, $template)
     {
         $card = $this->get('fhm_tools')->dmRepository('FhmCardBundle:Card')->find($idCard);
-        $document = $this->get('fhm_tools')->dmRepository(self::$repository)->find($idCategory);
+        $object = $this->get('fhm_tools')->dmRepository(self::$repository)->find($idCategory);
         // ERROR - unknown
         if ($card == "") {
             throw $this->createNotFoundException(
                 $this->get('translator')->trans('card.error.unknown', array(), self::$domain)
             );
         }
-        if ($document == "") {
+        if ($object == "") {
             throw $this->createNotFoundException(
                 $this->get('translator')->trans(self::$translation.'.error.unknown', array(), self::$domain)
             );
@@ -95,8 +93,8 @@ class ApiController extends FhmController
                 "::FhmCard/Template/Category/".$template.".html.twig",
                 array(
                     "card" => $card,
-                    "document" => $document,
-                    "documents" => $this->get('fhm_tools')->dmRepository(self::$repository)->getSons($card, $document),
+                    "object" => $object,
+                    "objects" => $this->get('fhm_tools')->dmRepository(self::$repository)->getSons($card, $object),
                 )
             )
         );
@@ -168,22 +166,20 @@ class ApiController extends FhmController
         $card = $this->get('fhm_tools')->dmRepository('FhmCardBundle:Card')->find($idCard);
         $category = $this->get('fhm_tools')->dmRepository(self::$repository)->find($idCategory);
         $this->__authorized($card);
-        $document = self::$document;
+
+        self::$class = $this->get('fhm.object.manager')->getCurrentModelName(self::$repository);
+        $object = self::$class;
         if ($category) {
-            $document->addParent($category);
+            $object->addParent($category);
         }
         $classType = CreateType::class;
         $classHandler = CreateHandler::class;
-        $form = $this->createForm(new $classType, $document);
+        $form = $this->createForm(new $classType, $object);
         $handler = new $classHandler($form, $request);
         $process = $handler->process();
         if ($process) {
-            $data = $request->get($form->getName());
-            // Persist
-            $document->setUserCreate($this->getUser());
-            $document->setAlias($this->getAlias($document->getId(), $document->getName()));
-            $document->setCard($card);
-            $this->get('fhm_tools')->dmPersist($document);
+            $object->setCard($card);
+            $this->get('fhm_tools')->dmPersist($object);
 
             return $this->__refresh($card);
         }
@@ -207,31 +203,26 @@ class ApiController extends FhmController
     public function updateAction(Request $request, $idCard, $idCategory)
     {
         $card = $this->get('fhm_tools')->dmRepository('FhmCardBundle:Card')->find($idCard);
-        $document = $this->get('fhm_tools')->dmRepository(self::$repository)->find($idCategory);
+        $object = $this->get('fhm_tools')->dmRepository(self::$repository)->find($idCategory);
         $this->__authorized($card);
-        if ($document == "") {
+        if ($object == "") {
             throw $this->createNotFoundException(
                 $this->get('translator')->trans(self::$translation.'.error.unknown', array(), self::$domain)
             );
         }
         $classType = CreateType::class;
         $classHandler = CreateHandler::class;
-        $form = $this->createForm(new $classType, $document);
+        $form = $this->createForm(new $classType, $object);
         $handler = new $classHandler($form, $request);
         $process = $handler->process();
         if ($process) {
-            $data = $request->get($form->getName());
-            // Persist
-            $document->setUserUpdate($this->getUser());
-            $document->setAlias($this->getAlias($document->getId(), $document->getName()));
-            $this->get('fhm_tools')->dmPersist($document);
-
+            $this->get('fhm_tools')->dmPersist($object);
             return $this->__refresh($card);
         }
 
         return array(
             'card' => $card,
-            'document' => $document,
+            'object' => $object,
             'form' => $form->createView(),
         );
     }
@@ -247,16 +238,15 @@ class ApiController extends FhmController
     public function activateAction(Request $request, $idCard, $idCategory)
     {
         $card = $this->get('fhm_tools')->dmRepository('FhmCardBundle:Card')->find($idCard);
-        $document = $this->get('fhm_tools')->dmRepository(self::$repository)->find($idCategory);
+        $object = $this->get('fhm_tools')->dmRepository(self::$repository)->find($idCategory);
         $this->__authorized($card);
-        if ($document == "") {
+        if ($object == "") {
             throw $this->createNotFoundException(
                 $this->get('translator')->trans(self::$translation.'.error.unknown', array(), self::$domain)
             );
         }
-        $document->setUserUpdate($this->getUser());
-        $document->setActive(true);
-        $this->get('fhm_tools')->dmPersist($document);
+        $object->setActive(true);
+        $this->get('fhm_tools')->dmPersist($object);
 
         return $this->__refresh($card);
     }
@@ -272,16 +262,15 @@ class ApiController extends FhmController
     public function deactivateAction(Request $request, $idCard, $idCategory)
     {
         $card = $this->get('fhm_tools')->dmRepository('FhmCardBundle:Card')->find($idCard);
-        $document = $this->get('fhm_tools')->dmRepository(self::$repository)->find($idCategory);
+        $object = $this->get('fhm_tools')->dmRepository(self::$repository)->find($idCategory);
         $this->__authorized($card);
-        if ($document == "") {
+        if ($object == "") {
             throw $this->createNotFoundException(
                 $this->get('translator')->trans(self::$translation.'.error.unknown', array(), self::$domain)
             );
         }
-        $document->setUserUpdate($this->getUser());
-        $document->setActive(false);
-        $this->get('fhm_tools')->dmPersist($document);
+        $object->setActive(false);
+        $this->get('fhm_tools')->dmPersist($object);
 
         return $this->__refresh($card);
     }
@@ -297,19 +286,18 @@ class ApiController extends FhmController
     public function deleteAction(Request $request, $idCard, $idCategory)
     {
         $card = $this->get('fhm_tools')->dmRepository('FhmCardBundle:Card')->find($idCard);
-        $document = $this->get('fhm_tools')->dmRepository(self::$repository)->find($idCategory);
+        $object = $this->get('fhm_tools')->dmRepository(self::$repository)->find($idCategory);
         $this->__authorized($card);
-        if ($document == "") {
+        if ($object == "") {
             throw $this->createNotFoundException(
                 $this->get('translator')->trans(self::$translation.'.error.unknown', array(), self::$domain)
             );
         }
-        if ($document->getDelete()) {
-            $this->get('fhm_tools')->dmRemove($document);
+        if ($object->getDelete()) {
+            $this->get('fhm_tools')->dmRemove($object);
         } else {
-            $document->setUserUpdate($this->getUser());
-            $document->setDelete(true);
-            $this->get('fhm_tools')->dmPersist($document);
+            $object->setDelete(true);
+            $this->get('fhm_tools')->dmPersist($object);
         }
 
         return $this->__refresh($card);
@@ -326,16 +314,15 @@ class ApiController extends FhmController
     public function undeleteAction(Request $request, $idCard, $idCategory)
     {
         $card = $this->get('fhm_tools')->dmRepository('FhmCardBundle:Card')->find($idCard);
-        $document = $this->get('fhm_tools')->dmRepository(self::$repository)->find($idCategory);
+        $object = $this->get('fhm_tools')->dmRepository(self::$repository)->find($idCategory);
         $this->__authorized($card);
-        if ($document == "") {
+        if ($object == "") {
             throw $this->createNotFoundException(
                 $this->get('translator')->trans(self::$translation.'.error.unknown', array(), self::$domain)
             );
         }
-        $document->setUserUpdate($this->getUser());
-        $document->setDelete(false);
-        $this->get('fhm_tools')->dmPersist($document);
+        $object->setDelete(false);
+        $this->get('fhm_tools')->dmPersist($object);
 
         return $this->__refresh($card);
     }
@@ -370,17 +357,17 @@ class ApiController extends FhmController
     {
         $order = 1;
         foreach ($list as $obj) {
-            $document = $this->get('fhm_tools')->dmRepository(self::$repository)->find($obj->id);
-            $document->resetParents();
-            $document->resetSons();
+            $object = $this->get('fhm_tools')->dmRepository(self::$repository)->find($obj->id);
+            $object->resetParents();
+            $object->resetSons();
             if (isset($obj->children)) {
-                $this->__treeSort($obj->children, $document);
+                $this->__treeSort($obj->children, $object);
             }
             if ($parent) {
-                $document->addParent($parent);
+                $object->addParent($parent);
             }
-            $document->setOrder($order);
-            $this->get('fhm_tools')->dmPersist($document);
+            $object->setOrder($order);
+            $this->get('fhm_tools')->dmPersist($object);
             $order++;
         }
 

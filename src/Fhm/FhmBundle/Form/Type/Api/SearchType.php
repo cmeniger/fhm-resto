@@ -58,16 +58,12 @@ class SearchType extends AbstractType
     {
         $resolver->setDefaults(
             array(
-                'data_class' => 'Fhm\FhmBundle\Document\Fhm',
+                'data_class' => '',
                 'translation_domain' => 'FhmFhmBundle',
                 'cascade_validation' => true,
                 'translation_route'=>'',
-                'filter'=>'',
-                'lang_visible'=>'',
-                'lang_available'=>'',
-                'grouping_visible'=>'',
-                'grouping_available'=>'',
-                'user_admin'=>''
+                'user_admin'=>'',
+                'object_manager'=>''
             )
         );
     }

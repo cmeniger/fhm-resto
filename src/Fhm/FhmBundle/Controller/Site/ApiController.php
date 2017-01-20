@@ -2,7 +2,6 @@
 namespace Fhm\FhmBundle\Controller\Site;
 
 use Fhm\FhmBundle\Controller\RefApiController as FhmController;
-use Fhm\FhmBundle\Document\Site;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
@@ -26,7 +25,6 @@ class ApiController extends FhmController
         self::$source = "fhm";
         self::$domain = "FhmFhmSite";
         self::$translation = "site";
-        self::$class = Site::class;
         self::$route = "site";
     }
 

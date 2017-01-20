@@ -2,8 +2,6 @@
 namespace Fhm\GalleryBundle\Controller\Album;
 
 use Fhm\FhmBundle\Controller\RefApiController as FhmController;
-use Fhm\GalleryBundle\Document\Gallery;
-use Fhm\GalleryBundle\Document\GalleryAlbum;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
@@ -27,7 +25,6 @@ class ApiController extends FhmController
         self::$source = "fhm";
         self::$domain = "FhmGalleryBundle";
         self::$translation = "gallery.album";
-        self::$class = GalleryAlbum::class;
         self::$route = "gallery_album";
     }
 
@@ -68,16 +65,17 @@ class ApiController extends FhmController
      */
     public function detailAction($template, $id)
     {
-        $document = $this->get('fhm_tools')->dmRepository(self::$repository)->getById($id);
-        $document = ($document) ? $document : $this->get('fhm_tools')->dmRepository(self::$repository)->getByAlias($id);
-        $document = ($document) ? $document : $this->get('fhm_tools')->dmRepository(self::$repository)->getByName($id);
+        $repository = $this->get('fhm.object.manager')->getCurrentRepository(self::$repository);
+        $object = $repository->getById($id);
+        $object = ($object) ? $object : $repository->getByAlias($id);
+        $object = ($object) ? $object : $repository->getByName($id);
         // ERROR - unknown
-        if ($document == "") {
+        if ($object == "") {
             throw $this->createNotFoundException(
                 $this->trans('gallery.album.error.unknown', array(), 'FhmGalleryBundle')
             );
         } // ERROR - Forbidden
-        elseif (!$this->getUser()->hasRole('ROLE_ADMIN') && ($document->getDelete() || !$document->getActive())) {
+        elseif (!$this->getUser()->hasRole('ROLE_ADMIN') && ($object->getDelete() || !$object->getActive())) {
             throw new HttpException(
                 403,
                 $this->trans('gallery.album.error.forbidden', array(), 'FhmGalleryBundle')
@@ -88,9 +86,11 @@ class ApiController extends FhmController
             $this->renderView(
                 "::FhmGallery/Template/".$template.".html.twig",
                 array(
-                    'document' => $document,
-                    'galleries' => $this->get('fhm_tools')->dmRepository("FhmGalleryBundle:Gallery")->getByGroupAll(
-                        $document
+                    'object' => $object,
+                    'galleries' => $this->get('fhm.object.manager')->getCurrentRepository(
+                        "FhmGalleryBundle:Gallery"
+                    )->getByGroupAll(
+                        $object
                     ),
                 )
             )

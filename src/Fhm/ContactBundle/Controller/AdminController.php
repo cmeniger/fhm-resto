@@ -4,7 +4,6 @@ namespace Fhm\ContactBundle\Controller;
 use Fhm\ContactBundle\Form\Type\Admin\CreateType;
 use Fhm\ContactBundle\Form\Type\Admin\UpdateType;
 use Fhm\FhmBundle\Controller\RefAdminController as FhmController;
-use Fhm\ContactBundle\Document\Contact;
 use Fhm\FhmBundle\Form\Handler\Admin\CreateHandler;
 use Fhm\FhmBundle\Form\Handler\Admin\UpdateHandler;
 use Symfony\Component\HttpFoundation\Request;
@@ -28,7 +27,6 @@ class AdminController extends FhmController
         self::$source = "fhm";
         self::$domain = "FhmContactBundle";
         self::$translation = "contact";
-        self::$class = Contact::class;
         self::$route = "contact";
         self::$form = new \stdClass();
         self::$form->createType    = CreateType::class;

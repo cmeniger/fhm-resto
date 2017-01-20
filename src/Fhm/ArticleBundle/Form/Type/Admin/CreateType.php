@@ -1,10 +1,9 @@
 <?php
 namespace Fhm\ArticleBundle\Form\Type\Admin;
 
-use Doctrine\Bundle\MongoDBBundle\Form\Type\DocumentType;
 use Fhm\FhmBundle\Form\Type\Admin\CreateType as FhmType;
 use Fhm\FhmBundle\Form\Type\AutocompleteType;
-use Fhm\GalleryBundle\Repository\GalleryRepository;
+use Fhm\FhmBundle\Manager\TypeManager;
 use Fhm\MediaBundle\Form\Type\MediaType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -58,12 +57,13 @@ class CreateType extends FhmType
             )
         )->add(
             'gallery',
-            DocumentType::class,
+            TypeManager::getType($options['object_manager']->getDBDriver()),
             array(
                 'label' => $options['translation_route'].'.admin.create.form.gallery',
                 'class' => 'FhmGalleryBundle:Gallery',
-                'query_builder' => function (GalleryRepository $dr) use ($options) {
-                    return $dr->getFormEnable($options['filter']);
+                'query_builder' => function () use ($options) {
+                    $dr = $options['object_manager']->getCurrentRepository('FhmGalleryBundle:Gallery');
+                    return $dr->getFormEnable();
                 },
                 'required' => false,
             )
@@ -85,12 +85,12 @@ class CreateType extends FhmType
     {
         $resolver->setDefaults(
             array(
-                'data_class' => 'Fhm\ArticleBundle\Document\Article',
+                'data_class' => '',
                 'translation_domain' => 'FhmArticleBundle',
                 'cascade_validation' => true,
                 'translation_route' => 'article',
-                'filter' => '',
                 'user_admin' => '',
+                'object_manager'
             )
         );
     }

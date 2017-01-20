@@ -3,7 +3,6 @@ namespace Fhm\FhmBundle\Form\Type\Admin;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -84,12 +83,13 @@ class CreateType extends AbstractType
     {
         $resolver->setDefaults(
             array(
-                'data_class' => 'Fhm\FhmBundle\Document\Fhm',
+                'data_class' => '',
                 'translation_domain' => 'FhmFhmBundle',
                 'cascade_validation' => true,
                 'translation_route' => '',
                 'filter' => '',
                 'user_admin' => '',
+                'object_manager'=>''
             )
         );
     }

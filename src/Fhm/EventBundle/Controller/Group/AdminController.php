@@ -4,7 +4,6 @@ namespace Fhm\EventBundle\Controller\Group;
 use Fhm\EventBundle\Form\Type\Admin\Group\CreateType;
 use Fhm\EventBundle\Form\Type\Admin\Group\UpdateType;
 use Fhm\FhmBundle\Controller\RefAdminController as FhmController;
-use Fhm\EventBundle\Document\EventGroup;
 use Fhm\FhmBundle\Form\Handler\Admin\CreateHandler;
 use Fhm\FhmBundle\Form\Handler\Admin\UpdateHandler;
 use Fhm\FhmBundle\Form\Type\Admin\SearchType;
@@ -30,12 +29,12 @@ class AdminController extends FhmController
         self::$source = "fhm";
         self::$domain = "FhmEventBundle";
         self::$translation = "event.group";
-        self::$class = EventGroup::class;
         self::$route = "event_group";
         self::$form = new \stdClass();
         self::$form->createType    = CreateType::class;
         self::$form->createHandler = CreateHandler::class;
         self::$form->updateType    = UpdateType::class;
+        self::$form->updateHandler = UpdateHandler::class;
     }
 
     /**
@@ -103,12 +102,12 @@ class AdminController extends FhmController
      */
     public function detailAction($id)
     {
-        $document = $this->get('fhm_tools')->dmRepository(self::$repository)->find($id);
+        $object = $this->get('fhm_tools')->dmRepository(self::$repository)->find($id);
 
         return array_merge(
             array(
                 'event1' => $this->get('fhm_tools')->dmRepository('FhmEventBundle:Event')->getAllEnable(),
-                'event2' => $this->getList($document->getEvent()),
+                'event2' => $this->getList($object->getEvent()),
             ),
             parent::detailAction($id)
         );
@@ -126,19 +125,19 @@ class AdminController extends FhmController
     public function previewAction($id)
     {
         $response = parent::detailAction($id);
-        $document = $response['document'];
+        $object = $response['object'];
         $form = $this->createForm(SearchType::class);
         $form->setData($this->get('request_stack')->getCurrentRequest()->get($form->getName()));
         $dataSearch = $form->getData();
-        $documents = $this->get('fhm_tools')->dmRepository("FhmEventBundle:Event")->getEventByGroupIndex(
-            $document,
+        $objects = $this->get('fhm_tools')->dmRepository("FhmEventBundle:Event")->getEventByGroupIndex(
+            $object,
             $dataSearch['search']
         );
 
         return array_merge(
             $response,
             array(
-                'documents' => $documents,
+                'objects' => $objects,
                 'form' => $form->createView(),
             )
         );
@@ -233,15 +232,15 @@ class AdminController extends FhmController
     public function eventAction(Request $request)
     {
         $event = json_decode($request->get('list'));
-        $document = $this->get('fhm_tools')->dmRepository(self::$repository)->find($request->get('id'));
-        foreach ($document->getEvents() as $event) {
-            $document->removeEvent($event);
+        $object = $this->get('fhm_tools')->dmRepository(self::$repository)->find($request->get('id'));
+        foreach ($object->getEvents() as $event) {
+            $object->removeEvent($event);
         }
         foreach ($event as $key => $data) {
             $event = $this->get('fhm_tools')->dmRepository('FhmEventBundle:Event')->find($data->id);
-            $document->addEvent($event);
+            $object->addEvent($event);
         }
-        $this->get('fhm_tools')->dmPersist($document);
+        $this->get('fhm_tools')->dmPersist($object);
 
         return new Response();
     }

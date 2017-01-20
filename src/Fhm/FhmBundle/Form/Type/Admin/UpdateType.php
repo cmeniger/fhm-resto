@@ -89,6 +89,7 @@ class UpdateType extends AbstractType
                 'cascade_validation' => true,
                 'translation_route' => '',
                 'user_admin' => '',
+                'object_manager'=>''
             )
         );
     }

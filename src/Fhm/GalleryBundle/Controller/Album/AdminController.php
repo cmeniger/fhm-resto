@@ -4,7 +4,6 @@ namespace Fhm\GalleryBundle\Controller\Album;
 use Fhm\FhmBundle\Controller\RefAdminController as FhmController;
 use Fhm\FhmBundle\Form\Handler\Admin\CreateHandler;
 use Fhm\FhmBundle\Form\Handler\Admin\UpdateHandler;
-use Fhm\GalleryBundle\Document\GalleryAlbum;
 use Fhm\GalleryBundle\Form\Type\Admin\Album\CreateType;
 use Fhm\GalleryBundle\Form\Type\Admin\Album\UpdateType;
 use Symfony\Component\HttpFoundation\Request;
@@ -29,12 +28,12 @@ class AdminController extends FhmController
         self::$source = "fhm";
         self::$domain = "FhmGalleryBundle";
         self::$translation = "gallery.album";
-        self::$class = GalleryAlbum::class;
         self::$route = "gallery_album";
         self::$form = new \stdClass();
-        self::$form->createType    = CreateType::class;
+        self::$form->createType = CreateType::class;
         self::$form->createHandler = CreateHandler::class;
-        self::$form->updateType    = UpdateType::class;
+        self::$form->updateType = UpdateType::class;
+        self::$form->updateHandler = UpdateHandler::class;
     }
 
     /**
@@ -102,12 +101,14 @@ class AdminController extends FhmController
      */
     public function detailAction($id)
     {
-        $document = $this->get('fhm_tools')->dmRepository(self::$repository)->find($id);
+        $object = $this->get('fhm_tools')->dmRepository(self::$repository)->find($id);
 
         return array_merge(
             array(
-                'gallery1' => $this->get('fhm_tools')->dmRepository('FhmGalleryBundle:Gallery')->getAllEnable(),
-                'gallery2' => $this->getList($document->getGalleries()),
+                'gallery1' => $this->get('fhm.object.manager')->getCurrentRepository(
+                    'FhmGalleryBundle:Gallery'
+                )->getAllEnable(),
+                'gallery2' => $this->getList($object->getGalleries()),
             ),
             parent::detailAction($id)
         );
@@ -215,15 +216,19 @@ class AdminController extends FhmController
      */
     public function listGalleryAction(Request $request)
     {
+        $objManager = $this->get('fhm.object.manager');
         $datas = json_decode($request->get('list'));
-        $document = $this->get('fhm_tools')->dmRepository(self::$repository)->find($request->get('id'));
-        foreach ($document->getGalleries() as $gallery) {
-            $document->removeGallery($gallery);
+        $object = $objManager->getCurrentRepository(self::$repository)->find($request->get('id'));
+        foreach ($object->getGalleries() as $gallery) {
+            $object->removeGallery($gallery);
         }
-        foreach ($datas as $key => $data) {
-            $document->addGallery($this->get('fhm_tools')->dmRepository('FhmGalleryBundle:Gallery')->find($data->id));
+        foreach ($datas as $data) {
+            $object->addGallery(
+                $objManager->getCurrentRepository('FhmGalleryBundle:Gallery')->find($data->id)
+            );
         }
-        $this->get('fhm_tools')->dmPersist($document);
+        $objManager->getManager()->persist($object);
+        $objManager->getManager()->flush();
 
         return new Response();
     }

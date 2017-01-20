@@ -4,7 +4,6 @@ namespace Fhm\ArticleBundle\Controller;
 use Fhm\ArticleBundle\Form\Type\Admin\CreateType;
 use Fhm\ArticleBundle\Form\Type\Admin\UpdateType;
 use Fhm\FhmBundle\Controller\RefFrontController as FhmController;
-use Fhm\ArticleBundle\Document\Article;
 use Fhm\FhmBundle\Form\Handler\Admin\CreateHandler;
 use Fhm\FhmBundle\Form\Handler\Admin\UpdateHandler;
 use Symfony\Component\HttpFoundation\Request;
@@ -29,7 +28,6 @@ class FrontController extends FhmController
         self::$translation = "article";
         self::$route       = "article";
         self::$source      = "fhm";
-        self::$class = Article::class;
     }
 
     /**

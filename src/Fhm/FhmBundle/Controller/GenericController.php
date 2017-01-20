@@ -23,7 +23,7 @@ abstract class GenericController extends Controller
     protected static $form;
     protected static $route;
     protected static $domain;
-    protected static $document;
+    protected static $object;
 
     /**
      * @param $route
@@ -96,19 +96,19 @@ abstract class GenericController extends Controller
      * @param $data
      * @return mixed
      */
-    public function redirectUrl($data, $document, $side = "admin")
+    public function redirectUrl($data, $object, $side = "admin")
     {
         $redirect = $this->redirect($this->getUrl(self::$source.'_admin_'.self::$route));
         $redirect = isset($data['submitSave']) ? $this->redirect(
             $this->getUrl(
                 self::$source.'_'.$side.'_'.self::$route.'_update',
-                array('id' => $document->getId())
+                array('id' => $object->getId())
             )
         ) : $redirect;
         $redirect = isset($data['submitDuplicate']) ? $this->redirect(
             $this->getUrl(
                 self::$source.'_'.$side.'_'.self::$route.'_duplicate',
-                array('id' => $document->getId())
+                array('id' => $object->getId())
             )
         ) : $redirect;
         $redirect = isset($data['submitNew']) ? $this->redirect(
@@ -117,7 +117,7 @@ abstract class GenericController extends Controller
         $redirect = isset($data['submitConfig']) ? $this->redirect(
             $this->getUrl(
                 self::$source.'_'.$side.'_'.self::$route.'_detail',
-                array('id' => $document->getId())
+                array('id' => $object->getId())
             )
         ) : $redirect;
 
