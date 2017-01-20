@@ -1,14 +1,11 @@
 <?php
 
-namespace Fhm\GeolocationBundle\Document;
-
-use Fhm\FhmBundle\Document\FhmWithUser;
-use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
+namespace Fhm\GeolocationBundle\Entity;
+use Fhm\FhmBundle\Entity\FhmWithUser;
 use Symfony\Component\Validator\Constraints as Assert;
+use Doctrine\ORM\Mapping as ORM;
 
-/**
- * Geolocation
- */
+
 class GeolocationWithUser extends FhmWithUser
 {
     /**
@@ -17,37 +14,37 @@ class GeolocationWithUser extends FhmWithUser
     private $geocoder;
 
     /**
-     * @MongoDB\Field(type="string")
+     * @ORM\Column(type="string", length=100)
      */
     protected $address_main;
 
     /**
-     * @MongoDB\Field(type="string")
+     * @ORM\Column(type="string", length=100)
      */
     protected $address_additional;
 
     /**
-     * @MongoDB\Field(type="string")
+     * @ORM\Column(type="string", length=100)
      */
     protected $zip_code;
 
     /**
-     * @MongoDB\Field(type="string")
+     * @ORM\Column(type="string", length=100)
      */
     protected $city;
 
     /**
-     * @MongoDB\Field(type="string")
+     * @ORM\Column(type="string", length=100)
      */
     protected $country;
 
     /**
-     * @MongoDB\Field(type="string")
+     * @ORM\Column(type="string", length=100)
      */
     protected $latitude;
 
     /**
-     * @MongoDB\Field(type="string")
+     * @ORM\Column(type="string", length=100)
      */
     protected $longitude;
 
