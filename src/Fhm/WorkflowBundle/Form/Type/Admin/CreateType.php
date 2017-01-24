@@ -3,6 +3,7 @@ namespace Fhm\WorkflowBundle\Form\Type\Admin;
 
 use Doctrine\Bundle\MongoDBBundle\Form\Type\DocumentType;
 use Fhm\FhmBundle\Form\Type\Admin\CreateType as FhmType;
+use Fhm\FhmBundle\Manager\TypeManager;
 use Fhm\WorkflowBundle\Repository\WorkflowTaskRepository;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -22,13 +23,14 @@ class CreateType extends FhmType
         parent::buildForm($builder, $options);
         $builder->add(
             'tasks',
-            DocumentType::class,
+            TypeManager::getType($options['object_manager']->getDBDriver()),
             array(
                 'label' => $options['translation_route'].'.admin.create.form.tasks',
                 'class' => 'FhmWorkflowBundle:WorkflowTask',
                 'choice_label' => 'name',
-                'query_builder' => function (WorkflowTaskRepository $dr) use ($options) {
-                    return $dr->getFormParent($options['filter']);
+                'query_builder' => function () use ($options) {
+                    $dr = $options['object_manager']->getCurrentRepository('FhmWorkflowBundle:WorkflowTask');
+                    return $dr->getFormEnable($options['filter']);
                 },
                 'multiple' => true,
                 'required' => false,

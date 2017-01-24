@@ -3,6 +3,7 @@ namespace Fhm\GalleryBundle\Form\Type\Admin\Video;
 
 use Doctrine\Bundle\MongoDBBundle\Form\Type\DocumentType;
 use Fhm\FhmBundle\Form\Type\Admin\UpdateType as FhmType;
+use Fhm\FhmBundle\Manager\TypeManager;
 use Fhm\GalleryBundle\Repository\GalleryRepository;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -23,7 +24,7 @@ class UpdateType extends FhmType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $this->setTranslation('gallery.video');
+//        $this->setTranslation('gallery.video');
         parent::buildForm($builder, $options);
         $builder->add(
             'title',
@@ -66,12 +67,13 @@ class UpdateType extends FhmType
             array('label' => $options['translation_route'].'.admin.update.form.video')
         )->add(
             'galleries',
-            DocumentType::class,
+            TypeManager::getType($options['object_manager']->getDBDriver()),
             array(
                 'label' => $options['translation_route'].'.admin.update.form.galleries',
                 'class' => 'FhmGalleryBundle:Gallery',
                 'choice_label' => 'name',
-                'query_builder' => function (GalleryRepository $dr) use ($options) {
+                'query_builder' => function () use ($options) {
+                    $dr = $options['object_manager']->getCurrentRepository('FhmGalleryBundle:Gallery');
                     return $dr->getFormEnable($options['filter']);
                 },
                 'required' => false,

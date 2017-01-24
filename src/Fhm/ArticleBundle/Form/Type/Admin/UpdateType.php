@@ -27,37 +27,37 @@ class UpdateType extends FhmType
             'title',
             TextType::class,
             array(
-                'label' => $options['translation_route'].'.admin.update.form.title',
+                'label' => $options['translation_route'] . '.admin.update.form.title',
             )
         )->add(
             'title',
             TextType::class,
             array(
-                'label' => $options['translation_route'].'.admin.update.form.title',
+                'label' => $options['translation_route'] . '.admin.update.form.title',
             )
         )->add(
             'subtitle',
             TextType::class,
-            array('label' => $options['translation_route'].'.admin.update.form.subtitle', 'required' => false)
+            array('label' => $options['translation_route'] . '.admin.update.form.subtitle', 'required' => false)
         )->add(
             'resume',
             TextareaType::class,
             array(
-                'label' => $options['translation_route'].'.admin.update.form.resume',
+                'label' => $options['translation_route'] . '.admin.update.form.resume',
                 'attr' => array('class' => 'editor'),
             )
         )->add(
             'content',
             TextareaType::class,
             array(
-                'label' => $options['translation_route'].'.admin.update.form.content',
+                'label' => $options['translation_route'] . '.admin.update.form.content',
                 'attr' => array('class' => 'editor'),
             )
         )->add(
             'image',
             MediaType::class,
             array(
-                'label' => $options['translation_route'].'.admin.update.form.image',
+                'label' => $options['translation_route'] . '.admin.update.form.image',
                 'filter' => 'image/*',
                 'required' => false,
             )
@@ -65,7 +65,7 @@ class UpdateType extends FhmType
             'gallery',
             TypeManager::getType($options['object_manager']->getDBDriver()),
             array(
-                'label' => $options['translation_route'].'.admin.update.form.gallery',
+                'label' => $options['translation_route'] . '.admin.update.form.gallery',
                 'class' => 'FhmGalleryBundle:Gallery',
                 'query_builder' => function () use ($options) {
                     $dr = $options['object_manager']->getCurrentRepository('FhmGalleryBundle:Gallery');
@@ -75,13 +75,16 @@ class UpdateType extends FhmType
             )
         )->add(
             'author',
-            AutocompleteType::class,
+            TypeManager::getType($options['object_manager']->getDBDriver()),
             array(
-                'label' => $options['translation_route'].'.admin.update.form.author',
+                'label' => $options['translation_route'] . '.admin.update.form.author',
                 'class' => 'FhmUserBundle:User',
-                'url' => 'fhm_api_user_autocomplete',
+                'query_builder' => function () use ($options) {
+                    $dr = $options['object_manager']->getCurrentRepository('FhmUserBundle:User');
+                    return $dr->getFormEnable();
+                },
+//                'url' => 'fhm_api_user_autocomplete',
                 'required' => false,
-                'ObjectType' => TypeManager::getType($options['object_manager']->getDBDriver())
             )
         )->remove('global')->remove('name')->remove('description');
     }

@@ -3,6 +3,7 @@ namespace Fhm\PartnerBundle\Form\Type\Admin\Group;
 
 use Doctrine\Bundle\MongoDBBundle\Form\Type\DocumentType;
 use Fhm\FhmBundle\Form\Type\Admin\UpdateType as FhmType;
+use Fhm\FhmBundle\Manager\TypeManager;
 use Fhm\PartnerBundle\Repository\PartnerRepository;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -27,13 +28,14 @@ class UpdateType extends FhmType
             array('label' => $options['translation_route'].'.admin.update.form.add_global', 'required' => false)
         )->add(
             'partners',
-            DocumentType::class,
+            TypeManager::getType($options['object_manager']->getDBDriver()),
             array(
                 'label' => $options['translation_route'].'.admin.create.form.partners',
                 'class' => 'FhmPartnerBundle:Partner',
                 'choice_label' => 'name',
-                'query_builder' => function (PartnerRepository $dr) use ($options) {
-                    return $dr->getFormEnable();
+                'query_builder' => function () use ($options) {
+                    $dr = $options['object_manager']->getCurrentRepository('FhmPartnerBundle:Partner');
+                    return $dr->getFormEnable($options['filter']);
                 },
                 'required' => false,
                 'multiple' => true,

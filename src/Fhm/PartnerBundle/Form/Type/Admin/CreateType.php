@@ -2,6 +2,7 @@
 namespace Fhm\PartnerBundle\Form\Type\Admin;
 
 use Doctrine\Bundle\MongoDBBundle\Form\Type\DocumentType;
+use Fhm\FhmBundle\Manager\TypeManager;
 use Fhm\MediaBundle\Form\Type\MediaType;
 use Fhm\PartnerBundle\Form\Type\Admin\Group\AddType;
 use Fhm\FhmBundle\Form\Type\Admin\CreateType as FhmType;
@@ -49,13 +50,14 @@ class CreateType extends FhmType
             )
         )->add(
             'partnergroups',
-            DocumentType::class,
+            TypeManager::getType($options['object_manager']->getDBDriver()),
             array(
                 'label' => $options['translation_route'].'.admin.create.form.partnergroups',
                 'class' => 'FhmPartnerBundle:PartnerGroup',
                 'choice_label' => 'name',
-                'query_builder' => function (PartnerGroupRepository $dr) use ($options) {
-                    return $dr->getFormEnable();
+                'query_builder' => function () use ($options) {
+                    $dr = $options['object_manager']->getCurrentRepository('FhmPartnerBundle:PartnerGroup');
+                    return $dr->getFormEnable($options['filter']);
                 },
                 'multiple' => true,
                 'required' => false,

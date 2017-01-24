@@ -3,6 +3,7 @@ namespace Fhm\GalleryBundle\Form\Type\Admin\Video;
 
 use Doctrine\Bundle\MongoDBBundle\Form\Type\DocumentType;
 use Fhm\FhmBundle\Form\Type\Admin\CreateType as FhmType;
+use Fhm\FhmBundle\Manager\TypeManager;
 use Fhm\GalleryBundle\Repository\GalleryRepository;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -63,12 +64,16 @@ class CreateType extends FhmType
             array('label' => $options['translation_route'].'.admin.create.form.video')
         )->add(
             'galleries',
-            DocumentType::class,
+            TypeManager::getType($options['object_manager']->getDBDriver()),
             array(
                 'label' => $options['translation_route'].'.admin.create.form.galleries',
                 'class' => 'FhmGalleryBundle:Gallery',
                 'choice_label' => 'name',
                 'query_builder' => function (GalleryRepository $dr) {
+                    return $dr->getFormEnable();
+                },
+                'query_builder' => function () use ($options) {
+                    $dr = $options['object_manager']->getCurrentRepository('FhmGalleryBundle:GalleryAlbum');
                     return $dr->getFormEnable();
                 },
                 'required' => false,

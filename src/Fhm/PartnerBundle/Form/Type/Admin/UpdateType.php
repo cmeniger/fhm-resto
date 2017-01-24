@@ -3,6 +3,7 @@ namespace Fhm\PartnerBundle\Form\Type\Admin;
 
 use Doctrine\Bundle\MongoDBBundle\Form\Type\DocumentType;
 use Fhm\FhmBundle\Form\Type\Admin\UpdateType as FhmType;
+use Fhm\FhmBundle\Manager\TypeManager;
 use Fhm\MediaBundle\Form\Type\MediaType;
 use Fhm\PartnerBundle\Repository\PartnerGroupRepository;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
@@ -48,12 +49,13 @@ class UpdateType extends FhmType
             )
         )->add(
             'partnergroups',
-            DocumentType::class,
+            TypeManager::getType($options['object_manager']->getDBDriver()),
             array(
                 'label' => $options['translation_route'].'.admin.update.form.partnergroups',
                 'class' => 'FhmPartnerBundle:PartnerGroup',
                 'choice_label' => 'name',
-                'query_builder' => function (PartnerGroupRepository $dr) use ($options) {
+                'query_builder' => function () use ($options) {
+                    $dr = $options['object_manager']->getCurrentRepository('FhmPartnerBundle:PartnerGroup');
                     return $dr->getFormEnable($options['filter']);
                 },
                 'multiple' => true,

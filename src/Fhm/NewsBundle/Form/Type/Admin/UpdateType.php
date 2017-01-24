@@ -4,6 +4,7 @@ namespace Fhm\NewsBundle\Form\Type\Admin;
 use Doctrine\Bundle\MongoDBBundle\Form\Type\DocumentType;
 use Fhm\FhmBundle\Form\Type\Admin\UpdateType as FhmType;
 use Fhm\FhmBundle\Form\Type\AutocompleteType;
+use Fhm\FhmBundle\Manager\TypeManager;
 use Fhm\GalleryBundle\Repository\GalleryRepository;
 use Fhm\MediaBundle\Form\Type\MediaType;
 use Fhm\NewsBundle\Repository\NewsGroupRepository;
@@ -80,25 +81,27 @@ class UpdateType extends FhmType
             )
         )->add(
             'gallery',
-            DocumentType::class,
+            TypeManager::getType($options['object_manager']->getDBDriver()),
             array(
                 'label' => $options['translation_route'].'.admin.update.form.gallery',
                 'class' => 'FhmGalleryBundle:Gallery',
                 'choice_label' => 'name',
-                'query_builder' => function (GalleryRepository $dr) use ($options) {
-                    return $dr->getFormEnable($options['filter']);
+                'query_builder' => function () use ($options) {
+                    $dr = $options['object_manager']->getCurrentRepository('FhmGalleryBundle:Gallery');
+                    return $dr->getFormEnable();
                 },
                 'required' => false,
             )
         )->add(
             'newsgroups',
-            DocumentType::class,
+            TypeManager::getType($options['object_manager']->getDBDriver()),
             array(
                 'label' => $options['translation_route'].'.admin.update.form.newsgroups',
                 'class' => 'FhmNewsBundle:NewsGroup',
                 'choice_label' => 'name',
-                'query_builder' => function (NewsGroupRepository $dr) use ($options) {
-                    return $dr->getFormEnable($options['filter']);
+                'query_builder' => function () use ($options) {
+                    $dr = $options['object_manager']->getCurrentRepository('FhmNewsBundle:NewsGroup');
+                    return $dr->getFormEnable();
                 },
                 'multiple' => true,
                 'required' => false,
@@ -106,14 +109,16 @@ class UpdateType extends FhmType
             )
         )->add(
             'author',
-            AutocompleteType::class,
+            TypeManager::getType($options['object_manager']->getDBDriver()),
             array(
-                'label' => $options['translation_route'].'.admin.create.form.author',
+                'label' => $options['translation_route'] . '.admin.update.form.author',
                 'class' => 'FhmUserBundle:User',
-                'url' => 'fhm_api_user_autocomplete',
-                'translation_domain'=>$options['translation_domain'],
+                'query_builder' => function () use ($options) {
+                    $dr = $options['object_manager']->getCurrentRepository('FhmUserBundle:User');
+                    return $dr->getFormEnable();
+                },
+//                'url' => 'fhm_api_user_autocomplete',
                 'required' => false,
-                'placeholder' => 'news.admin.create.form.autocomplete.author.placeholder',
             )
         )->remove('name')->remove('description');
     }
