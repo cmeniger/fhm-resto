@@ -1,14 +1,11 @@
 <?php
 namespace Fhm\FhmBundle\Form\Type;
 
-use Doctrine\Bundle\MongoDBBundle\Form\Type\DocumentType;
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\FormBuilderInterface;
-
 
 /**
  * Class AutocompleteType
@@ -38,9 +35,9 @@ class AutocompleteType extends AbstractType
                 'choice_label' => 'name',
                 'cascade_validation' => true,
                 'url' => '',
-                'class'=>'',
-                'label'=>'',
-                'required'=>''
+                'class' => '',
+                'label' => '',
+                'required' => '',
             )
         );
     }
@@ -72,7 +69,7 @@ class AutocompleteType extends AbstractType
      */
     public function getParent()
     {
-       DocumentType::class;
+        return 'fhm_autocomplet_form';
     }
 
 }

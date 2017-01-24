@@ -1,10 +1,9 @@
 <?php
 namespace Fhm\EventBundle\Form\Type\Admin;
 
-use Doctrine\Bundle\MongoDBBundle\Form\Type\DocumentType;
 use Fhm\EventBundle\Form\Type\Admin\Group\AddType;
-use Fhm\EventBundle\Repository\EventGroupRepository;
 use Fhm\FhmBundle\Form\Type\Admin\CreateType as FhmType;
+use Fhm\FhmBundle\Manager\TypeManager;
 use Fhm\MediaBundle\Form\Type\MediaType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -77,13 +76,14 @@ class CreateType extends FhmType
             )
         )->add(
             'eventgroups',
-            DocumentType::class,
+            TypeManager::getType($options['object_manager']->getDBDriver()),
             array(
                 'label' => $options['translation_route'].'.admin.create.form.eventgroups',
                 'class' => 'FhmEventBundle:EventGroup',
                 'choice_label' => 'name',
-                'query_builder' => function (EventGroupRepository $dr) use ($options) {
-                    return $dr->getFormEnable($options['filter']);
+                'query_builder' => function () use ($options) {
+                    $dr = $options['object_manager']->getCurrentRepository('FhmCardBundle:CardCategory');
+                    return $dr->getFormEnable();
                 },
                 'multiple' => true,
                 'required' => false,
@@ -99,12 +99,12 @@ class CreateType extends FhmType
     {
         $resolver->setDefaults(
             array(
-                'data_class' => 'Fhm\EventBundle\Document\Event',
+                'data_class' => '',
                 'translation_domain' => 'FhmEventBundle',
                 'cascade_validation' => true,
                 'translation_route' => 'event',
-                'filter' => '',
                 'user_admin' => '',
+                'object_manager'
             )
         );
     }

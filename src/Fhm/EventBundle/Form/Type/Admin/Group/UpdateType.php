@@ -3,6 +3,8 @@ namespace Fhm\EventBundle\Form\Type\Admin\Group;
 
 use Fhm\EventBundle\Repository\EventRepository;
 use Fhm\FhmBundle\Form\Type\Admin\UpdateType as FhmType;
+use Fhm\FhmBundle\Manager\TypeManager;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -21,17 +23,18 @@ class UpdateType extends FhmType
         parent::buildForm($builder, $options);
         $builder->add(
             'add_global',
-            'checkbox',
+            CheckboxType::class,
             array('label' => $options['translation_route'].'.admin.update.form.add_global', 'required' => false)
         )->add(
             'events',
-            'document',
+            TypeManager::getType($options['object_manager']->getDBDriver()),
             array(
                 'label' => $options['translation_route'].'.admin.update.form.events',
                 'class' => 'FhmEventBundle:Event',
                 'choice_label' => 'name',
-                'query_builder' => function (EventRepository $dr) use ($options) {
-                    return $dr->getFormEnable($options['filter']);
+                'query_builder' => function () use ($options) {
+                    $dr = $options['object_manager']->getCurrentRepository('FhmEventBundle:Event');
+                    return $dr->getFormEnable();
                 },
                 'required' => false,
                 'multiple' => true,
@@ -50,8 +53,8 @@ class UpdateType extends FhmType
                 'translation_domain' => 'FhmEventBundle',
                 'cascade_validation' => true,
                 'translation_route' => 'event.group',
-                'filter' => '',
                 'user_admin' => '',
+                'object_manager'=>''
             )
         );
     }
