@@ -10,7 +10,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * Menu
  *
  * @MongoDB\EmbeddedDocument
- * @MongoDB\Document(repositoryClass="Fhm\FhmBundle\Repository\MenuRepository")
+ * @MongoDB\Document(repositoryClass="Fhm\FhmBundle\Document\Repository\MenuRepository")
  */
 class Menu extends FhmFhm
 {

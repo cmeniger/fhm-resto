@@ -8,7 +8,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Mail
- * @MongoDB\Document(repositoryClass="Fhm\MailBundle\Repository\MailRepository")
+ * @MongoDB\Document(repositoryClass="Fhm\MailBundle\Document\Repository\MailRepository")
  */
 class Mail extends FhmFhm
 {

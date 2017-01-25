@@ -12,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
 class EventGroup extends Fhm
 {
     /**
-     * @ORM\OneToMany(targetEntity="Fhm\EventBundle\Entity\Event", nullable=true, cascade={"persist"})
+     * @ORM\ManyToMany(targetEntity="Fhm\EventBundle\Entity\Event", orphanRemoval=true, cascade={"persist"}, inversedBy="eventgroups")
      */
     protected $events;
 

@@ -103,7 +103,7 @@ class User extends GeolocationWithUser
     protected $sex;
 
     /**
-     * @ORM\OneToOne(targetEntity="Fhm\MediaBundle\Entity\Media", cascade={"persist"}, nullable=true)
+     * @ORM\OneToOne(targetEntity="Fhm\MediaBundle\Entity\Media", cascade={"persist"}, orphanRemoval=true)
      */
     protected $avatar;
 

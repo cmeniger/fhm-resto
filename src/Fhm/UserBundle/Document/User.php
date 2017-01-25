@@ -10,7 +10,7 @@ use JMS\Serializer\Annotation as Serializer;
 
 /**
  * User
- * @MongoDB\Document(repositoryClass="Fhm\UserBundle\Repository\UserRepository")
+ * @MongoDB\Document(repositoryClass="Fhm\UserBundle\Document\Repository\UserRepository")
  *
  * @MongoDB\HasLifecycleCallbacks
  * @MongoDBUnique(fields="email")

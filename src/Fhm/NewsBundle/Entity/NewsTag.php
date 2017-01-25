@@ -4,6 +4,7 @@ namespace Fhm\NewsBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Fhm\FhmBundle\Entity\Fhm;
 use Symfony\Component\Validator\Constraints as Assert;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
@@ -12,12 +13,12 @@ use Symfony\Component\Validator\Constraints as Assert;
 class NewsTag extends Fhm
 {
     /**
-     * @ORM\OneToMany(targetEntity="Fhm\NewsBundle\Entity\News", nullable=true, cascade={"all"})
+     * @ORM\OneToMany(targetEntity="Fhm\NewsBundle\Entity\News", orphanRemoval=true, cascade={"all"}, mappedBy="news")
      */
     protected $primaries;
 
     /**
-     * @ORM\OneToMany(targetEntity="Fhm\NewsBundle\Entity\News", nullable=true, cascade={"all"})
+     * @ORM\OneToMany(targetEntity="Fhm\NewsBundle\Entity\News", orphanRemoval=true, cascade={"all"}, mappedBy="news")
      */
     protected $secondaries;
 

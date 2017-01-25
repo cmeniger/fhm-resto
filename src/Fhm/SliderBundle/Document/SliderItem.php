@@ -8,7 +8,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * SliderItem
- * @MongoDB\Document(repositoryClass="Fhm\SliderBundle\Repository\SliderItemRepository")
+ * @MongoDB\Document(repositoryClass="Fhm\SliderBundle\Document\Repository\SliderItemRepository")
  */
 class SliderItem extends FhmFhm
 {

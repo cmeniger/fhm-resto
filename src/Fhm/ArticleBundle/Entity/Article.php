@@ -2,7 +2,7 @@
 namespace Fhm\ArticleBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Fhm\FhmBundle\Document\Fhm;
+use Fhm\FhmBundle\Entity\Fhm;
 
 /**
  * @ORM\Entity

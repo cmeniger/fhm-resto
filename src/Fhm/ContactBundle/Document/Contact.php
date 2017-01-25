@@ -8,7 +8,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Contact
- * @MongoDB\Document(repositoryClass="Fhm\ContactBundle\Repository\ContactRepository")
+ * @MongoDB\Document(repositoryClass="Fhm\ContactBundle\Document\Repository\ContactRepository")
  */
 class Contact extends FhmGeolocation
 {

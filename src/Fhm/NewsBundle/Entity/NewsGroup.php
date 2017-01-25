@@ -12,7 +12,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 class NewsGroup extends Fhm
 {
     /**
-     * @ORM\OneToMany(targetEntity="Fhm\NewsBundle\Entity\News", nullable=true, cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="Fhm\NewsBundle\Entity\News", cascade={"persist"}, mappedBy="newsgroups")
      */
     protected $news;
 

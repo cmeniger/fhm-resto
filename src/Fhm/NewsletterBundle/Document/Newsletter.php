@@ -9,7 +9,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Newsletter
- * @MongoDB\Document(repositoryClass="Fhm\NewsletterBundle\Repository\NewsletterRepository")
+ * @MongoDB\Document(repositoryClass="Fhm\NewsletterBundle\Document\Repository\NewsletterRepository")
  * @MongoDBUnique(fields="email")
  */
 class Newsletter extends FhmFhm

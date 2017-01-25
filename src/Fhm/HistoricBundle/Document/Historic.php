@@ -7,7 +7,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Fhm Hisrotic
- * @MongoDB\Document(repositoryClass="Fhm\HistoricBundle\Repository\HistoricRepository")
+ * @MongoDB\Document(repositoryClass="Fhm\HistoricBundle\Document\Repository\HistoricRepository")
  */
 class Historic
 {

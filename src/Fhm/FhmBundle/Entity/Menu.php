@@ -15,7 +15,7 @@ use Doctrine\ORM\Mapping as ORM;
 class Menu extends Fhm
 {
     /**
-     * @ORM\OneToMany(targetEntity="Fhm\FhmBundle\Entity\Menu", nullable=true, cascade={"all"})
+     * @ORM\OneToMany(targetEntity="Fhm\FhmBundle\Entity\Menu", orphanRemoval=true, cascade={"all"}, mappedBy="childs")
      */
     protected $childs;
 

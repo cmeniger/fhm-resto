@@ -8,7 +8,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * ContactMessage
- * @MongoDB\Document(repositoryClass="Fhm\ContactBundle\Repository\ContactMessageRepository")
+ * @MongoDB\Document(repositoryClass="Fhm\ContactBundle\Document\Repository\ContactMessageRepository")
  */
 class ContactMessage extends FhmFhm
 {

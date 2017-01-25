@@ -8,7 +8,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * News
- * @MongoDB\Document(repositoryClass="Fhm\NewsBundle\Repository\NewsRepository")
+ * @MongoDB\Document(repositoryClass="Fhm\NewsBundle\Document\Repository\NewsRepository")
  */
 class News extends FhmFhm
 {

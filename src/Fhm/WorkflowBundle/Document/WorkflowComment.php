@@ -8,7 +8,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * WorkflowComment
- * @MongoDB\Document(repositoryClass="Fhm\WorkflowBundle\Repository\WorkflowCommentRepository")
+ * @MongoDB\Document(repositoryClass="Fhm\WorkflowBundle\Document\Repository\WorkflowCommentRepository")
  */
 class WorkflowComment extends FhmFhm
 {

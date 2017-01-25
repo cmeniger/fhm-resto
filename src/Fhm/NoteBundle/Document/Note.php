@@ -9,7 +9,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Note
- * @MongoDB\Document(repositoryClass="Fhm\NoteBundle\Repository\NoteRepository")
+ * @MongoDB\Document(repositoryClass="Fhm\NoteBundle\Document\Repository\NoteRepository")
  */
 class Note extends FhmFhm
 {

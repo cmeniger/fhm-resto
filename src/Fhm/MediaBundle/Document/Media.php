@@ -8,7 +8,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Media
- * @MongoDB\Document(repositoryClass="Fhm\MediaBundle\Repository\MediaRepository")
+ * @MongoDB\Document(repositoryClass="Fhm\MediaBundle\Document\Repository\MediaRepository")
  */
 class Media extends FhmFhm
 {

@@ -41,7 +41,7 @@ class Contact extends Geolocation
     protected $profile;
 
     /**
-     * @ORM\OneToOne(targetEntity="Fhm\MediaBundle\Entity\Media", nullable=true, cascade={"persist"})
+     * @ORM\OneToOne(targetEntity="Fhm\MediaBundle\Entity\Media", orphanRemoval=true, cascade={"persist"})
      */
     protected $profile_image;
 
@@ -86,7 +86,7 @@ class Contact extends Geolocation
     protected $social_site;
 
     /**
-     * @ORM\OneToMany(targetEntity="Fhm\ContactBundle\Entity\ContactMessage")
+     * @ORM\OneToMany(targetEntity="Fhm\ContactBundle\Entity\ContactMessage", mappedBy="contact")
      */
     protected $messages;
 

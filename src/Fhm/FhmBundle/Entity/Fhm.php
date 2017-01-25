@@ -32,12 +32,12 @@ class Fhm
     protected $date_update;
 
     /**
-     * @ORM\OneToOne(targetEntity="Fhm\UserBundle\Entity\User", nullable=true, cascade={"persist"})
+     * @ORM\OneToOne(targetEntity="Fhm\UserBundle\Entity\User", cascade={"persist"}, orphanRemoval=true)
      */
     protected $user_create;
 
     /**
-     * @ORM\OneToOne(targetEntity="Fhm\UserBundle\Entity\User", nullable=true, cascade={"persist"})
+     * @ORM\OneToOne(targetEntity="Fhm\UserBundle\Entity\User", orphanRemoval=true, cascade={"persist"})
      */
     protected $user_update;
 

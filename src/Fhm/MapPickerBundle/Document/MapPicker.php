@@ -8,7 +8,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * MapPicker
- * @MongoDB\Document(repositoryClass="Fhm\MapPickerBundle\Repository\MapRepository")
+ * @MongoDB\Document(repositoryClass="Fhm\MapPickerBundle\Document\Repository\MapRepository")
  */
 class MapPicker extends FhmFhm
 {

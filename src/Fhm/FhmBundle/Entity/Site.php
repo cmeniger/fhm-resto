@@ -26,42 +26,42 @@ class Site extends Fhm
     protected $subtitle;
 
     /**
-     * @ORM\OneToOne(targetEntity="Fhm\FhmBundle\Entity\Menu", nullable=true)
+     * @ORM\OneToOne(targetEntity="Fhm\FhmBundle\Entity\Menu", orphanRemoval=true)
      */
     protected $menu;
 
     /**
-     * @ORM\OneToOne(targetEntity="Fhm\SliderBundle\Entity\Slider", nullable=true)
+     * @ORM\OneToOne(targetEntity="Fhm\SliderBundle\Entity\Slider", orphanRemoval=true)
      */
     protected $slider;
 
     /**
-     * @ORM\OneToOne(targetEntity="Fhm\GalleryBundle\Entity\Gallery", nullable=true)
+     * @ORM\OneToOne(targetEntity="Fhm\GalleryBundle\Entity\Gallery", orphanRemoval=true)
      */
     protected $gallery;
 
     /**
-     * @ORM\OneToOne(targetEntity="Fhm\MediaBundle\Entity\Media", cascade={"persist"}, nullable=true)
+     * @ORM\OneToOne(targetEntity="Fhm\MediaBundle\Entity\Media", cascade={"persist"}, orphanRemoval=true)
      */
     protected $logo;
 
     /**
-     * @ORM\OneToOne(targetEntity="Fhm\MediaBundle\Entity\Media", cascade={"persist"}, nullable=true)
+     * @ORM\OneToOne(targetEntity="Fhm\MediaBundle\Entity\Media", cascade={"persist"}, orphanRemoval=true)
      */
     protected $background;
 
     /**
-     * @ORM\OneToOne(targetEntity="Fhm\NewsBundle\Entity\NewsGroup", cascade={"persist"}, nullable=true)
+     * @ORM\OneToOne(targetEntity="Fhm\NewsBundle\Entity\NewsGroup", cascade={"persist"}, orphanRemoval=true)
      */
     protected $news;
 
     /**
-     * @ORM\OneToOne(targetEntity="Fhm\PartnerBundle\Entity\PartnerGroup", cascade={"persist"}, nullable=true)
+     * @ORM\OneToOne(targetEntity="Fhm\PartnerBundle\Entity\PartnerGroup", cascade={"persist"}, orphanRemoval=true)
      */
     protected $partner;
 
     /**
-     * @ORM\OneToOne(targetEntity="Fhm\ContactBundle\Entity\Contact", nullable=true)
+     * @ORM\OneToOne(targetEntity="Fhm\ContactBundle\Entity\Contact", orphanRemoval=true)
      */
     protected $contact;
 

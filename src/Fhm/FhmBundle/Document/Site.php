@@ -10,7 +10,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Site
- * @MongoDB\Document(repositoryClass="Fhm\FhmBundle\Repository\SiteRepository")
+ * @MongoDB\Document(repositoryClass="Fhm\FhmBundle\Document\Repository\SiteRepository")
  * @MongoDBUnique(fields="name")
  */
 class Site extends FhmFhm

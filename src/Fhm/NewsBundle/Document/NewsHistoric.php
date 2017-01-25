@@ -7,7 +7,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * NewsHistoric
- * @MongoDB\Document(repositoryClass="Fhm\NewsBundle\Repository\NewsRepository")
+ * @MongoDB\Document(repositoryClass="Fhm\NewsBundle\Document\Repository\NewsRepository")
  */
 class NewsHistoric extends News
 {

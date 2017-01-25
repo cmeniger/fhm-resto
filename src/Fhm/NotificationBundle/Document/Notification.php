@@ -8,7 +8,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Notification
- * @MongoDB\Document(repositoryClass="Fhm\NotificationBundle\Repository\NotificationRepository")
+ * @MongoDB\Document(repositoryClass="Fhm\NotificationBundle\Document\Repository\NotificationRepository")
  */
 class Notification extends FhmFhm
 {

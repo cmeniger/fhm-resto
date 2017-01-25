@@ -8,7 +8,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Event
- * @MongoDB\Document(repositoryClass="Fhm\EventBundle\Repository\EventRepository")
+ * @MongoDB\Document(repositoryClass="Fhm\EventBundle\Document\Repository\EventRepository")
  */
 class Event extends FhmFhm
 {
@@ -65,9 +65,9 @@ class Event extends FhmFhm
     public function __construct()
     {
         parent::__construct();
-        $this->eventgroups     = new ArrayCollection();
-        $this->date_start      = null;
-        $this->date_end        = null;
+        $this->eventgroups = new ArrayCollection();
+        $this->date_start = null;
+        $this->date_end = null;
         $this->sort_eventgroup = 0;
     }
 
@@ -81,7 +81,7 @@ class Event extends FhmFhm
     public function setTitle($title)
     {
         $this->title = $title;
-        $this->name  = $title;
+        $this->name = $title;
 
         return $this;
     }
@@ -259,8 +259,7 @@ class Event extends FhmFhm
      */
     public function setEventgroups(ArrayCollection $eventgroups)
     {
-        foreach($eventgroups as $eventgroup)
-        {
+        foreach ($eventgroups as $eventgroup) {
             $eventgroup->addEvent($this);
         }
         $this->eventgroups = $eventgroups;
@@ -277,8 +276,7 @@ class Event extends FhmFhm
      */
     public function addEventgroup(\Fhm\EventBundle\Document\EventGroup $eventgroup)
     {
-        if(!$this->eventgroups->contains($eventgroup))
-        {
+        if (!$this->eventgroups->contains($eventgroup)) {
             $this->eventgroups->add($eventgroup);
             $eventgroup->addEvent($this);
         }
@@ -295,8 +293,7 @@ class Event extends FhmFhm
      */
     public function removeEventgroup(\Fhm\EventBundle\Document\EventGroup $eventgroup)
     {
-        if($this->eventgroups->contains($eventgroup))
-        {
+        if ($this->eventgroups->contains($eventgroup)) {
             $this->eventgroups->removeElement($eventgroup);
             $eventgroup->removeEvent($this);
         }
@@ -311,8 +308,7 @@ class Event extends FhmFhm
      */
     public function resetEventgroups()
     {
-        foreach($this->eventgroups as $eventgroup)
-        {
+        foreach ($this->eventgroups as $eventgroup) {
             $eventgroup->removeEvent($this);
         }
         $this->eventgroups = new ArrayCollection();

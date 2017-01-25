@@ -8,7 +8,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * GalleryAlbum
- * @MongoDB\Document(repositoryClass="Fhm\GalleryBundle\Repository\GalleryAlbumRepository")
+ * @MongoDB\Document(repositoryClass="Fhm\GalleryBundle\Document\Repository\GalleryAlbumRepository")
  */
 class GalleryAlbum extends FhmFhm
 {

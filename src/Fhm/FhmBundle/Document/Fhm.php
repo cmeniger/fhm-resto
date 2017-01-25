@@ -8,7 +8,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Fhm
- * @MongoDB\Document(repositoryClass="Fhm\FhmBundle\Repository\FhmRepository")
+ * @MongoDB\Document(repositoryClass="Fhm\FhmBundle\Document\Repository\FhmRepository")
  *
  * @MongoDB\HasLifecycleCallbacks
  */

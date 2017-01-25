@@ -9,7 +9,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * CardIngredient
- * @MongoDB\Document(repositoryClass="Fhm\CardBundle\Repository\CardIngredientRepository")
+ * @MongoDB\Document(repositoryClass="Fhm\CardBundle\Document\Repository\CardIngredientRepository")
  */
 class CardIngredient extends FhmFhm
 {

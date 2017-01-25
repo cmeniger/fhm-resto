@@ -8,7 +8,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * WorkflowTask
- * @MongoDB\Document(repositoryClass="Fhm\WorkflowBundle\Repository\WorkflowTaskRepository")
+ * @MongoDB\Document(repositoryClass="Fhm\WorkflowBundle\Document\Repository\WorkflowTaskRepository")
  */
 class WorkflowTask extends FhmFhm
 {
@@ -84,17 +84,17 @@ class WorkflowTask extends FhmFhm
     public function __construct()
     {
         parent::__construct();
-        $this->status       = 0;
-        $this->parents      = new ArrayCollection();
-        $this->sons         = new ArrayCollection();
-        $this->logs         = new ArrayCollection();
-        $this->comments     = new ArrayCollection();
-        $this->medias       = new ArrayCollection();
-        $this->sort_parent  = 0;
-        $this->sort_son     = 0;
-        $this->sort_log     = 0;
+        $this->status = 0;
+        $this->parents = new ArrayCollection();
+        $this->sons = new ArrayCollection();
+        $this->logs = new ArrayCollection();
+        $this->comments = new ArrayCollection();
+        $this->medias = new ArrayCollection();
+        $this->sort_parent = 0;
+        $this->sort_son = 0;
+        $this->sort_log = 0;
         $this->sort_comment = 0;
-        $this->sort_step    = 0;
+        $this->sort_step = 0;
     }
 
     /**
@@ -189,8 +189,7 @@ class WorkflowTask extends FhmFhm
     public function setParents(ArrayCollection $parents)
     {
         $this->resetParents();
-        foreach($parents as $parent)
-        {
+        foreach ($parents as $parent) {
             $parent->addSon($this);
         }
         $this->parents = $parents;
@@ -207,8 +206,7 @@ class WorkflowTask extends FhmFhm
      */
     public function addParent(\Fhm\WorkflowBundle\Document\WorkflowTask $parent)
     {
-        if(!$this->parents->contains($parent))
-        {
+        if (!$this->parents->contains($parent)) {
             $this->parents->add($parent);
             $parent->addSon($this);
         }
@@ -225,8 +223,7 @@ class WorkflowTask extends FhmFhm
      */
     public function removeParent(\Fhm\WorkflowBundle\Document\WorkflowTask $parent)
     {
-        if($this->parents->contains($parent))
-        {
+        if ($this->parents->contains($parent)) {
             $this->parents->removeElement($parent);
             $parent->removeSon($this);
         }
@@ -241,8 +238,7 @@ class WorkflowTask extends FhmFhm
      */
     public function resetParents()
     {
-        foreach($this->parents as $parent)
-        {
+        foreach ($this->parents as $parent) {
             $parent->removeSon($this);
         }
         $this->parents = new ArrayCollection();
@@ -270,8 +266,7 @@ class WorkflowTask extends FhmFhm
     public function setSons(ArrayCollection $sons)
     {
         $this->resetSons();
-        foreach($sons as $son)
-        {
+        foreach ($sons as $son) {
             $son->addParent($this);
         }
         $this->sons = $sons;
@@ -288,8 +283,7 @@ class WorkflowTask extends FhmFhm
      */
     public function addSon(\Fhm\WorkflowBundle\Document\WorkflowTask $son)
     {
-        if(!$this->sons->contains($son))
-        {
+        if (!$this->sons->contains($son)) {
             $this->sons->add($son);
             $son->addParent($this);
         }
@@ -306,8 +300,7 @@ class WorkflowTask extends FhmFhm
      */
     public function removeSon(\Fhm\WorkflowBundle\Document\WorkflowTask $son)
     {
-        if($this->sons->contains($son))
-        {
+        if ($this->sons->contains($son)) {
             $this->sons->removeElement($son);
             $son->removeParent($this);
         }
@@ -322,8 +315,7 @@ class WorkflowTask extends FhmFhm
      */
     public function resetSons()
     {
-        foreach($this->sons as $son)
-        {
+        foreach ($this->sons as $son) {
             $son->removeParent($this);
         }
         $this->sons = new ArrayCollection();
@@ -351,8 +343,7 @@ class WorkflowTask extends FhmFhm
     public function setLogs(ArrayCollection $logs)
     {
         $this->resetLogs();
-        foreach($logs as $log)
-        {
+        foreach ($logs as $log) {
             $log->setTask($this);
         }
         $this->logs = $logs;
@@ -369,8 +360,7 @@ class WorkflowTask extends FhmFhm
      */
     public function addLog(\Fhm\WorkflowBundle\Document\WorkflowLog $log)
     {
-        if(!$this->logs->contains($log))
-        {
+        if (!$this->logs->contains($log)) {
             $this->logs->add($log);
             $log->setTask($this);
         }
@@ -387,8 +377,7 @@ class WorkflowTask extends FhmFhm
      */
     public function removeLog(\Fhm\WorkflowBundle\Document\WorkflowLog $log)
     {
-        if($this->logs->contains($log))
-        {
+        if ($this->logs->contains($log)) {
             $this->logs->removeElement($log);
             $log->setTask(null);
         }
@@ -403,8 +392,7 @@ class WorkflowTask extends FhmFhm
      */
     public function resetLogs()
     {
-        foreach($this->logs as $log)
-        {
+        foreach ($this->logs as $log) {
             $log->setTask(null);
         }
         $this->logs = new ArrayCollection();
@@ -432,8 +420,7 @@ class WorkflowTask extends FhmFhm
     public function setComments(ArrayCollection $comments)
     {
         $this->resetComments();
-        foreach($comments as $comment)
-        {
+        foreach ($comments as $comment) {
             $comment->setTask($this);
         }
         $this->comments = $comments;
@@ -450,8 +437,7 @@ class WorkflowTask extends FhmFhm
      */
     public function addComment(\Fhm\WorkflowBundle\Document\WorkflowComment $comment)
     {
-        if(!$this->comments->contains($comment))
-        {
+        if (!$this->comments->contains($comment)) {
             $this->comments->add($comment);
             $comment->setTask($this);
         }
@@ -468,8 +454,7 @@ class WorkflowTask extends FhmFhm
      */
     public function removeComment(\Fhm\WorkflowBundle\Document\WorkflowComment $comment)
     {
-        if($this->comments->contains($comment))
-        {
+        if ($this->comments->contains($comment)) {
             $this->comments->removeElement($comment);
             $comment->setTask(null);
         }
@@ -484,8 +469,7 @@ class WorkflowTask extends FhmFhm
      */
     public function resetComments()
     {
-        foreach($this->comments as $comment)
-        {
+        foreach ($this->comments as $comment) {
             $comment->setTask(null);
         }
         $this->comments = new ArrayCollection();
@@ -527,8 +511,7 @@ class WorkflowTask extends FhmFhm
      */
     public function addMedia(\Fhm\MediaBundle\Document\Media $media)
     {
-        if(!$this->medias->contains($media))
-        {
+        if (!$this->medias->contains($media)) {
             $this->medias->add($media);
         }
 
@@ -544,8 +527,7 @@ class WorkflowTask extends FhmFhm
      */
     public function removeMedia(\Fhm\MediaBundle\Document\Media $media)
     {
-        if($this->medias->contains($media))
-        {
+        if ($this->medias->contains($media)) {
             $this->medias->removeElement($media);
         }
 
@@ -572,18 +554,14 @@ class WorkflowTask extends FhmFhm
     public function countTasks(ArrayCollection &$tasks)
     {
         $count = 1;
-        foreach($this->parents as $task)
-        {
-            if(!$tasks->contains($task))
-            {
+        foreach ($this->parents as $task) {
+            if (!$tasks->contains($task)) {
                 $tasks->add($task);
                 $count += $task->countTasks($tasks);
             }
         }
-        foreach($this->sons as $task)
-        {
-            if(!$tasks->contains($task))
-            {
+        foreach ($this->sons as $task) {
+            if (!$tasks->contains($task)) {
                 $tasks->add($task);
                 $count += $task->countTasks($tasks);
             }
@@ -600,18 +578,14 @@ class WorkflowTask extends FhmFhm
     public function countComments(ArrayCollection &$tasks)
     {
         $count = $this->comments->count();
-        foreach($this->parents as $task)
-        {
-            if(!$tasks->contains($task))
-            {
+        foreach ($this->parents as $task) {
+            if (!$tasks->contains($task)) {
                 $tasks->add($task);
                 $count += $task->countComments($tasks);
             }
         }
-        foreach($this->sons as $task)
-        {
-            if(!$tasks->contains($task))
-            {
+        foreach ($this->sons as $task) {
+            if (!$tasks->contains($task)) {
                 $tasks->add($task);
                 $count += $task->countComments($tasks);
             }
@@ -628,18 +602,14 @@ class WorkflowTask extends FhmFhm
     public function countLogs(ArrayCollection &$tasks)
     {
         $count = $this->logs->count();
-        foreach($this->parents as $task)
-        {
-            if(!$tasks->contains($task))
-            {
+        foreach ($this->parents as $task) {
+            if (!$tasks->contains($task)) {
                 $tasks->add($task);
                 $count += $task->countLogs($tasks);
             }
         }
-        foreach($this->sons as $task)
-        {
-            if(!$tasks->contains($task))
-            {
+        foreach ($this->sons as $task) {
+            if (!$tasks->contains($task)) {
                 $tasks->add($task);
                 $count += $task->countLogs($tasks);
             }
@@ -656,18 +626,14 @@ class WorkflowTask extends FhmFhm
     public function countMedias(ArrayCollection &$tasks)
     {
         $count = $this->medias->count();
-        foreach($this->parents as $task)
-        {
-            if(!$tasks->contains($task))
-            {
+        foreach ($this->parents as $task) {
+            if (!$tasks->contains($task)) {
                 $tasks->add($task);
                 $count += $task->countMedias($tasks);
             }
         }
-        foreach($this->sons as $task)
-        {
-            if(!$tasks->contains($task))
-            {
+        foreach ($this->sons as $task) {
+            if (!$tasks->contains($task)) {
                 $tasks->add($task);
                 $count += $task->countMedias($tasks);
             }
@@ -683,15 +649,11 @@ class WorkflowTask extends FhmFhm
      */
     public function checkStatus()
     {
-        foreach($this->parents as $parent)
-        {
-            if($parent->getStatus() != 2)
-            {
+        foreach ($this->parents as $parent) {
+            if ($parent->getStatus() != 2) {
                 $this->setStatus(0);
                 break;
-            }
-            else
-            {
+            } else {
                 $this->setStatus(1);
             }
         }
@@ -706,15 +668,12 @@ class WorkflowTask extends FhmFhm
      */
     public function getTaskCurrent()
     {
-        if($this->status == 1 || $this->status == 3 || ($this->status == 0 && $this->parents->count() == 0))
-        {
+        if ($this->status == 1 || $this->status == 3 || ($this->status == 0 && $this->parents->count() == 0)) {
             return $this;
         }
-        foreach($this->sons as $son)
-        {
+        foreach ($this->sons as $son) {
             $current = $son->getTaskCurrent();
-            if($current)
-            {
+            if ($current) {
                 return $current;
             }
         }
@@ -731,15 +690,12 @@ class WorkflowTask extends FhmFhm
      */
     public function getAllLogs(&$logs)
     {
-        foreach($this->logs as $log)
-        {
-            if(!$logs->contains($log))
-            {
+        foreach ($this->logs as $log) {
+            if (!$logs->contains($log)) {
                 $logs->add($log);
             }
         }
-        foreach($this->sons as $son)
-        {
+        foreach ($this->sons as $son) {
             $son->getAllLogs($logs);
         }
 
@@ -756,18 +712,14 @@ class WorkflowTask extends FhmFhm
      */
     public function getAllMedias(&$medias, $user)
     {
-        if($this->action && $this->action->hasUserDownload($user))
-        {
-            foreach($this->medias as $media)
-            {
-                if(!$medias->contains($media))
-                {
+        if ($this->action && $this->action->hasUserDownload($user)) {
+            foreach ($this->medias as $media) {
+                if (!$medias->contains($media)) {
                     $medias->add($media);
                 }
             }
         }
-        foreach($this->sons as $son)
-        {
+        foreach ($this->sons as $son) {
             $son->getAllMedias($medias, $user);
         }
 
@@ -784,18 +736,14 @@ class WorkflowTask extends FhmFhm
      */
     public function getAllComments(&$comments, $user)
     {
-        if($this->action && $this->action->hasUserDownload($user))
-        {
-            foreach($this->comments as $comment)
-            {
-                if(!$comments->contains($comment))
-                {
+        if ($this->action && $this->action->hasUserDownload($user)) {
+            foreach ($this->comments as $comment) {
+                if (!$comments->contains($comment)) {
                     $comments->add($comment);
                 }
             }
         }
-        foreach($this->sons as $son)
-        {
+        foreach ($this->sons as $son) {
             $son->getAllComments($comments, $user);
         }
 
@@ -809,11 +757,11 @@ class WorkflowTask extends FhmFhm
      */
     public function sortUpdate()
     {
-        $this->sort_parent  = $this->parents->count();
-        $this->sort_son     = $this->sons->count();
-        $this->sort_log     = $this->logs->count();
+        $this->sort_parent = $this->parents->count();
+        $this->sort_son = $this->sons->count();
+        $this->sort_log = $this->logs->count();
         $this->sort_comment = $this->comments->count();
-        $this->sort_step    = $this->step ? $this->step->getOrder() : 0;
+        $this->sort_step = $this->step ? $this->step->getOrder() : 0;
 
         return parent::sortUpdate();
     }

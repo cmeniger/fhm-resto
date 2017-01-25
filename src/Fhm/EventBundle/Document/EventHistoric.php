@@ -7,7 +7,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * EventHistoric
- * @MongoDB\Document(repositoryClass="Fhm\EventBundle\Repository\EventRepository")
+ * @MongoDB\Document(repositoryClass="Fhm\EventBundle\Document\Repository\EventRepository")
  */
 class EventHistoric extends Event
 {
@@ -25,19 +25,20 @@ class EventHistoric extends Event
     public function historicMerge($dm, $document)
     {
         // ReferenceOne
-        $this->image   = $document->getImage() ? $dm->getRepository('FhmMediaBundle:Media')->find($document->getImage()->getId()) : null;
+        $this->image = $document->getImage() ? $dm->getRepository('FhmMediaBundle:Media')->find(
+            $document->getImage()->getId()
+        ) : null;
         // ReferenceMany
-        foreach($document->getEventgroups() as $eventgroup)
-        {
+        foreach ($document->getEventgroups() as $eventgroup) {
             $this->eventgroups->add($eventgroup);
         }
         // Rest
-        $this->title      = $document->getTitle();
-        $this->subtitle   = $document->getSubtitle();
-        $this->resume     = $document->getResume();
-        $this->content    = $document->getContent();
+        $this->title = $document->getTitle();
+        $this->subtitle = $document->getSubtitle();
+        $this->resume = $document->getResume();
+        $this->content = $document->getContent();
         $this->date_start = $document->getDateStart();
-        $this->date_end   = $document->getDateEnd();
+        $this->date_end = $document->getDateEnd();
 
         return parent::historicMerge($dm, $document);
     }
@@ -48,10 +49,10 @@ class EventHistoric extends Event
     public function historicDifference()
     {
         $count = 0;
-        if($this->historic_parent)
-        {
+        if ($this->historic_parent) {
             $count += $this->getImage() != $this->getHistoricParent()->getImage() ? 1 : 0;
-            $count += $this->getEventgroups()->toArray() != $this->getHistoricParent()->getEventgroups()->toArray() ? 1 : 0;
+            $count += $this->getEventgroups()->toArray() != $this->getHistoricParent()->getEventgroups()->toArray(
+            ) ? 1 : 0;
             $count += $this->getTitle() != $this->getHistoricParent()->getTitle() ? 1 : 0;
             $count += $this->getSubtitle() != $this->getHistoricParent()->getSubtitle() ? 1 : 0;
             $count += $this->getResume() != $this->getHistoricParent()->getResume() ? 1 : 0;
