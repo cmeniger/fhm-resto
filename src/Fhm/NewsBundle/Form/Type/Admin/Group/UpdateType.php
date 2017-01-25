@@ -3,6 +3,7 @@ namespace Fhm\NewsBundle\Form\Type\Admin\Group;
 
 use Doctrine\Bundle\MongoDBBundle\Form\Type\DocumentType;
 use Fhm\FhmBundle\Form\Type\Admin\UpdateType as FhmType;
+use Fhm\FhmBundle\Manager\TypeManager;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -34,12 +35,13 @@ class UpdateType extends FhmType
             )
         )->add(
             'news',
-            DocumentType::class,
+            TypeManager::getType($options['object_manager']->getDBDriver()),
             array(
                 'label' => $options['translation_route'].'.admin.update.form.news',
                 'class' => 'FhmNewsBundle:News',
                 'choice_label' => 'name',
-                'query_builder' => function (\Fhm\NewsBundle\Repository\NewsRepository $dr) {
+                'query_builder' => function () use ($options) {
+                    $dr = $options['object_manager']->getCurrentRepository('FhmNewsBundle:News');
                     return $dr->getFormEnable();
                 },
                 'required' => false,

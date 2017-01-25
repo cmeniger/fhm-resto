@@ -82,8 +82,8 @@ class CreateType extends FhmType
                 'class' => 'FhmEventBundle:EventGroup',
                 'choice_label' => 'name',
                 'query_builder' => function () use ($options) {
-                    $dr = $options['object_manager']->getCurrentRepository('FhmCardBundle:CardCategory');
-                    return $dr->getFormEnable();
+                    $dr = $options['object_manager']->getCurrentRepository('FhmEventBundle:EventGroup');
+                    return $dr->getFormEnable($options['filter']);
                 },
                 'multiple' => true,
                 'required' => false,

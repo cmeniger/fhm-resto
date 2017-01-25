@@ -3,6 +3,7 @@ namespace Fhm\MediaBundle\Form\Type\Admin\Tag;
 
 use Doctrine\Bundle\MongoDBBundle\Form\Type\DocumentType;
 use Fhm\FhmBundle\Form\Type\Admin\UpdateType as FhmType;
+use Fhm\FhmBundle\Manager\TypeManager;
 use Fhm\MediaBundle\Repository\MediaTagRepository;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -26,7 +27,7 @@ class UpdateType extends FhmType
                 'color',
                 TextType::class,
                 array(
-                    'label' => $options['translation_route'].'.admin.update.form.color',
+                    'label' => $options['translation_route'] . '.admin.update.form.color',
                     'attr' => array('class' => 'colorpicker'),
                     'required' => false,
                 )
@@ -34,17 +35,18 @@ class UpdateType extends FhmType
             ->add(
                 'private',
                 CheckboxType::class,
-                array('label' => $options['translation_route'].'.admin.update.form.private', 'required' => false)
+                array('label' => $options['translation_route'] . '.admin.update.form.private', 'required' => false)
             )
             ->add(
                 'parent',
-                DocumentType::class,
+                TypeManager::getType($options['object_manager']->getDBDriver()),
                 array(
-                    'label' => $options['translation_route'].'.admin.update.form.parent',
+                    'label' => $options['translation_route'] . '.admin.update.form.parent',
                     'class' => 'FhmMediaBundle:MediaTag',
                     'choice_label' => 'route',
-                    'query_builder' => function (MediaTagRepository $dr) use ($options) {
-                        return $dr->getFormFiltered($options['filter']);
+                    'query_builder' => function () use ($options) {
+                        $dr = $options['object_manager']->getCurrentRepository('FhmMediaBundle:MediaTag');
+                        return $dr->getFormFiltered();
                     },
                     'required' => false,
                 )

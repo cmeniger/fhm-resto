@@ -3,6 +3,7 @@ namespace Fhm\WorkflowBundle\Form\Type\Admin\Task;
 
 use Doctrine\Bundle\MongoDBBundle\Form\Type\DocumentType;
 use Fhm\FhmBundle\Form\Type\Admin\CreateType as FhmType;
+use Fhm\FhmBundle\Manager\TypeManager;
 use Fhm\WorkflowBundle\Repository\WorkflowActionRepository;
 use Fhm\WorkflowBundle\Repository\WorkflowStepRepository;
 use Fhm\WorkflowBundle\Repository\WorkflowTaskRepository;
@@ -24,35 +25,38 @@ class CreateType extends FhmType
         parent::buildForm($builder, $options);
         $builder->add(
             'step',
-            DocumentType::class,
+            TypeManager::getType($options['object_manager']->getDBDriver()),
             array(
                 'label' => $options['translation_route'].'.admin.create.form.step',
                 'class' => 'FhmWorkflowBundle:WorkflowStep',
                 'choice_label' => 'name',
-                'query_builder' => function (WorkflowStepRepository $dr) use ($options) {
+                'query_builder' => function () use ($options) {
+                    $dr = $options['object_manager']->getCurrentRepository('FhmWorkflowBundle:WorkflowStep');
                     return $dr->getFormEnable($options['filter']);
                 },
                 'required' => false,
             )
         )->add(
             'action',
-            DocumentType::class,
+            TypeManager::getType($options['object_manager']->getDBDriver()),
             array(
                 'label' => $options['translation_route'].'.admin.create.form.action',
                 'class' => 'FhmWorkflowBundle:WorkflowAction',
                 'choice_label' => 'name',
-                'query_builder' => function (WorkflowActionRepository $dr) use ($options) {
+                'query_builder' => function () use ($options) {
+                    $dr = $options['object_manager']->getCurrentRepository('FhmWorkflowBundle:WorkflowAction');
                     return $dr->getFormEnable($options['filter']);
                 },
             )
         )->add(
             'parents',
-            DocumentType::class,
+            TypeManager::getType($options['object_manager']->getDBDriver()),
             array(
                 'label' => $options['translation_route'].'.admin.create.form.parents',
                 'class' => 'FhmWorkflowBundle:WorkflowTask',
                 'choice_label' => 'name',
-                'query_builder' => function (WorkflowTaskRepository $dr) use ($options) {
+                'query_builder' => function () use ($options) {
+                    $dr = $options['object_manager']->getCurrentRepository('FhmWorkflowBundle:WorkflowTask');
                     return $dr->getFormEnable($options['filter']);
                 },
                 'multiple' => true,
@@ -61,12 +65,13 @@ class CreateType extends FhmType
             )
         )->add(
             'sons',
-            DocumentType::class,
+            TypeManager::getType($options['object_manager']->getDBDriver()),
             array(
                 'label' => $options['translation_route'].'.admin.create.form.sons',
                 'class' => 'FhmWorkflowBundle:WorkflowTask',
                 'choice_label' => 'name',
-                'query_builder' => function (WorkflowTaskRepository $dr) use ($options) {
+                'query_builder' => function () use ($options) {
+                    $dr = $options['object_manager']->getCurrentRepository('FhmWorkflowBundle:WorkflowTask');
                     return $dr->getFormEnable($options['filter']);
                 },
                 'multiple' => true,

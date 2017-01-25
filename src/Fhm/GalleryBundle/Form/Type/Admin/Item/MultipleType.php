@@ -3,6 +3,7 @@ namespace Fhm\GalleryBundle\Form\Type\Admin\Item;
 
 use Doctrine\Bundle\MongoDBBundle\Form\Type\DocumentType;
 use Fhm\FhmBundle\Form\Type\Admin\CreateType as FhmType;
+use Fhm\FhmBundle\Manager\TypeManager;
 use Fhm\GalleryBundle\Repository\GalleryRepository;
 use Fhm\MediaBundle\Repository\MediaTagRepository;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
@@ -54,12 +55,13 @@ class MultipleType extends FhmType
             )
         )->add(
             'galleries',
-            DocumentType::class,
+            TypeManager::getType($options['object_manager']->getDBDriver()),
             array(
                 'label' => $options['translation_route'].'.admin.multiple.form.galleries',
                 'class' => 'FhmGalleryBundle:Gallery',
                 'choice_label' => 'name',
-                'query_builder' => function (GalleryRepository $dr) use ($options) {
+                'query_builder' => function () use ($options) {
+                    $dr = $options['object_manager']->getCurrentRepository('FhmGalleryBundle:Gallery');
                     return $dr->getFormEnable($options['filter']);
                 },
                 'required' => false,
@@ -83,12 +85,13 @@ class MultipleType extends FhmType
             )
         )->add(
             'parent',
-            DocumentType::class,
+            TypeManager::getType($options['object_manager']->getDBDriver()),
             array(
                 'label' => $options['translation_route'].'.admin.multiple.form.parent',
                 'class' => 'FhmMediaBundle:MediaTag',
                 'choice_label' => 'route',
-                'query_builder' => function (MediaTagRepository $dr) use ($options) {
+                'query_builder' => function () use ($options) {
+                    $dr = $options['object_manager']->getCurrentRepository('FhmMediaBundle:MediaTag');
                     return $dr->getFormEnable($options['filter']);
                 },
                 'required' => false,
@@ -96,12 +99,13 @@ class MultipleType extends FhmType
             )
         )->add(
             'tags',
-            DocumentType::class,
+            TypeManager::getType($options['object_manager']->getDBDriver()),
             array(
                 'label' => $options['translation_route'].'.admin.multiple.form.tags',
                 'class' => 'FhmMediaBundle:MediaTag',
                 'choice_label' => 'route',
-                'query_builder' => function (MediaTagRepository $dr) use ($options) {
+                'query_builder' => function () use ($options) {
+                    $dr = $options['object_manager']->getCurrentRepository('FhmMediaBundle:MediaTag');
                     return $dr->getFormEnable($options['filter']);
                 },
                 'multiple' => true,

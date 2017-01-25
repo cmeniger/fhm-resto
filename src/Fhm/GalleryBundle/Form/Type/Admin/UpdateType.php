@@ -3,6 +3,7 @@ namespace Fhm\GalleryBundle\Form\Type\Admin;
 
 use Doctrine\Bundle\MongoDBBundle\Form\Type\DocumentType;
 use Fhm\FhmBundle\Form\Type\Admin\UpdateType as FhmType;
+use Fhm\FhmBundle\Manager\TypeManager;
 use Fhm\MediaBundle\Form\Type\MediaType;
 use Fhm\GalleryBundle\Repository\GalleryAlbumRepository;
 use Fhm\GalleryBundle\Repository\GalleryItemRepository;
@@ -95,12 +96,13 @@ class UpdateType extends FhmType
             )
         )->add(
             'albums',
-            DocumentType::class,
+            TypeManager::getType($options['object_manager']->getDBDriver()),
             array(
                 'label' => $options['translation_route'].'.admin.update.form.albums',
                 'class' => 'FhmGalleryBundle:GalleryAlbum',
                 'choice_label' => 'name',
-                'query_builder' => function (GalleryAlbumRepository $dr) use ($options) {
+                'query_builder' => function () use ($options) {
+                    $dr = $options['object_manager']->getCurrentRepository('FhmGalleryBundle:GalleryAlbum');
                     return $dr->getFormEnable();
                 },
                 'required' => false,
@@ -109,12 +111,13 @@ class UpdateType extends FhmType
             )
         )->add(
             'items',
-            DocumentType::class,
+            TypeManager::getType($options['object_manager']->getDBDriver()),
             array(
                 'label' => $options['translation_route'].'.admin.update.form.items',
                 'class' => 'FhmGalleryBundle:GalleryItem',
                 'choice_label' => 'name',
-                'query_builder' => function (GalleryItemRepository $dr) use ($options) {
+                'query_builder' => function () use ($options) {
+                    $dr = $options['object_manager']->getCurrentRepository('FhmGalleryBundle:GalleryItem');
                     return $dr->getFormEnable();
                 },
                 'required' => false,
@@ -123,12 +126,13 @@ class UpdateType extends FhmType
             )
         )->add(
             'videos',
-            DocumentType::class,
+            TypeManager::getType($options['object_manager']->getDBDriver()),
             array(
                 'label' => $options['translation_route'].'.admin.update.form.videos',
                 'class' => 'FhmGalleryBundle:GalleryVideo',
                 'choice_label' => 'name',
-                'query_builder' => function (GalleryVideoRepository $dr) use ($options) {
+                'query_builder' => function () use ($options) {
+                    $dr = $options['object_manager']->getCurrentRepository('FhmGalleryBundle:GalleryVideo');
                     return $dr->getFormEnable();
                 },
                 'required' => false,

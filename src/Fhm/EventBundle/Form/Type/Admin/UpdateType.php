@@ -5,6 +5,7 @@ use Doctrine\Bundle\MongoDBBundle\Form\Type\DocumentType;
 use Fhm\EventBundle\Form\Type\Admin\Group\AddType;
 use Fhm\EventBundle\Repository\EventGroupRepository;
 use Fhm\FhmBundle\Form\Type\Admin\UpdateType as FhmType;
+use Fhm\FhmBundle\Manager\TypeManager;
 use Fhm\MediaBundle\Form\Type\MediaType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -77,12 +78,13 @@ class UpdateType extends FhmType
             )
         )->add(
             'eventgroups',
-            DocumentType::class,
+            TypeManager::getType($options['object_manager']->getDBDriver()),
             array(
                 'label' => $options['translation_route'].'.admin.update.form.eventgroups',
                 'class' => 'FhmEventBundle:EventGroup',
                 'choice_label' => 'name',
-                'query_builder' => function (EventGroupRepository $dr) use ($options) {
+                'query_builder' => function () use ($options) {
+                    $dr = $options['object_manager']->getCurrentRepository('FhmEventBundle:EventGroup');
                     return $dr->getFormEnable($options['filter']);
                 },
                 'multiple' => true,

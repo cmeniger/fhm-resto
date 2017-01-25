@@ -366,6 +366,7 @@ class Tools
         $endkey = key($steps);
         reset($steps);
         $lastText = $lastUrl = '';
+//        var_dump($breaCrumps);die;
         foreach ($steps as $key => $step) {
             $lastText .= $step;
             $lastUrl .= $step;

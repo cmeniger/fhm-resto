@@ -3,6 +3,7 @@ namespace Fhm\GalleryBundle\Form\Type\Admin\Album;
 
 use Doctrine\Bundle\MongoDBBundle\Form\Type\DocumentType;
 use Fhm\FhmBundle\Form\Type\Admin\CreateType as FhmType;
+use Fhm\FhmBundle\Manager\TypeManager;
 use Fhm\GalleryBundle\Repository\GalleryRepository;
 use Fhm\MediaBundle\Form\Type\MediaType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -63,12 +64,13 @@ class CreateType extends FhmType
             )
         )->add(
             'galleries',
-            DocumentType::class,
+            TypeManager::getType($options['object_manager']->getDBDriver()),
             array(
                 'label' => $options['translation_route'].'.admin.create.form.galleries',
                 'class' => 'FhmGalleryBundle:Gallery',
                 'choice_label' => 'name',
-                'query_builder' => function (GalleryRepository $dr) use ($options) {
+                'query_builder' => function () use ($options) {
+                    $dr = $options['object_manager']->getCurrentRepository('FhmGalleryBundle:Gallery');
                     return $dr->getFormEnable($options['filter']);
                 },
                 'required' => false,

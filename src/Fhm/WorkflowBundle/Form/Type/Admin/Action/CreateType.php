@@ -3,6 +3,7 @@ namespace Fhm\WorkflowBundle\Form\Type\Admin\Action;
 
 use Doctrine\Bundle\MongoDBBundle\Form\Type\DocumentType;
 use Fhm\FhmBundle\Form\Type\Admin\CreateType as FhmType;
+use Fhm\FhmBundle\Manager\TypeManager;
 use Fhm\UserBundle\Repository\UserRepository;
 use Fhm\WorkflowBundle\Repository\WorkflowTaskRepository;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -28,12 +29,13 @@ class CreateType extends FhmType
             array('label' => $options['translation_route'].'.admin.create.form.validate_check', 'required' => false)
         )->add(
             'validate_users',
-            DocumentType::class,
+            TypeManager::getType($options['object_manager']->getDBDriver()),
             array(
                 'label' => $options['translation_route'].'.admin.create.form.validate_users',
                 'class' => 'FhmUserBundle:User',
                 'choice_label' => 'name',
-                'query_builder' => function (UserRepository $dr) use ($options) {
+                'query_builder' => function () use ($options) {
+                    $dr = $options['object_manager']->getCurrentRepository('FhmUserBundle:User');
                     return $dr->getFormEnable($options['filter']);
                 },
                 'multiple' => true,
@@ -46,12 +48,13 @@ class CreateType extends FhmType
             array('label' => $options['translation_route'].'.admin.create.form.dismiss_check', 'required' => false)
         )->add(
             'dismiss_users',
-            DocumentType::class,
+            TypeManager::getType($options['object_manager']->getDBDriver()),
             array(
                 'label' => $options['translation_route'].'.admin.create.form.dismiss_users',
                 'class' => 'FhmUserBundle:User',
                 'choice_label' => 'name',
-                'query_builder' => function (UserRepository $dr) use ($options) {
+                'query_builder' => function () use ($options) {
+                    $dr = $options['object_manager']->getCurrentRepository('FhmUserBundle:User');
                     return $dr->getFormEnable($options['filter']);
                 },
                 'multiple' => true,
@@ -64,12 +67,13 @@ class CreateType extends FhmType
             array('label' => $options['translation_route'].'.admin.create.form.cancel_check', 'required' => false)
         )->add(
             'cancel_users',
-            DocumentType::class,
+            TypeManager::getType($options['object_manager']->getDBDriver()),
             array(
                 'label' => $options['translation_route'].'.admin.create.form.cancel_users',
                 'class' => 'FhmUserBundle:User',
                 'choice_label' => 'name',
-                'query_builder' => function (UserRepository $dr) use ($options) {
+                'query_builder' => function () use ($options) {
+                    $dr = $options['object_manager']->getCurrentRepository('FhmUserBundle:User');
                     return $dr->getFormEnable($options['filter']);
                 },
                 'multiple' => true,
@@ -82,12 +86,13 @@ class CreateType extends FhmType
             array('label' => $options['translation_route'].'.admin.create.form.upload_check', 'required' => false)
         )->add(
             'upload_users',
-            DocumentType::class,
+            TypeManager::getType($options['object_manager']->getDBDriver()),
             array(
                 'label' => $options['translation_route'].'.admin.create.form.upload_users',
                 'class' => 'FhmUserBundle:User',
                 'choice_label' => 'name',
-                'query_builder' => function (UserRepository $dr) use ($options) {
+                'query_builder' => function () use ($options) {
+                    $dr = $options['object_manager']->getCurrentRepository('FhmUserBundle:User');
                     return $dr->getFormEnable($options['filter']);
                 },
                 'multiple' => true,
@@ -100,12 +105,13 @@ class CreateType extends FhmType
             array('label' => $options['translation_route'].'.admin.create.form.download_check', 'required' => false)
         )->add(
             'download_users',
-            DocumentType::class,
+            TypeManager::getType($options['object_manager']->getDBDriver()),
             array(
                 'label' => $options['translation_route'].'.admin.create.form.download_users',
                 'class' => 'FhmUserBundle:User',
                 'choice_label' => 'name',
-                'query_builder' => function (UserRepository $dr) use ($options) {
+                'query_builder' => function () use ($options) {
+                    $dr = $options['object_manager']->getCurrentRepository('FhmUserBundle:User');
                     return $dr->getFormEnable($options['filter']);
                 },
                 'multiple' => true,
@@ -118,12 +124,13 @@ class CreateType extends FhmType
             array('label' => $options['translation_route'].'.admin.create.form.comment_check', 'required' => false)
         )->add(
             'comment_users',
-            DocumentType::class,
+            TypeManager::getType($options['object_manager']->getDBDriver()),
             array(
                 'label' => $options['translation_route'].'.admin.create.form.comment_users',
                 'class' => 'FhmUserBundle:User',
                 'choice_label' => 'name',
-                'query_builder' => function (UserRepository $dr) use ($options) {
+                'query_builder' => function () use ($options) {
+                    $dr = $options['object_manager']->getCurrentRepository('FhmUserBundle:User');
                     return $dr->getFormEnable($options['filter']);
                 },
                 'multiple' => true,
@@ -132,12 +139,13 @@ class CreateType extends FhmType
             )
         )->add(
             'tasks',
-            DocumentType::class,
+            TypeManager::getType($options['object_manager']->getDBDriver()),
             array(
                 'label' => $options['translation_route'].'.admin.create.form.tasks',
                 'class' => 'FhmWorkflowBundle:WorkflowTask',
                 'choice_label' => 'name',
-                'query_builder' => function (WorkflowTaskRepository $dr) use ($options) {
+                'query_builder' => function () use ($options) {
+                    $dr = $options['object_manager']->getCurrentRepository('FhmWorkflowBundle:WorkflowTask');
                     return $dr->getFormEnable($options['filter']);
                 },
                 'multiple' => true,

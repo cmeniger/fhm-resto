@@ -3,6 +3,7 @@ namespace Fhm\NotificationBundle\Form\Type\Admin;
 
 use Doctrine\Bundle\MongoDBBundle\Form\Type\DocumentType;
 use Fhm\FhmBundle\Form\Type\Admin\UpdateType as FhmType;
+use Fhm\FhmBundle\Manager\TypeManager;
 use Fhm\UserBundle\Repository\UserRepository;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -30,12 +31,13 @@ class UpdateType extends FhmType
             )
         )->add(
             'user',
-            DocumentType::class,
+            TypeManager::getType($options['object_manager']->getDBDriver()),
             array(
                 'label' => $options['translation_route'].'.admin.update.form.user',
                 'class' => 'FhmUserBundle:User',
                 'choice_label' => 'name',
-                'query_builder' => function (UserRepository $dr) use ($options) {
+                'query_builder' => function () use ($options) {
+                    $dr = $options['object_manager']->getCurrentRepository('FhmUserBundle:User');
                     return $dr->getFormEnable($options['filter']);
                 },
             )

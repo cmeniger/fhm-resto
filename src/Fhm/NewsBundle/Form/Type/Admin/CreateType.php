@@ -3,6 +3,7 @@ namespace Fhm\NewsBundle\Form\Type\Admin;
 
 use Doctrine\Bundle\MongoDBBundle\Form\Type\DocumentType;
 use Fhm\FhmBundle\Form\Type\AutocompleteType;
+use Fhm\FhmBundle\Manager\TypeManager;
 use Fhm\GalleryBundle\Repository\GalleryRepository;
 use Fhm\MediaBundle\Form\Type\MediaType;
 use Fhm\NewsBundle\Form\Type\Admin\Group\AddType;
@@ -81,24 +82,26 @@ class CreateType extends FhmType
             )
         )->add(
             'gallery',
-            DocumentType::class,
+            TypeManager::getType($options['object_manager']->getDBDriver()),
             array(
                 'label' => $options['translation_route'].'.admin.create.form.gallery',
                 'class' => 'FhmGalleryBundle:Gallery',
                 'choice_label' => 'name',
-                'query_builder' => function (GalleryRepository $dr) use ($options) {
+                'query_builder' => function () use ($options) {
+                    $dr = $options['object_manager']->getCurrentRepository('FhmGalleryBundle:Gallery');
                     return $dr->getFormEnable();
                 },
                 'required' => false,
             )
         )->add(
             'newsgroups',
-            DocumentType::class,
+            TypeManager::getType($options['object_manager']->getDBDriver()),
             array(
                 'label' => $options['translation_route'].'.admin.create.form.newsgroups',
                 'class' => 'FhmNewsBundle:NewsGroup',
                 'choice_label' => 'name',
-                'query_builder' => function (NewsGroupRepository $dr) use ($options) {
+                'query_builder' => function () use ($options) {
+                    $dr = $options['object_manager']->getCurrentRepository('FhmNewsBundle:NewsGroup');
                     return $dr->getFormEnable();
                 },
                 'multiple' => true,
@@ -107,14 +110,16 @@ class CreateType extends FhmType
             )
         )->add(
             'author',
-            AutocompleteType::class,
+            TypeManager::getType($options['object_manager']->getDBDriver()),
             array(
-                'label' => $options['translation_route'].'.admin.create.form.author',
+                'label' => $options['translation_route'] . '.admin.create.form.author',
                 'class' => 'FhmUserBundle:User',
-                'url' => 'fhm_api_user_autocomplete',
-                'translation_domain'=>$options['translation_domain'],
+                'query_builder' => function () use ($options) {
+                    $dr = $options['object_manager']->getCurrentRepository('FhmUserBundle:User');
+                    return $dr->getFormEnable();
+                },
+//                'url' => 'fhm_api_user_autocomplete',
                 'required' => false,
-                'placeholder' => 'news.admin.create.form.autocomplete.author.placeholder',
             )
         )->remove('name')->remove('description');
     }
