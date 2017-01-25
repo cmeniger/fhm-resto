@@ -26,7 +26,7 @@ class EventRepository extends FhmRepository
      * @param string $search
 
      * @return mixed
-     * @throws \Doctrine\ODM\MongoDB\MongoDBException
+     * @throws \Doctrine\ORM\ORMException
      */
     public function getFrontIndex($search = "")
     {
@@ -50,7 +50,7 @@ class EventRepository extends FhmRepository
      * @param string $search
      *
      * @return int
-     * @throws \Doctrine\ODM\MongoDB\MongoDBException
+     * @throws \Doctrine\ORM\ORMException
      */
     public function getFrontCount($search = "")
     {
@@ -68,13 +68,13 @@ class EventRepository extends FhmRepository
     }
 
     /**
-     * @param \Fhm\EventBundle\Document\EventGroup $eventgroup
+     * @param \Fhm\EventBundle\Entity\EventGroup $eventgroup
      * @param string $search
      *
      * @return mixed
-     * @throws \Doctrine\ODM\MongoDB\MongoDBException
+     * @throws \Doctrine\ORM\ORMException
      */
-    public function getEventByGroupIndex(\Fhm\EventBundle\Document\EventGroup $eventgroup, $search = "")
+    public function getEventByGroupIndex(\Fhm\EventBundle\Entity\EventGroup $eventgroup, $search = "")
     {
         $builder = ($search) ? $this->search($search) : $this->createQueryBuilder();
         // Global
@@ -99,12 +99,12 @@ class EventRepository extends FhmRepository
     }
 
     /**
-     * @param \Fhm\EventBundle\Document\EventGroup $eventgroup
+     * @param \Fhm\EventBundle\Entity\EventGroup $eventgroup
      * @param string $search
      *
      * @return mixed
      */
-    public function getEventByGroupCount(\Fhm\EventBundle\Document\EventGroup $eventgroup, $search = "")
+    public function getEventByGroupCount(\Fhm\EventBundle\Entity\EventGroup $eventgroup, $search = "")
     {
         $builder = ($search) ? $this->search($search) : $this->createQueryBuilder();
         // Global
@@ -126,12 +126,12 @@ class EventRepository extends FhmRepository
     }
 
     /**
-     * @param \Fhm\EventBundle\Document\EventGroup $eventgroup
+     * @param \Fhm\EventBundle\Entity\EventGroup $eventgroup
      *
      * @return int
-     * @throws \Doctrine\ODM\MongoDB\MongoDBException
+     * @throws \Doctrine\ORM\ORMException
      */
-    public function getEventByGroupAll(\Fhm\EventBundle\Document\EventGroup $eventgroup)
+    public function getEventByGroupAll(\Fhm\EventBundle\Entity\EventGroup $eventgroup)
     {
         $builder = $this->createQueryBuilder();
         // Global
@@ -158,7 +158,7 @@ class EventRepository extends FhmRepository
     /**
      *
      * @return mixed
-     * @throws \Doctrine\ODM\MongoDB\MongoDBException
+     * @throws \Doctrine\ORM\ORMException
      */
     public function getEventEnable()
     {
@@ -180,7 +180,7 @@ class EventRepository extends FhmRepository
      * @param int $count
      *
      * @return mixed
-     * @throws \Doctrine\ODM\MongoDB\MongoDBException
+     * @throws \Doctrine\ORM\ORMException
      */
     public function getFrontDateIndex($date, $search = "", $page = 1, $count = 5)
     {
@@ -210,7 +210,7 @@ class EventRepository extends FhmRepository
      * @param string $search
      *
      * @return int
-     * @throws \Doctrine\ODM\MongoDB\MongoDBException
+     * @throws \Doctrine\ORM\ORMException
      */
     public function getFrontDateCount($date, $search = "")
     {

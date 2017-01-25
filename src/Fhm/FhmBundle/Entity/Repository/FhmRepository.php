@@ -96,7 +96,7 @@ class FhmRepository extends EntityRepository
 
     /**
      * @param string $search
-     * @return \Doctrine\ODM\MongoDB\Query\Query
+     * @return \Doctrine\ORM\Query
      */
     public function getFrontIndex($search = "")
     {
@@ -132,7 +132,7 @@ class FhmRepository extends EntityRepository
     }
 
     /**
-     * @return \Doctrine\ODM\MongoDB\Query\Builder
+     * @return \Doctrine\ORM\QueryBuilder
      */
     public function getFormEnable()
     {
@@ -150,7 +150,7 @@ class FhmRepository extends EntityRepository
     }
 
     /**
-     * @return \Doctrine\ODM\MongoDB\Query\Builder
+     * @return \Doctrine\ORM\QueryBuilder
      */
     public function getFormFiltered()
     {
@@ -168,7 +168,7 @@ class FhmRepository extends EntityRepository
     }
 
     /**
-     * @return \Doctrine\ODM\MongoDB\Query\Builder
+     * @return \Doctrine\ORM\QueryBuilder
      */
     public function getFormAll()
     {
@@ -451,7 +451,7 @@ class FhmRepository extends EntityRepository
     /**
      * @param $search
      *
-     * @return \Doctrine\ODM\MongoDB\Query\Builder
+     * @return \Doctrine\ORM\QueryBuilder
      */
     protected function search($search)
     {
@@ -462,7 +462,7 @@ class FhmRepository extends EntityRepository
         $fields[] = $qb->expr()->field('_id')->equals($search);
         // Search all fields
         foreach ($this->class->getFieldNames() as $field) {
-            $fields[] = $qb->expr()->field($field)->equals(new \MongoRegex($regx));
+            $fields[] = $qb->expr()->field($field)->equals($regx);
         }
         // Add OR conditions
         foreach ($fields as $field) {
@@ -475,7 +475,7 @@ class FhmRepository extends EntityRepository
     /**
      * @param $document
      *
-     * @return \Doctrine\ODM\MongoDB\Query\Builder
+     * @return \Doctrine\ORM\QueryBuilder
      */
     public function truncate($document)
     {
@@ -483,9 +483,9 @@ class FhmRepository extends EntityRepository
     }
 
     /**
-     * @param \Doctrine\ODM\MongoDB\Query\Builder $builder
+     * @param \Doctrine\ORM\Query
      */
-    protected function builderSort(\Doctrine\ODM\MongoDB\Query\Builder &$builder)
+    protected function builderSort(\Doctrine\ORM\QueryBuilder &$builder)
     {
         $builder->sort($this->sort[0], $this->sort[1]);
         if ($this->sort[0] != 'order') {

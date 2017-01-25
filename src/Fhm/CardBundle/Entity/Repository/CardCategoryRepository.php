@@ -33,12 +33,12 @@ class CardCategoryRepository extends FhmRepository
     }
 
     /**
-     * @param \Fhm\CardBundle\Document\Card $card
+     * @param \Fhm\CardBundle\Entity\Card $card
      *
      * @return mixed
-     * @throws \Doctrine\ODM\MongoDB\MongoDBException
+     * @throws \Doctrine\ORM\ORMException
      */
-    public function getByCard(\Fhm\CardBundle\Document\Card $card)
+    public function getByCard(\Fhm\CardBundle\Entity\Card $card)
     {
         $builder = $this->createQueryBuilder();
         // Parent
@@ -67,12 +67,12 @@ class CardCategoryRepository extends FhmRepository
     }
 
     /**
-     * @param \Fhm\CardBundle\Document\Card $card
+     * @param \Fhm\CardBundle\Entity\Card $card
      *
      * @return mixed
-     * @throws \Doctrine\ODM\MongoDB\MongoDBException
+     * @throws \Doctrine\ORM\ORMException
      */
-    public function getByCardAll(\Fhm\CardBundle\Document\Card $card)
+    public function getByCardAll(\Fhm\CardBundle\Entity\Card $card)
     {
         $builder = $this->createQueryBuilder();
         // Parent
@@ -99,13 +99,13 @@ class CardCategoryRepository extends FhmRepository
     }
 
     /**
-     * @param \Fhm\CardBundle\Document\Card $card
-     * @param \Fhm\CardBundle\Document\CardCategory $category
+     * @param \Fhm\CardBundle\Entity\Card $card
+     * @param \Fhm\CardBundle\Entity\CardCategory $category
      *
      * @return array
-     * @throws \Doctrine\ODM\MongoDB\MongoDBException
+     * @throws \Doctrine\ORM\ORMException
      */
-    public function getSons(\Fhm\CardBundle\Document\Card $card, \Fhm\CardBundle\Document\CardCategory $category)
+    public function getSons(\Fhm\CardBundle\Entity\Card $card, \Fhm\CardBundle\Entity\CardCategory $category)
     {
         $builder = $this->createQueryBuilder();
         // Parent
@@ -132,13 +132,13 @@ class CardCategoryRepository extends FhmRepository
     }
 
     /**
-     * @param \Fhm\CardBundle\Document\Card $card
-     * @param \Fhm\CardBundle\Document\CardCategory $category
+     * @param \Fhm\CardBundle\Entity\Card $card
+     * @param \Fhm\CardBundle\Entity\CardCategory $category
      *
      * @return array
-     * @throws \Doctrine\ODM\MongoDB\MongoDBException
+     * @throws \Doctrine\ORM\ORMException
      */
-    public function getSonsAll(\Fhm\CardBundle\Document\Card $card, \Fhm\CardBundle\Document\CardCategory $category)
+    public function getSonsAll(\Fhm\CardBundle\Entity\Card $card, \Fhm\CardBundle\Entity\CardCategory $category)
     {
         $builder = $this->createQueryBuilder();
         // Parent
@@ -163,12 +163,12 @@ class CardCategoryRepository extends FhmRepository
     }
 
     /**
-     * @param \Fhm\CardBundle\Document\Card $card
+     * @param \Fhm\CardBundle\Entity\Card $card
      *
      * @return mixed
-     * @throws \Doctrine\ODM\MongoDB\MongoDBException
+     * @throws \Doctrine\ORM\ORMException
      */
-    public function getFormParents(\Fhm\CardBundle\Document\Card $card)
+    public function getFormParents(\Fhm\CardBundle\Entity\Card $card)
     {
         $builder = $this->createQueryBuilder();
         // Parent
@@ -184,12 +184,12 @@ class CardCategoryRepository extends FhmRepository
     }
 
     /**
-     * @param \Fhm\CardBundle\Document\Card $card
+     * @param \Fhm\CardBundle\Entity\Card $card
      *
      * @return mixed
-     * @throws \Doctrine\ODM\MongoDB\MongoDBException
+     * @throws \Doctrine\ORM\ORMException
      */
-    public function getFormSons(\Fhm\CardBundle\Document\Card $card)
+    public function getFormSons(\Fhm\CardBundle\Entity\Card $card)
     {
         $builder = $this->createQueryBuilder();
         // Parent
@@ -205,12 +205,12 @@ class CardCategoryRepository extends FhmRepository
     }
 
     /**
-     * @param \Fhm\CardBundle\Document\Card $card
+     * @param \Fhm\CardBundle\Entity\Card $card
      *
      * @return mixed
-     * @throws \Doctrine\ODM\MongoDB\MongoDBException
+     * @throws \Doctrine\ORM\ORMException
      */
-    public function getFormCard(\Fhm\CardBundle\Document\Card $card)
+    public function getFormCard(\Fhm\CardBundle\Entity\Card $card)
     {
         $builder = $this->createQueryBuilder();
         // Parent

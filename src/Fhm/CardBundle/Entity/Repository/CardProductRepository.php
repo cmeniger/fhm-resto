@@ -36,9 +36,9 @@ class CardProductRepository extends FhmRepository
      * @param        $card
      *
      * @return mixed
-     * @throws \Doctrine\ODM\MongoDB\MongoDBException
+     * @throws \Doctrine\ORM\ORMException
      */
-    public function getByCard(\Fhm\CardBundle\Document\Card $card)
+    public function getByCard(\Fhm\CardBundle\Entity\Card $card)
     {
         $builder = $this->createQueryBuilder();
         // Parent
@@ -68,9 +68,9 @@ class CardProductRepository extends FhmRepository
      * @param        $card
      *
      * @return mixed
-     * @throws \Doctrine\ODM\MongoDB\MongoDBException
+     * @throws \Doctrine\ORM\ORMException
      */
-    public function getByCardAll(\Fhm\CardBundle\Document\Card $card)
+    public function getByCardAll(\Fhm\CardBundle\Entity\Card $card)
     {
         $builder = $this->createQueryBuilder();
         // Parent
@@ -95,13 +95,13 @@ class CardProductRepository extends FhmRepository
     }
 
     /**
-     * @param \Fhm\CardBundle\Document\Card $card
+     * @param \Fhm\CardBundle\Entity\Card $card
      * @param string $search
      *
      * @return array
-     * @throws \Doctrine\ODM\MongoDB\MongoDBException
+     * @throws \Doctrine\ORM\ORMException
      */
-    public function getByCardSearch(\Fhm\CardBundle\Document\Card $card, $search = "")
+    public function getByCardSearch(\Fhm\CardBundle\Entity\Card $card, $search = "")
     {
         $builder = $search ? $this->search($search) : $this->createQueryBuilder();
         // Parent
@@ -126,15 +126,15 @@ class CardProductRepository extends FhmRepository
     }
 
     /**
-     * @param \Fhm\CardBundle\Document\Card $card
-     * @param \Fhm\CardBundle\Document\CardCategory $category
+     * @param \Fhm\CardBundle\Entity\Card $card
+     * @param \Fhm\CardBundle\Entity\CardCategory $category
      *
      * @return array
-     * @throws \Doctrine\ODM\MongoDB\MongoDBException
+     * @throws \Doctrine\ORM\ORMException
      */
     public function getByCategory(
-        \Fhm\CardBundle\Document\Card $card,
-        \Fhm\CardBundle\Document\CardCategory $category
+        \Fhm\CardBundle\Entity\Card $card,
+        \Fhm\CardBundle\Entity\CardCategory $category
     ) {
         $builder = $this->createQueryBuilder();
         // Parent
@@ -162,15 +162,15 @@ class CardProductRepository extends FhmRepository
     }
 
     /**
-     * @param \Fhm\CardBundle\Document\Card $card
-     * @param \Fhm\CardBundle\Document\CardCategory $category
+     * @param \Fhm\CardBundle\Entity\Card $card
+     * @param \Fhm\CardBundle\Entity\CardCategory $category
      *
      * @return array
-     * @throws \Doctrine\ODM\MongoDB\MongoDBException
+     * @throws \Doctrine\ORM\ORMException
      */
     public function getByCategoryAll(
-        \Fhm\CardBundle\Document\Card $card,
-        \Fhm\CardBundle\Document\CardCategory $category
+        \Fhm\CardBundle\Entity\Card $card,
+        \Fhm\CardBundle\Entity\CardCategory $category
     ) {
         $builder = $this->createQueryBuilder();
         // Parent
@@ -196,12 +196,12 @@ class CardProductRepository extends FhmRepository
     }
 
     /**
-     * @param \Fhm\CardBundle\Document\Card $card
+     * @param \Fhm\CardBundle\Entity\Card $card
      *
      * @return mixed
      * @throws \Doctrine\ODM\MongoDB\MongoDBException
      */
-    public function getFormCard(\Fhm\CardBundle\Document\Card $card)
+    public function getFormCard(\Fhm\CardBundle\Entity\Card $card)
     {
         $builder = $this->createQueryBuilder();
         // Parent
