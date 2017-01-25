@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Menu
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Fhm\FhmBundle\Entity\Repository\MenuRepository")
  * @ORM\Table()
  * @ORM\Embeddable
  */

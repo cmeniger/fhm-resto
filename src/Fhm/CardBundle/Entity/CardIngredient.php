@@ -11,7 +11,7 @@ use Fhm\FhmBundle\Entity\Fhm;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Fhm\CardBundle\Entity\Repository\CardIngredientRepository")
  * @ORM\Table()
  */
 class CardIngredient extends Fhm

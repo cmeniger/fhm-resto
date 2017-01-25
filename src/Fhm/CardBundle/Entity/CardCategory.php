@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Fhm\FhmBundle\Entity\Fhm;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Fhm\CardBundle\Entity\Repository\CardCategoryRepository")
  * @ORM\Table()
  */
 class CardCategory extends Fhm

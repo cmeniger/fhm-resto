@@ -4,7 +4,7 @@ use Fhm\FhmBundle\Entity\Fhm as FhmFhm;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Fhm\ContactBundle\Entity\Repository\ContactMessageRepository")
  * @ORM\Table()
  */
 class ContactMessage extends FhmFhm

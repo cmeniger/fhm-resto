@@ -6,7 +6,7 @@ use Fhm\FhmBundle\Entity\Fhm;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Fhm\GalleryBundle\Entity\Repository\GalleryItemRepository")
  * @ORM\Table()
  */
 class GalleryItem extends Fhm

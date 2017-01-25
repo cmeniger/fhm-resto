@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Fhm\SliderBundle\Entity\Repository\SliderRepository")
  * @ORM\Table()
  */
 class Slider extends Fhm

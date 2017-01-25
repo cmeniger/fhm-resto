@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Fhm
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Fhm\FhmBundle\Entity\Repository\FhmRepository")
  * @ORM\Table()
  * @ORM\HasLifecycleCallbacks
  */

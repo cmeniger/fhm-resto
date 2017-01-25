@@ -6,7 +6,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Fhm\UserBundle\Entity\Repository\UserRepository")
  * @ORM\Table()
  * @ORM\HasLifecycleCallbacks
  * @UniqueEntity(fields="email")

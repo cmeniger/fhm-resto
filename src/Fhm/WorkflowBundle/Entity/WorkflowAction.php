@@ -6,7 +6,7 @@ use Fhm\FhmBundle\Entity\Fhm;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Fhm\WorkflowBundle\Entity\Repository\WorkflowActionRepository")
  * @ORM\Table()
  */
 class WorkflowAction extends Fhm

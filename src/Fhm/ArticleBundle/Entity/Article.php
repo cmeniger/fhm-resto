@@ -5,7 +5,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Fhm\FhmBundle\Entity\Fhm;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Fhm\ArticleBundle\Entity\Repository\ArticleRepository")
  * @ORM\Table()
  */
 class Article extends Fhm

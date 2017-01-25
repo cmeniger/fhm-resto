@@ -6,7 +6,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Fhm\EventBundle\Entity\Repository\EventRepository")
  * @ORM\Table()
  */
 class Event extends Fhm

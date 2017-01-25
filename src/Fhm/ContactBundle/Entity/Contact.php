@@ -5,7 +5,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Fhm\GeolocationBundle\Entity\Geolocation;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Fhm\ContactBundle\Entity\Repository\ContactRepository")
  * @ORM\Table()
  */
 class Contact extends Geolocation

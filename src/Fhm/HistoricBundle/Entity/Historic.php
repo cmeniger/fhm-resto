@@ -4,7 +4,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Fhm\HistoricBundle\Entity\Repository\HistoricRepository")
  * @ORM\Table()
  */
 class Historic

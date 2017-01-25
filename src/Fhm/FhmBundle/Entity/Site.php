@@ -9,7 +9,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * Site
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Fhm\FhmBundle\Entity\Repository\SiteRepository")
  * @ORM\Table()
  * @UniqueEntity(fields="name")
  */

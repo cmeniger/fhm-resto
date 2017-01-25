@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Fhm\PartnerBundle\Entity\Repository\PartnerRepository")
  * @ORM\Table()
  */
 class Partner extends Fhm

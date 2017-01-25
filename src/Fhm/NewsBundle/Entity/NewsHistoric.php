@@ -3,7 +3,7 @@ namespace Fhm\NewsBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Fhm\NewsBundle\Entity\Repository\NewsHistoricRepository")
  * @ORM\Table()
  */
 class NewsHistoric extends News

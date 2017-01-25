@@ -5,7 +5,7 @@ use Fhm\FhmBundle\Entity\Fhm;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Fhm\MailBundle\Entity\Repository\MailRepository")
  * @ORM\Table()
  */
 class Mail extends Fhm
