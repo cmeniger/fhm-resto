@@ -35,7 +35,7 @@ class Menu extends Fhm
     protected $icon = null;
 
     /**
-     * @ORM\Column(type="hash")
+     * @ORM\Column(type="array")
      */
     protected $module = array();
 

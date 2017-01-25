@@ -31,22 +31,22 @@ class CardProduct extends Fhm
     protected $default;
 
     /**
-     * @ORM\OneToOne(targetEntity="Fhm\MediaBundle\Entity\Media", nullable=true)
+     * @ORM\OneToOne(targetEntity="Fhm\MediaBundle\Entity\Media", orphanRemoval=true)
      */
     protected $image;
 
     /**
-     * @ORM\OneToOne(targetEntity="Fhm\CardBundle\Entity\Card", nullable=true, cascade={"persist"})
+     * @ORM\OneToOne(targetEntity="Fhm\CardBundle\Entity\Card", cascade={"persist"})
      */
     protected $card;
 
     /**
-     * @ORM\OneToMany(targetEntity="Fhm\CardBundle\Entity\CardCategory", nullable=true, cascade={"persist"})
+     * @ORM\ManyToMany(targetEntity="Fhm\CardBundle\Entity\CardCategory", cascade={"persist"}, mappedBy="products")
      */
     protected $categories;
 
     /**
-     * @ORM\OneToMany(targetEntity="Fhm\CardBundle\Entity\CardIngredient", nullable=true, cascade={"persist"})
+     * @ORM\ManyToMany(targetEntity="Fhm\CardBundle\Entity\CardIngredient", cascade={"persist"}, inversedBy="products")
      */
     protected $ingredients;
 

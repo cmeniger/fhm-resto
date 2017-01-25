@@ -15,7 +15,7 @@ class ContactMessage extends FhmFhm
     protected $email;
 
     /**
-     * @ORM\Column(type="hash")
+     * @ORM\Column(type="array")
      */
     protected $field;
 

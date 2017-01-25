@@ -37,27 +37,30 @@ class CardCategory extends Fhm
     protected $default;
 
     /**
-     * @ORM\OneToOne(targetEntity="Fhm\MediaBundle\Entity\Media", nullable=true)
+     * @ORM\OneToOne(targetEntity="Fhm\MediaBundle\Entity\Media", orphanRemoval=true)
      */
     protected $image;
 
     /**
-     * @ORM\OneToOne(targetEntity="Fhm\CardBundle\Entity\Card", nullable=true, cascade={"persist"})
+     * @ORM\OneToOne(targetEntity="Card", cascade={"persist"}, inversedBy="categories")
      */
     protected $card;
 
     /**
-     * @ORM\OneToMany(targetEntity="Fhm\CardBundle\Entity\CardCategory", nullable=true, cascade={"persist"})
+     * @ORM\ManyToMany(targetEntity="CardCategory", cascade={"persist"})
+     * @ORM\JoinTable(name="card_category_parents")
      */
     protected $parents;
 
     /**
-     * @ORM\OneToMany(targetEntity="Fhm\CardBundle\Entity\CardCategory", nullable=true, cascade={"persist"})
+     * @ORM\ManyToMany(targetEntity="CardCategory", cascade={"persist"})
+     * @ORM\JoinTable(name="card_category_sons")
      */
     protected $sons;
 
     /**
-     * @ORM\OneToMany(targetEntity="Fhm\CardBundle\Entity\CardProduct", nullable=true, cascade={"persist"})
+     * @ORM\ManyToMany(targetEntity="CardProduct", cascade={"persist"}, inversedBy="categories")
+     * @ORM\JoinTable(name="card_category_products")
      */
     protected $products;
 

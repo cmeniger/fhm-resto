@@ -10,8 +10,9 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Historic
 {
     /**
+     * @ORM\Column(type="integer")
      * @ORM\Id
-     * @Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
 

@@ -33,7 +33,7 @@ class Gallery extends Fhm
     protected $content;
 
     /**
-     * @ORM\OneToOne(targetEntity="Fhm\MediaBundle\Entity\Media", nullable=true)
+     * @ORM\OneToOne(targetEntity="Fhm\MediaBundle\Entity\Media", orphanRemoval=true)
      */
     protected $image;
 
@@ -58,17 +58,17 @@ class Gallery extends Fhm
     protected $order_video;
 
     /**
-     * @ORM\OneToMany(targetEntity="Fhm\GalleryBundle\Entity\GalleryItem", nullable=true, cascade={"persist"})
+     * @ORM\ManyToMany(targetEntity="GalleryItem", cascade={"persist"}, inversedBy="galleries")
      */
     protected $items;
 
     /**
-     * @ORM\OneToMany(targetEntity="Fhm\GalleryBundle\Entity\GalleryVideo", nullable=true, cascade={"persist"})
+     * @ORM\ManyToMany(targetEntity="GalleryVideo", cascade={"persist"}, inversedBy="galleries")
      */
     protected $videos;
 
     /**
-     * @ORM\OneToMany(targetEntity="Fhm\GalleryBundle\Entity\GalleryAlbum", nullable=true, cascade={"persist"})
+     * @ORM\ManyToMany(targetEntity="GalleryAlbum", cascade={"persist"}, inversedBy="galleries")
      */
     protected $albums;
 

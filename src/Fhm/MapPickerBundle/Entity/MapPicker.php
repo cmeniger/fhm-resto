@@ -24,7 +24,7 @@ class MapPicker extends Fhm
     protected $map;
 
     /**
-     * @ORM\Column(type="hash")
+     * @ORM\Column(type="array")
      */
     protected $zone = null;
 

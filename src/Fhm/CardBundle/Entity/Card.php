@@ -12,27 +12,27 @@ use Fhm\FhmBundle\Entity\Fhm;
 class Card extends Fhm
 {
     /**
-     * @ORM\OneToOne(targetEntity="")
+     * @ORM\OneToOne(targetEntity="Card")
      */
     protected $parent;
 
     /**
-     * @ORM\OneToOne(targetEntity="Fhm\MediaBundle\Entity\Media", nullable=true)
+     * @ORM\OneToOne(targetEntity="Fhm\MediaBundle\Entity\Media", orphanRemoval=true)
      */
     protected $image;
 
     /**
-     * @ORM\OneToMany(targetEntity="Fhm\CardBundle\Entity\CardCategory", nullable=true, cascade={"all"})
+     * @ORM\OneToMany(targetEntity="CardCategory", cascade={"all"}, mappedBy="card")
      */
     protected $categories;
 
     /**
-     * @ORM\OneToMany(targetEntity="Fhm\CardBundle\Entity\CardProduct", nullable=true, cascade={"all"})
+     * @ORM\OneToMany(targetEntity="CardProduct", cascade={"all"}, mappedBy="card")
      */
     protected $products;
 
     /**
-     * @ORM\OneToMany(targetEntity="Fhm\CardBundle\Entity\CardIngredient", nullable=true, cascade={"all"})
+     * @ORM\OneToMany(targetEntity="CardIngredient", cascade={"all"}, mappedBy="card")
      */
     protected $ingredients;
 

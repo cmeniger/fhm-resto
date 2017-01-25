@@ -12,7 +12,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Testimony extends Fhm
 {
     /**
-     * @ORM\OneToOne(targetEntity="Fhm\MediaBundle\Entity\Media", nullable=true)
+     * @ORM\OneToOne(targetEntity="Fhm\MediaBundle\Entity\Media", orphanRemoval=true)
      */
     protected $image;
 

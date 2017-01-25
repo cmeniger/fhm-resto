@@ -18,17 +18,17 @@ class Workflow extends Fhm
     protected $status;
 
     /**
-     * @ORM\OneToOne(targetEntity="Fhm\WorkflowBundle\Entity\WorkflowStep", nullable=true)
+     * @ORM\ManyToOne(targetEntity="WorkflowStep")
      */
     protected $step;
 
     /**
-     * @ORM\OneToOne(targetEntity="Fhm\WorkflowBundle\Entity\WorkflowTask", nullable=true)
+     * @ORM\OneToOne(targetEntity="WorkflowTask", orphanRemoval=true)
      */
     protected $task;
 
     /**
-     * @ORM\OneToMany(targetEntity="Fhm\WorkflowBundle\Entity\WorkflowTask", nullable=true, cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="WorkflowTask", cascade={"persist"}, mappedBy="workflow")
      */
     protected $tasks;
 

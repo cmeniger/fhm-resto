@@ -17,12 +17,12 @@ class Note extends Fhm
     protected $date;
 
     /**
-     * @ORM\OneToOne(targetEntity="Fhm\UserBundle\Entity\User", nullable=true, cascade={"persist"})
+     * @ORM\OneToOne(targetEntity="Fhm\UserBundle\Entity\User", cascade={"persist"})
      */
     protected $user;
 
     /**
-     * @ORM\OneToOne
+     * @ORM\OneToOne(targetEntity="Note", cascade={"persist"})
      */
     protected $parent;
 

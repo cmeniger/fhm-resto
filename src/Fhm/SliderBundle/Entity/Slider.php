@@ -33,7 +33,7 @@ class Slider extends Fhm
     protected $content;
 
     /**
-     * @ORM\OneToOne(targetEntity="Fhm\MediaBundle\Entity\Media", nullable=true)
+     * @ORM\OneToOne(targetEntity="Fhm\MediaBundle\Entity\Media", orphanRemoval=true)
      */
     protected $image;
 
@@ -48,7 +48,7 @@ class Slider extends Fhm
     protected $sort;
 
     /**
-     * @ORM\OneToMany(targetDocument="Fhm\SliderBundle\Entity\SliderItem", nullable=true, cascade={"persist"})
+     * @ORM\ManyToMany(targetEntity="SliderItem", cascade={"persist"}, mappedBy="slider")
      */
     protected $items;
 

@@ -27,7 +27,7 @@ class GalleryAlbum extends Fhm
     protected $content;
 
     /**
-     * @ORM\OneToOne(targetEntity="Fhm\MediaBundle\Entity\Media", nullable=true)
+     * @ORM\OneToOne(targetEntity="Fhm\MediaBundle\Entity\Media", orphanRemoval=true)
      */
     protected $image;
 
@@ -42,7 +42,7 @@ class GalleryAlbum extends Fhm
     protected $sort;
 
     /**
-     * @ORM\OneToMany(targetEntity="Fhm\GalleryBundle\Entity\Gallery", nullable=true, cascade={"persist"})
+     * @ORM\ManyToMany(targetEntity="Gallery", cascade={"persist"}, mappedBy="albums")
      */
     protected $galleries;
 

@@ -38,7 +38,7 @@ class GalleryVideo extends Fhm
     protected $link;
 
     /**
-     * @ORM\OneToMany(targetEntity="Fhm\GalleryBundle\Entity\Gallery", nullable=true, cascade={"persist"})
+     * @ORM\ManyToMany(targetEntity="Gallery", cascade={"persist"}, mappedBy="videos")
      */
     protected $galleries;
 

@@ -22,17 +22,17 @@ class CardIngredient extends Fhm
     protected $default;
 
     /**
-     * @ORM\OneToOne(targetEntity="Fhm\MediaBundle\Entity\Media", nullable=true)
+     * @ORM\OneToOne(targetEntity="Fhm\MediaBundle\Entity\Media", orphanRemoval=true)
      */
     protected $image;
 
     /**
-     * @ORM\OneToOne(targetEntity="Fhm\CardBundle\Entity\Card", nullable=true, cascade={"persist"})
+     * @ORM\OneToOne(targetEntity="Fhm\CardBundle\Entity\Card", cascade={"persist"})
      */
     protected $card;
 
     /**
-     * @ORM\OneToMany(targetEntity="Fhm\CardBundle\Entity\CardProduct", nullable=true, cascade={"persist"})
+     * @ORM\ManyToMany(targetEntity="Fhm\CardBundle\Entity\CardProduct", cascade={"persist"}, mappedBy="ingredients")
      */
     protected $products;
 

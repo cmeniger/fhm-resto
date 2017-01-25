@@ -11,7 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 class WorkflowComment extends Fhm
 {
     /**
-     * @ORM\OneToOne(targetEntity="Fhm\WorkflowBundle\Entity\WorkflowTask", nullable=true)
+     * @ORM\ManyToOne(targetEntity="Fhm\WorkflowBundle\Entity\WorkflowTask", inversedBy="comments")
      */
     protected $task;
 

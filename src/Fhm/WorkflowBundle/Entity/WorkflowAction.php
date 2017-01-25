@@ -17,7 +17,8 @@ class WorkflowAction extends Fhm
     protected $validate_check;
 
     /**
-     * @ORM\OneToMany(targetEntity="Fhm\UserBundle\Entity\User", nullable=true, cascade={"persist"})
+     * @ORM\ManyToMany(targetEntity="Fhm\UserBundle\Entity\User", cascade={"persist"})
+     * @ORM\JoinTable(name="wkfl_action_validate_users")
      */
     protected $validate_users;
 
@@ -27,7 +28,8 @@ class WorkflowAction extends Fhm
     protected $dismiss_check;
 
     /**
-     * @ORM\OneToMany(targetEntity="Fhm\UserBundle\Entity\User", nullable=true, cascade={"persist"})
+     * @ORM\ManyToMany(targetEntity="Fhm\UserBundle\Entity\User", cascade={"persist"})
+     * @ORM\JoinTable(name="wkfl_action_dismiss_users")
      */
     protected $dismiss_users;
 
@@ -37,7 +39,8 @@ class WorkflowAction extends Fhm
     protected $cancel_check;
 
     /**
-     * @ORM\OneToMany(targetEntity="Fhm\UserBundle\Entity\User", nullable=true, cascade={"persist"})
+     * @ORM\ManyToMany(targetEntity="Fhm\UserBundle\Entity\User", cascade={"persist"})
+     * @ORM\JoinTable(name="wkfl_action_cancel_users")
      */
     protected $cancel_users;
 
@@ -47,7 +50,8 @@ class WorkflowAction extends Fhm
     protected $upload_check;
 
     /**
-     * @ORM\OneToMany(targetEntity="Fhm\UserBundle\Entity\User", nullable=true, cascade={"persist"})
+     * @ORM\ManyToMany(targetEntity="Fhm\UserBundle\Entity\User", cascade={"persist"})
+     * @ORM\JoinTable(name="wkfl_action_upload_users")
      */
     protected $upload_users;
 
@@ -57,7 +61,8 @@ class WorkflowAction extends Fhm
     protected $download_check;
 
     /**
-     * @ORM\OneToMany(targetEntity="Fhm\UserBundle\Entity\User", nullable=true, cascade={"persist"})
+     * @ORM\ManyToMany(targetEntity="Fhm\UserBundle\Entity\User", cascade={"persist"})
+     * @ORM\JoinTable(name="wkfl_action_download_users")
      */
     protected $download_users;
 
@@ -67,12 +72,14 @@ class WorkflowAction extends Fhm
     protected $comment_check;
 
     /**
-     * @ORM\OneToMany(targetEntity="Fhm\UserBundle\Entity\User", nullable=true, cascade={"persist"})
+     * @ORM\ManyToMany(targetEntity="Fhm\UserBundle\Entity\User", cascade={"persist"})
+     * @ORM\JoinTable(name="wkfl_action_comment_users")
      */
     protected $comment_users;
 
     /**
-     * @ORM\OneToMany(targetEntity="Fhm\WorkflowBundle\Entity\WorkflowTask", nullable=true, cascade={"persist"})
+     * @ORM\ManyToMany(targetEntity="WorkflowTask", cascade={"persist"})
+     * @ORM\JoinTable(name="wkfl_action_task_users")
      */
     protected $tasks;
 
