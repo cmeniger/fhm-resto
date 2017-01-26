@@ -39,7 +39,6 @@ class FrontController extends FhmController
     public function detailAction($id)
     {
         $parent = parent::detailAction($id);
-        die("ici");
         $session = $this->get('session');
         $object = $parent['object'];
         $modules = '';

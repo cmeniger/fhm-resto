@@ -26,11 +26,10 @@ class SiteRepository extends FhmRepository
      */
     public function getDefault()
     {
-        $builder = $this->createQueryBuilder();
-
+        $builder = $this->createQueryBuilder('');
         return $builder
-            ->field('default')->equals(true)
-            ->limit(1)
+            ->andWhere('default' == true)
+            ->getMaxResults(1)
             ->getQuery()
             ->getSingleResult();
     }

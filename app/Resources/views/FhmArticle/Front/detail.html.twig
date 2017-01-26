@@ -6,12 +6,12 @@
 {% block content_data %}
     <div id="content_data" class="article-container">
         <div class="row article-full">
-            <h1>{{ document.getTitle() }}</h1>
-            <h2>{{ document.getSubTitle() }}</h2>
-            <div class="article-date">{{ document.getDateCreate()|localizeddate('full', 'short', app.request.locale) }}</div>
-            <div class="article-resume">{{ document.getResume()|raw }}</div>
-            <div class="article-content">{{ document.getContent()|raw }}</div>
-            <div class="article-author">{{ document.getUserCreate().getUsername() }}</div>
+            <h1>{{ object.getTitle() }}</h1>
+            <h2>{{ object.getSubTitle() }}</h2>
+            <div class="article-date">{{ object.getDateCreate()|localizeddate('full', 'short', app.request.locale) }}</div>
+            <div class="article-resume">{{ object.getResume()|raw }}</div>
+            <div class="article-content">{{ object.getContent()|raw }}</div>
+            <div class="article-author">{{ object.getUserCreate().getUsername() }}</div>
         </div>
     </div>
 {% endblock %}

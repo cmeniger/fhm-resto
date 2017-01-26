@@ -28,6 +28,7 @@ class RefFrontController extends GenericController
             $request->query->getInt('page', 1),
             $this->getParameters('pagination', 'fhm_fhm')
         );
+
         return array(
             'pagination' => $pagination,
             'form' => $form->createView(),
@@ -63,6 +64,7 @@ class RefFrontController extends GenericController
                 'notice',
                 $this->trans(self::$translation.'.front.create.flash.ok')
             );
+
             return $this->redirectUrl($data, $object, 'front');
         }
 
@@ -125,14 +127,16 @@ class RefFrontController extends GenericController
 
             return $this->redirectUrl($form->getData(), $object, 'front');
         }
+
         return array(
-            'document' => $object,
+            'object' => $object,
             'form' => $form->createView(),
             'breadcrumbs' => $this->get('fhm_tools')->generateBreadcrumbs(
                 array(
                     'domain' => self::$domain,
                     '_route' => $this->get('request_stack')->getCurrentRequest()->get('_route'),
-                )
+                ),
+                $object
             ),
         );
     }
@@ -147,21 +151,21 @@ class RefFrontController extends GenericController
         $object = $this->get('fhm_tools')->dmRepository(self::$repository)->getById($id);
         $object = ($object) ? $object : $this->get('fhm_tools')->dmRepository(self::$repository)->getByAlias($id);
         $object = ($object) ? $object : $this->get('fhm_tools')->dmRepository(self::$repository)->getByName($id);
+        $authorization = $this->get('security.authorization_checker')->isGranted('ROLE_ADMIN');
         if (!is_object($object)) {
             throw $this->createNotFoundException($this->trans(self::$translation.'.error.unknown'));
-        } elseif (!$this->get('security.authorization_checker')->isGranted('ROLE_ADMIN') && ($object->getDelete(
-                ) || !$object->getActive())
-        ) {
+        } elseif (!$authorization && ($object->getDelete() || !$object->getActive())) {
             throw new HttpException(403, $this->trans(self::$translation.'.error.forbidden'));
         }
 
         return array(
-            'document' => $object,
+            'object' => $object,
             'breadcrumbs' => $this->get('fhm_tools')->generateBreadcrumbs(
                 array(
                     'domain' => self::$domain,
                     '_route' => $this->get('request_stack')->getCurrentRequest()->get('_route'),
-                )
+                ),
+                $object
             ),
         );
     }

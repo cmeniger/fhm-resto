@@ -185,6 +185,7 @@ class Tools
             $unique = $this->dmRepository($repository)->isUnique($id, $alias);
             $code++;
         }
+
         return $alias;
     }
 
@@ -359,7 +360,7 @@ class Tools
      */
     public function generateBreadcrumbs($options, $element = null)
     {
-        $breaCrumps = [];
+        $breaCrumbs = [];
         $route = $options['_route'];
         $steps = explode('_', $route);
         end($steps);
@@ -369,17 +370,22 @@ class Tools
         foreach ($steps as $key => $step) {
             $lastText .= $step;
             $lastUrl .= $step;
-            $breaCrumps[] = array(
-                'link' => $this->getUrl($lastUrl, ($key == $endkey and $element) ? ['id' => $element->getId()] : []),
-                'text' => $this->trans($lastText.'.breadcrumb', [], $options['domain'], ''),
-            );
+            if ($this->routeExists($lastUrl)) {
+                $breaCrumbs[] = array(
+                    'link' => $this->getUrl(
+                        $lastUrl,
+                        ($key == $endkey and $element) ? ['id' => $element->getId()] : []
+                    ),
+                    'text' => $this->trans($lastText.'.breadcrumb', [], $options['domain'], ''),
+                );
+            }
             $lastText .= '.';
             $lastUrl .= '_';
         }
         if ($element) {
-            $breaCrumps[] = array('link' => '#', 'text' => $element->getName());
+            $breaCrumbs[] = array('link' => '#', 'text' => $element->getName());
         }
 
-        return $breaCrumps;
+        return $breaCrumbs;
     }
 }

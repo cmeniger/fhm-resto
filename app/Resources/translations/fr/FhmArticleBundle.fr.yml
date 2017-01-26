@@ -10,6 +10,10 @@ fhm:
                 breadcrumb:                     Modifier
             detail:
                 breadcrumb:                     Détails
+    article:
+        breadcrumb:                             Articles
+        lite:
+            breadcrumb:                         Détail
 article:
     admin:
         index:
@@ -175,3 +179,12 @@ article:
         undelete:
             flash:
                 ok:                             Le article a bien été restauré.
+    front:
+        index:
+            title:                              Articles
+            table:
+                header:
+                    action:                     Actions
+                    name:                       Articles
+                action:
+                    detail:                         Détail

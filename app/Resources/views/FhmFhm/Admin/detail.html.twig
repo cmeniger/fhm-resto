@@ -12,7 +12,7 @@
                 <br/>
                 <small>
                     {% block tagline_data_subtitle %}
-                        {{ (instance.translation ~ '.admin.detail.title')|trans({'%name%': document.getName()}) }}
+                        {{ (instance.translation ~ '.admin.detail.title')|trans({'%name%': object.getName()}) }}
                     {% endblock %}
                 </small>
             {% endblock %}
@@ -34,7 +34,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="{{ path(instance.source ~ '_admin_' ~ instance.route ~ '_update', {'id': document.getId()}) }}" class="button small"><i class="fa fa-pencil"></i> {{ (instance.translation ~ '.admin.update.link')|trans }}
+                        <a href="{{ path(instance.source ~ '_admin_' ~ instance.route ~ '_update', {'id': object.getId()}) }}" class="button small"><i class="fa fa-pencil"></i> {{ (instance.translation ~ '.admin.update.link')|trans }}
                         </a>
                     </li>
                     <li>
@@ -79,40 +79,40 @@
                     {% block content_data_information %}
                         <tr>
                             <td><strong>{{ (instance.translation ~ '.admin.detail.data.id')|trans }}</strong></td>
-                            <td>{{ document.getId() }}</td>
+                            <td>{{ object.getId() }}</td>
                         </tr>
                         <tr>
                             <td><strong>{{ (instance.translation ~ '.admin.detail.data.create')|trans }}</strong></td>
-                            <td>{{ document.getUserCreate() ? document.getUserCreate().getUsername() ~ ' - ' : '' }}{{ document.getDateCreate() | localizeddate('full', 'short', app.request.locale) }}</td>
+                            <td>{{ object.getUserCreate() ? object.getUserCreate().getUsername() ~ ' - ' : '' }}{{ object.getDateCreate() | localizeddate('full', 'short', app.request.locale) }}</td>
                         </tr>
                         <tr>
                             <td><strong>{{ (instance.translation ~ '.admin.detail.data.update')|trans }}</strong></td>
-                            <td>{{ document.getUserUpdate() ? document.getUserUpdate().getUsername() ~ ' - ' : '' }}{{ document.getDateUpdate() | localizeddate('full', 'short', app.request.locale) }}</td>
+                            <td>{{ object.getUserUpdate() ? object.getUserUpdate().getUsername() ~ ' - ' : '' }}{{ object.getDateUpdate() | localizeddate('full', 'short', app.request.locale) }}</td>
                         </tr>
                         <tr>
                             <td><strong>{{ (instance.translation ~ '.admin.detail.data.name')|trans }}</strong></td>
-                            <td>{{ document.getName() }}</td>
+                            <td>{{ object.getName() }}</td>
                         </tr>
                         <tr>
                             <td><strong>{{ (instance.translation ~ '.admin.detail.data.alias')|trans }}</strong></td>
-                            <td>{{ document.getAlias() }}</td>
+                            <td>{{ object.getAlias() }}</td>
                         </tr>
                         <tr>
                             <td><strong>{{ (instance.translation ~ '.admin.detail.data.description')|trans }}</strong>
                             </td>
-                            <td>{{ document.getDescription() }}</td>
+                            <td>{{ object.getDescription() }}</td>
                         </tr>
                         <tr>
                             <td><strong>{{ (instance.translation ~ '.admin.detail.data.status')|trans }}</strong></td>
                             <td>
-                                {% if document.getDelete() %}
+                                {% if object.getDelete() %}
                                     <span class="status alert radius label">{{ ('fhm.status.delete')|trans({}, 'FhmFhmBundle') }}</span>
-                                {% elseif not document.getActive() %}
+                                {% elseif not object.getActive() %}
                                     <span class="status warning radius label">{{ ('fhm.status.disable')|trans({}, 'FhmFhmBundle') }}</span>
                                 {% else %}
                                     <span class="status success radius label">{{ ('fhm.status.enable')|trans({}, 'FhmFhmBundle') }}</span>
                                 {% endif %}
-                                {% if document.getShare()%}
+                                {% if object.getShare()%}
                                     <span class="status regular radius label">{{ ('fhm.status.share')|trans({}, 'FhmFhmBundle') }}</span>
                                 {% endif %}
                             </td>
@@ -133,31 +133,31 @@
                         <tr>
                             <td><strong>{{ (instance.translation ~ '.admin.detail.url.admin.edit')|trans }}</strong>
                             </td>
-                            <td>{{ path(instance.source ~ '_admin_' ~ instance.route ~ '_update', {'id':document.getId()}) }}</td>
+                            <td>{{ path(instance.source ~ '_admin_' ~ instance.route ~ '_update', {'id':object.getId()}) }}</td>
                         </tr>
                         <tr>
                             <td><strong>{{ (instance.translation ~ '.admin.detail.url.admin.detail')|trans }}</strong>
                             </td>
-                            <td>{{ path(instance.source ~ '_admin_' ~ instance.route ~ '_detail', {'id':document.getId()}) }}</td>
+                            <td>{{ path(instance.source ~ '_admin_' ~ instance.route ~ '_detail', {'id':object.getId()}) }}</td>
                         </tr>
                         <tr>
                             <td><strong>{{ (instance.translation ~ '.admin.detail.url.front.id')|trans }}</strong></td>
-                            <td>{{ path(instance.source ~ '_' ~ instance.route ~ '_detail', {'id':document.getId()}) }}</td>
+                            <td>{{ path(instance.source ~ '_' ~ instance.route ~ '_detail', {'id':object.getId()}) }}</td>
                         </tr>
                         <tr>
                             <td><strong>{{ (instance.translation ~ '.admin.detail.url.front.name')|trans }}</strong>
                             </td>
-                            <td>{{ path(instance.source ~ '_' ~ instance.route ~ '_detail', {'id':document.getName()}) }}</td>
+                            <td>{{ path(instance.source ~ '_' ~ instance.route ~ '_detail', {'id':object.getName()}) }}</td>
                         </tr>
                         <tr>
                             <td><strong>{{ (instance.translation ~ '.admin.detail.url.front.alias')|trans }}</strong>
                             </td>
-                            <td>{{ path(instance.source ~ '_' ~ instance.route ~ '_detail', {'id':document.getAlias()}) }}</td>
+                            <td>{{ path(instance.source ~ '_' ~ instance.route ~ '_detail', {'id':object.getAlias()}) }}</td>
                         </tr>
                         <tr>
                             <td><strong>{{ (instance.translation ~ '.admin.detail.url.front.lite')|trans }}</strong>
                             </td>
-                            <td>{{ path(instance.source ~ '_' ~ instance.route ~ '_lite', {'id':document.getAlias()}) }}</td>
+                            <td>{{ path(instance.source ~ '_' ~ instance.route ~ '_lite', {'id':object.getAlias()}) }}</td>
                         </tr>
                     {% endblock %}
                 </tbody>

@@ -3,7 +3,7 @@
 
 {% block tagline %}
     <div class="row text-center">
-        <h1>{% block tagline_data %}{{ (instance.translation ~ '.front.detail.title')|trans({'%name%': document.getName()}) }}{% endblock %}</h1>
+        <h1>{% block tagline_data %}{{ (instance.translation ~ '.front.detail.title')|trans({'%name%': object.getName()}) }}{% endblock %}</h1>
     </div>
 {% endblock %}
 
@@ -31,24 +31,24 @@
                     {% block content_data_information %}
                         <tr>
                             <td><strong>{{ (instance.translation ~ '.front.detail.data.create')|trans }}</strong></td>
-                            <td>{{ document.getUserCreate() ? document.getUserCreate().getUsername() ~ ' - ' : '' }}{{ document.getDateCreate() | localizeddate('full', 'short', app.request.locale) }}</td>
+                            <td>{{ object.getUserCreate() ? object.getUserCreate().getUsername() ~ ' - ' : '' }}{{ object.getDateCreate() | localizeddate('full', 'short', app.request.locale) }}</td>
                         </tr>
                         <tr>
                             <td><strong>{{ (instance.translation ~ '.front.detail.data.update')|trans }}</strong></td>
-                            <td>{{ document.getUserUpdate() ? document.getUserUpdate().getUsername() ~ ' - ' : '' }}{{ document.getDateUpdate() | localizeddate('full', 'short', app.request.locale) }}</td>
+                            <td>{{ object.getUserUpdate() ? object.getUserUpdate().getUsername() ~ ' - ' : '' }}{{ object.getDateUpdate() | localizeddate('full', 'short', app.request.locale) }}</td>
                         </tr>
                         <tr>
                             <td><strong>{{ (instance.translation ~ '.front.detail.data.name')|trans }}</strong></td>
-                            <td>{{ document.getName() }}</td>
+                            <td>{{ object.getName() }}</td>
                         </tr>
                         <tr>
                             <td><strong>{{ (instance.translation ~ '.front.detail.data.alias')|trans }}</strong></td>
-                            <td>{{ document.getAlias() }}</td>
+                            <td>{{ object.getAlias() }}</td>
                         </tr>
                         <tr>
                             <td><strong>{{ (instance.translation ~ '.front.detail.data.description')|trans }}</strong>
                             </td>
-                            <td>{{ document.getDescription() }}</td>
+                            <td>{{ object.getDescription() }}</td>
                         </tr>
                     {% endblock %}
                 </tbody>

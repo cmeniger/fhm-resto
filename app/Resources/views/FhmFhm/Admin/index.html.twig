@@ -75,42 +75,42 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {% for document in pagination %}
+                        {% for object in pagination %}
                             <tr>
                                 {% block content_data_body %}
-                                    <td>{{ document.getName() }}</td>
+                                    <td>{{ object.getName() }}</td>
                                 {% endblock %}
                                 {% block content_data_status %}
                                     <td>
                                         {% block content_data_status_data %}
-                                            {% if document.getDelete() %}
+                                            {% if object.getDelete() %}
                                                 <span class="status alert radius label">{{ ('fhm.status.delete')|trans({}, 'FhmFhmBundle') }}</span>
-                                            {% elseif not document.getActive() %}
+                                            {% elseif not object.getActive() %}
                                                 <span class="status warning radius label">{{ ('fhm.status.disable')|trans({}, 'FhmFhmBundle') }}</span>
                                             {% else %}
                                                 <span class="status success radius label">{{ ('fhm.status.enable')|trans({}, 'FhmFhmBundle') }}</span>
                                             {% endif %}
-                                            {% if document.getGlobal() %}
+                                            {% if object.getGlobal() %}
                                                 <span class="status regular radius label">{{ ('fhm.status.global')|trans({}, 'FhmFhmBundle') }}</span>
                                             {% endif %}
-                                            {% if document.getShare() %}
+                                            {% if object.getShare() %}
                                                 <span class="status regular radius label">{{ ('fhm.status.share')|trans({}, 'FhmFhmBundle') }}</span>
                                             {% endif %}
                                         {% endblock %}
                                     </td>
                                 {% endblock %}
-                                {% if document.getShare is defined  and not is_granted('ROLE_ADMIN') %}
+                                {% if object.getShare is defined  and not is_granted('ROLE_ADMIN') %}
                                     {% block content_data_action_share %}
                                         <td>
                                             <div class="actions">
                                                 {% block content_data_action_share_button %}
-                                                    <a href="{{ path(instance.source ~ '_admin_' ~ instance.route ~ '_duplicate', {'id': document.getId()}) }}" class="tiny radius button split no-pip warning"><i class="fa fa-files-o"></i> {{ (instance.translation ~ '.admin.index.table.action.duplicate')|trans }}
-                                                        <span data-dropdown="action{{ document.getId() }}"><i class="fa fa-angle-down"></i></span></a>
+                                                    <a href="{{ path(instance.source ~ '_admin_' ~ instance.route ~ '_duplicate', {'id': object.getId()}) }}" class="tiny radius button split no-pip warning"><i class="fa fa-files-o"></i> {{ (instance.translation ~ '.admin.index.table.action.duplicate')|trans }}
+                                                        <span data-dropdown="action{{ object.getId() }}"><i class="fa fa-angle-down"></i></span></a>
                                                 {% endblock %}
-                                                <ul id="action{{ document.getId() }}" class="f-dropdown" data-dropdown-content>
+                                                <ul id="action{{ object.getId() }}" class="f-dropdown" data-dropdown-content>
                                                     {% block content_data_action_share_links %}
                                                         <li>
-                                                            <a href="{{ path(instance.source ~ '_admin_' ~ instance.route ~ '_detail', {'id': document.getId()}) }}" title="{{ (instance.translation ~ '.admin.index.table.action.detail')|trans }}"><i class="fa fa-fw fa-gear"></i> {{ (instance.translation ~ '.admin.index.table.action.detail')|trans }}
+                                                            <a href="{{ path(instance.source ~ '_admin_' ~ instance.route ~ '_detail', {'id': object.getId()}) }}" title="{{ (instance.translation ~ '.admin.index.table.action.detail')|trans }}"><i class="fa fa-fw fa-gear"></i> {{ (instance.translation ~ '.admin.index.table.action.detail')|trans }}
                                                             </a>
                                                         </li>
                                                     {% endblock %}
@@ -119,32 +119,32 @@
                                             </div>
                                         </td>
                                     {% endblock %}
-                                {% elseif document.getDelete is defined  %}
+                                {% elseif object.getDelete is defined  %}
                                     {% block content_data_action_delete %}
                                         <td>
                                             <div class="actions">
                                                 {% block content_data_action_delete_button %}
-                                                    <a href="{{ path(instance.source ~ '_admin_' ~ instance.route ~ '_update', {'id': document.getId()}) }}" class="tiny radius button split no-pip alert"><i class="fa fa-pencil"></i> {{ (instance.translation ~ '.admin.index.table.action.update')|trans }}
-                                                        <span data-dropdown="action{{ document.getId() }}"><i class="fa fa-angle-down"></i></span></a>
+                                                    <a href="{{ path(instance.source ~ '_admin_' ~ instance.route ~ '_update', {'id': object.getId()}) }}" class="tiny radius button split no-pip alert"><i class="fa fa-pencil"></i> {{ (instance.translation ~ '.admin.index.table.action.update')|trans }}
+                                                        <span data-dropdown="action{{ object.getId() }}"><i class="fa fa-angle-down"></i></span></a>
                                                 {% endblock %}
-                                                <ul id="action{{ document.getId() }}" class="f-dropdown" data-dropdown-content>
+                                                <ul id="action{{ object.getId() }}" class="f-dropdown" data-dropdown-content>
                                                     {% block content_data_action_delete_links %}
                                                         <li>
-                                                            <a href="{{ path(instance.source ~ '_admin_' ~ instance.route ~ '_detail', {'id': document.getId()}) }}" title="{{ (instance.translation ~ '.admin.index.table.action.detail')|trans }}"><i class="fa fa-fw fa-gear"></i> {{ (instance.translation ~ '.admin.index.table.action.detail')|trans }}
+                                                            <a href="{{ path(instance.source ~ '_admin_' ~ instance.route ~ '_detail', {'id': object.getId()}) }}" title="{{ (instance.translation ~ '.admin.index.table.action.detail')|trans }}"><i class="fa fa-fw fa-gear"></i> {{ (instance.translation ~ '.admin.index.table.action.detail')|trans }}
                                                             </a>
                                                         </li>
                                                         <li>
-                                                            <a href="{{ path(instance.source ~ '_admin_' ~ instance.route ~ '_duplicate', {'id': document.getId()}) }}" title="{{ (instance.translation ~ '.admin.index.table.action.duplicate')|trans }}"><i class="fa fa-fw fa-files-o"></i> {{ (instance.translation ~ '.admin.index.table.action.duplicate')|trans }}
+                                                            <a href="{{ path(instance.source ~ '_admin_' ~ instance.route ~ '_duplicate', {'id': object.getId()}) }}" title="{{ (instance.translation ~ '.admin.index.table.action.duplicate')|trans }}"><i class="fa fa-fw fa-files-o"></i> {{ (instance.translation ~ '.admin.index.table.action.duplicate')|trans }}
                                                             </a>
                                                         </li>
                                                     {% endblock %}
                                                     {% block content_data_action_delete_alert %}
                                                         <li class="alert">
-                                                            <a href="{{ path(instance.source ~ '_admin_' ~ instance.route ~ '_undelete', {'id': document.getId()}) }}" title="{{ (instance.translation ~ '.admin.index.table.action.undelete')|trans }}" onclick="return confirm('{{ (instance.translation ~ '.admin.index.table.confirm.undelete')|trans }}')"><i class="fa fa-fw fa-undo"></i> {{ (instance.translation ~ '.admin.index.table.action.undelete')|trans }}
+                                                            <a href="{{ path(instance.source ~ '_admin_' ~ instance.route ~ '_undelete', {'id': object.getId()}) }}" title="{{ (instance.translation ~ '.admin.index.table.action.undelete')|trans }}" onclick="return confirm('{{ (instance.translation ~ '.admin.index.table.confirm.undelete')|trans }}')"><i class="fa fa-fw fa-undo"></i> {{ (instance.translation ~ '.admin.index.table.action.undelete')|trans }}
                                                             </a>
                                                         </li>
                                                         <li class="alert">
-                                                            <a href="{{ path(instance.source ~ '_admin_' ~ instance.route ~ '_delete', {'id': document.getId()}) }}" title="{{ (instance.translation ~ '.admin.index.table.action.delete')|trans }}" onclick="return confirm('{{ (instance.translation ~ '.admin.index.table.confirm.delete')|trans }}')"><i class="fa fa-fw fa-trash-o"></i> {{ (instance.translation ~ '.admin.index.table.action.delete')|trans }}
+                                                            <a href="{{ path(instance.source ~ '_admin_' ~ instance.route ~ '_delete', {'id': object.getId()}) }}" title="{{ (instance.translation ~ '.admin.index.table.action.delete')|trans }}" onclick="return confirm('{{ (instance.translation ~ '.admin.index.table.confirm.delete')|trans }}')"><i class="fa fa-fw fa-trash-o"></i> {{ (instance.translation ~ '.admin.index.table.action.delete')|trans }}
                                                             </a>
                                                         </li>
                                                     {% endblock %}
@@ -157,34 +157,34 @@
                                         <td>
                                             <div class="actions">
                                                 {% block content_data_action_button %}
-                                                    <a href="{{ path(instance.source ~ '_admin_' ~ instance.route ~ '_update', {'id': document.getId()}) }}" class="tiny radius button split no-pip"><i class="fa fa-pencil"></i> {{ (instance.translation ~ '.admin.index.table.action.update')|trans }}
-                                                        <span data-dropdown="action{{ document.getId() }}"><i class="fa fa-angle-down"></i></span></a>
+                                                    <a href="{{ path(instance.source ~ '_admin_' ~ instance.route ~ '_update', {'id': object.getId()}) }}" class="tiny radius button split no-pip"><i class="fa fa-pencil"></i> {{ (instance.translation ~ '.admin.index.table.action.update')|trans }}
+                                                        <span data-dropdown="action{{ object.getId() }}"><i class="fa fa-angle-down"></i></span></a>
                                                 {% endblock %}
-                                                <ul id="action{{ document.getId() }}" class="f-dropdown" data-dropdown-content>
+                                                <ul id="action{{ object.getId() }}" class="f-dropdown" data-dropdown-content>
                                                     {% block content_data_action_links %}
                                                         <li>
-                                                            <a href="{{ path(instance.source ~ '_admin_' ~ instance.route ~ '_detail', {'id': document.getId()}) }}" title="{{ (instance.translation ~ '.admin.index.table.action.detail')|trans }}"><i class="fa fa-fw fa-gear"></i> {{ (instance.translation ~ '.admin.index.table.action.detail')|trans }}
+                                                            <a href="{{ path(instance.source ~ '_admin_' ~ instance.route ~ '_detail', {'id': object.getId()}) }}" title="{{ (instance.translation ~ '.admin.index.table.action.detail')|trans }}"><i class="fa fa-fw fa-gear"></i> {{ (instance.translation ~ '.admin.index.table.action.detail')|trans }}
                                                             </a>
                                                         </li>
                                                         <li>
-                                                            <a href="{{ path(instance.source ~ '_admin_' ~ instance.route ~ '_duplicate', {'id': document.getId()}) }}" title="{{ (instance.translation ~ '.admin.index.table.action.duplicate')|trans }}"><i class="fa fa-fw fa-files-o"></i> {{ (instance.translation ~ '.admin.index.table.action.duplicate')|trans }}
+                                                            <a href="{{ path(instance.source ~ '_admin_' ~ instance.route ~ '_duplicate', {'id': object.getId()}) }}" title="{{ (instance.translation ~ '.admin.index.table.action.duplicate')|trans }}"><i class="fa fa-fw fa-files-o"></i> {{ (instance.translation ~ '.admin.index.table.action.duplicate')|trans }}
                                                             </a>
                                                         </li>
-                                                        {% if document.getActive() %}
+                                                        {% if object.getActive() %}
                                                             <li>
-                                                                <a href="{{ path(instance.source ~ '_admin_' ~ instance.route ~ '_deactivate', {'id': document.getId()}) }}" title="{{ (instance.translation ~ '.admin.index.table.action.deactivate')|trans }}" onclick="return confirm('{{ (instance.translation ~ '.admin.index.table.confirm.deactivate')|trans }}')"><i class="fa fa-fw fa-eye-slash"></i> {{ (instance.translation ~ '.admin.index.table.action.deactivate')|trans }}
+                                                                <a href="{{ path(instance.source ~ '_admin_' ~ instance.route ~ '_deactivate', {'id': object.getId()}) }}" title="{{ (instance.translation ~ '.admin.index.table.action.deactivate')|trans }}" onclick="return confirm('{{ (instance.translation ~ '.admin.index.table.confirm.deactivate')|trans }}')"><i class="fa fa-fw fa-eye-slash"></i> {{ (instance.translation ~ '.admin.index.table.action.deactivate')|trans }}
                                                                 </a>
                                                             </li>
                                                         {% else %}
                                                             <li>
-                                                                <a href="{{ path(instance.source ~ '_admin_' ~ instance.route ~ '_activate', {'id': document.getId()}) }}" title="{{ (instance.translation ~ '.admin.index.table.action.activate')|trans }}" onclick="return confirm('{{ (instance.translation ~ '.admin.index.table.confirm.activate')|trans }}')"><i class="fa fa-fw fa-eye"></i> {{ (instance.translation ~ '.admin.index.table.action.activate')|trans }}
+                                                                <a href="{{ path(instance.source ~ '_admin_' ~ instance.route ~ '_activate', {'id': object.getId()}) }}" title="{{ (instance.translation ~ '.admin.index.table.action.activate')|trans }}" onclick="return confirm('{{ (instance.translation ~ '.admin.index.table.confirm.activate')|trans }}')"><i class="fa fa-fw fa-eye"></i> {{ (instance.translation ~ '.admin.index.table.action.activate')|trans }}
                                                                 </a>
                                                             </li>
                                                         {% endif %}
                                                     {% endblock %}
                                                     {% block content_data_action_alert %}
                                                         <li class="alert">
-                                                            <a href="{{ path(instance.source ~ '_admin_' ~ instance.route ~ '_delete', {'id': document.getId()}) }}" title="{{ (instance.translation ~ '.admin.index.table.action.delete')|trans }}" onclick="return confirm('{{ (instance.translation ~ '.admin.index.table.confirm.delete')|trans }}')"><i class="fa fa-fw fa-trash-o"></i> {{ (instance.translation ~ '.admin.index.table.action.delete')|trans }}
+                                                            <a href="{{ path(instance.source ~ '_admin_' ~ instance.route ~ '_delete', {'id': object.getId()}) }}" title="{{ (instance.translation ~ '.admin.index.table.action.delete')|trans }}" onclick="return confirm('{{ (instance.translation ~ '.admin.index.table.confirm.delete')|trans }}')"><i class="fa fa-fw fa-trash-o"></i> {{ (instance.translation ~ '.admin.index.table.action.delete')|trans }}
                                                             </a>
                                                         </li>
                                                     {% endblock %}
