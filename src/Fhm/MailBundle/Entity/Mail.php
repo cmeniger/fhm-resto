@@ -26,17 +26,17 @@ class Mail extends Fhm
     protected $subject;
 
     /**
-     * @ORM\Column(type="string", length=100)
+     * @ORM\Column(type="string", length=100, name="mail_from")
      */
     protected $from;
 
     /**
-     * @ORM\Column(type="string", length=100)
+     * @ORM\Column(type="string", length=100, name="mail_to")
      */
     protected $to;
 
     /**
-     * @ORM\Column(type="string", length=100)
+     * @ORM\Column(type="string", length=100, name="mail_body")
      */
     protected $body;
 

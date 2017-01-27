@@ -59,7 +59,7 @@ class CreateType extends FhmType
     {
         $resolver->setDefaults(
             array(
-                'data_class' => 'Fhm\MailBundle\Document\Mail',
+                'data_class' => '',
                 'translation_domain' => 'FhmMailBundle',
                 'cascade_validation' => true,
                 'translation_route' => 'mail',

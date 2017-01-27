@@ -3,7 +3,6 @@ namespace Fhm\MailBundle\Controller;
 
 use Fhm\FhmBundle\Controller\RefAdminController as FhmController;
 use Fhm\FhmBundle\Form\Handler\Admin\CreateHandler;
-use Fhm\MailBundle\Document\Mail;
 use Fhm\MailBundle\Form\Type\Admin\CreateType;
 use Fhm\MailBundle\Form\Type\Admin\UpdateType;
 use Symfony\Component\HttpFoundation\Request;
@@ -29,12 +28,11 @@ class AdminController extends FhmController
         self::$source = "fhm";
         self::$domain = "FhmMailBundle";
         self::$translation = "mail";
-        self::$class = Mail::class;
         self::$route = "mail";
         self::$form = new \stdClass();
-        self::$form->createType    = CreateType::class;
+        self::$form->createType = CreateType::class;
         self::$form->createHandler = CreateHandler::class;
-        self::$form->updateType    = UpdateType::class;
+        self::$form->updateType = UpdateType::class;
     }
 
     /**
@@ -60,8 +58,9 @@ class AdminController extends FhmController
      */
     public function createAction(Request $request)
     {
-        $document = new self::$class;
-        $form = $this->createForm(self::$form->createType, $document);
+        self::$class = $this->get('fhm.object.manager')->getCurrentModelName(self::$repository);
+        $object = new self::$class;
+        $form = $this->createForm(self::$form->createType, $object, array('data_class'=>self::$class));
         $handler = new self::$form->createHandler($form, $request);
         $process = $handler->process();
         if ($process) {
@@ -84,24 +83,11 @@ class AdminController extends FhmController
 
         return array(
             'form' => $form->createView(),
-            'breadcrumbs' => array(
+            'breadcrumbs' => $this->get('fhm_tools')->generateBreadcrumbs(
                 array(
-                    'link' => $this->getUrl('project_home'),
-                    'text' => $this->trans('project.home.breadcrumb', array(), 'ProjectDefaultBundle'),
-                ),
-                array(
-                    'link' => $this->getUrl('fhm_admin'),
-                    'text' => $this->trans('fhm.admin.breadcrumb', array(), 'FhmFhmBundle'),
-                ),
-                array(
-                    'link' => $this->getUrl('mail_admin_mail'),
-                    'text' => $this->trans('mail.admin.index.breadcrumb'),
-                ),
-                array(
-                    'link' => $this->getUrl('fhm_admin_mail_create'),
-                    'text' => $this->trans('mail.admin.create.breadcrumb'),
-                    'current' => true,
-                ),
+                    'domain' => self::$domain,
+                    '_route' => $this->get('request_stack')->getCurrentRequest()->get('_route'),
+                )
             ),
         );
     }
@@ -157,24 +143,11 @@ class AdminController extends FhmController
     public function modelAction(Request $request)
     {
         return array(
-            'breadcrumbs' => array(
+            'breadcrumbs' => $this->get('fhm_tools')->generateBreadcrumbs(
                 array(
-                    'link' => $this->getUrl('project_home'),
-                    'text' => $this->trans('project.home.breadcrumb', array(), 'ProjectDefaultBundle'),
-                ),
-                array(
-                    'link' => $this->getUrl('fhm_admin'),
-                    'text' => $this->trans('fhm.admin.breadcrumb', array(), 'FhmFhmBundle'),
-                ),
-                array(
-                    'link' => $this->getUrl('fhm_admin_mail'),
-                    'text' => $this->trans('mail.admin.index.breadcrumb'),
-                ),
-                array(
-                    'link' => $this->getUrl('fhm_admin_mail_model'),
-                    'text' => $this->trans('mail.admin.model.breadcrumb'),
-                    'current' => true,
-                ),
+                    'domain' => self::$domain,
+                    '_route' => $this->get('request_stack')->getCurrentRequest()->get('_route'),
+                )
             ),
         );
     }

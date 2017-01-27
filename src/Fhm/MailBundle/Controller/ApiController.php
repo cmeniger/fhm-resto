@@ -2,7 +2,6 @@
 namespace Fhm\MailBundle\Controller;
 
 use Fhm\FhmBundle\Controller\RefApiController as FhmController;
-use Fhm\MailBundle\Document\Mail;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
@@ -26,7 +25,6 @@ class ApiController extends FhmController
         self::$source = "fhm";
         self::$domain = "FhmMailBundle";
         self::$translation = "mail";
-        self::$class = Mail::class;
         self::$route = "mail";
     }
 
@@ -131,7 +129,8 @@ class ApiController extends FhmController
      */
     public function contactDefaultAction()
     {
-        $message = new \Fhm\ContactBundle\Document\ContactMessage();
+        $messageClass = $this->get('fhm.object.manager')->getCurrentModelName('FhmContactBundle:ContactMessage');
+        $message = new $messageClass;
         $message->setField(
             array(
                 'firstname' => 'John',
@@ -144,7 +143,8 @@ class ApiController extends FhmController
                  Sed a libero. Praesent venenatis metus at tortor pulvinar varius. Suspendisse potenti.',
             )
         );
-        $contact = new \Fhm\ContactBundle\Document\Contact();
+        $contactClass = $this->get('fhm.object.manager')->getCurrentModelName('FhmContactBundle:Contact');
+        $contact = new $contactClass;
         $contact->setName("Contact test");
         $contact->addMessage($message);
 

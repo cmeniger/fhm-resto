@@ -1,7 +1,6 @@
 <?php
 namespace Fhm\MailBundle\Services;
 
-use Fhm\UserBundle\Document\User;
 use Symfony\Component\Templating\EngineInterface;
 
 /**
@@ -43,11 +42,14 @@ class Mailer
             )->setBody($body)->setContentType('text/html');
             $mailer->send($message);
             // Save mail
-            $document = new \Fhm\MailBundle\Document\Mail();
-            $document->setType('mail')->setModel($model)->setFrom(array_keys($fromEmail)[0])->setTo(
+            $mailClass = $this->fhm_tools->getContainer()->get('fhm.object.manager')->getCurrentModelName(
+                'FhmMailBundle:Mail'
+            );
+            $object = new $mailClass;
+            $object->setType('mail')->setModel($model)->setFrom(array_keys($fromEmail)[0])->setTo(
                 $toEmail
             )->setSubject($subject)->setBody($body);
-            $this->fhm_tools->dmPersist($document);
+            $this->fhm_tools->dmPersist($object);
         } else {
             $this->fhm_tools->getSession()->getFlashBag()->add(
                 'notice',
@@ -72,11 +74,14 @@ class Mailer
         $sender = $this->fhm_tools->getContainer()->get('fos_message.sender');
         $sender->send($thread->getMessage());
         // Save mail
-        $document = new \Fhm\MailBundle\Document\Mail();
-        $document->setType('message')->setModel($model)->setFrom($fromUser->getEmailCanonical())->setTo(
+        $mailClass = $this->fhm_tools->getContainer()->get('fhm.object.manager')->getCurrentModelName(
+            'FhmMailBundle:Mail'
+        );
+        $object = new $mailClass;
+        $object->setType('message')->setModel($model)->setFrom($fromUser->getEmailCanonical())->setTo(
             $toUser->getEmailCanonical()
         )->setSubject($subject)->setBody($body);
-        $this->fhm_tools->dmPersist($document);
+        $this->fhm_tools->dmPersist($object);
     }
 
     /**

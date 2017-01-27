@@ -32,19 +32,19 @@
 {% endblock %}
 
 {% block content_data_body %}
-    <td>{{ document.getDateCreate() | localizeddate('short', 'medium', app.request.locale) }}</td>
-    <td>{{ document.getModel() }}</td>
-    <td>{{ document.getTo() }}</td>
-    <td>{{ document.getSubject() }}</td>
-    <td><span class="radius label {{ (instance.translation ~ '.type.' ~ document.getType())|trans }}">{{ document.getType() }}</span></td>
+    <td>{{ object.getDateCreate() | localizeddate('short', 'medium', app.request.locale) }}</td>
+    <td>{{ object.getModel() }}</td>
+    <td>{{ object.getTo() }}</td>
+    <td>{{ object.getSubject() }}</td>
+    <td><span class="radius label {{ (instance.translation ~ '.type.' ~ object.getType())|trans }}">{{ object.getType() }}</span></td>
 {% endblock %}
 
 {% block content_data_action_button %}
-    <a href="{{ path(instance.source ~ '_admin_' ~ instance.route ~ '_detail', {'id': document.getId()}) }}" class="tiny radius button split no-pip"><i class="fa fa-search"></i> {{ (instance.translation ~ '.admin.index.table.action.detail')|trans }}
-        <span data-dropdown="action{{ document.getId() }}"><i class="fa fa-angle-down"></i></span></a><br>
+    <a href="{{ path(instance.source ~ '_admin_' ~ instance.route ~ '_detail', {'id': object.getId()}) }}" class="tiny radius button split no-pip"><i class="fa fa-search"></i> {{ (instance.translation ~ '.admin.index.table.action.detail')|trans }}
+        <span data-dropdown="action{{ object.getId() }}"><i class="fa fa-angle-down"></i></span></a><br>
 {% endblock %}
 
 {% block content_data_action_delete_button %}
-    <a href="{{ path(instance.source ~ '_admin_' ~ instance.route ~ '_detail', {'id': document.getId()}) }}" class="tiny radius button split no-pip alert"><i class="fa fa-search"></i> {{ (instance.translation ~ '.admin.index.table.action.detail')|trans }}
-        <span data-dropdown="action{{ document.getId() }}"><i class="fa fa-angle-down"></i></span></a><br>
+    <a href="{{ path(instance.source ~ '_admin_' ~ instance.route ~ '_detail', {'id': object.getId()}) }}" class="tiny radius button split no-pip alert"><i class="fa fa-search"></i> {{ (instance.translation ~ '.admin.index.table.action.detail')|trans }}
+        <span data-dropdown="action{{ object.getId() }}"><i class="fa fa-angle-down"></i></span></a><br>
 {% endblock %}

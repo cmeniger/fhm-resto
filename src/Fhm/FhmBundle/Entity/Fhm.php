@@ -19,13 +19,13 @@ class Fhm
     protected $id;
 
     /**
-     * @ORM\Column(type="date")
+     * @ORM\Column(type="date", nullable=true)
      * @Assert\Type("\DateTime")
      */
     protected $date_create;
 
     /**
-     * @ORM\Column(type="date")
+     * @ORM\Column(type="date", nullable=true)
      * @Assert\Type("\DateTime")
      */
     protected $date_update;
@@ -43,59 +43,59 @@ class Fhm
     protected $user_update;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", name="is_deleted", nullable=true)
      */
     protected $delete;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", name="is_activated", nullable=true)
      */
     protected $active;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", name="is_shared", nullable=true)
      */
     protected $share;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", name="is_global", nullable=true)
      */
     protected $global;
 
     /**
-     * @ORM\Column(type="string", length=100)
+     * @ORM\Column(type="string", length=100, nullable=true)
      */
     protected $name;
 
     /**
-     * @ORM\Column(type="string", length=100)
+     * @ORM\Column(type="string", length=100, nullable=true)
      */
     protected $description;
 
     /**
-     * @ORM\Column(type="string", length=100)
+     * @ORM\Column(type="string", length=100, nullable=true)
      */
     protected $alias;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", name="_order", nullable=true)
      * @Assert\Range(min = 0)
      */
     protected $order;
 
     /**
-     * @ORM\Column(type="string", length=100)
+     * @ORM\Column(type="string", length=100, nullable=true)
      * @Assert\Length(max = 50)
      */
     protected $seo_title;
 
     /**
-     * @ORM\Column(type="string", length=100)
+     * @ORM\Column(type="string", length=100, nullable=true)
      */
     protected $seo_keywords;
 
     /**
-     * @ORM\Column(type="string", length=100)
+     * @ORM\Column(type="string", length=100, nullable=true)
      * @Assert\Length(max = 150)
      */
     protected $seo_description;

@@ -2,7 +2,6 @@
 namespace Fhm\MailBundle\Controller;
 
 use Fhm\FhmBundle\Controller\RefFrontController as FhmController;
-use Fhm\MailBundle\Document\Mail;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -24,7 +23,6 @@ class FrontController extends FhmController
         self::$source = "fhm";
         self::$domain = "FhmMailBundle";
         self::$translation = "mail";
-        self::$class = Mail::class;
         self::$route = "mail";
     }
 
