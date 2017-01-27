@@ -85,7 +85,7 @@ class UpdateType extends FhmType
                 'choice_label' => 'name',
                 'query_builder' => function () use ($options) {
                     $dr = $options['object_manager']->getCurrentRepository('FhmEventBundle:EventGroup');
-                    return $dr->getFormEnable($options['filter']);
+                    return $dr->getFormEnable();
                 },
                 'multiple' => true,
                 'required' => false,
@@ -107,6 +107,7 @@ class UpdateType extends FhmType
                 'translation_route' => 'event',
                 'filter' => '',
                 'user_admin' => '',
+                'object_manager'=> ''
             )
         );
     }
