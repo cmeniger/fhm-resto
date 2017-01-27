@@ -117,6 +117,7 @@ class UpdateType extends FhmType
                 'translation_route' => 'slider',
                 'filter' => '',
                 'user_admin' => '',
+                'object_manager' => '',
                 'map' => '',
             )
         );
