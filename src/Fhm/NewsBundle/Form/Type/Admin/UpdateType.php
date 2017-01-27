@@ -135,7 +135,8 @@ class UpdateType extends FhmType
                 'cascade_validation' => true,
                 'translation_route' => 'news',
                 'filter' => '',
-                'user_admin' => ''
+                'user_admin' => '',
+                'object_manager'=>''
             )
         );
     }

@@ -135,7 +135,8 @@ class CreateType extends FhmType
                 'translation_domain' => 'FhmNewsBundle',
                 'cascade_validation' => true,
                 'translation_route' => 'news',
-                'user_admin' => ''
+                'user_admin' => '',
+                'object_manager'=>''
             )
         );
     }

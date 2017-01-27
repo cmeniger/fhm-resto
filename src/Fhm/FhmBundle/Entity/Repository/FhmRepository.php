@@ -60,17 +60,16 @@ class FhmRepository extends EntityRepository
      */
     public function getAdminIndex($search = "", $roleSuperAdmin = false)
     {
-        $builder = $search ? $this->search($search) : $this->createQueryBuilder('');
+        $builder = $search ? $this->search($search) : $this->createQueryBuilder('a');
         // Parent
         if ($this->parent) {
-            $builder->field('parent')->in(array('0', null));
+            $builder->andWhere('a.parent IN :(parent)')->setParameter('parent', [0, null]);
         }
         // RoleSuperAdmin
         if (!$roleSuperAdmin) {
-            $builder->field('delete')->equals(false);
+            $builder->andWhere('a.delete = :bool')->setParameter('bool', false);
         }
-        // Common
-        $this->builderSort($builder);
+
         return $builder->getQuery();
     }
 
@@ -81,17 +80,19 @@ class FhmRepository extends EntityRepository
      */
     public function getAdminCount($search = "", $roleSuperAdmin = false)
     {
-        $builder = $search ? $this->search($search) : $this->createQueryBuilder('');
+        $builder = $search ? $this->search($search) : $this->createQueryBuilder('a');
+
+        $builder->select('count(a.id)');
         // Parent
         if ($this->parent) {
-            $builder->field('parent')->in(array('0', null));
+            $builder->andWhere('a.parent IN :(parent)')->setParameter('parent', [0, null]);
         }
         // RoleSuperAdmin
         if (!$roleSuperAdmin) {
-            $builder->field('delete')->equals(false);
+            $builder->andWhere('a.delete = :bool')->setParameter('bool', false);
         }
 
-        return $builder->count()->getQuery()->execute();
+        return $builder->getQuery()->execute();
     }
 
     /**
@@ -100,15 +101,13 @@ class FhmRepository extends EntityRepository
      */
     public function getFrontIndex($search = "")
     {
-        $builder = $search ? $this->search($search) : $this->createQueryBuilder('');
+        $builder = $search ? $this->search($search) : $this->createQueryBuilder('a');
         // Parent
         if ($this->parent) {
-            $builder->field('parent')->in(array('0', null));
+            $builder->andWhere('a.parent IN :(parent)')->setParameter('parent', [0, null]);
         }
-        // Common
-        $builder->field('active')->equals(true);
-        $builder->field('delete')->equals(false);
-        $this->builderSort($builder);
+        $builder->andWhere('a.active = :bool')->setParameter('bool', true);
+        $builder->andWhere('a.delete = :bool')->setParameter('bool', false);
 
         return $builder->getQuery();
     }
@@ -119,16 +118,17 @@ class FhmRepository extends EntityRepository
      */
     public function getFrontCount($search = "")
     {
-        $builder = $search ? $this->search($search) : $this->createQueryBuilder('');
+        $builder = $search ? $this->search($search) : $this->createQueryBuilder('a');
+
+        $builder->select('count(a.id)');
         // Parent
         if ($this->parent) {
-            $builder->field('parent')->in(array('0', null));
+            $builder->andWhere('a.parent IN :(parent)')->setParameter('parent', [0, null]);
         }
-        // Common
-        $builder->field('active')->equals(true);
-        $builder->field('delete')->equals(false);
+        $builder->andWhere('a.active = :bool')->setParameter('bool', true);
+        $builder->andWhere('a.delete = :bool')->setParameter('bool', false);
 
-        return $builder->count()->getQuery()->execute();
+        return $builder->getQuery()->execute();
     }
 
     /**
@@ -136,17 +136,16 @@ class FhmRepository extends EntityRepository
      */
     public function getFormEnable()
     {
-        $builder = $this->createQueryBuilder('');
+        $builder = $this->createQueryBuilder('a');
+
         // Parent
         if ($this->parent) {
-            $builder->field('parent')->in(array('0', null));
+            $builder->andWhere('a.parent IN :(parent)')->setParameter('parent', [0, null]);
         }
-        // Common
-        $builder->field('active')->equals(true);
-        $builder->field('delete')->equals(false);
-        $this->builderSort($builder);
+        $builder->andWhere('a.active = :bool')->setParameter('bool', true);
+        $builder->andWhere('a.delete = :bool')->setParameter('bool', false);
 
-        return $builder;
+        return $builder->getQuery()->execute();
     }
 
     /**
@@ -283,7 +282,7 @@ class FhmRepository extends EntityRepository
      */
     public function getAllFiltered()
     {
-        $builder = $this->createQueryBuilder();
+        $builder = $this->createQueryBuilder('a');
         // Parent
         if ($this->parent) {
             $builder->field('parent')->in(array('0', null));
@@ -301,9 +300,12 @@ class FhmRepository extends EntityRepository
      */
     public function getGlobalEnableCount()
     {
-        return $this->createQueryBuilder()->field('global')->equals(true)->field('active')->equals(true)->field(
-            'delete'
-        )->equals(false)->count()->getQuery()->execute();
+        $query =  $this->createQueryBuilder('a')
+            ->select('count(a.id)')
+            ->where('a.global = :bool')->setParameter('bool', true)
+            ->andWhere('a.active = :bool')->setParameter('bool', true)
+            ->andWhere('a.delete = :bool')->setParameter('bool', false)->getQuery();
+        return $query->execute();
     }
 
     /**
@@ -311,97 +313,11 @@ class FhmRepository extends EntityRepository
      */
     public function getGlobalAllCount()
     {
-        return $this->createQueryBuilder()->field('global')->equals(true)->count()->getQuery()->execute();
-    }
-
-    /**
-     * @param $document
-     * @param int $page
-     * @param int $count
-     * @param bool $roleSuperAdmin
-     * @return mixed
-     */
-    public function getHistoricIndex($document, $page = 1, $count = 5, $roleSuperAdmin = false)
-    {
-        $builder = $this->createQueryBuilder();
-        // Parent
-        if ($this->parent) {
-            $builder->field('parent')->in(array('0', null));
-        }
-        // RoleSuperAdmin
-        if (!$roleSuperAdmin) {
-            $builder->field('delete')->equals(false);
-        }
-        // Pagination
-        if ($page > 0 && $count > 0) {
-            $builder->limit($count);
-            $builder->skip(($page - 1) * $count);
-        }
-        // Common
-        $builder->field('historic_parent')->equals($document);
-        $builder->sort('date_create', 'desc');
-
-        return $builder->getQuery()->execute()->toArray();
-    }
-
-    /**
-     * @param $document
-     * @param bool $roleSuperAdmin
-     * @return mixed
-     */
-    public function getHistoricCount($document, $roleSuperAdmin = false)
-    {
-        $builder = $this->createQueryBuilder();
-        // Parent
-        if ($this->parent) {
-            $builder->field('parent')->in(array('0', null));
-        }
-        // RoleSuperAdmin
-        if (!$roleSuperAdmin) {
-            $builder->field('delete')->equals(false);
-        }
-        // Common
-        $builder->field('historic_parent')->equals($document);
-
-        return $builder->count()->getQuery()->execute();
-    }
-
-    /**
-     * @param $document
-     * @return mixed
-     */
-    public function getHistoricAll($document)
-    {
-        $builder = $this->createQueryBuilder();
-        // Parent
-        if ($this->parent) {
-            $builder->field('parent')->in(array('0', null));
-        }
-        // Common
-        $builder->field('historic_parent')->equals($document);
-        $builder->sort('date_create', 'desc');
-
-        return $builder->getQuery()->execute()->toArray();
-    }
-
-    /**
-     * @param $document
-     * @return mixed
-     */
-    public function getHistoricEnable($document)
-    {
-        $builder = $this->createQueryBuilder();
-        // Parent
-        if ($this->parent) {
-            $builder->field('parent')->in(array('0', null));
-        }
-        // Common
-        $builder->field('historic_parent.id')->equals($document->getId());
-        $builder->field('active')->equals(true);
-        $builder->field('delete')->equals(false);
-        $builder->sort('date_create', 'desc');
-
-        return $builder->getQuery()->execute()->toArray();
+        $query =  $this->createQueryBuilder('a')
+            ->select('count(a.id)')
+            ->where('a.global = :bool')->setParameter('bool', true)
+            ->getQuery();
+        return $query->execute();
     }
 
     /**
@@ -421,7 +337,9 @@ class FhmRepository extends EntityRepository
     public function getImport($data, $index = null)
     {
         $value = !is_null($index) ? $data[$index] : $data['name'];
-        $results = $this->createQueryBuilder()->field('name')->equals($value)->getQuery()->execute()->toArray();
+        $results = $this->createQueryBuilder('a')
+            ->where('a.name = :str')->setParameter('str', $value)
+            ->getQuery()->execute()->toArray();
         if (count($results) <= 1) {
             return array_pop($results);
         } else {
@@ -438,12 +356,12 @@ class FhmRepository extends EntityRepository
      */
     public function isUnique($id, $string)
     {
-        $builder = $this->createQueryBuilder();
-        $builder->field('_id')->notEqual($id);
-        $builder->addOr($builder->expr()->field('id')->equals($string));
-        $builder->addOr($builder->expr()->field('name')->equals($string));
-        $builder->addOr($builder->expr()->field('alias')->equals($string));
-        $count = $builder->count()->getQuery()->execute();
+        $builder = $this->createQueryBuilder('a');
+        $builder->where('a.id != :val')->setParameter('val', $id);
+        $builder->orWhere('a.id != :str')->setParameter('str', $string);
+        $builder->orWhere('a.name != :str')->setParameter('str', $string);
+        $builder->orWhere('a.alias != :str')->setParameter('str', $string);
+        $count = $builder->select('count(a.id)')->getQuery()->execute();
 
         return $count > 0 ? false : true;
     }
@@ -455,44 +373,22 @@ class FhmRepository extends EntityRepository
      */
     protected function search($search)
     {
-        $qb = $this->createQueryBuilder();
-        $regx = '/.*'.$search.'.*/i';
-        $fields = array();
-        // Search ID field (not supported regex search)
-        $fields[] = $qb->expr()->field('_id')->equals($search);
+        $qb = $this->createQueryBuilder('a');
+        $qb->where('a.id = :val')->setParameter('val', $search);
         // Search all fields
-        foreach ($this->class->getFieldNames() as $field) {
-            $fields[] = $qb->expr()->field($field)->equals($regx);
-        }
-        // Add OR conditions
-        foreach ($fields as $field) {
-            $qb->addOr($field);
+        foreach ($this->getClassMetadata()->getFieldNames() as $field) {
+            $qb->orWhere('a.'.$field.' LIKE :str')->setParameter('str', '%'.$search.'%');
         }
 
         return $qb;
     }
 
     /**
-     * @param $document
-     *
-     * @return \Doctrine\ORM\QueryBuilder
+     * @param $entity
+     * @return mixed
      */
-    public function truncate($document)
+    public function truncate($entity)
     {
-        return $this->createQueryBuilder($document)->remove()->getQuery()->execute();
-    }
-
-    /**
-     * @param \Doctrine\ORM\Query
-     */
-    protected function builderSort(\Doctrine\ORM\QueryBuilder &$builder)
-    {
-        $builder->sort($this->sort[0], $this->sort[1]);
-        if ($this->sort[0] != 'order') {
-            $builder->sort('order');
-        }
-        if ($this->sort[0] != 'name') {
-            $builder->sort('name');
-        }
+        return $this->createQueryBuilder($entity)->delete()->getQuery()->execute();
     }
 }
