@@ -65,7 +65,15 @@ class AdminController extends FhmController
     public function createAction(Request $request)
     {
         $document = new self::$class;
-        $form = $this->createForm(self::$form->createType, $document);
+        $form = $this->createForm(
+            self::$form->createType,
+            $document,
+            array(
+                'user_admin' => $this->getUser()->hasRole('ROLE_SUPER_ADMIN'),
+                'data_class' => self::$class,
+                'object_manager' => $this->get('fhm.object.manager'),
+            )
+        );
         $handler = new self::$form->createHandler($form, $request);
         $process = $handler->process();
         if ($process) {
@@ -179,7 +187,15 @@ class AdminController extends FhmController
         if (!$this->getUser()->hasRole('ROLE_SUPER_ADMIN') && $document->getDelete()) {
             throw new HttpException(403, $this->trans(self::$translation.'.error.forbidden'));
         }
-        $form = $this->createForm(self::$form->updateType, $document);
+        $form = $this->createForm(
+            self::$form->updateType,
+            $document,
+            array(
+                'user_admin' => $this->getUser()->hasRole('ROLE_SUPER_ADMIN'),
+                'data_class' => self::$class,
+                'object_manager' => $this->get('fhm.object.manager'),
+            )
+        );
         $handler = new self::$form->updateHandler($form, $request);
         $process = $handler->process();
         if ($process) {

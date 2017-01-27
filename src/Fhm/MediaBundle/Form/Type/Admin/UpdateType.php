@@ -86,7 +86,9 @@ class UpdateType extends FhmType
                 'data_class' => 'Fhm\MediaBundle\Document\Media',
                 'translation_domain' => 'FhmMediaBundle',
                 'cascade_validation' => true,
-                'translation_route' => 'media'
+                'translation_route' => 'media',
+                'user_admin' => '',
+                'object_manager' => ''
             )
         );
     }
