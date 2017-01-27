@@ -26,12 +26,14 @@ class SiteRepository extends FhmRepository
      */
     public function getDefault()
     {
-        $builder = $this->createQueryBuilder('');
-        return $builder
-            ->andWhere('default' == true)
-            ->getMaxResults(1)
+        $builder = $this->createQueryBuilder('a');
+
+        return
+            $builder
+            ->andWhere('a.default = :bool')->setParameter('bool', true)
+            ->setMaxResults(1)
             ->getQuery()
-            ->getSingleResult();
+            ->getResult();
     }
 
     /**
@@ -39,14 +41,9 @@ class SiteRepository extends FhmRepository
      */
     public function resetDefault()
     {
-        $builder = $this->createQueryBuilder();
-
-        $builder
-            ->field('default')->equals(true)
-            ->field('default')->set(false)
-            ->update()
-            ->multiple(true)
-            ->getQuery()
-            ->execute();
+        $this->_em->createQueryBuilder()
+        ->update($this->_entityName, 'a')
+        ->set('a.default', false)
+        ->andWhere('a.default = :bool')->setParameter('bool', true)->getQuery()->execute();
     }
 }

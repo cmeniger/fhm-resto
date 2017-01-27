@@ -74,13 +74,19 @@ class NotificationRepository extends FhmRepository
         if (!$user) {
             return 0;
         }
-        $builder = $this->createQueryBuilder();
-        $builder->field('user.id')->equals($user->getId());
-        $builder->field('new')->equals(true);
-        $builder->field('active')->equals(true);
-        $builder->field('delete')->equals(false);
+        $builder = $this->_em->createQueryBuilder()
+            ->select('count(a)')
+            ->from($this->_entityName, 'a')
+            ->leftJoin('FhmUserBundle:User', 'u')
+            ->where('u.id = :userid')
+            ->andWhere('a.new = true')
+            ->andWhere('a.active = true')
+            ->andWhere('a.delete = false')
+            ->setParameter('userid', $user->getId())
+        ;
 
-        return $builder->count()->getQuery()->execute();
+        $result =  $builder->getQuery()->getSingleResult();
+        return array_shift($result);
     }
 
     /**

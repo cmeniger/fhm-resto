@@ -1,7 +1,9 @@
 <?php
 namespace Fhm\NotificationBundle\Entity;
+
 use Fhm\FhmBundle\Entity\Fhm;
 use Doctrine\ORM\Mapping as ORM;
+use Fhm\UserBundle\Entity\User;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -11,7 +13,8 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Notification extends Fhm
 {
     /**
-     * @ORM\ManyToOne(targetEntity="Fhm\UserBundle\Entity\User")
+     * @ORM\ManyToOne(targetEntity="Fhm\UserBundle\Entity\User", fetch="EAGER")
+     * @ORM\JoinColumn(nullable=true)
      */
     protected $user;
 
@@ -51,9 +54,9 @@ class Notification extends Fhm
     public function __construct()
     {
         parent::__construct();
-        $this->new       = true;
-        $this->active    = true;
-        $this->template  = "default";
+        $this->new = true;
+        $this->active = true;
+        $this->template = "default";
         $this->sort_user = "";
         $this->sort_data = "";
     }
@@ -77,7 +80,9 @@ class Notification extends Fhm
      */
     public function setUser($user)
     {
-        $this->user = ($user instanceof \Fhm\UserBundle\Entity\User) ? $user : null;
+        if ($user instanceof User) {
+            $this->user = $user;
+        }
 
         return $this;
     }
@@ -170,10 +175,8 @@ class Notification extends Fhm
     public function sortUpdate()
     {
         $this->sort_user = $this->user->getUsernameCanonical();
-        $this->sort_data = $this->user->getEmailCanonical() . ';'
-            . $this->user->getUsernameCanonical() . ';'
-            . $this->user->getFirstName() . ';'
-            . $this->user->getLastName();
+        $this->sort_data = $this->user->getEmailCanonical().';'.$this->user->getUsernameCanonical(
+            ).';'.$this->user->getFirstName().';'.$this->user->getLastName();
 
         return parent::sortUpdate();
     }

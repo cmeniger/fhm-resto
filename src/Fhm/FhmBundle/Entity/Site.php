@@ -1,8 +1,12 @@
 <?php
 namespace Fhm\FhmBundle\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Fhm\ContactBundle\Entity\Contact;
+use Fhm\GalleryBundle\Entity\Gallery;
+use Fhm\MediaBundle\Entity\Media;
+use Fhm\NewsBundle\Entity\NewsGroup;
+use Fhm\PartnerBundle\Entity\PartnerGroup;
+use Fhm\SliderBundle\Entity\Slider;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -26,42 +30,50 @@ class Site extends Fhm
     protected $subtitle;
 
     /**
-     * @ORM\OneToOne(targetEntity="Fhm\FhmBundle\Entity\Menu", orphanRemoval=true)
+     * @ORM\ManyToOne(targetEntity="Fhm\FhmBundle\Entity\Menu", fetch="EAGER")
+     * @ORM\JoinColumn(nullable=true)
      */
     protected $menu;
 
     /**
-     * @ORM\OneToOne(targetEntity="Fhm\SliderBundle\Entity\Slider", orphanRemoval=true)
+     * @ORM\ManyToOne(targetEntity="Fhm\SliderBundle\Entity\Slider", fetch="EAGER")
+     * @ORM\JoinColumn(nullable=true)
      */
     protected $slider;
 
     /**
-     * @ORM\OneToOne(targetEntity="Fhm\GalleryBundle\Entity\Gallery", orphanRemoval=true)
+     * @ORM\ManyToOne(targetEntity="Fhm\GalleryBundle\Entity\Gallery", fetch="EAGER")
+     * @ORM\JoinColumn(nullable=true)
      */
     protected $gallery;
 
     /**
-     * @ORM\OneToOne(targetEntity="Fhm\MediaBundle\Entity\Media", cascade={"persist"}, orphanRemoval=true)
+     * @ORM\ManyToOne(targetEntity="Fhm\MediaBundle\Entity\Media", cascade={"persist"}, fetch="EAGER")
+     * @ORM\JoinColumn(nullable=true)
      */
     protected $logo;
 
     /**
-     * @ORM\OneToOne(targetEntity="Fhm\MediaBundle\Entity\Media", cascade={"persist"}, orphanRemoval=true)
+     * @ORM\ManyToOne(targetEntity="Fhm\MediaBundle\Entity\Media", cascade={"persist"}, fetch="EAGER")
+     * @ORM\JoinColumn(nullable=true)
      */
     protected $background;
 
     /**
-     * @ORM\OneToOne(targetEntity="Fhm\NewsBundle\Entity\NewsGroup", cascade={"persist"}, orphanRemoval=true)
+     * @ORM\ManyToOne(targetEntity="Fhm\NewsBundle\Entity\NewsGroup", cascade={"persist"}, fetch="EAGER")
+     * @ORM\JoinColumn(nullable=true)
      */
     protected $news;
 
     /**
-     * @ORM\OneToOne(targetEntity="Fhm\PartnerBundle\Entity\PartnerGroup", cascade={"persist"}, orphanRemoval=true)
+     * @ORM\ManyToOne(targetEntity="Fhm\PartnerBundle\Entity\PartnerGroup", cascade={"persist"}, fetch="EAGER")
+     * @ORM\JoinColumn(nullable=true)
      */
     protected $partner;
 
     /**
-     * @ORM\OneToOne(targetEntity="Fhm\ContactBundle\Entity\Contact", orphanRemoval=true)
+     * @ORM\ManyToOne(targetEntity="Fhm\ContactBundle\Entity\Contact", fetch="EAGER")
+     * @ORM\JoinColumn(nullable=true)
      */
     protected $contact;
 
@@ -182,7 +194,9 @@ class Site extends Fhm
      */
     public function setMenu($menu)
     {
-        $this->menu = ($menu instanceof \Fhm\FhmBundle\Entity\Menu) ? $menu : null;
+        if ($menu instanceof Menu) {
+            $this->menu = $menu;
+        }
 
         return $this;
     }
@@ -206,7 +220,9 @@ class Site extends Fhm
      */
     public function setSlider($slider)
     {
-        $this->slider = ($slider instanceof \Fhm\SliderBundle\Entity\Slider) ? $slider : null;
+        if ($slider instanceof Slider) {
+            $this->slider = $slider;
+        }
 
         return $this;
     }
@@ -230,7 +246,9 @@ class Site extends Fhm
      */
     public function setGallery($gallery)
     {
-        $this->gallery = ($gallery instanceof \Fhm\GalleryBundle\Entity\Gallery) ? $gallery : null;
+        if ($gallery instanceof Gallery) {
+            $this->gallery = $gallery;
+        }
 
         return $this;
     }
@@ -254,7 +272,9 @@ class Site extends Fhm
      */
     public function setLogo($media)
     {
-        $this->logo = ($media instanceof \Fhm\MediaBundle\Entity\Media) ? $media : null;
+        if ($media instanceof Media) {
+            $this->logo = $media;
+        }
 
         return $this;
     }
@@ -278,7 +298,9 @@ class Site extends Fhm
      */
     public function setBackground($media)
     {
-        $this->background = ($media instanceof \Fhm\MediaBundle\Entity\Media) ? $media : null;
+        if ($media instanceof Media) {
+            $this->background = $media;
+        }
 
         return $this;
     }
@@ -302,7 +324,9 @@ class Site extends Fhm
      */
     public function setNews($news)
     {
-        $this->news = ($news instanceof \Fhm\NewsBundle\Entity\NewsGroup) ? $news : null;
+        if ($news instanceof NewsGroup) {
+            $this->news = $news;
+        }
 
         return $this;
     }
@@ -326,7 +350,9 @@ class Site extends Fhm
      */
     public function setPartner($partner)
     {
-        $this->partner = ($partner instanceof \Fhm\PartnerBundle\Entity\PartnerGroup) ? $partner : null;
+        if ($partner instanceof PartnerGroup) {
+            $this->partner = $partner;
+        }
 
         return $this;
     }

@@ -3,12 +3,11 @@ namespace Fhm\FhmBundle\Entity;
 
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\MappedSuperclass;
 
 /**
  * Fhm
- * @ORM\Entity(repositoryClass="Fhm\FhmBundle\Entity\Repository\FhmRepository")
- * @ORM\Table()
- * @ORM\HasLifecycleCallbacks
+ * @ORM\MappedSuperclass
  */
 class Fhm
 {
@@ -32,12 +31,14 @@ class Fhm
     protected $date_update;
 
     /**
-     * @ORM\OneToOne(targetEntity="Fhm\UserBundle\Entity\User", cascade={"persist"}, orphanRemoval=true)
+     * @ORM\ManyToOne(targetEntity="Fhm\UserBundle\Entity\User", cascade={"persist"}, fetch="EAGER")
+     * @ORM\JoinColumn(nullable=true)
      */
     protected $user_create;
 
     /**
-     * @ORM\OneToOne(targetEntity="Fhm\UserBundle\Entity\User", orphanRemoval=true, cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="Fhm\UserBundle\Entity\User", cascade={"persist"}, fetch="EAGER")
+     * @ORM\JoinColumn(nullable=true)
      */
     protected $user_update;
 

@@ -1,10 +1,10 @@
 {#
-     tree     : document en cours
-     treemap  : branches du document en cours
+     tree     : object en cours
+     treemap  : branches du object en cours
      fieldset : texte du fieldset
      instance : données d'instance de la page courante
 #}
-{% macro admin(tree, treemap, document, modules, basetrans, instance) %}
+{% macro admin(tree, treemap, object, modules, basetrans, instance) %}
 
     {% trans_default_domain instance.domain %}
     {% import _self as this %}
@@ -13,7 +13,7 @@
             <div class="dd-tree-map">
                 <ul class="breadcrumbs">
                     {% for map in treemap %}
-                        {% if map.getId() == document.getId() %}
+                        {% if map.getId() == object.getId() %}
                             <li class="current">{{ map.getName() }}</li>
                         {% else %}
                             <li>
@@ -24,16 +24,16 @@
                 </ul>
             </div>
         {% endif %}
-        <div class="dd-tree-master" data-id="{{ document.getId() }}" data-url="{{ path('fhm_admin_' ~ instance.route ~ '_sort') }}">
+        <div class="dd-tree-master" data-id="{{ object.getId() }}" data-url="{{ path('fhm_admin_' ~ instance.route ~ '_sort') }}">
             <div class="dd-tree-handle"><i class="fa fa-chevron-down"></i></div>
-            <div class="dd-tree-content {{ document.getActive() ? "" : "deactive" }} {{ document.getDelete() ? "delete" : "" }}">
-                <div class="pull-left">{{ document.getName() }}</div>
-                <div class="pull-right">{{ this.actions(document, instance) }}</div>
+            <div class="dd-tree-content {{ object.getActive() ? "" : "deactive" }} {{ object.getDelete() ? "delete" : "" }}">
+                <div class="pull-left">{{ object.getName() }}</div>
+                <div class="pull-right">{{ this.actions(object, instance) }}</div>
             </div>
         </div>
 
-        {% if document.getChilds()|length > 0 %}
-            {{ this.branchs(document.getChilds(), instance) }}
+        {% if object.getChilds()|length > 0 %}
+            {{ this.branchs(object.getChilds(), instance) }}
         {% endif %}
     </div>
 
@@ -56,7 +56,7 @@
                 </div>
                 <div class="row">
                     {{ (basetrans ~ '.add.form.route')|trans }}
-                    <a href="#" data-reveal-id="addData" onclick="$('#FhmAdd_parent').val('{{ document.getId() }}')" title="{{ (instance.translation ~ '.admin.index.table.action.add')|trans }}"><i class="fa fa-plus"></i></a>
+                    <a href="#" data-reveal-id="addData" onclick="$('#FhmAdd_parent').val('{{ object.getId() }}')" title="{{ (instance.translation ~ '.admin.index.table.action.add')|trans }}"><i class="fa fa-plus"></i></a>
                     <input type="text" id="FhmAdd_route" name="FhmAdd[route]">
                 </div>
                 <div class="row">
@@ -66,7 +66,7 @@
             </div>
             <div class="large-12 columns">
                 <input type="hidden" id="FhmAdd_parent" name="FhmAdd[parent]" value="">
-                <input type="hidden" id="FhmAdd_id" name="FhmAdd[id]" value="{{ document.getId() }}">
+                <input type="hidden" id="FhmAdd_id" name="FhmAdd[id]" value="{{ object.getId() }}">
                 <button type="submit" id="FhmAdd_submit" name="FhmAdd[submit]">{{ (instance.translation ~ '.admin.add.submit')|trans }}</button>
             </div>
         </form>
@@ -93,7 +93,7 @@
                 </div>
                 <div class="row">
                     {{ (basetrans ~ '.edit.form.route')|trans }}
-                    <a href="#" data-reveal-id="addData" onclick="$('#FhmUpdate_parent').val('{{ document.getId() }}')" title="{{ (instance.translation ~ '.admin.index.table.action.add')|trans }}"><i class="fa fa-plus"></i></a>
+                    <a href="#" data-reveal-id="addData" onclick="$('#FhmUpdate_parent').val('{{ object.getId() }}')" title="{{ (instance.translation ~ '.admin.index.table.action.add')|trans }}"><i class="fa fa-plus"></i></a>
                     <input type="text" id="FhmUpdate_route" name="FhmUpdate[route]" value="">
                 </div>
                 <div class="row">
@@ -109,16 +109,16 @@
         </form>
         <a class="close-reveal-modal" aria-label="Close">&#215;</a>
     </div>
-    {{ this.moduleAjax(document, modules,'FhmAdd_route', basetrans, instance) }}
+    {{ this.moduleAjax(object, modules,'FhmAdd_route', basetrans, instance) }}
 {% endmacro %}
 
 {#
-     tree     : document en cours
-     treemap  : branches du document en cours
+     tree     : object en cours
+     treemap  : branches du object en cours
      fieldset : texte du fieldset
      instance : données d'instance de la page courante
 #}
-{% macro module(document, modules, basetrans, instance) %}
+{% macro module(object, modules, basetrans, instance) %}
     {% trans_default_domain instance.domain %}
     {% import _self as this %}
     <div id="addData" class="reveal-modal" data-reveal>
@@ -148,9 +148,9 @@
                 </div>
             </div>
             <div class="large-12 columns">
-                {% if document != null %}
-                    <input type="hidden" id="FhmAdd_parent" name="FhmAdd[parent]" value="{{ document.getParent() }}">
-                    <input type="hidden" id="FhmAdd_id" name="FhmAdd[id]" value="{{ document.getId() }}">
+                {% if object != null %}
+                    <input type="hidden" id="FhmAdd_parent" name="FhmAdd[parent]" value="{{ object.getParent() }}">
+                    <input type="hidden" id="FhmAdd_id" name="FhmAdd[id]" value="{{ object.getId() }}">
                 {% else %}
                     <input type="hidden" id="FhmAdd_parent" name="FhmAdd[parent]" value="">
                     <input type="hidden" id="FhmAdd_id" name="FhmAdd[id]" value="">
@@ -164,12 +164,12 @@
 {% endmacro %}
 
 {#
-     tree     : document en cours
-     treemap  : branches du document en cours
+     tree     : object en cours
+     treemap  : branches du object en cours
      fieldset : texte du fieldset
      instance : données d'instance de la page courante
 #}
-{% macro moduleAjax(document, modules, elem, basetrans, instance) %}
+{% macro moduleAjax(object, modules, elem, basetrans, instance) %}
     {% trans_default_domain instance.domain %}
     {% import _self as this %}
     <div id="addData" box={{ elem }} class="reveal-modal" data-reveal>
@@ -199,9 +199,9 @@
                 </div>
             </div>
             <div class="large-12 columns">
-                {% if document != null %}
-                    <input type="hidden" id="FhmAdd_parent" name="FhmAdd[parent]" value="{{ document.getParent() }}">
-                    <input type="hidden" id="FhmAdd_id" name="FhmAdd[id]" value="{{ document.getId() }}">
+                {% if object != null %}
+                    <input type="hidden" id="FhmAdd_parent" name="FhmAdd[parent]" value="{{ object.getParent() }}">
+                    <input type="hidden" id="FhmAdd_id" name="FhmAdd[id]" value="{{ object.getId() }}">
                 {% else %}
                     <input type="hidden" id="FhmAdd_parent" name="FhmAdd[parent]" value="">
                     <input type="hidden" id="FhmAdd_id" name="FhmAdd[id]" value="">
@@ -246,50 +246,50 @@
 {% endmacro %}
 
 {# Actions #}
-{# @var document object #}
+{# @var object object #}
 {# @var instance object #}
-{% macro actions(document, instance) %}
+{% macro actions(object, instance) %}
 
     {% trans_default_domain instance.domain %}
 
     <div class="dd-tree-status">
-        {% if document.getDelete() %}
+        {% if object.getDelete() %}
             <span class="status alert radius label">{{ ('fhm.status.delete')|trans({}, 'FhmFhmBundle') }}</span>
-        {% elseif not document.getActive() %}
+        {% elseif not object.getActive() %}
             <span class="status warning radius label">{{ ('fhm.status.disable')|trans({}, 'FhmFhmBundle') }}</span>
         {% else %}
             <span class="status success radius label">{{ ('fhm.status.enable')|trans({}, 'FhmFhmBundle') }}</span>
         {% endif %}
-        {% if document.getShare() and not document.hasGrouping(instance.grouping.used) %}
+        {% if object.getShare() and not object.hasGrouping(instance.grouping.used) %}
             <span class="status regular radius label">{{ ('fhm.status.share')|trans({}, 'FhmFhmBundle') }}</span>
         {% endif %}
     </div>
 
     <div class="dd-tree-page">
-        {% if document.getRoute() %}
-            <i class="fa fa-link" title="{{ document.getRoute() }}"></i>
+        {% if object.getRoute() %}
+            <i class="fa fa-link" title="{{ object.getRoute() }}"></i>
         {% else %}
             <i class="fa fa-file-o nodata"></i>
         {% endif %}
     </div>
 
     <div class="dd-tree-actions">
-        <a href="#" data-reveal-id="addDataForm" onclick="$('#FhmAdd_parent').val('{{ document.getId() }}')" title="{{ (instance.translation ~ '.admin.index.table.action.add')|trans }}"><i class="fa fa-plus"></i></a>
-        <a href="{{ path('fhm_admin_' ~ instance.route ~ '_detail', {'id': document.getId()}) }}" title="{{ (instance.translation ~ '.admin.index.table.action.detail')|trans }}"><i class="fa fa-gear"></i></a>
-        <a href="#" data-reveal-id="updateDataForm" onclick='$("#FhmUpdate_id").val("{{ document.getId() }}"),$("#FhmUpdate_parent").val("{{ document.getId() }}"),$("#FhmUpdate_name").val("{{ document.getName() }}"),$("#FhmUpdate_description").val("{{ document.getDescription() }}"),$("#FhmUpdate_route").val("{{ document.getRoute() }}"),$("#FhmUpdate_icon").val("{{ document.getIcon() }}")' title="{{ (instance.translation ~ '.admin.index.table.action.update')|trans }}"><i class="fa fa-pencil"></i></a>
+        <a href="#" data-reveal-id="addDataForm" onclick="$('#FhmAdd_parent').val('{{ object.getId() }}')" title="{{ (instance.translation ~ '.admin.index.table.action.add')|trans }}"><i class="fa fa-plus"></i></a>
+        <a href="{{ path('fhm_admin_' ~ instance.route ~ '_detail', {'id': object.getId()}) }}" title="{{ (instance.translation ~ '.admin.index.table.action.detail')|trans }}"><i class="fa fa-gear"></i></a>
+        <a href="#" data-reveal-id="updateDataForm" onclick='$("#FhmUpdate_id").val("{{ object.getId() }}"),$("#FhmUpdate_parent").val("{{ object.getId() }}"),$("#FhmUpdate_name").val("{{ object.getName() }}"),$("#FhmUpdate_description").val("{{ object.getDescription() }}"),$("#FhmUpdate_route").val("{{ object.getRoute() }}"),$("#FhmUpdate_icon").val("{{ object.getIcon() }}")' title="{{ (instance.translation ~ '.admin.index.table.action.update')|trans }}"><i class="fa fa-pencil"></i></a>
 
-        {% if document.getDelete() %}
+        {% if object.getDelete() %}
             {% if instance.user.admin %}
-                <a href="{{ path('fhm_admin_' ~ instance.route ~ '_undelete', {'id': document.getId()}) }}" title="{{ (instance.translation ~ '.admin.index.table.action.undelete')|trans }}" onclick="return confirm('{{ (instance.translation ~ '.admin.index.table.confirm.undelete')|trans }}')"><i class="fa fa-undo"></i></a>
-                <a href="{{ path('fhm_admin_' ~ instance.route ~ '_delete', {'id': document.getId()}) }}" title="{{ (instance.translation ~ '.admin.index.table.action.delete')|trans }}" onclick="return confirm('{{ (instance.translation ~ '.admin.index.table.confirm.delete')|trans }}')"><i class="fa fa-trash"></i></a>
+                <a href="{{ path('fhm_admin_' ~ instance.route ~ '_undelete', {'id': object.getId()}) }}" title="{{ (instance.translation ~ '.admin.index.table.action.undelete')|trans }}" onclick="return confirm('{{ (instance.translation ~ '.admin.index.table.confirm.undelete')|trans }}')"><i class="fa fa-undo"></i></a>
+                <a href="{{ path('fhm_admin_' ~ instance.route ~ '_delete', {'id': object.getId()}) }}" title="{{ (instance.translation ~ '.admin.index.table.action.delete')|trans }}" onclick="return confirm('{{ (instance.translation ~ '.admin.index.table.confirm.delete')|trans }}')"><i class="fa fa-trash"></i></a>
             {% endif %}
         {% else %}
-            {% if document.getActive() %}
-                <a href="{{ path('fhm_admin_' ~ instance.route ~ '_deactivate', {'id': document.getId()}) }}" title="{{ (instance.translation ~ '.admin.index.table.action.deactivate')|trans }}" onclick="return confirm('{{ (instance.translation ~ '.admin.index.table.confirm.deactivate')|trans }}')"><i class="fa fa-eye-slash"></i></a>
+            {% if object.getActive() %}
+                <a href="{{ path('fhm_admin_' ~ instance.route ~ '_deactivate', {'id': object.getId()}) }}" title="{{ (instance.translation ~ '.admin.index.table.action.deactivate')|trans }}" onclick="return confirm('{{ (instance.translation ~ '.admin.index.table.confirm.deactivate')|trans }}')"><i class="fa fa-eye-slash"></i></a>
             {% else %}
-                <a href="{{ path('fhm_admin_' ~ instance.route ~ '_activate', {'id': document.getId()}) }}" title="{{ (instance.translation ~ '.admin.index.table.action.activate')|trans }}" onclick="return confirm('{{ (instance.translation ~ '.admin.index.table.confirm.activate')|trans }}')"><i class="fa fa-eye"></i></a>
+                <a href="{{ path('fhm_admin_' ~ instance.route ~ '_activate', {'id': object.getId()}) }}" title="{{ (instance.translation ~ '.admin.index.table.action.activate')|trans }}" onclick="return confirm('{{ (instance.translation ~ '.admin.index.table.confirm.activate')|trans }}')"><i class="fa fa-eye"></i></a>
             {% endif %}
-            <a href="{{ path('fhm_admin_' ~ instance.route ~ '_delete', {'id': document.getId()}) }}" title="{{ (instance.translation ~ '.admin.index.table.action.delete')|trans }}" onclick="return confirm('{{ (instance.translation ~ '.admin.index.table.confirm.delete')|trans }}')"><i class="fa fa-trash-o"></i></a>
+            <a href="{{ path('fhm_admin_' ~ instance.route ~ '_delete', {'id': object.getId()}) }}" title="{{ (instance.translation ~ '.admin.index.table.action.delete')|trans }}" onclick="return confirm('{{ (instance.translation ~ '.admin.index.table.confirm.delete')|trans }}')"><i class="fa fa-trash-o"></i></a>
         {% endif %}
     </div>
 {% endmacro %}
