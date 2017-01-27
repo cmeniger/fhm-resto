@@ -77,7 +77,10 @@ class CreateType extends FhmType
             array(
                 'data_class' => 'Fhm\NewsBundle\Document\NewsGroup',
                 'translation_domain' => 'FhmNewsBundle',
+                'translation_route' => 'news.group',
                 'cascade_validation' => true,
+                'user_admin' => '',
+                'object_manager' => ''
             )
         );
     }
