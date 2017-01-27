@@ -87,6 +87,7 @@ class UpdateType extends FhmType
                 'translation_route' => 'gallery.item',
                 'filter' => '',
                 'user_admin' => '',
+                'object_manager' => ''
             )
         );
     }

@@ -69,11 +69,8 @@ class CreateType extends FhmType
                 'label' => $options['translation_route'].'.admin.create.form.galleries',
                 'class' => 'FhmGalleryBundle:Gallery',
                 'choice_label' => 'name',
-                'query_builder' => function (GalleryRepository $dr) {
-                    return $dr->getFormEnable();
-                },
                 'query_builder' => function () use ($options) {
-                    $dr = $options['object_manager']->getCurrentRepository('FhmGalleryBundle:GalleryAlbum');
+                    $dr = $options['object_manager']->getCurrentRepository('FhmGalleryBundle:Gallery');
                     return $dr->getFormEnable();
                 },
                 'required' => false,
@@ -96,6 +93,7 @@ class CreateType extends FhmType
                 'translation_route' => 'gallery.video',
                 'filter' => '',
                 'user_admin' => '',
+                'object_manager' => ''
             )
         );
     }

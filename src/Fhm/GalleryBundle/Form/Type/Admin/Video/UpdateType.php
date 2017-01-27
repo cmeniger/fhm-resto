@@ -96,6 +96,7 @@ class UpdateType extends FhmType
                 'translation_route' => 'gallery.video',
                 'filter' => '',
                 'user_admin' => '',
+                'object_manager' => ''
             )
         );
     }

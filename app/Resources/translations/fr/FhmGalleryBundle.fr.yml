@@ -313,7 +313,7 @@ gallery:
     item:
         admin:
             index:
-                title:                          Gestion des galeries ':' images
+                title:                          'Gestion des galeries : images'
                 link:                           Images
                 breadcrumb:                     Images
                 nodata:                         Aucune donnée
@@ -590,7 +590,7 @@ gallery:
     video:
         admin:
             index:
-                title:                          Gestion des galeries ':' vidéos
+                title:                          'Gestion des galeries : vidéos'
                 link:                           Vidéos
                 breadcrumb:                     Vidéos
                 nodata:                         Aucune donnée
