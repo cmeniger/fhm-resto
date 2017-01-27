@@ -22,24 +22,6 @@ class UserRepository extends FhmRepository
         parent::__construct($dm, $class);
     }
 
-    /**
-     * @param string $search
-     * @param bool $roleSuperAdmin
-     * @return mixed
-     */
-    public function getAdminIndex($search = "", $roleSuperAdmin = false)
-    {
-        $builder = ($search) ? $this->search($search) : $this->createQueryBuilder();
-        // RoleSuperAdmin
-        if (!$roleSuperAdmin) {
-            $builder->field('delete')->equals(false);
-        }
-        // Common
-        $builder->field('roles')->notIn(array('ROLE_SUPER_ADMIN'));
-        $this->builderSort($builder);
-
-        return $builder->getQuery();
-    }
 
     /**
      * @param string $search

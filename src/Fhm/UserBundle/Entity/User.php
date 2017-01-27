@@ -17,53 +17,53 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 class User extends GeolocationWithUser
 {
     /**
-     * @ORM\Column(type="string", length=100)
+     * @ORM\Column(type="string", length=100, nullable=true)
      */
     protected $id_facebook;
 
     /**
-     * @ORM\Column(type="string", length=100)
+     * @ORM\Column(type="string", length=100, nullable=true)
      */
     protected $image_facebook;
 
     /**
-     * @ORM\Column(type="string", length=100)
+     * @ORM\Column(type="string", length=100, nullable=true)
      */
     protected $id_twitter;
 
     /**
-     * @ORM\Column(type="string", length=100)
+     * @ORM\Column(type="string", length=100, nullable=true)
      */
     protected $id_google;
 
     /**
-     * @ORM\Column(type="date")
+     * @ORM\Column(type="date", nullable=true)
      * @Assert\Type("\DateTime")
      */
     protected $date_activity;
 
     /**
-     * @ORM\Column(type="string", length=100)
+     * @ORM\Column(type="string", length=100, nullable=true)
      */
     protected $first_name;
 
     /**
-     * @ORM\Column(type="string", length=100)
+     * @ORM\Column(type="string", length=100, nullable=true)
      */
     protected $last_name;
 
     /**
-     * @ORM\Column(type="string", length=100)
+     * @ORM\Column(type="string", length=100, nullable=true)
      */
     protected $tel1;
 
     /**
-     * @ORM\Column(type="string", length=100)
+     * @ORM\Column(type="string", length=100, nullable=true)
      */
     protected $tel2;
 
     /**
-     * @ORM\Column(type="date")
+     * @ORM\Column(type="date", nullable=true)
      * @Assert\Type("\DateTime")
      */
     protected $birth_date;
@@ -88,17 +88,17 @@ class User extends GeolocationWithUser
     protected $emailCanonical;
 
     /**
-     * @ORM\Column(type="string", length=100)
+     * @ORM\Column(type="string", length=100, nullable=true)
      */
     protected $usernameCanonical;
 
     /**
-     * @ORM\Column(type="string", length=100)
+     * @ORM\Column(type="string", length=100, nullable=true)
      */
     protected $sign;
 
     /**
-     * @ORM\Column(type="string", length=100)
+     * @ORM\Column(type="string", length=100, nullable=true)
      */
     protected $sex;
 
@@ -108,52 +108,52 @@ class User extends GeolocationWithUser
     protected $avatar;
 
     /**
-     * @ORM\Column(type="string", length=100)
+     * @ORM\Column(type="string", length=100, nullable=true)
      */
     protected $social_facebook;
 
     /**
-     * @ORM\Column(type="string", length=100)
+     * @ORM\Column(type="string", length=100, nullable=true)
      */
     protected $social_facebook_id;
 
     /**
-     * @ORM\Column(type="string", length=100)
+     * @ORM\Column(type="string", length=100, nullable=true)
      */
     protected $social_twitter;
 
     /**
-     * @ORM\Column(type="string", length=100)
+     * @ORM\Column(type="string", length=100, nullable=true)
      */
     protected $social_twitter_id;
 
     /**
-     * @ORM\Column(type="string", length=100)
+     * @ORM\Column(type="string", length=100, nullable=true)
      */
     protected $social_google;
 
     /**
-     * @ORM\Column(type="string", length=100)
+     * @ORM\Column(type="string", length=100, nullable=true)
      */
     protected $social_google_id;
 
     /**
-     * @ORM\Column(type="string", length=100)
+     * @ORM\Column(type="string", length=100, nullable=true)
      */
     protected $social_youtube;
 
     /**
-     * @ORM\Column(type="string", length=100)
+     * @ORM\Column(type="string", length=100, nullable=true)
      */
     protected $social_instagram;
 
     /**
-     * @ORM\Column(type="string", length=100)
+     * @ORM\Column(type="string", length=100, nullable=true)
      */
     protected $social_flux;
 
     /**
-     * @ORM\Column(type="string", length=100)
+     * @ORM\Column(type="string", length=100, nullable=true)
      */
     protected $social_site;
 

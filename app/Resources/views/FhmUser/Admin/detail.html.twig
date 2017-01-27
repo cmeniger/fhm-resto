@@ -4,81 +4,81 @@
 {% block content_data_information %}
     <tr>
         <td><strong>{{ (instance.translation ~ '.admin.detail.data.id')|trans }}</strong></td>
-        <td>{{ document.getId() }}</td>
+        <td>{{ object.getId() }}</td>
     </tr>
     <tr>
         <td><strong>{{ (instance.translation ~ '.admin.detail.data.create')|trans }}</strong></td>
-        <td>{{ document.getUserCreate() ? document.getUserCreate().getUsername() ~ ' - ' : '' }}{{ document.getDateCreate() | localizeddate('full', 'short', app.request.locale) }}</td>
+        <td>{{ object.getUserCreate() ? object.getUserCreate().getUsername() ~ ' - ' : '' }}{{ object.getDateCreate() | localizeddate('full', 'short', app.request.locale) }}</td>
     </tr>
     <tr>
         <td><strong>{{ (instance.translation ~ '.admin.detail.data.update')|trans }}</strong></td>
-        <td>{{ document.getUserUpdate() ? document.getUserUpdate().getUsername() ~ ' - ' : '' }}{{ document.getDateUpdate() | localizeddate('full', 'short', app.request.locale) }}</td>
+        <td>{{ object.getUserUpdate() ? object.getUserUpdate().getUsername() ~ ' - ' : '' }}{{ object.getDateUpdate() | localizeddate('full', 'short', app.request.locale) }}</td>
     </tr>
     <tr>
         <td><strong>{{ (instance.translation ~ '.admin.detail.data.activity')|trans }}</strong></td>
-        <td>{{ document.getDateActivity() ? document.getDateActivity() | localizeddate('full', 'short', app.request.locale) : '' }}</td>
+        <td>{{ object.getDateActivity() ? object.getDateActivity() | localizeddate('full', 'short', app.request.locale) : '' }}</td>
     </tr>
     <tr>
         <td><strong>{{ (instance.translation ~ '.admin.detail.data.username')|trans }}</strong></td>
-        <td>{{ document.getUsername() }}</td>
+        <td>{{ object.getUsername() }}</td>
     </tr>
     <tr>
         <td><strong>{{ (instance.translation ~ '.admin.detail.data.email')|trans }}</strong></td>
-        <td>{{ document.getEmail() }}</td>
+        <td>{{ object.getEmail() }}</td>
     </tr>
     <tr>
         <td><strong>{{ (instance.translation ~ '.admin.detail.data.avatar')|trans }}</strong></td>
-        <td>{{ document.getAvatar()|image('xs', 100, '/images/default-avatar.jpg')|raw }}</td>
+        <td>{{ object.getAvatar()|image('xs', 100, '/images/default-avatar.jpg')|raw }}</td>
     </tr>
     <tr>
         <td><strong>{{ (instance.translation ~ '.admin.detail.data.firstname')|trans }}</strong></td>
-        <td>{{ document.getFirstname() }}</td>
+        <td>{{ object.getFirstname() }}</td>
     </tr>
     <tr>
         <td><strong>{{ (instance.translation ~ '.admin.detail.data.lastname')|trans }}</strong></td>
-        <td>{{ document.getLastname() }}</td>
+        <td>{{ object.getLastname() }}</td>
     </tr>
     <tr>
         <td><strong>{{ (instance.translation ~ '.admin.detail.data.birthdate')|trans }}</strong></td>
-        <td>{{ document.getBirthdate()|localizeddate('long', 'none') }}</td>
+        <td>{{ object.getBirthdate()|localizeddate('long', 'none') }}</td>
     </tr>
     <tr>
         <td><strong>{{ (instance.translation ~ '.admin.detail.data.tel1')|trans }}</strong></td>
-        <td>{{ document.getTel1() }}</td>
+        <td>{{ object.getTel1() }}</td>
     </tr>
     <tr>
         <td><strong>{{ (instance.translation ~ '.admin.detail.data.tel2')|trans }}</strong></td>
-        <td>{{ document.getTel2() }}</td>
+        <td>{{ object.getTel2() }}</td>
     </tr>
     <tr>
         <td><strong>{{ (instance.translation ~ '.admin.detail.data.address')|trans }}</strong></td>
-        <td>{{ document|addressHtml|raw }}</td>
+        <td>{{ object|addressHtml|raw }}</td>
     </tr>
     <tr>
         <td><strong>{{ (instance.translation ~ '.admin.detail.data.alias')|trans }}</strong></td>
-        <td>{{ document.getAlias() }}</td>
+        <td>{{ object.getAlias() }}</td>
     </tr>
     <tr>
         <td><strong>{{ (instance.translation ~ '.admin.detail.data.sign')|trans }}</strong></td>
-        <td>{{ document.getSign()|raw }}</td>
+        <td>{{ object.getSign()|raw }}</td>
     </tr>
     <tr>
         <td><strong>{{ (instance.translation ~ '.admin.detail.data.status')|trans }}</strong></td>
         <td>
-            {% if document.getDelete() %}
+            {% if object.getDelete() %}
                 <span class="status alert radius label">{{ ('fhm.status.delete')|trans({}, 'FhmFhmBundle') }}</span>
-            {% elseif not document.getActive() %}
+            {% elseif not object.getActive() %}
                 <span class="status warning radius label">{{ ('fhm.status.disable')|trans({}, 'FhmFhmBundle') }}</span>
             {% else %}
                 <span class="status success radius label">{{ ('fhm.status.enable')|trans({}, 'FhmFhmBundle') }}</span>
             {% endif %}
-            {% if document.getShare() and not document.hasGrouping(instance.grouping.used) %}
+            {% if object.getShare() and not object.hasGrouping(instance.grouping.used) %}
                 <span class="status regular radius label">{{ ('fhm.status.share')|trans({}, 'FhmFhmBundle') }}</span>
             {% endif %}
-            {#{% if document.isLocked() %}#}
+            {#{% if object.isLocked() %}#}
                 {#<span class="status alert radius label">{{ (instance.translation ~ '.status.locked')|trans }}</span>#}
             {#{% endif %}#}
-            {% if not document.isAccountNonExpired() %}
+            {% if not object.isAccountNonExpired() %}
                 <span class="status alert radius label">{{ (instance.translation ~ '.status.expired')|trans }}</span>
             {% endif %}
         </td>
@@ -86,7 +86,7 @@
     {#<tr>#}
         {#<td><strong>{{ grouping_name is defined ? grouping_name : (instance.translation ~ '.admin.detail.data.grouping')|trans }}</strong></td>#}
         {#<td>#}
-            {#{% for data in document.getGrouping() %}#}
+            {#{% for data in object.getGrouping() %}#}
                 {#<span class="status {{ data == instance.grouping.current ? 'success' : 'warning' }} radius label">{{ data }}</span>#}
             {#{% endfor %}#}
         {#</td>#}
@@ -99,9 +99,9 @@
         {{
         macroList.admin
         (
-            document,
+            object,
             {'ROLE_USER':'ROLE_USER','ROLE_MEMBER':'ROLE_MEMBER','ROLE_MODERATOR':'ROLE_MODERATOR','ROLE_ADMIN':'ROLE_ADMIN'},
-            document.getRolesList(),
+            object.getRolesList(),
             '',
             'fhm_admin_' ~ instance.route ~ '_roles',
             (instance.translation ~ '.admin.detail.roles.title')|trans,
@@ -115,7 +115,7 @@
     <div class="row">
         <fieldset>
             <legend>{{ (instance.translation ~ '.admin.detail.password.title')|trans }}</legend>
-            <form action="{{ path('fhm_admin_' ~ instance.route ~ '_password', {'id': document.getId()}) }}" method="POST" {{ form_start(formPassword) }}>
+            <form action="{{ path('fhm_admin_' ~ instance.route ~ '_password', {'id': object.getId()}) }}" method="POST" {{ form_start(formPassword) }}>
                 <div class="row">
                     <div class="large-12 columns">
                         {{ form_errors(formPassword) }}

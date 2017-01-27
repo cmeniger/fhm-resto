@@ -10,19 +10,19 @@
 {% endblock %}
 
 {% block content_data_body %}
-    <td>{{ document.getUsername() }}</td>
-    <td>{{ document.getEmailCanonical() }}</td>
-    <td>{{ document.getFirstName() }}</td>
-    <td>{{ document.getLastName() }}</td>
-    <td>{{ document.getDateCreate()|localizeddate('short', 'short', app.request.locale)}}</td>
+    <td>{{ object.getUsername() }}</td>
+    <td>{{ object.getEmailCanonical() }}</td>
+    <td>{{ object.getFirstName() }}</td>
+    <td>{{ object.getLastName() }}</td>
+    <td>{{ object.getDateCreate()|localizeddate('short', 'short', app.request.locale)}}</td>
 {% endblock %}
 
 {% block content_data_status_data %}
     {{ parent() }}
-    {% if not document.isAccountNonLocked() %}
+    {% if not object.isAccountNonLocked() %}
         <span class="status alert radius label">{{ (instance.translation ~ '.status.locked')|trans }}</span>
     {% endif %}
-    {% if not document.isAccountNonExpired() %}
+    {% if not object.isAccountNonExpired() %}
         <span class="status alert radius label">{{ (instance.translation ~ '.status.expired')|trans }}</span>
     {% endif %}
 {% endblock %}

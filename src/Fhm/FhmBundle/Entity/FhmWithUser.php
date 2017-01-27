@@ -3,8 +3,6 @@ namespace Fhm\FhmBundle\Entity;
 
 use FOS\UserBundle\Model\User;
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Bundle\MongoDBBundle\Validator\Constraints\Unique as MongoDBUnique;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -43,22 +41,22 @@ class FhmWithUser extends User
     protected $user_update;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", name="is_deleted")
      */
     protected $delete;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", name="is_activated")
      */
     protected $active;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", name="is_shared")
      */
     protected $share;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", name="is_global")
      */
     protected $global;
 
@@ -68,7 +66,7 @@ class FhmWithUser extends User
     protected $name;
 
     /**
-     * @ORM\Column(type="string", length=100)
+     * @ORM\Column(type="string", length=100, nullable=true)
      */
     protected $description;
 
@@ -78,24 +76,24 @@ class FhmWithUser extends User
     protected $alias;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", name="_order")
      * @Assert\Range(min = 0)
      */
     protected $order;
 
     /**
-     * @ORM\Column(type="string", length=100)
+     * @ORM\Column(type="string", length=100, nullable=true)
      * @Assert\Length(max = 50)
      */
     protected $seo_title;
 
     /**
-     * @ORM\Column(type="string", length=100)
+     * @ORM\Column(type="string", length=100, nullable=true)
      */
     protected $seo_keywords;
 
     /**
-     * @ORM\Column(type="string", length=100)
+     * @ORM\Column(type="string", length=100, nullable=true)
      * @Assert\Length(max = 150)
      */
     protected $seo_description;

@@ -183,6 +183,7 @@ class UpdateType extends GeolocationType
                 'translation_route' => 'user',
                 'filter' => '',
                 'user_admin' => '',
+                'object_manager'=>''
             )
         );
     }
