@@ -83,7 +83,7 @@ class CreateType extends FhmType
                 'choice_label' => 'name',
                 'query_builder' => function () use ($options) {
                     $dr = $options['object_manager']->getCurrentRepository('FhmEventBundle:EventGroup');
-                    return $dr->getFormEnable($options['filter']);
+                    return $dr->getFormEnable();
                 },
                 'multiple' => true,
                 'required' => false,
@@ -104,7 +104,7 @@ class CreateType extends FhmType
                 'cascade_validation' => true,
                 'translation_route' => 'event',
                 'user_admin' => '',
-                'object_manager'
+                'object_manager'=> ''
             )
         );
     }

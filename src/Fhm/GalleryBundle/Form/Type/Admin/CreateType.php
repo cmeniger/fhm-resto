@@ -172,6 +172,7 @@ class CreateType extends FhmType
                 'translation_route' => 'gallery',
                 'filter' => '',
                 'user_admin' => '',
+                'object_manager' => ''
             )
         );
     }
