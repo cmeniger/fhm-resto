@@ -30,7 +30,7 @@ class Menu extends Fhm
     protected $route = null;
 
     /**
-     * @ORM\Column(type="string", length=100)
+     * @ORM\Column(type="string", length=100, nullable=true)
      */
     protected $icon = null;
 
@@ -40,7 +40,7 @@ class Menu extends Fhm
     protected $module = array();
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", name="_order")
      * @Assert\Range(min = 0)
      */
     protected $order = 0;

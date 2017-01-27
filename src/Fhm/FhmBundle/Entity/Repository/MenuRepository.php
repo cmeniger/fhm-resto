@@ -26,13 +26,15 @@ class MenuRepository extends FhmRepository
      */
     public function getFormEnable()
     {
-        $builder = $this->createQueryBuilder();
+        $builder = $this->createQueryBuilder('a');
         // Common
-        $builder->field('parent')->in(array('0', null));
-        $builder->field('active')->equals(true);
-        $builder->field('delete')->equals(false);
-        $builder->sort('order');
-        $builder->sort('name');
+        if ($this->parent) {
+            $builder->andWhere('a.parent IN :(parent)')->setParameter('parent', [0, null]);
+        }
+        $builder->andWhere('a.active = :bool1')->setParameter('bool1', true);
+        $builder->andWhere('a.delete = :bool2')->setParameter('bool2', false);
+        $builder->orderBy('a.order');
+        $builder->orderBy('a.name');
 
         return $builder;
     }
@@ -44,23 +46,24 @@ class MenuRepository extends FhmRepository
      */
     public function getSons($idp)
     {
-        return $this->createQueryBuilder()->field('parent')->equals($idp)->sort('order')->sort('name')->getQuery(
-            )->execute()->toArray();
+        return $this->createQueryBuilder('a')->andWhere('a.parent = :(parent)')->setParameter('parent', $idp)->orderBy(
+                'a.order'
+            )->orderBy('a.name')->getQuery()->execute()->toArray();
     }
 
     /**
      * @param $idp
-     *
-     * @return object
-     * @throws \Doctrine\ODM\MongoDB\LockException
+     * @return null|object
      */
     public function getTree($idp)
     {
         $current = $this->find($idp);
         $current->branchs = array();
         $branchs = $current->getChilds();
-        foreach ($branchs as $branch) {
-            $current->branchs[] = $this->getTree($branch->getId());
+        if (is_array($branchs)) {
+            foreach ($branchs as $branch) {
+                $current->branchs[] = $this->getTree($branch->getId());
+            }
         }
 
         return $current;
@@ -68,9 +71,7 @@ class MenuRepository extends FhmRepository
 
     /**
      * @param $idp
-     *
      * @return array
-     * @throws \Doctrine\ODM\MongoDB\LockException
      */
     public function getTreeMap($idp)
     {
