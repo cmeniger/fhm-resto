@@ -87,6 +87,7 @@ class CreateType extends FhmType
                 'translation_route' => 'slider.item',
                 'filter' => '',
                 'user_admin' => '',
+                'object_manager' => '',
                 'map' => '',
             )
         );
