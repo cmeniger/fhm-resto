@@ -4,7 +4,6 @@ namespace Fhm\GalleryBundle\Controller;
 use Fhm\FhmBundle\Controller\RefAdminController as FhmController;
 use Fhm\FhmBundle\Form\Handler\Admin\CreateHandler;
 use Fhm\FhmBundle\Form\Handler\Admin\UpdateHandler;
-use Fhm\GalleryBundle\Document\Gallery;
 use Fhm\GalleryBundle\Form\Type\Admin\CreateType;
 use Fhm\GalleryBundle\Form\Type\Admin\UpdateType;
 use Symfony\Component\HttpFoundation\Request;
@@ -29,7 +28,6 @@ class AdminController extends FhmController
         self::$source = "fhm";
         self::$domain = "FhmGalleryBundle";
         self::$translation = "gallery";
-        self::$class = Gallery::class;
         self::$route = "gallery";
         self::$form = new \stdClass();
         self::$form->createType = CreateType::class;
@@ -108,11 +106,11 @@ class AdminController extends FhmController
         return array_merge(
             array(
                 'item1' => $this->get('fhm_tools')->dmRepository('FhmGalleryBundle:GalleryItem')->getAllEnable(),
-                'item2' => $this->getList($document->getItems()),
+                'item2' => $this->get('fhm_tools')->getList($document->getItems()),
                 'video1' => $this->get('fhm_tools')->dmRepository('FhmGalleryBundle:GalleryVideo')->getAllEnable(),
-                'video2' => $this->getList($document->getVideos()),
+                'video2' => $this->get('fhm_tools')->getList($document->getVideos()),
                 'album1' => $this->get('fhm_tools')->dmRepository('FhmGalleryBundle:GalleryAlbum')->getAllEnable(),
-                'album2' => $this->getList($document->getAlbums()),
+                'album2' => $this->get('fhm_tools')->getList($document->getAlbums()),
             ),
             parent::detailAction($id)
         );

@@ -108,7 +108,7 @@ class AdminController extends FhmController
                 'gallery1' => $this->get('fhm.object.manager')->getCurrentRepository(
                     'FhmGalleryBundle:Gallery'
                 )->getAllEnable(),
-                'gallery2' => $this->getList($object->getGalleries()),
+                'gallery2' => $this->get('fhm_tools')->getList($object->getGalleries()),
             ),
             parent::detailAction($id)
         );

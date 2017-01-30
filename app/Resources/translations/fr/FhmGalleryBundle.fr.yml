@@ -10,6 +10,10 @@ fhm:
                 breadcrumb:                     Modifier
             detail:
                 breadcrumb:                     Détails
+            album:
+                breadcrumb:                     Album
+                create:
+                    breadcrumb:                 Ajouter
 project:
     breadcrump:                                 Accueil
     admin:
@@ -160,6 +164,10 @@ gallery:
                 title:                          Images
                 list1:                          Disponibles
                 list2:                          Sélectionnés
+            video:
+                list1:                          Vidéos disponibles
+                list2:                          Vidéos séléctionnées
+                title:                          Vidéos
             url:
                 title:                          Routes disponibles
                 admin:
