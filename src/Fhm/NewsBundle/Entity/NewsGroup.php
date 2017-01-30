@@ -1,5 +1,6 @@
 <?php
 namespace Fhm\NewsBundle\Entity;
+
 use Doctrine\Common\Collections\ArrayCollection;
 use Fhm\FhmBundle\Entity\Fhm;
 use Doctrine\ORM\Mapping as ORM;
@@ -12,7 +13,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 class NewsGroup extends Fhm
 {
     /**
-     * @ORM\OneToMany(targetEntity="Fhm\NewsBundle\Entity\News", cascade={"persist"}, mappedBy="newsgroups")
+     * @ORM\ManyToMany(targetEntity="Fhm\NewsBundle\Entity\News", cascade={"persist"})
      */
     protected $news;
 
@@ -37,10 +38,10 @@ class NewsGroup extends Fhm
     public function __construct()
     {
         parent::__construct();
-        $this->news       = new ArrayCollection();
+        $this->news = new ArrayCollection();
         $this->add_global = false;
-        $this->sort       = "date_start desc";
-        $this->sort_news  = 0;
+        $this->sort = "date_start desc";
+        $this->sort_news = 0;
     }
 
     /**
@@ -135,8 +136,7 @@ class NewsGroup extends Fhm
     public function setNews(ArrayCollection $news)
     {
         $this->resetNews();
-        foreach($news as $new)
-        {
+        foreach ($news as $new) {
             $new->addNewsgroup($this);
         }
         $this->news = $news;
@@ -153,8 +153,7 @@ class NewsGroup extends Fhm
      */
     public function addNews(\Fhm\NewsBundle\Entity\News $news)
     {
-        if(!$this->news->contains($news))
-        {
+        if (!$this->news->contains($news)) {
             $this->news->add($news);
             $news->addNewsgroup($this);
         }
@@ -171,8 +170,7 @@ class NewsGroup extends Fhm
      */
     public function removeNews(\Fhm\NewsBundle\Entity\News $news)
     {
-        if($this->news->contains($news))
-        {
+        if ($this->news->contains($news)) {
             $this->news->removeElement($news);
             $news->removeNewsgroup($this);
         }
@@ -187,8 +185,7 @@ class NewsGroup extends Fhm
      */
     public function resetNews()
     {
-        foreach($this->news as $news)
-        {
+        foreach ($this->news as $news) {
             $news->removeNewsgroup($this);
         }
         $this->news = new ArrayCollection();
@@ -205,7 +202,7 @@ class NewsGroup extends Fhm
     {
         $this->sort_news = $this->news->count();
 
-        return parent::sortUpdate();
+//        return parent::sortUpdate();
     }
 
     /**
@@ -215,6 +212,6 @@ class NewsGroup extends Fhm
     {
         $this->resetNews();
 
-        return parent::preRemove();
+//        return parent::preRemove();
     }
 }

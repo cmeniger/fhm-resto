@@ -1,7 +1,6 @@
 <?php
 namespace Fhm\NewsBundle\Form\Type\Admin\Group;
 
-use Doctrine\Bundle\MongoDBBundle\Form\Type\DocumentType;
 use Fhm\FhmBundle\Form\Type\Admin\UpdateType as FhmType;
 use Fhm\FhmBundle\Manager\TypeManager;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -75,7 +74,7 @@ class UpdateType extends FhmType
     {
         $resolver->setDefaults(
             array(
-                'data_class' => 'Fhm\NewsBundle\Document\NewsGroup',
+                'data_class' => '',
                 'translation_domain' => 'FhmNewsBundle',
                 'translation_route' => 'news.group',
                 'cascade_validation' => true,

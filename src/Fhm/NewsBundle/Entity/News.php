@@ -60,8 +60,7 @@ class News extends Fhm
     protected $author;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Fhm\NewsBundle\Entity\NewsGroup", cascade={"all"}, inversedBy="news")
-     * @ORM\JoinColumn(nullable=true)
+     * @ORM\ManyToMany(targetEntity="Fhm\NewsBundle\Entity\NewsGroup", cascade={"all"})
      */
     protected $newsgroups;
 

@@ -4,7 +4,6 @@ namespace Fhm\NewsBundle\Controller\Group;
 use Fhm\FhmBundle\Controller\RefAdminController as FhmController;
 use Fhm\FhmBundle\Form\Handler\Admin\CreateHandler;
 use Fhm\FhmBundle\Form\Handler\Admin\UpdateHandler;
-use Fhm\NewsBundle\Document\NewsGroup;
 use Fhm\NewsBundle\Form\Type\Admin\Group\CreateType;
 use Fhm\NewsBundle\Form\Type\Admin\Group\UpdateType;
 use Symfony\Component\HttpFoundation\Request;
@@ -29,7 +28,6 @@ class AdminController extends FhmController
         self::$source = "fhm";
         self::$domain = "FhmNewsBundle";
         self::$translation = "news.group";
-        self::$class = NewsGroup::class;
         self::$route = "news_group";
         self::$form = new \stdClass();
         self::$form->createType = CreateType::class;
