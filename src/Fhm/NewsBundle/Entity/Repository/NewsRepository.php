@@ -56,75 +56,73 @@ class NewsRepository extends FhmRepository
 
     /**
      * @param string $search
-     * @param string $grouping
-     *
-     * @return int
-     * @throws \Doctrine\ORM\ORMException
+     * @return mixed
      */
-    public function getFrontCount($search = "", $grouping = "")
+    public function getFrontCount($search = "")
     {
-        $builder = ($search) ? $this->search($search) : $this->createQueryBuilder();
+        $date = new \DateTime();
+        $builder = ($search) ? $this->search($search) : $this->createQueryBuilder('a');
+        $builder->select('count(a.id)');
         // Dates
-        $builder->addAnd(
-            $builder->expr()->addOr($builder->expr()->field('date_start')->equals(null))->addOr(
-                $builder->expr()->field('date_start')->lt(new \DateTime())
+        $builder->where('a.active = :bool1')->setParameter('bool1', true);
+        $builder->andWhere('a.delete = :bool2')->setParameter('bool2', false);
+        $builder->andWhere(
+            $builder->expr()->orX(
+                $builder->expr()->isNull('a.date_start'),
+                $builder->expr()->lt('a.date_start', $date->format('yyyy-mm-dd'))
             )
         );
-        $builder->addAnd(
-            $builder->expr()->addOr($builder->expr()->field('date_end')->equals(null))->addOr(
-                $builder->expr()->field('date_end')->gt(new \DateTime())
+        $builder->andWhere(
+            $builder->expr()->orX(
+                $builder->expr()->isNull('a.date_end'),
+                $builder->expr()->gt('a.date_end', $date->format('yyyy-mm-dd'))
             )
         );
-        // Common
-        $builder->field('active')->equals(true);
-        $builder->field('delete')->equals(false);
+        $builder->orderBy('a.order', 'asc');
+        $builder->orderBy('a.date_start', 'desc');
+        $builder->orderBy('a.date_create', 'desc');
+        $builder->orderBy('a.name', 'asc');
 
-        return count(
-            $builder->getQuery()->execute()->toArray()
-        );
+
+        return $builder->getQuery()->execute();
     }
 
     /**
-     * @param \Fhm\NewsBundle\Entity\NewsGroup $newsgroup
+     * @param NewsGroup $newsgroup
      * @param string $search
-     * @param int $page
-     * @param int $count
-     *
      * @return mixed
-     * @throws \Doctrine\ORM\ORMException
      */
-    public function getNewsByGroupIndex(
-        \Fhm\NewsBundle\Entity\NewsGroup $newsgroup,
-        $search = "",
-        $page = 1,
-        $count = 5
-    ) {
-        $builder = ($search) ? $this->search($search) : $this->createQueryBuilder();
+    public function getNewsByGroupIndex(\Fhm\NewsBundle\Entity\NewsGroup $newsgroup, $search = "")
+    {
+        $date = new \DateTime();
+
+        $builder = ($search) ? $this->search($search) : $this->createQueryBuilder('a');
+
+        $builder->select('count(a.id)');
         // Global
         if ($newsgroup->getAddGlobal()) {
-            $builder->addAnd(
-                $builder->expr()->addOr($builder->expr()->field('newsgroups.id')->equals($newsgroup->getId()))->addOr(
-                    $builder->expr()->field('global')->equals(true)
-                )
-            );
+            $builder->andWhere($builder->expr()->orX($builder->expr()->eq('a.newsgroups', $newsgroup->getId())));
+            $builder->andWhere($builder->expr()->orX($builder->expr()->eq('a.global', true)));
         } else {
-            $builder->field('newsgroups.id')->equals($newsgroup->getId());
+            $builder->andWhere($builder->expr()->orX($builder->expr()->eq('a.newsgroups', $newsgroup->getId())));
         }
         // Dates
-        $builder->addAnd(
-            $builder->expr()->addOr($builder->expr()->field('date_start')->equals(null))->addOr(
-                $builder->expr()->field('date_start')->lt(new \DateTime())
+        $builder->andWhere(
+            $builder->expr()->orX(
+                $builder->expr()->isNull('a.date_start'),
+                $builder->expr()->lt('a.date_start', $date->format('yyyy-mm-dd'))
             )
         );
-        $builder->addAnd(
-            $builder->expr()->addOr($builder->expr()->field('date_end')->equals(null))->addOr(
-                $builder->expr()->field('date_end')->gt(new \DateTime())
+        $builder->andWhere(
+            $builder->expr()->orX(
+                $builder->expr()->isNull('a.date_end'),
+                $builder->expr()->gt('a.date_end', $date->format('yyyy-mm-dd'))
             )
         );
         // Common
-        $builder->field('active')->equals(true);
-        $builder->field('delete')->equals(false);
-        $builder->sort($newsgroup->getSortField(), $newsgroup->getSortOrder());
+        $builder->where('a.active = :bool1')->setParameter('bool1', true);
+        $builder->andWhere('a.delete = :bool2')->setParameter('bool2', false);
+        $builder->orderBy($newsgroup->getSortField());
 
         return $builder->getQuery()->execute()->toArray();
     }
@@ -137,33 +135,36 @@ class NewsRepository extends FhmRepository
      */
     public function getNewsByGroupCount(\Fhm\NewsBundle\Entity\NewsGroup $newsgroup, $search = "")
     {
-        $builder = ($search) ? $this->search($search) : $this->createQueryBuilder();
+        $date = new \DateTime();
+
+        $builder = ($search) ? $this->search($search) : $this->createQueryBuilder('a');
+
+        $builder->select('count(a.id)');
         // Global
         if ($newsgroup->getAddGlobal()) {
-            $builder->addAnd(
-                $builder->expr()->addOr($builder->expr()->field('newsgroups.id')->equals($newsgroup->getId()))->addOr(
-                    $builder->expr()->field('global')->equals(true)
-                )
-            );
+            $builder->andWhere($builder->expr()->orX($builder->expr()->eq('a.newsgroups', $newsgroup->getId())));
+            $builder->andWhere($builder->expr()->orX($builder->expr()->eq('a.global', true)));
         } else {
-            $builder->field('newsgroups.id')->equals($newsgroup->getId());
+            $builder->andWhere($builder->expr()->orX($builder->expr()->eq('a.newsgroups', $newsgroup->getId())));
         }
         // Dates
-        $builder->addAnd(
-            $builder->expr()->addOr($builder->expr()->field('date_start')->equals(null))->addOr(
-                $builder->expr()->field('date_start')->lt(new \DateTime())
+        $builder->andWhere(
+            $builder->expr()->orX(
+                $builder->expr()->isNull('a.date_start'),
+                $builder->expr()->lt('a.date_start', $date->format('yyyy-mm-dd'))
             )
         );
-        $builder->addAnd(
-            $builder->expr()->addOr($builder->expr()->field('date_end')->equals(null))->addOr(
-                $builder->expr()->field('date_end')->gt(new \DateTime())
+        $builder->andWhere(
+            $builder->expr()->orX(
+                $builder->expr()->isNull('a.date_end'),
+                $builder->expr()->gt('a.date_end', $date->format('yyyy-mm-dd'))
             )
         );
-        // Common
-        $builder->field('active')->equals(true);
-        $builder->field('delete')->equals(false);
+        $builder->where('a.active = :bool1')->setParameter('bool1', true);
+        $builder->andWhere('a.delete = :bool2')->setParameter('bool2', false);
+        $builder->orderBy($newsgroup->getSortField());
 
-        return $builder->count()->getQuery()->execute();
+        return $builder->getQuery()->execute();
     }
 
     /**
@@ -174,40 +175,45 @@ class NewsRepository extends FhmRepository
      */
     public function getNewsByGroupAll(\Fhm\NewsBundle\Entity\NewsGroup $newsgroup)
     {
-        $builder = $this->createQueryBuilder();
+        $date = new \DateTime();
+        $builder = $this->createQueryBuilder('a');
         // Global
         if ($newsgroup->getAddGlobal()) {
-            $builder->addAnd(
-                $builder->expr()->addOr($builder->expr()->field('newsgroups.id')->equals($newsgroup->getId()))->addOr(
-                    $builder->expr()->field('global')->equals(true)
-                )
-            );
+            $builder->andWhere($builder->expr()->orX($builder->expr()->eq('a.newsgroups', $newsgroup->getId())));
+            $builder->andWhere($builder->expr()->orX($builder->expr()->eq('a.global', true)));
         } else {
-            $builder->field('newsgroups.id')->equals($newsgroup->getId());
+            $builder->andWhere($builder->expr()->orX($builder->expr()->eq('a.newsgroups', $newsgroup->getId())));
         }
         // Dates
-        $builder->addAnd(
-            $builder->expr()->addOr($builder->expr()->field('date_start')->equals(null))->addOr(
-                $builder->expr()->field('date_start')->lt(new \DateTime())
+        $builder->andWhere(
+            $builder->expr()->orX(
+                $builder->expr()->isNull('a.date_start'),
+                $builder->expr()->lt('a.date_start', $date->format('yyyy-mm-dd'))
             )
         );
-        $builder->addAnd(
-            $builder->expr()->addOr($builder->expr()->field('date_end')->equals(null))->addOr(
-                $builder->expr()->field('date_end')->gt(new \DateTime())
+        $builder->andWhere(
+            $builder->expr()->orX(
+                $builder->expr()->isNull('a.date_end'),
+                $builder->expr()->gt('a.date_end', $date->format('yyyy-mm-dd'))
             )
         );
-        // Common
-        $builder->field('active')->equals(true);
-        $builder->field('delete')->equals(false);
-        $builder->sort($newsgroup->getSortField(), $newsgroup->getSortOrder());
+        $builder->where('a.active = :bool1')->setParameter('bool1', true);
+        $builder->andWhere('a.delete = :bool2')->setParameter('bool2', false);
+        $builder->orderBy($newsgroup->getSortField());
 
         return $builder->getQuery()->execute();
     }
 
+    /**
+     * @return mixed
+     */
     public function findAllParent()
     {
-        return $this->createQueryBuilder()->field('parent')->in(array('0', null))->sort('name')->getQuery()->execute(
-        )->toArray();
+        $builder= $this->createQueryBuilder('a');
+        $builder->where($builder->expr()->isNull('parent'));
+        $builder->orderBy('a.name', 'ASC');
+
+        return $builder->getQuery()->execute();
     }
 
     /**

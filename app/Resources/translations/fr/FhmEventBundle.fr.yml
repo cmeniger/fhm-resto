@@ -10,6 +10,10 @@ fhm:
                 breadcrumb:                     Modifier
             detail:
                 breadcrumb:                     Détails
+            group:
+                breadcrumb:                     Calendiers
+                create:
+                    breadcrumb:                  Ajouter
 project:
     breadcrump:                                 Accueil
     admin:

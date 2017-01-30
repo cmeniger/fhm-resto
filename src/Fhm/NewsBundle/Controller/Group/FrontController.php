@@ -3,8 +3,6 @@ namespace Fhm\NewsBundle\Controller\Group;
 
 use Fhm\FhmBundle\Controller\RefFrontController as FhmController;
 use Fhm\FhmBundle\Form\Type\Admin\SearchType;
-use Fhm\NewsBundle\Document\News;
-use Fhm\NewsBundle\Document\NewsGroup;
 use Fhm\NewsBundle\Form\Type\Front\Group\CreateType;
 use Fhm\NewsBundle\Form\Type\Front\Group\UpdateType;
 use Symfony\Component\HttpFoundation\Request;
@@ -29,7 +27,6 @@ class FrontController extends FhmController
         self::$source = "fhm";
         self::$domain = "FhmNewsBundle";
         self::$translation = "News.group";
-        self::$class = NewsGroup::class;
         self::$route = "news_group";
     }
 
