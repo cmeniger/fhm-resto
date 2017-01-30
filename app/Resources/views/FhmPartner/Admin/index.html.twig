@@ -17,8 +17,8 @@
 {% endblock %}
 
 {% block content_data_body %}
-    <td>{{ document.getImage()|image('xs', 50)|raw }}</td>
+    <td>{{ object.getImage()|image('xs', 50)|raw }}</td>
     {{ parent() }}
-    <td>{{ document.getOrder() }}</td>
-    <td>{{ document.getPartnergroups()|length }}</td>
+    <td>{{ object.getOrder() }}</td>
+    <td>{{ object.getPartnergroups()|length }}</td>
 {% endblock %}

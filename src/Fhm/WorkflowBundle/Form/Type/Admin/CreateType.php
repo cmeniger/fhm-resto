@@ -30,11 +30,25 @@ class CreateType extends FhmType
                 'choice_label' => 'name',
                 'query_builder' => function () use ($options) {
                     $dr = $options['object_manager']->getCurrentRepository('FhmWorkflowBundle:WorkflowTask');
-                    return $dr->getFormEnable($options['filter']);
+                    return $dr->getFormEnable();
                 },
                 'multiple' => true,
                 'required' => false,
                 'by_reference' => false,
+            )
+        );
+    }
+
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults(
+            array(
+                'data_class' => '',
+                'translation_domain' => 'FhmWorkflowBundle',
+                'cascade_validation' => true,
+                'translation_route' => 'workflow',
+                'user_admin' => '',
+                'object_manager'=>''
             )
         );
     }

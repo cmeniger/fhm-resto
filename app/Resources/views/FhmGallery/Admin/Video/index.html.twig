@@ -25,6 +25,6 @@
 
  {% block content_data_body %}
      {{ parent() }}
-     <td>{{ document.getVideo() }}</td>
-     <td>{{ document.getGalleries()|length }}</td>
+     <td>{{ object.getVideo() }}</td>
+     <td>{{ object.getGalleries()|length }}</td>
  {% endblock %}

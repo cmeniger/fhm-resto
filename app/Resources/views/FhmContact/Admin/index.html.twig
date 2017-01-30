@@ -12,7 +12,7 @@
 {% block content_data_action_share_links %}
     {{ parent() }}
     <li>
-        <a href="{{ path(instance.source ~ '_admin_' ~ instance.route ~ '_preview', {'id': document.getId()}) }}" title="{{ (instance.translation ~ '.admin.index.table.action.preview')|trans }}" target="_blank"><i class="fa fa-fw fa-search"></i> {{ (instance.translation ~ '.admin.index.table.action.preview')|trans }}
+        <a href="{{ path(instance.source ~ '_admin_' ~ instance.route ~ '_preview', {'id': object.getId()}) }}" title="{{ (instance.translation ~ '.admin.index.table.action.preview')|trans }}" target="_blank"><i class="fa fa-fw fa-search"></i> {{ (instance.translation ~ '.admin.index.table.action.preview')|trans }}
         </a>
     </li>
 {% endblock %}
@@ -20,7 +20,7 @@
 {% block content_data_action_delete_links %}
     {{ parent() }}
     <li>
-        <a href="{{ path(instance.source ~ '_admin_' ~ instance.route ~ '_preview', {'id': document.getId()}) }}" title="{{ (instance.translation ~ '.admin.index.table.action.preview')|trans }}" target="_blank"><i class="fa fa-fw fa-search"></i> {{ (instance.translation ~ '.admin.index.table.action.preview')|trans }}
+        <a href="{{ path(instance.source ~ '_admin_' ~ instance.route ~ '_preview', {'id': object.getId()}) }}" title="{{ (instance.translation ~ '.admin.index.table.action.preview')|trans }}" target="_blank"><i class="fa fa-fw fa-search"></i> {{ (instance.translation ~ '.admin.index.table.action.preview')|trans }}
         </a>
     </li>
 {% endblock %}
@@ -28,7 +28,7 @@
 {% block content_data_action_links %}
     {{ parent() }}
     <li>
-        <a href="{{ path(instance.source ~ '_admin_' ~ instance.route ~ '_preview', {'id': document.getId()}) }}" title="{{ (instance.translation ~ '.admin.index.table.action.preview')|trans }}" target="_blank"><i class="fa fa-fw fa-search"></i> {{ (instance.translation ~ '.admin.index.table.action.preview')|trans }}
+        <a href="{{ path(instance.source ~ '_admin_' ~ instance.route ~ '_preview', {'id': object.getId()}) }}" title="{{ (instance.translation ~ '.admin.index.table.action.preview')|trans }}" target="_blank"><i class="fa fa-fw fa-search"></i> {{ (instance.translation ~ '.admin.index.table.action.preview')|trans }}
         </a>
     </li>
 {% endblock %}
@@ -42,12 +42,12 @@
 {% endblock %}
 
 {% block content_data_body %}
-    <td>{{ document.getName() }}</td>
-    <td>{{ document.getEmail() }}</td>
-    <td>{{ document|addressHtml|raw }}</td>
-    <td>{{ document.getMessages().count() }}</td>
+    <td>{{ object.getName() }}</td>
+    <td>{{ object.getEmail() }}</td>
+    <td>{{ object|addressHtml|raw }}</td>
+    <td>{{ object.getMessages().count() }}</td>
     <td>
-        {% if document.getProfile() %}
+        {% if object.getProfile() %}
             <span class="status warning radius label">{{ (instance.translation ~ '.admin.index.table.header.type.profile')|trans }}</span>
         {% else %}
             <span class="status success radius label">{{ (instance.translation ~ '.admin.index.table.header.type.form')|trans }}</span>

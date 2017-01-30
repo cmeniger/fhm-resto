@@ -19,7 +19,6 @@ class UpdateType extends FhmType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $this->setTranslation('workflow');
         parent::buildForm($builder, $options);
         $builder->add(
             'color',
@@ -45,9 +44,12 @@ class UpdateType extends FhmType
     {
         $resolver->setDefaults(
             array(
-                'data_class' => 'Fhm\WorkflowBundle\Document\WorkflowStep',
+                'data_class' => '',
                 'translation_domain' => 'FhmWorkflowBundle',
                 'cascade_validation' => true,
+                'translation_route' => 'workflow.step',
+                'user_admin' => '',
+                'object_manager'=>''
             )
         );
     }

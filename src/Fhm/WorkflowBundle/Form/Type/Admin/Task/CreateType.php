@@ -32,7 +32,7 @@ class CreateType extends FhmType
                 'choice_label' => 'name',
                 'query_builder' => function () use ($options) {
                     $dr = $options['object_manager']->getCurrentRepository('FhmWorkflowBundle:WorkflowStep');
-                    return $dr->getFormEnable($options['filter']);
+                    return $dr->getFormEnable();
                 },
                 'required' => false,
             )
@@ -45,7 +45,7 @@ class CreateType extends FhmType
                 'choice_label' => 'name',
                 'query_builder' => function () use ($options) {
                     $dr = $options['object_manager']->getCurrentRepository('FhmWorkflowBundle:WorkflowAction');
-                    return $dr->getFormEnable($options['filter']);
+                    return $dr->getFormEnable();
                 },
             )
         )->add(
@@ -57,7 +57,7 @@ class CreateType extends FhmType
                 'choice_label' => 'name',
                 'query_builder' => function () use ($options) {
                     $dr = $options['object_manager']->getCurrentRepository('FhmWorkflowBundle:WorkflowTask');
-                    return $dr->getFormEnable($options['filter']);
+                    return $dr->getFormEnable();
                 },
                 'multiple' => true,
                 'required' => false,
@@ -72,7 +72,7 @@ class CreateType extends FhmType
                 'choice_label' => 'name',
                 'query_builder' => function () use ($options) {
                     $dr = $options['object_manager']->getCurrentRepository('FhmWorkflowBundle:WorkflowTask');
-                    return $dr->getFormEnable($options['filter']);
+                    return $dr->getFormEnable();
                 },
                 'multiple' => true,
                 'required' => false,
@@ -81,6 +81,20 @@ class CreateType extends FhmType
         )->remove('seo_title')->remove('seo_description')->remove('seo_keywords')->remove('languages')->remove(
             'grouping'
         )->remove('share')->remove('global');
+    }
+
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults(
+            array(
+                'data_class' => '',
+                'translation_domain' => 'FhmWorkflowBundle',
+                'cascade_validation' => true,
+                'translation_route' => 'workflow.task',
+                'user_admin' => '',
+                'object_manager'=>''
+            )
+        );
     }
 
 }

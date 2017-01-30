@@ -116,7 +116,7 @@ class AdminController extends FhmController
     public function deleteAction($id)
     {
         $response = parent::deleteAction($id);
-        $document = $this->fhm_tools->dmRepository()->find($id);
+        $document = $this->get('fhm_tools')->dmRepository(self::$repository)->find($id);
         $this->_tagDelete($id, $document ? false : true);
 
         return $response;
@@ -215,19 +215,19 @@ class AdminController extends FhmController
      */
     private function _tagDelete($id, $delete)
     {
-        $documents = $this->fhm_tools->dmRepository()->getSons($id);
+        $documents = $this->get('fhm_tools')->dmRepository(self::$repository)->getSons($id);
         foreach ($documents as $document) {
             $this->_tagDelete($document->getId(), $delete);
             if ($delete) {
-                $medias = $this->fhm_tools->dmRepository("FhmMediaBundle:Media")->getByTag($document->getId());
+                $medias = $this->get('fhm_tools')->dmRepository("FhmMediaBundle:Media")->getByTag($document->getId());
                 foreach ($medias as $media) {
                     $media->removeTag($document);
-                    $this->fhm_tools->dmPersist($media);
+                    $this->get('fhm_tools')->dmPersist($media);
                 }
-                $this->fhm_tools->dmRemove($document);
+                $this->get('fhm_tools')->dmRemove($document);
             } else {
                 $document->setDelete(true);
-                $this->fhm_tools->dmPersist($document);
+                $this->get('fhm_tools')->dmPersist($document);
             }
         }
 
@@ -243,11 +243,11 @@ class AdminController extends FhmController
      */
     private function _tagUndelete($id)
     {
-        $documents = $this->fhm_tools->dmRepository()->getSons($id);
+        $documents = $this->get('fhm_tools')->dmRepository(self::$repository)->getSons($id);
         foreach ($documents as $document) {
             $this->_tagUndelete($document->getId());
             $document->setDelete(false);
-            $this->fhm_tools->dmPersist($document);
+            $this->get('fhm_tools')->dmPersist($document);
         }
 
         return $this;
@@ -263,11 +263,11 @@ class AdminController extends FhmController
      */
     private function _tagActive($id, $active)
     {
-        $documents = $this->fhm_tools->dmRepository()->getSons($id);
+        $documents = $this->get('fhm_tools')->dmRepository(self::$repository)->getSons($id);
         foreach ($documents as $document) {
             $this->_tagActive($document->getId(), $active);
             $document->setActive($active);
-            $this->fhm_tools->dmPersist($document);
+            $this->get('fhm_tools')->dmPersist($document);
         }
 
         return $this;

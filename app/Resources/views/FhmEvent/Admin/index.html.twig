@@ -12,7 +12,7 @@
 {% block content_data_action_share_links %}
     {{ parent() }}
     <li>
-        <a href="{{ path(instance.source ~ '_admin_' ~ instance.route ~ '_preview', {'id': document.getId()}) }}" title="{{ (instance.translation ~ '.admin.index.table.action.preview')|trans }}" target="_blank"><i class="fa fa-fw fa-search"></i> {{ (instance.translation ~ '.admin.index.table.action.preview')|trans }}
+        <a href="{{ path(instance.source ~ '_admin_' ~ instance.route ~ '_preview', {'id': object.getId()}) }}" title="{{ (instance.translation ~ '.admin.index.table.action.preview')|trans }}" target="_blank"><i class="fa fa-fw fa-search"></i> {{ (instance.translation ~ '.admin.index.table.action.preview')|trans }}
         </a>
     </li>
 {% endblock %}
@@ -20,7 +20,7 @@
 {% block content_data_action_delete_links %}
     {{ parent() }}
     <li>
-        <a href="{{ path(instance.source ~ '_admin_' ~ instance.route ~ '_preview', {'id': document.getId()}) }}" title="{{ (instance.translation ~ '.admin.index.table.action.preview')|trans }}" target="_blank"><i class="fa fa-fw fa-search"></i> {{ (instance.translation ~ '.admin.index.table.action.preview')|trans }}
+        <a href="{{ path(instance.source ~ '_admin_' ~ instance.route ~ '_preview', {'id': object.getId()}) }}" title="{{ (instance.translation ~ '.admin.index.table.action.preview')|trans }}" target="_blank"><i class="fa fa-fw fa-search"></i> {{ (instance.translation ~ '.admin.index.table.action.preview')|trans }}
         </a>
     </li>
 {% endblock %}
@@ -28,7 +28,7 @@
 {% block content_data_action_links %}
     {{ parent() }}
     <li>
-        <a href="{{ path(instance.source ~ '_admin_' ~ instance.route ~ '_preview', {'id': document.getId()}) }}" title="{{ (instance.translation ~ '.admin.index.table.action.preview')|trans }}" target="_blank"><i class="fa fa-fw fa-search"></i> {{ (instance.translation ~ '.admin.index.table.action.preview')|trans }}
+        <a href="{{ path(instance.source ~ '_admin_' ~ instance.route ~ '_preview', {'id': object.getId()}) }}" title="{{ (instance.translation ~ '.admin.index.table.action.preview')|trans }}" target="_blank"><i class="fa fa-fw fa-search"></i> {{ (instance.translation ~ '.admin.index.table.action.preview')|trans }}
         </a>
     </li>
 {% endblock %}
@@ -42,7 +42,7 @@
 
  {% block content_data_body %}
      {{ parent() }}
-     <td>{{ document.getDateStart() | localizeddate('full', 'short', app.request.locale) }}</td>
-     <td>{{ document.getDateEnd() | localizeddate('full', 'short', app.request.locale) }}</td>
-     <td>{{ document.getEventgroups()|length }}</td>
+     <td>{{ object.getDateStart() | localizeddate('full', 'short', app.request.locale) }}</td>
+     <td>{{ object.getDateEnd() | localizeddate('full', 'short', app.request.locale) }}</td>
+     <td>{{ object.getEventgroups()|length }}</td>
  {% endblock %}

@@ -137,6 +137,7 @@ class CreateType extends GeolocationType
                 'cascade_validation' => true,
                 'translation_route' => 'contact',
                 'user_admin' => '',
+                'object_manager' => ''
             )
         );
     }
