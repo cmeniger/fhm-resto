@@ -4,6 +4,7 @@ namespace Fhm\NewsBundle\Entity\Repository;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Mapping\ClassMetadata;
 use Fhm\FhmBundle\Entity\Repository\FhmRepository;
+use Fhm\NewsBundle\Entity\News;
 
 /**
  * NewsGroupRepository
@@ -21,5 +22,22 @@ class NewsGroupRepository extends FhmRepository
     public function __construct(EntityManager $dm, ClassMetadata $class)
     {
         parent::__construct($dm, $class);
+    }
+
+    /**
+     * @return array
+     */
+    public function getListByNews($news)
+    {
+        $ret = [];
+        if ($news instanceof News) {
+            $builder = $this->createQueryBuilder('a');
+            $builder->where('a.news = :news')->setParameter('news', $news->getId());
+            $builder->andWhere('a.active = :bool1')->setParameter('bool1', true);
+            $builder->andWhere('a.delete = :bool2')->setParameter('bool2', false);
+            $ret = $builder->getQuery()->execute();
+        }
+
+        return $ret;
     }
 }

@@ -25,36 +25,33 @@ class NewsRepository extends FhmRepository
 
     /**
      * @param string $search
-     * @param int $page
-     * @param int $count
-     * @param string $grouping
-     *
      * @return mixed
-     * @throws \Doctrine\ORM\ORMException
      */
-    public function getFrontIndex($search = "", $page = 1, $count = 5, $grouping = "")
+    public function getFrontIndex($search = "")
     {
-        $builder = ($search) ? $this->search($search) : $this->createQueryBuilder();
+        $date = new \DateTime();
+        $builder = ($search) ? $this->search($search) : $this->createQueryBuilder('a');
         // Dates
-        $builder->addAnd(
-            $builder->expr()->addOr($builder->expr()->field('date_start')->equals(null))->addOr(
-                $builder->expr()->field('date_start')->lt(new \DateTime())
+        $builder->where('a.active = :bool1')->setParameter('bool1', true);
+        $builder->andWhere('a.delete = :bool2')->setParameter('bool2', false);
+        $builder->andWhere(
+            $builder->expr()->orX(
+                $builder->expr()->isNull('a.date_start'),
+                $builder->expr()->lt('a.date_start', $date->format('yyyy-mm-dd'))
             )
         );
-        $builder->addAnd(
-            $builder->expr()->addOr($builder->expr()->field('date_end')->equals(null))->addOr(
-                $builder->expr()->field('date_end')->gt(new \DateTime())
+        $builder->andWhere(
+            $builder->expr()->orX(
+                $builder->expr()->isNull('a.date_end'),
+                $builder->expr()->gt('a.date_end', $date->format('yyyy-mm-dd'))
             )
         );
-        // Common
-        $builder->field('active')->equals(true);
-        $builder->field('delete')->equals(false);
-        $builder->sort('order', 'asc');
-        $builder->sort('date_start', 'desc');
-        $builder->sort('date_create', 'desc');
-        $builder->sort('name', 'asc');
+        $builder->orderBy('a.order', 'asc');
+        $builder->orderBy('a.date_start', 'desc');
+        $builder->orderBy('a.date_create', 'desc');
+        $builder->orderBy('a.name', 'asc');
 
-        return $builder->getQuery()->execute()->toArray();
+        return $builder->getQuery()->execute();
     }
 
     /**
@@ -225,8 +222,9 @@ class NewsRepository extends FhmRepository
             $builder->where('a.newsgroups = :group')->setParameter('group', $group->getId());
             $builder->andWhere('a.active = :bool1')->setParameter('bool1', true);
             $builder->andWhere('a.delete = :bool2')->setParameter('bool2', false);
-            $ret = $builder->getQuery()->execute()->toArray();
+            $ret = $builder->getQuery()->execute();
         }
+
         return $ret;
     }
 }

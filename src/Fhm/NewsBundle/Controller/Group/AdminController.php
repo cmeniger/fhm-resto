@@ -101,13 +101,13 @@ class AdminController extends FhmController
      */
     public function detailAction($id)
     {
-        $document = $this->get('fhm_tools')->dmRepository(self::$repository)->find($id);
+        $repository = $this->get('fhm.object.manager')->getCurrentRepository(self::$repository);
+        $object = $repository->find($id);
 
         return array_merge(
             array(
-                'news1' => $this->get('fhm_tools')->dmRepository('FhmNewsBundle:News')->getAllEnable(
-                ),
-                'news2' => $this->getList($document->getNews()),
+                'news1' => $this->get('fhm.object.manager')->getCurrentRepository('FhmNewsBundle:News')->getAllEnable(),
+                'news2' => $repository->getListByNews($object->getNews()),
             ),
             parent::detailAction($id)
         );

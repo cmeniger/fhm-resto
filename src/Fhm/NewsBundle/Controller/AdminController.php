@@ -106,7 +106,9 @@ class AdminController extends FhmController
 
         return array_merge(
             array(
-                'newsgroups1' => $repository->getListEnable(),
+                'newsgroups1' => $this->get('fhm.object.manager')->getCurrentRepository(
+                    'FhmNewsBundle:NewsGroup'
+                )->getListEnable(),
                 'newsgroups2' => $repository->getListByGroup($object->getNewsgroups()),
             ),
             parent::detailAction($id)
