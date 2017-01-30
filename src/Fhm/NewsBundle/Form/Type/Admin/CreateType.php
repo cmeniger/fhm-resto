@@ -1,14 +1,10 @@
 <?php
 namespace Fhm\NewsBundle\Form\Type\Admin;
 
-use Doctrine\Bundle\MongoDBBundle\Form\Type\DocumentType;
-use Fhm\FhmBundle\Form\Type\AutocompleteType;
 use Fhm\FhmBundle\Manager\TypeManager;
-use Fhm\GalleryBundle\Repository\GalleryRepository;
 use Fhm\MediaBundle\Form\Type\MediaType;
 use Fhm\NewsBundle\Form\Type\Admin\Group\AddType;
 use Fhm\FhmBundle\Form\Type\Admin\CreateType as FhmType;
-use Fhm\NewsBundle\Repository\NewsGroupRepository;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -118,7 +114,6 @@ class CreateType extends FhmType
                     $dr = $options['object_manager']->getCurrentRepository('FhmUserBundle:User');
                     return $dr->getFormEnable();
                 },
-//                'url' => 'fhm_api_user_autocomplete',
                 'required' => false,
             )
         )->remove('name')->remove('description');
@@ -131,7 +126,7 @@ class CreateType extends FhmType
     {
         $resolver->setDefaults(
             array(
-                'data_class' => 'Fhm\NewsBundle\Document\News',
+                'data_class' => '',
                 'translation_domain' => 'FhmNewsBundle',
                 'cascade_validation' => true,
                 'translation_route' => 'news',

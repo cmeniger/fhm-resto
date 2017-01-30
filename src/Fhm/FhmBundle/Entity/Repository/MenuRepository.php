@@ -3,6 +3,7 @@ namespace Fhm\FhmBundle\Entity\Repository;
 
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Mapping\ClassMetadata;
+use Fhm\FhmBundle\Entity\Menu;
 
 /**
  * MenuRepository
@@ -27,10 +28,6 @@ class MenuRepository extends FhmRepository
     public function getFormEnable()
     {
         $builder = $this->createQueryBuilder('a');
-        // Common
-        if ($this->parent) {
-            $builder->andWhere('a.parent IN :(parent)')->setParameter('parent', [0, null]);
-        }
         $builder->andWhere('a.active = :bool1')->setParameter('bool1', true);
         $builder->andWhere('a.delete = :bool2')->setParameter('bool2', false);
         $builder->orderBy('a.order');
@@ -46,9 +43,12 @@ class MenuRepository extends FhmRepository
      */
     public function getSons($idp)
     {
-        return $this->createQueryBuilder('a')->andWhere('a.parent = :(parent)')->setParameter('parent', $idp)->orderBy(
-                'a.order'
-            )->orderBy('a.name')->getQuery()->execute()->toArray();
+        $builder =  $this->createQueryBuilder('a');
+        $builder->andWhere('a.parent = :(parent)')->setParameter('parent', $idp);
+        $builder->orderBy('a.order');
+        $builder->orderBy('a.name');
+
+        return $builder->getQuery()->execute()->toArray();
     }
 
     /**
@@ -58,8 +58,8 @@ class MenuRepository extends FhmRepository
     public function getTree($idp)
     {
         $current = $this->find($idp);
-        $current->branchs = array();
         $branchs = $current->getChilds();
+        $current->branchs = array();
         if (is_array($branchs)) {
             foreach ($branchs as $branch) {
                 $current->branchs[] = $this->getTree($branch->getId());
@@ -77,8 +77,9 @@ class MenuRepository extends FhmRepository
     {
         $current = $this->find($idp);
         $map = array();
-        if ($current->getParent() != '0') {
-            $map = array_merge($map, $this->getTreeMap($current->getParent()));
+        $parent = $current->getParent();
+        if ($parent instanceof Menu) {
+            $map = array_merge($map, $this->getTreeMap($parent->getId()));
         }
         $map[] = $current;
 

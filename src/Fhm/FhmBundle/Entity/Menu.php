@@ -10,19 +10,18 @@ use Doctrine\ORM\Mapping as ORM;
  * Menu
  * @ORM\Entity(repositoryClass="Fhm\FhmBundle\Entity\Repository\MenuRepository")
  * @ORM\Table()
- * @ORM\Embeddable
  */
 class Menu extends Fhm
 {
     /**
-     * @ORM\OneToMany(targetEntity="Fhm\FhmBundle\Entity\Menu", orphanRemoval=true, cascade={"all"}, mappedBy="childs")
+     * @ORM\OneToMany(targetEntity="Fhm\FhmBundle\Entity\Menu", cascade={"all"}, mappedBy="parent")
      */
     protected $childs;
 
     /**
-     * @ORM\Column(type="string", length=100)
+     * @ORM\ManyToOne(targetEntity="Fhm\FhmBundle\Entity\Menu", cascade={"all"}, inversedBy="childs")
      */
-    protected $parent = 0;
+    protected $parent;
 
     /**
      * @ORM\Column(type="string", length=100)

@@ -49,17 +49,19 @@ class News extends Fhm
     protected $image;
 
     /**
-     * @ORM\OneToOne(targetEntity="Fhm\GalleryBundle\Entity\Gallery", orphanRemoval=true, cascade={"all"})
+     * @ORM\ManyToOne(targetEntity="Fhm\GalleryBundle\Entity\Gallery", cascade={"all"})
+     * @ORM\JoinColumn(nullable=true)
      */
     protected $gallery;
 
     /**
-     * @ORM\OneToOne(targetEntity="Fhm\UserBundle\Entity\User", orphanRemoval=true, cascade={"all"})
+     * @ORM\ManyToOne(targetEntity="Fhm\UserBundle\Entity\User", cascade={"all"})
      */
     protected $author;
 
     /**
      * @ORM\ManyToOne(targetEntity="Fhm\NewsBundle\Entity\NewsGroup", cascade={"all"}, inversedBy="news")
+     * @ORM\JoinColumn(nullable=true)
      */
     protected $newsgroups;
 
@@ -74,7 +76,6 @@ class News extends Fhm
     public function __construct()
     {
         parent::__construct();
-        $this->newsgroups     = new ArrayCollection();
         $this->date_start     = null;
         $this->date_end       = null;
         $this->sort_newsgroup = 0;
@@ -387,7 +388,7 @@ class News extends Fhm
     {
         $this->sort_newsgroup = $this->newsgroups->count();
 
-        return parent::sortUpdate();
+//        return parent::sortUpdate();
     }
 
     /**
@@ -397,6 +398,6 @@ class News extends Fhm
     {
         $this->resetNewsgroups();
 
-        return parent::preRemove();
+//        return parent::preRemove();
     }
 }

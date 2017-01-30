@@ -81,7 +81,6 @@ class FhmRepository extends EntityRepository
     public function getAdminCount($search = "", $roleSuperAdmin = false)
     {
         $builder = $search ? $this->search($search) : $this->createQueryBuilder('a');
-
         $builder->select('count(a.id)');
         // Parent
         if ($this->parent) {
@@ -106,8 +105,8 @@ class FhmRepository extends EntityRepository
         if ($this->parent) {
             $builder->andWhere('a.parent IN :(parent)')->setParameter('parent', [0, null]);
         }
-        $builder->andWhere('a.active = :bool')->setParameter('bool', true);
-        $builder->andWhere('a.delete = :bool')->setParameter('bool', false);
+        $builder->andWhere('a.active = :bool1')->setParameter('bool1', true);
+        $builder->andWhere('a.delete = :bool2')->setParameter('bool2', false);
 
         return $builder->getQuery();
     }
@@ -119,14 +118,13 @@ class FhmRepository extends EntityRepository
     public function getFrontCount($search = "")
     {
         $builder = $search ? $this->search($search) : $this->createQueryBuilder('a');
-
         $builder->select('count(a.id)');
         // Parent
         if ($this->parent) {
             $builder->andWhere('a.parent IN :(parent)')->setParameter('parent', [0, null]);
         }
-        $builder->andWhere('a.active = :bool')->setParameter('bool', true);
-        $builder->andWhere('a.delete = :bool')->setParameter('bool', false);
+        $builder->andWhere('a.active = :bool1')->setParameter('bool1', true);
+        $builder->andWhere('a.delete = :bool2')->setParameter('bool2', false);
 
         return $builder->getQuery()->execute();
     }
@@ -137,15 +135,14 @@ class FhmRepository extends EntityRepository
     public function getFormEnable()
     {
         $builder = $this->createQueryBuilder('a');
-
         // Parent
         if ($this->parent) {
             $builder->andWhere('a.parent IN :(parent)')->setParameter('parent', [0, null]);
         }
-        $builder->andWhere('a.active = :bool')->setParameter('bool', true);
-        $builder->andWhere('a.delete = :bool')->setParameter('bool', false);
+        $builder->andWhere('a.active = :bool1')->setParameter('bool1', true);
+        $builder->andWhere('a.delete = :bool2')->setParameter('bool2', false);
 
-        return $builder->getQuery()->execute();
+        return $builder;
     }
 
     /**
@@ -153,15 +150,12 @@ class FhmRepository extends EntityRepository
      */
     public function getFormFiltered()
     {
-        $builder = $this->createQueryBuilder();
-        // Parent
+        $builder = $this->createQueryBuilder('a');
         if ($this->parent) {
-            $builder->field('parent')->in(array('0', null));
+            $builder->andWhere('a.parent IN :(parent)')->setParameter('parent', [0, null]);
         }
-        // Common
-        $builder->field('active')->equals(true);
-        $builder->field('delete')->equals(false);
-        $this->builderSort($builder);
+        $builder->andWhere('a.active = :bool1')->setParameter('bool1', true);
+        $builder->andWhere('a.delete = :bool2')->setParameter('bool2', false);
 
         return $builder;
     }
@@ -171,13 +165,10 @@ class FhmRepository extends EntityRepository
      */
     public function getFormAll()
     {
-        $builder = $this->createQueryBuilder();
-        // Parent
+        $builder = $this->createQueryBuilder('a');
         if ($this->parent) {
-            $builder->field('parent')->in(array('0', null));
+            $builder->andWhere('a.parent IN :(parent)')->setParameter('parent', [0, null]);
         }
-        // Common
-        $this->builderSort($builder);
 
         return $builder;
     }
@@ -187,20 +178,17 @@ class FhmRepository extends EntityRepository
      */
     public function getListEnable()
     {
-        $builder = $this->createQueryBuilder();
-        // Parent
+        $builder = $this->createQueryBuilder('a');
         if ($this->parent) {
-            $builder->field('parent')->in(array('0', null));
+            $builder->andWhere('a.parent IN :(parent)')->setParameter('parent', [0, null]);
         }
-        // Common
-        $builder->field('active')->equals(true);
-        $builder->field('delete')->equals(false);
-        $this->builderSort($builder);
+        $builder->andWhere('a.active = :bool1')->setParameter('bool1', true);
+        $builder->andWhere('a.delete = :bool2')->setParameter('bool2', false);
         // Format list
-        $documents = $builder->getQuery()->execute()->toArray();
+        $entities = $builder->getQuery()->execute();
         $list = array();
-        foreach ($documents as $document) {
-            $list[$document->getId()] = $document;
+        foreach ($entities as $entity) {
+            $list[$entity->getId()] = $entity;
         }
 
         return $list;
@@ -212,18 +200,14 @@ class FhmRepository extends EntityRepository
      */
     public function getListAll($grouping = "")
     {
-        $builder = $this->createQueryBuilder();
-        // Parent
+        $builder = $this->createQueryBuilder('a');
         if ($this->parent) {
-            $builder->field('parent')->in(array('0', null));
+            $builder->andWhere('a.parent IN :(parent)')->setParameter('parent', [0, null]);
         }
-        // Common
-        $this->builderSort($builder);
-        // Format list
-        $documents = $builder->getQuery()->execute()->toArray();
+        $entities = $builder->getQuery()->execute()->toArray();
         $list = array();
-        foreach ($documents as $document) {
-            $list[$document->getId()] = $document;
+        foreach ($entities as $entity) {
+            $list[$entity->getId()] = $entity;
         }
 
         return $list;
@@ -283,14 +267,11 @@ class FhmRepository extends EntityRepository
     public function getAllFiltered()
     {
         $builder = $this->createQueryBuilder('a');
-        // Parent
         if ($this->parent) {
-            $builder->field('parent')->in(array('0', null));
+            $builder->andWhere('a.parent IN :(parent)')->setParameter('parent', [0, null]);
         }
-        // Common
-        $builder->field('active')->equals(true);
-        $builder->field('delete')->equals(false);
-        $this->builderSort($builder);
+        $builder->andWhere('a.active = :bool1')->setParameter('bool1', true);
+        $builder->andWhere('a.delete = :bool2')->setParameter('bool2', false);
 
         return $builder->getQuery()->execute()->toArray();
     }
@@ -300,11 +281,11 @@ class FhmRepository extends EntityRepository
      */
     public function getGlobalEnableCount()
     {
-        $query =  $this->createQueryBuilder('a')
-            ->select('count(a.id)')
-            ->where('a.global = :bool')->setParameter('bool', true)
-            ->andWhere('a.active = :bool')->setParameter('bool', true)
-            ->andWhere('a.delete = :bool')->setParameter('bool', false)->getQuery();
+        $query = $this->createQueryBuilder('a');
+        $query->select('count(a.id)')->where('a.global = :bool')->setParameter('bool', true);
+        $query->andWhere('a.active = :bool')->setParameter('bool', true);
+        $query->andWhere('a.delete = :bool')->setParameter('bool', false)->getQuery();
+
         return $query->execute();
     }
 
@@ -313,10 +294,9 @@ class FhmRepository extends EntityRepository
      */
     public function getGlobalAllCount()
     {
-        $query =  $this->createQueryBuilder('a')
-            ->select('count(a.id)')
-            ->where('a.global = :bool')->setParameter('bool', true)
-            ->getQuery();
+        $query = $this->createQueryBuilder('a');
+        $query->select('count(a.id)')->where('a.global = :bool')->setParameter('bool', true)->getQuery();
+
         return $query->execute();
     }
 
@@ -337,9 +317,8 @@ class FhmRepository extends EntityRepository
     public function getImport($data, $index = null)
     {
         $value = !is_null($index) ? $data[$index] : $data['name'];
-        $results = $this->createQueryBuilder('a')
-            ->where('a.name = :str')->setParameter('str', $value)
-            ->getQuery()->execute()->toArray();
+        $results = $this->createQueryBuilder('a');
+        $results->where('a.name = :str')->setParameter('str', $value)->getQuery()->execute()->toArray();
         if (count($results) <= 1) {
             return array_pop($results);
         } else {

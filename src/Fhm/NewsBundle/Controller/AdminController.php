@@ -4,7 +4,6 @@ namespace Fhm\NewsBundle\Controller;
 use Fhm\FhmBundle\Controller\RefAdminController as FhmController;
 use Fhm\FhmBundle\Form\Handler\Admin\CreateHandler;
 use Fhm\FhmBundle\Form\Handler\Admin\UpdateHandler;
-use Fhm\NewsBundle\Document\News;
 use Fhm\NewsBundle\Form\Type\Admin\CreateType;
 use Fhm\NewsBundle\Form\Type\Admin\UpdateType;
 use Symfony\Component\HttpFoundation\Request;
@@ -29,7 +28,6 @@ class AdminController extends FhmController
         self::$source = "fhm";
         self::$domain = "FhmNewsBundle";
         self::$translation = "news";
-        self::$class = News::class;
         self::$route = "news";
         self::$form = new \stdClass();
         self::$form->createType = CreateType::class;
@@ -103,12 +101,13 @@ class AdminController extends FhmController
      */
     public function detailAction($id)
     {
-        $document = $this->get('fhm_tools')->dmRepository(self::$repository)->find($id);
+        $repository = $this->get('fhm.object.manager')->getCurrentRepository(self::$repository);
+        $object = $repository->find($id);
 
         return array_merge(
             array(
-                'newsgroups1' => $this->get('fhm_tools')->dmRepository('FhmNewsBundle:NewsGroup')->getListEnable(),
-                'newsgroups2' => $this->getList($document->getNewsgroups()),
+                'newsgroups1' => $repository->getListEnable(),
+                'newsgroups2' => $repository->getListByGroup($object->getNewsgroups()),
             ),
             parent::detailAction($id)
         );

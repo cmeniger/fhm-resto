@@ -152,12 +152,12 @@
                         <tr>
                             <td><strong>{{ (instance.translation ~ '.admin.detail.url.front.alias')|trans }}</strong>
                             </td>
-                            <td>{{ path(instance.source ~ '_' ~ instance.route ~ '_detail', {'id':object.getAlias()}) }}</td>
+                            <td>{{ path(instance.source ~ '_' ~ instance.route ~ '_detail', {'id':object.getId()}) }}</td>
                         </tr>
                         <tr>
                             <td><strong>{{ (instance.translation ~ '.admin.detail.url.front.lite')|trans }}</strong>
                             </td>
-                            <td>{{ path(instance.source ~ '_' ~ instance.route ~ '_lite', {'id':object.getAlias()}) }}</td>
+                            <td>{{ path(instance.source ~ '_' ~ instance.route ~ '_lite', {'id':object.getId()}) }}</td>
                         </tr>
                     {% endblock %}
                 </tbody>
