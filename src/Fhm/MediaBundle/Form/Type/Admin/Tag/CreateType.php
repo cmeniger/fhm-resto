@@ -7,6 +7,7 @@ use Fhm\MediaBundle\Repository\MediaTagRepository;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Class CreateType
@@ -49,5 +50,19 @@ class CreateType extends FhmType
         )->remove('seo_title')->remove('seo_description')->remove('seo_keywords')->remove('languages')->remove(
             'grouping'
         )->remove('share')->remove('global');
+    }
+
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults(
+            array(
+                'data_class' => '',
+                'translation_domain' => 'FhmMediaBundle',
+                'cascade_validation' => true,
+                'translation_route' => 'media.tag',
+                'user_admin' => '',
+                'object_manager'=>''
+            )
+        );
     }
 }

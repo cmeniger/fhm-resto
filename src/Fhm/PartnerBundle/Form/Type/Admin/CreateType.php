@@ -57,7 +57,7 @@ class CreateType extends FhmType
                 'choice_label' => 'name',
                 'query_builder' => function () use ($options) {
                     $dr = $options['object_manager']->getCurrentRepository('FhmPartnerBundle:PartnerGroup');
-                    return $dr->getFormEnable($options['filter']);
+                    return $dr->getFormEnable();
                 },
                 'multiple' => true,
                 'required' => false,
@@ -76,7 +76,8 @@ class CreateType extends FhmType
                 'translation_domain' => 'FhmPartnerBundle',
                 'cascade_validation' => true,
                 'translation_route' => 'partner',
-                'user_admin' => ''
+                'user_admin' => '',
+                'object_manager' => ''
             )
         );
     }
