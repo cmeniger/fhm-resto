@@ -21,6 +21,6 @@
 
 {% block content_data_body %}
     {{ parent() }}
-    <td>{{ document.getPrimaries()|length }}</td>
-    <td>{{ document.getSecondaries()|length }}</td>
+    <td>{{ object.getPrimaries()|length }}</td>
+    <td>{{ object.getSecondaries()|length }}</td>
 {% endblock %}

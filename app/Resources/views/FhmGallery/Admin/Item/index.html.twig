@@ -39,7 +39,7 @@
 {% endblock %}
 
  {% block content_data_body %}
-     <td>{{ document.getImage()|image('xs', 50)|raw }}</td>
+     <td>{{ object.getImage()|image('xs', 50)|raw }}</td>
      {{ parent() }}
-     <td>{{ document.getGalleries()|length }}</td>
+     <td>{{ object.getGalleries()|length }}</td>
  {% endblock %}

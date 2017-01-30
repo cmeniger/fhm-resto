@@ -37,4 +37,22 @@ class CreateType extends FhmType
         )->remove('share')->remove('global');
     }
 
+    /**
+     * @param OptionsResolver $resolver
+     */
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults(
+            array(
+                'data_class' => '',
+                'translation_domain' => 'FhmWorkflowBundle',
+                'cascade_validation' => true,
+                'translation_route' => 'workflow.step',
+                'user_admin' => '',
+                'object_manager'=>''
+            )
+        );
+    }
+
+
 }

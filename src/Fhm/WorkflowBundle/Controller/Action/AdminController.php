@@ -31,7 +31,7 @@ class AdminController extends FhmController
         self::$domain = "FhmWorkflowBundle";
         self::$translation = "workflow.action";
         self::$class = WorkflowAction::class;
-        self::$route = 'Workflow_action';
+        self::$route = 'workflow_action';
         self::$form = new \stdClass();
         self::$form->createType = CreateType::class;
         self::$form->createHandler = CreateHandler::class;

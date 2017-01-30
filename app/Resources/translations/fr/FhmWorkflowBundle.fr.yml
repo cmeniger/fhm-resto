@@ -300,7 +300,7 @@ workflow:
     step:
         admin:
             index:
-                title:                          Gestion des workflows ':' étapes
+                title:                          'Gestion des workflows : étapes'
                 link:                           Etapes
                 breadcrumb:                     Etapes
                 nodata:                         Aucune donnée
@@ -536,7 +536,7 @@ workflow:
     task:
         admin:
             index:
-                title:                          Gestion des workflows ':' tâches
+                title:                          'Gestion des workflows : tâches'
                 link:                           Tâches
                 breadcrumb:                     Tâches
                 nodata:                         Aucune donnée
@@ -785,7 +785,7 @@ workflow:
     action:
         admin:
             index:
-                title:                          Gestion des workflows ':' actions
+                title:                          'Gestion des workflows : actions'
                 link:                           Actions
                 breadcrumb:                     Actions
                 nodata:                         Aucune donnée

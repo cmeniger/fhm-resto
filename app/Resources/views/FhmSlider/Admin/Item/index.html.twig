@@ -16,7 +16,7 @@
 {% endblock %}
 
  {% block content_data_body %}
-     <td><img src="{{ asset(document.getImage()|media('xs')) }}" alt="{{ document.getName() }}" style="width:90px;"/></td>
+     <td><img src="{{ asset(object.getImage()|media('xs')) }}" alt="{{ object.getName() }}" style="width:90px;"/></td>
      {{ parent() }}
-     <td>{{ document.getSliders()|length }}</td>
+     <td>{{ object.getSliders()|length }}</td>
  {% endblock %}
