@@ -3,6 +3,7 @@ namespace Fhm\GalleryBundle\Controller\Item;
 
 use Fhm\FhmBundle\Controller\RefAdminController as FhmController;
 use Fhm\FhmBundle\Form\Handler\Admin\CreateHandler;
+use Fhm\FhmBundle\Form\Handler\Admin\UpdateHandler;
 use Fhm\GalleryBundle\Form\Type\Admin\Item\CreateType;
 use Fhm\GalleryBundle\Form\Type\Admin\Item\MultipleType;
 use Fhm\GalleryBundle\Form\Type\Admin\Item\UpdateType;
@@ -34,6 +35,7 @@ class AdminController extends FhmController
         self::$form->createType    = CreateType::class;
         self::$form->createHandler = CreateHandler::class;
         self::$form->updateType    = UpdateType::class;
+        self::$form->updateHandler = UpdateHandler::class;
     }
 
     /**
@@ -81,8 +83,7 @@ class AdminController extends FhmController
             $object,
             array(
                 'data_class' => self::$class,
-                'translation_domain' => self::$domain,
-                'translation_route' => self::$translation,
+                'object_manager' => $this->get('fhm.object.manager'),
                 'user_admin' => $this->getUser()->hasRole('ROLE_ADMIN'),
 
             )
@@ -102,17 +103,15 @@ class AdminController extends FhmController
             $tab = explode('.', $fileData['name']);
             $name = $data['title'] ? $this->get('fhm_tools')->getUnique(null, $data['title'], true) : $tab[0];
             // Persist media
-            $media = new \Fhm\MediaBundle\Document\Media();
+            $media = $this->get('fhm.object.manager')->getCurrentModelName('FhmMediaBundle:Media');
             $media->setName($name);
             $media->setFile($file);
-            $media->setUserCreate($this->getUser());
-            $media->setAlias($this->get('fhm_tools')->getAlias($media->getId(), $media->getName()));
             $media->setWatermark((array)$request->get('watermark'));
             // Tag
             if (isset($data['tag']) && $data['tag']) {
                 $tag = $this->get('fhm_tools')->dmRepository('FhmMediaBundle:MediaTag')->getByName($data['tag']);
                 if ($tag == "") {
-                    $tag = new \Fhm\MediaBundle\Document\MediaTag();
+                    $tag = $this->get('fhm.object.manager')->getCurrentModelName('FhmMediaBundle:MediaTag');
                     $tag->setName($data['tag']);
                     $tag->setActive(true);
                 }
@@ -137,8 +136,6 @@ class AdminController extends FhmController
                 $request->get('watermark')
             )->execute();
             $object->setTitle($name);
-            $object->setUserCreate($this->getUser());
-            $object->setAlias($this->get('fhm_tools')->getAlias($object->getId(), $object->getName()));
             $object->setImage($media);
             $this->get('fhm_tools')->dmPersist($object);
         }
@@ -151,24 +148,11 @@ class AdminController extends FhmController
                 'files',
                 'fhm_media'
             ) : '',
-            'breadcrumbs' => array(
+            'breadcrumbs' => $this->get('fhm_tools')->generateBreadcrumbs(
                 array(
-                    'link' => $this->getUrl('project_home'),
-                    'text' => $this->trans('project.home.breadcrumb', array(), 'ProjectDefaultBundle'),
-                ),
-                array(
-                    'link' => $this->getUrl('fhm_admin'),
-                    'text' => $this->trans('fhm.admin.breadcrumb', array(), 'FhmFhmBundle'),
-                ),
-                array(
-                    'link' => $this->getUrl('fhm_admin_'.self::$route),
-                    'text' => $this->trans('.admin.index.breadcrumb'),
-                ),
-                array(
-                    'link' => $this->getUrl('fhm_admin_'.self::$route.'_create'),
-                    'text' => $this->ftrans('.admin.create.breadcrumb'),
-                    'current' => true,
-                ),
+                    'domain' => self::$domain,
+                    '_route' => $this->get('request_stack')->getCurrentRequest()->get('_route'),
+                )
             ),
         );
     }
