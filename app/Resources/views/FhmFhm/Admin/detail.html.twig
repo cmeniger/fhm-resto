@@ -147,7 +147,7 @@
                         <tr>
                             <td><strong>{{ (instance.translation ~ '.admin.detail.url.front.name')|trans }}</strong>
                             </td>
-                            <td>{{ path(instance.source ~ '_' ~ instance.route ~ '_detail', {'id':object.getName()}) }}</td>
+                            <td>{{ path(instance.source ~ '_' ~ instance.route ~ '_detail', {'id':object.getId()}) }}</td>
                         </tr>
                         <tr>
                             <td><strong>{{ (instance.translation ~ '.admin.detail.url.front.alias')|trans }}</strong>
@@ -202,10 +202,6 @@
                                                                 <a  href="{{ path(instance.source ~ '_api_' ~ instance.route ~ '_historic_restore', {'id': historic.getId()}) }}"  data-id="{{ historic.getId() }}"  title="{{ ('fhm.historic.table.action.restore')|trans({},'FhmFhmBundle') }}"><i class="fa fa-share" aria-hidden="true"></i> {{ ('fhm.historic.table.action.restore')|trans({},'FhmFhmBundle') }}
                                                                 </a>
                                                             </li>
-                                                            {#<li>#}
-                                                                {#<a  href="#" data-url="{{ path(instance.source ~ '_api_' ~ instance.route ~ '_historic_restore', {'id': historic.getId()}) }}"  data-id="{{ historic.getId() }}" data-restaure title="{{ ('fhm.historic.table.action.restore')|trans({},'FhmFhmBundle') }}" onclick="return confirm('{{ ('fhm.historic.table.confirm.copy')|trans({},'FhmFhmBundle') }}')"><i class="fa fa-share" aria-hidden="true"></i> {{ ('fhm.historic.table.action.restore')|trans({},'FhmFhmBundle') }}#}
-                                                                {#</a>#}
-                                                            {#</li>#}
                                                         {% endblock %}
                                                         {% block content_data_action_alert %}
                                                             <li class="alert">

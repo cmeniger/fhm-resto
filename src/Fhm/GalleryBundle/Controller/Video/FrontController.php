@@ -43,4 +43,18 @@ class FrontController extends FhmController
     {
         return $this->detailAction($id);
     }
+
+    /**
+     * @Route
+     * (
+     *      path="/detail/{id}",
+     *      name="fhm_gallery_video_detail",
+     *      requirements={"id"=".+"}
+     * )
+     * @Template("::FhmGallery/Front/Video/detail.html.twig")
+     */
+    public function detailAction($id)
+    {
+        return parent::detailAction($id);
+    }
 }

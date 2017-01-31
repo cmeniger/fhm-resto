@@ -7,14 +7,14 @@
     <div class="row">
         <fieldset>
             <legend>{{ (instance.translation ~ '.admin.detail.video.title')|trans }}</legend>
-            {{ document.getVideo()|video|raw }}
+            {{ object.getVideo()|video|raw }}
         </fieldset>
     </div>
     <div class="row">
         {{
         macroList.admin
         (
-        document,
+        object,
         gallery1,
         gallery2,
         '',

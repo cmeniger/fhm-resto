@@ -4,7 +4,6 @@ namespace Fhm\GalleryBundle\Controller\Video;
 use Fhm\FhmBundle\Controller\RefAdminController as FhmController;
 use Fhm\FhmBundle\Form\Handler\Admin\CreateHandler;
 use Fhm\FhmBundle\Form\Handler\Admin\UpdateHandler;
-use Fhm\GalleryBundle\Document\GalleryVideo;
 use Fhm\GalleryBundle\Form\Type\Admin\Video\CreateType;
 use Fhm\GalleryBundle\Form\Type\Admin\Video\UpdateType;
 use Symfony\Component\HttpFoundation\Request;
@@ -30,7 +29,6 @@ class AdminController extends FhmController
         self::$source = "fhm";
         self::$domain = "FhmGalleryBundle";
         self::$translation = "gallery.video";
-        self::$class = GalleryVideo::class;
         self::$route = "gallery_video";
         self::$form = new \stdClass();
         self::$form->createType    = CreateType::class;
@@ -104,12 +102,12 @@ class AdminController extends FhmController
      */
     public function detailAction($id)
     {
-        $document = $this->get('fhm_tools')->dmRepository(self::$repository)->find($id);
+        $object = $this->get('fhm_tools')->dmRepository(self::$repository)->find($id);
 
         return array_merge(
             array(
                 'gallery1' => $this->get('fhm_tools')->dmRepository('FhmGalleryBundle:Gallery')->getAllEnable(),
-                'gallery2' => $this->getList($document->getGalleries()),
+                'gallery2' => $this->get('fhm_tools')->getList($object->getGalleries()),
             ),
             parent::detailAction($id)
         );

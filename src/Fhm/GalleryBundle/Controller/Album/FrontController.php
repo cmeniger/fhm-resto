@@ -67,4 +67,5 @@ class FrontController extends FhmController
     {
         return $this->detailAction($id);
     }
+
 }

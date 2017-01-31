@@ -7,14 +7,14 @@
     <div class="row">
         <fieldset>
             <legend>{{ (instance.translation ~ '.admin.detail.item.title')|trans }}</legend>
-            {{ document.getImage()|image('s')|raw }}
+            {{ object.getImage()|image('s')|raw }}
         </fieldset>
     </div>
     <div class="row">
         {{
         macroList.admin
         (
-        document,
+        object,
         gallery1,
         gallery2,
         '',

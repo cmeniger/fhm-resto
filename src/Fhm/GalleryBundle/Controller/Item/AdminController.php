@@ -85,7 +85,6 @@ class AdminController extends FhmController
                 'data_class' => self::$class,
                 'object_manager' => $this->get('fhm.object.manager'),
                 'user_admin' => $this->getUser()->hasRole('ROLE_ADMIN'),
-
             )
         );
         $handler = new $classHandler($form, $request);
@@ -201,7 +200,7 @@ class AdminController extends FhmController
         return array_merge(
             array(
                 'gallery1' => $this->get('fhm_tools')->dmRepository('FhmGalleryBundle:Gallery')->getAllEnable(),
-                'gallery2' => $this->getList($object->getGalleries()),
+                'gallery2' => $this->get('fhm_tools')->getList($object->getGalleries()),
             ),
             parent::detailAction($id)
         );

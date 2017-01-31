@@ -44,4 +44,18 @@ class FrontController extends FhmController
     {
         return $this->detailAction($id);
     }
+
+    /**
+     * @Route
+     * (
+     *      path="/detail/{id}",
+     *      name="fhm_gallery_item_detail",
+     *      requirements={"id"=".+"}
+     * )
+     * @Template("::FhmGallery/Front/Item/detail.html.twig")
+     */
+    public function detailAction($id)
+    {
+        return parent::detailAction($id);
+    }
 }
