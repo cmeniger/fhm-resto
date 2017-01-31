@@ -48,7 +48,7 @@ class Slider extends Fhm
     protected $sort;
 
     /**
-     * @ORM\ManyToMany(targetEntity="SliderItem", cascade={"persist"}, mappedBy="slider")
+     * @ORM\ManyToMany(targetEntity="SliderItem", cascade={"persist"})
      */
     protected $items;
 
@@ -63,10 +63,10 @@ class Slider extends Fhm
     public function __construct()
     {
         parent::__construct();
-        $this->items      = new ArrayCollection();
+        $this->items = new ArrayCollection();
         $this->add_global = false;
-        $this->sort       = "date_start desc";
-        $this->sort_item  = 0;
+        $this->sort = "date_start desc";
+        $this->sort_item = 0;
     }
 
     /**
@@ -79,7 +79,7 @@ class Slider extends Fhm
     public function setTitle($title)
     {
         $this->title = $title;
-        $this->name  = $title;
+        $this->name = $title;
 
         return $this;
     }
@@ -282,8 +282,7 @@ class Slider extends Fhm
     public function setItems(ArrayCollection $items)
     {
         $this->resetItems();
-        foreach($items as $item)
-        {
+        foreach ($items as $item) {
             $item->addSlider($this);
         }
         $this->items = $items;
@@ -300,8 +299,7 @@ class Slider extends Fhm
      */
     public function addItem(\Fhm\SliderBundle\Entity\SliderItem $item)
     {
-        if(!$this->items->contains($item))
-        {
+        if (!$this->items->contains($item)) {
             $this->items->add($item);
             $item->addSlider($this);
         }
@@ -318,8 +316,7 @@ class Slider extends Fhm
      */
     public function removeItem(\Fhm\SliderBundle\Entity\SliderItem $item)
     {
-        if($this->items->contains($item))
-        {
+        if ($this->items->contains($item)) {
             $this->items->removeElement($item);
             $item->removeSlider($this);
         }
@@ -334,8 +331,7 @@ class Slider extends Fhm
      */
     public function resetItems()
     {
-        foreach($this->items as $item)
-        {
+        foreach ($this->items as $item) {
             $item->removeSlider($this);
         }
         $this->items = new ArrayCollection();
@@ -351,8 +347,6 @@ class Slider extends Fhm
     public function sortUpdate()
     {
         $this->sort_item = $this->items->count();
-
-        return parent::sortUpdate();
     }
 
     /**
@@ -361,7 +355,5 @@ class Slider extends Fhm
     public function preRemove()
     {
         $this->resetItems();
-
-        return parent::preRemove();
     }
 }

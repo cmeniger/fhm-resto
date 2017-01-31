@@ -2,7 +2,6 @@
 namespace Fhm\SliderBundle\Controller;
 
 use Fhm\FhmBundle\Controller\RefFrontController as FhmController;
-use Fhm\SliderBundle\Document\Slider;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -24,7 +23,6 @@ class FrontController extends FhmController
         self::$source = "fhm";
         self::$domain = "FhmSliderBundle";
         self::$translation = "slider";
-        self::$class = Slider::class;
         self::$route = "slider";
     }
 

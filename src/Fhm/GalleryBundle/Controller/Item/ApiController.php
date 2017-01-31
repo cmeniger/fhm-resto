@@ -2,8 +2,6 @@
 namespace Fhm\GalleryBundle\Controller\Item;
 
 use Fhm\FhmBundle\Controller\RefApiController as FhmController;
-use Fhm\GalleryBundle\Document\Gallery;
-use Fhm\GalleryBundle\Document\GalleryItem;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
@@ -27,7 +25,6 @@ class ApiController extends FhmController
         self::$source = "fhm";
         self::$domain = "FhmGalleryBundle";
         self::$translation = "gallery.item";
-        self::$class = GalleryItem::class;
         self::$route = "gallery_item";
     }
 

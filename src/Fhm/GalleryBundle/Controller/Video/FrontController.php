@@ -2,8 +2,6 @@
 namespace Fhm\GalleryBundle\Controller\Video;
 
 use Fhm\FhmBundle\Controller\RefFrontController as FhmController;
-use Fhm\GalleryBundle\Document\Gallery;
-use Fhm\GalleryBundle\Document\GalleryVideo;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -26,7 +24,6 @@ class FrontController extends FhmController
         self::$source = "fhm";
         self::$domain = "FhmGalleryBundle";
         self::$translation = "gallery.video";
-        self::$class = GalleryVideo::class;
         self::$route = "gallery_video";
     }
 

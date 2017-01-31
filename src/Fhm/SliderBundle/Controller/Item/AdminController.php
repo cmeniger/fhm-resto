@@ -4,7 +4,6 @@ namespace Fhm\SliderBundle\Controller\Item;
 use Fhm\FhmBundle\Controller\RefAdminController as FhmController;
 use Fhm\FhmBundle\Form\Handler\Admin\CreateHandler;
 use Fhm\FhmBundle\Form\Handler\Admin\UpdateHandler;
-use Fhm\SliderBundle\Document\SliderItem;
 use Fhm\SliderBundle\Form\Type\Admin\Item\CreateType;
 use Fhm\SliderBundle\Form\Type\Admin\Item\UpdateType;
 use Symfony\Component\HttpFoundation\Request;
@@ -29,7 +28,6 @@ class AdminController extends FhmController
         self::$source = "fhm";
         self::$domain = "FhmSliderBundle";
         self::$translation = "slider.item";
-        self::$class = SliderItem::class;
         self::$route = "slider_item";
         self::$form = new \stdClass();
         self::$form->createType = CreateType::class;
@@ -109,7 +107,7 @@ class AdminController extends FhmController
             array(
                 'slider1' => $this->get('fhm_tools')->dmRepository('FhmSliderBundle:Slider')->getAllEnable(
                 ),
-                'slider2' => $this->getList($document->getSliders()),
+                'slider2' => $this->get('fhm_tools')->getList($document->getSliders()),
             ),
             parent::detailAction($id)
         );

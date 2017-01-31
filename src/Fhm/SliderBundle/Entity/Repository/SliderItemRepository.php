@@ -23,159 +23,116 @@ class SliderItemRepository extends FhmRepository
 
     /**
      * @param string $search
-     * @param int    $page
-     * @param int    $count
-     * @param string $grouping
-     *
-     * @return mixed
-     * @throws \Doctrine\ORM\ORMException
+     * @return \Doctrine\ORM\Query
      */
-    public function getFrontIndex($search = "", $page = 1, $count = 5, $grouping = "")
+    public function getFrontIndex($search = "")
     {
-        $builder = (($page > 0 && $count > 0) && $search) ? $this->search($search) : $this->createQueryBuilder();
-        // Grouping
-        if($grouping != "")
-        {
-            $builder->addOr($builder->expr()->field('grouping')->in((array) $grouping));
-            $builder->addOr($builder->expr()->field('share')->equals(true));
-        }
-        // Pagination
-        if($page > 0 && $count > 0)
-        {
-            $builder->limit($count);
-            $builder->skip(($page - 1) * $count);
-        }
-        // Dates
-        $builder->addAnd(
-            $builder->expr()
-                ->addOr($builder->expr()->field('date_start')->equals(null))
-                ->addOr($builder->expr()->field('date_start')->lt(new \DateTime()))
-        );
-        $builder->addAnd(
-            $builder->expr()
-                ->addOr($builder->expr()->field('date_end')->equals(null))
-                ->addOr($builder->expr()->field('date_end')->gt(new \DateTime()))
-        );
-        // Common
-        $builder->field('active')->equals(true);
-        $builder->field('delete')->equals(false);
-        $this->builderSort($builder);
+        $builder = ($search) ? $this->search($search) : $this->createQueryBuilder('a');
 
-        return $builder
-            ->getQuery()
-            ->execute()
-            ->toArray();
+        $date = new \DateTime();
+        $builder->where('a.active = :bool1')->setParameter('bool1', true);
+        $builder->andWhere('a.delete = :bool2')->setParameter('bool2', false);
+        // Dates
+        $builder->andWhere(
+            $builder->expr()->orX(
+                $builder->expr()->isNull('a.date_start'),
+                $builder->expr()->lt('a.date_start', $date->format('yyyy-mm-dd'))
+            )
+        );
+        $builder->andWhere(
+            $builder->expr()->orX(
+                $builder->expr()->isNull('a.date_end'),
+                $builder->expr()->gt('a.date_end', $date->format('yyyy-mm-dd'))
+            )
+        );
+
+        $builder->orderBy('a.name', 'ASC');
+
+        return $builder->getQuery();
     }
 
     /**
      * @param string $search
-     * @param string $grouping
-     *
      * @return int
-     * @throws \Doctrine\ORM\ORMException
      */
-    public function getFrontCount($search = "", $grouping = "")
+    public function getFrontCount($search = "")
     {
-        $builder = ($search) ? $this->search($search) : $this->createQueryBuilder();
-        // Grouping
-        if($grouping != "")
-        {
-            $builder->addOr($builder->expr()->field('grouping')->in((array) $grouping));
-            $builder->addOr($builder->expr()->field('share')->equals(true));
-        }
+        $builder = ($search) ? $this->search($search) : $this->createQueryBuilder('a');
+
+        $date = new \DateTime();
+        $builder->where('a.active = :bool1')->setParameter('bool1', true);
+        $builder->andWhere('a.delete = :bool2')->setParameter('bool2', false);
         // Dates
-        $builder->addAnd(
-            $builder->expr()
-                ->addOr($builder->expr()->field('date_start')->equals(null))
-                ->addOr($builder->expr()->field('date_start')->lt(new \DateTime()))
+        $builder->andWhere(
+            $builder->expr()->orX(
+                $builder->expr()->isNull('a.date_start'),
+                $builder->expr()->lt('a.date_start', $date->format('yyyy-mm-dd'))
+            )
         );
-        $builder->addAnd(
-            $builder->expr()
-                ->addOr($builder->expr()->field('date_end')->equals(null))
-                ->addOr($builder->expr()->field('date_end')->gt(new \DateTime()))
+        $builder->andWhere(
+            $builder->expr()->orX(
+                $builder->expr()->isNull('a.date_end'),
+                $builder->expr()->gt('a.date_end', $date->format('yyyy-mm-dd'))
+            )
         );
-        // Common
-        $builder->field('active')->equals(true);
-        $builder->field('delete')->equals(false);
 
-        return count($builder
-            ->getQuery()
-            ->execute()
-            ->toArray());
+        return count(
+            $builder->getQuery()->execute()->toArray()
+        );
     }
 
     /**
      * @param \Fhm\SliderBundle\Entity\Slider $slider
-     * @param string                            $search
-     * @param int                               $page
-     * @param int                               $count
-     *
-     * @return mixed
-     * @throws \Doctrine\ORM\ORMException
+     * @param string $search
+     * @return \Doctrine\ORM\Query
      */
-    public function getByGroupIndex(\Fhm\SliderBundle\Entity\Slider $slider, $search = "", $page = 1, $count = 5)
+    public function getByGroupIndex(\Fhm\SliderBundle\Entity\Slider $slider, $search = "")
     {
-        $builder = (($page > 0 && $count > 0) && $search) ? $this->search($search) : $this->createQueryBuilder();
-        // Global
-        if($slider->getAddGlobal())
-        {
-            $builder->addAnd(
-                $builder->expr()
-                    ->addOr($builder->expr()->field('sliders.id')->equals($slider->getId()))
-                    ->addOr($builder->expr()->field('global')->equals(true))
-            );
-        }
-        else
-        {
-            $builder->field('sliders.id')->equals($slider->getId());
-        }
-        // Pagination
-        if($page > 0 && $count > 0)
-        {
-            $builder->limit($count);
-            $builder->skip(($page - 1) * $count);
-        }
-        // Common
-        $builder->field('active')->equals(true);
-        $builder->field('delete')->equals(false);
-        $builder->sort($slider->getSortField(), $slider->getSortOrder());
+        $builder = ($search) ? $this->search($search) : $this->createQueryBuilder('a');
+        $builder->where('a.active = :bool1')->setParameter('bool1', true);
+        $builder->andWhere('a.delete = :bool2')->setParameter('bool2', false);
 
-        return $builder
-            ->getQuery()
-            ->execute()
-            ->toArray();
+        // Global
+        if ($slider->getAddGlobal()) {
+            $builder->andWhere(
+                $builder->expr()->orX(
+                    $builder->expr()->eq('a.sliders', $slider->getId()),
+                    $builder->expr()->eq('a.global', true)
+                )
+            );
+        } else {
+            $builder->andWhere('sliders.id = :id')->setParameter('id', $slider->getId());
+        }
+        $builder->orderBy($slider->getSortField(), $slider->getSortOrder());
+
+        return $builder->getQuery();
     }
 
     /**
      * @param \Fhm\SliderBundle\Entity\Slider $slider
-     * @param string                            $search
+     * @param string $search
      *
      * @return mixed
      */
     public function getByGroupCount(\Fhm\SliderBundle\Entity\Slider $slider, $search = "")
     {
-        $builder = ($search) ? $this->search($search) : $this->createQueryBuilder();
+        $builder = ($search) ? $this->search($search) : $this->createQueryBuilder('a');
+        $builder->select('count(a.id)');
+        $builder->where('a.active = :bool1')->setParameter('bool1', true);
+        $builder->andWhere('a.delete = :bool2')->setParameter('bool2', false);
         // Global
-        if($slider->getAddGlobal())
-        {
-            $builder->addAnd(
-                $builder->expr()
-                    ->addOr($builder->expr()->field('sliders.id')->equals($slider->getId()))
-                    ->addOr($builder->expr()->field('global')->equals(true))
+        if ($slider->getAddGlobal()) {
+            $builder->andWhere(
+                $builder->expr()->orX(
+                    $builder->expr()->eq('a.sliders', $slider->getId()),
+                    $builder->expr()->eq('a.global', true)
+                )
             );
+        } else {
+            $builder->andWhere('sliders.id = :id')->setParameter('id', $slider->getId());
         }
-        else
-        {
-            $builder->field('sliders.id')->equals($slider->getId());
-        }
-        // Common
-        $builder->field('active')->equals(true);
-        $builder->field('delete')->equals(false);
 
-        return $builder
-            ->count()
-            ->getQuery()
-            ->execute();
+        return $builder->getQuery()->execute();
     }
 
     /**
@@ -186,27 +143,23 @@ class SliderItemRepository extends FhmRepository
      */
     public function getByGroupAll(\Fhm\SliderBundle\Entity\Slider $slider)
     {
-        $builder = $this->createQueryBuilder();
+        $builder = $this->createQueryBuilder('a');
+        $builder->where('a.active = :bool1')->setParameter('bool1', true);
+        $builder->andWhere('a.delete = :bool2')->setParameter('bool2', false);
         // Global
-        if($slider->getAddGlobal())
-        {
-            $builder->addAnd(
-                $builder->expr()
-                    ->addOr($builder->expr()->field('sliders.id')->equals($slider->getId()))
-                    ->addOr($builder->expr()->field('global')->equals(true))
+        if ($slider->getAddGlobal()) {
+            $builder->andWhere(
+                $builder->expr()->orX(
+                    $builder->expr()->eq('a.sliders', $slider->getId()),
+                    $builder->expr()->eq('a.global', true)
+                )
             );
+        } else {
+            $builder->andWhere('sliders.id = :id')->setParameter('id', $slider->getId());
         }
-        else
-        {
-            $builder->field('sliders.id')->equals($slider->getId());
-        }
-        // Common
-        $builder->field('active')->equals(true);
-        $builder->field('delete')->equals(false);
-        $builder->sort($slider->getSortField(), $slider->getSortOrder());
 
-        return $builder
-            ->getQuery()
-            ->execute();
+        $builder->orderBy($slider->getSortField(), $slider->getSortOrder());
+
+        return $builder->getQuery()->execute();
     }
 }

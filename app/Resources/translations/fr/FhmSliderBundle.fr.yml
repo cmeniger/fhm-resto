@@ -10,6 +10,14 @@ fhm:
                 breadcrumb:                     Modifier
             detail:
                 breadcrumb:                     Détails
+            item:
+                breadcrumb:                     Images
+                create:
+                    breadcrumb:                 Ajouter
+                detail:
+                    breadcrumb:                 Détail
+                update:
+                    breadcrumb:                 Modifier
 project:
     breadcrump:                                 Accueil
     admin:

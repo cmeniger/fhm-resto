@@ -4,12 +4,12 @@ namespace Fhm\SliderBundle\Controller;
 use Fhm\FhmBundle\Controller\RefAdminController as FhmController;
 use Fhm\FhmBundle\Form\Handler\Admin\CreateHandler;
 use Fhm\FhmBundle\Form\Handler\Admin\UpdateHandler;
-use Fhm\SliderBundle\Document\Slider;
 use Fhm\SliderBundle\Form\Type\Admin\CreateType;
 use Fhm\SliderBundle\Form\Type\Admin\UpdateType;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @Route("/admin/slider")
@@ -28,7 +28,6 @@ class AdminController extends FhmController
         self::$source = "fhm";
         self::$domain = "FhmSliderBundle";
         self::$translation = "slider";
-        self::$class = Slider::class;
         self::$route = "slider";
         self::$form = new \stdClass();
         self::$form->createType = CreateType::class;
@@ -102,12 +101,12 @@ class AdminController extends FhmController
      */
     public function detailAction($id)
     {
-        $document = $this->get('fhm_tools')->dmRepository(self::$repository)->find($id);
+        $object = $this->get('fhm_tools')->dmRepository(self::$repository)->find($id);
 
         return array_merge(
             array(
                 'item1' => $this->get('fhm_tools')->dmRepository('FhmSliderBundle:SliderItem')->getAllEnable(),
-                'item2' => $this->getList($document->getItems()),
+                'item2' => $this->get('fhm_tools')->getList($object->getItems()),
             ),
             parent::detailAction($id)
         );

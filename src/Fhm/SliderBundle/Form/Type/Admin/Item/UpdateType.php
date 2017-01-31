@@ -1,17 +1,19 @@
 <?php
 namespace Fhm\SliderBundle\Form\Type\Admin\Item;
 
-use Doctrine\Bundle\MongoDBBundle\Form\Type\DocumentType;
 use Fhm\FhmBundle\Form\Type\Admin\UpdateType as FhmType;
 use Fhm\FhmBundle\Manager\TypeManager;
 use Fhm\MediaBundle\Form\Type\MediaType;
-use Fhm\SliderBundle\Repository\SliderRepository;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/**
+ * Class UpdateType
+ * @package Fhm\SliderBundle\Form\Type\Admin\Item
+ */
 class UpdateType extends FhmType
 {
     /**
@@ -61,7 +63,8 @@ class UpdateType extends FhmType
                 'choice_label' => 'name',
                 'query_builder' => function () use ($options) {
                     $dr = $options['object_manager']->getCurrentRepository('FhmSliderBundle:Slider');
-                    return $dr->getFormEnable($options['filter']);
+
+                    return $dr->getFormEnable();
                 },
                 'required' => false,
                 'multiple' => true,
@@ -77,7 +80,7 @@ class UpdateType extends FhmType
     {
         $resolver->setDefaults(
             array(
-                'data_class' => 'Fhm\SliderBundle\Document\SliderItem',
+                'data_class' => '',
                 'translation_domain' => 'FhmSliderBundle',
                 'cascade_validation' => true,
                 'translation_route' => 'slider.item',

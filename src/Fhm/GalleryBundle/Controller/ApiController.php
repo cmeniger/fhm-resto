@@ -2,7 +2,6 @@
 namespace Fhm\GalleryBundle\Controller;
 
 use Fhm\FhmBundle\Controller\RefApiController as FhmController;
-use Fhm\GalleryBundle\Document\Gallery;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
@@ -26,7 +25,6 @@ class ApiController extends FhmController
         self::$source = "fhm";
         self::$domain = "FhmGalleryBundle";
         self::$translation = "gallery";
-        self::$class = Gallery::class;
         self::$route = "gallery";
     }
 
@@ -67,16 +65,17 @@ class ApiController extends FhmController
      */
     public function detailAction($template, $id)
     {
-        $document = $this->get('fhm_tools')->dmRepository(self::$repository)->getById($id);
-        $document = ($document) ? $document : $this->get('fhm_tools')->dmRepository(self::$repository)->getByAlias($id);
-        $document = ($document) ? $document : $this->get('fhm_tools')->dmRepository(self::$repository)->getByName($id);
+
+        $object = $this->get('fhm_tools')->dmRepository(self::$repository)->getById($id);
+        $object = ($object) ?: $this->get('fhm_tools')->dmRepository(self::$repository)->getByAlias($id);
+        $object = ($object) ?: $this->get('fhm_tools')->dmRepository(self::$repository)->getByName($id);
         // ERROR - unknown
-        if ($document == "") {
+        if ($object == "") {
             throw $this->createNotFoundException(
                 $this->trans('gallery.item.error.unknown', array(), 'FhmGalleryBundle')
             );
         } // ERROR - Forbidden
-        elseif (!$this->getUser()->hasRole('ROLE_ADMIN') && ($document->getDelete() || !$document->getActive())) {
+        elseif (!$this->getUser()->hasRole('ROLE_ADMIN') && ($object->getDelete() || !$object->getActive())) {
             throw new HttpException(403, $this->trans('gallery.item.error.forbidden', array(), 'FhmGalleryBundle'));
         }
 
@@ -84,12 +83,12 @@ class ApiController extends FhmController
             $this->renderView(
                 "::FhmGallery/Template/".$template.".html.twig",
                 array(
-                    'document' => $document,
+                    'document' => $object,
                     'items' => $this->get('fhm_tools')->dmRepository("FhmGalleryBundle:GalleryItem")->getByGroupAll(
-                        $document
+                        $object
                     ),
                     'videos' => $this->get('fhm_tools')->dmRepository("FhmGalleryBundle:GalleryVideo")->getByGroupAll(
-                        $document
+                        $object
                     ),
                 )
             )

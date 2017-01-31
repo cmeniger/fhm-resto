@@ -1,11 +1,9 @@
 <?php
 namespace Fhm\SliderBundle\Form\Type\Admin;
 
-use Doctrine\Bundle\MongoDBBundle\Form\Type\DocumentType;
 use Fhm\FhmBundle\Form\Type\Admin\CreateType as FhmType;
 use Fhm\FhmBundle\Manager\TypeManager;
 use Fhm\MediaBundle\Form\Type\MediaType;
-use Fhm\SliderBundle\Repository\SliderItemRepository;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -111,7 +109,7 @@ class CreateType extends FhmType
     {
         $resolver->setDefaults(
             array(
-                'data_class' => 'Fhm\SliderBundle\Document\Slider',
+                'data_class' => '',
                 'translation_domain' => 'FhmSliderBundle',
                 'cascade_validation' => true,
                 'translation_route' => 'slider',

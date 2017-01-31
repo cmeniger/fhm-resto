@@ -2,7 +2,6 @@
 namespace Fhm\SliderBundle\Controller;
 
 use Fhm\FhmBundle\Controller\RefApiController as FhmController;
-use Fhm\SliderBundle\Document\Slider;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
@@ -26,7 +25,6 @@ class ApiController extends FhmController
         self::$source = "fhm";
         self::$domain = "FhmSliderBundle";
         self::$translation = "slider";
-        self::$class = Slider::class;
         self::$route = "slider";
     }
 
@@ -67,16 +65,16 @@ class ApiController extends FhmController
      */
     public function detailAction($template, $id)
     {
-        $document = $this->get('fhm_tools')->dmRepository(self::$repository)->getById($id);
-        $document = ($document) ? $document : $this->get('fhm_tools')->dmRepository(self::$repository)->getByAlias($id);
-        $document = ($document) ? $document : $this->get('fhm_tools')->dmRepository(self::$repository)->getByName($id);
+        $object = $this->get('fhm_tools')->dmRepository(self::$repository)->getById($id);
+        $object = ($object) ?: $this->get('fhm_tools')->dmRepository(self::$repository)->getByAlias($id);
+        $object = ($object) ?: $this->get('fhm_tools')->dmRepository(self::$repository)->getByName($id);
         // ERROR - unknown
-        if ($document == "") {
+        if ($object == "") {
             throw $this->createNotFoundException(
                 $this->trans('slider.item.error.unknown', array(), 'FhmSliderBundle')
             );
         } // ERROR - Forbidden
-        elseif (!$this->getUser()->hasRole('ROLE_SUPER_ADMIN') && ($document->getDelete() || !$document->getActive())) {
+        elseif (!$this->getUser()->hasRole('ROLE_SUPER_ADMIN') && ($object->getDelete() || !$object->getActive())) {
             throw new HttpException(
                 403, $this->trans('slider.item.error.forbidden', array(), 'FhmSliderBundle')
             );
@@ -86,9 +84,9 @@ class ApiController extends FhmController
             $this->renderView(
                 "::FhmSlider/Template/".$template.".html.twig",
                 array(
-                    'document' => $document,
+                    'document' => $object,
                     'items' => $this->get('fhm_tools')->dmRepository("FhmSliderBundle:SliderItem")->getByGroupAll(
-                        $document
+                        $object
                     ),
                 )
             )

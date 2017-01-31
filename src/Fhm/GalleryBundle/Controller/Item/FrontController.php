@@ -2,8 +2,6 @@
 namespace Fhm\GalleryBundle\Controller\Item;
 
 use Fhm\FhmBundle\Controller\RefFrontController as FhmController;
-use Fhm\GalleryBundle\Document\Gallery;
-use Fhm\GalleryBundle\Document\GalleryItem;
 use Fhm\GalleryBundle\Form\Type\Admin\Item\CreateType;
 use Fhm\GalleryBundle\Form\Type\Admin\Item\UpdateType;
 use Symfony\Component\HttpFoundation\Request;
@@ -28,7 +26,6 @@ class FrontController extends FhmController
         self::$source = "fhm";
         self::$domain = "FhmGalleryBundle";
         self::$translation = "gallery.item";
-        self::$class = GalleryItem::class;
     }
 
     /**

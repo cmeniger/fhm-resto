@@ -2,8 +2,6 @@
 namespace Fhm\SliderBundle\Controller\Item;
 
 use Fhm\FhmBundle\Controller\RefApiController as FhmController;
-use Fhm\SliderBundle\Document\Slider;
-use Fhm\SliderBundle\Document\SliderItem;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
@@ -27,7 +25,6 @@ class ApiController extends FhmController
         self::$source = "fhm";
         self::$domain = "FhmSliderBundle";
         self::$translation = "slider.item";
-        self::$class = SliderItem::class;
         self::$route = "slider_item";
     }
 

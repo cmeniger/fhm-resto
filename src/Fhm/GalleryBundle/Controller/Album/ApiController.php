@@ -67,8 +67,8 @@ class ApiController extends FhmController
     {
         $repository = $this->get('fhm.object.manager')->getCurrentRepository(self::$repository);
         $object = $repository->getById($id);
-        $object = ($object) ? $object : $repository->getByAlias($id);
-        $object = ($object) ? $object : $repository->getByName($id);
+        $object = ($object) ?: $repository->getByAlias($id);
+        $object = ($object) ?: $repository->getByName($id);
         // ERROR - unknown
         if ($object == "") {
             throw $this->createNotFoundException(
