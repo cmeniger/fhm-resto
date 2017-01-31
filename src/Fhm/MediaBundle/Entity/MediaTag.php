@@ -11,7 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 class MediaTag extends Fhm
 {
     /**
-     * @ORM\OneToOne(targetEntity="MediaTag", orphanRemoval=true)
+     * @ORM\ManyToOne(targetEntity="MediaTag")
      */
     protected $parent;
 
@@ -173,7 +173,6 @@ class MediaTag extends Fhm
      */
     public function prePersist()
     {
-        parent::prePersist();
         $this->route = $this->getRouteParent();
 
         return $this;
@@ -184,9 +183,7 @@ class MediaTag extends Fhm
      */
     public function preUpdate()
     {
-        parent::preUpdate();
         $this->route = $this->getRouteParent();
-
         return $this;
     }
 }

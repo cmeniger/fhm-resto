@@ -4,7 +4,6 @@ namespace Fhm\MediaBundle\Controller;
 use Fhm\FhmBundle\Controller\RefAdminController as FhmController;
 use Fhm\FhmBundle\Form\Handler\Admin\CreateHandler;
 use Fhm\FhmBundle\Form\Handler\Admin\UpdateHandler;
-use Fhm\MediaBundle\Document\Media;
 use Fhm\MediaBundle\Form\Type\Admin\CreateType;
 use Fhm\MediaBundle\Form\Type\Admin\UpdateType;
 use Symfony\Component\HttpFoundation\Request;
@@ -31,7 +30,6 @@ class AdminController extends FhmController
         self::$source = "fhm";
         self::$domain = "FhmMediaBundle";
         self::$translation = "media";
-        self::$class = Media::class;
         self::$route = "media";
         self::$form = new \stdClass();
         self::$form->createType = CreateType::class;
@@ -64,10 +62,11 @@ class AdminController extends FhmController
      */
     public function createAction(Request $request)
     {
-        $document = new self::$class;
+        self::$class = $this->get('fhm.object.manager')->getCurrentModelName('FhmMediaBundle:Media');
+        $object = new self::$class;
         $form = $this->createForm(
             self::$form->createType,
-            $document,
+            $object,
             array(
                 'user_admin' => $this->getUser()->hasRole('ROLE_SUPER_ADMIN'),
                 'data_class' => self::$class,
@@ -82,7 +81,8 @@ class AdminController extends FhmController
             if (isset($data['tag']) && $data['tag']) {
                 $tag = $this->get('fhm_tools')->dmRepository('FhmMediaBundle:MediaTag')->getByName($data['tag']);
                 if ($tag == "") {
-                    $tag = new \Fhm\MediaBundle\Document\MediaTag();
+                    $tagClassName = $this->get('fhm.object.manager')->getCurrentModelName('FhmMediaBundle:MediaTag');
+                    $tag = new $tagClassName;
                     $tag->setName($data['tag']);
                     $tag->setActive(true);
                 }
@@ -91,7 +91,7 @@ class AdminController extends FhmController
                         $this->get('fhm_tools')->dmRepository('FhmMediaBundle:MediaTag')->find($data['parent'])
                     );
                 }
-                $document->addTag($tag);
+                $object->addTag($tag);
             }
             $fileData = array(
                 'tmp_name' => isset($_FILES['file']) ? $_FILES['file']['tmp_name'] : $_FILES[$form->getName(
@@ -102,24 +102,17 @@ class AdminController extends FhmController
             $file = new UploadedFile($fileData['tmp_name'], $fileData['name'], $fileData['type']);
             $tab = explode('.', $fileData['name']);
             $name = $data['name'] ? $this->get('fhm_tools')->getUnique(
-                $document->getId(),
+                $object->getId(),
                 $data['name'],
                 true,
                 self::$repository
             ) : $tab[0];
             // Persist
-            $document->setName($name);
-            $document->setFile($file);
-            $document->setUserCreate($this->getUser());
-            $document->setAlias(
-                $this->get('fhm_tools')->getAlias($document->getId(), $document->getName(), self::$repository)
-            );
-            $document->setWatermark((array)$request->get('watermark'));
-            $this->get('fhm_tools')->dmPersist($document);
-            $this->get('fhm_media_service')
-                 ->setDocument($document)
-                 ->setWatermark($request->get('watermark'))
-                 ->execute();
+            $object->setName($name);
+            $object->setFile($file);
+            $object->setWatermark((array)$request->get('watermark'));
+            $this->get('fhm_tools')->dmPersist($object);
+            $this->get('fhm_media_service')->setModel($object)->setWatermark($request->get('watermark'))->execute();
         }
 
         return array(
@@ -130,23 +123,11 @@ class AdminController extends FhmController
                 'files',
                 'fhm_media'
             ) : '',
-            'breadcrumbs' => array(
+            'breadcrumbs' => $this->get('fhm_tools')->generateBreadcrumbs(
                 array(
-                    'link' => $this->getUrl('project_home'),
-                    'text' => $this->trans('project.home.breadcrumb', array(), 'ProjectDefaultBundle'),
-                ),
-                array(
-                    'link' => $this->getUrl('fhm_admin'),
-                    'text' => $this->trans('fhm.admin.breadcrumb', array(), 'FhmFhmBundle'),
-                ),
-                array(
-                    'link' => $this->getUrl('fhm_admin_'.self::$route),
-                    'text' => $this->trans(self::$translation.'.admin.index.breadcrumb'),
-                ),
-                array(
-                    'link' => $this->getUrl('fhm_admin_'.self::$route.'_create'),
-                    'text' => $this->trans(self::$translation.'.admin.create.breadcrumb'),
-                ),
+                    'domain' => self::$domain,
+                    '_route' => $this->get('request_stack')->getCurrentRequest()->get('_route'),
+                )
             ),
         );
     }
@@ -176,20 +157,20 @@ class AdminController extends FhmController
      */
     public function updateAction(Request $request, $id)
     {
-        $document = $this->get('fhm_tools')->dmRepository(self::$repository)->find($id);
+        $object = $this->get('fhm_tools')->dmRepository(self::$repository)->find($id);
         // ERROR - unknown
-        if ($document == "") {
+        if ($object == "") {
             throw $this->createNotFoundException($this->trans(self::$translation.'.error.unknown'));
         }
         if (!$this->getUser()->hasRole('ROLE_ADMIN')) {
             throw new HttpException(403, $this->trans(self::$translation.'.error.forbidden'));
         }
-        if (!$this->getUser()->hasRole('ROLE_SUPER_ADMIN') && $document->getDelete()) {
+        if (!$this->getUser()->hasRole('ROLE_SUPER_ADMIN') && $object->getDelete()) {
             throw new HttpException(403, $this->trans(self::$translation.'.error.forbidden'));
         }
         $form = $this->createForm(
             self::$form->updateType,
-            $document,
+            $object,
             array(
                 'user_admin' => $this->getUser()->hasRole('ROLE_SUPER_ADMIN'),
                 'data_class' => self::$class,
@@ -202,7 +183,8 @@ class AdminController extends FhmController
             $data = $request->get($form->getName());
             // Tag
             if (isset($data['tag']) && $data['tag']) {
-                $tag = new \Fhm\MediaBundle\Document\MediaTag();
+                $tagClasName = $this->get('fhm.object.manager')->getCurrentModelName('FhmMediaBundle:MediaTag');
+                $tag = new $tagClasName;
                 $tag->setName($data['tag']);
                 $tag->setActive(true);
                 if (isset($data['parent']) && $data['parent']) {
@@ -210,26 +192,19 @@ class AdminController extends FhmController
                         $this->get('fhm_tools')->dmRepository('FhmMediaBundle:MediaTag')->find($data['parent'])
                     );
                 }
-                $document->addTag($tag);
+                $object->addTag($tag);
             }
             // Persist
-            $document->setUserUpdate($this->getUser());
-            $document->setAlias(
-                $this->get('fhm_tools')->getAlias($document->getId(), $document->getName(), self::$repository)
-            );
+            if ($object->getFile()) {
+                $this->get('fhm_media_service')->setDocument($object)->setWatermark(
+                    $request->get('watermark')
+                )->execute();
 
-            if ($document->getFile()) {
-                $this->get('fhm_media_service')
-                     ->setDocument($document)
-                     ->setWatermark($request->get('watermark'))
-                     ->execute();
-
-            } elseif ($request->get('generate') || $document->getWatermark() != $request->get('watermark')) {
-                $this->get('fhm_media_service')
-                     ->setDocument($document)
-                     ->setWatermark($request->get('watermark'))
-                     ->generateImage();
-                $document->setWatermark((array)$request->get('watermark'));
+            } elseif ($request->get('generate') || $object->getWatermark() != $request->get('watermark')) {
+                $this->get('fhm_media_service')->setModel($object)->setWatermark(
+                    $request->get('watermark')
+                )->generateImage();
+                $object->setWatermark((array)$request->get('watermark'));
                 $this->get('fhm_tools')->dmPersist($document);
             }
             // Message
@@ -237,12 +212,13 @@ class AdminController extends FhmController
                 'notice',
                 $this->trans(self::$translation.'.admin.update.flash.ok')
             );
+
             // Redirect
-            return $this->redirectUrl($data, $document);
+            return $this->redirectUrl($data, $object);
         }
 
         return array(
-            'document' => $document,
+            'document' => $object,
             'form' => $form->createView(),
             'watermarks' => $this->get('fhm_tools')->getParameters('watermark', 'fhm_media') ? $this->get(
                 'fhm_tools'
@@ -250,30 +226,12 @@ class AdminController extends FhmController
                 'files',
                 'fhm_media'
             ) : '',
-            'breadcrumbs' => array(
+            'breadcrumbs' => $this->get('fhm_tools')->generateBreadcrumbs(
                 array(
-                    'link' => $this->getUrl('project_home'),
-                    'text' => $this->trans('project.home.breadcrumb', array(), 'ProjectDefaultBundle'),
+                    'domain' => self::$domain,
+                    '_route' => $this->get('request_stack')->getCurrentRequest()->get('_route'),
                 ),
-                array(
-                    'link' => $this->getUrl('fhm_admin'),
-                    'text' => $this->trans('fhm.admin.breadcrumb', array(), 'FhmFhmBundle'),
-                ),
-                array(
-                    'link' => $this->getUrl('fhm_admin_'.self::$route),
-                    'text' => $this->trans(self::$translation.'.admin.index.breadcrumb'),
-                ),
-                array(
-                    'link' => $this->getUrl('fhm_admin_'.self::$route.'_detail', array('id' => $id)),
-                    'text' => $this->trans(
-                        '.admin.detail.breadcrumb',
-                        array('%name%' => $document->getName())
-                    ),
-                ),
-                array(
-                    'link' => $this->getUrl('fhm_admin_'.self::$route.'_update', array('id' => $id)),
-                    'text' => $this->trans('.admin.update.breadcrumb'),
-                ),
+                $object
             ),
         );
     }
@@ -307,27 +265,26 @@ class AdminController extends FhmController
      */
     public function deleteAction($id)
     {
-        $document = $this->get('fhm_tools')->dmRepository(self::$repository)->find($id);
+        $object = $this->get('fhm_tools')->dmRepository(self::$repository)->find($id);
         // ERROR - Unknown
-        if ($document == "") {
+        if ($object == "") {
             throw $this->createNotFoundException($this->trans(self::$translation.'.error.unknown'));
         } // ERROR - Forbidden
-        elseif ($document->getDelete() && !$this->getUser()->isSuperAdmin()) {
+        elseif ($object->getDelete() && !$this->getUser()->isSuperAdmin()) {
             throw new HttpException(403, $this->trans(self::$translation.'.error.forbidden'));
         }
         // Delete
-        if ($document->getDelete()) {
-            $this->get($this->get('fhm_tools')->getParameters('service', 'fhm_media'))->setDocument($document)->remove(
-            );
-            $this->get('fhm_tools')->dmRemove($document);
+        if ($object->getDelete()) {
+            $this->get($this->get('fhm_tools')->getParameters('service', 'fhm_media'))->setDocument($object)->remove();
+            $this->get('fhm_tools')->dmRemove($object);
             // Message
             $this->get('session')->getFlashBag()->add(
                 'notice',
                 $this->trans(self::$translation.'.admin.delete.flash.ok')
             );
         } else {
-            $document->setDelete(true);
-            $this->get('fhm_tools')->dmPersist($document);
+            $object->setDelete(true);
+            $this->get('fhm_tools')->dmPersist($object);
             // Message
             $this->get('session')->getFlashBag()->add(
                 'notice',

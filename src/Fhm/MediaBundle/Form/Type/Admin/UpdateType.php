@@ -52,6 +52,7 @@ class UpdateType extends FhmType
                 'choice_label' => 'route',
                 'query_builder' => function () use ($options) {
                     $dr = $options['object_manager']->getCurrentRepository('FhmMediaBundle:MediaTag');
+
                     return $dr->getFormFiltered();
                 },
                 'mapped' => false,
@@ -66,6 +67,7 @@ class UpdateType extends FhmType
                 'choice_label' => 'route',
                 'query_builder' => function () use ($options) {
                     $dr = $options['object_manager']->getCurrentRepository('FhmMediaBundle:MediaTag');
+
                     return $dr->getFormFiltered();
                 },
                 'multiple' => true,
@@ -76,6 +78,7 @@ class UpdateType extends FhmType
             'grouping'
         )->remove('share')->remove('global');
     }
+
     /**
      * @param OptionsResolver $resolver
      */
@@ -83,12 +86,12 @@ class UpdateType extends FhmType
     {
         $resolver->setDefaults(
             array(
-                'data_class' => 'Fhm\MediaBundle\Document\Media',
+                'data_class' => '',
                 'translation_domain' => 'FhmMediaBundle',
                 'cascade_validation' => true,
                 'translation_route' => 'media',
                 'user_admin' => '',
-                'object_manager' => ''
+                'object_manager' => '',
             )
         );
     }
