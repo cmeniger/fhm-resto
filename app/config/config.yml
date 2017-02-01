@@ -9,6 +9,9 @@ imports:
     - { resource: security.yml }
     - { resource: services.yml }
 
+fhm_fhm:
+    database_manager: '%env(DATABASE_MANAGER)%'
+
 sensio_framework_extra:
      request:
          converters: true
