@@ -33,7 +33,11 @@ if (isset($_SERVER['HTTP_CLIENT_IP'])
 $loader = require __DIR__.'/../app/autoload.php';
 Debug::enable();
 
-$kernel = new AppKernel('dev', true);
+$databasemanager = getenv('DATABASE_MANAGER');
+if($databasemanager == false) {
+    putenv('DATABASE_MANAGER=odm');
+}
+$kernel = new AppKernel(getenv('DATABASE_MANAGER'), true);
 $kernel->loadClassCache();
 $request = Request::createFromGlobals();
 $response = $kernel->handle($request);

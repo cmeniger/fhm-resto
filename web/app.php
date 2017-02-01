@@ -27,8 +27,11 @@ include_once __DIR__.'/../var/bootstrap.php.cache';
 // $apcLoader = new Symfony\Component\ClassLoader\ApcClassLoader(sha1(__FILE__), $loader);
 // $loader->unregister();
 // $apcLoader->register(true);
-
-$kernel = new AppKernel('prod', false);
+$databasemanager = getenv('DATABASE_MANAGER');
+if($databasemanager == false) {
+    putenv('DATABASE_MANAGER=odm');
+}
+$kernel = new AppKernel(getenv('DATABASE_MANAGER'), false);
 $kernel->loadClassCache();
 
 // When using the HTTP Cache to improve application performance, the application
