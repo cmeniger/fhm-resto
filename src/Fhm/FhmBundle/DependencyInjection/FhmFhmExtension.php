@@ -33,13 +33,15 @@ class FhmFhmExtension extends Extension
      */
     public function selectDatabase(ContainerBuilder $container)
     {
-        switch ($container->getParameter('database_manager')) {
+        switch ($container->getParameter("kernel.environment")) {
             case 'odm':
                 $container->setAlias('fhm.database.manager', self::ODM);
                 break;
             case 'orm':
                 $container->setAlias('fhm.database.manager', self::ORM);
                 break;
+            default:
+                $container->setAlias('fhm.database.manager', self::ODM);
         }
     }
 }
