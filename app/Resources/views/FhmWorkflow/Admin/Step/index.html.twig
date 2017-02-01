@@ -33,6 +33,6 @@
 
 {% block content_data_body %}
     {{ parent() }}
-    <td>{{ document.getOrder() }}</td>
-    <td><div style="width:25px;height:25px;background-color: {{ document.getColor() }}"></div></td>
+    <td>{{ object.getOrder() }}</td>
+    <td><div style="width:25px;height:25px;background-color: {{ object.getColor() }}"></div></td>
 {% endblock %}

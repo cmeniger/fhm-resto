@@ -33,13 +33,13 @@
 
 {% block content_data_body %}
     {{ parent() }}
-    <td>{{ document.getTasks()|length }}</td>
+    <td>{{ object.getTasks()|length }}</td>
     <td>
-        <span class="label {{ document.getValidateCheck() ? 'success' : 'alert' }}" title="{{ ('workflow.actions.buttons.validate')|trans }}"><i class="fa fa-fw fa-check"></i></span>
-        <span class="label {{ document.getDismissCheck() ? 'success' : 'alert' }}" title="{{ ('workflow.actions.buttons.dismiss')|trans }}"><i class="fa fa-fw fa-times"></i></span>
-        <span class="label {{ document.getCancelCheck() ? 'success' : 'alert' }}" title="{{ ('workflow.actions.buttons.cancel')|trans }}"><i class="fa fa-fw fa-ban"></i></span>
-        <span class="label {{ document.getUploadCheck() ? 'success' : 'alert' }}" title="{{ ('workflow.actions.buttons.upload')|trans }}"><i class="fa fa-fw fa-upload"></i></span>
-        <span class="label {{ document.getDownloadCheck() ? 'success' : 'alert' }}" title="{{ ('workflow.actions.buttons.download')|trans }}"><i class="fa fa-fw fa-download"></i></span>
-        <span class="label {{ document.getCommentCheck() ? 'success' : 'alert' }}" title="{{ ('workflow.actions.buttons.comment')|trans }}"><i class="fa fa-fw fa-comment"></i></span>
+        <span class="label {{ object.getValidateCheck() ? 'success' : 'alert' }}" title="{{ ('workflow.actions.buttons.validate')|trans }}"><i class="fa fa-fw fa-check"></i></span>
+        <span class="label {{ object.getDismissCheck() ? 'success' : 'alert' }}" title="{{ ('workflow.actions.buttons.dismiss')|trans }}"><i class="fa fa-fw fa-times"></i></span>
+        <span class="label {{ object.getCancelCheck() ? 'success' : 'alert' }}" title="{{ ('workflow.actions.buttons.cancel')|trans }}"><i class="fa fa-fw fa-ban"></i></span>
+        <span class="label {{ object.getUploadCheck() ? 'success' : 'alert' }}" title="{{ ('workflow.actions.buttons.upload')|trans }}"><i class="fa fa-fw fa-upload"></i></span>
+        <span class="label {{ object.getDownloadCheck() ? 'success' : 'alert' }}" title="{{ ('workflow.actions.buttons.download')|trans }}"><i class="fa fa-fw fa-download"></i></span>
+        <span class="label {{ object.getCommentCheck() ? 'success' : 'alert' }}" title="{{ ('workflow.actions.buttons.comment')|trans }}"><i class="fa fa-fw fa-comment"></i></span>
     </td>
 {% endblock %}

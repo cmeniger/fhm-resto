@@ -11,7 +11,7 @@
             <div class="article-date">{{ object.getDateCreate()|localizeddate('full', 'short', app.request.locale) }}</div>
             <div class="article-resume">{{ object.getResume()|raw }}</div>
             <div class="article-content">{{ object.getContent()|raw }}</div>
-            <div class="article-author">{{ object.getUserCreate().getUsername() }}</div>
+            <div class="article-author">{{ object.getAuthor().getUsername() is defined ? object.getAuthor().getUsername() : 'admin' }}</div>
         </div>
     </div>
 {% endblock %}

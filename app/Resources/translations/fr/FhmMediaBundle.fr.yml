@@ -10,6 +10,14 @@ fhm:
                 breadcrumb:                     Modifier
             detail:
                 breadcrumb:                     Détails
+            tag:
+                breadcrumb:                     Tag Média
+                create:
+                    breadcrumb:                 Ajouter un tag média
+                update:
+                    breadcrumb:                 Modifier
+                detail:
+                    breadcrumb:                 Détails
 project:
     breadcrump:                                 Accueil
     admin:

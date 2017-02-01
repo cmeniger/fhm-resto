@@ -18,6 +18,22 @@ fhm:
                     breadcrumb:                     Modifier
                 detail:
                     breadcrumb:                     Détails
+    news:
+        breadcrumb:                         Actualités
+        create:
+            breadcrumb:                     Ajouter une actualité
+        update:
+            breadcrumb:                     Modifier
+        detail:
+            breadcrumb:                     Détails
+        group:
+            breadcrumb:                         Journal
+            create:
+                breadcrumb:                     Ajouter un journal
+            update:
+                breadcrumb:                     Modifier
+            detail:
+                breadcrumb:                     Détails
 project:
     breadcrump:                                 Accueil
     admin:

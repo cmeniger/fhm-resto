@@ -10,6 +10,30 @@ fhm:
                 breadcrumb:                     Modifier
             detail:
                 breadcrumb:                     Détails
+            task:
+                breadcrumb:                     Workflow Tâche
+                create:
+                    breadcrumb:                 Ajouter un workflow tâche
+                update:
+                    breadcrumb:                 Modifier
+                detail:
+                    breadcrumb:                 Détails
+            action:
+                breadcrumb:                     Workflow Action
+                create:
+                    breadcrumb:                 Ajouter un workflow action
+                update:
+                    breadcrumb:                 Modifier
+                detail:
+                    breadcrumb:                 Détails
+            step:
+                breadcrumb:                     Workflow Etape
+                create:
+                    breadcrumb:                 Ajouter un workflow étape
+                update:
+                    breadcrumb:                 Modifier
+                detail:
+                    breadcrumb:                 Détails
 project:
     breadcrump:                                 Accueil
     admin:
