@@ -21,7 +21,7 @@ class Configuration implements ConfigurationInterface
         $rootNode = $treeBuilder
             ->root('fhm_fhm')
             ->children()
-                ->scalarNode('database_manager')
+                ->scalarNode('fhm_database_manager')
                 ->defaultValue('odm')
                 ->end()
             ->end()
