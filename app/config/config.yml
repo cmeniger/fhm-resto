@@ -10,7 +10,7 @@ imports:
     - { resource: services.yml }
 
 fhm_fhm:
-    database_manager: '%env(DATABASE_MANAGER)%'
+    fhm_database_manager: '%env(DATABASE_MANAGER)%'
 
 sensio_framework_extra:
      request:
