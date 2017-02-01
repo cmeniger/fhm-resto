@@ -18,7 +18,14 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('fhm_fhm');
+        $rootNode = $treeBuilder
+            ->root('fhm_fhm')
+            ->children()
+                ->scalarNode('database_manager')
+                ->defaultValue('odm')
+                ->end()
+            ->end()
+        ;
 
         // Here you should define the parameters that are allowed to
         // configure your bundle. See the documentation linked above for
