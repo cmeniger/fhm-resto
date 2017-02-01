@@ -39,4 +39,4 @@ services:
 
     fhm.object.manager:
         class: Fhm\FhmBundle\Manager\FhmObjectManager
-        arguments: ["@fhm.database.manager", "%git puldatabase_manager%"]
+        arguments: ["@fhm.database.manager", "%database_manager%"]
