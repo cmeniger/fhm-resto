@@ -4,6 +4,7 @@ namespace Fhm\NewsBundle\Controller\Group;
 use Fhm\FhmBundle\Controller\RefAdminController as FhmController;
 use Fhm\FhmBundle\Form\Handler\Admin\CreateHandler;
 use Fhm\FhmBundle\Form\Handler\Admin\UpdateHandler;
+use Fhm\FhmBundle\Form\Type\Admin\SearchType;
 use Fhm\NewsBundle\Form\Type\Admin\Group\CreateType;
 use Fhm\NewsBundle\Form\Type\Admin\Group\UpdateType;
 use Symfony\Component\HttpFoundation\Request;
@@ -124,7 +125,23 @@ class AdminController extends FhmController
      */
     public function previewAction($id)
     {
-        return parent::detailAction($id);
+        $response = parent::detailAction($id);
+        $document = $response['object'];
+        $form = $this->createForm(SearchType::class);
+        $form->setData($this->get('request_stack')->getCurrentRequest()->get($form->getName()));
+        $dataSearch = $form->getData();
+        $documents = $this->get('fhm_tools')->dmRepository("FhmNewsBundle:News")->getNewsByGroupIndex(
+            $document,
+            $dataSearch['search']
+        );
+
+        return array_merge(
+            $response,
+            array(
+                'documents' => $documents,
+                'form' => $form->createView(),
+            )
+        );
     }
 
     /**

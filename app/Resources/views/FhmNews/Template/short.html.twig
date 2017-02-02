@@ -2,7 +2,7 @@
 {% import "::Macros/pagination.html.twig" as macroPagination %}
 
 <div id="content_data" class="news">
-    {% if documents %}
+    {% if documents is defined %}
         {% for news in documents %}
             <div class="row news-short">
                 <div class="column large-3 medium-4 small-12">
