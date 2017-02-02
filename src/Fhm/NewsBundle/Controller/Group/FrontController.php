@@ -62,7 +62,7 @@ class FrontController extends FhmController
     public function detailAction($id)
     {
         $response = parent::detailAction($id);
-        $document = $response['document'];
+        $document = $response['object'];
         $form = $this->createForm(SearchType::class);
         $form->setData($this->get('request_stack')->getCurrentRequest()->get($form->getName()));
         $dataSearch = $form->getData();

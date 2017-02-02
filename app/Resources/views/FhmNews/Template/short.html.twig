@@ -17,7 +17,7 @@
                             <small>{{ news.getDateStart() ? news.getDateStart()|localizeddate('full', 'none', app.request.locale) : news.getDateCreate()|localizeddate('full', 'none', app.request.locale) }}</small>
                         </h3>
                         <p>{{ news.getResume()|raw }}</p>
-                        <small>{{ news.getUserCreate().getUsername() }}{{ news.getDateUpdate ? ' | ' ~ ('news.front.index.form.update')|trans({'%date%':news.getDateUpdate()|localizeddate('full', 'none', app.request.locale)},'FhmNewsBundle') : '' }}</small>
+                        <small>{{ news.getAuthor().getUsername() }}{{ news.getDateUpdate ? ' | ' ~ ('news.front.index.form.update')|trans({'%date%':news.getDateUpdate()|localizeddate('full', 'none', app.request.locale)},'FhmNewsBundle') : '' }}</small>
                         <a class="more button tiny right" href="{{ path('fhm_news_lite', {id: news.getAlias()}) }}">{{ ('news.front.index.form.more')|trans({},'FhmNewsBundle') }}</a>
                     </div>
                 </div>
@@ -29,5 +29,8 @@
         </div>
     {% endif %}
 </div>
+
 {# Pagination #}
-{{ macroPagination.print(pagination) }}
+{# @TODO  Make paginations on this page #}
+{#{{ knp_pagination_render(pagination) }}#}
+{#{{ macroPagination.print(pagination) }}#}
