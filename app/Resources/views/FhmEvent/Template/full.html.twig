@@ -2,12 +2,12 @@
 
 <div id="content_data" class="event">
     <div class="row event-full">
-        <h1>{{ document.getTitle() }}</h1>
-        <h2>{{ document.getSubTitle() }}</h2>
-        <div class="event-image" style="background: url('{{ asset(document.getImage()|media("xxl","/images/common/event-cover-default.jpg")) }}') center center no-repeat;"></div>
-        <div class="event-date">{{ document.getDateStart()|localizeddate('full', 'none', app.request.locale) }} - {{ document.getDateEnd()|localizeddate('full', 'none', app.request.locale) }}</div>
-        <div class="event-resume">{{ document.getResume()|raw }}</div>
-        <div class="event-content">{{ document.getContent()|raw }}</div>
-        <div class="event-author">{{ document.getUserCreate().getUsername() }}</div>
+        <h1>{{ object.getTitle() }}</h1>
+        <h2>{{ object.getSubTitle() }}</h2>
+        <div class="event-image" style="background: url('{{ asset(object.getImage()|media("xxl","/images/common/event-cover-default.jpg")) }}') center center no-repeat;"></div>
+        <div class="event-date">{{ object.getDateStart()|localizeddate('full', 'none', app.request.locale) }} - {{ object.getDateEnd()|localizeddate('full', 'none', app.request.locale) }}</div>
+        <div class="event-resume">{{ object.getResume()|raw }}</div>
+        <div class="event-content">{{ object.getContent()|raw }}</div>
+        <div class="event-author">{{ object.getAuthor() is defined ? object.getAuthor().getUsername() : 'admin'}}</div>
     </div>
 </div>

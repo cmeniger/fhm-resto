@@ -2,15 +2,15 @@
 {% import "::Macros/pagination.html.twig" as macroPagination %}
 
 <div id="content_data" class="event">
-    {% if documents %}
-        {% for event in documents %}
+    {% if objects is defined %}
+        {% for event in objects %}
             <div class="large-12 column panel panel-ffse panel-calendar-insidepanel">
                 <div class="panel-wrapper">
                     <div class="page-module-style page-module-calendar">
                         <div class="column large-12">
                             <div class="calendar-insidepanel">
                                 <div class="column large-5 small-12 calendar-image">
-                                    <a href="{{ path("fhm_event_lite", {id:event.getAlias()}) }}" class="calendar-cover" style="display: block; height: 175px; background: url('{{ event.getImage()|medium("/images/common/calendar-default.jpg") }}') center center no-repeat; background-size: cover !important; "></a>
+                                    <a href="{{ path("fhm_event_lite", {id:event.getAlias()}) }}" class="calendar-cover" style="display: block; height: 175px; background: url('{{ event.getImage()|media("m","/images/common/calendar-default.jpg") }}') center center no-repeat; background-size: cover !important; "></a>
                                 </div>
                                 <div class="column large-7 small-12 calendar-content">
                                     <h3 class="calendar-title">
@@ -39,4 +39,4 @@
     {% endif %}
 </div>
 {# Pagination #}
-{{ macroPagination.print(pagination) }}
+{#{{ macroPagination.print(pagination) }}#}

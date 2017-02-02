@@ -196,7 +196,7 @@ class MediaExtension extends \Twig_Extension
     public function getMedia($media, $format = 'origin', $default = 'default')
     {
         if ($media) {
-            return $this->service->setDocument($media)->getPathFile($format, $default);
+            return $this->service->setModel($media)->getPathFile($format, $default);
         } elseif ($default == "default") {
             $default = file_exists('../web/images/default.jpg') ? '/images/default.jpg' : $default;
             $default = file_exists('../web/images/default.png') ? '/images/default.png' : $default;
@@ -222,7 +222,7 @@ class MediaExtension extends \Twig_Extension
      */
     public function getDimension($media, $axe = '', $ratio = '')
     {
-        $path = $this->service->setDocument($media)->getPath();
+        $path = $this->service->setModel($media)->getPath();
         if (!file_exists($path->fullWeb.'origin.'.$media->getExtension())) {
             return '';
         }
@@ -238,6 +238,6 @@ class MediaExtension extends \Twig_Extension
             $axe = ($axe != 'width' && $axe != 'height') ? 'width' : $axe;
         }
 
-        return $axe ? $$axe : $width.' x '.$height;
+        return $axe ? $axe : $width.' x '.$height;
     }
 }
