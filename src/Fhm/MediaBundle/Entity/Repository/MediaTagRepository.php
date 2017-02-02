@@ -53,99 +53,92 @@ class MediaTagRepository extends FhmRepository
     }
 
     /**
-     * @param        $id
-     * @param string $grouping
-     *
+     * @param $id
      * @return mixed
      */
-    public function getSons($id, $grouping = '')
+    public function getSons($id)
     {
-        $builder = $this->createQueryBuilder();
+        $builder = $this->createQueryBuilder('a');
+        $builder->Where('a.parent = :parent')->setParameter('parent', $id);
         // Private
         if (!$this->private) {
-            $builder->field('private')->equals(false);
+            $builder->andWhere('a.private = :bool1')->setParameter('bool1', false);
         }
         // Common
-        $builder->field('parent.id')->equals($id);
-        $this->builderSort($builder);
+        $builder->orderBy('a.name', 'ASC');
 
         return $builder->getQuery()->execute()->toArray();
     }
 
     /**
-     * @param        $id
-     * @param string $grouping
-     *
+     * @param $id
      * @return mixed
      */
-    public function getSonsEnable($id, $grouping = '')
+    public function getSonsEnable($id)
     {
-        $builder = $this->createQueryBuilder();
+        $builder = $this->createQueryBuilder('a');
+        $builder->where('a.active = :boolActive')->setParameter('boolActive', true);
+        $builder->andWhere('a.delete = :boolDelete')->setParameter('boolDelete', false);
         // Private
         if (!$this->private) {
-            $builder->field('private')->equals(false);
+            $builder->andWhere('a.private = :bool1')->setParameter('bool1', false);
         }
         // Common
-        $builder->field('parent.id')->equals($id);
-        $builder->field('active')->equals(true);
-        $builder->field('delete')->equals(false);
-        $this->builderSort($builder);
+        $builder->andWhere('a.parent = :parent')->setParameter('parent', $id);
+        $builder->orderBy('a.name', 'ASC');
 
         return $builder->getQuery()->execute()->toArray();
     }
 
     /**
-     * @param string $grouping
      *
      * @return mixed
      */
-    public function getAllEnable($grouping = "")
+    public function getAllEnable()
     {
-        $builder = $this->createQueryBuilder();
+        $builder = $this->createQueryBuilder('a');
+        $builder->where('a.active = :boolActive')->setParameter('boolActive', true);
+        $builder->andWhere('a.delete = :boolDelete')->setParameter('boolDelete', false);
         // Root
         if ($this->root) {
-            $builder->field('parent.id')->equals($this->root);
+            $builder->andWhere('a.parent = :parent')->setParameter('parent', $this->root);
         } // Parent
         elseif ($this->parent) {
-            $builder->field('parent')->in(array('0', null));
+            $builder->andWhere('a.parent IN (:parents)')->setParameter('parents', [0, null]);
         }
         // Private
         if (!$this->private) {
-            $builder->field('private')->equals(false);
+            $builder->andWhere('a.private = :bool1')->setParameter('bool1', false);
         }
         // Common
-        $builder->field('active')->equals(true);
-        $builder->field('delete')->equals(false);
-        $this->builderSort($builder);
+        $builder->orderBy('a.name', 'ASC');
 
         return $builder->getQuery()->execute()->toArray();
     }
 
     /**
-     * @param string $grouping
-     *
      * @return mixed
      */
-    public function getAllFiltered($grouping = "")
+    public function getAllFiltered()
     {
-        $builder = $this->createQueryBuilder();
+        $builder = $this->createQueryBuilder('a');
+        $builder->where('a.active = :boolActive')->setParameter('boolActive', true);
+        $builder->andWhere('a.delete = :boolDelete')->setParameter('boolDelete', false);
         // Root
         if ($this->root) {
-            $builder->field('parent.id')->equals($this->root);
+            $builder->andWhere('a.parent = :parent')->setParameter('parent', $this->root);
         } // Parent
         elseif ($this->parent) {
-            $builder->field('parent')->in(array('0', null));
+            $builder->andWhere('a.parent IN (:parents)')->setParameter('parents', [0, null]);
         }
         // Private
         if (!$this->private) {
-            $builder->field('private')->equals(false);
+            $builder->andWhere('a.private = :bool1')->setParameter('bool1', false);
         }
         // Common
-        $builder->field('active')->equals(true);
-        $builder->field('delete')->equals(false);
-        $this->builderSort($builder);
+        $builder->orderBy('a.name', 'ASC');
 
-        return $builder->getQuery()->execute()->toArray();
+        return $builder->getQuery()->execute();
     }
 
     /**
@@ -153,22 +146,22 @@ class MediaTagRepository extends FhmRepository
      */
     public function getFormFiltered()
     {
-        $builder = $this->createQueryBuilder();
+        $builder = $this->createQueryBuilder('a');
+        $builder->where('a.active = :boolActive')->setParameter('boolActive', true);
+        $builder->andWhere('a.delete = :boolDelete')->setParameter('boolDelete', false);
         // Root
         if ($this->root) {
-            $builder->field('parent.id')->equals($this->root);
+            $builder->andWhere('a.parent = :parent')->setParameter('parent', $this->root);
         } // Parent
         elseif ($this->parent) {
-            $builder->field('parent')->in(array('0', null));
+            $builder->andWhere('a.parent IN (:parents)')->setParameter('parents', [0, null]);
         }
         // Private
         if (!$this->private) {
-            $builder->field('private')->equals(false);
+            $builder->andWhere('a.private = :bool1')->setParameter('bool1', false);
         }
         // Common
-        $builder->field('active')->equals(true);
-        $builder->field('delete')->equals(false);
-        $this->builderSort($builder);
+        $builder->orderBy('a.name', 'ASC');
 
         return $builder;
     }

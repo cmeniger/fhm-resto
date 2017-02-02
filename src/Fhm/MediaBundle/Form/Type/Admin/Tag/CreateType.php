@@ -43,6 +43,7 @@ class CreateType extends FhmType
                 'choice_label' => 'route',
                 'query_builder' => function () use ($options) {
                     $dr = $options['object_manager']->getCurrentRepository('FhmMediaBundle:MediaTag');
+
                     return $dr->getFormFiltered();
                 },
                 'required' => false,
@@ -52,6 +53,9 @@ class CreateType extends FhmType
         )->remove('share')->remove('global');
     }
 
+    /**
+     * @param OptionsResolver $resolver
+     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(
@@ -61,7 +65,7 @@ class CreateType extends FhmType
                 'cascade_validation' => true,
                 'translation_route' => 'media.tag',
                 'user_admin' => '',
-                'object_manager'=>''
+                'object_manager' => '',
             )
         );
     }

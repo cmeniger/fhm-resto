@@ -2,7 +2,6 @@
 namespace Fhm\MediaBundle\Services;
 
 use Fhm\FhmBundle\Services\Tools;
-use Fhm\MediaBundle\Document\Media;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -13,7 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 class Local
 {
     protected $fhm_tools;
-    protected $document;
+    protected $model;
     private $files;
     private $file;
     private $path;
@@ -44,22 +43,22 @@ class Local
     /**
      * @return mixed
      */
-    public function getDocument()
+    public function getModel()
     {
-        return $this->document;
+        return $this->model;
     }
 
     /**
-     * @param $document
-     *
+     * @param $model
      * @return $this
      */
-    public function setDocument($document)
+    public function setModel($model)
     {
-        if ($document instanceof Media) {
-            $this->document = $document;
-            $this->file = $document->getFile();
-            $this->path->files = $document->getId().'/';
+        $type = $this->fhm_tools->container->get('fhm.object.manager')->getCurrentModelName('FhmMediaBundle:Media');
+        if ($model instanceof $type) {
+            $this->model = $model;
+            $this->file = $model->getFile();
+            $this->path->files = $model->getId().'/';
             $this->path->fullWeb = $this->path->root.$this->path->web.$this->path->files;
         }
 
@@ -69,9 +68,11 @@ class Local
     /**
      * @return bool
      */
-    public function isDocumentSet()
+    public function isModelSet()
     {
-        return $this->document instanceof Media;
+        $type = $this->fhm_tools->container->get('fhm.object.manager')->getCurrentModelName('FhmMediaBundle:Media');
+
+        return $this->model instanceof $type;
     }
 
     /**
@@ -130,18 +131,14 @@ class Local
             $default = file_exists('../web/images/default.jpg') ? '/images/default.jpg' : $default;
             $default = file_exists('../web/images/default.png') ? '/images/default.png' : $default;
         }
-        if ($this->isDocumentSet()) {
-            if ($this->document->getType() == 'image') {
-                $file = $this->path->media.
-                        $this->document->getId().
-                        '/'.$format.'.'.$this->document->getExtension();
+        if ($this->isModelSet()) {
+            if ($this->model->getType() == 'image') {
+                $file = $this->path->media.$this->model->getId().'/'.$format.'.'.$this->model->getExtension();
 
                 return ($file && file_exists('../web'.$file)) ? $file : $default;
             } else {
-                $file = $this->path->media.
-                        $this->document->getId().
-                        '/'.$this->document->getAlias().
-                        '.'.$this->document->getExtension();
+                $file = $this->path->media.$this->model->getId().'/'.$this->model->getAlias(
+                    ).'.'.$this->model->getExtension();
 
                 return ($file && file_exists('../web'.$file)) ? $file : '#';
             }
@@ -158,16 +155,15 @@ class Local
     public function download($filename = '')
     {
         $response = new Response();
-        if ($this->isDocumentSet()) {
+        if ($this->isModelSet()) {
             $response->setStatusCode(200);
-            $response->headers->set('Content-Type', $this->document->getMimeType());
+            $response->headers->set('Content-Type', $this->model->getMimeType());
             $response->headers->set(
                 'Content-Disposition',
-                'attachment; filename="'.($filename ? $filename : $this->document->getName()).'"'
+                'attachment; filename="'.($filename ? $filename : $this->model->getName()).'"'
             );
-            $response->setContent(file_get_contents($this->path->fullOrigin.$this->document->getId()));
-        }
-        else {
+            $response->setContent(file_get_contents($this->path->fullOrigin.$this->model->getId()));
+        } else {
             $response->setStatusCode(404);
         }
 
@@ -213,12 +209,15 @@ class Local
      */
     public function tagRoot($root = "")
     {
+        $tagClassName = $this->fhm_tools->container->get('fhm.object.manager')->getCurrentModelName(
+            'FhmMediaBundle:MediaTag'
+        );
         if ($root === '&user') {
             $root = $this->fhm_tools->getUser()->getUsername();
             $tagParent = $this->fhm_tools->dmRepository('FhmMediaBundle:MediaTag')->getByAlias('users');
             $tag = $this->fhm_tools->dmRepository('FhmMediaBundle:MediaTag')->getByAlias($root);
             if (!$tagParent) {
-                $tagParent = new \Fhm\MediaBundle\Document\MediaTag();
+                $tagParent = new $tagClassName;
                 $tagParent->setName('users');
                 $tagParent->setAlias('users');
                 $tagParent->setActive(true);
@@ -226,7 +225,7 @@ class Local
                 $this->fhm_tools->dmPersist($tagParent);
             }
             if (!$tag) {
-                $tag = new \Fhm\MediaBundle\Document\MediaTag();
+                $tag = new $tagClassName;
                 $tag->setName($root);
                 $tag->setAlias($root);
                 $tag->setParent($tagParent);
@@ -242,7 +241,7 @@ class Local
             $tag = ($tag) ? $tag : $this->fhm_tools->dmRepository('FhmMediaBundle:MediaTag')->getByAlias($root);
             $tag = ($tag) ? $tag : $this->fhm_tools->dmRepository('FhmMediaBundle:MediaTag')->getByName($root);
             if (!$tag) {
-                $tag = new \Fhm\MediaBundle\Document\MediaTag();
+                $tag = new $tagClassName;
                 $tag->setName($root);
                 $tag->setAlias($root);
                 $tag->setActive(true);
@@ -260,14 +259,14 @@ class Local
      */
     public function remove()
     {
-        if ($this->isDocumentSet()) {
+        if ($this->isModelSet()) {
             $files = array_diff(scandir($this->path->fullWeb), array('.', '..'));
             foreach ($files as $file) {
                 unlink($this->path->fullWeb.$file);
             }
             rmdir($this->path->fullWeb);
-            if ($this->document->getType() == 'image') {
-                unlink($this->path->fullOrigin.$this->document->getId());
+            if ($this->model->getType() == 'image') {
+                unlink($this->path->fullOrigin.$this->model->getId());
             }
         }
 
@@ -288,7 +287,7 @@ class Local
             }
         }
         // Image
-        if ($this->isDocumentSet() && $this->document->getType() == 'image') {
+        if ($this->isModelSet() && $this->model->getType() == 'image') {
             $this->_uploadImage();
             $this->_generateImage();
         } // Other
@@ -302,8 +301,8 @@ class Local
      */
     private function _uploadImage()
     {
-        if ($this->isDocumentSet() && $this->file && $this->document->getType() == 'image') {
-            $this->file->move($this->path->fullOrigin, $this->document->getId());
+        if ($this->isModelSet() && $this->file && $this->model->getType() == 'image') {
+            $this->file->move($this->path->fullOrigin, $this->model->getId());
         }
     }
 
@@ -312,8 +311,8 @@ class Local
      */
     private function _uploadFile()
     {
-        if ($this->isDocumentSet() && $this->file && $this->document->getType() != 'image') {
-            $this->file->move($this->path->fullWeb, $this->document->getAlias().'.'.$this->document->getExtension());
+        if ($this->isModelSet() && $this->file && $this->model->getType() != 'image') {
+            $this->file->move($this->path->fullWeb, $this->model->getAlias().'.'.$this->model->getExtension());
         }
     }
 
@@ -322,22 +321,22 @@ class Local
      */
     private function _generateImage()
     {
-        if (! $this->isDocumentSet()) {
+        if (!$this->isModelSet()) {
             return $this;
         }
-        if ($this->document->getType() == 'image') {
+        if ($this->model->getType() == 'image') {
             // Copy image
-            $source1 = $this->path->fullWeb.'tmp1.'.$this->document->getExtension();
-            $source2 = $this->path->fullWeb.'tmp2.'.$this->document->getExtension();
-            $originalFileName = $this->path->fullWeb.$this->document->getAlias().'.'.$this->document->getExtension();
-            copy($this->path->fullOrigin.$this->document->getId(), $originalFileName);
-            copy($this->path->fullOrigin.$this->document->getId(), $source1);
-            copy($this->path->fullOrigin.$this->document->getId(), $source2);
+            $source1 = $this->path->fullWeb.'tmp1.'.$this->model->getExtension();
+            $source2 = $this->path->fullWeb.'tmp2.'.$this->model->getExtension();
+            $originalFileName = $this->path->fullWeb.$this->model->getAlias().'.'.$this->model->getExtension();
+            copy($this->path->fullOrigin.$this->model->getId(), $originalFileName);
+            copy($this->path->fullOrigin.$this->model->getId(), $source1);
+            copy($this->path->fullOrigin.$this->model->getId(), $source2);
             // Initialization
             $sizeSource = getimagesize($source1);
             $sizeWatermark = getimagesize($this->path->fullWatermark);
-            $function1 = $this->_getImagecreatefrom($this->document->getExtension());
-            $function2 = $this->_getImage($this->document->getExtension());
+            $function1 = $this->_getImagecreatefrom($this->model->getExtension());
+            $function2 = $this->_getImage($this->model->getExtension());
             // Resize watermarker
             $watermarkPercent = $sizeWatermark[0] > $sizeWatermark[1] ? $sizeWatermark[0] * 100 / ($sizeSource[0] - 40) : $sizeWatermark[1] * 100 / ($sizeSource[1] - 40);
             $watermarkWidth = 100 * $sizeWatermark[0] / $watermarkPercent;
@@ -411,7 +410,7 @@ class Local
                         $object,
                         call_user_func(
                             $function1,
-                            $this->path->fullWeb.$file['name'].'.'.$this->document->getExtension()
+                            $this->path->fullWeb.$file['name'].'.'.$this->model->getExtension()
                         ),
                         $offsetX,
                         $offsetY,
@@ -425,7 +424,7 @@ class Local
                     call_user_func(
                         $function2,
                         $object,
-                        $this->path->fullWeb.$file['name'].'.'.$this->document->getExtension()
+                        $this->path->fullWeb.$file['name'].'.'.$this->model->getExtension()
                     );
                     imagedestroy($object);
                 }
@@ -444,28 +443,31 @@ class Local
      */
     private function _tag()
     {
-        $tagType = $this->fhm_tools->dmRepository('FhmMediaBundle:MediaTag')->getByAlias($this->document->getType());
+        $tagClassName = $this->fhm_tools->container->get('fhm.object.manager')->getCurrentModelName(
+            'FhmMediaBundle:MediaTag'
+        );
+        $tagType = $this->fhm_tools->dmRepository('FhmMediaBundle:MediaTag')->getByAlias($this->model->getType());
         $tagExtension = $this->fhm_tools->dmRepository('FhmMediaBundle:MediaTag')->getByAlias(
-            $this->document->getExtension()
+            $this->model->getExtension()
         );
         if (!$tagType) {
-            $tagType = new \Fhm\MediaBundle\Document\MediaTag();
-            $tagType->setName($this->document->getType());
-            $tagType->setAlias($this->document->getType());
+            $tagType = new $tagClassName;
+            $tagType->setName($this->model->getType());
+            $tagType->setAlias($this->model->getType());
             $tagType->setActive(true);
             $this->fhm_tools->dmPersist($tagType);
         }
         if (!$tagExtension) {
-            $tagExtension = new \Fhm\MediaBundle\Document\MediaTag();
-            $tagExtension->setName($this->document->getExtension());
-            $tagExtension->setAlias($this->document->getExtension());
+            $tagExtension = new $tagClassName;
+            $tagExtension->setName($this->model->getExtension());
+            $tagExtension->setAlias($this->model->getExtension());
             $tagExtension->setParent($tagType);
             $tagExtension->setActive(true);
             $this->fhm_tools->dmPersist($tagExtension);
         }
-        $this->document->addTag($tagType);
-        $this->document->addTag($tagExtension);
-        $this->fhm_tools->dmPersist($this->document);
+        $this->model->addTag($tagType);
+        $this->model->addTag($tagExtension);
+        $this->fhm_tools->dmPersist($this->model);
 
         return $this;
     }

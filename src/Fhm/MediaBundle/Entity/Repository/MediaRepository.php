@@ -76,25 +76,25 @@ class MediaRepository extends FhmRepository
      */
     public function getAdminIndex($search = "", $roleSuperAdmin = false)
     {
-        $builder = ($search) ? $this->search($search) : $this->createQueryBuilder();
+        $builder = ($search) ? $this->search($search) : $this->createQueryBuilder('a');
         // Parent
         if ($this->parent) {
-            $builder->field('parent')->in(array('0', null));
+            $builder->andWhere('a.parent IN :(parent)')->setParameter('parent', [0, null]);
         }
         // Tag
         if ($this->tag) {
-            $builder->field('tags.id')->equals($this->tag);
+            $builder->andWhere('a.tags = :(tag)')->setParameter('tag', $this->tag);
         }
         // Private
         if (!$this->private) {
-            $builder->field('private')->equals(false);
+            $builder->andWhere('a.private = :bool1')->setParameter('bool1', false);
         }
         // RoleSuperAdmin
         if (!$roleSuperAdmin) {
-            $builder->field('delete')->equals(false);
+            $builder->andWhere('a.delete = :bool')->setParameter('bool', false);
         }
         // Common
-        $this->builderSort($builder);
+        $builder->orderBy('a.name');
 
         return $builder->getQuery();
     }
@@ -109,25 +109,28 @@ class MediaRepository extends FhmRepository
      */
     public function getAdminCount($search = "", $roleSuperAdmin = false)
     {
-        $builder = ($search) ? $this->search($search) : $this->createQueryBuilder();
+        $builder = ($search) ? $this->search($search) : $this->createQueryBuilder('a');
+        $builder->select('count(a.id)');
         // Parent
         if ($this->parent) {
-            $builder->field('parent')->in(array('0', null));
+            $builder->andWhere('a.parent IN :(parent)')->setParameter('parent', [0, null]);
         }
         // Tag
         if ($this->tag) {
-            $builder->field('tags.id')->equals($this->tag);
+            $builder->andWhere('a.tags = :(tag)')->setParameter('tag', $this->tag);
         }
         // Private
         if (!$this->private) {
-            $builder->field('private')->equals(false);
+            $builder->andWhere('a.private = :bool1')->setParameter('bool1', false);
         }
         // RoleSuperAdmin
         if (!$roleSuperAdmin) {
-            $builder->field('delete')->equals(false);
+            $builder->andWhere('a.delete = :bool')->setParameter('bool', false);
         }
+        // Common
+        $builder->orderBy('a.name');
 
-        return $builder->count()->getQuery()->execute();
+        return $builder->getQuery()->getResult();
     }
 
     /**
@@ -138,33 +141,34 @@ class MediaRepository extends FhmRepository
      */
     public function getFrontIndex($search = "")
     {
-        $builder = ($search) ? $this->search($search) : $this->createQueryBuilder();
+        $builder = ($search) ? $this->search($search) : $this->createQueryBuilder('a');
+
+        $builder->where('a.active = :booActive')->setParameter('boolActive', true);
+        $builder->andWhere('a.delete = :boolDelete')->setParameter('boolDelete', false);
+
+
         // Parent
         if ($this->parent) {
-            $builder->field('parent')->in(array('0', null));
+            $builder->andWhere('a.parent IN :(parent)')->setParameter('parent', [0, null]);
         }
         // Tag
         if ($this->tag) {
-            $builder->field('tags.id')->equals($this->tag);
+            $builder->andWhere('a.tags = :(tag)')->setParameter('tag', $this->tag);
         }
         // Private
         if (!$this->private) {
-            $builder->field('private')->equals(false);
+            $builder->andWhere('a.private = :bool1')->setParameter('bool1', false);
         }
         // Filter
         if ($this->filter) {
-            $builder->addAnd(
-                $builder->expr()->addOr($builder->expr()->field('type')->in($this->filter))->addOr(
-                        $builder->expr()->field('extension')->in($this->filter)
-                    )->addOr($builder->expr()->field('mimeType')->in($this->filter))
+            $builder->andWhere(
+                $builder->expr()->orX($builder->expr()->in('type', $this->filter)),
+                $builder->expr()->orX($builder->expr()->in('extension', $this->filter)),
+                $builder->expr()->orX($builder->expr()->in('mimeType', $this->filter))
             );
         }
-
         // Common
-        $builder->field('active')->equals(true);
-        $builder->field('delete')->equals(false);
-        $this->builderSort($builder);
-
+        $builder->orderBy('a.name');
         return $builder->getQuery()->execute()->toArray();
     }
 
@@ -176,33 +180,35 @@ class MediaRepository extends FhmRepository
      */
     public function getFrontCount($search = "")
     {
-        $builder = ($search) ? $this->search($search) : $this->createQueryBuilder();
+        $builder = ($search) ? $this->search($search) : $this->createQueryBuilder('a');
+
+        $builder->select('count(a.id)');
+        $builder->where('a.active = :booActive')->setParameter('boolActive', true);
+        $builder->andWhere('a.delete = :boolDelete')->setParameter('boolDelete', false);
+
+
         // Parent
         if ($this->parent) {
-            $builder->field('parent')->in(array('0', null));
+            $builder->andWhere('a.parent IN :(parent)')->setParameter('parent', [0, null]);
         }
         // Tag
         if ($this->tag) {
-            $builder->field('tags.id')->equals($this->tag);
+            $builder->andWhere('a.tags = :(tag)')->setParameter('tag', $this->tag);
         }
         // Private
         if (!$this->private) {
-            $builder->field('private')->equals(false);
+            $builder->andWhere('a.private = :bool1')->setParameter('bool1', false);
         }
         // Filter
         if ($this->filter) {
-            $builder->addAnd(
-                $builder->expr()->addOr($builder->expr()->field('type')->in($this->filter))->addOr(
-                        $builder->expr()->field('extension')->in($this->filter)
-                    )->addOr($builder->expr()->field('mimeType')->in($this->filter))
+            $builder->andWhere(
+                $builder->expr()->orX($builder->expr()->in('type', $this->filter)),
+                $builder->expr()->orX($builder->expr()->in('extension', $this->filter)),
+                $builder->expr()->orX($builder->expr()->in('mimeType', $this->filter))
             );
         }
-
         // Common
-        $builder->field('active')->equals(true);
-        $builder->field('delete')->equals(false);
-
-        return $builder->count()->getQuery()->execute();
+        return $builder->getQuery()->getResult();
     }
 
     /**
@@ -212,14 +218,14 @@ class MediaRepository extends FhmRepository
      */
     public function getByTag($id)
     {
-        $builder = $this->createQueryBuilder();
+        $builder = $this->createQueryBuilder('a');
         // Private
         if (!$this->private) {
-            $builder->field('private')->equals(false);
+            $builder->andWhere('a.private = :bool1')->setParameter('bool1', false);
         }
         // Common
-        $builder->field('tags.id')->equals($id);
-        $this->builderSort($builder);
+        $builder->andWhere('a.tags = :(tag)')->setParameter('tag', $id);
+        $builder->orderBy('a.name', 'ASC');
 
         return $builder->getQuery()->execute()->toArray();
     }

@@ -31,7 +31,6 @@ class ApiController extends FhmController
         self::$source = "fhm";
         self::$domain = "FhmMediaBundle";
         self::$translation = "media";
-        self::$class = Media::class;
         self::$route = "media";
         self::$form = new \stdClass();
         self::$form->createType = CreateType::class;

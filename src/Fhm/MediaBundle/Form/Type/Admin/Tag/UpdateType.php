@@ -23,44 +23,40 @@ class UpdateType extends FhmType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         parent::buildForm($builder, $options);
-        $builder
-            ->add(
-                'color',
-                TextType::class,
-                array(
-                    'label' => $options['translation_route'] . '.admin.update.form.color',
-                    'attr' => array('class' => 'colorpicker'),
-                    'required' => false,
-                )
+        $builder->add(
+            'color',
+            TextType::class,
+            array(
+                'label' => $options['translation_route'].'.admin.update.form.color',
+                'attr' => array('class' => 'colorpicker'),
+                'required' => false,
             )
-            ->add(
-                'private',
-                CheckboxType::class,
-                array('label' => $options['translation_route'] . '.admin.update.form.private', 'required' => false)
+        )->add(
+            'private',
+            CheckboxType::class,
+            array('label' => $options['translation_route'].'.admin.update.form.private', 'required' => false)
+        )->add(
+            'parent',
+            TypeManager::getType($options['object_manager']->getDBDriver()),
+            array(
+                'label' => $options['translation_route'].'.admin.update.form.parent',
+                'class' => 'FhmMediaBundle:MediaTag',
+                'choice_label' => 'route',
+                'query_builder' => function () use ($options) {
+                    $dr = $options['object_manager']->getCurrentRepository('FhmMediaBundle:MediaTag');
+
+                    return $dr->getFormFiltered();
+                },
+                'required' => false,
             )
-            ->add(
-                'parent',
-                TypeManager::getType($options['object_manager']->getDBDriver()),
-                array(
-                    'label' => $options['translation_route'] . '.admin.update.form.parent',
-                    'class' => 'FhmMediaBundle:MediaTag',
-                    'choice_label' => 'route',
-                    'query_builder' => function () use ($options) {
-                        $dr = $options['object_manager']->getCurrentRepository('FhmMediaBundle:MediaTag');
-                        return $dr->getFormFiltered();
-                    },
-                    'required' => false,
-                )
-            )
-            ->remove('seo_title')
-            ->remove('seo_description')
-            ->remove('seo_keywords')
-            ->remove('languages')
-            ->remove('grouping')
-            ->remove('share')
-            ->remove('global');
+        )->remove('seo_title')->remove('seo_description')->remove('seo_keywords')->remove('languages')->remove(
+            'grouping'
+        )->remove('share')->remove('global');
     }
 
+    /**
+     * @param OptionsResolver $resolver
+     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(
@@ -70,7 +66,7 @@ class UpdateType extends FhmType
                 'cascade_validation' => true,
                 'translation_route' => 'media.tag',
                 'user_admin' => '',
-                'object_manager'=>''
+                'object_manager' => '',
             )
         );
     }

@@ -27,32 +27,33 @@ class CreateType extends FhmType
         $builder->add(
             'name',
             TextType::class,
-            array('label' => $options['translation_route'] . '.admin.create.form.name', 'required' => false)
+            array('label' => $options['translation_route'].'.admin.create.form.name', 'required' => false)
         )->add(
             'file',
             FileType::class,
-            array('label' => $options['translation_route'] . '.admin.create.form.file')
+            array('label' => $options['translation_route'].'.admin.create.form.file')
         )->add(
             'tag',
             TextType::class,
             array(
-                'label' => $options['translation_route'] . '.admin.create.form.tag',
+                'label' => $options['translation_route'].'.admin.create.form.tag',
                 'mapped' => false,
                 'required' => false,
             )
         )->add(
             'private',
             CheckboxType::class,
-            array('label' => $options['translation_route'] . '.admin.create.form.private', 'required' => false)
+            array('label' => $options['translation_route'].'.admin.create.form.private', 'required' => false)
         )->add(
             'parent',
             TypeManager::getType($options['object_manager']->getDBDriver()),
             array(
-                'label' => $options['translation_route'] . '.admin.create.form.parent',
+                'label' => $options['translation_route'].'.admin.create.form.parent',
                 'class' => 'FhmMediaBundle:MediaTag',
                 'choice_label' => 'route',
                 'query_builder' => function () use ($options) {
                     $dr = $options['object_manager']->getCurrentRepository('FhmMediaBundle:MediaTag');
+
                     return $dr->getFormFiltered();
                 },
                 'mapped' => false,
@@ -62,11 +63,12 @@ class CreateType extends FhmType
             'tags',
             TypeManager::getType($options['object_manager']->getDBDriver()),
             array(
-                'label' => $options['translation_route'] . '.admin.create.form.tags',
+                'label' => $options['translation_route'].'.admin.create.form.tags',
                 'class' => 'FhmMediaBundle:MediaTag',
                 'choice_label' => 'route',
                 'query_builder' => function () use ($options) {
                     $dr = $options['object_manager']->getCurrentRepository('FhmMediaBundle:MediaTag');
+
                     return $dr->getFormFiltered();
                 },
                 'multiple' => true,
@@ -87,12 +89,12 @@ class CreateType extends FhmType
     {
         $resolver->setDefaults(
             array(
-                'data_class' => 'Fhm\MediaBundle\Document\Media',
+                'data_class' => '',
                 'translation_domain' => 'FhmMediaBundle',
                 'cascade_validation' => true,
                 'translation_route' => 'media',
                 'user_admin' => '',
-                'object_manager' => ''
+                'object_manager' => '',
             )
         );
     }

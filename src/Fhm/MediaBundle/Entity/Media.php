@@ -12,7 +12,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Media extends Fhm
 {
     /**
-     * @ORM\OneToMany(targetEntity="MediaTag", cascade={"persist"}, orphanRemoval=true, mappedBy="media")
+     * @ORM\OneToMany(targetEntity="MediaTag", cascade={"persist"}, mappedBy="media")
      */
     protected $tags;
 
