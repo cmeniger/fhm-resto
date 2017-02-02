@@ -62,7 +62,7 @@ class MultipleType extends FhmType
                 'choice_label' => 'name',
                 'query_builder' => function () use ($options) {
                     $dr = $options['object_manager']->getCurrentRepository('FhmGalleryBundle:Gallery');
-                    return $dr->getFormEnable($options['filter']);
+                    return $dr->getFormEnable();
                 },
                 'required' => false,
                 'multiple' => true,
@@ -92,7 +92,7 @@ class MultipleType extends FhmType
                 'choice_label' => 'route',
                 'query_builder' => function () use ($options) {
                     $dr = $options['object_manager']->getCurrentRepository('FhmMediaBundle:MediaTag');
-                    return $dr->getFormEnable($options['filter']);
+                    return $dr->getFormEnable();
                 },
                 'required' => false,
                 'mapped' => false,
@@ -106,7 +106,7 @@ class MultipleType extends FhmType
                 'choice_label' => 'route',
                 'query_builder' => function () use ($options) {
                     $dr = $options['object_manager']->getCurrentRepository('FhmMediaBundle:MediaTag');
-                    return $dr->getFormEnable($options['filter']);
+                    return $dr->getFormEnable();
                 },
                 'multiple' => true,
                 'required' => false,
@@ -129,8 +129,8 @@ class MultipleType extends FhmType
                 'translation_domain' => 'FhmGalleryBundle',
                 'cascade_validation' => true,
                 'translation_route' => 'gallery.item',
-                'filter' => '',
                 'user_admin' => '',
+                'object_manager' => ''
             )
         );
     }

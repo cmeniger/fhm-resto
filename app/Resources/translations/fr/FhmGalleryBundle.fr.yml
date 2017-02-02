@@ -14,11 +14,23 @@ fhm:
                 breadcrumb:                     Album
                 create:
                     breadcrumb:                 Ajouter
+                update:
+                    breadcrumb:                 Modifier
+                detail:
+                    breadcrumb:                 Détail
+            video:
+                breadcrumb:                     Vidéo
+                create:
+                    breadcrumb:                 Ajouter
+                update:
+                    breadcrumb:                 Modifier
                 detail:
                     breadcrumb:                 Détail
                 update:
                     breadcrumb:                 Modifier
             item:
+                multiple:
+                    breadcrumb:                 Multiple
                 breadcrumb:                     Image
                 create:
                     breadcrumb:                 Ajouter

@@ -21,9 +21,9 @@ class FhmFhmExtension extends Extension
      */
     public function load(array $configs, ContainerBuilder $container)
     {
-        $this->selectDatabase($container);
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
+        $this->selectDatabase($container);
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
     }
@@ -33,13 +33,12 @@ class FhmFhmExtension extends Extension
      */
     public function selectDatabase(ContainerBuilder $container)
     {
-        switch ($container->getParameter('database_manager')) {
-            case 'odm':
-                $container->setAlias('fhm.database.manager', self::ODM);
-                break;
+        switch ($container->getParameter("kernel.environment")) {
             case 'orm':
                 $container->setAlias('fhm.database.manager', self::ORM);
                 break;
+            default:
+                $container->setAlias('fhm.database.manager', self::ODM);
         }
     }
 }

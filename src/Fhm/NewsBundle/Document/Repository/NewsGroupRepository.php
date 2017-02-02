@@ -5,6 +5,7 @@ use Fhm\FhmBundle\Document\Repository\FhmRepository;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Doctrine\ODM\MongoDB\UnitOfWork;
 use Doctrine\ODM\MongoDB\Mapping\ClassMetadata;
+use Fhm\NewsBundle\Document\News;
 
 /**
  * NewsGroupRepository
@@ -23,5 +24,23 @@ class NewsGroupRepository extends FhmRepository
     public function __construct(DocumentManager $dm, UnitOfWork $uow, ClassMetadata $class)
     {
         parent::__construct($dm, $uow, $class);
+    }
+
+
+    /**
+     * @return array
+     */
+    public function getListByNews($news)
+    {
+        $ret = [];
+        if ($news instanceof News) {
+            $builder = $this->createQueryBuilder()
+                ->field('news')->includesReferenceTo($news)
+                ->field('active')->equals(true)
+                ->field('delete')->equals(false);
+            $ret = $builder->getQuery()->execute();
+        }
+
+        return $ret;
     }
 }

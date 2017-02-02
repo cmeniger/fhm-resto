@@ -10,12 +10,12 @@
         <div class="row">
             <ul class="button-group">
                 <li>
-                    <a href="{{ instance.lastroute }}" class="button secondary"><i class="fa fa-angle-double-left"></i></a>
+                    <a href="#" onclick="window.history.go(-1); return false;" class="button secondary"><i class="fa fa-angle-double-left"></i></a>
                 </li>
             </ul>
         </div>
         {# Search #}
-        <form action="{{ path('fhm_news_group_lite',{id:document.getAlias()}) }}" method="POST" {{ form_start(form) }} >
+        <form action="{{ path('fhm_news_group_lite',{id:object.getAlias()}) }}" method="POST" {{ form_start(form) }} >
             <div class="row collapse">
                 <div class="small-6 columns">
                     {{ form_widget(form.search) }}

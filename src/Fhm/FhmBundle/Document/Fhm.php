@@ -578,6 +578,14 @@ class Fhm
     }
 
     /**
+     * @MongoDB\PreRemove()
+     */
+    public function preRemove()
+    {
+        return $this;
+    }
+
+    /**
      * @MongoDB\PrePersist()
      */
     public function prePersist()

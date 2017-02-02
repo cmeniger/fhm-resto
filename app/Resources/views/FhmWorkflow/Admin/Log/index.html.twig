@@ -35,8 +35,8 @@
 
 {% block content_data_body %}
     {{ parent() }}
-    <td>{{ document.getDateCreate()|localizeddate('short', 'short', app.request.locale) }}</td>
-    <td>{{ (instance.translation ~ '.type.' ~ document.getType())|trans }}</td>
-    <td>{{ document.getDescription()|raw }}</td>
-    <td>{{ document.getTask() ? document.getTask().getName() : '' }}</td>
+    <td>{{ object.getDateCreate()|localizeddate('short', 'short', app.request.locale) }}</td>
+    <td>{{ (instance.translation ~ '.type.' ~ object.getType())|trans }}</td>
+    <td>{{ object.getDescription()|raw }}</td>
+    <td>{{ object.getTask() ? object.getTask().getName() : '' }}</td>
 {% endblock %}

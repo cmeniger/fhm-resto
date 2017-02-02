@@ -36,19 +36,19 @@
 {% block content_data_action_links %}
     {{ parent() }}
     <li class="separator">
-        <a href="{{ path('fhm_api_workflow_task_status_wait', {id:document.getId()}) }}" title="{{ ('workflow.status.wait')|trans }}" onclick="return confirm('{{ ('workflow.events.confirm.status')|trans }}')"><i class="fa fa-fw fa-circle-o"></i> {{ ('workflow.status.wait')|trans }}
+        <a href="{{ path('fhm_api_workflow_task_status_wait', {id:object.getId()}) }}" title="{{ ('workflow.status.wait')|trans }}" onclick="return confirm('{{ ('workflow.events.confirm.status')|trans }}')"><i class="fa fa-fw fa-circle-o"></i> {{ ('workflow.status.wait')|trans }}
         </a>
     </li>
     <li>
-        <a href="{{ path('fhm_api_workflow_task_status_run', {id:document.getId()}) }}" title="{{ ('workflow.status.run')|trans }}" onclick="return confirm('{{ ('workflow.events.confirm.status')|trans }}')"><i class="fa fa-fw fa-play-circle-o"></i> {{ ('workflow.status.run')|trans }}
+        <a href="{{ path('fhm_api_workflow_task_status_run', {id:object.getId()}) }}" title="{{ ('workflow.status.run')|trans }}" onclick="return confirm('{{ ('workflow.events.confirm.status')|trans }}')"><i class="fa fa-fw fa-play-circle-o"></i> {{ ('workflow.status.run')|trans }}
         </a>
     </li>
     <li>
-        <a href="{{ path('fhm_api_workflow_task_status_finish', {id:document.getId()}) }}" title="{{ ('workflow.status.finish')|trans }}" onclick="return confirm('{{ ('workflow.events.confirm.status')|trans }}')"><i class="fa fa-fw fa-check-circle-o"></i> {{ ('workflow.status.finish')|trans }}
+        <a href="{{ path('fhm_api_workflow_task_status_finish', {id:object.getId()}) }}" title="{{ ('workflow.status.finish')|trans }}" onclick="return confirm('{{ ('workflow.events.confirm.status')|trans }}')"><i class="fa fa-fw fa-check-circle-o"></i> {{ ('workflow.status.finish')|trans }}
         </a>
     </li>
     <li>
-        <a href="{{ path('fhm_api_workflow_task_status_cancel', {id:document.getId()}) }}" title="{{ ('workflow.status.cancel')|trans }}" onclick="return confirm('{{ ('workflow.events.confirm.status')|trans }}')"><i class="fa fa-fw fa-ban"></i> {{ ('workflow.status.cancel')|trans }}
+        <a href="{{ path('fhm_api_workflow_task_status_cancel', {id:object.getId()}) }}" title="{{ ('workflow.status.cancel')|trans }}" onclick="return confirm('{{ ('workflow.events.confirm.status')|trans }}')"><i class="fa fa-fw fa-ban"></i> {{ ('workflow.status.cancel')|trans }}
         </a>
     </li>
 {% endblock %}
@@ -64,27 +64,27 @@
 
 {% block content_data_body %}
     {{ parent() }}
-    <td>{{ document.getParents()|length }}</td>
-    <td>{{ document.getSons()|length }}</td>
-    <td>{{ document.getStep() ? document.getStep().getOrder() ~ ' - ' ~ document.getStep().getName() : '' }}</td>
+    <td>{{ object.getParents()|length }}</td>
+    <td>{{ object.getSons()|length }}</td>
+    <td>{{ object.getStep() ? object.getStep().getOrder() ~ ' - ' ~ object.getStep().getName() : '' }}</td>
     <td>
-        {% if document.getStatus() == 3 %}
+        {% if object.getStatus() == 3 %}
             <span class="label alert radius">{{ ('workflow.status.cancel')|trans }}</span>
-        {% elseif document.getStatus() == 2 %}
+        {% elseif object.getStatus() == 2 %}
             <span class="label success radius">{{ ('workflow.status.finish')|trans }}</span>
-        {% elseif document.getStatus() == 1 %}
+        {% elseif object.getStatus() == 1 %}
             <span class="label warning radius">{{ ('workflow.status.run')|trans }}</span>
         {% else %}
             <span class="label secondary radius">{{ ('workflow.status.wait')|trans }}</span>
         {% endif %}
     </td>
     <td>
-        <span class="label {{ document.getAction() and document.getAction().getValidateCheck() ? 'success' : 'alert' }}" title="{{ ('workflow.status.validate')|trans }}"><i class="fa fa-fw fa-check"></i></span>
-        <span class="label {{ document.getAction() and document.getAction().getDismissCheck() ? 'success' : 'alert' }}" title="{{ ('workflow.status.dismiss')|trans }}"><i class="fa fa-fw fa-times"></i></span>
-        <span class="label {{ document.getAction() and document.getAction().getCancelCheck() ? 'success' : 'alert' }}" title="{{ ('workflow.status.cancel')|trans }}"><i class="fa fa-fw fa-ban"></i></span>
+        <span class="label {{ object.getAction() and object.getAction().getValidateCheck() ? 'success' : 'alert' }}" title="{{ ('workflow.status.validate')|trans }}"><i class="fa fa-fw fa-check"></i></span>
+        <span class="label {{ object.getAction() and object.getAction().getDismissCheck() ? 'success' : 'alert' }}" title="{{ ('workflow.status.dismiss')|trans }}"><i class="fa fa-fw fa-times"></i></span>
+        <span class="label {{ object.getAction() and object.getAction().getCancelCheck() ? 'success' : 'alert' }}" title="{{ ('workflow.status.cancel')|trans }}"><i class="fa fa-fw fa-ban"></i></span>
         <br>
-        <span class="label {{ document.getAction() and document.getAction().getUploadCheck() ? 'success' : 'alert' }}" title="{{ ('workflow.status.upload')|trans }}"><i class="fa fa-fw fa-upload"></i></span>
-        <span class="label {{ document.getAction() and document.getAction().getDownloadCheck() ? 'success' : 'alert' }}" title="{{ ('workflow.status.download')|trans }}"><i class="fa fa-fw fa-download"></i></span>
-        <span class="label {{ document.getAction() and document.getAction().getCommentCheck() ? 'success' : 'alert' }}" title="{{ ('workflow.status.comment')|trans }}"><i class="fa fa-fw fa-comment"></i></span>
+        <span class="label {{ object.getAction() and object.getAction().getUploadCheck() ? 'success' : 'alert' }}" title="{{ ('workflow.status.upload')|trans }}"><i class="fa fa-fw fa-upload"></i></span>
+        <span class="label {{ object.getAction() and object.getAction().getDownloadCheck() ? 'success' : 'alert' }}" title="{{ ('workflow.status.download')|trans }}"><i class="fa fa-fw fa-download"></i></span>
+        <span class="label {{ object.getAction() and object.getAction().getCommentCheck() ? 'success' : 'alert' }}" title="{{ ('workflow.status.comment')|trans }}"><i class="fa fa-fw fa-comment"></i></span>
     </td>
 {% endblock %}

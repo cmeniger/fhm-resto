@@ -54,7 +54,7 @@ class UpdateType extends FhmType
                 'choice_label' => 'name',
                 'query_builder' => function () use ($options) {
                     $dr = $options['object_manager']->getCurrentRepository('FhmCardBundle:Card');
-                    return $dr->getFormEnable($options['filter']);
+                    return $dr->getFormEnable();
                 },
                 'required' => false,
             )
@@ -67,7 +67,7 @@ class UpdateType extends FhmType
                 'choice_label' => 'name',
                 'query_builder' => function () use ($options) {
                     $dr = $options['object_manager']->getCurrentRepository('FhmCardBundle:CardProduct');
-                    return $dr->getFormEnable($options['filter']);
+                    return $dr->getFormEnable();
                 },
                 'multiple' => true,
                 'required' => false,
