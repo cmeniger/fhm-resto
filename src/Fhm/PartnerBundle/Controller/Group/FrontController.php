@@ -64,9 +64,9 @@ class FrontController extends FhmController
     public function detailAction($id)
     {
         $response = parent::detailAction($id);
-        $document = $response['document'];
+        $document = $response['object'];
         $form = $this->createForm(SearchType::class);
-        $form->setData($this->get('request_stack')->get($form->getName()));
+        $form->setData($this->get('request_stack')->getCurrentRequest()->get($form->getName()));
         $dataSearch = $form->getData();
         $documents = $this->get('fhm_tools')->dmRepository("FhmPartnerBundle:Partner")->getPartnerByGroupIndex(
             $document,

@@ -1,0 +1,22 @@
+{% trans_default_domain instance.domain %}
+{% extends "::FhmFhm/Front/index.html.twig" %}
+
+{% block content_link_data %}
+    {{ parent() }}
+    <li>
+        <a href="{{ path('fhm_admin_slider') }}" class="button small"><i class="fa fa-arrows-h"></i> {{ ('slider.admin.index.link')|trans }}
+        </a>
+    </li>
+{% endblock %}
+
+{% block content_data_header %}
+    <th>{{ (instance.translation ~ '.admin.index.table.header.image')|trans }}</th>
+    {{ parent() }}
+    <th>{{ (instance.translation ~ '.admin.index.table.header.sliders')|trans }}</th>
+{% endblock %}
+
+ {% block content_data_body %}
+     <td><img src="{{ asset(object.getImage()|media('xs')) }}" alt="{{ object.getName() }}" style="width:90px;"/></td>
+     {{ parent() }}
+     <td>{{ object.getSliders()|length }}</td>
+ {% endblock %}
