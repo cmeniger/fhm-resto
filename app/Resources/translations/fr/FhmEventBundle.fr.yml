@@ -13,7 +13,9 @@ fhm:
             group:
                 breadcrumb:                     Calendiers
                 create:
-                    breadcrumb:                  Ajouter
+                    breadcrumb:                 Ajouter
+                update:
+                    breadcrumb:                 Modifier
 project:
     breadcrump:                                 Accueil
     admin:
