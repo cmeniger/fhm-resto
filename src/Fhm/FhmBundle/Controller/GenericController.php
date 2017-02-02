@@ -98,24 +98,24 @@ abstract class GenericController extends Controller
      */
     public function redirectUrl($data, $object, $side = "admin")
     {
-        $redirect = $this->redirect($this->generateUrl(self::$source.'_admin_'.self::$route));
+        $redirect = $this->redirect($this->getUrl(self::$source.'_admin_'.self::$route));
         $redirect = isset($data['submitSave']) ? $this->redirect(
-            $this->generateUrl(
+            $this->getUrl(
                 self::$source.'_'.$side.'_'.self::$route.'_update',
                 array('id' => $object->getId())
             )
         ) : $redirect;
         $redirect = isset($data['submitDuplicate']) ? $this->redirect(
-            $this->generateUrl(
+            $this->getUrl(
                 self::$source.'_'.$side.'_'.self::$route.'_duplicate',
                 array('id' => $object->getId())
             )
         ) : $redirect;
         $redirect = isset($data['submitNew']) ? $this->redirect(
-            $this->generateUrl(self::$source.'_'.$side.'_'.self::$route.'_create')
+            $this->getUrl(self::$source.'_'.$side.'_'.self::$route.'_create')
         ) : $redirect;
         $redirect = isset($data['submitConfig']) ? $this->redirect(
-            $this->generateUrl(
+            $this->getUrl(
                 self::$source.'_'.$side.'_'.self::$route.'_detail',
                 array('id' => $object->getId())
             )
