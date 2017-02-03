@@ -26,6 +26,14 @@ fhm:
                     breadcrumb:                 Modifier
                 detail:
                     breadcrumb:                 Détails
+            comment:
+                breadcrumb:                     Workflow Commentaire
+                create:
+                    breadcrumb:                 Ajouter un workflow commentaire
+                update:
+                    breadcrumb:                 Modifier
+                detail:
+                    breadcrumb:                 Détails
             step:
                 breadcrumb:                     Workflow Etape
                 create:
@@ -1345,7 +1353,7 @@ workflow:
     comment:
         admin:
             index:
-                title:                          Gestion des workflows ':' commentaires
+                title:                          'Gestion des workflows : commentaires'
                 link:                           Commentaires
                 breadcrumb:                     Commentaires
                 nodata:                         Aucune donnée
