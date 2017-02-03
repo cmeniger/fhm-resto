@@ -4,7 +4,6 @@ namespace Fhm\UserBundle\Controller;
 use Fhm\FhmBundle\Controller\RefAdminController as FhmController;
 use Fhm\FhmBundle\Form\Handler\Admin\CreateHandler;
 use Fhm\FhmBundle\Form\Handler\Admin\UpdateHandler;
-use Fhm\UserBundle\Document\User;
 use Fhm\UserBundle\Form\Handler\Admin\PasswordHandler;
 use Fhm\UserBundle\Form\Type\Admin\CreateType;
 use Fhm\UserBundle\Form\Type\Admin\PasswordType;
@@ -31,7 +30,6 @@ class AdminController extends FhmController
         self::$source = "fhm";
         self::$domain = "FhmUserBundle";
         self::$translation = "user";
-        self::$class = User::class;
         self::$route = 'user';
         self::$form = new \stdClass();
         self::$form->createType = CreateType::class;
@@ -106,8 +104,8 @@ class AdminController extends FhmController
      */
     public function detailAction($id)
     {
-        $document = $this->get('fhm_tools')->dmRepository(self::$repository)->find($id);
-        $form = $this->createForm(PasswordType::class, $document);
+        $object = $this->get('fhm_tools')->dmRepository(self::$repository)->find($id);
+        $form = $this->createForm(PasswordType::class, $object);
 
         return array_merge(array('formPassword' => $form->createView()), parent::detailAction($id));
     }
@@ -199,13 +197,13 @@ class AdminController extends FhmController
      */
     public function rolesAction(Request $request)
     {
-        $document = $this->get('fhm_tools')->dmRepository(self::$repository)->find($request->get('id'));
+        $object = $this->get('fhm_tools')->dmRepository(self::$repository)->find($request->get('id'));
         $roles = json_decode($request->get('list'));
-        $document->setRoles(array());
+        $object->setRoles(array());
         foreach ($roles as $role) {
-            $document->addRole($role->id);
+            $object->addRole($role->id);
         }
-        $this->get('fhm_tools')->dmPersist($document);
+        $this->get('fhm_tools')->dmPersist($object);
 
         return new Response();
     }
@@ -221,15 +219,15 @@ class AdminController extends FhmController
      */
     public function passwordAction(Request $request, $id)
     {
-        $document = $this->get('fhm_tools')->dmRepository(self::$repository)->find($id);
+        $object = $this->get('fhm_tools')->dmRepository(self::$repository)->find($id);
         $classHandler = PasswordHandler::class;
-        $form = $this->createForm(PasswordType::class, $document);
+        $form = $this->createForm(PasswordType::class, $object);
         $handler = new $classHandler($form, $request);
         $process = $handler->process();
         if ($process) {
             // Persist
             $userManager = $this->get('fos_user.user_manager');
-            $userManager->updateUser($document);
+            $userManager->updateUser($object);
             // Message
             $this->get('session')->getFlashBag()->add(
                 'notice',

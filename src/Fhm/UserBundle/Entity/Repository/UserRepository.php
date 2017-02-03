@@ -32,13 +32,15 @@ class UserRepository extends FhmRepository
      */
     public function getAdminCount($search = "", $roleSuperAdmin = false)
     {
-        $builder = ($search) ? $this->search($search) : $this->createQueryBuilder();
+        $builder = ($search) ? $this->search($search) : $this->createQueryBuilder('a');
+        $builder->where($builder->expr()->notIn('a.roles', ['ROLE_SUPER_ADMIN']));
+        if ($this->parent) {
+            $builder->andWhere('a.parent IN :(parent)')->setParameter('parent', [0, null]);
+        }
         // RoleSuperAdmin
         if (!$roleSuperAdmin) {
-            $builder->field('delete')->equals(false);
+            $builder->andWhere('a.delete = :bool')->setParameter('bool', false);
         }
-        // Common
-        $builder->field('roles')->notIn(array('ROLE_SUPER_ADMIN'));
 
         return count(
             $builder->getQuery()->execute()->toArray()
@@ -47,27 +49,21 @@ class UserRepository extends FhmRepository
 
     /**
      * @param string $search
-     * @param int $page
-     * @param int $count
-     *
      * @return mixed
-     * @throws \Doctrine\ORM\ORMException
      */
-    public function getFrontIndex($search = "", $page = 1, $count = 5)
+    public function getFrontIndex($search = "")
     {
-        $builder = (($page > 0 && $count > 0) && $search) ? $this->search($search) : $this->createQueryBuilder();
-        // Pagination
-        if ($page > 0 && $count > 0) {
-            $builder->limit($count);
-            $builder->skip(($page - 1) * $count);
-        }
+        $builder = ($search) ? $this->search($search) : $this->createQueryBuilder('a');
         // Common
-        $builder->field('roles')->notIn(array('ROLE_SUPER_ADMIN'));
-        $builder->field('active')->equals(true);
-        $builder->field('delete')->equals(false);
-        $this->builderSort($builder);
+        $builder->where($builder->expr()->notIn('a.roles', ['ROLE_SUPER_ADMIN']));
+        if ($this->parent) {
+            $builder->andWhere('a.parent IN :(parent)')->setParameter('parent', [0, null]);
+        }
+        $builder->andWhere('a.delete = :bool1')->setParameter('bool1', false);
+        $builder->andWhere('a.active = :bool2')->setParameter('bool2', true);
+        $builder->orderBy('a.username', 'ASC');
 
-        return $builder->getQuery()->execute()->toArray();
+        return $builder->getQuery();
     }
 
     /**
@@ -78,11 +74,14 @@ class UserRepository extends FhmRepository
      */
     public function getFrontCount($search = "")
     {
-        $builder = ($search) ? $this->search($search) : $this->createQueryBuilder();
+        $builder = ($search) ? $this->search($search) : $this->createQueryBuilder('a');
         // Common
-        $builder->field('roles')->notIn(array('ROLE_SUPER_ADMIN'));
-        $builder->field('active')->equals(true);
-        $builder->field('delete')->equals(false);
+        $builder->where($builder->expr()->notIn('a.roles', ['ROLE_SUPER_ADMIN']));
+        if ($this->parent) {
+            $builder->andWhere('a.parent IN :(parent)')->setParameter('parent', [0, null]);
+        }
+        $builder->andWhere('a.delete = :bool1')->setParameter('bool1', false);
+        $builder->andWhere('a.active = :bool2')->setParameter('bool2', true);
 
         return count(
             $builder->getQuery()->execute()->toArray()
@@ -96,7 +95,7 @@ class UserRepository extends FhmRepository
      */
     public function getExport($group = "")
     {
-        return $this->createQueryBuilder()->sort('username')->getQuery()->execute()->toArray();
+        return $this->createQueryBuilder('a')->orderBy('a.username')->getQuery()->execute()->toArray();
     }
 
     /**
@@ -108,9 +107,9 @@ class UserRepository extends FhmRepository
      */
     public function getImport($data, $index = null)
     {
-        $qb = $this->createQueryBuilder();
-        $qb->addOr($qb->expr()->field('usernameCanonical')->equals(strtolower($data['username'])));
-        $qb->addOr($qb->expr()->field('emailCanonical')->equals(strtolower($data['email'])));
+        $qb = $this->createQueryBuilder('a');
+        $qb->where('usernameCanonical LIKE LOWER(:username)')->setParameter('username', strtolower($data['username']));
+        $qb->where('emailCanonical LIKE LOWER(:email)')->setParameter('email', strtolower($data['email']));
         $results = $qb->getQuery()->execute()->toArray();
         if (count($results) > 1) {
             return 'error';
