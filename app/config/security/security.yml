@@ -1,3 +1,4 @@
+#Common security configuration
 security:
     role_hierarchy:
         ROLE_MODERATOR:                     ROLE_USER

@@ -1,23 +1,27 @@
 # This file is auto-generated during the composer install
 parameters:
+    #DATABASE
     database_driver: pdo_mysql
     database_host: docker_fhmmysql_1
-    database_port: null
-    database_name: fhmtoolsv2
+    database_port: 3306
+    database_name: fhm-tools-v2
     database_user: root
     database_password: null
-    database_manager: %kernel.environment%
+    database_manager: '%kernel.environment%'
+    #MAILER
     mailer_transport: smtp
     mailer_host: docker_fhmmailer_1
     mailer_port: 1025
     mailer_user: null
     mailer_password: null
     mailer_encryption: null
+    #SYMFONY
     locale: fr
     secret: ThisTokenIsNotSoSecretChangeItFHMT0Ol$
     debug_toolbar: true
     debug_redirects: false
     use_assetic_controller: true
+    #MONGO
     mongodb_server: 'mongodb://docker_fhmmongo_1:27017'
     mongodb_database: fhm-tools-v2
     mongodb_username: null
@@ -26,12 +30,14 @@ parameters:
     mongo.session.options:
         database: fhm-tools_session
         collection: session
+    #OAUTH
     oauth.facebook.id: 'null'
     oauth.facebook.secret: 'null'
     oauth.twitter.id: 'null'
     oauth.twitter.secret: 'null'
     oauth.google.id: 'null'
     oauth.google.secret: 'null'
+    #RECAPTCHA
     recaptcha_public_key: 6LfZ9SQTAAAAAKHbN5Sp8eaEZrX7OIA5m8S_vvGR
     recaptcha_private_key: 6LfZ9SQTAAAAAEIP0FVscmWH3U3VUE5wmrJnmtJy
     aws:

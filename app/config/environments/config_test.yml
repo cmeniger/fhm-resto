@@ -2,7 +2,7 @@ parameters:
     mongodb_server: 'mongodb://localhost:27017'
 
 imports:
-    - { resource: config_dev.yml }
+    - { resource: 'config_dev.yml' }
 
 framework:
     test: ~

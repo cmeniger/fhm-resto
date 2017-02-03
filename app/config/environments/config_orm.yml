@@ -1,6 +1,6 @@
 imports:
     - { resource: 'config.yml' }
-    - { resource: 'security_orm.yml' }
+    - { resource: '../security/security_orm.yml' }
 
 # FOSUser
 fos_user:
@@ -36,7 +36,7 @@ fos_user:
 #profiler
 framework:
     router:
-        resource: "%kernel.root_dir%/config/routing_dev.yml"
+        resource: "%kernel.root_dir%/config/routing/routing_dev.yml"
         strict_requirements: true
     profiler: { only_exceptions: false }
 
