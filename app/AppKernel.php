@@ -66,7 +66,7 @@ class AppKernel extends Kernel
             $bundles[] = new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle();
         }
         if ($this->getEnvironment() == 'odm') {
-            new Doctrine\Bundle\MongoDBBundle\DoctrineMongoDBBundle();
+            $bundles[] = new Doctrine\Bundle\MongoDBBundle\DoctrineMongoDBBundle();
         }
 
         return $bundles;
