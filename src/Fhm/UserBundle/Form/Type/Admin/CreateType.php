@@ -7,6 +7,7 @@ use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -35,6 +36,19 @@ class CreateType extends GeolocationType
             'email',
             EmailType::class,
             array('label' => $options['translation_route'].'.admin.create.form.email')
+        )->add(
+            'plainPassword',
+            RepeatedType::class,
+            array(
+                'type' => \Symfony\Component\Form\Extension\Core\Type\PasswordType::class,
+                'first_options' => array(
+                    'label' => 'user.admin.detail.password.password',
+                ),
+                'second_options' => array(
+                    'label' => 'user.admin.detail.password.password_confirmation',
+                ),
+                'invalid_message' => 'fos_user.password.mismatch',
+            )
         )->add(
             'first_name',
             TextType::class,
@@ -72,8 +86,8 @@ class CreateType extends GeolocationType
             ChoiceType::class,
             array(
                 'choices' => array(
-                    'fhm.sex.m'=>'m',
-                    'fhm.sex.f'=>'f',
+                    'fhm.sex.m' => 'm',
+                    'fhm.sex.f' => 'f',
                 ),
                 'label' => 'fhm.sex.label',
                 'translation_domain' => 'FhmFhmBundle',
@@ -179,12 +193,12 @@ class CreateType extends GeolocationType
     {
         $resolver->setDefaults(
             array(
-                'data_class' => 'Fhm\UserBundle\Document\User',
+                'data_class' => '',
                 'translation_domain' => 'FhmUserBundle',
                 'cascade_validation' => true,
                 'translation_route' => 'user',
                 'user_admin' => '',
-                'object_manager'=>''
+                'object_manager' => '',
             )
         );
     }

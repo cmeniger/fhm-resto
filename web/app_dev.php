@@ -28,7 +28,7 @@ if (isset($_SERVER['HTTP_CLIENT_IP']) || isset($_SERVER['HTTP_X_FORWARDED_FOR'])
 $loader = require __DIR__.'/../app/autoload.php';
 Debug::enable();
 if (getenv('DATABASE_MANAGER') == false) {
-    putenv('DATABASE_MANAGER=odm');
+    putenv('DATABASE_MANAGER=orm');
 }
 $kernel = new AppKernel(getenv('DATABASE_MANAGER'), true);
 $kernel->loadClassCache();

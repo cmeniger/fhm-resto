@@ -16,6 +16,10 @@
                 {{ form_errors(form.email) }}
                 {{ form_widget(form.email) }}
             </div>
+            <div class="row">
+                {{ form_errors(form.plainPassword) }}
+                {{ form_widget(form.plainPassword) }}
+            </div>
         </fieldset>
         <fieldset>
             <legend>{{ (instance.translation ~ '.admin.create.form.fieldset.informations')|trans }}</legend>

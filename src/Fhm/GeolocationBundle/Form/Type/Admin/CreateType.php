@@ -71,7 +71,7 @@ class CreateType extends FhmType
     {
         $resolver->setDefaults(
             array(
-                'data_class' => 'Fhm\GeolocationBundle\Document\Geolocation',
+                'data_class' => 'FhmGeolocationBundle:Geolocation',
                 'translation_domain' => 'FhmGeolocationBundle',
                 'cascade_validation' => true,
                 'translation_route' => 'gealocation',

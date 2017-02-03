@@ -70,8 +70,8 @@ class UpdateType extends GeolocationType
             ChoiceType::class,
             array(
                 'choices' => array(
-                    'fhm.sex.m'=>'m',
-                    'fhm.sex.f'=>'f',
+                    'fhm.sex.m' => 'm',
+                    'fhm.sex.f' => 'f',
                 ),
                 'label' => 'fhm.sex.label',
                 'translation_domain' => 'FhmFhmBundle',
@@ -177,13 +177,13 @@ class UpdateType extends GeolocationType
     {
         $resolver->setDefaults(
             array(
-                'data_class' => 'Fhm\UserBundle\Document\User',
+                'data_class' => 'FhmUserBundle:User',
                 'translation_domain' => 'FhmUserBundle',
                 'cascade_validation' => true,
                 'translation_route' => 'user',
                 'filter' => '',
                 'user_admin' => '',
-                'object_manager'=>''
+                'object_manager' => '',
             )
         );
     }
