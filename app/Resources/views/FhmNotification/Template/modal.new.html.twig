@@ -8,10 +8,10 @@
             {{ 'notification.modal.all'|trans }}
         </a>
     </div>
-    {% if documents %}
-        {% for document in documents %}
+    {% if objects %}
+        {% for object in objects %}
             <div class="item">
-                {{ render(path('fhm_api_notification_detail', {id:document.getId()})) }}
+                {{ render(path('fhm_api_notification_detail', {id:object.getId()})) }}
             </div>
         {% endfor %}
     {% else %}

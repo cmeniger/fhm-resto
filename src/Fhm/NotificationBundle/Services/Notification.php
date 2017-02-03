@@ -1,9 +1,6 @@
 <?php
 namespace Fhm\NotificationBundle\Services;
 
-use Fhm\Manager\AbstractManager;
-use Fhm\UserBundle\Document\User;
-
 /**
  * Class Notification
  *
@@ -17,22 +14,22 @@ class Notification
      * Notification constructor.
      * @param $dm
      */
-    public function __construct(AbstractManager $dm)
+    public function __construct($dm)
     {
         $this->dm = $dm;
     }
 
     /**
-     * @param \Fhm\UserBundle\Document\User $user
+     * @param $user
      * @param string $content
      * @param string $template
      * @param array $parameter
      *
      * @return $this
      */
-    public function create(User $user, $content = '', $template = 'default', $parameter = array())
+    public function create($user, $content = '', $template = 'default', $parameter = array())
     {
-        $objectName = $this->dm->getCurrentModelName();
+        $objectName = $this->dm->getCurrentModelName('NotificationBundle:Notification');
         $document = new $objectName;
         $document->setUserCreate($user);
         $document->setUser($user);

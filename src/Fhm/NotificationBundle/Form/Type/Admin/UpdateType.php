@@ -53,7 +53,7 @@ class UpdateType extends FhmType
     {
         $resolver->setDefaults(
             array(
-                'data_class' => 'Fhm\NotificationBundle\Document\Notification',
+                'data_class' => 'FhmNotificationBundle:Notification',
                 'translation_domain' => 'FhmNotificationBundle',
                 'cascade_validation' => true,
                 'translation_route' => 'notification',

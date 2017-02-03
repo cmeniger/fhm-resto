@@ -2,7 +2,6 @@
 namespace Fhm\NotificationBundle\Controller;
 
 use Fhm\FhmBundle\Controller\RefFrontController as FhmController;
-use Fhm\NotificationBundle\Document\Notification;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -24,7 +23,6 @@ class FrontController extends FhmController
         self::$source = "fhm";
         self::$domain = "FhmNotificationBundle";
         self::$translation = "notification";
-        self::$class = Notification::class;
         self::$route = "notification";
     }
 

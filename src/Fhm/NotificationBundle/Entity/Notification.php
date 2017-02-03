@@ -177,8 +177,6 @@ class Notification extends Fhm
         $this->sort_user = $this->user->getUsernameCanonical();
         $this->sort_data = $this->user->getEmailCanonical().';'.$this->user->getUsernameCanonical(
             ).';'.$this->user->getFirstName().';'.$this->user->getLastName();
-
-        return parent::sortUpdate();
     }
 
     /**
@@ -187,8 +185,6 @@ class Notification extends Fhm
     public function prePersist()
     {
         $this->name = $this->user->getUsernameCanonical();
-
-        return parent::prePersist();
     }
 
     /**
@@ -197,7 +193,5 @@ class Notification extends Fhm
     public function preUpdate()
     {
         $this->name = $this->user->getUsernameCanonical();
-
-        return parent::preUpdate();
     }
 }

@@ -33,12 +33,12 @@ class NotificationRepository extends FhmRepository
         if (!$user) {
             return 0;
         }
-        $builder = $this->createQueryBuilder();
-        $builder->field('user.id')->equals($user->getId());
-        $builder->field('new')->equals(true);
-        $builder->field('active')->equals(true);
-        $builder->field('delete')->equals(false);
-        $builder->sort('date_create', 'desc');
+        $builder = $this->createQueryBuilder('a');
+        $builder->where('a.user = :userid')->setParameter('useid', $user->getId());
+        $builder->andWhere('a.new = :boolNew')->setParameter('boolNew', true);
+        $builder->andWhere('a.active = :activeStatus')->setParameter('activeStatus', true);
+        $builder->andWhere('a.delete = :deleteStatus')->setParameter('deleteStatus', false);
+        $builder->orderBy('a.date_create', 'DESC');
 
         return $builder->getQuery()->execute()->toArray();
     }
@@ -54,11 +54,14 @@ class NotificationRepository extends FhmRepository
         if (!$user) {
             return 0;
         }
-        $builder = $this->createQueryBuilder();
-        $builder->field('user.id')->equals($user->getId());
-        $builder->field('active')->equals(true);
-        $builder->field('delete')->equals(false);
-        $builder->sort('date_create', 'desc');
+        $builder = $this->_em->createQueryBuilder();
+        $builder->select('a');
+        $builder->from($this->_entityName, 'a');
+        $builder->leftJoin('FhmUserBundle:User', 'u');
+        $builder->where('u.id = :userid')->setParameter('useid', $user->getId());
+        $builder->andWhere('a.active = :activeStatus')->setParameter('activeStatus', true);
+        $builder->andWhere('a.delete = :deleteStatus')->setParameter('deleteStatus', false);
+        $builder->orderBy('a.date_create', 'DESC');
 
         return $builder->getQuery()->execute()->toArray();
     }
@@ -74,18 +77,17 @@ class NotificationRepository extends FhmRepository
         if (!$user) {
             return 0;
         }
-        $builder = $this->_em->createQueryBuilder()
-            ->select('count(a)')
-            ->from($this->_entityName, 'a')
-            ->leftJoin('FhmUserBundle:User', 'u')
-            ->where('u.id = :userid')
-            ->andWhere('a.new = true')
-            ->andWhere('a.active = true')
-            ->andWhere('a.delete = false')
-            ->setParameter('userid', $user->getId())
-        ;
+        $builder = $this->_em->createQueryBuilder();
+        $builder->select('count(a)');
+        $builder->from($this->_entityName, 'a');
+        $builder->leftJoin('FhmUserBundle:User', 'u');
+        $builder->where('u.id = :userid');
+        $builder->andWhere('a.new = true');
+        $builder->andWhere('a.active = true');
+        $builder->andWhere('a.delete = false');
+        $builder->setParameter('userid', $user->getId());
+        $result = $builder->getQuery()->getSingleResult();
 
-        $result =  $builder->getQuery()->getSingleResult();
         return array_shift($result);
     }
 
@@ -100,11 +102,14 @@ class NotificationRepository extends FhmRepository
         if (!$user) {
             return 0;
         }
-        $builder = $this->createQueryBuilder();
-        $builder->field('user.id')->equals($user->getId());
-        $builder->field('active')->equals(true);
-        $builder->field('delete')->equals(false);
+        $builder = $this->_em->createQueryBuilder();
+        $builder->select('count(a.id)');
+        $builder->from($this->_entityName, 'a');
+        $builder->leftJoin('FhmUserBundle:User', 'u');
+        $builder->where('u.id = :userid')->setParameter('useid', $user->getId());
+        $builder->andWhere('a.active = :activeStatus')->setParameter('activeStatus', true);
+        $builder->andWhere('a.delete = :deleteStatus')->setParameter('deleteStatus', false);
 
-        return $builder->count()->getQuery()->execute();
+        return $builder->getQuery()->execute();
     }
 }

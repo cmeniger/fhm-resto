@@ -2,7 +2,6 @@
 namespace Fhm\NotificationBundle\Controller;
 
 use Fhm\FhmBundle\Controller\RefAdminController as FhmController;
-use Fhm\NotificationBundle\Document\Notification;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
@@ -26,7 +25,6 @@ class AdminController extends FhmController
         self::$source = "fhm";
         self::$domain = "FhmNotificationBundle";
         self::$translation = "notification";
-        self::$class = Notification::class;
         self::$route = "notification";
     }
 
