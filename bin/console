@@ -18,6 +18,7 @@ $loader = require __DIR__.'/../app/autoload.php';
 
 $input = new ArgvInput();
 $env = $input->getParameterOption(['--env', '-e'], getenv('SYMFONY_ENV') ?: 'dev');
+putenv("DATABASE_MANAGER=$env");
 $debug = getenv('SYMFONY_DEBUG') !== '0' && !$input->hasParameterOption(['--no-debug', '']) && $env !== 'prod';
 
 if ($debug) {
