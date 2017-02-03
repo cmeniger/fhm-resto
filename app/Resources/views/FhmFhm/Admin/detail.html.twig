@@ -227,12 +227,11 @@
 
     {# Admin #}
     {% block content_admin %}
-        {% if instance.user is defined and instance.user.admin %}
+        {% if is_granted("ROLE_ADMIN") %}
             <div class="row">
                 <h2 id="anchor-admin-tools">{{ (instance.translation ~ '.admin.detail.admin.title')|trans }}</h2>
             </div>
             {% block content_admin_data %}
-
             {% endblock %}
         {% endif %}
     {% endblock %}

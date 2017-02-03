@@ -62,7 +62,7 @@ class PasswordType extends FhmType
     {
         $resolver->setDefaults(
             array(
-                'data_class' => 'Fhm\UserBundle\Document\User',
+                'data_class' => 'FhmUserBundle:User',
                 'translation_domain' => 'FhmUserBundle',
                 'cascade_validation' => true,
                 'translation_route'=>'user',

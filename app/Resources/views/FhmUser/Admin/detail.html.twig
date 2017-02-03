@@ -75,47 +75,35 @@
             {% if object.getShare() and not object.hasGrouping(instance.grouping.used) %}
                 <span class="status regular radius label">{{ ('fhm.status.share')|trans({}, 'FhmFhmBundle') }}</span>
             {% endif %}
-            {#{% if object.isLocked() %}#}
-                {#<span class="status alert radius label">{{ (instance.translation ~ '.status.locked')|trans }}</span>#}
-            {#{% endif %}#}
             {% if not object.isAccountNonExpired() %}
                 <span class="status alert radius label">{{ (instance.translation ~ '.status.expired')|trans }}</span>
             {% endif %}
         </td>
     </tr>
-    {#<tr>#}
-        {#<td><strong>{{ grouping_name is defined ? grouping_name : (instance.translation ~ '.admin.detail.data.grouping')|trans }}</strong></td>#}
-        {#<td>#}
-            {#{% for data in object.getGrouping() %}#}
-                {#<span class="status {{ data == instance.grouping.current ? 'success' : 'warning' }} radius label">{{ data }}</span>#}
-            {#{% endfor %}#}
-        {#</td>#}
-    {#</tr>#}
 {% endblock %}
 
 {% block content_admin_data %}
     {{ parent() }}
     <div class="row">
-        {{
-        macroList.admin
+        {{ macroList.admin
         (
-            object,
-            {'ROLE_USER':'ROLE_USER','ROLE_MEMBER':'ROLE_MEMBER','ROLE_MODERATOR':'ROLE_MODERATOR','ROLE_ADMIN':'ROLE_ADMIN'},
-            object.getRolesList(),
-            '',
-            'fhm_admin_' ~ instance.route ~ '_roles',
-            (instance.translation ~ '.admin.detail.roles.title')|trans,
-            (instance.translation ~ '.admin.detail.roles.list1')|trans,
-            (instance.translation ~ '.admin.detail.roles.list2')|trans,
-            2,
-            instance
-        )
-        }}
+        object,
+        switch_roles ,
+        object.getRolesList(),
+        '',
+        'fhm_admin_' ~ instance.route ~ '_roles',
+        (instance.translation ~ '.admin.detail.roles.title')|trans,
+        (instance.translation ~ '.admin.detail.roles.list1')|trans,
+        (instance.translation ~ '.admin.detail.roles.list2')|trans,
+        2,
+        instance
+        ) }}
     </div>
     <div class="row">
         <fieldset>
             <legend>{{ (instance.translation ~ '.admin.detail.password.title')|trans }}</legend>
-            <form action="{{ path('fhm_admin_' ~ instance.route ~ '_password', {'id': object.getId()}) }}" method="POST" {{ form_start(formPassword) }}>
+            <form action="{{ path('fhm_admin_' ~ instance.route ~ '_password', {'id': object.getId()}) }}"
+                  method="POST" }}>
                 <div class="row">
                     <div class="large-12 columns">
                         {{ form_errors(formPassword) }}

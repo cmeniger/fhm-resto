@@ -48,6 +48,12 @@ twig:
         project: "%project%"
         mailer: "%fhm_mailer%"
         oauth_facebook_id: "%oauth.facebook.id%"
+        switch_roles:
+            ROLE_USER: 'ROLE_USER'
+            ROLE_MEMBER: 'ROLE_MEMBER'
+            ROLE_MODERATOR: 'ROLE_MODERATOR'
+            ROLE_ADMIN: 'ROLE_ADMIN'
+
         instance: "@fhm.instance.data"
 
 # Doctrine Configuration (used to access databases and manipulate their information)
