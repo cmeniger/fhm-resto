@@ -5,7 +5,6 @@ use Fhm\FhmBundle\Form\Type\Admin\CreateType as FhmType;
 use Fhm\FhmBundle\Manager\TypeManager;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Fhm\MediaBundle\Form\Type\MediaType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -107,7 +106,7 @@ class CreateType extends FhmType
             TypeManager::getType($options['object_manager']->getDBDriver()),
             array(
                 'label' => $options['translation_route'].'.admin.create.form.background',
-                'class' => 'FhmMediaBundle:Media  ',
+                'class' => 'FhmMediaBundle:Media',
                 'query_builder' => function () use ($options) {
                     $dr = $options['object_manager']->getCurrentRepository('FhmMediaBundle:Media');
 
@@ -228,7 +227,7 @@ class CreateType extends FhmType
                 'cascade_validation' => true,
                 'translation_route' => 'site',
                 'user_admin' => '',
-                'object_manager'=>'',
+                'object_manager' => '',
             )
         );
     }
