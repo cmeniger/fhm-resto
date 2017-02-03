@@ -293,7 +293,8 @@ class AdminController extends FhmController
         $object->setParent($datas['parent']);
         $object->setDescription($datas['description']);
         $object->setIcon($datas['icon']);
-        $object->setAlias($this->getAlias($object->getId(), $object->getName(), self::$repository));
+        $object->setActive(true);
+        $object->setDelete(false);
         $objectParent->addChild($object);
         $this->get('fhm_tools')->dmPersist($object);
         $this->get('fhm_tools')->dmPersist($objectParent);

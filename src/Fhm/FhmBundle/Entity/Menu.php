@@ -14,14 +14,19 @@ use Doctrine\ORM\Mapping as ORM;
 class Menu extends Fhm
 {
     /**
-     * @ORM\OneToMany(targetEntity="Fhm\FhmBundle\Entity\Menu", cascade={"all"}, mappedBy="parent")
+     * @ORM\OneToMany(targetEntity="Fhm\FhmBundle\Entity\Menu", cascade={"all"}, mappedBy="parentObject")
      */
     protected $childs;
 
     /**
      * @ORM\ManyToOne(targetEntity="Fhm\FhmBundle\Entity\Menu", cascade={"all"}, inversedBy="childs")
      */
-    protected $parent;
+    protected $parentObject;
+
+    /**
+     * @ORM\Column(type="string", length=100)
+     */
+    protected $parent = null;
 
     /**
      * @ORM\Column(type="string", length=100)

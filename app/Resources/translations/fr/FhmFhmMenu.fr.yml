@@ -3,9 +3,9 @@ fhm:
     admin:
         breadcrumb:                             Admin
         menu:
-            breadcrumb:                         Article
+            breadcrumb:                         Menu
             create:
-                breadcrumb:                     Ajouter un article
+                breadcrumb:                     Ajouter un menu
             update:
                 breadcrumb:                     Modifier
             detail:
@@ -15,9 +15,9 @@ project:
     admin:
         breadcrump:                             Admin
         menu:
-            breadcrump:                         Article
+            breadcrump:                         Menu
             create:
-                breadcrumb:                     Ajouter un article
+                breadcrumb:                     Ajouter un menu
             update:
                 breadcrumb:                     Modifier
             detail:
