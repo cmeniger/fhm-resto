@@ -1,15 +1,64 @@
 imports:
-    - { resource: config.yml }
+    - { resource: 'config.yml' }
+    - { resource: 'security_odm.yml' }
 
-#framework:
-#    validation:
-#        cache: apc
 
-#doctrine:
-#    orm:
-#        metadata_cache_driver: apc
-#        result_cache_driver: apc
-#        query_cache_driver: apc
+
+doctrine_mongodb:
+    connections:
+        default:
+            server: "%mongodb_server%"
+            options:
+                username: "%mongodb_username%"
+                password: "%mongodb_password%"
+                replicaSet: "%mongodb_replicaSet%"
+    default_database: "%mongodb_database%"
+    document_managers:
+        default:
+            auto_mapping: true
+
+# FOSUser
+fos_user:
+    db_driver: mongodb
+    firewall_name: main
+    user_class: Fhm\UserBundle\Document\User
+    from_email:
+        address:     "%fhm_mailer.noreply%"
+        sender_name: noreply
+    service:
+        mailer: fhm_user.mailer.twig_swift
+    resetting:
+        form:
+            type: Fhm\UserBundle\Form\Type\Front\ResettingType
+        email:
+            from_email:
+                address:        "%fhm_mailer.noreply%"
+                sender_name:    noreply
+    registration:
+        form:
+            type: Fhm\UserBundle\Form\Type\Front\CreateType
+        confirmation:
+            enabled: true
+            from_email:
+                address:        "%fhm_mailer.noreply%"
+                sender_name:    Registration
+    profile:
+        form:
+            type: Fhm\UserBundle\Form\Type\Front\UpdateType
+    change_password:
+        form:
+            type: Fhm\UserBundle\Form\Type\Front\PasswordType
+
+#profiler
+framework:
+    router:
+        resource: "%kernel.root_dir%/config/routing_dev.yml"
+        strict_requirements: true
+    profiler: { only_exceptions: false }
+
+web_profiler:
+    toolbar: '%kernel.debug%'
+    intercept_redirects: false
 
 framework:
     router:
@@ -24,12 +73,9 @@ web_profiler:
 monolog:
     handlers:
         main:
-            type:         fingers_crossed
-            action_level: error
-            handler:      nested
-        nested:
-            type:  stream
-            path:  "%kernel.logs_dir%/%kernel.environment%.log"
-            level: debug
+            type:   stream
+            path:   "%kernel.logs_dir%/%kernel.environment%.log"
+            level:  info
         console:
-            type:  console
+            type:   console
+            bubble: false

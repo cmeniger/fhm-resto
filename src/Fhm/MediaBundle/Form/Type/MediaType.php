@@ -1,7 +1,6 @@
 <?php
 namespace Fhm\MediaBundle\Form\Type;
 
-use Doctrine\Bundle\MongoDBBundle\Form\Type\DocumentType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\Form\FormInterface;
@@ -16,13 +15,6 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  */
 class MediaType extends AbstractType
 {
-    /**
-     * MediaType constructor.
-     */
-    public function __construct()
-    {
-    }
-
     /**
      * @param OptionsResolver $resolver
      */

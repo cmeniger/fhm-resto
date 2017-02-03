@@ -1,5 +1,4 @@
 <?php
-
 use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\Config\Loader\LoaderInterface;
 
@@ -24,7 +23,6 @@ class AppKernel extends Kernel
             new Symfony\Bundle\MonologBundle\MonologBundle(),
             new Symfony\Bundle\AsseticBundle\AsseticBundle(),
             new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
-            new Doctrine\Bundle\MongoDBBundle\DoctrineMongoDBBundle(),
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new WhiteOctober\PagerfantaBundle\WhiteOctoberPagerfantaBundle(),
             new Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle(),
@@ -56,17 +54,19 @@ class AppKernel extends Kernel
             new Http\HttplugBundle\HttplugBundle(),
             new Fhm\HistoricBundle\FhmHistoricBundle(),
         ];
-
         // Some bundles are only used while developing the application or during
         // the unit and functional tests. Therefore, they are only registered
         // when the application runs in 'dev' or 'test' environments. This allows
         // to increase application performance in the production environment.
-        if (in_array($this->getEnvironment(), ['dev', 'test', getenv('DATABASE_MANAGER')])) {
+        if (in_array($this->getEnvironment(), ['dev', 'test', 'orm', 'odm'])) {
             $bundles[] = new Symfony\Bundle\DebugBundle\DebugBundle();
             $bundles[] = new Symfony\Bundle\WebProfilerBundle\WebProfilerBundle();
             $bundles[] = new Sensio\Bundle\DistributionBundle\SensioDistributionBundle();
             $bundles[] = new Sensio\Bundle\GeneratorBundle\SensioGeneratorBundle();
             $bundles[] = new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle();
+        }
+        if ($this->getEnvironment() == 'odm') {
+            new Doctrine\Bundle\MongoDBBundle\DoctrineMongoDBBundle();
         }
 
         return $bundles;

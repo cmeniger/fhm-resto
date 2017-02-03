@@ -1,0 +1,5 @@
+imports:
+    - { resource: 'security.yml' }
+security:
+    encoders:
+        Fhm\UserBundle\Document\User: bcrypt

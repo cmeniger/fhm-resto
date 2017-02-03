@@ -77,30 +77,24 @@ class AdminController extends FhmController
         $process = $handler->process();
         if ($process) {
             $data = $request->get($form->getName());
-            // Tag
             if (isset($data['tag']) && $data['tag']) {
-                $tag = $this->get('fhm_tools')->dmRepository('FhmMediaBundle:MediaTag')->getByName($data['tag']);
-                if ($tag == "") {
-                    $tagClassName = $this->get('fhm.object.manager')->getCurrentModelName('FhmMediaBundle:MediaTag');
-                    $tag = new $tagClassName;
+                $tagClasName = $this->get('fhm.object.manager')->getCurrentModelName('FhmMediaBundle:MediaTag');
+                $tag = $this->get('fhm.object.manager')->getCurrentRepository('FhmMediaBundle:MediaTag')->findOneBy(
+                    ['name' => $data['tag']]
+                );
+                if (!$tag) {
+                    $tag = new $tagClasName;
                     $tag->setName($data['tag']);
                     $tag->setActive(true);
-                }
-                if (isset($data['parent']) && $data['parent']) {
-                    $tag->setParent(
-                        $this->get('fhm_tools')->dmRepository('FhmMediaBundle:MediaTag')->find($data['parent'])
-                    );
+                    if (isset($data['parent']) && $data['parent']) {
+                        $tag->setParent(
+                            $this->get('fhm_tools')->dmRepository('FhmMediaBundle:MediaTag')->find($data['parent'])
+                        );
+                    }
                 }
                 $object->addTag($tag);
             }
-            $fileData = array(
-                'tmp_name' => isset($_FILES['file']) ? $_FILES['file']['tmp_name'] : $_FILES[$form->getName(
-                )]['tmp_name']['file'],
-                'name' => isset($_FILES['file']) ? $_FILES['file']['name'] : $_FILES[$form->getName()]['name']['file'],
-                'type' => isset($_FILES['file']) ? $_FILES['file']['type'] : $_FILES[$form->getName()]['type']['file'],
-            );
-            $file = new UploadedFile($fileData['tmp_name'], $fileData['name'], $fileData['type']);
-            $tab = explode('.', $fileData['name']);
+            $tab = explode('.', $object->getFile()->getClientOriginalName());
             $name = $data['name'] ? $this->get('fhm_tools')->getUnique(
                 $object->getId(),
                 $data['name'],
@@ -109,7 +103,6 @@ class AdminController extends FhmController
             ) : $tab[0];
             // Persist
             $object->setName($name);
-            $object->setFile($file);
             $object->setWatermark((array)$request->get('watermark'));
             $this->get('fhm_tools')->dmPersist($object);
             $this->get('fhm_media_service')->setModel($object)->setWatermark($request->get('watermark'))->execute();
@@ -168,6 +161,7 @@ class AdminController extends FhmController
         if (!$this->getUser()->hasRole('ROLE_SUPER_ADMIN') && $object->getDelete()) {
             throw new HttpException(403, $this->trans(self::$translation.'.error.forbidden'));
         }
+        self::$class = $this->get('fhm.object.manager')->getCurrentModelName('FhmMediaBundle:Media');
         $form = $this->createForm(
             self::$form->updateType,
             $object,
@@ -184,41 +178,40 @@ class AdminController extends FhmController
             // Tag
             if (isset($data['tag']) && $data['tag']) {
                 $tagClasName = $this->get('fhm.object.manager')->getCurrentModelName('FhmMediaBundle:MediaTag');
-                $tag = new $tagClasName;
-                $tag->setName($data['tag']);
-                $tag->setActive(true);
-                if (isset($data['parent']) && $data['parent']) {
-                    $tag->setParent(
-                        $this->get('fhm_tools')->dmRepository('FhmMediaBundle:MediaTag')->find($data['parent'])
-                    );
+                $tag = $this->get('fhm.object.manager')->getCurrentRepository('FhmMediaBundle:MediaTag')->findOneBy(
+                    ['name' => $data['tag']]
+                );
+                if (!$tag) {
+                    $tag = new $tagClasName;
+                    $tag->setName($data['tag']);
+                    $tag->setActive(true);
+                    if (isset($data['parent']) && $data['parent']) {
+                        $tag->setParent(
+                            $this->get('fhm_tools')->dmRepository('FhmMediaBundle:MediaTag')->find($data['parent'])
+                        );
+                    }
                 }
                 $object->addTag($tag);
             }
             // Persist
+            $process = $this->get('fhm_media_service')->setModel($object)->setWatermark($request->get('watermark'));
             if ($object->getFile()) {
-                $this->get('fhm_media_service')->setDocument($object)->setWatermark(
-                    $request->get('watermark')
-                )->execute();
-
+                $process->execute();
             } elseif ($request->get('generate') || $object->getWatermark() != $request->get('watermark')) {
-                $this->get('fhm_media_service')->setModel($object)->setWatermark(
-                    $request->get('watermark')
-                )->generateImage();
+                $process->generateImage();
                 $object->setWatermark((array)$request->get('watermark'));
-                $this->get('fhm_tools')->dmPersist($document);
+                $this->get('fhm_tools')->dmPersist($object);
             }
-            // Message
             $this->get('session')->getFlashBag()->add(
                 'notice',
                 $this->trans(self::$translation.'.admin.update.flash.ok')
             );
 
-            // Redirect
             return $this->redirectUrl($data, $object);
         }
 
         return array(
-            'document' => $object,
+            'object' => $object,
             'form' => $form->createView(),
             'watermarks' => $this->get('fhm_tools')->getParameters('watermark', 'fhm_media') ? $this->get(
                 'fhm_tools'

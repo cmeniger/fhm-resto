@@ -1,5 +1,7 @@
 <?php
 namespace Fhm\MediaBundle\Entity;
+
+use Doctrine\Common\Collections\ArrayCollection;
 use Fhm\FhmBundle\Entity\Fhm;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -11,17 +13,21 @@ use Symfony\Component\Validator\Constraints as Assert;
 class MediaTag extends Fhm
 {
     /**
-     * @ORM\ManyToOne(targetEntity="MediaTag")
+     * @ORM\ManyToOne(targetEntity="MediaTag" , cascade={"persist"})
      */
     protected $parent;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="Media", inversedBy="tags")
+     */
+    protected $medias;
     /**
      * @ORM\Column(type="string", length=100)
      */
     protected $route;
 
     /**
-     * @ORM\Column(type="string", length=100)
+     * @ORM\Column(type="string", length=100, nullable=true)
      */
     protected $color;
 
@@ -36,10 +42,11 @@ class MediaTag extends Fhm
     public function __construct()
     {
         parent::__construct();
-        $this->parent  = null;
-        $this->route   = '';
-        $this->color   = null;
+        $this->parent = null;
+        $this->route = '';
+        $this->color = null;
         $this->private = false;
+        $this->medias = new ArrayCollection();
     }
 
     /**
@@ -83,7 +90,7 @@ class MediaTag extends Fhm
      */
     public function getRouteParent()
     {
-        return $this->parent ? $this->parent->getRouteParent() . ' > ' . $this->name : $this->name;
+        return $this->parent ? $this->parent->getRouteParent().' > '.$this->name : $this->name;
     }
 
     /**
@@ -184,6 +191,40 @@ class MediaTag extends Fhm
     public function preUpdate()
     {
         $this->route = $this->getRouteParent();
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getMedias()
+    {
+        return $this->medias;
+    }
+
+    /**
+     * @param mixed $medias
+     * @return MediaTag
+     */
+    public function setMedias($medias)
+    {
+        $this->medias = $medias;
+
+        return $this;
+    }
+
+    /**
+     * @param Media $media
+     * @return $this
+     */
+    public function addMedia(Media $media)
+    {
+        if (!$this->medias->contains($media)) {
+            $this->medias->add($media);
+            $media->addTag($this);
+        }
+
         return $this;
     }
 }

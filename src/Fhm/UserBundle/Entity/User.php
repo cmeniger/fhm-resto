@@ -69,30 +69,6 @@ class User extends GeolocationWithUser
     protected $birth_date;
 
     /**
-     * @ORM\Column(type="string", length=100)
-     * @Assert\NotBlank()
-     * @Assert\Email()
-     */
-    protected $email;
-
-    /**
-     * @ORM\Column(type="string", length=100)
-     * @Assert\NotBlank()
-     */
-    protected $username;
-
-    /**
-     * @ORM\Column(type="string", length=100)
-     * @Assert\Email()
-     */
-    protected $emailCanonical;
-
-    /**
-     * @ORM\Column(type="string", length=100, nullable=true)
-     */
-    protected $usernameCanonical;
-
-    /**
      * @ORM\Column(type="string", length=100, nullable=true)
      */
     protected $sign;

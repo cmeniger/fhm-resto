@@ -1,18 +1,22 @@
 <?php
 namespace Fhm\MediaBundle\Entity;
+
 use Doctrine\Common\Collections\ArrayCollection;
 use Fhm\FhmBundle\Entity\Fhm;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
+ * @ORM\Entity
  * @ORM\Entity(repositoryClass="Fhm\MediaBundle\Entity\Repository\MediaRepository")
  * @ORM\Table()
+ * @ORM\HasLifecycleCallbacks
  */
 class Media extends Fhm
 {
     /**
-     * @ORM\OneToMany(targetEntity="MediaTag", cascade={"persist"}, mappedBy="media")
+     * @ORM\ManyToMany(targetEntity="MediaTag", cascade={"persist"}, mappedBy="medias")
      */
     protected $tags;
 
@@ -22,27 +26,37 @@ class Media extends Fhm
     protected $file;
 
     /**
-     * @ORM\Column(type="string", length=100)
+     * @ORM\Column(type="string", length=100, nullable=true)
      */
     protected $filename;
 
     /**
      * @ORM\Column(type="string", length=100)
      */
+    protected $path;
+
+    /**
+     * @var
+     */
+    protected $temp;
+
+    /**
+     * @ORM\Column(type="string", length=100, nullable=true)
+     */
     protected $type;
 
     /**
-     * @ORM\Column(type="string", length=100)
+     * @ORM\Column(type="string", length=100, nullable=true)
      */
     protected $mimeType;
 
     /**
-     * @ORM\Column(type="string", length=100)
+     * @ORM\Column(type="string", length=100, nullable=true)
      */
     protected $extension;
 
     /**
-     * @ORM\Column(type="string", length=100)
+     * @ORM\Column(type="string", length=100, nullable=true)
      */
     protected $size;
 
@@ -55,6 +69,8 @@ class Media extends Fhm
      * @ORM\Column(type="boolean")
      */
     protected $private;
+
+
 
     /**
      * Constructor
@@ -233,20 +249,6 @@ class Media extends Fhm
     }
 
     /**
-     * Set file
-     *
-     * @param string $file
-     *
-     * @return self
-     */
-    public function setFile($file)
-    {
-        $this->file = $file;
-
-        return $this;
-    }
-
-    /**
      * Set private
      *
      * @param boolean $private
@@ -303,6 +305,7 @@ class Media extends Fhm
     {
         if (!$this->tags->contains($tag)) {
             $this->tags->add($tag);
+            $tag->addMedia($this);
         }
 
         return $this;
@@ -325,33 +328,69 @@ class Media extends Fhm
     }
 
     /**
-     * @ORM\PrePersist()
+     * Sets file.
+     *
+     * @param UploadedFile $file
      */
-    public function prePersist()
+    public function setFile(UploadedFile $file = null)
     {
-        parent::prePersist();
-        if ($this->file === null) {
-            return $this->file;
+        $this->file = $file;
+        if (isset($this->path)) {
+            $this->temp = $this->path;
+            $this->path = null;
+        } else {
+            $this->path = 'initial';
         }
-        $ext = explode('/', $this->file->getClientMimeType());
-        $this->setExtension($this->file->getClientOriginalExtension());
-        $this->setFilename($this->file->getClientOriginalName());
-        $this->setSize($this->file->getClientSize());
-        $this->setType($ext[0]);
-        $this->setMimeType($this->file->getClientMimeType());
-
-        return $this;
     }
 
+    /**
+     * @return null|string
+     */
+    public function getAbsolutePath()
+    {
+        return null === $this->path
+            ? null
+            : $this->getUploadRootDir().'/'.$this->path;
+    }
 
     /**
+     * @return null|string
+     */
+    public function getWebPath()
+    {
+        return null === $this->path
+            ? null
+            : $this->getUploadDir().'/'.$this->path;
+    }
+
+    /**
+     * @return string
+     */
+    protected function getUploadRootDir()
+    {
+        return __DIR__.'/../../../../web/'.$this->getUploadDir();
+    }
+
+    /**
+     * @return string
+     */
+    protected function getUploadDir()
+    {
+        return 'datas/media';
+    }
+
+    /**
+     * @ORM\PrePersist()
      * @ORM\PreUpdate()
      */
-    public function preUpdate()
+    public function preUpload()
     {
-        parent::preUpdate();
-        if ($this->file === null) {
-            return $this->file;
+        if (null === $this->file) {
+            return;
+        }
+
+        if ($this->path != $this->file->getClientOriginalName()) {
+            $this->path = $this->file->getClientOriginalName();
         }
         $ext = explode('/', $this->file->getClientMimeType());
         $this->setExtension($this->file->getClientOriginalExtension());
@@ -359,7 +398,23 @@ class Media extends Fhm
         $this->setSize($this->file->getClientSize());
         $this->setType($ext[0]);
         $this->setMimeType($this->file->getClientMimeType());
+    }
 
-        return $this;
+    /**
+     * @ORM\PostPersist()
+     * @ORM\PostUpdate()
+     */
+    public function upload()
+    {
+        if (null === $this->file) {
+            return;
+        }
+
+        $filename = $this->file->getClientOriginalName();
+        if (!file_exists($this->getUploadRootDir())) {
+            mkdir($this->getUploadRootDir(), 0775, true);
+        }
+        $this->file->move($this->getUploadRootDir(), $filename);
+        $this->file = null;
     }
 }

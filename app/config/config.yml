@@ -6,7 +6,6 @@
 # such as the security component and the dependency injection services
 imports:
     - { resource: parameters.yml }
-    - { resource: security.yml }
     - { resource: services.yml }
 
 sensio_framework_extra:
@@ -84,18 +83,6 @@ doctrine:
         auto_generate_proxy_classes: "%kernel.debug%"
         auto_mapping: true
 
-doctrine_mongodb:
-    connections:
-        default:
-            server: "%mongodb_server%"
-            options:
-                username: "%mongodb_username%"
-                password: "%mongodb_password%"
-                replicaSet: "%mongodb_replicaSet%"
-    default_database: "%mongodb_database%"
-    document_managers:
-        default:
-            auto_mapping: true
 
 # Swiftmailer Configuration (used to send emails)
 # instead of configuring the mailer credentials in this file, we pull
@@ -109,38 +96,6 @@ swiftmailer:
     username:  "%mailer_user%"
     password:  "%mailer_password%"
     spool:     { type: memory }
-
-# FOSUser
-fos_user:
-    db_driver: mongodb
-    firewall_name: main
-    user_class: Fhm\UserBundle\Document\User
-    from_email:
-        address:     "%fhm_mailer.noreply%"
-        sender_name: noreply
-    service:
-        mailer: fhm_user.mailer.twig_swift
-    resetting:
-        form:
-            type: Fhm\UserBundle\Form\Type\Front\ResettingType
-        email:
-            from_email:
-                address:        "%fhm_mailer.noreply%"
-                sender_name:    noreply
-    registration:
-        form:
-            type: Fhm\UserBundle\Form\Type\Front\CreateType
-        confirmation:
-            enabled: true
-            from_email:
-                address:        "%fhm_mailer.noreply%"
-                sender_name:    Registration
-    profile:
-        form:
-            type: Fhm\UserBundle\Form\Type\Front\UpdateType
-    change_password:
-        form:
-            type: Fhm\UserBundle\Form\Type\Front\PasswordType
 
 
 # Oauth

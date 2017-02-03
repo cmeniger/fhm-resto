@@ -1,77 +1,23 @@
-services:
-    session.handler.mongo:
-        class: Symfony\Component\HttpFoundation\Session\Storage\Handler\MongoDbSessionHandler
-        arguments: ['@mongo', '%mongo.session.options%']
-
-    # Use doctrine_mongodb to allow doctrine mapping
-    fos_user.doctrine_registry:
-        alias: doctrine_mongodb
-
-    mongo.connection:
-        class: Doctrine\MongoDB\Connection
-        factory: ["@doctrine.odm.mongodb.document_manager", getConnection]
-        calls:
-            - [initialize, []]
-
-    mongo:
-        class: Mongo
-        factory: ["@mongo.connection", getMongo]
-
-    twig.extension.intl:
-        class: Twig_Extensions_Extension_Intl
-        tags:
-            - { name: twig.extension }
-
-    # First we define some basic services to make these utilities available in
-    # the entire application
-#    slugger:
-#        class: Core\FhmBundle\Utils\Slugger
+#services:
+#    session.handler.mongo:
+#        class: Symfony\Component\HttpFoundation\Session\Storage\Handler\MongoDbSessionHandler
+#        arguments: ['@mongo', '%mongo.session.options%']
 #
-#    markdown:
-#        class: Core\FhmBundle\Utils\Markdown
-
-    # These are the Twig extensions that create new filters and functions for
-    # using them in the templates
-#    app.twig.app_extension:
-#        public:    false
-#        class:     Core\FhmBundle\Twig\FhmExtension
-#        arguments: ['@markdown', '%app_locales%']
+#    # Use doctrine_mongodb to allow doctrine mapping
+#    fos_user.doctrine_registry:
+#        alias: doctrine_mongodb
+#
+#    mongo.connection:
+#        class: Doctrine\MongoDB\Connection
+#        factory: ["@doctrine.odm.mongodb.document_manager", getConnection]
+#        calls:
+#            - [initialize, []]
+#
+#    mongo:
+#        class: Mongo
+#        factory: ["@mongo.connection", getMongo]
+#
+#    twig.extension.intl:
+#        class: Twig_Extensions_Extension_Intl
 #        tags:
 #            - { name: twig.extension }
-
-#    app.twig.intl_extension:
-#        public: false
-#        class:  Twig_Extensions_Extension_Intl
-#        tags:
-#            - { name: twig.extension }
-#
-#    app.redirect_to_preferred_locale_listener:
-#        class: Core\FhmBundle\EventListener\RedirectToPreferredLocaleListener
-#        arguments: ['@router', '%app_locales%', '%locale%']
-#        tags:
-#            - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
-#
-#    fhm_user.oauth.user_provider:
-#        class: Core\FhmBundle\OAuth\UserProvider
-#        arguments: ["@fos_user.user_manager", {facebook: id_facebook, google: id_gplus, twitter: id_twitter}]
-#
-#    doctrine_mongo_db_param_converter:
-#        class: Sensio\Bundle\FrameworkExtraBundle\Request\ParamConverter\DoctrineParamConverter
-#        arguments: ['@doctrine_mongodb']
-#        tags:
-#            - { name: request.param_converter, priority: -2, converter: doctrine_mongo_db_param_converter}
-
-    # Uncomment the following lines to define a service for the Post Doctrine repository.
-    # It's not mandatory to create these services, but if you use repositories a lot,
-    # these services simplify your code:
-    #
-    # app.post_repository:
-    #     class:     Doctrine\ORM\EntityRepository
-    #     factory:   ['@doctrine.orm.entity_manager', getRepository]
-    #     arguments: [AppBundle\Entity\Post]
-    #
-    # // traditional code inside a controller
-    # $entityManager = $this->getDoctrine()->getManager();
-    # $posts = $entityManager->getRepository('AppBundle:Post')->findAll();
-    #
-    # // same code using repository services

@@ -3,6 +3,13 @@ services:
 #        class: Fhm\HistoricBundle\EventListener\HistoricService
 #        arguments: ["@request_stack"]
 #        tags:
+#             - { name: doctrine_mongodb.odm.event_subscriber, event: postUpdate }
+#             - { name: doctrine_mongodb.odm.event_subscriber, event: postPersist}
+#             - { name: doctrine_mongodb.odm.event_subscriber, event: postFlush}
+#    fhm.historic.service:
+#        class: Fhm\HistoricBundle\EventListener\HistoricService
+#        arguments: ["@request_stack"]
+#        tags:
 #             - { name: doctrine_mongodb.odm.event_subscriber, event: postUpdate , connection: default}
 #             - { name: doctrine_mongodb.odm.event_subscriber, event: postPersist, connection: default}
 #             - { name: doctrine_mongodb.odm.event_subscriber, event: postFlush, connection: default}

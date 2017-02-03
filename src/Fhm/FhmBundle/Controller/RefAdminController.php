@@ -3,6 +3,7 @@ namespace Fhm\FhmBundle\Controller;
 
 use Fhm\FhmBundle\Form\Type\Admin\ExportType;
 use Fhm\FhmBundle\Form\Type\Admin\SearchType;
+use Fhm\FhmBundle\Manager\TypeManager;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
@@ -59,7 +60,7 @@ class RefAdminController extends GenericController
             self::$form->createType,
             $object,
             array(
-                'user_admin' => $this->getUser()->hasRole('ROLE_SUPER_ADMIN'),
+                'user_admin' => $this->getUser()->hasRole('ROLE_ADMIN'),
                 'data_class' => self::$class,
                 'object_manager' => $this->get('fhm.object.manager'),
             )

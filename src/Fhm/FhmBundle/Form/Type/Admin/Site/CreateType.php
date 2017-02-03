@@ -104,18 +104,28 @@ class CreateType extends FhmType
             )
         )->add(
             'background',
-            MediaType::class,
+            TypeManager::getType($options['object_manager']->getDBDriver()),
             array(
                 'label' => $options['translation_route'].'.admin.create.form.background',
-                'filter' => 'image/*',
+                'class' => 'FhmMediaBundle:Media  ',
+                'query_builder' => function () use ($options) {
+                    $dr = $options['object_manager']->getCurrentRepository('FhmMediaBundle:Media');
+
+                    return $dr->getFormEnable();
+                },
                 'required' => false,
             )
         )->add(
             'logo',
-            MediaType::class,
+            TypeManager::getType($options['object_manager']->getDBDriver()),
             array(
                 'label' => $options['translation_route'].'.admin.create.form.logo',
-                'filter' => 'image/*',
+                'class' => 'FhmMediaBundle:Media',
+                'query_builder' => function () use ($options) {
+                    $dr = $options['object_manager']->getCurrentRepository('FhmMediaBundle:Media');
+
+                    return $dr->getFormEnable();
+                },
                 'required' => false,
             )
         )->add(
