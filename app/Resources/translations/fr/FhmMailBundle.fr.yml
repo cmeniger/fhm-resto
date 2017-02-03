@@ -10,6 +10,8 @@ fhm:
                 breadcrumb:                     Modifier
             detail:
                 breadcrumb:                     Détails
+            model:
+                breadcrumb:                     Modèles
 project:
     breadcrump:                                 Accueil
     admin:

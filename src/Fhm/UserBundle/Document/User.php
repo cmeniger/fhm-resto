@@ -74,30 +74,6 @@ class User extends GeolocationWithUser
 
     /**
      * @MongoDB\Field(type="string")
-     * @Assert\NotBlank()
-     * @Assert\Email()
-     */
-    protected $email;
-
-    /**
-     * @MongoDB\Field(type="string")
-     * @Assert\NotBlank()
-     */
-    protected $username;
-
-    /**
-     * @MongoDB\Field(type="string")
-     * @Assert\Email()
-     */
-    protected $emailCanonical;
-
-    /**
-     * @MongoDB\Field(type="string")
-     */
-    protected $usernameCanonical;
-
-    /**
-     * @MongoDB\Field(type="string")
      */
     protected $sign;
 

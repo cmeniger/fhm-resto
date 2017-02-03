@@ -4,7 +4,6 @@ namespace Fhm\MailBundle\Controller;
 use Fhm\FhmBundle\Controller\RefAdminController as FhmController;
 use Fhm\FhmBundle\Form\Handler\Admin\CreateHandler;
 use Fhm\MailBundle\Form\Type\Admin\CreateType;
-use Fhm\MailBundle\Form\Type\Admin\UpdateType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
@@ -32,7 +31,6 @@ class AdminController extends FhmController
         self::$form = new \stdClass();
         self::$form->createType = CreateType::class;
         self::$form->createHandler = CreateHandler::class;
-        self::$form->updateType = UpdateType::class;
     }
 
     /**

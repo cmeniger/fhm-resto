@@ -29,33 +29,33 @@
             <tbody>
                 <tr>
                     <td><strong>{{ (instance.translation ~ '.admin.detail.data.id')|trans }}</strong></td>
-                    <td>{{ document.getId() }}</td>
+                    <td>{{ object.getId() }}</td>
                 </tr>
                 <tr>
                     <td><strong>{{ (instance.translation ~ '.admin.detail.data.create')|trans }}</strong></td>
-                    <td>{{ document.getUserCreate() ? document.getUserCreate().getUsername() ~ ' - ' : '' }}{{ document.getDateCreate() | localizeddate('full', 'short', app.request.locale) }}</td>
+                    <td>{{ object.getUserCreate() ? object.getUserCreate().getUsername() ~ ' - ' : '' }}{{ object.getDateCreate() | localizeddate('full', 'short', app.request.locale) }}</td>
                 </tr>
                 <tr>
                     <td><strong>{{ (instance.translation ~ '.admin.detail.data.model')|trans }}</strong></td>
-                    <td>{{ document.getModel() }}</td>
+                    <td>{{ object.getModel() }}</td>
                 </tr>
                 <tr>
                     <td><strong>{{ (instance.translation ~ '.admin.detail.data.type')|trans }}</strong></td>
                     <td>
-                        <span class="radius label {{ (instance.translation ~ '.type.' ~ document.getType())|trans }}">{{ document.getType() }}</span>
+                        <span class="radius label {{ (instance.translation ~ '.type.' ~ object.getType())|trans }}">{{ object.getType() }}</span>
                     </td>
                 </tr>
                 <tr>
                     <td><strong>{{ (instance.translation ~ '.admin.detail.data.from')|trans }}</strong></td>
-                    <td>{{ document.getFrom() }}</td>
+                    <td>{{ object.getFrom() }}</td>
                 </tr>
                 <tr>
                     <td><strong>{{ (instance.translation ~ '.admin.detail.data.to')|trans }}</strong></td>
-                    <td>{{ document.getTo() }}</td>
+                    <td>{{ object.getTo() }}</td>
                 </tr>
                 <tr>
                     <td><strong>{{ (instance.translation ~ '.admin.detail.data.subject')|trans }}</strong></td>
-                    <td>{{ document.getSubject() }}</td>
+                    <td>{{ object.getSubject() }}</td>
                 </tr>
             </tbody>
         </table>
@@ -64,7 +64,7 @@
         <table class="fullwidth">
             <tbody>
                 <tr>
-                    <td>{{ document.getBody()|raw }}</td>
+                    <td>{{ object.getBody()|raw }}</td>
                 </tr>
             </tbody>
         </table>

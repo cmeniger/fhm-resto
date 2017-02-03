@@ -54,7 +54,7 @@ class ApiController extends FhmController
             'notice',
             $this->trans(
                 "mail.test.flash.ok",
-                array("%email%" => $this->get('fhm_tools')->getParameters('admin', 'fhm_mailer'))
+                array("%email%" => $this->getParameters('admin', 'fhm_mailer'))
             )
         );
         $this->get('fhm_mail')->AdminTest();

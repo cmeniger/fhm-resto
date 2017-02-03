@@ -132,13 +132,15 @@ class Mailer
             $this->fhm_tools->getParameters('noreply', 'fhm_mailer')
         );
         // Email - Admin
-        $this->sendMail(
-            array($noreply->getEmail() => $this->fhm_tools->getParameters('sign', 'fhm_mailer')),
-            $this->fhm_tools->getParameters('admin', 'fhm_mailer'),
-            $this->fhm_tools->getParameters('project', 'fhm_mailer')." email test",
-            $this->renderMail(array('template' => 'test'), 'Admin'),
-            'admin > test'
-        );
+        if (is_object($noreply)){
+            $this->sendMail(
+                array($noreply->getEmail() => $this->fhm_tools->getParameters('sign', 'fhm_mailer')),
+                $this->fhm_tools->getParameters('admin', 'fhm_mailer'),
+                $this->fhm_tools->getParameters('project', 'fhm_mailer')." email test",
+                $this->renderMail(array('template' => 'test'), 'Admin'),
+                'admin > test'
+            );
+        }
     }
 
     /**

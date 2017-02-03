@@ -52,28 +52,6 @@
             </fieldset>
         </div>
     </div>
-    <div class="row">
-        <div class="columns">
-            <fieldset>
-                <legend>{{ (instance.translation ~ '.admin.model.place.create.fieldset')|trans }}</legend>
-                <div class="small-12 medium-3 columns end">
-                    <a class="button fullwidth" href="#" data-reveal-id="mailModal" data-mail-modal="{{ path('fhm_api_mail_place_moderation_create_admin') }}">{{ (instance.translation ~ '.admin.model.place.create.admin')|trans }}</a>
-                </div>
-                <div class="small-12 medium-3 columns end">
-                    <a class="button fullwidth" href="#" data-reveal-id="mailModal" data-mail-modal="{{ path('fhm_api_mail_place_moderation_create_user') }}">{{ (instance.translation ~ '.admin.model.place.create.user')|trans }}</a>
-                </div>
-                <div class="small-12 medium-3 columns end">
-                    <a class="button fullwidth" href="#" data-reveal-id="mailModal" data-mail-modal="{{ path('fhm_api_mail_place_moderation_create_accept') }}">{{ (instance.translation ~ '.admin.model.place.create.accept')|trans }}</a>
-                </div>
-                <div class="small-12 medium-3 columns end">
-                    <a class="button fullwidth" href="#" data-reveal-id="mailModal" data-mail-modal="{{ path('fhm_api_mail_place_moderation_create_refuse') }}">{{ (instance.translation ~ '.admin.model.place.create.refuse')|trans }}</a>
-                </div>
-                <div class="small-12 medium-3 columns end">
-                    <a class="button fullwidth" href="#" data-reveal-id="mailModal" data-mail-modal="{{ path('fhm_api_mail_place_moderation_create_cancel') }}">{{ (instance.translation ~ '.admin.model.place.create.cancel')|trans }}</a>
-                </div>
-            </fieldset>
-        </div>
-    </div>
     <div id="mailModal" class="reveal-modal" data-reveal aria-hidden="true" role="dialog">
         <div id="mailModalContent">
             <i class="fa fa-refresh fa-spin"></i>
