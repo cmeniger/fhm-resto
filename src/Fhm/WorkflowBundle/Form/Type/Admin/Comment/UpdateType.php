@@ -20,4 +20,20 @@ class UpdateType extends FhmType
         parent::buildForm($builder, $options);
     }
 
+    /**
+     * @param OptionsResolver $resolver
+     */
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults(
+            array(
+                'data_class' => '',
+                'translation_domain' => 'FhmWorkflowBundle',
+                'cascade_validation' => true,
+                'translation_route' => 'workflow.comment',
+                'user_admin' => '',
+                'object_manager'=>''
+            )
+        );
+    }
 }

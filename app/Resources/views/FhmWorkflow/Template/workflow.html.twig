@@ -2,7 +2,7 @@
 <div class="workflow">
     <div class="row">
         <div class="column">
-            {{ document.getDescription() }}
+            {{ object.getDescription() }}
         </div>
     </div>
     <div class="canvas" id="wfCanvas">
@@ -36,7 +36,7 @@
         <div class="line">
             <div class="tasks">
                 {% set level = 1 %}
-                {% for task in document|wfTasks %}
+                {% for task in object|wfTasks %}
                 {% if level != task.level %}
             </div>
         </div>
@@ -44,7 +44,7 @@
             <div class="tasks">
                 {% set level = task.level %}
                 {% endif %}
-                {{ task.task|wfTask(document, instance)|raw }}
+                {{ task.task|wfTask(object, instance)|raw }}
                 {% endfor %}
             </div>
         </div>

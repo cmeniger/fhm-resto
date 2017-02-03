@@ -32,6 +32,20 @@ class FrontController extends FhmController
      * @Route
      * (
      *      path="/{id}",
+     *      name="fhm_workflow_task_detail",
+     *      requirements={"id"=".+"}
+     * )
+     * @Template("::FhmWorkflow/Front/Task/detail.html.twig")
+     */
+    public function detailAction($id)
+    {
+        return $this->detailAction($id);
+    }
+
+    /**
+     * @Route
+     * (
+     *      path="/{id}",
      *      name="fhm_workflow_task_lite",
      *      requirements={"id"=".+"}
      * )
