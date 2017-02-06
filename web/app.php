@@ -24,7 +24,7 @@ include_once __DIR__.'/../var/bootstrap.php.cache';
 // $loader->unregister();
 // $apcLoader->register(true);
 if (getenv('DATABASE_MANAGER') == false) {
-    putenv('DATABASE_MANAGER=orm');
+    putenv('DATABASE_MANAGER=odm');
 }
 $kernel = new AppKernel(getenv('DATABASE_MANAGER'), false);
 $kernel->loadClassCache();

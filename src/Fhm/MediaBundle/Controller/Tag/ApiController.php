@@ -2,8 +2,6 @@
 namespace Fhm\MediaBundle\Controller\Tag;
 
 use Fhm\FhmBundle\Controller\RefApiController as FhmController;
-use Fhm\MediaBundle\Document\Media;
-use Fhm\MediaBundle\Document\MediaTag;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
@@ -27,7 +25,6 @@ class ApiController extends FhmController
         self::$source = "fhm";
         self::$domain = "FhmMediaBundle";
         self::$translation = "media.tag";
-        self::$class = MediaTag::class;
         self::$route = "media_tag";
     }
 

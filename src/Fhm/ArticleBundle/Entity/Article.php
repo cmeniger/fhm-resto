@@ -31,7 +31,8 @@ class Article extends Fhm
     protected $content;
 
     /**
-     * @ORM\OneToOne(targetEntity="Fhm\MediaBundle\Entity\Media")
+     * @ORM\ManyToOne(targetEntity="Fhm\MediaBundle\Entity\Media")
+     * @ORM\JoinColumn(nullable=true)
      */
     protected $image;
 

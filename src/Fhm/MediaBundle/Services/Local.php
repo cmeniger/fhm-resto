@@ -1,8 +1,10 @@
 <?php
 namespace Fhm\MediaBundle\Services;
 
-use Fhm\FhmBundle\Services\Tools;
+use Fhm\FhmBundle\Manager\FhmObjectManager;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 
 /**
  * Class Local
@@ -11,25 +13,32 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class Local
 {
-    protected $fhm_tools;
-    protected $model;
     private $files;
-    private $file;
+    private $file = null;
     private $path;
+
+    protected $model;
+    protected $rootDir;
+    protected $objectManager;
+    protected $tokenStorage;
 
     /**
      * Local constructor.
-     *
-     * @param \Fhm\FhmBundle\Services\Tools $tools
+     * @param FhmObjectManager $manager
+     * @param TokenStorage $tokenStorage
+     * @param array $fhmMedia
+     * @param $kernelRootDir
      */
-    public function __construct(Tools $tools)
+    public function __construct(FhmObjectManager $manager, TokenStorage $tokenStorage, array $fhmMedia, $kernelRootDir)
     {
-        $this->fhm_tools = $tools;
-        $this->files = $this->_filesInit($this->fhm_tools->getParameters('files', 'fhm_media'));
-        $this->file = null;
+        $this->tokenStorage = $tokenStorage;
+        $this->objectManager = $manager;
+        $this->rootDir = $kernelRootDir;
+        $this->files = $this->filesInit(isset($fhmMedia['files']) ? $fhmMedia['files'] : []);
+
         // Path
         $this->path = new \stdClass();
-        $this->path->root = $this->fhm_tools->getContainer()->get('kernel')->getRootDir().'/../';
+        $this->path->root = $kernelRootDir.'/../';
         $this->path->origin = 'media/';
         $this->path->media = '/datas/media/';
         $this->path->web = 'web'.$this->path->media;
@@ -54,8 +63,7 @@ class Local
      */
     public function setModel($model)
     {
-        $type = $this->fhm_tools->container->get('fhm.object.manager')->getCurrentModelName('FhmMediaBundle:Media');
-        if ($model instanceof $type) {
+        if ($model) {
             $this->model = $model;
             $this->file = $model->getFile();
             $this->path->files = $model->getId().'/';
@@ -66,11 +74,23 @@ class Local
     }
 
     /**
+     * Execute
+     */
+    public function execute()
+    {
+        if ($this->model->getFile() instanceof UploadedFile) {
+            $this->upload();
+            $this->tag();
+        }
+        return $this;
+    }
+
+    /**
      * @return bool
      */
     public function isModelSet()
     {
-        $type = $this->fhm_tools->container->get('fhm.object.manager')->getCurrentModelName('FhmMediaBundle:Media');
+        $type = $this->objectManager->getCurrentModelName('FhmMediaBundle:Media');
 
         return $this->model instanceof $type;
     }
@@ -171,23 +191,12 @@ class Local
     }
 
     /**
-     * Execute
-     */
-    public function execute()
-    {
-        $this->_upload();
-        $this->_tag();
-
-        return $this;
-    }
-
-    /**
      * Generate Image
      */
     public function generateImage()
     {
-        $this->_clearFolder($this->path->fullWeb);
-        $this->_generateImage();
+        $this->clearFolder($this->path->fullWeb);
+        $this->generate();
 
         return $this;
     }
@@ -197,7 +206,7 @@ class Local
      */
     public function generateTag()
     {
-        $this->_tag();
+        $this->tag();
 
         return $this;
     }
@@ -209,20 +218,18 @@ class Local
      */
     public function tagRoot($root = "")
     {
-        $tagClassName = $this->fhm_tools->container->get('fhm.object.manager')->getCurrentModelName(
-            'FhmMediaBundle:MediaTag'
-        );
+        $tagClassName = $this->objectManager->getCurrentModelName('FhmMediaBundle:MediaTag');
         if ($root === '&user') {
-            $root = $this->fhm_tools->getUser()->getUsername();
-            $tagParent = $this->fhm_tools->dmRepository('FhmMediaBundle:MediaTag')->getByAlias('users');
-            $tag = $this->fhm_tools->dmRepository('FhmMediaBundle:MediaTag')->getByAlias($root);
+            $root = $this->tokenStorage->getToken()->getUser()->getUsername();
+            $tagParent = $this->objectManager->getCurrentRepository('FhmMediaBundle:MediaTag')->getByAlias('users');
+            $tag = $this->objectManager->getCurrentRepository('FhmMediaBundle:MediaTag')->getByAlias($root);
             if (!$tagParent) {
                 $tagParent = new $tagClassName;
                 $tagParent->setName('users');
                 $tagParent->setAlias('users');
                 $tagParent->setActive(true);
                 $tagParent->setPrivate(true);
-                $this->fhm_tools->dmPersist($tagParent);
+                $this->objectManager->getManager()->persist($tagParent);
             }
             if (!$tag) {
                 $tag = new $tagClassName;
@@ -231,22 +238,28 @@ class Local
                 $tag->setParent($tagParent);
                 $tag->setActive(true);
                 $tag->setPrivate(true);
-                $this->fhm_tools->dmPersist($tag);
+                $this->objectManager->getManager()->persist($tag);
             }
+            $this->objectManager->getManager()->flush();
 
             return $tag->getId();
         }
         if ($root) {
-            $tag = $this->fhm_tools->dmRepository('FhmMediaBundle:MediaTag')->getById($root);
-            $tag = ($tag) ? $tag : $this->fhm_tools->dmRepository('FhmMediaBundle:MediaTag')->getByAlias($root);
-            $tag = ($tag) ? $tag : $this->fhm_tools->dmRepository('FhmMediaBundle:MediaTag')->getByName($root);
+            $tag = $this->objectManager->getCurrentRepository('FhmMediaBundle:MediaTag')->getById($root);
+            $tag = ($tag) ? $tag : $this->objectManager->getCurrentRepository('FhmMediaBundle:MediaTag')->getByAlias(
+                $root
+            );
+            $tag = ($tag) ? $tag : $this->objectManager->getCurrentRepository('FhmMediaBundle:MediaTag')->getByName(
+                $root
+            );
             if (!$tag) {
                 $tag = new $tagClassName;
                 $tag->setName($root);
                 $tag->setAlias($root);
                 $tag->setActive(true);
-                $this->fhm_tools->dmPersist($tag);
+                $this->objectManager->getManager()->persist($tag);
             }
+            $this->objectManager->getManager()->flush();
 
             return $tag->getId();
         }
@@ -276,7 +289,7 @@ class Local
     /**
      * Upload
      */
-    private function _upload()
+    private function upload()
     {
         if ($this->file) {
             if (!is_dir($this->path->fullOrigin)) {
@@ -288,20 +301,20 @@ class Local
         }
         // Image
         if ($this->isModelSet() && $this->model->getType() == 'image') {
-            $this->_uploadImage();
-            $this->_generateImage();
+            $this->uploadImage();
+            $this->generate();
         } // Other
         else {
-            $this->_uploadFile();
+            $this->uploadFile();
         }
     }
 
     /**
      * Upload image
      */
-    private function _uploadImage()
+    private function uploadImage()
     {
-        if ($this->isModelSet() && $this->file && $this->model->getType() == 'image') {
+        if ($this->file instanceof UploadedFile) {
             $this->file->move($this->path->fullOrigin, $this->model->getId());
         }
     }
@@ -309,7 +322,7 @@ class Local
     /**
      * Upload file
      */
-    private function _uploadFile()
+    private function uploadFile()
     {
         if ($this->isModelSet() && $this->file && $this->model->getType() != 'image') {
             $this->file->move($this->path->fullWeb, $this->model->getAlias().'.'.$this->model->getExtension());
@@ -319,7 +332,7 @@ class Local
     /**
      * Generate image
      */
-    private function _generateImage()
+    private function generate()
     {
         if (!$this->isModelSet()) {
             return $this;
@@ -329,16 +342,21 @@ class Local
             $source1 = $this->path->fullWeb.'tmp1.'.$this->model->getExtension();
             $source2 = $this->path->fullWeb.'tmp2.'.$this->model->getExtension();
             $originalFileName = $this->path->fullWeb.$this->model->getAlias().'.'.$this->model->getExtension();
+
             copy($this->path->fullOrigin.$this->model->getId(), $originalFileName);
             copy($this->path->fullOrigin.$this->model->getId(), $source1);
             copy($this->path->fullOrigin.$this->model->getId(), $source2);
+
             // Initialization
             $sizeSource = getimagesize($source1);
             $sizeWatermark = getimagesize($this->path->fullWatermark);
-            $function1 = $this->_getImagecreatefrom($this->model->getExtension());
-            $function2 = $this->_getImage($this->model->getExtension());
+            $function1 = $this->getImagecreatefrom($this->model->getExtension());
+            $function2 = $this->getImage($this->model->getExtension());
+
             // Resize watermarker
-            $watermarkPercent = $sizeWatermark[0] > $sizeWatermark[1] ? $sizeWatermark[0] * 100 / ($sizeSource[0] - 40) : $sizeWatermark[1] * 100 / ($sizeSource[1] - 40);
+            $watermarkPercent = $sizeWatermark[0] > $sizeWatermark[1]
+                ? $sizeWatermark[0] * 100 / ($sizeSource[0] - 40)
+                : $sizeWatermark[1] * 100 / ($sizeSource[1] - 40);
             $watermarkWidth = 100 * $sizeWatermark[0] / $watermarkPercent;
             $watermarkHeight = 100 * $sizeWatermark[1] / $watermarkPercent;
             $watermarkX = ($sizeSource[0] - $watermarkWidth) / 2;
@@ -372,7 +390,7 @@ class Local
                 // Copy image
                 copy(
                     $file['watermark'] ? $source2 : $source1,
-                    $this->path->fullWeb.$file['name'].'.'.$this->document->getExtension()
+                    $this->path->fullWeb.$file['name'].'.'.$this->model->getExtension()
                 );
                 // Square
                 if ($file['width'] > 0 && $file['height'] === null) {
@@ -383,14 +401,19 @@ class Local
                 // Resize
                 if ($file['width'] + $file['height'] > 0) {
                     if ($file['width'] > 0 && $file['height'] > 0) {
-                        $percent = ($sizeSource[0] / $file['width'] > $sizeSource[1] / $file['height']) ? $file['width'] * 100 / $sizeSource[0] : $file['height'] * 100 / $sizeSource[1];
+                        $percent = ($sizeSource[0] / $file['width'] > $sizeSource[1] / $file['height'])
+                            ? $file['width'] * 100 / $sizeSource[0]
+                            : $file['height'] * 100 / $sizeSource[1];
                     } else {
-                        $percent = $file['width'] >= $file['height'] ? $file['width'] * 100 / $sizeSource[0] : $file['height'] * 100 / $sizeSource[1];
+                        $percent = $file['width'] >= $file['height']
+                            ? $file['width'] * 100 / $sizeSource[0]
+                            : $file['height'] * 100 / $sizeSource[1];
                     }
                     $width = $percent * $sizeSource[0] / 100;
                     $height = $percent * $sizeSource[1] / 100;
                     $offsetX = $file['width'] > $width ? ($file['width'] - $width) / 2 : 0;
                     $offsetY = $file['height'] > $height ? ($file['height'] - $height) / 2 : 0;
+
                     $object = imagecreatetruecolor(
                         $file['width'] == 0 ? $width : $file['width'],
                         $file['height'] == 0 ? $height : $file['height']
@@ -441,13 +464,13 @@ class Local
     /**
      * @return $this
      */
-    private function _tag()
+    private function tag()
     {
-        $tagClassName = $this->fhm_tools->container->get('fhm.object.manager')->getCurrentModelName(
-            'FhmMediaBundle:MediaTag'
+        $tagClassName = $this->objectManager->getCurrentModelName('FhmMediaBundle:MediaTag');
+        $tagType = $this->objectManager->getCurrentRepository('FhmMediaBundle:MediaTag')->getByAlias(
+            $this->model->getType()
         );
-        $tagType = $this->fhm_tools->dmRepository('FhmMediaBundle:MediaTag')->getByAlias($this->model->getType());
-        $tagExtension = $this->fhm_tools->dmRepository('FhmMediaBundle:MediaTag')->getByAlias(
+        $tagExtension = $this->objectManager->getCurrentRepository('FhmMediaBundle:MediaTag')->getByAlias(
             $this->model->getExtension()
         );
         if (!$tagType) {
@@ -455,7 +478,7 @@ class Local
             $tagType->setName($this->model->getType());
             $tagType->setAlias($this->model->getType());
             $tagType->setActive(true);
-            $this->fhm_tools->dmPersist($tagType);
+            $this->objectManager->getManager()->persist($tagType);
         }
         if (!$tagExtension) {
             $tagExtension = new $tagClassName;
@@ -463,11 +486,12 @@ class Local
             $tagExtension->setAlias($this->model->getExtension());
             $tagExtension->setParent($tagType);
             $tagExtension->setActive(true);
-            $this->fhm_tools->dmPersist($tagExtension);
+            $this->objectManager->getManager()->persist($tagExtension);
         }
         $this->model->addTag($tagType);
         $this->model->addTag($tagExtension);
-        $this->fhm_tools->dmPersist($this->model);
+        $this->objectManager->getManager()->persist($this->model);
+        $this->objectManager->getManager()->flush();
 
         return $this;
     }
@@ -477,7 +501,7 @@ class Local
      *
      * @return $this
      */
-    private function _clearFolder($folder)
+    private function clearFolder($folder)
     {
         $dir = opendir($folder);
         while ($file = readdir($dir)) {
@@ -495,16 +519,16 @@ class Local
      *
      * @return array
      */
-    private function _filesInit($files)
+    private function filesInit($files)
     {
         $list = array();
         foreach ($files as $name => $size) {
-            $size = explode(':', $size);
+            $widthHeight = explode(':', $size);
             $list[$name] = array(
                 'name' => $name,
                 'watermark' => false,
-                'width' => $size[0],
-                'height' => isset($size[1]) ? $size[1] : null,
+                'width' => $widthHeight[0],
+                'height' => isset($widthHeight[1]) ? $widthHeight[1] : null,
             );
         }
 
@@ -516,7 +540,7 @@ class Local
      *
      * @return string
      */
-    private function _getImagecreatefrom($extension)
+    private function getImagecreatefrom($extension)
     {
         if ($extension == 'jpg') {
             $extension = 'jpeg';
@@ -530,7 +554,7 @@ class Local
      *
      * @return string
      */
-    private function _getImage($extension)
+    private function getImage($extension)
     {
         if ($extension == 'jpg') {
             $extension = 'jpeg';

@@ -2,8 +2,6 @@
 namespace Fhm\MediaBundle\Controller\Tag;
 
 use Fhm\FhmBundle\Controller\RefFrontController as FhmController;
-use Fhm\MediaBundle\Document\Media;
-use Fhm\MediaBundle\Document\MediaTag;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -25,7 +23,6 @@ class FrontController extends FhmController
         self::$source = "fhm";
         self::$domain = "FhmMediaBundle";
         self::$translation = "media.tag";
-        self::$class = MediaTag::class;
         self::$route = "media_tag";
     }
 

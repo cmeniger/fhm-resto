@@ -63,7 +63,7 @@ class MediaExtension extends \Twig_Extension
         return $env->render(
             '::FhmMedia/Template/Bloc/admin.'.($media->getType() == 'image' ? 'image' : 'file').'.html.twig',
             array(
-                'document' => $media
+                'object' => $media
             )
         );
     }
@@ -78,7 +78,7 @@ class MediaExtension extends \Twig_Extension
         return $env->render(
             '::FhmMedia/Template/Bloc/front.'.($media->getType() == 'image' ? 'image' : 'file').'.html.twig',
             array(
-                'document' => $media
+                'object' => $media
             )
         );
     }
@@ -111,7 +111,7 @@ class MediaExtension extends \Twig_Extension
         return $env->render(
             '::FhmMedia/Template/Bloc/editor.'.($media->getType() == 'image' ? 'image' : 'file').'.html.twig',
             array(
-                'document' => $media
+                'object' => $media
             )
         );
     }
@@ -128,7 +128,7 @@ class MediaExtension extends \Twig_Extension
             '::FhmMedia/Template/Bloc/download.html.twig',
             array(
                 'format' => $format,
-                'document' => $media
+                'object' => $media
             )
         );
     }
@@ -147,7 +147,7 @@ class MediaExtension extends \Twig_Extension
             array(
                 'url' => $url,
                 'title' => $title ? $title : $media->getName(),
-                'document' => $media
+                'object' => $media
             )
         );
     }

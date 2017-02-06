@@ -31,10 +31,10 @@
             <hr/>
             <div class="row">
                 <div class="columns small-6">
-                    {{ document|download|raw }}
+                    {{ object|download|raw }}
                 </div>
                 <div class="columns small-6">
-                    {% if document.getType() == 'image' %}
+                    {% if object.getType() == 'image' %}
                         {{ (instance.translation ~ '.admin.update.form.generate')|trans }}
                         <div class="switch tiny">
                             <input id="generateImage" type="checkbox" name="generate">
@@ -52,7 +52,7 @@
                     <div class="row">
                         <div class="column small-2">
                             <div class="switch tiny watermark">
-                                <input id="watermark{{ loop.index }}" type="checkbox" name="watermark[{{ name }}]" {{ document.hasWatermark(name) ? "checked" : "" }}>
+                                <input id="watermark{{ loop.index }}" type="checkbox" name="watermark[{{ name }}]" {{ object.hasWatermark(name) ? "checked" : "" }}>
                                 <label for="watermark{{ loop.index }}"></label>
                             </div>
                         </div>

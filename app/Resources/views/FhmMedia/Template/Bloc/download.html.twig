@@ -1,12 +1,12 @@
 <div class="media">
-    {% if document.getType() == 'image' %}
-        <a href="{{ document|media(format) }}" target="_blank" title="{{ document.getName() }}" download="{{ document.getAlias() ~ '.' ~ document.getExtension() }}">
-            <div class='data download image' media-id='{{ document.getId() }}' title='{{ ('media.bloc.download')|trans({},'FhmMediaBundle') }}' style="background:url('{{ document|media('s') }}') no-repeat center center;">
+    {% if object.getType() == 'image' %}
+        <a href="{{ object|media(format) }}" target="_blank" title="{{ object.getName() }}" download="{{ object.getAlias() ~ '.' ~ object.getExtension() }}">
+            <div class='data download image' media-id='{{ object.getId() }}' title='{{ ('media.bloc.download')|trans({},'FhmMediaBundle') }}' style="background:url('{{ object|media('s') }}') no-repeat center center;">
             </div>
         </a>
     {% else %}
-        <a href="{{ document|media(format) }}" target="_blank" title="{{ document.getName() }}">
-            <div class='data download file {{ document.getExtension() }}' media-id='{{ document.getId() }}' title='{{ ('media.bloc.download')|trans({},'FhmMediaBundle') }}'>
+        <a href="{{ object|media(format) }}" target="_blank" title="{{ object.getName() }}">
+            <div class='data download file {{ object.getExtension() }}' media-id='{{ object.getId() }}' title='{{ ('media.bloc.download')|trans({},'FhmMediaBundle') }}'>
             </div>
         </a>
     {% endif %}

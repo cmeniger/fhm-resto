@@ -4,7 +4,6 @@ namespace Fhm\MediaBundle\Controller\Tag;
 use Fhm\FhmBundle\Controller\RefAdminController as FhmController;
 use Fhm\FhmBundle\Form\Handler\Admin\CreateHandler;
 use Fhm\FhmBundle\Form\Handler\Admin\UpdateHandler;
-use Fhm\MediaBundle\Document\MediaTag;
 use Fhm\MediaBundle\Form\Type\Admin\Tag\CreateType;
 use Fhm\MediaBundle\Form\Type\Admin\Tag\UpdateType;
 use Symfony\Component\HttpFoundation\Request;
@@ -28,7 +27,6 @@ class AdminController extends FhmController
         self::$source = "fhm";
         self::$domain = "FhmMediaBundle";
         self::$translation = "media.tag";
-        self::$class = MediaTag::class;
         self::$route = "media_tag";
         self::$form = new \stdClass();
         self::$form->createType = CreateType::class;
@@ -116,8 +114,8 @@ class AdminController extends FhmController
     public function deleteAction($id)
     {
         $response = parent::deleteAction($id);
-        $document = $this->get('fhm_tools')->dmRepository(self::$repository)->find($id);
-        $this->_tagDelete($id, $document ? false : true);
+        $object = $this->get('fhm_tools')->dmRepository(self::$repository)->find($id);
+        $this->tagDelete($id, $object ? false : true);
 
         return $response;
     }
@@ -194,18 +192,6 @@ class AdminController extends FhmController
     }
 
     /**
-     * @Route
-     * (
-     *      path="/grouping",
-     *      name="fhm_admin_media_tag_grouping"
-     * )
-     */
-    public function groupingAction(Request $request)
-    {
-        return parent::groupingAction($request);
-    }
-
-    /**
      * Tag delete
      *
      * @param String $id
@@ -213,21 +199,21 @@ class AdminController extends FhmController
      *
      * @return self
      */
-    private function _tagDelete($id, $delete)
+    private function tagDelete($id, $delete)
     {
-        $documents = $this->get('fhm_tools')->dmRepository(self::$repository)->getSons($id);
-        foreach ($documents as $document) {
-            $this->_tagDelete($document->getId(), $delete);
+        $objects = $this->get('fhm_tools')->dmRepository(self::$repository)->getSons($id);
+        foreach ($objects as $object) {
+            $this->tagDelete($object->getId(), $delete);
             if ($delete) {
-                $medias = $this->get('fhm_tools')->dmRepository("FhmMediaBundle:Media")->getByTag($document->getId());
+                $medias = $this->get('fhm_tools')->dmRepository("FhmMediaBundle:Media")->getByTag($object->getId());
                 foreach ($medias as $media) {
-                    $media->removeTag($document);
+                    $media->removeTag($object);
                     $this->get('fhm_tools')->dmPersist($media);
                 }
-                $this->get('fhm_tools')->dmRemove($document);
+                $this->get('fhm_tools')->dmRemove($object);
             } else {
-                $document->setDelete(true);
-                $this->get('fhm_tools')->dmPersist($document);
+                $object->setDelete(true);
+                $this->get('fhm_tools')->dmPersist($object);
             }
         }
 

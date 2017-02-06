@@ -4,11 +4,13 @@ namespace Fhm\MediaBundle\Document;
 use Fhm\FhmBundle\Document\Fhm as FhmFhm;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Media
  * @MongoDB\Document(repositoryClass="Fhm\MediaBundle\Document\Repository\MediaRepository")
+ * @MongoDB\HasLifecycleCallbacks
  */
 class Media extends FhmFhm
 {
@@ -21,6 +23,16 @@ class Media extends FhmFhm
      * @var \Symfony\Component\HttpFoundation\File\UploadedFile
      */
     protected $file;
+
+    /**
+     * @MongoDB\Field(type="string")
+     */
+    protected $path;
+
+    /**
+     * @var
+     */
+    protected $temp;
 
     /**
      * @MongoDB\Field(type="string")

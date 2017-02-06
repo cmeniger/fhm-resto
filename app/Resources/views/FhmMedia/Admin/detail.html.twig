@@ -25,18 +25,18 @@
         <h2 id="anchor-admin-file">{{ (instance.translation ~ '.admin.detail.file.title')|trans }}</h2>
         <table class="fullwidth media-table">
             <tbody>
-                    {% if document.getType() == 'image' %}
+                    {% if object.getType() == 'image' %}
                         {% for name, size in files %}
                             <tr>
-                                <td>{{ document|download(instance, name)|raw }}</td>
+                                <td>{{ object|download(name)|raw }}</td>
                                 <td>{{ name }} ({{ size }})</td>
-                                <td>{{ document|media(name) }}</td>
+                                <td>{{ object|media(name) }}</td>
                             </tr>
                         {% endfor %}
                     {% else %}
                         <tr>
-                            <td>{{ document|download(instance)|raw }}</td>
-                            <td>{{ document|media() }}</td>
+                            <td>{{ object|download()|raw }}</td>
+                            <td>{{ object|media() }}</td>
                         </tr>
                     {% endif %}
             </tbody>

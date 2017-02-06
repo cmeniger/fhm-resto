@@ -94,13 +94,16 @@ class AdminController extends FhmController
                 }
                 $object->addTag($tag);
             }
-            $tab = explode('.', $object->getFile()->getClientOriginalName());
+            $file = $request->files->get('file');
+            $object->setFile($file);
+            $tab = explode('.', $file->getClientOriginalName());
             $name = $data['name'] ? $this->get('fhm_tools')->getUnique(
                 $object->getId(),
                 $data['name'],
                 true,
                 self::$repository
             ) : $tab[0];
+            $object->setAlias($object->getName());
             // Persist
             $object->setName($name);
             $object->setWatermark((array)$request->get('watermark'));
@@ -194,14 +197,14 @@ class AdminController extends FhmController
                 $object->addTag($tag);
             }
             // Persist
-            $process = $this->get('fhm_media_service')->setModel($object)->setWatermark($request->get('watermark'));
-            if ($object->getFile()) {
-                $process->execute();
-            } elseif ($request->get('generate') || $object->getWatermark() != $request->get('watermark')) {
+            $process = $this->get('fhm_media_service')->setModel($object);
+            if ($request->get('generate') || $object->getWatermark() != $request->get('watermark')) {
                 $process->generateImage();
                 $object->setWatermark((array)$request->get('watermark'));
-                $this->get('fhm_tools')->dmPersist($object);
+            } else {
+                $process->setWatermark($request->get('watermark'))->execute();
             }
+            $this->get('fhm_tools')->dmPersist($object);
             $this->get('session')->getFlashBag()->add(
                 'notice',
                 $this->trans(self::$translation.'.admin.update.flash.ok')
