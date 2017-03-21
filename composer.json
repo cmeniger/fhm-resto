@@ -35,7 +35,8 @@
         "doctrine/mongodb-odm-bundle"          : "~3.0",
         "doctrine/common"                      : "2.5.*@dev",
         "hwi/oauth-bundle"                     : "^0.5.1",
-        "egeloen/google-map-bundle"            : "dev-master",
+        "egeloen/google-map-bundle"            : "3.0.0",
+        "egeloen/serializer-bundle"            : "^1.0",
         "egeloen/google-map"                   : "^2.0@dev",
         "willdurand/geocoder"                  : "~2.0",
         "excelwebzone/recaptcha-bundle"        : "^1.4",
@@ -49,6 +50,7 @@
         "sensio/generator-bundle"              : "^3.0",
         "symfony/phpunit-bridge"               : "^3.0"
     },
+    "minimum-stability" : "dev",
     "scripts": {
         "post-install-cmd": [
             "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",

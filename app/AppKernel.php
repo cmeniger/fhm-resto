@@ -53,6 +53,7 @@ class AppKernel extends Kernel
             new Fhm\NoteBundle\FhmNoteBundle(),
             new Http\HttplugBundle\HttplugBundle(),
             new Fhm\HistoricBundle\FhmHistoricBundle(),
+            new Ivory\SerializerBundle\IvorySerializerBundle(),
         ];
         // Some bundles are only used while developing the application or during
         // the unit and functional tests. Therefore, they are only registered
