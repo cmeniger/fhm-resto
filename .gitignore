@@ -20,3 +20,6 @@
 /media/
 /web/datas/
 *.php~
+composer-setup.php
+composer.lock
+composer.phar

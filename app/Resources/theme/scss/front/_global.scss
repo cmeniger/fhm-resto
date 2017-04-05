@@ -42,7 +42,19 @@ img {
 img {
     -ms-interpolation-mode: bicubic;
 }
+.row {
+    max-width: 1200px;
+    &.full-width {
+        max-width: 100%;
+    }
+}
 
+.nopadding {
+    padding: 0;
+}
+.no-padding-top {
+    padding-top: 0 !important;
+}
 #map_canvas,
 .map_canvas {
     img,
