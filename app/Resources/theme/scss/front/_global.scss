@@ -48,7 +48,21 @@ img {
         max-width: 100%;
     }
 }
-
+.default-button {
+    border: none;
+    background: #e72d43;
+    border-radius: 43px;
+    color: $white;
+    display: inline-block;
+    font-family: $font-family-montserrat;
+    font-weight: 500;
+    font-size: 11px;
+    height: 45px;
+    line-height: 45px;
+    padding-left: 50px;
+    padding-right: 50px;
+    text-transform: uppercase;
+}
 .nopadding {
     padding: 0;
 }

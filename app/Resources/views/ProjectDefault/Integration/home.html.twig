@@ -7,6 +7,7 @@
     <meta charset="utf-8"/>
     <meta name="description" content="">
     <link href="https://fonts.googleapis.com/css?family=Merriweather:400,400i,700i" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Stalemate" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
     <meta name="format-detection" content="telephone=no">
@@ -30,13 +31,53 @@
                         <ul class="menu-depth-1 sub-menu">
                             <li class="has-submenu">
                                 <a href="#">Layout variants</a>
-                                <ul class="menu-depth-2 sub-menu">
+                                <ul class="menu-depth-2 nest-menu-depth sub-menu">
                                     <li>
                                         <a href="#">Layout variants</a>
                                     </li>
                                     <li class="has-submenu">
                                         <a href="#">Layout variants</a>
-                                        <ul class="menu-depth-3 sub-menu">
+                                        <ul class="menu-depth-3 nest-menu-depth sub-menu">
+                                            <li>
+                                                <a href="#">Layout variants</a>
+                                            </li>
+                                            <li>
+                                                <a href="#">Layout variants</a>
+                                            </li>
+                                            <li>
+                                                <a href="#">Layout variants</a>
+                                            </li>
+                                            <li>
+                                                <a href="#">Layout variants</a>
+                                            </li>
+                                            <li>
+                                                <a href="#">Layout variants</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a href="#">Layout variants</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Layout variants</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Layout variants</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="#">Layout variants</a>
+                            </li>
+                            <li class="has-submenu">
+                                <a href="#">Layout variants</a>
+                                <ul class="menu-depth-2 nest-menu-depth sub-menu">
+                                    <li>
+                                        <a href="#">Layout variants</a>
+                                    </li>
+                                    <li class="has-submenu">
+                                        <a href="#">Layout variants</a>
+                                        <ul class="menu-depth-3 nest-menu-depth sub-menu">
                                             <li>
                                                 <a href="#">Layout variants</a>
                                             </li>
@@ -71,12 +112,6 @@
                             <li>
                                 <a href="#">Layout variants</a>
                             </li>
-                            <li>
-                                <a href="#">Layout variants</a>
-                            </li>
-                            <li>
-                                <a href="#">Layout variants</a>
-                            </li>
                         </ul>
                     </li>
                 </ul>
@@ -99,12 +134,15 @@
             </nav>
         </header>
         <section id="main-content">
-            <div class="row-wrapper">
-                <div class="image-banner"></div>
+            <div class="row-wrapper banner-wrap">
+                <div class="image-banner" data-parallax="scroll" data-image-src="/images/back12.jpg"></div>
                 <div class="introduction">
                     <h2>Lorem ipsum dolor sit amet consectetur</h2>
                     <h1>True Italy in the heart of New York</h1>
                     <h2></h2>
+                    <p class="button-wrap">
+                        <a href="#">Scroll Down</a>
+                    </p>
                 </div>
             </div>
             <div class="row-wrapper two-cols">
@@ -144,12 +182,16 @@
                                 <h3>Sed scelerisque justo vitae</h3>
                                 <h2>Discover our restaurant</h2>
                                 <p>Curabitur convallis eget leo a sagittis. Duis et dui et ligula lacinia aliquet. Pellentesque ligula lacus, fringilla ac ex eget, viverra bibendum ante. Integer volutpat fringilla elit, vitae efficitur ex. Sed pretium molestie diam, eu eleifend quam porta a.</p>
+                                <p class="button-wrap">
+                                    <a href="#">More About Us</a>
+                                </p>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="row-wrapper three-cols">
+                <div class="parallax-image-offers" data-parallax="scroll" data-image-src="/images/back11.jpg"></div>
                 <header class="header-title">
                     <h3>Commodo aliquam risus mi</h3>
                     <h2>Best offers from <em>chef</em></h2>
@@ -221,7 +263,7 @@
                                 </ul>
                             </div>
                             <div class="tabs-panel-wrap">
-                                <div class="tabs-panel">
+                                <div class="tabs-panel active">
                                     <ul>
                                         <li>
                                             <div class="thumb-wrap">
@@ -293,6 +335,86 @@
                                             <div class="text-wrap">
                                                 <h4><span>Greek salad</span><span class="price">$19</span></h4>
                                                 <p>Etiam fermentum justo nec auctor pretium</p>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="tabs-panel">
+                                    <ul>
+                                        <li>
+                                            <div class="thumb-wrap">
+                                                <img src="/images/food_1-701x701.jpg" alt="" />
+                                            </div>
+                                            <div class="text-wrap">
+                                                <h4><span>Meatball tagliatelle</span><span class="price">$21</span></h4>
+                                                <p>Pellentesque habitant morbi tristique</p>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="thumb-wrap">
+                                                <img src="/images/food_3-701x701.jpg" alt="" />
+                                            </div>
+                                            <div class="text-wrap">
+                                                <h4><span>Garden salad</span><span class="price">$9</span></h4>
+                                                <p>Ut sapien sem, posuere sed nibh quis</p>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="thumb-wrap">
+                                                <img src="/images/food_2-701x701.jpg" alt="" />
+                                            </div>
+                                            <div class="text-wrap">
+                                                <h4><span>Asparagus spaghetti</span><span class="price">$17</span></h4>
+                                                <p>Netus et malesuada fames ac turpis egestas</p>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="thumb-wrap">
+                                                <img src="/images/food_5-701x701.jpg" alt="" />
+                                            </div>
+                                            <div class="text-wrap">
+                                                <h4><span>Caesar salad</span><span class="price">$11</span></h4>
+                                                <p>Aliquam at vestibulum urna, vitae tincidunt</p>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="tabs-panel">
+                                    <ul>
+                                        <li>
+                                            <div class="thumb-wrap">
+                                                <img src="/images/food_1-701x701.jpg" alt="" />
+                                            </div>
+                                            <div class="text-wrap">
+                                                <h4><span>Meatball tagliatelle</span><span class="price">$21</span></h4>
+                                                <p>Pellentesque habitant morbi tristique</p>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="thumb-wrap">
+                                                <img src="/images/food_3-701x701.jpg" alt="" />
+                                            </div>
+                                            <div class="text-wrap">
+                                                <h4><span>Garden salad</span><span class="price">$9</span></h4>
+                                                <p>Ut sapien sem, posuere sed nibh quis</p>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="thumb-wrap">
+                                                <img src="/images/food_2-701x701.jpg" alt="" />
+                                            </div>
+                                            <div class="text-wrap">
+                                                <h4><span>Asparagus spaghetti</span><span class="price">$17</span></h4>
+                                                <p>Netus et malesuada fames ac turpis egestas</p>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="thumb-wrap">
+                                                <img src="/images/food_5-701x701.jpg" alt="" />
+                                            </div>
+                                            <div class="text-wrap">
+                                                <h4><span>Caesar salad</span><span class="price">$11</span></h4>
+                                                <p>Aliquam at vestibulum urna, vitae tincidunt</p>
                                             </div>
                                         </li>
                                     </ul>
@@ -404,6 +526,7 @@
                 </div>
             </div>
             <div class="row-wrapper time-table">
+                <div class="parallax-image-shop" data-parallax="scroll" data-image-src="/images/rest2.jpg"></div>
                 <div class="row">
                     <div class="large-4 columns working-box">
                         <header class="header-title no-padding-top">
@@ -459,25 +582,28 @@
                 </header>
                 <div class="row">
                     <div class="large-12 columns">
-                        <div class="syn-slider">
-                            <div>Ut iaculis ligula arcu, sit amet efficitur elit rutrum at. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Maecenas lacinia consectetur nibh, a ultricies turpis blandit sit amet. Duis ac metus in lacus elementum imperdiet sodales sed ex. Curabitur convallis eget leo a sagittis.</div>
+                        <div class="slider-for">
+                            <div class="slick-slide">Ut iaculis ligula arcu, sit amet efficitur elit rutrum at. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Maecenas lacinia consectetur nibh, a ultricies turpis blandit sit amet. Duis ac metus in lacus elementum imperdiet sodales sed ex. Curabitur convallis eget leo a sagittis.</div>
+                            <div class="slick-slide">Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Maecenas lacinia consectetur nibh, a ultricies turpis blandit sit amet. Duis ac metus in lacus elementum imperdiet sodales sed ex. Curabitur convallis eget leo a sagittis.</div>
+                            <div class="slick-slide">nascetur ridiculus mus. Maecenas lacinia consectetur nibh, a ultricies turpis blandit sit amet. Duis ac metus in lacus elementum imperdiet sodales sed ex. Curabitur convallis eget leo a sagittis.</div>
                         </div>
-                        <div class="slider-track">
-                            <div class="track-list">
+                        <div class="syn-slider">
+                            <div>
                                 <img src="/images/user_5-135x135.jpg" alt="" />
                                 <p class="title">Mark Stephenson</p>
                                 <p>Mauris quis facilisis mi</p>
                             </div>
-                            <div class="track-list">
+                            <div>
                                 <img src="/images/user_3-135x135.jpg" alt="" />
                                 <p class="title">Mark Stephenson</p>
                                 <p>Mauris quis facilisis mi</p>
                             </div>
-                            <div class="track-list">
+                            <div>
                                 <img src="/images/user_1-135x135.jpg" alt="" />
                                 <p class="title">Mark Stephenson</p>
                                 <p>Mauris quis facilisis mi</p>
                             </div>
+
                         </div>
                     </div>
                 </div>
@@ -514,5 +640,9 @@
         </footer>
     </div>
 </div>
+<script src="/js/jquery.js"></script>
+<script src="/js/parallax.min.js"></script>
+<script src="/js/slick.min.js"></script>
+<script src="/js/main.js"></script>
 </body>
 </html>
