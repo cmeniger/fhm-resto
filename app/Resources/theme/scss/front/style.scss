@@ -243,10 +243,64 @@ body {
     width: 50%;
     text-align: center;
     &.onscreen {
-      h2,
-      h3,
+      &.info2 {
+        .info-inner {
+          opacity: 1;
+          left: 0 !important;
+        }
+      }
+      &.info1 {
+        p {
+          opacity: 1;
+          left: 0;
+        }
+      }
+      &.info3 {
+        .head-info {
+          opacity: 1;
+          left: 0;
+        }
+        p {
+          opacity: 1;
+          left: 0 !important;
+          .button-wrap {
+            left: 0 !important;
+          }
+        }
+      }
+    }
+    &.info1 {
       p {
-        opacity: 1;
+        opacity: 0;
+        left: -40px;
+        position: relative;
+        @include css3-prefix(transition, all 2s ease);
+      }
+    }
+    &.info2 {
+      .info-inner {
+        left: 40px;
+        position: relative;
+        opacity: 0;
+        @include css3-prefix(transition, all 2s ease);
+      }
+    }
+    &.info3 {
+      .head-info {
+        opacity: 0;
+        position: relative;
+        left: -50px;
+        @include css3-prefix(transition, all 2s ease);
+      }
+      p {
+        position: relative;
+        left: -40px;
+        opacity: 0;
+        @include css3-prefix(transition, all 3s ease);
+        &.button-wrap {
+          left: -60px;
+          @include css3-prefix(transition, all 4s ease);
+        }
       }
     }
     h2 {
@@ -255,8 +309,8 @@ body {
       font-size: 30px;
       line-height: 1em;
       margin-bottom: 30px;
-      opacity: 0;
-      @include css3-prefix(transition, all 0.2s ease);
+
+      @include css3-prefix(transition, all 1s ease);
       span {
         display: block;
       }
@@ -274,8 +328,6 @@ body {
       font-size: 32px;
       font-family: $font-family-stalemate;
       font-weight: normal;
-      opacity: 0;
-      @include css3-prefix(transition, all 0.2s ease);
     }
     p {
       font-size: 14px;
@@ -285,22 +337,40 @@ body {
       line-height: 28px;
       letter-spacing: 0;
       color: #7b7b7b;
-      opacity: 0;
-      @include css3-prefix(transition, all 0.2s ease);
+    }
+  }
+  .video-wrap {
+    height: 340px;
+    width: 50%;
+    float: left;
+    &.onscreen {
+      .image {
+        opacity: 1;
+        width: 100%;
+        height: 100%;
+      }
+
     }
   }
   &.video-box {
     margin-bottom: 100px;
     .image {
-      height: 340px;
+      width: 80%;
+      height: 80%;
+      top: 50%;
+      left: 50%;
       background: none;
       position: relative;
       border-radius: 10px;
+      opacity: 0;
+      @include css3-prefix(transition, all 1s ease);
       @include css3-prefix(box-shadow, 0 30px 120px 0 rgba($black, 0.25));
+      @include css3-prefix(transform, translate(-50%, -50%));
       iframe {
         width: 100%;
         height: 100%;
       }
+
     }
     .info {
       padding-top: 0;

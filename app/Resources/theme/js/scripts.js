@@ -9,6 +9,7 @@
             this.resizeScreen();
             this.menuBox();
             this.scrollDocument();
+            this.bannerHeight();
         },
         menuBox: function() {
             $('.menu-icon-wrap .menu-icon').click(function(e) {
@@ -26,6 +27,11 @@
                 $(this).toggleClass('expand');
                 $(this).next().slideToggle();
             });
+        },
+        bannerHeight: function() {
+            var windowHeight = $(window).height();
+            $('.banner-wrap').css('height', windowHeight);
+            $('.image-banner').css('min-height', windowHeight);
         },
         parallaxImage: function () {
             if ($('.image-banner').length) {
@@ -101,8 +107,9 @@
                 $('.tabs-list li').removeClass('active');
                 $('.tabs-panel-wrap .tabs-panel ul').removeAttr('style');
                 $(this).addClass('active');
-                $('.tabs-panel-wrap .tabs-panel').removeClass('active');
+                $('.tabs-panel-wrap .tabs-panel, .tabs-panel-wrap .tabs-panel .header-tab').removeClass('active');
                 $('.tabs-panel-wrap .tabs-panel').eq(tabIndex).addClass('active');
+                $('.tabs-panel-wrap .tabs-panel').eq(tabIndex).find('.header-tab').addClass('active');
             });
             $('.header-tab').click(function(e) {
                 var self = this;
@@ -124,6 +131,7 @@
             });
         },
         resizeScreen: function() {
+            var self = this;
             $(window).on("load resize",function(e){
                 if($('.flip-box').length) {
                     $('.flip-box .flip-back').show();
@@ -136,14 +144,25 @@
                         reverse: true
                     });
                 }
+                self.bannerHeight();
             });
         },
         scrollDocument: function () {
             $(window).scroll(function () {
                 if ($('.vc-row-wrapper .info').length) {
-                    if ($('.vc-row-wrapper .info').customIsOnScreen()) { // if target element is visible on screen after DOM loaded
-                        $('.vc-row-wrapper .info').addClass('onscreen');
+                    if ($('.vc-row-wrapper .info1').customIsOnScreen()) {
+                        $('.vc-row-wrapper .info1').addClass('onscreen');
                     }
+                    if ($('.vc-row-wrapper .info2').customIsOnScreen()) {
+                        $('.vc-row-wrapper .info2').addClass('onscreen');
+                    }
+                    if ($('.vc-row-wrapper .info3').customIsOnScreen()) {
+                        $('.vc-row-wrapper .info3').addClass('onscreen');
+                    }
+                    if ($('.vc-row-wrapper .video-wrap').customIsOnScreen()) {
+                        $('.vc-row-wrapper .video-wrap').addClass('onscreen');
+                    }
+
                 }
             });
         }
