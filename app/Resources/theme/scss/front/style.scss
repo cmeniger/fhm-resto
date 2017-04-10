@@ -242,12 +242,21 @@ body {
     padding: 50px 5% 0;
     width: 50%;
     text-align: center;
+    &.onscreen {
+      h2,
+      h3,
+      p {
+        opacity: 1;
+      }
+    }
     h2 {
       color: #313131;
       font-family: $font-family-merriweather;
       font-size: 30px;
       line-height: 1em;
       margin-bottom: 30px;
+      opacity: 0;
+      @include css3-prefix(transition, all 0.2s ease);
       span {
         display: block;
       }
@@ -265,6 +274,8 @@ body {
       font-size: 32px;
       font-family: $font-family-stalemate;
       font-weight: normal;
+      opacity: 0;
+      @include css3-prefix(transition, all 0.2s ease);
     }
     p {
       font-size: 14px;
@@ -274,6 +285,8 @@ body {
       line-height: 28px;
       letter-spacing: 0;
       color: #7b7b7b;
+      opacity: 0;
+      @include css3-prefix(transition, all 0.2s ease);
     }
   }
   &.video-box {
@@ -486,6 +499,9 @@ body {
         visibility: visible;
       }
     }
+    .header-tab {
+      display: none;
+    }
     ul {
       margin: 0;
       padding: 0;
@@ -557,7 +573,7 @@ body {
       }
     }
   }
-  &:nth-child(even) {
+  &:nth-child(odd) {
     .columns {
       &:nth-child(even) {
         .menu-list {
@@ -881,7 +897,8 @@ body {
     }
   }
   .syn-slider {
-    width: 490px;
+    max-width: 490px;
+    width: 100%;
     .slick-slide {
       width: 145px;
       margin: 0 10px;
@@ -938,7 +955,7 @@ body {
 .logo-device {
   display: none;
 }
-.mask {
+.wrap-mask {
   display: none;
   position: fixed;
   background: rgba($black,0.4);
@@ -947,8 +964,10 @@ body {
   width: 100%;
   height: 100%;
   z-index: 8;
+
 }
 .menu-icon-wrap {
+  display: none;
   float: right;
   border-left: 1px solid #e7e7e7;
   padding-left: 20px;
@@ -978,23 +997,37 @@ body {
   }
 }
 .device-menu-wrap {
-  display: none;
   background: #232323;
   color: #ffffff;
   position: fixed;
   top: 0;
-  left: 0;
+  left: -260px;
   overflow-x: hidden;
   overflow-y: auto;
   width: 260px;
   height: 100%;
   z-index: 9;
-
+  @include css3-prefix(transition, all 0.2s ease);
+  &.expand {
+    left: 0;
+  }
 }
 .device-menu {
   width: 100%;
   position: relative;
   padding-top: 30px;
+  .close-menu {
+    font-size: 0;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 10px;
+    height: 10px;
+    .fa {
+      font-size: 12px;
+      color: $white;
+    }
+  }
   ul {
     margin: 0;
     padding: 0;
@@ -1012,6 +1045,7 @@ body {
     line-height: 28px;
     letter-spacing: 0;
     color: #7b7b7b;
+    position: relative;
     a {
       display: block;
       font-family: $font-family-montserrat;
@@ -1025,6 +1059,77 @@ body {
       padding: 15px 25px;
       position: relative;
     }
+    .dotted-link {
+      position: absolute;
+      top: 50%;
+      right: 24px;
+      display: block;
+      width: 3px;
+      height: 3px;
+      margin-top: -1.5px;
+      background: rgba($white,0.3);
+      border-radius: 50%;
+      -webkit-box-shadow: -4px 0 0 0 rgba(255,255,255,.3), 4px 0 0 0 rgba(255,255,255,.3);
+      box-shadow: -4px 0 0 0 rgba(255,255,255,.3), 4px 0 0 0 rgba(255,255,255,.3);
+      -webkit-transition: background .3s ease, box-shadow .3s ease;
+      -moz-transition: background .3s ease, box-shadow .3s ease;
+      transition: background .3s ease, box-shadow .3s ease;
+    }
+    &.has-submenu,
+    &.has-subchild {
+      .sidr-dropdown-toggler {
+        display: block;
+        width: 50px;
+        height: 40px;
+        position: absolute;
+        top: 0;
+        right: 0;
+        line-height: 1;
+        cursor: pointer;
+        &.expand {
+          &:hover {
+            &:before {
+              -webkit-box-shadow: none;
+              box-shadow: none;
+              background: none;
+            }
+          }
+          &:before {
+            content: "\f00d";
+            width: 10px;
+            height: 10px;
+            font: normal normal normal 12px/1 FontAwesome;
+            color: $white;
+            -webkit-box-shadow: none;
+            box-shadow: none;
+            background: none;
+            left: 50%;
+            right: inherit;
+            @include css3-prefix(transform, translate(-50%, -50%));
+          }
+        }
+        &:hover {
+          &:before {
+            color: $white;
+            background: rgba($white, 1);
+            -webkit-box-shadow: -4px 0 0 0 rgba($white,1), 4px 0 0 0 rgba($white,1);
+            box-shadow: -4px 0 0 0 rgba($white,1), 4px 0 0 0 rgba($white,1);
+          }
+        }
+        &:before {
+          content: "";
+          @extend .dotted-link;
+        }
+      }
+      > a {
+
+        &:hover {
+          &:after {
+            opacity: 1;
+          }
+        }
+      }
+    }
   }
   .sub-menu {
     display: none;
@@ -1032,9 +1137,19 @@ body {
       a {
         font-family: $font-family-opensans;
         font-size: 13px;
-        padding-left: 65px;
+        padding-left: 35px;
         font-weight: normal;
         text-transform: none;
+      }
+    }
+    ul {
+
+      background: #2b2b2b;
+      li {
+        border-bottom: 1px solid #292929;
+        a {
+          padding-left: 25px;
+        }
       }
     }
   }

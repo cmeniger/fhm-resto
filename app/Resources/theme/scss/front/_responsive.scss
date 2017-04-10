@@ -73,7 +73,100 @@
         }
       }
     }
+    .menu-icon-wrap {
+      display: block;
+      float: right;
+      border-left: 1px solid #e7e7e7;
+      padding-left: 20px;
+      height: 70px;
+      position: relative;
+      width: 56px;
+      @include css3-prefix(transition, all 0.2s ease);
+      a {
+        overflow: hidden;
+        position: absolute;
+        top: 50%;
+        right: 0;
+        display: block;
+        width: 30px;
+        height: auto;
+        @include css3-prefix(transform, translateY(-50%));
+        &:hover {
+          span {
+            &:nth-child(1) {
+              @include css3-prefix(animation, animationFrames1 linear 1s);
+              @include css3-prefix(animation-iteration-count, infinite);
+              @include css3-prefix(transform-origin, 50% 50%);
+            }
+            &:nth-child(2) {
+              @include css3-prefix(animation, animationFrames2 linear 0.8s);
+              @include css3-prefix(animation-iteration-count, infinite);
+              @include css3-prefix(transform-origin, 50% 50%);
+            }
+            &:nth-child(3) {
+              @include css3-prefix(animation, animationFrames3 linear 1.2s);
+              @include css3-prefix(animation-iteration-count, infinite);
+              @include css3-prefix(transform-origin, 50% 50%);
+            }
+          }
+        }
+      }
+      @include keyframes(animationFrames1) {
+        0% {
+          width: 24px;
+        }
+        50% {
+          width: 20px;
+        }
+        80% {
+          width: 26px;
+        }
+        100% {
+          width: 26px;
+        }
+      }
+      @include keyframes(animationFrames2) {
+        0% {
+          width: 20px;
+        }
+        50% {
+          width: 16px;
+        }
+        80% {
+          width: 22px;
+        }
+        100% {
+          width: 22px;
+        }
+      }
+      @include keyframes(animationFrames3) {
+        0% {
+          width: 24px;
+        }
+        50% {
+          width: 22px;
+        }
+        80% {
+          width: 26px;
+        }
+        100% {
+          width: 26px;
+        }
+      }
 
+      span {
+        width: 24px;
+        height: 2px;
+        background: $black;
+        display: block;
+        margin: 1px 0;
+        float: right;
+        @include css3-prefix(transition, all 2s ease);
+        &:nth-child(2) {
+          width: 20px;
+        }
+      }
+    }
   }
 }
 @media only screen and (max-width: 799px) {
@@ -126,6 +219,75 @@
     .bottom-four-cols {
       .columns {
         text-align: center;
+      }
+    }
+    .tabs-wrap {
+      .tabs-list {
+        display: none;
+      }
+      .tabs-panel-wrap {
+        .tabs-panel {
+          position: relative;
+          visibility: visible;
+          opacity: 1;
+          display: block;
+          ul {
+            display: none;
+          }
+          .header-tab {
+            display: block;
+            border: 1px solid #d6d6d6;
+            color: #28262b;
+            background: $white;
+            border-radius: 4px;
+            padding: 5px 0;
+            text-align: center;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            font-family: $font-family-montserrat;
+            font-size: 11px;
+            font-weight: 500;
+            &.active {
+              color: $white;
+              background: #e72d43;
+              border: none;
+              margin-bottom: 55px;
+            }
+          }
+          &.active {
+            ul {
+              display: block;
+            }
+          }
+        }
+      }
+    }
+    .time-table {
+      .row {
+        width: 94%;
+      }
+      .working-box {
+        height: auto;
+      }
+      .table-box {
+        height: auto;
+      }
+    }
+    .row-slide {
+      .syn-slider {
+        .slick-slide {
+          width: 125px;
+        }
+      }
+      .slider-for {
+        width: 100%;
+
+        .pager-right,
+        .pager-left,
+        .slick-prev,
+        .slick-next {
+          display: none !important;
+        }
       }
     }
   }
