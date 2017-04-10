@@ -1,0 +1,29 @@
+{% trans_default_domain instance.domain %}
+{% extends "::FhmFhm/Admin/index.html.twig" %}
+
+{% block content_link_data %}
+    {{ parent() }}
+    <li>
+        <a href="{{ path('fhm_admin_product_ingredient') }}" class="button small"><i class="fa fa-th-large"></i> {{ ('product.ingredient.admin.index.link')|trans }}
+        </a>
+    </li>
+{% endblock %}
+
+{% block content_data_header %}
+    {{ parent() }}
+    <th>{{ (instance.translation ~ '.admin.index.table.header.image')|trans }}</th>
+    <th>{{ (instance.translation ~ '.admin.index.table.header.categories')|trans }}</th>
+    <th>{{ (instance.translation ~ '.admin.index.table.header.price')|trans }} {{ macroSort.print('price', sort) }}</th>
+{% endblock %}
+
+{% block content_data_body %}
+    {{ parent() }}
+    <td><img src={{ document.getMedia() ? document.getMedia()|media('xs') :   '/images/common/logo.png' }} width="70px">
+    </td>
+    <td>
+        {% for category in document.getCategories() %}
+            | <a href="{{ path('fhm_admin_category_update', {'id': category.getId()}) }}" title="{{ (instance.translation ~ '.admin.index.table.action.detail')|trans }}">{{ category.getroute() }}</a>
+        {% endfor %}
+    </td>
+    <td>{{ document.getPrice() }} €</td>
+{% endblock %}

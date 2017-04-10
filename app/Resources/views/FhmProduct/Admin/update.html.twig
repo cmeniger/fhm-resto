@@ -1,0 +1,64 @@
+{% trans_default_domain instance.domain %}
+{% extends "::FhmFhm/Admin/update.html.twig" %}
+
+{% block content_data_fields_data %}
+    <div class="large-6 medium-6 small-12 columns">
+        <fieldset>
+            <legend>{{ (instance.translation ~ '.admin.update.form.fieldset.data')|trans }}</legend>
+            <div class="row">
+                {{ form_label(form.name) }}
+                {{ form_errors(form.name) }}
+                {{ form_widget(form.name) }}
+            </div>
+            <div class="row">
+                {{ form_label(form.description) }}
+                {{ form_errors(form.description) }}
+                {{ form_widget(form.description) }}
+            </div>
+            <div class="row">
+                {{ form_label(form.title) }}
+                {{ form_errors(form.title) }}
+                {{ form_widget(form.title) }}
+            </div>
+            <div class="row">
+                {{ form_label(form.price) }}
+                {{ form_errors(form.price) }}
+                {{ form_widget(form.price, {'attr': {'placeholder': '€' }}) }}
+
+            </div>
+            <div class="row">
+                {{ form_label(form.media) }}
+                {{ form_errors(form.media) }}
+                {{ form_widget(form.media) }}
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend>{{ (instance.translation ~ '.admin.update.form.fieldset.categories')|trans }}</legend>
+            <div class="row">
+                {{ form_label(form.categories) }}
+                {{ form_errors(form.categories) }}
+                {{ form_widget(form.categories) }}
+            </div>
+        </fieldset>
+    </div>
+    <div class="large-6 medium-6 small-12 columns">
+        <fieldset>
+            <legend>{{ (instance.translation ~ '.admin.update.form.fieldset.ingredients')|trans }}</legend>
+            <div class="row">
+                {{ form_label(form.ingredient) }}
+                {{ form_errors(form.ingredient) }}
+                {{ form_widget(form.ingredient) }}
+            </div>
+            <div class="row">
+                {{ form_label(form.parent) }}
+                {{ form_errors(form.parent) }}
+                {{ form_widget(form.parent) }}
+            </div>
+            <div class="row">
+                {{ form_label(form.ingredients) }}
+                {{ form_errors(form.ingredients) }}
+                {{ form_widget(form.ingredients) }}
+            </div>
+        </fieldset>
+    </div>
+{% endblock %}

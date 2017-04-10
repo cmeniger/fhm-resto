@@ -1,0 +1,5 @@
+services:
+    fhm_grouping_category:
+        class: Project\CategoryBundle\Services\Grouping
+        arguments: ['@service_container']
+

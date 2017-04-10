@@ -1,0 +1,41 @@
+{% trans_default_domain instance.domain %}
+<div id="products" class="row" data-path="{{ path('fhm_api_product_data_admin') }}">
+    <div class="large-2 columns" id="products-ingredients">
+        {% if ingredientMains %}
+            <ul class="side-nav">
+                <li><a href="#" product-ingredient="">{{ (instance.translation ~ '.admin.index.ingredients.all')|trans }}</a></li>
+                <li>
+                    <hr/>
+                </li>
+                {% for ingredientMain in ingredientMains %}
+                    <li><a href="#" product-ingredient="{{ ingredientMain.getId() }}">{{ ingredientMain|ingredientLabel|raw }}</a></li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </div>
+    <div class="large-10 columns" id="products-datas">
+        {{ ingredient ? ingredient|ingredientBreadcrumbs|raw : '' }}
+        {% if ingredientSons %}
+            <div class="row bloc" id="datas-sons">
+                {% for ingredientSon in ingredientSons %}
+                    <div class="large-3 medium-4 small-6 columns end">
+                        {{ ingredientSon|ingredientBloc|raw }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+        {% if documents %}
+            <div class="row bloc" id="datas-products">
+                {% for document in documents %}
+                    <div class="large-3 medium-4 small-6 columns end">
+                        {{ document|productBloc(instance)|raw }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="panel nodata bloc">
+                <p>{{ (instance.translation ~ '.admin.index.nodata')|trans }}</p>
+            </div>
+        {% endif %}
+    </div>
+</div>

@@ -1,0 +1,10 @@
+{% trans_default_domain instance.domain %}
+{% extends "::FhmFhm/Admin/detail.html.twig" %}
+
+{% block content_link_data %}
+    {{ parent() }}
+    <li>
+        <a href="{{ path('fhm_admin_product_ingredient') }}" class="button"><i class="fa fa-ingredients"></i> {{ ('product.ingredient.admin.index.link')|trans }}
+        </a>
+    </li>
+{% endblock %}

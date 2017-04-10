@@ -208,7 +208,18 @@
             </a>
         </div>
     {% endblock %}
-    {% block menu_project %}{% endblock %}
+    {% block menu_project %}
+        {# category #}
+        <div class="link">
+            <a href="{{ path("fhm_admin_category") }}" title="{{ ('category.admin.index.title')|trans({}, 'FhmCategoryBundle') }}"><i class="fa fa-fw fa-star-o menu"></i>{{ ('category.admin.index.link')|trans({}, 'FhmCategoryBundle') }}</a>
+            <span>
+                <a href="{{ path("fhm_admin_category_import") }}" title="{{ ('category.admin.import.link')|trans({}, 'FhmNoteBundle') }}"><i class="fa fa-fw fa-download"></i></a>
+                <a href="{{ path("fhm_admin_category_export") }}" title="{{ ('category.admin.export.link')|trans({}, 'FhmNoteBundle') }}"><i class="fa fa-fw fa-upload"></i></a>
+            </span>
+        </div>
+        <hr>
+
+    {% endblock %}
     {% block menu_action %}
         {% block menu_action_separator %}
             <hr>

@@ -1,0 +1,119 @@
+{% trans_default_domain instance.domain %}
+{#{% extends "::FhmFhm/Front/detail.html.twig" %}#}
+{% extends "::layout_resto.front.html.twig" %}
+    {% block breadcrumbs %}
+    {% endblock %}
+{% block header %}
+    <div class="header-wrapper">
+        <div class="row">
+            <div class="logo left">
+                <a href="{{ path('project_reset') }}">
+                    {% if site  and site.getLogo() %}
+                        <img src="{{ site.getLogo()|media('m') }}" alt="logo_aldabke"/>
+                    {% else %}
+                        <img src="{{ asset("images/common/logo.png") }}" alt="logo_aldabke"/>
+                    {% endif %}
+                </a>
+            </div>
+            <div class="menu right">
+                {% render(path('fhm_api_menu_restaurant',{'template': "menurestaurant", 'id': site.getMenu.getId() })) %}
+            </div>
+            <div class="network right">
+                <ul class="inline-list reset-margin">
+                    {% if site %}
+                        {% if site.getSocialFacebook() %}
+                            <li>
+                                <a href="{{ site.getSocialFacebook() }}"><i class="fa fa-facebook"></i></a>
+                            </li>
+                        {% endif %}
+                        {% if site.getSocialTwitter() %}
+                            <li>
+                                <a href="{{ site.getSocialTwitter() }}"><i class="fa fa-twitter"></i></a>
+                            </li>
+                        {% endif %}
+                        {% if site.getSocialGoogle() %}
+                            <li>
+                                <a href="{{ site.getSocialGoogle() }}"><i class="fa fa-google-plus"></i></a>
+                            </li>
+                        {% endif %}
+                        {% if site.getSocialInstagram() %}
+                            <li>
+                                <a href="{{ site.getSocialInstagram() }}"><i class="fa fa-instagram"></i></a>
+                            </li>
+                        {% endif %}
+                        {% if site.getSocialYoutube() %}
+                            <li>
+                                <a href="{{ site.getSocialYoutube() }}"><i class="fa fa-youtube"></i></a>
+                            </li>
+                        {% endif %}
+                        {% if site.getSocialFlux() %}
+                            <li>
+                                <a href="{{ site.getSocialFlux() }}"><i class="fa fa-rss"></i></a>
+                            </li>
+                        {% endif %}
+                        {% if site.getSocialTripadvisor() %}
+                            <li><a href="{{ site.getSocialTripadvisor() }}"><i class="fa fa-tripadvisor"></i></a></li>
+                        {% endif %}
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </div>
+    {{ breadcrumbs is defined ? macroBreadcrumbs.print(breadcrumbs) : '' }}
+
+{% endblock %}
+
+{% block content %}
+
+    {# Links #}
+    {% block content_link %}
+    <div class="row">
+        <ul class="button-group">
+            {% block content_link_data %}
+                <li>
+                    <a href="{{ instance.lastroute }}" class="button secondary"><i class="fa fa-angle-double-left"></i></a>
+                </li>
+            {% endblock %}
+        </ul>
+    </div>
+{% endblock %}
+
+    {# Document #}
+    {% block content_data %}
+        <div id="content_data" class="row">
+        <h2>{{ (instance.translation ~ '.front.detail.data.title')|trans }}</h2>
+        {% block conten_data_information %}
+            <div class="small-8 small-centered align-center">
+                <div class="product-detail-wrapper gutter-margin-top gutter-margin-bottom">
+                    <div class="product-detail-card">
+                        <div class="product-detail-image-card">
+                            <div class="wrapper" style="background-image: url('{{ document.getMedia() ? document.getMedia()|media('s') :   '/images/common/logo.png' }}');">
+                            <img src='{{ document.getMedia() ? document.getMedia()|media('s') :   '/images/common/logo.png' }}'>
+                        </div>
+                        <span class="product-detail-price-card">{{ document.getPrice() }}<small>€</small></span>
+                    </div>
+                    <div class="product-detail-category-card">
+                        <span class="product-category">{% for categoryproduct in  document.getCategories() %}{% for category in categories %}{{ category.getId() == categoryproduct.getId() ? category.getName() : '' }}{% endfor %}{% endfor %}</span>
+                    </div>
+                    <div class="product-detail-name-card">
+                        <span class="product-name">{{ document.getName() }}</span>
+                    </div>
+                    <div class="product-detail-decription-card">
+                        <p class="product-description">
+                            {{ document.getDescription() }}
+                        </p>
+                    </div>
+                    <div class="product-detail-ingredients-card">
+                                <span class="product-ingredient">
+                                    {% for ingredient in document.getIngredients() %}
+                                        <a href="{{ path('fhm_product_ingredient_lite', {'id': ingredient.getAlias() ? ingredient.getAlias() : ingredient.getId() }) }}">{{ ingredient.getName() }}</a> |
+                                    {% endfor %}
+                                </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endblock %}
+        </div>
+    {% endblock %}
+{% endblock %}
