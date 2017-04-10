@@ -334,7 +334,6 @@ body {
   }
   .flip-box {
     width: 100%;
-    //height: 302px;
     display: block;
     margin-bottom: 30px;
   }
@@ -375,6 +374,16 @@ body {
     p {
       font-size: 13px;
       color: rgba($white,0.85);
+      &:after{
+        content:'';
+        top:25px;
+        height: 13px;
+        width : 43px;
+        margin: 15px auto 0;
+        display: block;
+        text-align: center;
+        background: url(/images/small_white_delim.png) no-repeat 0 0;
+      }
     }
   }
 }

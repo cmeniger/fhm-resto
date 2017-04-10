@@ -20107,6 +20107,15 @@ body {
     .three-cols .description p {
       font-size: 13px;
       color: rgba(255, 255, 255, 0.85); }
+      .three-cols .description p:after {
+        content: '';
+        top: 25px;
+        height: 13px;
+        width: 43px;
+        margin: 15px auto 0;
+        display: block;
+        text-align: center;
+        background: url(/images/small_white_delim.png) no-repeat 0 0; }
 
 .header-title {
   width: 100%;
