@@ -1,1 +1,280 @@
-!function(t,e,n){function s(t){this.settings=t,this.page=1,this.step=0,this.count=0,this.current=0,this.map=null,this.markers=[],this.clusterer=null,this.play=!0,this.init()}s.prototype={init:function(){this.mapCanvas=n.getElementById(this.settings.anchors.map),this.map=new google.maps.Map(this.mapCanvas,this.settings.map),this.infowindow=new google.maps.InfoWindow,this.mapCanvas.gMap=this.map,this.settings.map.cluster&&(this.clusterer=new MarkerClusterer(this.map,[],this.settings.cluster)),this.initCounter(),this.initAroundme()},initCounter:function(){var e=this;t.ajax({type:"GET",url:e.settings.url.counter,success:function(t){e.page=t.page,e.step=t.step,e.count=t.count,e.addCounter(),e.addMarkers()}})},initAroundme:function(){var e=this;if(e.settings.map.aroundme){var n=new google.maps.Marker({position:null,map:e.map,draggable:!1,visible:!1,icon:"/images/marker-aroundme.png"}),s=function(t){var s=new google.maps.LatLng(t.coords.latitude,t.coords.longitude);n.setPosition(s),n.setVisible(!0),e.map.setCenter(s),e.map.setZoom(17)},r=function(t){console.warn("ERROR("+t.code+"): "+t.message)};t("#"+e.settings.anchors.aroundme).click(function(t){navigator.geolocation&&navigator.geolocation.getCurrentPosition(s,r,e.settings.aroundme)})}else t("#"+e.settings.anchors.aroundme).hide()},addCounter:function(){var e=this,n=0==e.count?100:Math.floor(100*e.current/e.count),s=t("#"+e.settings.anchors.counter),r=n>=100?"refresh":e.play?"pause":"play";e.settings.map.counter&&(s.html(""),e.settings.counter.refresh&&s.append("<div class='actions'><i class='fa fa-"+r+"' id='counter-play'></i></div>"),e.settings.counter.progressbar&&s.append("<div class='progressbar'><div class='bar'><div class='current' style='width:"+n+"%;'></div></div><div class='text'>"+n+"%</div></div>"),e.settings.counter.count&&s.append("<div class='count'>"+e.current+" / "+e.count+"</div>"),t("#counter-play").click(function(t){e.play=!e.play,n>=100?(e.current=0,e.page=1,e.play=!0,e.settings.map.cluster&&(e.clusterer=new MarkerClusterer(e.map,[],e.settings.cluster)),e.removeMarkers(),e.initCounter()):(e.addCounter(),e.addMarkers())}))},addMarkers:function(){var e=this;t.ajax({type:"GET",url:e.settings.url.marker,data:{page:e.page,step:e.step},success:function(t){e.current+=t.length,e.page+=1,e.current<e.count&&e.play&&e.addMarkers();for(var n=0;n<t.length;n++){var s=new google.maps.Marker({position:new google.maps.LatLng(t[n].lat,t[n].lng),map:e.map,title:t[n].name,draggable:!1,visible:!0,icon:"/images/marker.png"});e.markers.push(s),e.addPopup(s,t[n].id)}e.settings.map.cluster&&e.current>=e.count&&(e.clusterer=new MarkerClusterer(e.map,e.markers,e.settings.cluster)),e.addCounter()}})},removeMarkers:function(){for(var t=this,e=0;e<t.markers.length;e++)t.markers[e].setMap(null);t.markers=[]},addPopup:function(e,n){var s=this;google.maps.event.addListener(e,"click",function(){s.infowindow.close(),s.infowindow.setContent("<i class='fa fa-refresh fa-spin' style='font-size:30px;'></i>"),s.infowindow.open(s.map,e),t.ajax({type:"GET",url:s.settings.url.popup,data:{id:n},success:function(t){s.infowindow.setContent(t)}})})}},t.fn.gmap=function(e){var n=t.extend({anchors:{map:"map-canvas",counter:"map-counter",aroundme:"map-aroundme"},url:{counter:"",marker:"",popup:""},map:{center:{lat:46,lng:5},zoom:5,scrollwheel:!0,panControl:!0,rotateControl:!0,scaleControl:!0,streetViewControl:!0,mapTypeControl:!0,overviewMapControl:!0,zoomControl:!0,counter:!0,aroundme:!0,cluster:!1,styles:[]},counter:{refresh:!0,progressbar:!0,count:!0},aroundme:{enableHighAccuracy:!0,timeout:5e3,maximumAge:0},cluster:{gridSize:50,maxZoom:15,zoomOnClick:!1,styles:[{url:"/images/clusters_03.png",textColor:"white",fontWeight:"light",textSize:14,width:50,height:50},{url:"/images/clusters_02.png",textColor:"white",fontWeight:"light",textSize:15,width:50,height:50},{url:"/images/clusters_01.png",textColor:"white",fontWeight:"light",textSize:16,width:50,height:50}]}},e);new s(n)}}(jQuery,window,window.document);
+(function ($, window, document)
+{
+    function Plugin(settings)
+    {
+        this.settings = settings;
+        this.page = 1;
+        this.step = 0;
+        this.count = 0;
+        this.current = 0;
+        this.map = null;
+        this.markers = [];
+        this.clusterer = null;
+        this.play = true;
+        this.init();
+    }
+
+    Plugin.prototype = {
+        init:          function ()
+                       {
+                           var parent = this;
+                           this.mapCanvas = document.getElementById(this.settings.anchors.map);
+                           this.map = new google.maps.Map(this.mapCanvas, this.settings.map);
+                           this.infowindow = new google.maps.InfoWindow();
+                           this.mapCanvas.gMap = this.map;
+                           if(this.settings.map.cluster)
+                           {
+                               this.clusterer = new MarkerClusterer(this.map, [], this.settings.cluster);
+                           }
+                           this.initCounter();
+                           this.initAroundme();
+                       },
+        initCounter:   function ()
+                       {
+                           var parent = this;
+                           $.ajax
+                           ({
+                               type:    'GET',
+                               url:     parent.settings.url.counter,
+                               success: function (data)
+                                        {
+                                            parent.page = data.page;
+                                            parent.step = data.step;
+                                            parent.count = data.count;
+                                            parent.addCounter();
+                                            parent.addMarkers();
+                                        }
+                           });
+                       },
+        initAroundme:  function ()
+                       {
+                           var parent = this;
+                           if(parent.settings.map.aroundme)
+                           {
+                               var marker = new google.maps.Marker
+                               ({
+                                   position:  null,
+                                   map:       parent.map,
+                                   draggable: false,
+                                   visible:   false,
+                                   icon:      '/images/marker-aroundme.png'
+                               });
+                               var success = function (position)
+                               {
+                                   var location = new google.maps.LatLng(position.coords.latitude, position.coords.longitude)
+                                   marker.setPosition(location);
+                                   marker.setVisible(true);
+                                   parent.map.setCenter(location);
+                                   parent.map.setZoom(17);
+                               };
+                               var error = function (error)
+                               {
+                                   console.warn('ERROR(' + error.code + '): ' + error.message);
+                               };
+                               $('#' + parent.settings.anchors.aroundme).click(function (e)
+                               {
+                                   if(navigator.geolocation)
+                                   {
+                                       navigator.geolocation.getCurrentPosition(success, error, parent.settings.aroundme);
+                                   }
+                               });
+                           }
+                           else
+                           {
+                               $('#' + parent.settings.anchors.aroundme).hide();
+                           }
+                       },
+        addCounter:    function ()
+                       {
+                           var parent = this;
+                           var percent = parent.count == 0 ? 100 : Math.floor(parent.current * 100 / parent.count);
+                           var container = $('#' + parent.settings.anchors.counter);
+                           var action = percent >= 100 ? 'refresh' : parent.play ? 'pause' : 'play'
+                           if(parent.settings.map.counter)
+                           {
+                               container.html('');
+                               if(parent.settings.counter.refresh)
+                               {
+                                   container.append("<div class='actions'><i class='fa fa-" + action + "' id='counter-play'></i></div>");
+                               }
+                               if(parent.settings.counter.progressbar)
+                               {
+                                   container.append("<div class='progressbar'><div class='bar'><div class='current' style='width:" + percent + "%;'></div></div><div class='text'>" + percent + "%</div></div>");
+                               }
+                               if(parent.settings.counter.count)
+                               {
+                                   container.append("<div class='count'>" + parent.current + " / " + parent.count + "</div>");
+                               }
+                               $('#counter-play').click(function (e)
+                               {
+                                   parent.play = !parent.play;
+                                   if(percent >= 100)
+                                   {
+                                       parent.current = 0;
+                                       parent.page = 1;
+                                       parent.play = true;
+                                       if(parent.settings.map.cluster)
+                                       {
+                                           parent.clusterer = new MarkerClusterer(parent.map, [], parent.settings.cluster);
+                                       }
+                                       parent.removeMarkers();
+                                       parent.initCounter();
+                                   }
+                                   else
+                                   {
+                                       parent.addCounter();
+                                       parent.addMarkers();
+                                   }
+                               });
+                           }
+                       },
+        addMarkers:    function ()
+                       {
+                           var parent = this;
+                           $.ajax
+                           ({
+                               type:    'GET',
+                               url:     parent.settings.url.marker,
+                               data:    {
+                                   page: parent.page,
+                                   step: parent.step
+                               },
+                               success: function (data)
+                                        {
+                                            parent.current += data.length;
+                                            parent.page += 1;
+                                            if(parent.current < parent.count && parent.play)
+                                            {
+                                                parent.addMarkers();
+                                            }
+                                            for(var i = 0; i < data.length; i++)
+                                            {
+                                                var marker = new google.maps.Marker
+                                                ({
+                                                    position:  new google.maps.LatLng(data[i].lat, data[i].lng),
+                                                    map:       parent.map,
+                                                    title:     data[i].name,
+                                                    draggable: false,
+                                                    visible:   true,
+                                                    icon:      '/images/marker.png'
+                                                });
+                                                parent.markers.push(marker);
+                                                parent.addPopup(marker, data[i].id);
+                                            }
+                                            if(parent.settings.map.cluster && parent.current >= parent.count)
+                                            {
+                                                parent.clusterer = new MarkerClusterer(parent.map, parent.markers, parent.settings.cluster);
+                                            }
+                                            parent.addCounter();
+                                        }
+                           });
+                       },
+        removeMarkers: function ()
+                       {
+                           var parent = this;
+                           for(var i = 0; i < parent.markers.length; i++)
+                           {
+                               parent.markers[i].setMap(null);
+                           }
+                           parent.markers = [];
+                       },
+        addPopup:      function (marker, id)
+                       {
+                           var parent = this;
+                           google.maps.event.addListener(marker, 'click', function ()
+                           {
+                               parent.infowindow.close();
+                               parent.infowindow.setContent("<i class='fa fa-refresh fa-spin' style='font-size:30px;'></i>");
+                               parent.infowindow.open(parent.map, marker);
+                               $.ajax
+                               ({
+                                   type:    'GET',
+                                   url:     parent.settings.url.popup,
+                                   data:    {id: id},
+                                   success: function (data)
+                                            {
+                                                parent.infowindow.setContent(data);
+                                            }
+                               });
+                           })
+                       }
+    };
+    $.fn.gmap = function (options)
+    {
+        var settings = $.extend
+        ({
+            anchors:  {
+                map:      'map-canvas',
+                counter:  'map-counter',
+                aroundme: 'map-aroundme'
+            },
+            url:      {
+                counter: '',
+                marker:  '',
+                popup:   ''
+            },
+            map:      {
+                center:             {
+                    lat: 46,
+                    lng: 5
+                },
+                zoom:               5,
+                scrollwheel:        true,
+                panControl:         true,
+                rotateControl:      true,
+                scaleControl:       true,
+                streetViewControl:  true,
+                mapTypeControl:     true,
+                overviewMapControl: true,
+                zoomControl:        true,
+                counter:            true,
+                aroundme:           true,
+                cluster:            false,
+                styles:             []
+            },
+            counter:  {
+                refresh:     true,
+                progressbar: true,
+                count:       true
+            },
+            aroundme: {
+                enableHighAccuracy: true,
+                timeout:            5000,
+                maximumAge:         0
+            },
+            cluster:  {
+                gridSize:    50,
+                maxZoom:     15,
+                zoomOnClick: false,
+                styles:      [
+                    {
+                        url:        '/images/clusters_03.png',
+                        textColor:  "white",
+                        fontWeight: "light",
+                        textSize:   14,
+                        width:      50,
+                        height:     50
+                    },
+                    {
+                        url:        '/images/clusters_02.png',
+                        textColor:  "white",
+                        fontWeight: "light",
+                        textSize:   15,
+                        width:      50,
+                        height:     50
+                    },
+                    {
+                        url:        '/images/clusters_01.png',
+                        textColor:  "white",
+                        fontWeight: "light",
+                        textSize:   16,
+                        width:      50,
+                        height:     50
+                    }
+                ]
+            }
+        }, options);
+        new Plugin(settings);
+    };
+}
+(jQuery, window, window.document));

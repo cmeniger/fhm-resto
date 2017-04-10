@@ -19377,6 +19377,9 @@ body {
   background: #FFFFFF;
   line-height: 28px; }
 
+.clear {
+  clear: both; }
+
 #wrapper {
   width: 100%; }
 
@@ -19408,6 +19411,10 @@ body {
     z-index: 4; }
     #header.sticky nav li > a {
       line-height: 60px; }
+    #header.sticky .menu-icon-wrap {
+      border-left: none; }
+      #header.sticky .menu-icon-wrap span {
+        background: #FFFFFF; }
   #header .logo-wrap {
     display: inline-block;
     vertical-align: middle; }
@@ -19645,12 +19652,29 @@ body {
     width: 100%; }
   .three-cols .flip-box {
     width: 100%;
+    height: 302px;
     display: block;
     margin-bottom: 30px; }
   .three-cols .flip-front {
     text-align: center; }
   .three-cols .flip-back {
+    overflow: hidden;
     display: none; }
+    .three-cols .flip-back .flip-back-content {
+      color: #fff;
+      background: #c62f41;
+      position: absolute;
+      display: block;
+      padding: 15px;
+      text-align: center;
+      width: 100%;
+      height: 100%; }
+      .three-cols .flip-back .flip-back-content p {
+        vertical-align: middle;
+        color: #fff;
+        position: relative;
+        top: 50%;
+        transform: translateY(-50%); }
   .three-cols .description {
     width: 100%;
     display: block;
@@ -20195,7 +20219,10 @@ body {
     height: 2px;
     background: #000000;
     display: block;
-    margin: 2px 0; }
+    margin: 2px 0;
+    float: right; }
+    .menu-icon-wrap span:nth-child(2) {
+      width: 20px; }
 
 .device-menu-wrap {
   display: none;

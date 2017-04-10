@@ -7,6 +7,9 @@ body {
   background: $white;
   line-height: 28px;
 }
+.clear{
+  clear: both;
+}
 
 #wrapper {
   width: 100%;
@@ -39,6 +42,12 @@ body {
         > a {
           line-height: 60px;
         }
+      }
+    }
+    .menu-icon-wrap {
+      border-left: none;
+      span {
+        background: $white;
       }
     }
   }
@@ -312,6 +321,7 @@ body {
   }
   .flip-box {
     width: 100%;
+    height: 302px;
     display: block;
     margin-bottom: 30px;
   }
@@ -319,7 +329,25 @@ body {
     text-align: center;
   }
   .flip-back {
+    overflow: hidden;
     display: none;
+    .flip-back-content{
+      color:#fff;
+      background:#c62f41;
+      position: absolute;
+      display: block;
+      padding:15px;
+      text-align: center;
+      width: 100%;
+      height: 100%;
+      p{
+        vertical-align: middle;
+        color:#fff;
+        position: relative;
+        top:50%;
+        transform: translateY(-50%);
+      }
+    }
   }
   .description {
     width: 100%;
@@ -943,6 +971,10 @@ body {
     background: $black;
     display: block;
     margin: 2px 0;
+    float: right;
+    &:nth-child(2) {
+      width: 20px;
+    }
   }
 }
 .device-menu-wrap {
