@@ -1,5 +1,7 @@
 {% extends "::layout.admin.html.twig" %}
 {% trans_default_domain instance.domain %}
+{% import "::Macros/pagination.html.twig" as macroPagination %}
+{% import "::Macros/sort.html.twig" as macroSort %}
 
 {% block tagline %}
     {% if not app.request.isxmlhttprequest %}

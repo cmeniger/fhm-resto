@@ -13,7 +13,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 class ProductIngredient extends FhmFhm
 {
     /**
-     * @MongoDB\ReferenceOne(targetDocument="Fhm\ProductBundle\Document\ProductIngredient", nullable=true)
+     * @MongoDB\ReferenceOne(targetDocument="Project\ProductBundle\Document\ProductIngredient", nullable=true)
      */
     protected $parent;
 

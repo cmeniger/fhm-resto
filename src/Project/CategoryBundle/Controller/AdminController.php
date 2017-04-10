@@ -25,7 +25,7 @@ class AdminController extends FhmController
         self::$domain      = "ProjectCategoryBundle";
         self::$translation = "category";
         self::$route       = "category";
-        self::$source      = "project";
+        self::$source      = "fhm";
 
         self::$form  = new \stdClass();
 

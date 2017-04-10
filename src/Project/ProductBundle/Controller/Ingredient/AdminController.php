@@ -5,8 +5,8 @@ use Fhm\FhmBundle\Controller\RefAdminController as FhmController;
 use Fhm\FhmBundle\Form\Handler\Admin\CreateHandler;
 use Fhm\FhmBundle\Form\Handler\Admin\UpdateHandler;
 use Project\ProductBundle\Document\Product;
-use Fhm\ProductBundle\Form\Type\Admin\Ingredient\CreateType;
-use Fhm\ProductBundle\Form\Type\Admin\Ingredient\UpdateType;
+use Project\ProductBundle\Form\Type\Admin\Ingredient\CreateType;
+use Project\ProductBundle\Form\Type\Admin\Ingredient\UpdateType;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -23,9 +23,9 @@ class AdminController extends FhmController
     {
         self::$repository  = "FhmProductBundle:ProductIngredient";
         self::$domain      = "FhmProductBundle";
-        self::$translation = "ingredient";
-        self::$route       = "ingredient";
-        self::$source      = "project";
+        self::$translation = "product.ingredient";
+        self::$route       = "product_ingredient";
+        self::$source      = "fhm";
 
         self::$form  = new \stdClass();
 
@@ -41,7 +41,7 @@ class AdminController extends FhmController
      *      path="/",
      *      name="fhm_admin_product_ingredient"
      * )
-     * @Template("::ProjectProduct/Admin/Ingredient/index.html.twig")
+     * @Template("::FhmProduct/Admin/Ingredient/index.html.twig")
      */
     public function indexAction()
     {
@@ -54,7 +54,7 @@ class AdminController extends FhmController
      *      path="/create",
      *      name="fhm_admin_product_ingredient_create"
      * )
-     * @Template("::ProjectProduct/Admin/Ingredient/create.html.twig")
+     * @Template("::FhmProduct/Admin/Ingredient/create.html.twig")
      */
     public function createAction(Request $request)
     {
@@ -68,7 +68,7 @@ class AdminController extends FhmController
      *      name="fhm_admin_product_ingredient_duplicate",
      *      requirements={"id"="[a-z0-9]*"}
      * )
-     * @Template("::ProjectProduct/Admin/Ingredient/create.html.twig")
+     * @Template("::FhmProduct/Admin/Ingredient/create.html.twig")
      */
     public function duplicateAction(Request $request, $id)
     {
@@ -82,7 +82,7 @@ class AdminController extends FhmController
      *      name="fhm_admin_product_ingredient_update",
      *      requirements={"id"="[a-z0-9]*"}
      * )
-     * @Template("::ProjectProduct/Admin/Ingredient/update.html.twig")
+     * @Template("::FhmProduct/Admin/Ingredient/update.html.twig")
      */
     public function updateAction(Request $request, $id)
     {
@@ -96,7 +96,7 @@ class AdminController extends FhmController
      *      name="fhm_admin_product_ingredient_detail",
      *      requirements={"id"="[a-z0-9]*"}
      * )
-     * @Template("::ProjectProduct/Admin/Ingredient/detail.html.twig")
+     * @Template("::FhmProduct/Admin/Ingredient/detail.html.twig")
      */
     public function detailAction($id)
     {
@@ -171,7 +171,7 @@ class AdminController extends FhmController
      *      path="/import",
      *      name="fhm_admin_product_ingredient_import"
      * )
-     * @Template("::ProjectProduct/Admin/Ingredient/import.html.twig")
+     * @Template("::FhmProduct/Admin/Ingredient/import.html.twig")
      */
     public function importAction(Request $request)
     {
@@ -184,7 +184,7 @@ class AdminController extends FhmController
      *      path="/export",
      *      name="fhm_admin_product_ingredient_export"
      * )
-     * @Template("::ProjectProduct/Admin/Ingredient/export.html.twig")
+     * @Template("::FhmProduct/Admin/Ingredient/export.html.twig")
      */
     public function exportAction(Request $request)
     {

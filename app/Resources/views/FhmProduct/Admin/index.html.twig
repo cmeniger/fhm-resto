@@ -13,17 +13,19 @@
     {{ parent() }}
     <th>{{ (instance.translation ~ '.admin.index.table.header.image')|trans }}</th>
     <th>{{ (instance.translation ~ '.admin.index.table.header.categories')|trans }}</th>
-    <th>{{ (instance.translation ~ '.admin.index.table.header.price')|trans }} {{ macroSort.print('price', sort) }}</th>
+    <th>
+        {#{{ (instance.translation ~ '.admin.index.table.header.price')|trans }} {{ macroSort.print('price', sort) }}#}
+    </th>
 {% endblock %}
 
 {% block content_data_body %}
     {{ parent() }}
-    <td><img src={{ document.getMedia() ? document.getMedia()|media('xs') :   '/images/common/logo.png' }} width="70px">
+    <td><img src={{ object.getMedia() ? object.getMedia()|media('xs') :   '/images/common/logo.png' }} width="70px">
     </td>
     <td>
-        {% for category in document.getCategories() %}
+        {% for category in object.getCategories() %}
             | <a href="{{ path('fhm_admin_category_update', {'id': category.getId()}) }}" title="{{ (instance.translation ~ '.admin.index.table.action.detail')|trans }}">{{ category.getroute() }}</a>
         {% endfor %}
     </td>
-    <td>{{ document.getPrice() }} €</td>
+    <td>{{ object.getPrice() }} €</td>
 {% endblock %}
