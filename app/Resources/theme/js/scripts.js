@@ -162,7 +162,18 @@
                     if ($('.vc-row-wrapper .video-wrap').customIsOnScreen()) {
                         $('.vc-row-wrapper .video-wrap').addClass('onscreen');
                     }
-
+                    if ($('.row-wrapper .header-offers').customIsOnScreen()) {
+                        $('.row-wrapper .header-offers').addClass('onscreen');
+                    }
+                    if ($('.row-wrapper .header-tabs').customIsOnScreen()) {
+                        $('.row-wrapper .header-tabs').addClass('onscreen');
+                    }
+                    if ($('.row-wrapper .header-restaurant').customIsOnScreen()) {
+                        $('.row-wrapper .header-restaurant').addClass('onscreen');
+                    }
+                    if ($('.row-wrapper .header-slide').customIsOnScreen()) {
+                        $('.row-wrapper .header-slide').addClass('onscreen');
+                    }
                 }
             });
         }

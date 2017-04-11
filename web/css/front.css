@@ -20198,12 +20198,18 @@ body {
   .header-title h2 {
     color: #FFFFFF;
     font-family: "Merriweather", serif;
-    font-size: 45px;
+    font-size: 38px;
     font-weight: 700;
     text-transform: none;
     line-height: 55px;
     letter-spacing: -1.5px;
-    margin: 0; }
+    margin: 0;
+    -webkit-transition: all 2s ease;
+    -khtml-transition: all 2s ease;
+    -moz-transition: all 2s ease;
+    -ms-transition: all 2s ease;
+    -o-transition: all 2s ease;
+    transition: all 2s ease; }
     .header-title h2:after {
       content: "";
       display: block;
@@ -20215,15 +20221,25 @@ body {
     font-family: "Stalemate", cursive;
     font-weight: 400;
     font-style: normal;
-    font-size: 32px;
+    font-size: 28px;
     color: #FFFFFF;
-    margin: 0; }
+    margin: 0;
+    -webkit-transition: all 1.5s ease;
+    -khtml-transition: all 1.5s ease;
+    -moz-transition: all 1.5s ease;
+    -ms-transition: all 1.5s ease;
+    -o-transition: all 1.5s ease;
+    transition: all 1.5s ease; }
   .header-title.gray h2 {
     color: #2d2d2d; }
     .header-title.gray h2:after {
       background: url(/images/delim_small.png) no-repeat 0 0; }
   .header-title.gray h3 {
     color: #383838; }
+  .header-title.onscreen h3 {
+    font-size: 32px; }
+  .header-title.onscreen h2 {
+    font-size: 45px; }
 
 .tabs-box {
   background: #FFFFFF;
@@ -20563,8 +20579,10 @@ body {
   background: #FFFFFF;
   padding-bottom: 100px; }
   .row-slide .header-title h2 {
-    font-size: 35px;
+    font-size: 30px;
     line-height: normal; }
+  .row-slide .header-title.onscreen h2 {
+    font-size: 35px; }
   .row-slide .slider-for {
     width: 80%;
     margin: 0 auto 35px; }
