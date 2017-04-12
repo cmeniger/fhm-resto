@@ -1,18 +1,16 @@
 <?php
-namespace Project\CategoryBundle\Controller;
+namespace Fhm\CardBundle\Controller\Product;
 
-use Fhm\CategoryBundle\Form\Type\Admin\CreateType;
-use Fhm\CategoryBundle\Form\Type\Admin\UpdateType;
 use Fhm\FhmBundle\Controller\RefAdminController as FhmController;
-use Fhm\CategoryBundle\Document\Category;
-use Fhm\FhmBundle\Form\Handler\Admin\CreateHandler;
-use Fhm\FhmBundle\Form\Handler\Admin\UpdateHandler;
+use Fhm\CardBundle\Document\CardProduct;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 /**
- * @Route("/admin/category")
+ * @Route("/admin/cardproduct")
  */
 class AdminController extends FhmController
 {
@@ -21,27 +19,19 @@ class AdminController extends FhmController
      */
     public function __construct()
     {
-        self::$repository  = "FhmCategoryBundle:Category";
-        self::$domain      = "FhmCategoryBundle";
-        self::$translation = "category";
-        self::$route       = "category";
-        self::$source      = "fhm";
-
-        self::$form  = new \stdClass();
-
-        self::$form->createType    = \Project\CategoryBundle\Form\Type\Admin\CreateType::class;
-        self::$form->updateType    = \Project\CategoryBundle\Form\Type\Admin\UpdateType::class;
-        self::$form->createHandler = CreateHandler::class;
-        self::$form->updateHandler = UpdateHandler::class;
+        parent::__construct('Fhm', 'Card', 'card_product', 'CardProduct');
+        $this->form->type->create = 'Fhm\\CardBundle\\Form\\Type\\Admin\\Product\\CreateType';
+        $this->form->type->update = 'Fhm\\CardBundle\\Form\\Type\\Admin\\Product\\UpdateType';
+        $this->translation        = array('FhmCardBundle', 'card.product');
     }
 
     /**
      * @Route
      * (
      *      path="/",
-     *      name="fhm_admin_category"
+     *      name="fhm_admin_card_product"
      * )
-     * @Template("::FhmCategory/Admin/index.html.twig")
+     * @Template("::FhmCard/Admin/Product/index.html.twig")
      */
     public function indexAction()
     {
@@ -52,9 +42,9 @@ class AdminController extends FhmController
      * @Route
      * (
      *      path="/create",
-     *      name="fhm_admin_category_create"
+     *      name="fhm_admin_card_product_create"
      * )
-     * @Template("::FhmCategory/Admin/create.html.twig")
+     * @Template("::FhmCard/Admin/Product/create.html.twig")
      */
     public function createAction(Request $request)
     {
@@ -65,10 +55,10 @@ class AdminController extends FhmController
      * @Route
      * (
      *      path="/duplicate/{id}",
-     *      name="fhm_admin_category_duplicate",
+     *      name="fhm_admin_card_product_duplicate",
      *      requirements={"id"="[a-z0-9]*"}
      * )
-     * @Template("::FhmCategory/Admin/create.html.twig")
+     * @Template("::FhmCard/Admin/Product/create.html.twig")
      */
     public function duplicateAction(Request $request, $id)
     {
@@ -79,10 +69,10 @@ class AdminController extends FhmController
      * @Route
      * (
      *      path="/update/{id}",
-     *      name="fhm_admin_category_update",
+     *      name="fhm_admin_card_product_update",
      *      requirements={"id"="[a-z0-9]*"}
      * )
-     * @Template("::FhmCategory/Admin/update.html.twig")
+     * @Template("::FhmCard/Admin/Product/update.html.twig")
      */
     public function updateAction(Request $request, $id)
     {
@@ -93,10 +83,10 @@ class AdminController extends FhmController
      * @Route
      * (
      *      path="/detail/{id}",
-     *      name="fhm_admin_category_detail",
+     *      name="fhm_admin_card_product_detail",
      *      requirements={"id"="[a-z0-9]*"}
      * )
-     * @Template("::FhmCategory/Admin/detail.html.twig")
+     * @Template("::FhmCard/Admin/Product/detail.html.twig")
      */
     public function detailAction($id)
     {
@@ -107,7 +97,7 @@ class AdminController extends FhmController
      * @Route
      * (
      *      path="/delete/{id}",
-     *      name="fhm_admin_category_delete",
+     *      name="fhm_admin_card_product_delete",
      *      requirements={"id"="[a-z0-9]*"}
      * )
      */
@@ -120,7 +110,7 @@ class AdminController extends FhmController
      * @Route
      * (
      *      path="/undelete/{id}",
-     *      name="fhm_admin_category_undelete",
+     *      name="fhm_admin_card_product_undelete",
      *      requirements={"id"="[a-z0-9]*"}
      * )
      */
@@ -133,7 +123,7 @@ class AdminController extends FhmController
      * @Route
      * (
      *      path="/activate/{id}",
-     *      name="fhm_admin_category_activate",
+     *      name="fhm_admin_card_product_activate",
      *      requirements={"id"="[a-z0-9]*"}
      * )
      */
@@ -146,7 +136,7 @@ class AdminController extends FhmController
      * @Route
      * (
      *      path="/deactivate/{id}",
-     *      name="fhm_admin_category_deactivate",
+     *      name="fhm_admin_card_product_deactivate",
      *      requirements={"id"="[a-z0-9]*"}
      * )
      */
@@ -159,9 +149,9 @@ class AdminController extends FhmController
      * @Route
      * (
      *      path="/import",
-     *      name="fhm_admin_category_import"
+     *      name="fhm_admin_card_product_import"
      * )
-     * @Template("::FhmCategory/Admin/import.html.twig")
+     * @Template("::FhmCard/Admin/Product/import.html.twig")
      */
     public function importAction(Request $request)
     {
@@ -172,9 +162,9 @@ class AdminController extends FhmController
      * @Route
      * (
      *      path="/export",
-     *      name="fhm_admin_category_export"
+     *      name="fhm_admin_card_product_export"
      * )
-     * @Template("::FhmCategory/Admin/export.html.twig")
+     * @Template("::FhmCard/Admin/Product/export.html.twig")
      */
     public function exportAction(Request $request)
     {
@@ -185,11 +175,27 @@ class AdminController extends FhmController
      * @Route
      * (
      *      path="/grouping",
-     *      name="fhm_admin_category_grouping"
+     *      name="fhm_admin_card_product_grouping"
      * )
      */
     public function groupingAction(Request $request)
     {
         return parent::groupingAction($request);
+    }
+
+    /**
+     * @Route
+     * (
+     *      path="/sort",
+     *      name="fhm_admin_card_product_sort"
+     * )
+     */
+    public function sortAction(Request $request)
+    {
+        $id   = $request->get('master');
+        $list = json_decode($request->get('list'));
+        $this->_treeSort($id, $list);
+
+        return new Response();
     }
 }

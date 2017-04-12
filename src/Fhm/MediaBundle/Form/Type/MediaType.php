@@ -49,7 +49,7 @@ class MediaType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'media';
+        return parent::getBlockPrefix();
     }
 
     /**
@@ -57,6 +57,6 @@ class MediaType extends AbstractType
      */
     public function getParent()
     {
-        return parent::getParent();
+        return 'Doctrine\Bundle\MongoDBBundle\Form\Type\DocumentType';
     }
 }

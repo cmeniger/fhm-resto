@@ -55,6 +55,10 @@ twig:
             ROLE_ADMIN: 'ROLE_ADMIN'
 
         instance: "@fhm.instance.data"
+    form_themes:
+        - 'FhmFhmBundle:Form:fields.html.twig'
+        - 'FhmMediaBundle:Form:fields.html.twig'
+#        - 'FhmMenuBundle:Form:fields.html.twig'
 
 # Doctrine Configuration (used to access databases and manipulate their information)
 doctrine:

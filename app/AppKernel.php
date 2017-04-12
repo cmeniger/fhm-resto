@@ -54,6 +54,9 @@ class AppKernel extends Kernel
             new Http\HttplugBundle\HttplugBundle(),
             new Fhm\HistoricBundle\FhmHistoricBundle(),
             new Ivory\SerializerBundle\IvorySerializerBundle(),
+//            new Project\CategoryBundle\FhmCategoryBundle(),
+//            new Project\ProductBundle\FhmProductBundle(),
+//            new Project\CardBundle\FhmCardBundle(),
         ];
         // Some bundles are only used while developing the application or during
         // the unit and functional tests. Therefore, they are only registered
@@ -68,8 +71,6 @@ class AppKernel extends Kernel
         }
         if ($this->getEnvironment() == 'odm') {
             $bundles[] = new Doctrine\Bundle\MongoDBBundle\DoctrineMongoDBBundle();
-            $bundles[] = new Project\CategoryBundle\FhmCategoryBundle();
-            $bundles[] = new Project\ProductBundle\FhmProductBundle();
         }
 
         return $bundles;

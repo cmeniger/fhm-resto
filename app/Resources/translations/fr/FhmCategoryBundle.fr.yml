@@ -1,0 +1,290 @@
+fhm:
+    breadcrumb:                                 Accueil
+    admin:
+        breadcrumb:                             Admin
+        category:
+            breadcrumb:                         Article
+            create:
+                breadcrumb:                     Ajouter une catégorie
+            update:
+                breadcrumb:                     Modifier
+            detail:
+                breadcrumb:                     Détails
+    category:
+        breadcrumb:                             Catégories
+        lite:
+            breadcrumb:                         Détail
+category:
+    admin:
+        index:
+            title:                              Gestion des catégories
+            link:                               Catégories
+            breadcrumb:                         Catégories
+            nodata:                             Aucune donnée
+            form:
+                search:                         Rechercher
+            table:
+                header:
+                    name:                       Nom
+                    route:                      Route
+                    type:                       Types
+                    action:                     Actions
+                    status:                     Status
+                    grouping:                   Groupe(s)
+                action:
+                    activate:                   Activer
+                    deactivate:                 Désactiver
+                    delete:                     Supprimer
+                    detail:                     Paramétrer
+                    duplicate:                  Dupliquer
+                    undelete:                   Débloquer
+                    update:                     Modifier
+                confirm:
+                    activate:                   Confirmer l'activation de la catégorie ?
+                    deactivate:                 Confirmer la désactivation de la catégorie ?
+                    delete:                     Confirmer la suppression de la catégorie ?
+                    undelete:                   Confirmer le déblocage de la catégorie ?
+
+        create:
+            title:                              Ajouter
+            link:                               Ajouter
+            breadcrumb:                         Ajouter une catégorie
+            flash:
+                ok:                             La catégorie a bien été créée.
+                ko:                             La catégorie n'a pas été créée.
+            form:
+                order:                          Ordre d'affichage
+                activeimage:                    Activer les images des produits?
+                activemenumode:                 Activer le mode "Menu"?
+                price:                          Prix
+                content:                        Contenu
+                name:                           Nom
+                description:                    Description
+                parent:                         Parent
+                active:                         Activer
+                share:                          Partager
+                global:                         Globale
+                submit:
+                    save:                       Sauvegarder
+                    new:                        Sauvegarder et ajouter
+                    duplicate:                  Sauvegarder et dupliquer
+                    quit:                       Sauvegarder et quitter
+                    config:                     Sauvegarder et paramétrer
+                    cancel:                     Annuler
+                    import:                     Importer
+                    export:                     Exporter
+                fieldset:
+                    datacategory:               Autres données
+                    information:                Informations
+                    data:                       Informations
+                    media:                      Médias
+                    news:                       Actualités
+                    video:                      Vidéos
+                    partner:                    Partenaires
+                    poster:                     Affiches
+                    live:                       Live
+                    timer:                      Compte à rebours
+                    images:                     Images
+                    newsletter:                 Newsletters
+                    social:                     Réseaux sociaux
+                    options:                    Options
+                    race:                       Course
+        update:
+            title:                              Modifier
+            link:                               Modifier
+            breadcrumb:                         Modifier
+            flash:
+                ok:                             La catégorie a bien été modifiée.
+                ko:                             La catégorie n'a pas été modifiée.
+            form:
+                order:                          Ordre d'affichage
+                activeimage:                    Activer les images des produits?
+                activemenumode:                 Activer le mode "Menu"?
+                content:                        Contenu
+                price:                          Prix
+                name:                           Nom
+                description:                    Description
+                parent:                         Parent
+                active:                         Activer
+                share:                          Partager
+                global:                         Globale
+                grouping:                       Ajouter au groupe '%name%'
+                submit:
+                    save:                       Sauvegarder
+                    new:                        Sauvegarder et ajouter
+                    duplicate:                  Sauvegarder et dupliquer
+                    quit:                       Sauvegarder et quitter
+                    config:                     Sauvegarder et paramétrer
+                    cancel:                     Annuler
+                    import:                     Importer
+                    export:                     Exporter
+                    delete:                     Supprimer
+                fieldset:
+                    datacategory:               Autres données
+                    information:                Informations
+                    data:                       Informations
+                    media:                      Médias
+                    news:                       Actualités
+                    video:                      Vidéos
+                    partner:                    Partenaires
+                    poster:                     Affiches
+                    live:                       Live
+                    timer:                      Compte à rebours
+                    images:                     Images
+                    newsletter:                 Newsletters
+                    social:                     Réseaux sociaux
+                    options:                    Options
+                    race:                       Course
+        detail:
+            title:                              '%name%'
+            link:                               Détail
+            breadcrumb:                         '%name%'
+            data:
+                title:                          Informations
+                id:                             ID
+                create:                         Création
+                update:                         Modification
+                name:                           Nom
+                alias:                          Alias
+                description:                    Description
+                status:                         Status
+                grouping:                       Groupe(s)
+            url:
+                title:                          Routes disponibles
+                admin:
+                    edit:                       Modifier
+                    detail:                     Paramétrer
+                front:
+                    id:                         Afficher via l'ID
+                    name:                       Afficher via le nom
+                    alias:                      Afficher via l'alias
+                    lite:                       Afficher via l'url simplifiée
+            grouping:
+                title:                          Gestion des groupes
+                list1:                          Groupes disponibles
+                list2:                          Groupes sélectionnés
+            admin:
+                title:                          Outils d'administration
+
+        export:
+            breadcrumb:                         Exporter
+            form:
+                submit:                         Exporter
+            link:                               Exporter
+            title:                              Exporter des catégories
+
+        import:
+            breadcrumb:                         Importer
+            flash:
+                ok:                             Les catégories ont bien été importés ("%countAdd%" ajout(s), "%countUpdate%" modification(s), "%countError%" erreur(s)).
+                ko:                             Les catégories n'ont pas été importés.
+            form:
+                file:                           Fichier CSV
+                submit:                         Importer
+            link:                               Importer
+            title:                              Importer des catégories
+
+        deactivate:
+            flash:
+                ok:                             La catégorie a bien été désactivée.
+
+        delete:
+            flash:
+                ok:                             La catégorie a bien été supprimée.
+
+        activate:
+            flash:
+                ok:                             La catégorie a bien été activée.
+
+        undelete:
+            flash:
+                ok:                             La catégorie a bien été restaurée.
+
+    front:
+        index:
+            title:                              Catégorie
+            link:                               Catégorie
+            breadcrumb:                         Catégorie
+            nodata:                             Aucune donnée
+            form:
+                search:                         Rechercher
+            table:
+                header:
+                    name:                       Nom
+                    route:                      Route
+                    action:                     Actions
+                action:
+                    detail:                     Détail
+                    delete:                     Supprimer
+                confirm:
+                    delete:                     Confirmer la suppression de la catégorie ?
+            card:                               La carte
+            products:                           Les produits
+            ingredients:                        Les ingredients
+            filterbyingredients:                Filtrer par ingredients
+            selectingredient:                   Selectionnez un ou plusieurs ingredients
+
+        create:
+            title:                              Ajouter
+            link:                               Ajouter
+            breadcrumb:                         Ajouter une catégorie
+            flash:
+                ok:                             La catégorie a bien été créée.
+                ko:                             La catégorie n'a pas été créée.
+            form:
+                name:                           Nom
+                description:                    Description
+                submit:
+                    save:                       Sauvegarder
+                    new:                        Sauvegarder et ajouter
+                    duplicate:                  Sauvegarder et dupliquer
+                    quit:                       Sauvegarder et quitter
+                    cancel:                     Annuler
+                alert:
+                    title:                      Information
+                    text:                       L'ajout d'une catégorie nécessite la validation d'un modérateur pour être affiché.
+
+        update:
+            title:                              Modifier
+            link:                               Modifier
+            breadcrumb:                         Modifier
+            flash:
+                ok:                             La catégorie a bien été modifiée.
+                ko:                             La catégorie n'a pas été modifiée.
+            form:
+                name:                           Nom
+                description:                    Description
+                submit:
+                    save:                       Sauvegarder
+                    new:                        Sauvegarder et ajouter
+                    duplicate:                  Sauvegarder et dupliquer
+                    quit:                       Sauvegarder et quitter
+                    cancel:                     Annuler
+                alert:
+                    title:                      Information
+                    text:                       La modification d'une catégorie nécessite la validation d'un modérateur pour être affichée.
+
+        detail:
+            title:                              "%name%"
+            link:                               Détail
+            breadcrumb:                         "%name%"
+            data:
+                title:                          Informations
+                create:                         Création
+                update:                         Modification
+                name:                           Nom
+                alias:                          Alias
+                description:                    Description
+
+        delete:
+            flash:
+                ok:                             La catégorie a bien été supprimée.
+
+    api:
+        index:
+            title:                              Catégorie
+
+    pagination:
+        counter:                                "Nombre des catégories: %count% / %all%"
+    grouping:
+        add:                                    Grouping par Catégorie
