@@ -24,7 +24,7 @@ class RefAdminController extends GenericController
         $dataSearch = $request->request->get('FhmSearch');
         $query = $this->get('fhm_tools')->dmRepository(self::$repository)->getAdminIndex(
             $dataSearch['search'],
-            $this->getUser()->hasRole('ROLE_ADMIN')
+            $this->isGranted('ROLE_ADMIN')
         );
         $pagination = $this->get('knp_paginator')->paginate(
             $query,
