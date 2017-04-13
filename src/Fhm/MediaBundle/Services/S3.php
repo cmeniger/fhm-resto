@@ -42,7 +42,7 @@ class S3
         $this->path->web = 'web/';
         $this->path->watermark = 'watermark.png';
         $this->path->files = '';
-        $this->path->root = $this->fhm_tools->getContainer()->get('kernel')->getRootDir().'/../';
+        $this->path->localRoot = $this->fhm_tools->getContainer()->get('kernel')->getRootDir().'/../';
         $this->path->local = $this->path->localRoot.$this->path->origin;
         $this->path->fullWeb = '';
         $this->path->fullOrigin = $this->path->root.$this->path->origin;
