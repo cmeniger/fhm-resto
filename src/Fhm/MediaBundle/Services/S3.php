@@ -1,6 +1,7 @@
 <?php
 namespace Fhm\MediaBundle\Services;
 
+use Aws\Sdk;
 use Fhm\FhmBundle\Services\Tools;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -658,7 +659,7 @@ class S3
     {
         $parameters = $this->fhm_tools->getParameters(array(), 'aws');
         // SDK
-        $sdk = new \Aws\Sdk(
+        $sdk = new Sdk(
             [
                 'version' => $parameters['sdk']['version'],
                 'region' => $parameters['sdk']['region'],
