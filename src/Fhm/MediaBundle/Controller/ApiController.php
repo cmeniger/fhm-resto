@@ -369,10 +369,19 @@ class ApiController extends FhmController
      */
     public function dataNewAction(Request $request)
     {
+        self::$class = $this->get('fhm.object.manager')->getCurrentModelName(self::$repository);
         $selector = $request->get('selector');
-        $root = $this->get($this->get('fhm_tools')->getParameters('service', 'fhm_media'))->tagRoot($selector['root']);
+        $mediaService = $this->get('fhm_tools')->getParameters('service', 'fhm_media');
+        $root = !is_null($mediaService) ? $this->get($mediaService)->tagRoot($selector['root']) : '';
         $object = new self::$class;
-        $form = $this->createForm(self::$form->createType, $object);
+        $form = $this->createForm(self::$form->createType,
+            $object,
+            array(
+                'user_admin' => $this->getUser()->hasRole('ROLE_ADMIN'),
+                'data_class' => self::$class,
+                'object_manager' => $this->get('fhm.object.manager'),
+            )
+        );
         $handler = new self::$form->createHandler($form, $request);
         $process = $handler->process();
         if ($process) {
