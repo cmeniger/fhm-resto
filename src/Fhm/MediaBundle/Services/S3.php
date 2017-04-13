@@ -656,7 +656,7 @@ class S3
      */
     private function _awsInit()
     {
-        $parameters = $this->fhm_tools->getParameter(array(), 'aws');
+        $parameters = $this->fhm_tools->getParameters(array(), 'aws');
         // SDK
         $sdk = new \Aws\Sdk(
             [
