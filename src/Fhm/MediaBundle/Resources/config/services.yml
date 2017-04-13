@@ -22,10 +22,10 @@ services:
 
     fhm_media_local:
         class: Fhm\MediaBundle\Services\Local
-        public: false
+#        public: false
         arguments: ["@fhm.object.manager", "@security.token_storage","%fhm_media%", "%kernel.root_dir%"]
 
     fhm_media_s3:
         class: Fhm\MediaBundle\Services\S3
-        public: false
+#        public: false
         arguments: ["@fhm_tools"]

@@ -49,7 +49,7 @@ class MediaType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return parent::getBlockPrefix();
+        return 'media';
     }
 
     /**

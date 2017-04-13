@@ -180,7 +180,8 @@ class ApiController extends FhmController
     {
         $data = $request->get('media');
         $selector = $request->get('selector');
-        $root = $this->get($this->get('fhm_tools')->getParameter('service', 'fhm_media'))->tagRoot($selector['root']);
+        $mediaService = $this->get('fhm_tools')->getParameters('service', 'fhm_media');
+        $root = !is_null($mediaService) ? $this->get($mediaService)->tagRoot($selector['root']) : '';
         $tagMains = $this->get('fhm_tools')->dmRepository('FhmMediaBundle:MediaTag')->setParent(true)->setRoot(
             $root
         )->setPrivate($selector['private'])->getAllEnable();
