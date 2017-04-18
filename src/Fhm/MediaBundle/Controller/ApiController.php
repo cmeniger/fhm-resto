@@ -424,15 +424,11 @@ class ApiController extends FhmController
             $object->setName($name);
             $object->setFile($file);
             $object->setUserCreate($this->getUser());
-            $object->setAlias($this->get('fhm_tools')->getAlias($object->getId(), $object->getName()));
+            $object->setAlias($this->get('fhm_tools')->getAlias($object->getId(), $object->getName(), self::$repository));
             $object->setWatermark((array)$request->get('watermark'));
             $object->setActive(true);
             $this->get('fhm_tools')->dmPersist($object);
-            $this->get($this->get('fhm_tools')->getParameters('service', 'fhm_media'))->setobject(
-                $object
-            )->setWatermark(
-                $request->get('watermark')
-            )->execute();
+            $this->get($mediaService)->setDocument($object)->setWatermark($request->get('watermark'))->execute();
             // Response
             $response = new JsonResponse();
 

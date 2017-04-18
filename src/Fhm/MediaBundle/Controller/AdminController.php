@@ -108,7 +108,7 @@ class AdminController extends FhmController
             $object->setName($name);
             $object->setWatermark((array)$request->get('watermark'));
             $this->get('fhm_tools')->dmPersist($object);
-            $this->get('fhm_media_service')->setModel($object)->setWatermark($request->get('watermark'))->execute();
+            $this->get('fhm_media_service')->setDocument($object)->setWatermark($request->get('watermark'))->execute();
         }
 
         return array(
