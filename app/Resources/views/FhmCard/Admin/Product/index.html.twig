@@ -32,17 +32,17 @@
 {% endblock %}
 
 {% block content_data_body %}
-    <td>{{ document.getImage()|image('s',50)|raw }}</td>
+    <td>{{ object.getImage()|image('s',50)|raw }}</td>
     {{ parent() }}
-    <td>{{ document.getVarSort('card') }}</td>
-    <td>{{ document.getVarSort('category') }}</td>
-    <td>{{ document.getVarSort('ingredient') }}</td>
-    <td>{{ document.getOrder() }}</td>
+    <td>{{ object.getVarSort('card') }}</td>
+    <td>{{ object.getVarSort('category') }}</td>
+    <td>{{ object.getVarSort('ingredient') }}</td>
+    <td>{{ object.getOrder() }}</td>
 {% endblock %}
 
 {% block content_data_status %}
     <td>
-        {% if document.getDefault() %}
+        {% if object.getDefault() %}
             <span class="status success radius label">{{ ('fhm.status.yes')|trans({}, 'FhmFhmBundle') }}</span>
         {% else %}
             <span class="status warning radius label">{{ ('fhm.status.no')|trans({}, 'FhmFhmBundle') }}</span>

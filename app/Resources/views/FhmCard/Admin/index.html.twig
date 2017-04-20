@@ -20,7 +20,7 @@
 {% block content_data_action_share_links %}
     {{ parent() }}
     <li>
-        <a href="{{ path(instance.source ~ '_admin_' ~ instance.route ~ '_preview', {'id': document.getId()}) }}" title="{{ (instance.translation ~ '.admin.index.table.action.preview')|trans }}" target="_blank"><i class="fa fa-fw fa-search"></i> {{ (instance.translation ~ '.admin.index.table.action.preview')|trans }}
+        <a href="{{ path(instance.source ~ '_admin_' ~ instance.route ~ '_preview', {'id': object.getId()}) }}" title="{{ (instance.translation ~ '.admin.index.table.action.preview')|trans }}" target="_blank"><i class="fa fa-fw fa-search"></i> {{ (instance.translation ~ '.admin.index.table.action.preview')|trans }}
         </a>
     </li>
 {% endblock %}
@@ -28,7 +28,7 @@
 {% block content_data_action_delete_links %}
     {{ parent() }}
     <li>
-        <a href="{{ path(instance.source ~ '_admin_' ~ instance.route ~ '_preview', {'id': document.getId()}) }}" title="{{ (instance.translation ~ '.admin.index.table.action.preview')|trans }}" target="_blank"><i class="fa fa-fw fa-search"></i> {{ (instance.translation ~ '.admin.index.table.action.preview')|trans }}
+        <a href="{{ path(instance.source ~ '_admin_' ~ instance.route ~ '_preview', {'id': object.getId()}) }}" title="{{ (instance.translation ~ '.admin.index.table.action.preview')|trans }}" target="_blank"><i class="fa fa-fw fa-search"></i> {{ (instance.translation ~ '.admin.index.table.action.preview')|trans }}
         </a>
     </li>
 {% endblock %}
@@ -36,7 +36,7 @@
 {% block content_data_action_links %}
     {{ parent() }}
     <li>
-        <a href="{{ path(instance.source ~ '_admin_' ~ instance.route ~ '_preview', {'id': document.getId()}) }}" title="{{ (instance.translation ~ '.admin.index.table.action.preview')|trans }}" target="_blank"><i class="fa fa-fw fa-search"></i> {{ (instance.translation ~ '.admin.index.table.action.preview')|trans }}
+        <a href="{{ path(instance.source ~ '_admin_' ~ instance.route ~ '_preview', {'id': object.getId()}) }}" title="{{ (instance.translation ~ '.admin.index.table.action.preview')|trans }}" target="_blank"><i class="fa fa-fw fa-search"></i> {{ (instance.translation ~ '.admin.index.table.action.preview')|trans }}
         </a>
     </li>
 {% endblock %}
@@ -51,10 +51,10 @@
 {% endblock %}
 
 {% block content_data_body %}
-    <td>{{ document.getImage()|image('s',50)|raw }}</td>
+    <td>{{ object.getImage()|image('s',50)|raw }}</td>
     {{ parent() }}
-    <td>{{ document.getParent() ? document.getParent().getName() : '' }}</td>
-    <td>{{ document.getVarSort('category') }}</td>
-    <td>{{ document.getVarSort('product') }}</td>
-    <td>{{ document.getVarSort('ingredient') }}</td>
+    <td>{{ object.getParent() ? object.getParent().getName() : '' }}</td>
+    <td>{{ object.getVarSort('category') }}</td>
+    <td>{{ object.getVarSort('product') }}</td>
+    <td>{{ object.getVarSort('ingredient') }}</td>
 {% endblock %}
