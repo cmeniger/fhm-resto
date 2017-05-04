@@ -20302,20 +20302,27 @@ body {
     position: relative; }
     .tabs-wrap .tabs-panel-wrap .tabs-panel {
       position: absolute;
-      left: 0;
+      left: 30px;
       top: 0;
       opacity: 0;
       visibility: hidden;
-      -webkit-transition: all 1s ease;
-      -khtml-transition: all 1s ease;
-      -moz-transition: all 1s ease;
-      -ms-transition: all 1s ease;
-      -o-transition: all 1s ease;
-      transition: all 1s ease; }
+      -webkit-transition: opacity 1s ease;
+      -khtml-transition: opacity 1s ease;
+      -moz-transition: opacity 1s ease;
+      -ms-transition: opacity 1s ease;
+      -o-transition: opacity 1s ease;
+      transition: opacity 1s ease; }
       .tabs-wrap .tabs-panel-wrap .tabs-panel.active {
+        left: 0;
         position: relative;
         opacity: 1;
-        visibility: visible; }
+        visibility: visible;
+        -webkit-transition: all 1s ease;
+        -khtml-transition: all 1s ease;
+        -moz-transition: all 1s ease;
+        -ms-transition: all 1s ease;
+        -o-transition: all 1s ease;
+        transition: all 1s ease; }
     .tabs-wrap .tabs-panel-wrap .header-tab {
       display: none; }
     .tabs-wrap .tabs-panel-wrap ul {
@@ -20380,6 +20387,40 @@ body {
 .menu-list-wrap:nth-child(odd) .columns:nth-child(even) .menu-list .food-image {
   float: right; }
 
+.menu-list-first.onscreen .menu-list .title-animation-left, .onscreen.menu-list-second .menu-list .title-animation-left {
+  margin-right: 5px;
+  padding: 6px 10px;
+  width: auto;
+  font-size: 10px; }
+  .menu-list-first.onscreen .menu-list .title-animation-left:before, .onscreen.menu-list-second .menu-list .title-animation-left:before {
+    left: 100%; }
+
+.menu-list-first.onscreen .menu-list .title-animation-right, .onscreen.menu-list-second .menu-list .title-animation-right {
+  margin-right: 5px;
+  padding: 6px 10px;
+  width: auto;
+  font-size: 10px; }
+  .menu-list-first.onscreen .menu-list .title-animation-right:before, .onscreen.menu-list-second .menu-list .title-animation-right:before {
+    right: 100%; }
+
+.menu-list-first.onscreen .menu-list .food-detail .food-detail-ifo-left, .onscreen.menu-list-second .menu-list .food-detail .food-detail-ifo-left {
+  right: 0;
+  -webkit-transition: all 2s ease;
+  -khtml-transition: all 2s ease;
+  -moz-transition: all 2s ease;
+  -ms-transition: all 2s ease;
+  -o-transition: all 2s ease;
+  transition: all 2s ease; }
+
+.menu-list-first.onscreen .menu-list .food-detail .food-detail-ifo-right, .onscreen.menu-list-second .menu-list .food-detail .food-detail-ifo-right {
+  left: 0;
+  -webkit-transition: all 2s ease;
+  -khtml-transition: all 2s ease;
+  -moz-transition: all 2s ease;
+  -ms-transition: all 2s ease;
+  -o-transition: all 2s ease;
+  transition: all 2s ease; }
+
 .menu-list {
   width: 100%;
   height: 450px;
@@ -20402,19 +20443,73 @@ body {
       transform: translate(-50%, -50%); }
   .menu-list .food-detail {
     width: 50%;
-    padding: 95px 3% 0;
+    padding: 95px 3% 15px;
     float: left;
-    text-align: center; }
-  .menu-list .title-animation {
+    text-align: center;
+    -webkit-transition: all 1s ease;
+    -khtml-transition: all 1s ease;
+    -moz-transition: all 1s ease;
+    -ms-transition: all 1s ease;
+    -o-transition: all 1s ease;
+    transition: all 1s ease;
+    position: relative;
+    overflow: hidden; }
+    .menu-list .food-detail .food-detail-ifo-left {
+      right: 70px;
+      position: relative; }
+    .menu-list .food-detail .food-detail-ifo-right {
+      left: 70px;
+      position: relative; }
+  .menu-list .title-animation-left {
     background: #e72d43;
     color: #FFFFFF;
     display: inline-block;
     line-height: normal;
-    padding: 6px 10px;
     margin-bottom: 16px;
     font-size: 10px;
+    padding: 6px 10px;
     font-family: "Montserrat", sans-serif;
-    font-weight: 600; }
+    font-weight: 600;
+    position: relative; }
+    .menu-list .title-animation-left:before {
+      content: "";
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      background: #fff;
+      -webkit-transition: all 1s ease;
+      -khtml-transition: all 1s ease;
+      -moz-transition: all 1s ease;
+      -ms-transition: all 1s ease;
+      -o-transition: all 1s ease;
+      transition: all 1s ease; }
+  .menu-list .title-animation-right {
+    background: #e72d43;
+    color: #FFFFFF;
+    display: inline-block;
+    line-height: normal;
+    margin-bottom: 16px;
+    font-size: 10px;
+    padding: 6px 10px;
+    font-family: "Montserrat", sans-serif;
+    font-weight: 600;
+    position: relative; }
+    .menu-list .title-animation-right:before {
+      content: "";
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      right: 0;
+      background: #fff;
+      -webkit-transition: all 1s ease;
+      -khtml-transition: all 1s ease;
+      -moz-transition: all 1s ease;
+      -ms-transition: all 1s ease;
+      -o-transition: all 1s ease;
+      transition: all 1s ease; }
   .menu-list h4 {
     color: #313131;
     font-size: 25px;
@@ -20438,11 +20533,22 @@ body {
     font-size: 30px;
     font-family: "Merriweather", serif;
     font-weight: 700;
-    margin: 0; }
+    margin: 0;
+    line-height: normal; }
 
 .bottom-three-cols {
   padding: 120px 0 100px;
-  width: 100%; }
+  width: 100%;
+  top: -100px;
+  position: relative;
+  -webkit-transition: all 2s ease;
+  -khtml-transition: all 2s ease;
+  -moz-transition: all 2s ease;
+  -ms-transition: all 2s ease;
+  -o-transition: all 2s ease;
+  transition: all 2s ease; }
+  .bottom-three-cols.onscreen {
+    top: 0; }
   .bottom-three-cols .columns {
     text-align: center; }
   .bottom-three-cols h3 {
@@ -20489,6 +20595,36 @@ body {
         background: #e7e7e7;
         display: inline-block;
         border-radius: 50%; }
+        .bottom-three-cols p.readmore span:nth-child(1) {
+          -webkit-transition: background 0.2s ease 0s;
+          -khtml-transition: background 0.2s ease 0s;
+          -moz-transition: background 0.2s ease 0s;
+          -ms-transition: background 0.2s ease 0s;
+          -o-transition: background 0.2s ease 0s;
+          transition: background 0.2s ease 0s; }
+        .bottom-three-cols p.readmore span:nth-child(2) {
+          -webkit-transition: background 0.2s ease 0.2s;
+          -khtml-transition: background 0.2s ease 0.2s;
+          -moz-transition: background 0.2s ease 0.2s;
+          -ms-transition: background 0.2s ease 0.2s;
+          -o-transition: background 0.2s ease 0.2s;
+          transition: background 0.2s ease 0.2s; }
+        .bottom-three-cols p.readmore span:nth-child(3) {
+          -webkit-transition: background 0.2s ease 0.4s;
+          -khtml-transition: background 0.2s ease 0.4s;
+          -moz-transition: background 0.2s ease 0.4s;
+          -ms-transition: background 0.2s ease 0.4s;
+          -o-transition: background 0.2s ease 0.4s;
+          transition: background 0.2s ease 0.4s; }
+      .bottom-three-cols p.readmore a {
+        -webkit-transition: none;
+        -khtml-transition: none;
+        -moz-transition: none;
+        -ms-transition: none;
+        -o-transition: none;
+        transition: none; }
+        .bottom-three-cols p.readmore a:hover span {
+          background: #3498db; }
 
 .time-table {
   padding: 150px 0;
@@ -20501,9 +20637,17 @@ body {
     width: 100%; }
   .time-table .working-box {
     background: #262626;
-    padding: 100px 5% 80px;
+    padding: 100px 0 5% 80px;
     height: 610px;
     text-align: center; }
+    .time-table .working-box.onscreen {
+      padding-right: 5%;
+      -webkit-transition: all 1s ease;
+      -khtml-transition: all 1s ease;
+      -moz-transition: all 1s ease;
+      -ms-transition: all 1s ease;
+      -o-transition: all 1s ease;
+      transition: all 1s ease; }
     .time-table .working-box .header-title {
       padding-bottom: 28px; }
       .time-table .working-box .header-title h2 {
@@ -20570,6 +20714,11 @@ body {
           -o-box-shadow: none;
           box-shadow: none;
           border-bottom: 1px solid #e9e9e9; }
+        .time-table .table-box .form-box li .border-input {
+          height: 1px;
+          width: 100%;
+          background: red;
+          transition: all .5s ease-in-out; }
       .time-table .table-box .form-box .button-box {
         width: 100%;
         text-align: center; }

@@ -174,6 +174,18 @@
                     if ($('.row-wrapper .header-slide').customIsOnScreen()) {
                         $('.row-wrapper .header-slide').addClass('onscreen');
                     }
+                    if ($('.row-wrapper .menu-list-first').customIsOnScreen()) {
+                        $('.row-wrapper .menu-list-first').addClass('onscreen');
+                    }
+                    if ($('.row-wrapper .menu-list-second').customIsOnScreen()) {
+                        $('.row-wrapper .menu-list-second').addClass('onscreen');
+                    }
+                    if ($('.row-wrapper .working-box').customIsOnScreen()) {
+                        $('.row-wrapper .working-box').addClass('onscreen');
+                    }
+                    if ($('.row-wrapper .bottom-three-cols').customIsOnScreen()) {
+                        $('.row-wrapper .bottom-three-cols').addClass('onscreen');
+                    }
                 }
             });
         }
