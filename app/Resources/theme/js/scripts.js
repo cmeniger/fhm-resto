@@ -10,6 +10,9 @@
             this.menuBox();
             this.scrollDocument();
             this.bannerHeight();
+            this.clickInputFiel();
+            this.datePicker();
+            this.timePicker();
         },
         menuBox: function() {
             $('.menu-icon-wrap .menu-icon').click(function(e) {
@@ -146,6 +149,26 @@
                 }
                 self.bannerHeight();
             });
+        },
+        clickInputFiel: function () {
+            var placeholderText = '';
+            $(".form-box .input-border").click(function(){
+                $(this).parents('.border-input').addClass('border-bottom');
+                placeholderText = $(this).attr('placeholder');
+                $(this).removeAttr('placeholder');
+            });
+            $(".form-box .input-border").blur(function(){
+                $(this).parents('.border-input').removeClass('border-bottom');
+                $(this).attr('placeholder',placeholderText);
+            });
+
+        },
+        datePicker: function () {
+            $('.form-box .datepicker').datepicker();
+        },
+        timePicker: function () {
+            // $('.form-box .timepicker').timepicker();
+            $('.form-box .select-time').niceSelect();
         },
         scrollDocument: function () {
             $(window).scroll(function () {

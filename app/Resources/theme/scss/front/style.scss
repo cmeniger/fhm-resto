@@ -993,37 +993,73 @@ body {
         margin: 0;
         padding: 0;
         width: 100%;
+        &.form-wrap {
+          > li {
+            margin: 0 0 0 -4px;
+            padding: 0 10px;
+            display: inline-block;
+            vertical-align: top;
+            width: 50%;
+            position: relative;
+            &.full-width {
+              width: 100%;
+            }
+            select,
+            textarea,
+            input[type='text'] {
+              border: none;
+              color: #7b7b7b;
+              font-family: $font-family-opensans;
+              font-size: 13px;
+              line-height: 13px;
+              background: $white;
+              @include css3-prefix(box-shadow, none);
+              border-bottom: 1px solid #e9e9e9;
+              &.border-bottom{
+                content: "";
+                display: block;
+                border-width: 1px;
+                width: 97%;
+                position: absolute;
+                margin: 0 auto;
+                left: 10px;
+                border-bottom: 2px solid #3498db;
+                @include css3-prefix(transition, width 0.5s ease);
+              }
+            }
+            span{
+              display: block;
+              position: relative;
+              &:before{
+                content: "";
+                background: #3498db;
+                display: block;
+                border-width: 1px;
+                width: 0;
+                height: 2px;
+                position: absolute;
+                bottom: 0;
+                margin: 0 auto;
+                left: 0;
+                text-align: center;
+                @include css3-prefix(transition, width 0.5s ease);
+              }
+              &.border-bottom{
+                &:before{
+                  width: 100%;
+                }
+              }
+            }
+          }
+          .select-time{
+            &:hover{
+              transform: perspective(1200px);
+              box-shadow: 0 5px 23px 0 rgba(0, 0, 0, 0.2);
+            }
+          }
+        }
       }
-      li {
-        margin: 0 0 0 -4px;
-        padding: 0 10px;
-        display: inline-block;
-        vertical-align: top;
-        width: 50%;
-        &.full-width {
-          width: 100%;
-        }
-        select,
-        textarea,
-        input[type='text'] {
-          border: none;
-          color: #7b7b7b;
-          font-family: $font-family-opensans;
-          font-size: 13px;
-          line-height: 13px;
-          background: $white;
-          @include css3-prefix(box-shadow, none);
-          border-bottom: 1px solid #e9e9e9;
-        }
-        .border-input{
-          height:1px;
-          width:100%;
-          background:red;
-          transition: all .5s ease-in-out;
-        }
 
-
-      }
       .button-box {
         width: 100%;
         text-align: center;

@@ -716,26 +716,55 @@
                             <h2>Table reservations</h2>
                         </header>
                         <div class="form-box">
-                            <ul>
+                            {#<div class="row form-wrap">#}
+                                {#<div class="larg-6 columns">#}
+                                    {##}
+                                {#</div>#}
+                            {#</div>#}
+                            <ul class="form-wrap">
                                 <li>
-                                    <input type="text" name="txtdate" placeholder="Select date"/>
+                                    <input type="text" name="txtdate" placeholder="Select date" class="datepicker"/>
                                 </li>
                                 <li>
-                                    <select name="select-time">
-                                        <option value="">Select time</option>
+                                    <select name="select-time" class="select-time">
+                                        <option data-display="select" value="Select time">Select time</option>
+                                        <option value="8pm">8pm</option>
+                                        <option value="9pm">9pm</option>
+                                        <option value="10pm">10pm</option>
+                                        <option value="11pm">11pm</option>
+                                        <option value="12pm">12pm</option>
+                                        <option value="1am">1am</option>
+                                        <option value="2am">2am</option>
+                                        <option value="3am">3am</option>
+                                        <option value="4am">4am</option>
+                                        <option value="5am">5am</option>
+                                        <option value="6am">6am</option>
+                                        <option value="7am">7am</option>
+                                        <option value="8am">8am</option>
+                                        <option value="9am">9am</option>
+                                        <option value="10am">10am</option>
+                                        <option value="11am">11am</option>
                                     </select>
                                 </li>
                                 <li>
-                                    <select name="select-time">
-                                        <option value="">Select persons</option>
+                                    <select name="select-person" class="select-time">
+                                        <option value="Select persons">Select persons</option>
+                                        <option value="1-2 persons">1-2 persons</option>
+                                        <option value="3-5 persons">3-5 persons</option>
+                                        <option value="5-7 persons">5-7 persons</option>
+                                        <option value="7-10 persons">7-10 persons</option>
+                                        <option value="Banquet">Banquet</option>
                                     </select>
                                 </li>
                                 <li>
-                                    <input type="text" name="txtname" placeholder="Name"/>
+                                    <span class="border-input">
+                                        <input class="input-border" type="text" name="txtname" placeholder="Name"/>
+                                    </span>
                                 </li>
                                 <li class="full-width">
-                                    <textarea name="txtmessage" placeholder="Message"></textarea>
-                                    <span class="border-input"></span>
+                                    <span class="border-input">
+                                        <textarea class="input-border" name="txtmessage" placeholder="Message"></textarea>
+                                    </span>
                                 </li>
                             </ul>
                             <div class="button-box">
@@ -825,6 +854,8 @@
 <script src="/js/jquery.js"></script>
 
 <script src="/js/parallax.min.js"></script>
+<script src="/js/jquery.nice-select.js"></script>
+<script src="/js/jquery.datepicker.js"></script>
 <script src="/js/slick.min.js"></script>
 <script src="/js/flip.js"></script>
 <script src="/js/main.js"></script>
