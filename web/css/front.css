@@ -22857,6 +22857,30 @@ body {
   .device-menu-wrap.expand {
     left: 0; }
 
+.four-cols-footer.onscreen .animation-top {
+  margin-top: 0;
+  -webkit-transition: all 0.2s ease;
+  -khtml-transition: all 0.2s ease;
+  -moz-transition: all 0.2s ease;
+  -ms-transition: all 0.2s ease;
+  -o-transition: all 0.2s ease;
+  transition: all 0.2s ease; }
+
+.four-cols-footer.onscreen .animation-bottom {
+  margin-top: 0;
+  -webkit-transition: all 2s ease;
+  -khtml-transition: all 2s ease;
+  -moz-transition: all 2s ease;
+  -ms-transition: all 2s ease;
+  -o-transition: all 2s ease;
+  transition: all 2s ease; }
+
+.animation-top {
+  margin-top: -20px; }
+
+.animation-bottom {
+  margin-top: 50px; }
+
 .device-menu {
   width: 100%;
   position: relative;

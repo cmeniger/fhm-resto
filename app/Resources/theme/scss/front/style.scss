@@ -1255,6 +1255,28 @@ body {
     left: 0;
   }
 }
+.four-cols-footer{
+  &.onscreen{
+    .animation-top{
+      margin-top:0;
+      @include css3-prefix(transition, all 0.2s ease);
+    }
+    .animation-bottom{
+      margin-top:0;
+      @include css3-prefix(transition, all 2s ease);
+    }
+  }
+}
+.animation-top{
+  margin-top:-20px;
+  //@include css3-prefix(transition, all 0.2s ease);
+}
+.animation-bottom{
+  margin-top:50px;
+  //@include css3-prefix(transition, all 2s ease);
+}
+
+
 .device-menu {
   width: 100%;
   position: relative;

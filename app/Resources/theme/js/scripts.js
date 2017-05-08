@@ -209,6 +209,9 @@
                     if ($('.row-wrapper .bottom-three-cols').customIsOnScreen()) {
                         $('.row-wrapper .bottom-three-cols').addClass('onscreen');
                     }
+                    if($('.row-wrapper .four-cols-footer').customIsOnScreen()){
+                        $('.row-wrapper .four-cols-footer').addClass('onscreen');
+                    }
                 }
             });
         }
