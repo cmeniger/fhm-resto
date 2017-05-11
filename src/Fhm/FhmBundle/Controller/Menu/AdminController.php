@@ -71,6 +71,7 @@ class AdminController extends FhmController
         $process = $handler->process();
         if ($process) {
             $data = $request->get($form->getName());
+            $object->setAlias($this->get('fhm_tools')->getAlias($object->getId(), $object->getName(), self::$repository));
             $this->get('fhm_tools')->dmPersist($object);
             if ($data['id']) {
                 $this->__treeDuplicate($data['id'], $object->getId());

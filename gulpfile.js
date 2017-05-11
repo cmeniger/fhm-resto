@@ -8,158 +8,158 @@ var minify = require('gulp-minify-css');
 var del = require('del');
 // Parameters
 var parameters =
-{
-    js:        {
-        watch:      'app/Resources/theme/js/**/*.js',
-        src:        ['app/Resources/theme/js/*.js', '!app/Resources/theme/js/**/README.md'],
-        dest:       'web/js',
-        file:       'main.js',
-        concat:     true,
-        clean:      true,
-        uglify:     false,
-        libs:       {
-            src:  'app/Resources/theme/js/libs/*.js',
-            dest: 'web/js'
-        },
-        packages:   {
-            src:  [
-                'app/Resources/theme/packages/**/*.js'
-            ],
-            dest: 'web/js'
-        },
-        foundation: {
-            src:  [
-                'bower_components/foundation/js/foundation.js'
-            ],
-            dest: 'web/js'
-        },
-        slick:      {
-            src:  [
-                'bower_components/slick-carousel/slick/slick.js'
-            ],
-            dest: 'web/js'
-        },
-        gmap_cluster:      {
-            src:  [
-                'bower_components/js-marker-clusterer/src/markerclusterer_compiled.js'
-            ],
-            dest: 'web/js'
-        },
-        inview:      {
-            src:  [
-                'bower_components/inview/inview.js'
-            ],
-            dest: 'web/js'
-        },
-        nestable:      {
-            src:  [
-                'bower_components/nestable2/jquery.nestable.js'
-            ],
-            dest: 'web/js'
-        }
-    },
-    sass:      {
-        watch:    'app/Resources/theme/scss/**/*.scss',
-        src:      {
-            admin: [
-                'app/Resources/theme/scss/admin/import.scss',
-                'app/Resources/theme/scss/admin/**/_*.scss',
-                'app/Resources/theme/scss/admin/style.scss',
-                '!app/Resources/theme/scss/admin/__*.scss',
-                '!app/Resources/theme/scss/admin/**/README.md'
-            ],
-            front: [
-                'app/Resources/theme/scss/front/import.scss',
-                'app/Resources/theme/scss/front/**/_*.scss',
-                'app/Resources/theme/scss/front/style.scss',
-                '!app/Resources/theme/scss/front/__*.scss',
-                '!app/Resources/theme/scss/front/**/README.md'
-            ]
-        },
-        dest:     'web/css',
-        file:     {
-            admin: 'admin.scss',
-            front: 'front.scss'
-        },
-        includes: [],
-        concat:   true,
-        clean:    true,
-        minify:   false,
-        packages: {
-            src:  {
-                sass: [
-                    'app/Resources/theme/packages/**/*.scss',
-                    'app/Resources/theme/packages/**/*.sass'
+    {
+        js:        {
+            watch:      'app/Resources/theme/js/**/*.js',
+            src:        ['app/Resources/theme/js/*.js', '!app/Resources/theme/js/**/README.md'],
+            dest:       'web/js',
+            file:       'main.js',
+            concat:     true,
+            clean:      true,
+            uglify:     false,
+            libs:       {
+                src:  'app/Resources/theme/js/libs/*.js',
+                dest: 'web/js'
+            },
+            packages:   {
+                src:  [
+                    'app/Resources/theme/packages/**/*.js'
                 ],
-                css:  'app/Resources/theme/packages/**/*.css'
+                dest: 'web/js'
             },
-            dest: 'web/css'
-        }
-    },
-    images:    {
-        watch:    'app/Resources/theme/images/**',
-        src:      ['app/Resources/theme/images/**', '!app/Resources/theme/images/**/README.md'],
-        dest:     'web/images',
-        clean:    true,
-        packages: {
-            src:  [
-                'app/Resources/theme/packages/**/*.gif',
-                'app/Resources/theme/packages/**/*.png',
-                'app/Resources/theme/packages/**/*.jpg',
-                'app/Resources/theme/packages/**/*.svg'
-            ],
-            dest: 'web/images'
-        }
-    },
-    fonts:     {
-        watch:       'app/Resources/theme/fonts/**',
-        src:         ['app/Resources/theme/fonts/**', '!app/Resources/theme/fonts/**/README.md'],
-        dest:        'web/fonts',
-        clean:       true,
-        packages:    {
-            src:  [
-                'app/Resources/theme/packages/**/*.otf',
-                'app/Resources/theme/packages/**/*.eot',
-                'app/Resources/theme/packages/**/*.svg',
-                'app/Resources/theme/packages/**/*.ttf',
-                'app/Resources/theme/packages/**/*.woff'
-            ],
-            dest: 'web/fonts'
+            foundation: {
+                src:  [
+                    'bower_components/foundation/js/foundation.js'
+                ],
+                dest: 'web/js'
+            },
+            slick:      {
+                src:  [
+                    'bower_components/slick-carousel/slick/slick.js'
+                ],
+                dest: 'web/js'
+            },
+            gmap_cluster:      {
+                src:  [
+                    'bower_components/js-marker-clusterer/src/markerclusterer_compiled.js'
+                ],
+                dest: 'web/js'
+            },
+            inview:      {
+                src:  [
+                    'bower_components/inview/inview.js'
+                ],
+                dest: 'web/js'
+            },
+            nestable:      {
+                src:  [
+                    'bower_components/nestable2/jquery.nestable.js'
+                ],
+                dest: 'web/js'
+            }
         },
-        fontawesome: {
-            src:  'bower_components/fontawesome/fonts/**',
-            dest: 'web/fonts'
+        sass:      {
+            watch:    'app/Resources/theme/scss/**/*.scss',
+            src:      {
+                admin: [
+                    'app/Resources/theme/scss/admin/import.scss',
+                    'app/Resources/theme/scss/admin/**/_*.scss',
+                    'app/Resources/theme/scss/admin/style.scss',
+                    '!app/Resources/theme/scss/admin/__*.scss',
+                    '!app/Resources/theme/scss/admin/**/README.md'
+                ],
+                front: [
+                    'app/Resources/theme/scss/front/import.scss',
+                    'app/Resources/theme/scss/front/**/_*.scss',
+                    'app/Resources/theme/scss/front/style.scss',
+                    '!app/Resources/theme/scss/front/__*.scss',
+                    '!app/Resources/theme/scss/front/**/README.md'
+                ]
+            },
+            dest:     'web/css',
+            file:     {
+                admin: 'admin.scss',
+                front: 'front.scss'
+            },
+            includes: [],
+            concat:   true,
+            clean:    true,
+            minify:   false,
+            packages: {
+                src:  {
+                    sass: [
+                        'app/Resources/theme/packages/**/*.scss',
+                        'app/Resources/theme/packages/**/*.sass'
+                    ],
+                    css:  'app/Resources/theme/packages/**/*.css'
+                },
+                dest: 'web/css'
+            }
         },
-        slick:       {
-            src:  'bower_components/slick-carousel/slick/fonts/**',
-            dest: 'web/fonts'
-        }
-    },
-    libraries: {
-        watch:   'app/Resources/theme/libraries/**',
-        src:     ['app/Resources/theme/libraries/**', '!app/Resources/theme/libraries/**/README.md'],
-        dest:    'web/libraries',
-        clean:   true,
-        tinymce: {
-            js:     {
-                src:  'bower_components/tinymce/tinymce.js',
-                dest: 'web/libraries/tinymce'
+        images:    {
+            watch:    'app/Resources/theme/images/**',
+            src:      ['app/Resources/theme/images/**', '!app/Resources/theme/images/**/README.md'],
+            dest:     'web/images',
+            clean:    true,
+            packages: {
+                src:  [
+                    'app/Resources/theme/packages/**/*.gif',
+                    'app/Resources/theme/packages/**/*.png',
+                    'app/Resources/theme/packages/**/*.jpg',
+                    'app/Resources/theme/packages/**/*.svg'
+                ],
+                dest: 'web/images'
+            }
+        },
+        fonts:     {
+            watch:       'app/Resources/theme/fonts/**',
+            src:         ['app/Resources/theme/fonts/**', '!app/Resources/theme/fonts/**/README.md'],
+            dest:        'web/fonts',
+            clean:       true,
+            packages:    {
+                src:  [
+                    'app/Resources/theme/packages/**/*.otf',
+                    'app/Resources/theme/packages/**/*.eot',
+                    'app/Resources/theme/packages/**/*.svg',
+                    'app/Resources/theme/packages/**/*.ttf',
+                    'app/Resources/theme/packages/**/*.woff'
+                ],
+                dest: 'web/fonts'
             },
-            theme:  {
-                src:  'bower_components/tinymce/themes/**',
-                dest: 'web/libraries/tinymce/themes'
+            fontawesome: {
+                src:  'bower_components/fontawesome/fonts/**',
+                dest: 'web/fonts'
             },
-            skin:   {
-                src:  'bower_components/tinymce/skins/**',
-                dest: 'web/libraries/tinymce/skins'
-            },
-            plugin: {
-                src:  'bower_components/tinymce/plugins/**',
-                dest: 'web/libraries/tinymce/plugins'
+            slick:       {
+                src:  'bower_components/slick-carousel/slick/fonts/**',
+                dest: 'web/fonts'
+            }
+        },
+        libraries: {
+            watch:   'app/Resources/theme/libraries/**',
+            src:     ['app/Resources/theme/libraries/**', '!app/Resources/theme/libraries/**/README.md'],
+            dest:    'web/libraries',
+            clean:   true,
+            tinymce: {
+                js:     {
+                    src:  'bower_components/tinymce/tinymce.js',
+                    dest: 'web/libraries/tinymce'
+                },
+                theme:  {
+                    src:  'bower_components/tinymce/themes/**',
+                    dest: 'web/libraries/tinymce/themes'
+                },
+                skin:   {
+                    src:  'bower_components/tinymce/skins/**',
+                    dest: 'web/libraries/tinymce/skins'
+                },
+                plugin: {
+                    src:  'bower_components/tinymce/plugins/**',
+                    dest: 'web/libraries/tinymce/plugins'
+                }
             }
         }
-    }
-};
+    };
 //----------------------------------------
 // TASK - SASS
 //----------------------------------------

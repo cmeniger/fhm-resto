@@ -1,16 +1,26 @@
 {% extends app.request.isxmlhttprequest ? "::ajax.html.twig" : "::layout.html.twig" %}
 {% import "::Macros/breadcrumbs.html.twig" as macroBreadcrumbs %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="https://fonts.googleapis.com/css?family=Merriweather:400,400i,700i" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Stalemate" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="icon" type="image/x-icon" href="images/favicon.ico"/>
+    {#<link rel="stylesheet" type="text/css" href="/css/front.css"/>#}
+{% endblock %}
 {% block css_main %}
     {{ asset('css/front.css') }}
 {% endblock %}
 
 {% block body_header %}
-    <div id="header">
+    {#<div id="header">#}
         {# Menu #}
         {% block menu %}
-            {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-                {{ render_hinclude(url('fhm_api_menu_detail', {'template':'front'})) }}
-            {% endif %}
+            {#{% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}#}
+                {#{{ render_hinclude(url('fhm_api_menu_detail', {'template':'front'})) }}#}
+            {#{% endif %}#}
         {% endblock %}
 
         {# Tagline #}
@@ -35,14 +45,17 @@
         {% endblock %}
 
         {# Header #}
-        {% block header %}{% endblock %}
-    </div>
+        {% block header %}
+        {% endblock %}
+    {#</div>#}
 {% endblock %}
 
 {% block body_content %}
     <div id="content">
         {% block left %}{% endblock %}
-        {% block content %}{% endblock %}
+        {% block content %}
+
+        {% endblock %}
         {% block right %}{% endblock %}
     </div>
 {% endblock %}

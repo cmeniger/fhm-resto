@@ -8,12 +8,13 @@
 {% block content_data_submit_list %}{% endblock %}
 
 {% block tagline_data %}
-    <i class="fa fa-user"></i> {{ (instance.translation ~ '.front.login.title')|trans }}
 {% endblock %}
 
 {% block content_data %}
     <div class="main-login">
         <div class="row">
+
+                <i class="fa fa-user"></i> {{ (instance.translation ~ '.front.login.title')|trans }}
             <div class="large-6 columns large-centered">
                 {% if error %}
                     <div class="error">

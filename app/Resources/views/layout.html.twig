@@ -48,7 +48,10 @@
         {% endblock %}
     </head>
     <body class="{% block body_class %}{% endblock %}" {% block body_attribut %}{% endblock %}>
-        <a id="anchor-top"></a>
+        {#<a id="anchor-top"></a>#}
+        <div id="wrapper">
+            <div class="wrap-mask"></div>
+
         {% block body_all %}
         {% block body_header %}
             <div id="header">
@@ -61,17 +64,32 @@
             </div>
         {% endblock %}
         {% block body_footer %}
-            <div id="footer">
+            {#<div id="footer">#}
                 {% block footer %}
-                    <div class="row copyright center">
-                        {{ ('project.footer')|trans({}, 'ProjectDefaultBundle') }}
-                        <a href="http://www.fhmsolutions.com/">FHM Solutions</a>
-                    </div>
+                    <footer id="footer">
+                        <div class="row">
+                            <div class="large-4 columns nopadding">
+                                <a href="#"><img src="/images/logo.png" alt=""/></a>
+                            </div>
+                            <div class="large-4 columns copyright nopadding">
+                                <p>&copy; DynamicFrameworks - Elite ThemeForest Author.</p>
+                            </div>
+                            <div class="large-4 columns nopadding">
+                                <a href="#"></a>
+                            </div>
+                        </div>
+                        <div class="row copyright center">
+                            {{ ('project.footer')|trans({}, 'ProjectDefaultBundle') }}
+                            <a href="http://www.fhmsolutions.com/">FHM Solutions</a>
+                        </div>
+                    </footer>
+
                 {% endblock %}
-            </div>
+            {#</div>#}
         {% endblock %}
         {% block body_javascripts %}
         {% block body_javascripts_file %}
+            {#<script src="{{ asset('js/jquery.js') }}"></script>#}
             <script src="{{ asset('js/jquery.nestable.js') }}"></script>
             <script src="{{ asset('js/jquery.addresspicker.js') }}"></script>
             <script src="{{ asset('js/jquery.datetimepicker.js') }}"></script>
@@ -90,6 +108,11 @@
             <script src="{{ asset('js/slick.js') }}"></script>
             <script src="{{ asset('js/inview.js') }}"></script>
             <script src="{{ asset('js/main.js') }}"></script>
+            <script src="{{ asset('js/parallax.min.js') }}"></script>
+            <script src="{{ asset('js/jquery.nice-select.js') }}"></script>
+            <script src="{{ asset('js/jquery.datepicker.js') }}"></script>
+            <script src="{{ asset('js/slick.min.js') }}"></script>
+            <script src="{{ asset('js/flip.js') }}"></script>
             <script src="{{ asset('libraries/tinymce/tinymce.js') }}"></script>
             <script src="{{ asset('js/hinclude.js') }}"></script>
         {% endblock %}
@@ -115,21 +138,21 @@
                 $(document).ready(function ()
                 {
                     {% block body_javascripts_ready %}
-                    $('.colorpicker').each(function ()
-                    {
-                        if($(this).val())
-                        {
-                            $(this).css('background-color', $(this).val());
-                        }
-                        $(this).colorpicker({
-                            color:            $(this).val(),
-                            displayIndicator: true,
-                            history:          false
-                        }).on('change.color', function (evt, color)
-                        {
-                            $(this).css('background-color', color);
-                        });
-                    });
+//                    $('.colorpicker').each(function ()
+//                    {
+//                        if($(this).val())
+//                        {
+//                            $(this).css('background-color', $(this).val());
+//                        }
+//                        $(this).colorpicker({
+//                            color:            $(this).val(),
+//                            displayIndicator: true,
+//                            history:          false
+//                        }).on('change.color', function (evt, color)
+//                        {
+//                            $(this).css('background-color', color);
+//                        });
+//                    });
                     tinymce.init({
                         selector:    'textarea.editor',
                         height:      200,
@@ -183,5 +206,7 @@
         {% endblock %}
         {% endblock %}
         {% endblock %}
+        </div>
+
     </body>
 </html>

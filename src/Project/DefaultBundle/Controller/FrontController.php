@@ -42,7 +42,11 @@ class FrontController extends RefFrontController
         if ($site) {
             $menu = $site->getMenu();
             if ($menu) {
-                return $this->redirectToRoute('fhm_menu_lite', array('id'=>$menu->getAlias()));
+                //return $this->redirectToRoute('fhm_menu_lite', array('id'=>$menu->getAlias()));
+                return array(
+                    'site' => $site,
+                    'menu' => $menu,
+                );
             } else {
                 return $this->redirectToRoute('project_template', array('name'=>'default'));
             }

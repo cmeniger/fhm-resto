@@ -68,6 +68,7 @@ class RefAdminController extends GenericController
         $handler = new self::$form->createHandler($form, $request);
         $process = $handler->process();
         if ($process) {
+            $object->setAlias($this->get('fhm_tools')->getAlias($object->getId(), $object->getName(), self::$repository));
             $this->get('fhm_tools')->dmPersist($object);
             $this->get('session')->getFlashBag()->add(
                 'notice',
@@ -135,6 +136,7 @@ class RefAdminController extends GenericController
         $handler = new self::$form->updateHandler($form, $request);
         $process = $handler->process();
         if ($process) {
+            $object->setAlias($this->get('fhm_tools')->getAlias($object->getId(), $object->getName(), self::$repository));
             $this->get('fhm_tools')->dmPersist($object);
             $this->get('session')->getFlashBag()->add(
                 'notice',
