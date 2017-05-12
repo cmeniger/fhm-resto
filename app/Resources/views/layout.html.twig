@@ -51,7 +51,7 @@
         {#<a id="anchor-top"></a>#}
         <div id="wrapper">
             <div class="wrap-mask"></div>
-
+            <div id="content">
         {% block body_all %}
         {% block body_header %}
             <div id="header">
@@ -69,19 +69,20 @@
                     <footer id="footer">
                         <div class="row">
                             <div class="large-4 columns nopadding">
-                                <a href="#"><img src="/images/logo.png" alt=""/></a>
+                                <a href="#"><img src="/images/logo1.png" alt=""/></a>
                             </div>
                             <div class="large-4 columns copyright nopadding">
-                                <p>&copy; DynamicFrameworks - Elite ThemeForest Author.</p>
+                                <p>&copy; Boucherie de la Ferme des Ormes.</p>
                             </div>
                             <div class="large-4 columns nopadding">
                                 <a href="#"></a>
                             </div>
+                            <div class="row copyright center">
+                                {{ ('project.footer')|trans({}, 'ProjectDefaultBundle') }}
+                                <a href="http://www.fhmsolutions.com/">FHM Solutions</a>
+                            </div>
                         </div>
-                        <div class="row copyright center">
-                            {{ ('project.footer')|trans({}, 'ProjectDefaultBundle') }}
-                            <a href="http://www.fhmsolutions.com/">FHM Solutions</a>
-                        </div>
+
                     </footer>
 
                 {% endblock %}
@@ -207,6 +208,6 @@
         {% endblock %}
         {% endblock %}
         </div>
-
+        </div>
     </body>
 </html>

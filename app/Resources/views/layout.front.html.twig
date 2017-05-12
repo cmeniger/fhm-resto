@@ -21,6 +21,120 @@
             {#{% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}#}
                 {#{{ render_hinclude(url('fhm_api_menu_detail', {'template':'front'})) }}#}
             {#{% endif %}#}
+            <div class="device-menu-wrap">
+                <div class="device-menu">
+                    <a href="#" class="close-menu"><i class="fa fa-times" aria-hidden="true"></i></a>
+                    <nav>
+                        <ul>
+                            <li>
+                                <a href="#">Accueil</a>
+                            </li>
+                            <li>
+                                <a href="#">Produits et services</a>
+                            </li>
+                            <li class="has-subchild">
+                                <a href="#">Offres commerciales</a>
+                                <i class="sidr-dropdown-toggler"></i>
+                                <ul class="menu-depth-1 sub-menu">
+                                    <li class="has-submenu">
+                                        <a href="#">Layout variants</a>
+                                        <i class="sidr-dropdown-toggler"></i>
+                                        {#<ul class="menu-depth-2 nest-menu-depth sub-menu">#}
+                                            {#<li>#}
+                                                {#<a href="#">Layout variants</a>#}
+                                            {#</li>#}
+                                            {#<li class="has-submenu">#}
+                                                {#<a href="#">Layout variants</a>#}
+                                                {#<ul class="menu-depth-3 nest-menu-depth sub-menu">#}
+                                                    {#<li>#}
+                                                        {#<a href="#">Layout variants</a>#}
+                                                    {#</li>#}
+                                                    {#<li>#}
+                                                        {#<a href="#">Layout variants</a>#}
+                                                    {#</li>#}
+                                                    {#<li>#}
+                                                        {#<a href="#">Layout variants</a>#}
+                                                    {#</li>#}
+                                                    {#<li>#}
+                                                        {#<a href="#">Layout variants</a>#}
+                                                    {#</li>#}
+                                                    {#<li>#}
+                                                        {#<a href="#">Layout variants</a>#}
+                                                    {#</li>#}
+                                                {#</ul>#}
+                                            {#</li>#}
+                                            {#<li>#}
+                                                {#<a href="#">Layout variants</a>#}
+                                            {#</li>#}
+                                            {#<li>#}
+                                                {#<a href="#">Layout variants</a>#}
+                                            {#</li>#}
+                                            {#<li>#}
+                                                {#<a href="#">Layout variants</a>#}
+                                            {#</li>#}
+                                        {#</ul>#}
+                                    {#</li>#}
+                                    {#<li>#}
+                                        {#<a href="#">Layout variants</a>#}
+                                    {#</li>#}
+                                    {#<li class="has-submenu">#}
+                                        {#<a href="#">Layout variants</a>#}
+                                        {#<ul class="menu-depth-2 nest-menu-depth sub-menu">#}
+                                            {#<li>#}
+                                                {#<a href="#">Layout variants</a>#}
+                                            {#</li>#}
+                                            {#<li class="has-submenu">#}
+                                                {#<a href="#">Layout variants</a>#}
+                                                {#<ul class="menu-depth-3 nest-menu-depth sub-menu">#}
+                                                    {#<li>#}
+                                                        {#<a href="#">Layout variants</a>#}
+                                                    {#</li>#}
+                                                    {#<li>#}
+                                                        {#<a href="#">Layout variants</a>#}
+                                                    {#</li>#}
+                                                    {#<li>#}
+                                                        {#<a href="#">Layout variants</a>#}
+                                                    {#</li>#}
+                                                    {#<li>#}
+                                                        {#<a href="#">Layout variants</a>#}
+                                                    {#</li>#}
+                                                    {#<li>#}
+                                                        {#<a href="#">Layout variants</a>#}
+                                                    {#</li>#}
+                                                {#</ul>#}
+                                            {#</li>#}
+                                            {#<li>#}
+                                                {#<a href="#">Layout variants</a>#}
+                                            {#</li>#}
+                                            {#<li>#}
+                                                {#<a href="#">Layout variants</a>#}
+                                            {#</li>#}
+                                            {#<li>#}
+                                                {#<a href="#">Layout variants</a>#}
+                                            {#</li>#}
+                                        {#</ul>#}
+                                    {#</li>#}
+                                    {#<li>#}
+                                        {#<a href="#">Layout variants</a>#}
+                                    {#</li>#}
+                                    {#<li>#}
+                                        {#<a href="#">Layout variants</a>#}
+                                    {#</li>#}
+                                {#</ul>#}
+                            </li>
+                            {#<li>#}
+                            {#<a href="#">Gallery</a>#}
+                            {#</li>#}
+                            <li>
+                                <a href="#">Horaires et plan d'accès</a>
+                            </li>
+                            <li>
+                                <a href="#">Témoignages</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
         {% endblock %}
 
         {# Tagline #}
@@ -51,7 +165,133 @@
 {% endblock %}
 
 {% block body_content %}
-    <div id="content">
+<div id="container">
+    <header id="header" >
+        <div class="logo-device">
+            <a href="#"><img src="/images/logo1.png" alt=""/></a>
+        </div>
+        <div class="menu-icon-wrap">
+            <a href="#" class="menu-icon">
+                <span></span>
+                <span></span>
+                <span></span>
+            </a>
+        </div>
+        <nav class="nav-left">
+            <ul>
+                <li>
+                    <a href="#">Accueil</a>
+                </li>
+                <li>
+                    <a href="#">Produits et services</a>
+                </li>
+                <li>
+                    <a href="#">Offres commerciales</a>
+                    {#<ul class="menu-depth-1 sub-menu">#}
+                        {#<li class="has-submenu">#}
+                            {#<a href="#">Layout variants</a>#}
+                            {#<ul class="menu-depth-2 nest-menu-depth sub-menu">#}
+                                {#<li>#}
+                                    {#<a href="#">Layout variants</a>#}
+                                {#</li>#}
+                                {#<li class="has-submenu">#}
+                                    {#<a href="#">Layout variants</a>#}
+                                    {#<ul class="menu-depth-3 nest-menu-depth sub-menu">#}
+                                        {#<li>#}
+                                            {#<a href="#">Layout variants</a>#}
+                                        {#</li>#}
+                                        {#<li>#}
+                                            {#<a href="#">Layout variants</a>#}
+                                        {#</li>#}
+                                        {#<li>#}
+                                            {#<a href="#">Layout variants</a>#}
+                                        {#</li>#}
+                                        {#<li>#}
+                                            {#<a href="#">Layout variants</a>#}
+                                        {#</li>#}
+                                        {#<li>#}
+                                            {#<a href="#">Layout variants</a>#}
+                                        {#</li>#}
+                                    {#</ul>#}
+                                {#</li>#}
+                                {#<li>#}
+                                    {#<a href="#">Layout variants</a>#}
+                                {#</li>#}
+                                {#<li>#}
+                                    {#<a href="#">Layout variants</a>#}
+                                {#</li>#}
+                                {#<li>#}
+                                    {#<a href="#">Layout variants</a>#}
+                                {#</li>#}
+                            {#</ul>#}
+                        {#</li>#}
+                        {#<li>#}
+                            {#<a href="#">Layout variants</a>#}
+                        {#</li>#}
+                        {#<li class="has-submenu">#}
+                            {#<a href="#">Layout variants</a>#}
+                            {#<ul class="menu-depth-2 nest-menu-depth sub-menu">#}
+                                {#<li>#}
+                                    {#<a href="#">Layout variants</a>#}
+                                {#</li>#}
+                                {#<li class="has-submenu">#}
+                                    {#<a href="#">Layout variants</a>#}
+                                    {#<ul class="menu-depth-3 nest-menu-depth sub-menu">#}
+                                        {#<li>#}
+                                            {#<a href="#">Layout variants</a>#}
+                                        {#</li>#}
+                                        {#<li>#}
+                                            {#<a href="#">Layout variants</a>#}
+                                        {#</li>#}
+                                        {#<li>#}
+                                            {#<a href="#">Layout variants</a>#}
+                                        {#</li>#}
+                                        {#<li>#}
+                                            {#<a href="#">Layout variants</a>#}
+                                        {#</li>#}
+                                        {#<li>#}
+                                            {#<a href="#">Layout variants</a>#}
+                                        {#</li>#}
+                                    {#</ul>#}
+                                {#</li>#}
+                                {#<li>#}
+                                    {#<a href="#">Layout variants</a>#}
+                                {#</li>#}
+                                {#<li>#}
+                                    {#<a href="#">Layout variants</a>#}
+                                {#</li>#}
+                                {#<li>#}
+                                    {#<a href="#">Layout variants</a>#}
+                                {#</li>#}
+                            {#</ul>#}
+                        {#</li>#}
+                        {#<li>#}
+                            {#<a href="#">Layout variants</a>#}
+                        {#</li>#}
+                        {#<li>#}
+                            {#<a href="#">Layout variants</a>#}
+                        {#</li>#}
+                    {#</ul>#}
+                </li>
+            </ul>
+        </nav>
+        <div class="logo-wrap">
+            <a href="#" class="logo"><img src="/images/logo1.png" alt=""/></a>
+        </div>
+        <nav class="nav-right">
+            <ul>
+                {#<li>#}
+                {#<a href="#">Gallery</a>#}
+                {#</li>#}
+                <li>
+                    <a href="#">Horaires et plan d'accès</a>
+                </li>
+                <li>
+                    <a href="#">Témoignages</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
         {% block left %}{% endblock %}
         {% block content %}
 
