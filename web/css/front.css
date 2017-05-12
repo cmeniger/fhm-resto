@@ -18834,7 +18834,7 @@ img {
 
 .default-button, .banner-wrap .introduction .button-wrap a, .vc-row-wrapper.video-box .button-wrap a, .time-table .table-box .form-box .button-box input[type='submit'] {
   border: none;
-  background: #e72d43;
+  background: #B20002;
   border-radius: 43px;
   color: #FFFFFF;
   display: inline-block;
@@ -21755,7 +21755,7 @@ body {
         -o-transform: translateY(-50%);
         transform: translateY(-50%); }
     #header nav a {
-      color: #FFFFFF;
+      color: #B20002;
       font-size: 14px;
       font-weight: bold;
       font-family: "Merriweather", serif;
@@ -21841,7 +21841,7 @@ body {
     transform: translateY(-50%);
     z-index: 2; }
     .banner-wrap .introduction h1 {
-      color: #FFFFFF;
+      color: #B20002;
       font-size: 45px;
       font-family: "Merriweather", serif;
       text-transform: none;
@@ -21850,7 +21850,7 @@ body {
       font-family: "Stalemate", cursive;
       text-align: center;
       width: 100%;
-      color: #FFFFFF;
+      color: #B20002;
       font-size: 35px;
       margin: 0;
       text-transform: none; }
@@ -21946,7 +21946,7 @@ body {
         -o-transition: all 4s ease;
         transition: all 4s ease; }
     .vc-row-wrapper .info h2 {
-      color: #313131;
+      color: #B20002;
       font-family: "Merriweather", serif;
       font-size: 30px;
       line-height: 1em;
@@ -21967,7 +21967,7 @@ body {
         height: 25px;
         margin: 12px auto 0; }
     .vc-row-wrapper .info h3 {
-      color: #383838;
+      color:#B20002;
       font-size: 32px;
       font-family: "Stalemate", cursive;
       font-weight: normal; }
@@ -22075,7 +22075,7 @@ body {
     text-align: center; }
     .three-cols .description h4 {
       font-size: 18px;
-      color: #FFFFFF;
+      color: #B20002;
       font-family: "Merriweather", serif;
       margin: 0; }
     .three-cols .description p {
@@ -22097,7 +22097,7 @@ body {
   padding-top: 100px;
   padding-bottom: 46px; }
   .header-title h2 {
-    color: #FFFFFF;
+    color: #B20002;
     font-family: "Merriweather", serif;
     font-size: 38px;
     font-weight: 700;
@@ -22123,7 +22123,7 @@ body {
     font-weight: 400;
     font-style: normal;
     font-size: 28px;
-    color: #FFFFFF;
+    color: #B20002;
     margin: 0;
     -webkit-transition: all 1.5s ease;
     -khtml-transition: all 1.5s ease;
@@ -22132,15 +22132,17 @@ body {
     -o-transition: all 1.5s ease;
     transition: all 1.5s ease; }
   .header-title.gray h2 {
-    color: #2d2d2d; }
+    color: #B20002; }
     .header-title.gray h2:after {
       background: url(/images/delim_small.png) no-repeat 0 0; }
   .header-title.gray h3 {
-    color: #383838; }
+    color: #B20002; }
   .header-title.onscreen h3 {
-    font-size: 32px; }
+    font-size: 32px;
+    color: #B20002 !important;}
   .header-title.onscreen h2 {
-    font-size: 45px; }
+    font-size: 45px;
+    color: #B20002 !important;}
 
 .tabs-box {
   background: #FFFFFF;

@@ -52,9 +52,9 @@ project:
         seconds:                                Secondes
 
     seo:
-        title:                                  FhmTools
-        description:                            FhmTools description
-        keywords:                               FhmTools, word1, word2
+        title:                                  Boucherie de la Ferme des Ormes
+        description:                            Boucherie de la Ferme des Ormes
+        keywords:                               Boucherie de la Ferme des Ormes
 
     pagination:
          counter:                               "Nombre de Places: '%count%' / '%all%'"
