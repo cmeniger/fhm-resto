@@ -1,103 +1,108 @@
 // Must be 100% for off canvas to work
-html, body {
+html, body{
     height: 100%;
 }
 
 // Set box-sizing globally to handle padding and border widths
 *,
 *:before,
-*:after {
+*:after{
     @include box-sizing(border-box);
 }
 
 html,
-body {
+body{
     font-size: $base-font-size;
 }
 
 // Default body styles
-body {
-    background: $body-bg;
-    color: $body-font-color;
-    padding: 0;
-    margin: 0;
+body{
+    background:  $body-bg;
+    color:       $body-font-color;
+    padding:     0;
+    margin:      0;
     font-family: $body-font-family;
     font-weight: $body-font-weight;
-    font-style: $body-font-style;
+    font-style:  $body-font-style;
     line-height: $base-line-height; // Set to $base-line-height to take on browser default of 150%
-    position: relative;
-    cursor: $cursor-auto-value;
+    position:    relative;
+    cursor:      $cursor-auto-value;
 }
 
-a:hover {
+a:hover{
     cursor: $cursor-pointer-value;
 }
 
 // Grid Defaults to get images and embeds to work properly
-img {
+img{
     max-width: 100%;
-    height: auto;
+    height:    auto;
 }
 
-img {
+img{
     -ms-interpolation-mode: bicubic;
 }
-.row {
+
+.row{
     max-width: 1200px;
-    &.full-width {
+    &.full-width{
         max-width: 100%;
     }
 }
-.default-button {
-    border: none;
-    background: #e72d43;
-    border-radius: 43px;
-    color: $white;
-    display: inline-block;
-    font-family: $font-family-montserrat;
-    font-weight: 500;
-    font-size: 11px;
-    height: 45px;
-    line-height: 45px;
-    padding-left: 50px;
-    padding-right: 50px;
+
+.default-button{
+    border:         none;
+    background:     #E72D43;
+    border-radius:  43px;
+    color:          $white;
+    display:        inline-block;
+    font-family:    $font-family-montserrat;
+    font-weight:    500;
+    font-size:      11px;
+    height:         45px;
+    line-height:    45px;
+    padding-left:   50px;
+    padding-right:  50px;
     text-transform: uppercase;
 }
-.nopadding {
+
+.nopadding{
     padding: 0;
 }
-.no-padding-top {
+
+.no-padding-top{
     padding-top: 0 !important;
 }
+
 #map_canvas,
-.map_canvas {
+.map_canvas{
     img,
     embed,
-    object {
+    object{
         max-width: none !important;
     }
 }
 
 // Miscellaneous useful HTML classes
-.left {
+.left{
     float: left !important;
 }
 
-.right {
+.right{
     float: right !important;
 }
 
-.clearfix {
+.clearfix{
     @include clearfix;
 }
 
 // Hide visually and from screen readers
-.hide {
+.hide{
     display: none;
 }
 
 // Hide visually and from screen readers, but maintain layout
-.invisible {
+.invisible{
     visibility: hidden;
 }
 
@@ -105,14 +110,14 @@ img {
 // Antialiased font smoothing works best for light text on a dark background.
 // Apply to single elements instead of globally to body.
 // Note this only applies to webkit-based desktop browsers and Firefox 25 (and later) on the Mac.
-.antialiased {
-    -webkit-font-smoothing: antialiased;
+.antialiased{
+    -webkit-font-smoothing:  antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
 
 // Get rid of gap under images by making them display: inline-block; by default
-img {
-    display: inline-block;
+img{
+    display:        inline-block;
     vertical-align: middle;
 }
 
@@ -121,12 +126,12 @@ img {
 //
 
 // Make sure textarea takes on height automatically
-textarea {
-    height: auto;
+textarea{
+    height:     auto;
     min-height: 50px;
 }
 
 // Make select elements 100% width by default
-select {
+select{
     width: 100%;
 }

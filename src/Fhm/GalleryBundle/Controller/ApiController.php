@@ -1,4 +1,5 @@
 <?php
+
 namespace Fhm\GalleryBundle\Controller;
 
 use Fhm\FhmBundle\Controller\RefApiController as FhmController;
@@ -12,6 +13,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
  * @Route("/api/gallery")
  * ------------------------------------
  * Class ApiController
+ *
  * @package Fhm\GalleryBundle\Controller
  */
 class ApiController extends FhmController
@@ -21,11 +23,11 @@ class ApiController extends FhmController
      */
     public function __construct()
     {
-        self::$repository = "FhmGalleryBundle:Gallery";
-        self::$source = "fhm";
-        self::$domain = "FhmGalleryBundle";
+        self::$repository  = "FhmGalleryBundle:Gallery";
+        self::$source      = "fhm";
+        self::$domain      = "FhmGalleryBundle";
         self::$translation = "gallery";
-        self::$route = "gallery";
+        self::$route       = "gallery";
     }
 
     /**
@@ -65,29 +67,45 @@ class ApiController extends FhmController
      */
     public function detailAction($template, $id)
     {
-
+        if($id == 'demo')
+        {
+            return new Response(
+                $this->renderView(
+                    "::FhmGallery/Template/" . $template . ".html.twig",
+                    array(
+                        'document' => null,
+                        'items'    => null,
+                        'videos'   => null,
+                        'demo'     => true
+                    )
+                )
+            );
+        }
         $object = $this->get('fhm_tools')->dmRepository(self::$repository)->getById($id);
         $object = ($object) ?: $this->get('fhm_tools')->dmRepository(self::$repository)->getByAlias($id);
         $object = ($object) ?: $this->get('fhm_tools')->dmRepository(self::$repository)->getByName($id);
         // ERROR - unknown
-        if ($object == "") {
+        if($object == "")
+        {
             throw $this->createNotFoundException(
                 $this->trans('gallery.item.error.unknown', array(), 'FhmGalleryBundle')
             );
-        } // ERROR - Forbidden
-        elseif (!$this->getUser()->hasRole('ROLE_ADMIN') && ($object->getDelete() || !$object->getActive())) {
+        }
+        // ERROR - Forbidden
+        elseif($object->getDelete() || !$object->getActive())
+        {
             throw new HttpException(403, $this->trans('gallery.item.error.forbidden', array(), 'FhmGalleryBundle'));
         }
 
         return new Response(
             $this->renderView(
-                "::FhmGallery/Template/".$template.".html.twig",
+                "::FhmGallery/Template/" . $template . ".html.twig",
                 array(
                     'document' => $object,
-                    'items' => $this->get('fhm_tools')->dmRepository("FhmGalleryBundle:GalleryItem")->getByGroupAll(
+                    'items'    => $this->get('fhm_tools')->dmRepository("FhmGalleryBundle:GalleryItem")->getByGroupAll(
                         $object
                     ),
-                    'videos' => $this->get('fhm_tools')->dmRepository("FhmGalleryBundle:GalleryVideo")->getByGroupAll(
+                    'videos'   => $this->get('fhm_tools')->dmRepository("FhmGalleryBundle:GalleryVideo")->getByGroupAll(
                         $object
                     ),
                 )

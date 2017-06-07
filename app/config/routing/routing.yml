@@ -1,9 +1,6 @@
 routing_fhm:
     resource: "routing_fhm.yml"
 
-routing_shop:
-    resource: "routing_shop.yml"
-
 routing_other:
     resource: "routing_other.yml"
 

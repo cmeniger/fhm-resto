@@ -56,9 +56,11 @@
                 var posTop = $(this).scrollTop();
                 if (posTop > 0) {
                     $('#header').addClass('sticky');
+                    $('#anchor-top').show();
                 }
                 else {
                     $('#header').removeClass('sticky');
+                    $('#anchor-top').hide();
                 }
             });
         },

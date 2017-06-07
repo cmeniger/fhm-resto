@@ -48,10 +48,6 @@
         {% endblock %}
     </head>
     <body class="{% block body_class %}{% endblock %}" {% block body_attribut %}{% endblock %}>
-        {#<a id="anchor-top"></a>#}
-        <div id="wrapper">
-            <div class="wrap-mask"></div>
-            <div id="content">
         {% block body_all %}
         {% block body_header %}
             <div id="header">
@@ -65,27 +61,27 @@
         {% endblock %}
         {% block body_footer %}
             {#<div id="footer">#}
-                {% block footer %}
-                    <footer id="footer">
-                        <div class="row">
-                            <div class="large-4 columns nopadding">
-                                <a href="#"><img src="/images/logo1.png" alt=""/></a>
-                            </div>
-                            <div class="large-4 columns copyright nopadding">
-                                <p>&copy; Boucherie de la Ferme des Ormes.</p>
-                            </div>
-                            <div class="large-4 columns nopadding">
-                                <a href="#"></a>
-                            </div>
-                            <div class="row copyright center">
-                                {{ ('project.footer')|trans({}, 'ProjectDefaultBundle') }}
-                                <a href="http://www.fhmsolutions.com/">FHM Solutions</a>
-                            </div>
-                        </div>
+                {#{% block footer %}#}
+                    {#<footer id="footer">#}
+                        {#<div class="row">#}
+                            {#<div class="large-4 columns nopadding">#}
+                                {#<a href="#"><img src="/images/logo1.png" alt=""/></a>#}
+                            {#</div>#}
+                            {#<div class="large-4 columns copyright nopadding">#}
+                                {#<p>&copy; Boucherie de la Ferme des Ormes.</p>#}
+                            {#</div>#}
+                            {#<div class="large-4 columns nopadding">#}
+                                {#<a href="#"></a>#}
+                            {#</div>#}
+                            {#<div class="row copyright center">#}
+                                {#{{ ('project.footer')|trans({}, 'ProjectDefaultBundle') }}#}
+                                {#<a href="http://www.fhmsolutions.com/">FHM Solutions</a>#}
+                            {#</div>#}
+                        {#</div>#}
 
-                    </footer>
+                    {#</footer>#}
 
-                {% endblock %}
+                {#{% endblock %}#}
             {#</div>#}
         {% endblock %}
         {% block body_javascripts %}
@@ -99,8 +95,6 @@
             <script src="{{ asset('js/jquery.formcollection.js') }}"></script>
             <script src="{{ asset('js/jquery.media.js') }}"></script>
             <script src="{{ asset('js/jquery.autocomplete.js') }}"></script>
-            <script src="{{ asset('js/jquery.vmap.js') }}"></script>
-            <script src="{{ asset('js/jquery.workflow.js') }}"></script>
             <script src="{{ asset('js/jquery.contact.js') }}"></script>
             <script src="{{ asset('js/jquery.timer.js') }}"></script>
             <script src="{{ asset('js/jquery.card.js') }}"></script>
@@ -114,8 +108,8 @@
             <script src="{{ asset('js/jquery.datepicker.js') }}"></script>
             <script src="{{ asset('js/slick.min.js') }}"></script>
             <script src="{{ asset('js/flip.js') }}"></script>
-            <script src="{{ asset('libraries/tinymce/tinymce.js') }}"></script>
             <script src="{{ asset('js/hinclude.js') }}"></script>
+            <script src="{{ asset('libraries/tinymce/tinymce.js') }}"></script>
         {% endblock %}
         {% block body_javascripts_script %}
             <script>
@@ -124,7 +118,6 @@
                 $(document).formcollection();
                 $(document).media();
                 $(document).autocomplete();
-                $(document).workflow();
                 $(document).contact();
                 $(document).card();
                 $(document).note();
@@ -139,21 +132,21 @@
                 $(document).ready(function ()
                 {
                     {% block body_javascripts_ready %}
-//                    $('.colorpicker').each(function ()
-//                    {
-//                        if($(this).val())
-//                        {
-//                            $(this).css('background-color', $(this).val());
-//                        }
-//                        $(this).colorpicker({
-//                            color:            $(this).val(),
-//                            displayIndicator: true,
-//                            history:          false
-//                        }).on('change.color', function (evt, color)
-//                        {
-//                            $(this).css('background-color', color);
-//                        });
-//                    });
+                    $('.colorpicker').each(function ()
+                    {
+                        if($(this).val())
+                        {
+                            $(this).css('background-color', $(this).val());
+                        }
+                        $(this).colorpicker({
+                            color:            $(this).val(),
+                            displayIndicator: true,
+                            history:          false
+                        }).on('change.color', function (evt, color)
+                        {
+                            $(this).css('background-color', color);
+                        });
+                    });
                     tinymce.init({
                         selector:    'textarea.editor',
                         height:      200,
@@ -207,7 +200,5 @@
         {% endblock %}
         {% endblock %}
         {% endblock %}
-        </div>
-        </div>
     </body>
 </html>

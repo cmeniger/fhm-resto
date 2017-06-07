@@ -23,12 +23,12 @@ parameters:
     use_assetic_controller: true
     #MONGO
     mongodb_server: 'mongodb://docker_fhmmongo_1:27017'
-    mongodb_database: fhm-tools-v2
+    mongodb_database: fhm-restos
     mongodb_username: null
     mongodb_password: null
     mongodb_replicaSet: ''
     mongo.session.options:
-        database: fhm-tools_session
+        database: fhm-restos_session
         collection: session
     #OAUTH
     oauth.facebook.id: 'null'
@@ -48,7 +48,7 @@ parameters:
             version: latest
         s3:
             host: 'http://s3-eu-west-1.amazonaws.com/'
-            bucket: fhm-tools
+            bucket: fhm-restos
             environment: test
     project:
         construct: false
@@ -62,20 +62,20 @@ parameters:
             id: UA-60572981-4
     fhm_mailer:
         enable: true
-        project: FHMTools
-        sign: 'L''équipe FHM-Tools'
-        footer: 'FHMTools 2015 - 2016, tous droits réservés.'
-        host: 'http://fhm-tools-v2.local'
-        admin: admin@fhm-tools.com
-        noreply: noreply@fhm-tools.com
-        contact: contact@fhm-tools.com
+        project: FHM-Restos
+        sign: 'L''équipe FHM-Restos'
+        footer: 'FHM-Restos 2017, tous droits réservés.'
+        host: 'http://fhm-restos.local'
+        admin: admin@fhm-restos.com
+        noreply: noreply@fhm-restos.com
+        contact: contact@fhm-restos.com
         transport: '%mailer_transport%'
         fhm_host: '%mailer_host%'
         fhm_port: '%mailer_port%'
         fhm_user: '%mailer_user%'
         fhm_password: '%mailer_password%'
         fhm_encryption: '%mailer_encryption%'
-    fhm_mailer.noreply: noreply@fhm-tools.com
+    fhm_mailer.noreply: noreply@fhm-restos.com
     fhm_fhm:
         pagination: 3
         autocomplete:

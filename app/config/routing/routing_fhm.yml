@@ -18,11 +18,6 @@ fhm_notification:
     type:     annotation
     prefix:   /
 
-fhm_workflow:
-    resource: "@FhmWorkflowBundle/Controller/"
-    type:     annotation
-    prefix:   /
-
 fhm_mail:
     resource: "@FhmMailBundle/Controller/"
     type:     annotation
@@ -70,11 +65,6 @@ fhm_news:
 
 fhm_contact:
     resource: "@FhmContactBundle/Controller/"
-    type:     annotation
-    prefix:   /
-
-fhm_map_picker:
-    resource: "@FhmMapPickerBundle/Controller/"
     type:     annotation
     prefix:   /
 

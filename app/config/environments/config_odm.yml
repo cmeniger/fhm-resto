@@ -2,8 +2,6 @@ imports:
     - { resource: 'config.yml' }
     - { resource: '../security/security_odm.yml' }
 
-
-
 doctrine_mongodb:
     connections:
         default:
@@ -50,16 +48,6 @@ fos_user:
             type: Fhm\UserBundle\Form\Type\Front\PasswordType
 
 #profiler
-framework:
-    router:
-        resource: "%kernel.root_dir%/config/routing/routing_dev.yml"
-        strict_requirements: true
-    profiler: { only_exceptions: false }
-
-web_profiler:
-    toolbar: '%kernel.debug%'
-    intercept_redirects: false
-
 framework:
     router:
         resource: "%kernel.root_dir%/config/routing/routing_dev.yml"

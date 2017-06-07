@@ -1,0 +1,60 @@
+{% trans_default_domain instance.domain %}
+{% if demo is defined %}
+    <div class="slider home row">
+        <div class="slider-item" style="background: url({{ asset('images/demo/slider/slider-item1.jpg') }})">
+            <div class="caption">
+                <h2>Aenean ut eros</h2>
+                <p>Vestibulum dapibus nunc ac augue. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu.
+                    In auctor lobortis lacus.</p>
+                <a href="#" target="_blank">{{ (instance.translation ~ '.api.more')|trans }}</a>
+            </div>
+        </div>
+        <div class="slider-item" style="background: url({{ asset('images/demo/slider/slider-item2.jpg') }})">
+            <div class="caption">
+                <h2>Donec pede justo</h2>
+                <p>Quisque id mi. Suspendisse eu ligula. Curabitur at lacus ac velit ornare lobortis. Aenean leo ligula,
+                    porttitor eu, consequat vitae, eleifend ac, enim. Cum sociis natoque penatibus et magnis dis
+                    parturient montes, nascetur ridiculus mus. Vestibulum eu odio. Nulla facilisi. Praesent venenatis
+                    metus at tortor pulvinar varius. In dui magna, posuere eget, vestibulum et, tempor auctor, justo.
+                    Pellentesque egestas, neque sit amet convallis pulvinar, justo nulla eleifend augue, ac auctor orci
+                    leo non est.</p>
+                <a href="#" target="_blank">{{ (instance.translation ~ '.api.more')|trans }}</a>
+            </div>
+        </div>
+        <div class="slider-item" style="background: url({{ asset('images/demo/slider/slider-item3.jpg') }})">
+            <div class="caption">
+                <h2>In auctor</h2>
+                <p>Suspendisse enim turpis, dictum sed, iaculis a, condimentum nec, nisi. Pellentesque auctor neque nec
+                    urna. Curabitur at lacus ac velit ornare lobortis.</p>
+                <a href="#" target="_blank">{{ (instance.translation ~ '.api.more')|trans }}</a>
+            </div>
+        </div>
+    </div>
+{% else %}
+    <div class="slider home row">
+        {% for item in items %}
+            <div class="slider-item" style="background: url({{ item.getImage()|media }})">
+                <div class="caption">
+                    <h2>{{ item.getTitle() }}</h2>
+                    <p>{{ item.getContent()|raw }}</p>
+                    {% if item.getLink() %}
+                        <a href="{{ item.getLink() }}" target="_blank">{{ (instance.translation ~ '.api.more')|trans }}</a>
+                    {% endif %}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endif %}
+<script>
+    $(document).ready(function ()
+    {
+        $('.slider').slick({
+            autoplay: true,
+            dots:     true,
+            infinite: true,
+            fade:     true,
+            speed:    500,
+            cssEase:  'linear'
+        });
+    });
+</script>

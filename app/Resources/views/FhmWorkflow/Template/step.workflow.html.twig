@@ -1,7 +1,0 @@
-{% trans_default_domain instance.domain %}
-
-{% if workflows %}
-    {% for workflow in workflows %}
-        {{ workflow.getTask()|wfStepTask(workflow, instance)|raw }}
-    {% endfor %}
-{% endif %}

@@ -1,31 +1,5 @@
 {% trans_default_domain "FhmFhmBundle" %}
 {% extends "::FhmFhm/Admin/menu.html.twig" %}
 
-{#{{ render(path('fhm_api_menu_detail', {'template':'admin'})) }}#}
-
 {% block menu_project %}
-    {# category #}
-    {#<div class="link">#}
-        {#<a href="{{ path("fhm_admin_category") }}" title="{{ ('category.admin.index.title')|trans({}, 'FhmCategoryBundle') }}"><i class="fa fa-folder fa-star-o menu"></i>{{ ('category.admin.index.link')|trans({}, 'FhmCategoryBundle') }}</a>#}
-        {#<span>#}
-                {#<a href="{{ path("fhm_admin_category_import") }}" title="{{ ('category.admin.import.link')|trans({}, 'FhmCategoryBundle') }}"><i class="fa fa-fw fa-download"></i></a>#}
-                {#<a href="{{ path("fhm_admin_category_export") }}" title="{{ ('category.admin.export.link')|trans({}, 'FhmCategoryBundle') }}"><i class="fa fa-fw fa-upload"></i></a>#}
-            {#</span>#}
-    {#</div>#}
-    {# product #}
-    {#<div class="link">#}
-        {#<a href="{{ path("fhm_admin_product") }}" title="{{ ('product.admin.index.title')|trans({}, 'FhmProductBundle') }}"><i class="menu"></i>{{ ('product.admin.index.link')|trans({}, 'FhmProductBundle') }}</a>#}
-        {#<span>#}
-            {#<a href="{{ path("fhm_admin_product_import") }}" title="{{ ('product.admin.import.link')|trans({}, 'FhmProductBundle') }}"><i class="fa fa-fw fa-download"></i></a>#}
-            {#<a href="{{ path("fhm_admin_product_export") }}" title="{{ ('product.admin.export.link')|trans({}, 'FhmProductBundle') }}"><i class="fa fa-fw fa-upload"></i></a>#}
-        {#</span>#}
-    {#</div>#}
-    {# ingredient #}
-    {#<div class="link">#}
-        {#<a href="{{ path("fhm_admin_product_ingredient") }}" title="{{ ('product.ingredient.admin.index.title')|trans({}, 'FhmProductBundle') }}"><i class="menu"></i>{{ ('product.ingredient.admin.index.link')|trans({}, 'FhmProductBundle') }}</a>#}
-        {#<span>#}
-            {#<a href="{{ path("fhm_admin_product_ingredient_import") }}" title="{{ ('product.ingredient.admin.import.link')|trans({}, 'FhmProductBundle') }}"><i class="fa fa-fw fa-download"></i></a>#}
-            {#<a href="{{ path("fhm_admin_product_ingredient_export") }}" title="{{ ('product.ingredient.admin.export.link')|trans({}, 'FhmProductBundle') }}"><i class="fa fa-fw fa-upload"></i></a>#}
-        {#</span>#}
-    {#</div>#}
 {% endblock %}

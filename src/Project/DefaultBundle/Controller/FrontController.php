@@ -1,4 +1,5 @@
 <?php
+
 namespace Project\DefaultBundle\Controller;
 
 use Fhm\FhmBundle\Controller\RefFrontController;
@@ -17,10 +18,10 @@ class FrontController extends RefFrontController
      */
     public function __construct()
     {
-        self::$source = "project";
-        self::$domain = "ProjectDefaultBundle";
+        self::$source      = "project";
+        self::$domain      = "ProjectDefaultBundle";
         self::$translation = "project";
-        self::$route = 'project';
+        self::$route       = 'project';
     }
 
     /**
@@ -29,27 +30,17 @@ class FrontController extends RefFrontController
      *      path="/",
      *      name="project_home"
      * )
-     * @Route
-     * (
-     *      path="/",
-     *      name="fhm"
-     * )
      * @Template("::ProjectDefault/Front/home.html.twig")
      */
     public function homeAction()
     {
         $site = $this->get('fhm_tools')->dmRepository('FhmFhmBundle:Site')->getDefault();
-        if ($site) {
-            $menu = $site->getMenu();
-            if ($menu) {
-                //return $this->redirectToRoute('fhm_menu_lite', array('id'=>$menu->getAlias()));
-                return array(
-                    'site' => $site,
-                    'menu' => $menu,
-                );
-            } else {
-                return $this->redirectToRoute('project_template', array('name'=>'default'));
-            }
+        if($site)
+        {
+            return array(
+                'site' => $site,
+                'menu' => $site->getMenu(),
+            );
         }
 
         return $this->redirectToRoute('fhm_admin_site_create');
@@ -66,8 +57,8 @@ class FrontController extends RefFrontController
     {
         $response = new Response();
         $template = ($this->get('templating')->exists(
-            '::ProjectDefault/Template/'.$name.'.html.twig'
-        )) ? '::ProjectDefault/Template/'.$name.'.html.twig' : '::ProjectDefault/Template/default.html.twig';
+            '::ProjectDefault/Template/' . $name . '.html.twig'
+        )) ? '::ProjectDefault/Template/' . $name . '.html.twig' : '::ProjectDefault/Template/default.html.twig';
 
         return $this->render(
             $template,

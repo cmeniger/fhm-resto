@@ -158,29 +158,6 @@
                 <a href="{{ path("fhm_admin_contact_export") }}" title="{{ ('contact.admin.export.link')|trans({}, 'FhmContactBundle') }}"><i class="fa fa-fw fa-upload"></i></a>
             </span>
         </div>
-        {# mappicker #}
-        <div class="link">
-            <a href="{{ path("fhm_admin_mappicker") }}" title="{{ ('mappicker.admin.index.title')|trans({}, 'FhmMapPickerBundle') }}"><i class="fa fa-fw fa-globe menu"></i>{{ ('mappicker.admin.index.link')|trans({}, 'FhmMapPickerBundle') }}
-            </a>
-            <span>
-                <a href="{{ path("fhm_admin_mappicker_create") }}" title="{{ ('mappicker.admin.create.link')|trans({}, 'FhmMapPickerBundle') }}"><i class="fa fa-fw fa-plus"></i></a>
-                <a href="{{ path("fhm_admin_mappicker_import") }}" title="{{ ('mappicker.admin.import.link')|trans({}, 'FhmMapPickerBundle') }}"><i class="fa fa-fw fa-download"></i></a>
-                <a href="{{ path("fhm_admin_mappicker_export") }}" title="{{ ('mappicker.admin.export.link')|trans({}, 'FhmMapPickerBundle') }}"><i class="fa fa-fw fa-upload"></i></a>
-            </span>
-        </div>
-        {# workflow #}
-        <div class="link">
-            <a href="{{ path("fhm_admin_workflow") }}" title="{{ ('workflow.admin.index.title')|trans({}, 'FhmWorkflowBundle') }}"><i class="fa fa-fw fa-sitemap menu"></i>{{ ('workflow.admin.index.link')|trans({}, 'FhmWorkflowBundle') }}
-            </a>
-            <span>
-                <a href="{{ path("fhm_admin_workflow_task") }}" title="{{ ('workflow.task.admin.index.link')|trans({}, 'FhmWorkflowBundle') }}"><i class="fa fa-fw fa-square"></i></a>
-                <a href="{{ path("fhm_admin_workflow_action") }}" title="{{ ('workflow.action.admin.index.link')|trans({}, 'FhmWorkflowBundle') }}"><i class="fa fa-fw fa-ellipsis-h"></i></a>
-                <a href="{{ path("fhm_admin_workflow_step") }}" title="{{ ('workflow.step.admin.index.link')|trans({}, 'FhmWorkflowBundle') }}"><i class="fa fa-fw fa-columns"></i></a>
-                <a href="{{ path("fhm_admin_workflow_create") }}" title="{{ ('workflow.admin.create.link')|trans({}, 'FhmWorkflowBundle') }}"><i class="fa fa-fw fa-plus"></i></a>
-                <a href="{{ path("fhm_admin_workflow_import") }}" title="{{ ('workflow.admin.import.link')|trans({}, 'FhmWorkflowBundle') }}"><i class="fa fa-fw fa-download"></i></a>
-                <a href="{{ path("fhm_admin_workflow_export") }}" title="{{ ('workflow.admin.export.link')|trans({}, 'FhmWorkflowBundle') }}"><i class="fa fa-fw fa-upload"></i></a>
-            </span>
-        </div>
         {# card #}
         <div class="link">
             <a href="{{ path("fhm_admin_card") }}" title="{{ ('card.admin.index.title')|trans({}, 'FhmCardBundle') }}"><i class="fa fa-fw fa-map-o menu"></i>{{ ('card.admin.index.link')|trans({}, 'FhmCardBundle') }}</a>
@@ -203,20 +180,18 @@
         </div>
     {% block menu_project %}
     {% endblock %}
-        <hr>
-        <div class="link">
-            <a href="{{ path("fhm_admin_historic") }}" title="{{ ('historic.admin.index.link')|trans({}, 'FhmHistoricBundle') }}" class="action button tiny radius secondary">
-                {{ ('historic.admin.index.link')|trans({}, 'FhmHistoricBundle') }}
-            </a>
-        </div>
     {% endblock %}
     {% block menu_action %}
         {% block menu_action_separator %}
             <hr>
         {% endblock %}
-        <a href="{{ path("fhm_admin_cache") }}" title="{{ ('fhm.menu.action.cache')|trans({}, 'FhmFhmBundle') }}" class="action button tiny radius secondary">
-            {{ ('fhm.menu.action.cache')|trans({}, 'FhmFhmBundle') }}
-        </a>
+        {#<a href="{{ path("fhm_admin_historic") }}" title="{{ ('historic.admin.index.link')|trans({}, 'FhmHistoricBundle') }}" class="action button tiny radius secondary">#}
+            {#{{ ('historic.admin.index.link')|trans({}, 'FhmHistoricBundle') }}#}
+        {#</a>#}
+        {#<hr>#}
+        {#<a href="{{ path("fhm_admin_cache") }}" title="{{ ('fhm.menu.action.cache')|trans({}, 'FhmFhmBundle') }}" class="action button tiny radius secondary">#}
+            {#{{ ('fhm.menu.action.cache')|trans({}, 'FhmFhmBundle') }}#}
+        {#</a>#}
     {% endblock %}
 {% endblock %}
 

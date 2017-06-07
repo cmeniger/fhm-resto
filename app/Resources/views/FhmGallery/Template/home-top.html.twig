@@ -1,0 +1,86 @@
+{% trans_default_domain instance.domain %}
+
+{% if demo is defined %}
+    <div class="gallery home-top row">
+        <div class="gallery-item">
+            <div class="image" style="background:url({{ asset('images/demo/gallery/gallery-item1.jpg') }})"></div>
+            <div class="caption">
+                <h3>Sed posuere dolor vel nulla</h3>
+                <h2>Praesent neque arcu</h2>
+                <p>Maecenas pellentesque risus vel ipsum pulvinar, eu laoreet leo venenatis. In fringilla justo nec
+                    lorem malesuada, et accumsan neque lacinia. Aliquam erat volutpat. Fusce a tellus tellus. Praesent
+                    neque arcu, efficitur sit amet libero vulputate, dignissim malesuada ipsum.</p>
+            </div>
+        </div>
+        <div class="gallery-item">
+            <div class="image" style="background:url({{ asset('images/demo/gallery/gallery-item2.jpg') }})"></div>
+            <div class="caption">
+                <h3>Sed posuere dolor vel nulla</h3>
+                <h2>Praesent neque arcu</h2>
+                <p>Maecenas pellentesque risus vel ipsum pulvinar, eu laoreet leo venenatis. In fringilla justo nec
+                    lorem malesuada, et accumsan neque lacinia. Aliquam erat volutpat. Fusce a tellus tellus.</p>
+            </div>
+        </div>
+        <div class="gallery-item">
+            <div class="image" style="background:url({{ asset('images/demo/gallery/gallery-item3.jpg') }})"></div>
+            <div class="caption">
+                <h3>Sed posuere dolor vel nulla</h3>
+                <h2>Praesent neque arcu</h2>
+                <p>Maecenas pellentesque risus vel ipsum pulvinar, eu laoreet leo venenatis.</p>
+            </div>
+        </div>
+        <div class="gallery-item">
+            <div class="image" style="background:url({{ asset('images/demo/gallery/gallery-item4.jpg') }})"></div>
+            <div class="caption">
+                <h3>Sed posuere dolor vel nulla</h3>
+                <h2>Praesent neque arcu</h2>
+                <p>Maecenas pellentesque risus vel ipsum pulvinar, eu laoreet leo venenatis. In fringilla justo nec
+                    lorem malesuada, et accumsan neque lacinia. Aliquam erat volutpat.</p>
+            </div>
+        </div>
+        <div class="gallery-videos">
+            <h2>{{ (instance.translation ~ '.front.detail.video.title')|trans }}</h2>
+            <ul class="clearing-thumbs small-block-grid-1 medium-block-grid-2 large-block-grid-4">
+                <li>
+                    <iframe width='250' height='200' src='https://player.vimeo.com/video/122647096' frameborder='0' allowfullscreen></iframe>
+                </li>
+                <li>
+                    <iframe width='250' height='200' src='https://player.vimeo.com/video/122647096' frameborder='0' allowfullscreen></iframe>
+                </li>
+                <li>
+                    <iframe width='250' height='200' src='https://player.vimeo.com/video/122647096' frameborder='0' allowfullscreen></iframe>
+                </li>
+                <li>
+                    <iframe width='250' height='200' src='https://player.vimeo.com/video/122647096' frameborder='0' allowfullscreen></iframe>
+                </li>
+            </ul>
+        </div>
+    </div>
+{% else %}
+    <div class="gallery home-top row">
+        {% if items|length > 0 %}
+            {% for item in items %}
+                <div class="gallery-item">
+                    <div class="image" style="background:url({{ item.getImage()|media }})"></div>
+                    <div class="caption">
+                        <h3>{{ item.getSubtitle() }}</h3>
+                        <h2>{{ item.getTitle() }}</h2>
+                        <p>{{ item.getContent()|raw }}</p>
+                    </div>
+                </div>
+            {% endfor %}
+        {% endif %}
+        {% if videos|length > 0 %}
+            <div class="gallery-videos">
+                <h2>{{ (instance.translation ~ '.front.detail.video.title')|trans }}</h2>
+                <ul class="clearing-thumbs small-block-grid-1 medium-block-grid-4">
+                    {% for video in videos %}
+                        <li>
+                            {{ video.getVideo()|video(250,200)|raw }}
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+    </div>
+{% endif %}

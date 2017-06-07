@@ -2,13 +2,3 @@ project_default:
     resource: "@ProjectDefaultBundle/Controller/"
     type:     annotation
     prefix:   /
-
-#fhm_product:
-#    resource: "@FhmProductBundle/Controller/"
-#    type:     annotation
-#    prefix:   /
-#
-#fhm_category:
-#    resource: "@FhmCategoryBundle/Controller/"
-#    type:     annotation
-#    prefix:   /

@@ -1,4 +1,0 @@
-services:
-    #    fhm_product.example:
-    #        class: Fhm\ProductBundle\Example
-    #        arguments: [@service_id, "plain_value", %parameter%]
