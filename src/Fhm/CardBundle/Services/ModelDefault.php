@@ -22,25 +22,29 @@ class ModelDefault
     protected $form_factory;
     protected $template;
     protected $form;
+    protected $user;
 
     /**
      * ModelDefault constructor.
      *
-     * @param \Fhm\FhmBundle\Services\Tools           $tools
-     * @param \Fhm\FhmBundle\Manager\FhmObjectManager $manager
-     * @param \Symfony\Bundle\TwigBundle\TwigEngine   $twig_engine
-     * @param \Symfony\Component\Form\FormFactory     $form_factory
+     * @param \Fhm\FhmBundle\Services\Tools                                              $tools
+     * @param \Fhm\FhmBundle\Manager\FhmObjectManager                                    $manager
+     * @param \Symfony\Bundle\TwigBundle\TwigEngine                                      $twig_engine
+     * @param \Symfony\Component\Form\FormFactory                                        $form_factory
+     * @param \Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage $token_storage
      */
     public function __construct(
         \Fhm\FhmBundle\Services\Tools $tools,
         \Fhm\FhmBundle\Manager\FhmObjectManager $manager,
         \Symfony\Bundle\TwigBundle\TwigEngine $twig_engine,
-        \Symfony\Component\Form\FormFactory $form_factory
+        \Symfony\Component\Form\FormFactory $form_factory,
+        \Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage $token_storage
     ) {
         $this->fhm_tools    = $tools;
         $this->fhm_manager  = $manager;
         $this->twig_engine  = $twig_engine;
         $this->form_factory = $form_factory;
+        $this->user         = $token_storage->getToken()->getUser();
         $this->initData('Default');
     }
 
@@ -104,7 +108,7 @@ class ModelDefault
     {
         $card = $this->fhm_tools->dmRepository('FhmCardBundle:Card')->find($idCard);
         $this->authorized($card);
-        $categories = $this->fhm_tools->dmRepository('FhmCardBundle:CardCategory')->getByCardAll($card);
+        $categories = $this->fhm_tools->dmRepository('FhmCardBundle:CardCategory')->getByCardAll($card, $this->user->hasRole('ROLE_SUPER_ADMIN'));
         $tree       = $this->categoryTree($card, $categories);
 
         return new Response(
@@ -113,7 +117,7 @@ class ModelDefault
                 array(
                     "card"       => $card,
                     "categories" => $categories,
-                    "products"   => $this->fhm_tools->dmRepository('FhmCardBundle:CardProduct')->getByCardAll($card),
+                    "products"   => $this->fhm_tools->dmRepository('FhmCardBundle:CardProduct')->getByCardAll($card, $this->user->hasRole('ROLE_SUPER_ADMIN')),
                     "tree"       => $tree,
                     "template"   => strtolower($this->template)
                 )
@@ -131,7 +135,7 @@ class ModelDefault
      */
     public function categoryRefresh($card, $category, $master)
     {
-        $categories = $this->fhm_tools->dmRepository('FhmCardBundle:CardCategory')->getByCardAll($card);
+        $categories = $this->fhm_tools->dmRepository('FhmCardBundle:CardCategory')->getByCardAll($card, $this->user->hasRole('ROLE_SUPER_ADMIN'));
         $tree       = $this->categoryTree($card, $categories);
         $response   = new JsonResponse();
         $response->setData(array(
@@ -141,7 +145,7 @@ class ModelDefault
                 array(
                     "card"       => $card,
                     "categories" => $categories,
-                    "products"   => $this->fhm_tools->dmRepository('FhmCardBundle:CardProduct')->setSort('alias')->getByCardAll($card),
+                    "products"   => $this->fhm_tools->dmRepository('FhmCardBundle:CardProduct')->setSort('alias')->getByCardAll($card, $this->user->hasRole('ROLE_SUPER_ADMIN')),
                     "tree"       => $tree,
                     "template"   => strtolower($this->template),
                 ))
@@ -196,7 +200,7 @@ class ModelDefault
             $this->form->category->create,
             $category,
             array(
-                'user_admin'     => $this->getUser()->hasRole('ROLE_ADMIN'),
+                'user_admin'     => $this->user->hasRole('ROLE_ADMIN'),
                 'data_class'     => $class,
                 'object_manager' => $this->fhm_manager,
                 'card'           => $idCard
@@ -208,7 +212,7 @@ class ModelDefault
         {
             $data = $request->get($form->getName());
             // Persist
-            $category->setUserCreate($this->getUser());
+            $category->setUserCreate($this->user);
             $category->setAlias($this->fhm_tools->getAlias($category->getId(), $category->getName(), 'FhmCardBundle:CardCategory'));
             $category->setCard($card);
             $this->fhm_tools->dmPersist($category);
@@ -254,7 +258,7 @@ class ModelDefault
             $this->form->category->create,
             $category,
             array(
-                'user_admin'     => $this->getUser()->hasRole('ROLE_ADMIN'),
+                'user_admin'     => $this->user->hasRole('ROLE_ADMIN'),
                 'data_class'     => $class,
                 'object_manager' => $this->fhm_manager,
                 'card'           => $idCard
@@ -266,7 +270,7 @@ class ModelDefault
         {
             $data = $request->get($form->getName());
             // Persist
-            $category->setUserUpdate($this->getUser());
+            $category->setUserUpdate($this->user);
             $category->setAlias($this->fhm_tools->getAlias($category->getId(), $category->getName(), 'FhmCardBundle:CardCategory'));
             $this->fhm_tools->dmPersist($category);
 
@@ -304,7 +308,7 @@ class ModelDefault
         {
             throw new NotFoundHttpException($this->fhm_tools->trans('card.category.error.unknown', array(), 'FhmCardBundle'));
         }
-        $category->setUserUpdate($this->getUser());
+        $category->setUserUpdate($this->user);
         $category->setActive(true);
         $this->fhm_tools->dmPersist($category);
 
@@ -328,7 +332,7 @@ class ModelDefault
         {
             throw new NotFoundHttpException($this->fhm_tools->trans('card.category.error.unknown', array(), 'FhmCardBundle'));
         }
-        $category->setUserUpdate($this->getUser());
+        $category->setUserUpdate($this->user);
         $category->setActive(false);
         $this->fhm_tools->dmPersist($category);
 
@@ -359,7 +363,7 @@ class ModelDefault
         }
         else
         {
-            $category->setUserUpdate($this->getUser());
+            $category->setUserUpdate($this->user);
             $category->setDelete(true);
             $this->fhm_tools->dmPersist($category);
         }
@@ -385,7 +389,7 @@ class ModelDefault
             throw new NotFoundHttpException($this->fhm_tools->trans('card.category.error.unknown', array(), 'FhmCardBundle'));
         }
         // Undelete
-        $category->setUserUpdate($this->getUser());
+        $category->setUserUpdate($this->user);
         $category->setDelete(false);
         $this->fhm_tools->dmPersist($category);
 
@@ -453,7 +457,7 @@ class ModelDefault
     {
         $card = $this->fhm_tools->dmRepository('FhmCardBundle:Card')->find($idCard);
         $this->authorized($card);
-        $categories = $this->fhm_tools->dmRepository('FhmCardBundle:CardCategory')->getByCardAll($card);
+        $categories = $this->fhm_tools->dmRepository('FhmCardBundle:CardCategory')->getByCardAll($card, $this->user->hasRole('ROLE_SUPER_ADMIN'));
         $tree       = $this->productTree($card, $categories);
 
         return new Response(
@@ -462,7 +466,7 @@ class ModelDefault
                 array(
                     "card"       => $card,
                     "categories" => $categories,
-                    "products"   => $this->fhm_tools->dmRepository('FhmCardBundle:CardProduct')->getByCardAll($card),
+                    "products"   => $this->fhm_tools->dmRepository('FhmCardBundle:CardProduct')->getByCardAll($card, $this->user->hasRole('ROLE_SUPER_ADMIN')),
                     "tree"       => $tree,
                     "template"   => strtolower($this->template),
                 )
@@ -481,7 +485,7 @@ class ModelDefault
      */
     public function productRefresh($card, $category, $master, $product)
     {
-        $categories = $this->fhm_tools->dmRepository('FhmCardBundle:CardCategory')->getByCardAll($card);
+        $categories = $this->fhm_tools->dmRepository('FhmCardBundle:CardCategory')->getByCardAll($card, $this->user->hasRole('ROLE_SUPER_ADMIN'));
         $tree       = $this->productTree($card, $categories);
         $response   = new JsonResponse();
         $response->setData(array(
@@ -491,7 +495,7 @@ class ModelDefault
                 array(
                     "card"       => $card,
                     "categories" => $categories,
-                    "products"   => $this->fhm_tools->dmRepository('FhmCardBundle:CardProduct')->setSort('alias')->getByCardAll($card),
+                    "products"   => $this->fhm_tools->dmRepository('FhmCardBundle:CardProduct')->setSort('alias')->getByCardAll($card, $this->user->hasRole('ROLE_SUPER_ADMIN')),
                     "tree"       => $tree,
                     "template"   => strtolower($this->template),
                 ))
@@ -501,7 +505,8 @@ class ModelDefault
     }
 
     /**
-     * @param $idCard
+     * @param Request $request
+     * @param         $idCard
      *
      * @return Response
      */
@@ -565,9 +570,9 @@ class ModelDefault
         }
         $form    = $this->form_factory->create(
             $this->form->product->create,
-            $category,
+            $product,
             array(
-                'user_admin'     => $this->getUser()->hasRole('ROLE_ADMIN'),
+                'user_admin'     => $this->user->hasRole('ROLE_ADMIN'),
                 'data_class'     => $class,
                 'object_manager' => $this->fhm_manager,
                 'card'           => $idCard
@@ -579,7 +584,7 @@ class ModelDefault
         {
             $data = $request->get($form->getName());
             // Persist
-            $product->setUserCreate($this->getUser());
+            $product->setUserCreate($this->user);
             $product->setAlias($this->fhm_tools->getAlias($product->getId(), $product->getName(), 'FhmCardBundle:CardProduct'));
             $product->setCard($card);
             $this->fhm_tools->dmPersist($product);
@@ -625,9 +630,9 @@ class ModelDefault
         $class   = $this->fhm_manager->getCurrentModelName('FhmCardBundle:CardProduct');
         $form    = $this->form_factory->create(
             $this->form->product->create,
-            $category,
+            $product,
             array(
-                'user_admin'     => $this->getUser()->hasRole('ROLE_ADMIN'),
+                'user_admin'     => $this->user->hasRole('ROLE_ADMIN'),
                 'data_class'     => $class,
                 'object_manager' => $this->fhm_manager,
                 'card'           => $idCard
@@ -639,7 +644,7 @@ class ModelDefault
         {
             $data = $request->get($form->getName());
             // Persist
-            $product->setUserUpdate($this->getUser());
+            $product->setUserUpdate($this->user);
             $product->setAlias($this->fhm_tools->getAlias($product->getId(), $product->getName(), 'FhmCardBundle:CardProduct'));
             $product->setCard($card);
             $this->fhm_tools->dmPersist($product);
@@ -681,7 +686,7 @@ class ModelDefault
         {
             throw new NotFoundHttpException($this->fhm_tools->trans('card.product.error.unknown', array(), 'FhmCardBundle'));
         }
-        $product->setUserUpdate($this->getUser());
+        $product->setUserUpdate($this->user);
         $product->setActive(true);
         $this->fhm_tools->dmPersist($product);
 
@@ -707,7 +712,7 @@ class ModelDefault
         {
             throw new NotFoundHttpException($this->fhm_tools->trans('card.product.error.unknown', array(), 'FhmCardBundle'));
         }
-        $product->setUserUpdate($this->getUser());
+        $product->setUserUpdate($this->user);
         $product->setActive(false);
         $this->fhm_tools->dmPersist($product);
 
@@ -740,7 +745,7 @@ class ModelDefault
         }
         else
         {
-            $product->setUserUpdate($this->getUser());
+            $product->setUserUpdate($this->user);
             $product->setDelete(true);
             $this->fhm_tools->dmPersist($product);
         }
@@ -768,7 +773,7 @@ class ModelDefault
             throw new NotFoundHttpException($this->fhm_tools->trans('card.product.error.unknown', array(), 'FhmCardBundle'));
         }
         // Undelete
-        $product->setUserUpdate($this->getUser());
+        $product->setUserUpdate($this->user);
         $product->setDelete(false);
         $this->fhm_tools->dmPersist($product);
 
@@ -841,7 +846,7 @@ class ModelDefault
                 "::FhmCard/Template/Editor/" . $this->template . "/Ingredient/index.html.twig",
                 array(
                     "card"     => $card,
-                    "products" => $this->fhm_tools->dmRepository('FhmCardBundle:CardProduct')->getByCardAll($card),
+                    "products" => $this->fhm_tools->dmRepository('FhmCardBundle:CardProduct')->getByCardAll($card, $this->user->hasRole('ROLE_SUPER_ADMIN')),
                     "tree"     => $tree,
                     "template" => strtolower($this->template),
                 )
@@ -858,7 +863,7 @@ class ModelDefault
      */
     public function ingredientRefresh($card, $ingredient)
     {
-        $ingredients = $this->fhm_tools->dmRepository('FhmCardBundle:CardIngredient')->getByCardAll($card);
+        $ingredients = $this->fhm_tools->dmRepository('FhmCardBundle:CardIngredient')->getByCardAll($card, $this->user->hasRole('ROLE_SUPER_ADMIN'));
         $tree        = $this->ingredientTree($card);
         $response    = new JsonResponse();
         $response->setData(array(
@@ -912,7 +917,7 @@ class ModelDefault
             $this->form->ingredient->create,
             $ingredient,
             array(
-                'user_admin'     => $this->getUser()->hasRole('ROLE_ADMIN'),
+                'user_admin'     => $this->user->hasRole('ROLE_ADMIN'),
                 'data_class'     => $class,
                 'object_manager' => $this->fhm_manager,
                 'card'           => $idCard
@@ -924,7 +929,7 @@ class ModelDefault
         {
             $data = $request->get($form->getName());
             // Persist
-            $ingredient->setUserCreate($this->getUser());
+            $ingredient->setUserCreate($this->user);
             $ingredient->setAlias($this->fhm_tools->getAlias($ingredient->getId(), $ingredient->getName(), 'FhmCardBundle:CardIngredient'));
             $ingredient->setCard($card);
             $this->fhm_tools->dmPersist($ingredient);
@@ -965,7 +970,7 @@ class ModelDefault
             $this->form->ingredient->update,
             $ingredient,
             array(
-                'user_admin'     => $this->getUser()->hasRole('ROLE_ADMIN'),
+                'user_admin'     => $this->user->hasRole('ROLE_ADMIN'),
                 'data_class'     => $class,
                 'object_manager' => $this->fhm_manager,
                 'card'           => $idCard
@@ -977,7 +982,7 @@ class ModelDefault
         {
             $data = $request->get($form->getName());
             // Persist
-            $ingredient->setUserUpdate($this->getUser());
+            $ingredient->setUserUpdate($this->user);
             $ingredient->setAlias($this->fhm_tools->getAlias($ingredient->getId(), $ingredient->getName(), 'FhmCardBundle:CardIngredient'));
             $ingredient->setCard($card);
             $this->fhm_tools->dmPersist($ingredient);
@@ -1013,7 +1018,7 @@ class ModelDefault
         {
             throw new NotFoundHttpException($this->fhm_tools->trans('card.ingredient.error.unknown', array(), 'FhmCardBundle'));
         }
-        $ingredient->setUserUpdate($this->getUser());
+        $ingredient->setUserUpdate($this->user);
         $ingredient->setActive(true);
         $this->fhm_tools->dmPersist($ingredient);
 
@@ -1035,7 +1040,7 @@ class ModelDefault
         {
             throw new NotFoundHttpException($this->fhm_tools->trans('card.ingredient.error.unknown', array(), 'FhmCardBundle'));
         }
-        $ingredient->setUserUpdate($this->getUser());
+        $ingredient->setUserUpdate($this->user);
         $ingredient->setActive(false);
         $this->fhm_tools->dmPersist($ingredient);
 
@@ -1064,7 +1069,7 @@ class ModelDefault
         }
         else
         {
-            $ingredient->setUserUpdate($this->getUser());
+            $ingredient->setUserUpdate($this->user);
             $ingredient->setDelete(true);
             $this->fhm_tools->dmPersist($ingredient);
         }
@@ -1088,7 +1093,7 @@ class ModelDefault
             throw new NotFoundHttpException($this->fhm_tools->trans('card.ingredient.error.unknown', array(), 'FhmCardBundle'));
         }
         // Undelete
-        $ingredient->setUserUpdate($this->getUser());
+        $ingredient->setUserUpdate($this->user);
         $ingredient->setDelete(false);
         $this->fhm_tools->dmPersist($ingredient);
 
@@ -1102,7 +1107,7 @@ class ModelDefault
      */
     public function ingredientTree($card)
     {
-        return $this->fhm_tools->dmRepository('FhmCardBundle:CardIngredient')->getByCardAll($card);
+        return $this->fhm_tools->dmRepository('FhmCardBundle:CardIngredient')->getByCardAll($card, $this->user->hasRole('ROLE_SUPER_ADMIN'));
     }
 
     /**
@@ -1159,7 +1164,7 @@ class ModelDefault
         }
         if($card->getParent() && method_exists($card->getParent(), 'hasModerator'))
         {
-            if(!$this->getUser()->isSuperAdmin() && !$this->getUser()->hasRole('ROLE_ADMIN') && !$card->getParent()->hasModerator($this->getUser()))
+            if(!$this->user->isSuperAdmin() && !$this->user->hasRole('ROLE_ADMIN') && !$card->getParent()->hasModerator($this->user))
             {
                 throw new HttpException(403, $this->fhm_tools->trans('card.error.forbidden', array(), 'FhmCardBundle'));
             }

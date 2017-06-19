@@ -1,6 +1,6 @@
 {% trans_default_domain instance.domain %}
 <div class="form form-create">
-    <form action="{{ path('fhm_api_card_category_create',{idCard:card.getId(), idCategory:parent ? parent.getId() : 0}) }}" method="POST" {{ form_enctype(form) }}>
+    <form action="{{ path('fhm_api_card_category_create',{idCard:card.getId(), idCategory:parent ? parent.getId() : 0}) }}" method="POST">
         {% if form.vars.errors|length > 0 %}
             <div class="form-bloc form-error">
                 <div class="row">

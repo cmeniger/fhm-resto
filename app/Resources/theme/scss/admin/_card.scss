@@ -171,7 +171,7 @@
     .category{
         width:  90%;
         margin: auto;
-        .title{
+        .category-title{
             @include card-title();
             span{
                 font-size: 1.2em;
@@ -181,7 +181,7 @@
                 border-bottom: 1px solid $secondary-color;
             }
         }
-        .description{
+        .category-description{
             @include card-description();
         }
         &.menu{
@@ -431,10 +431,29 @@
                 }
             }
             .tabs-content{
-            }
-            .content{
-                margin:  0 !important;
-                padding: 0 !important;
+                .content{
+                    margin:  0;
+                    padding: 0;
+                    &.menu{
+                        @include border-radius(5px);
+                        border:  1px solid $secondary-color;
+                        padding: 1rem;
+                        margin:  auto;
+                        width:   75%;
+                        .title{
+                            margin-bottom: 1rem;
+                            .price{
+                                text-align: center;
+                                font-size:  2em;
+                            }
+                            .description{
+                                text-align: center;
+                                color:      $secondary-color;
+                            }
+                        }
+
+                    }
+                }
             }
         }
         &.card-embed-accordion{
@@ -466,6 +485,23 @@
                     }
                     .accordion-content{
                         padding: 1rem 0;
+                        &.menu{
+                            @include border-radius(5px);
+                            border:  1px solid $secondary-color;
+                            padding: 1rem;
+                            .title{
+                                margin-bottom: 1rem;
+                                .price{
+                                    text-align: center;
+                                    font-size:  2em;
+                                }
+                                .description{
+                                    text-align: center;
+                                    color:      $secondary-color;
+                                }
+                            }
+
+                        }
                     }
                     &.active{
                         .accordion-title{

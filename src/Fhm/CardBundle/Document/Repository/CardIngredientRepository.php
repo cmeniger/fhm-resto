@@ -87,13 +87,13 @@ class CardIngredientRepository extends FhmRepository
     }
 
     /**
-     * @param        $card
-     * @param string $grouping
+     * @param \Fhm\CardBundle\Document\Card $card
+     * @param bool                          $roleSuperAdmin
+     * @param string                        $grouping
      *
-     * @return mixed
-     * @throws \Doctrine\ODM\MongoDB\MongoDBException
+     * @return array
      */
-    public function getByCardAll(\Fhm\CardBundle\Document\Card $card, $grouping = "")
+    public function getByCardAll(\Fhm\CardBundle\Document\Card $card, $roleSuperAdmin = false, $grouping = "")
     {
         $builder = $this->createQueryBuilder();
         // Parent
@@ -123,6 +123,11 @@ class CardIngredientRepository extends FhmRepository
         else
         {
             return array();
+        }
+        // RoleSuperAdmin
+        if(!$roleSuperAdmin)
+        {
+            $builder->field('delete')->equals(false);
         }
         // Common
         $builder->field('card.id')->equals($card->getId());

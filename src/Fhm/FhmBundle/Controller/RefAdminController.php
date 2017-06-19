@@ -69,6 +69,7 @@ class RefAdminController extends GenericController
         if($process)
         {
             $object->setAlias($this->get('fhm_tools')->getAlias($object->getId(), $object->getName(), self::$repository));
+            $object->setCreateUser($this->getUser());
             $this->get('fhm_tools')->dmPersist($object);
             $this->get('session')->getFlashBag()->add(
                 'notice',
@@ -121,6 +122,7 @@ class RefAdminController extends GenericController
         if($process)
         {
             $object->setAlias($this->get('fhm_tools')->getAlias($object->getId(), $object->getName(), self::$repository));
+            $object->setCreateUser($this->getUser());
             $this->get('fhm_tools')->dmPersist($object);
             $this->get('session')->getFlashBag()->add(
                 'notice',
@@ -171,6 +173,7 @@ class RefAdminController extends GenericController
         if($process)
         {
             $object->setAlias($this->get('fhm_tools')->getAlias($object->getId(), $object->getName(), self::$repository));
+            $object->setUpdateUser($this->getUser());
             $this->get('fhm_tools')->dmPersist($object);
             $this->get('session')->getFlashBag()->add(
                 'notice',
@@ -235,7 +238,7 @@ class RefAdminController extends GenericController
         }
         if($object->getDelete())
         {
-            $this->get('fhm_tools')->dm()->remove($object);
+            $this->get('fhm_tools')->dmRemove($object);
             $this->get('session')->getFlashBag()->add(
                 'notice',
                 $this->trans(self::$translation . '.admin.delete.flash.ok')

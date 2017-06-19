@@ -3,7 +3,6 @@ breadcrumb:
     menu_create:                                Ajouter
     menu_update:                                Modifier
     menu_detail:                                '%name%'
-    menu_tree:                                  '%name%'
 
 menu:
     admin:
@@ -28,6 +27,7 @@ menu:
                     duplicate:                  Dupliquer
                     undelete:                   Restaurer
                     update:                     Modifier
+                    tree:                       Paramétrer
                 confirm:
                     activate:                   Confirmer l'activation du menu ?
                     deactivate:                 Confirmer la désactivation du menu ?

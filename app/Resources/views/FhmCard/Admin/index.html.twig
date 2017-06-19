@@ -17,6 +17,21 @@
     </li>
 {% endblock %}
 
+{% block content_data_action_share_button %}
+    <a href="{{ path(instance.source ~ '_admin_' ~ instance.route ~ '_tree', {'id': object.getId()}) }}" class="tiny radius button warning no-split" title="{{ (instance.translation ~ '.admin.index.table.action.tree')|trans }}"><i class="fa fa-bars"></i></a>
+    {{ parent() }}
+{% endblock %}
+
+{% block content_data_action_delete_button %}
+    <a href="{{ path(instance.source ~ '_admin_' ~ instance.route ~ '_tree', {'id': object.getId()}) }}" class="tiny radius button alert no-split" title="{{ (instance.translation ~ '.admin.index.table.action.tree')|trans }}"><i class="fa fa-bars"></i></a>
+    {{ parent() }}
+{% endblock %}
+
+{% block content_data_action_button %}
+    <a href="{{ path(instance.source ~ '_admin_' ~ instance.route ~ '_tree', {'id': object.getId()}) }}" class="tiny radius button no-split" title="{{ (instance.translation ~ '.admin.index.table.action.tree')|trans }}"><i class="fa fa-bars"></i></a>
+    {{ parent() }}
+{% endblock %}
+
 {% block content_data_action_share_links %}
     {{ parent() }}
     <li>

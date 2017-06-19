@@ -341,8 +341,27 @@ class Tools
      */
     public function dmPersist(&$obj)
     {
-        $this->dm()->persist($obj);
-        $this->dm()->flush();
+        if($obj != "")
+        {
+            $this->dm()->persist($obj);
+            $this->dm()->flush();
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param $obj
+     *
+     * @return $this
+     */
+    public function dmRemove(&$obj)
+    {
+        if($obj != "")
+        {
+            $this->dm()->remove($obj);
+            $this->dm()->flush();
+        }
 
         return $this;
     }
@@ -429,7 +448,7 @@ class Tools
                     {
                         $breadcrumbs[] = array(
                             'link' => $this->getUrl($current, array('id' => $element->getId())),
-                            'text' => $this->trans('breadcrumb.' . $trans, ['%name%' => $element->getAlias()], $options['domain'], '')
+                            'text' => $this->trans('breadcrumb.' . str_replace('tree', 'detail', $trans), ['%name%' => $element->getAlias()], $options['domain'], '')
                         );
                     }
                     elseif($step == 'detail' || $step == 'lite')

@@ -44,6 +44,7 @@ card:
                     undelete:                   Restaurer
                     update:                     Modifier
                     preview:                    Aperçu
+                    tree:                       Paramétrer
                 confirm:
                     activate:                   Confirmer l\'activation de la carte ?
                     deactivate:                 Confirmer la désactivation de la carte ?

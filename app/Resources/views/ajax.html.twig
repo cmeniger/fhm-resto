@@ -2,6 +2,10 @@
 
 <script language="JavaScript">
     {% block javascript %}
-        $(document).foundation();
+        $(document).foundation({
+            reveal: {
+                multiple_opened: true
+            }
+        });
     {% endblock %}
 </script>

@@ -1,4 +1,5 @@
 <?php
+
 namespace Fhm\FhmBundle\EventListener;
 
 /**
@@ -12,6 +13,7 @@ use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 
 /**
  * Class FhmInstance
+ *
  * @package Fhm\FhmBundle\EventListener
  */
 class FhmInstance implements EventSubscriberInterface
@@ -25,17 +27,20 @@ class FhmInstance implements EventSubscriberInterface
 
     /**
      * @param FilterControllerEvent $event
+     *
      * @return bool
      */
     public function onKernelController(FilterControllerEvent $event)
     {
         $controllers = $event->getController();
-        $controller = $controllers[0];
-        $refClass = new \ReflectionClass($controller);
-        if ($refClass->hasMethod('getProperties')) {
+        $controller  = $controllers[0];
+        $refClass    = new \ReflectionClass($controller);
+        if($refClass->hasMethod('getProperties'))
+        {
             $instanceData = $controller->getProperties();
             $this->hydrate($instanceData);
         }
+
         return false;
     }
 
@@ -44,9 +49,11 @@ class FhmInstance implements EventSubscriberInterface
      */
     public function hydrate(array $donnees)
     {
-        foreach ($donnees as $key => $value) {
-            $method = 'set'.ucfirst($key);
-            if (method_exists($this, $method)) {
+        foreach($donnees as $key => $value)
+        {
+            $method = 'set' . ucfirst($key);
+            if(method_exists($this, $method))
+            {
                 $this->$method($value);
             }
         }
@@ -61,6 +68,7 @@ class FhmInstance implements EventSubscriberInterface
             'kernel.controller' => 'onKernelController',
         );
     }
+
     /**
      * @return mixed
      */
@@ -71,6 +79,7 @@ class FhmInstance implements EventSubscriberInterface
 
     /**
      * @param mixed $source
+     *
      * @return FhmInstance
      */
     public function setSource($source)
@@ -90,6 +99,7 @@ class FhmInstance implements EventSubscriberInterface
 
     /**
      * @param mixed $repository
+     *
      * @return FhmInstance
      */
     public function setRepository($repository)
@@ -109,6 +119,7 @@ class FhmInstance implements EventSubscriberInterface
 
     /**
      * @param mixed $translation
+     *
      * @return FhmInstance
      */
     public function setTranslation($translation)
@@ -128,6 +139,7 @@ class FhmInstance implements EventSubscriberInterface
 
     /**
      * @param mixed $class
+     *
      * @return FhmInstance
      */
     public function setClass($class)
@@ -147,6 +159,7 @@ class FhmInstance implements EventSubscriberInterface
 
     /**
      * @param mixed $route
+     *
      * @return FhmInstance
      */
     public function setRoute($route)
@@ -166,6 +179,7 @@ class FhmInstance implements EventSubscriberInterface
 
     /**
      * @param mixed $domain
+     *
      * @return FhmInstance
      */
     public function setDomain($domain)

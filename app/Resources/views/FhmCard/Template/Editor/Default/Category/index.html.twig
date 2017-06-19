@@ -97,10 +97,8 @@
         <a href="#" data-reveal-id="modal-editor-category" data-modal="category" data-url="{{ path('fhm_api_card_category_create',{idCard:card.getId(),idCategory:document.getId(),template:template}) }}" title="{{ ('card.api.action.add')|trans }}"><i class="fa fa-plus"></i></a>
         <a href="#" data-reveal-id="modal-editor-category" data-modal="category" data-url="{{ path('fhm_api_card_category_update',{idCard:card.getId(),idCategory:document.getId(),template:template}) }}" title="{{ ('card.api.action.update')|trans }}"><i class="fa fa-pencil"></i></a>
         {% if document.getDelete() %}
-            {% if instance.user.admin %}
-                <a href="{{ path('fhm_api_card_category_undelete', {idCard:card.getId(),idCategory:document.getId(),template:template}) }}" title="{{ ('card.api.action.undelete')|trans }}" data-confirm="{{ ('card.api.confirm.undelete')|trans }}" data-ajax><i class="fa fa-undo"></i></a>
-                <a href="{{ path('fhm_api_card_category_delete', {idCard:card.getId(),idCategory:document.getId(),template:template}) }}" title="{{ ('card.api.action.delete')|trans }}" data-confirm="{{ ('card.api.confirm.delete')|trans }}" data-ajax><i class="fa fa-trash"></i></a>
-            {% endif %}
+            <a href="{{ path('fhm_api_card_category_undelete', {idCard:card.getId(),idCategory:document.getId(),template:template}) }}" title="{{ ('card.api.action.undelete')|trans }}" data-confirm="{{ ('card.api.confirm.undelete')|trans }}" data-ajax><i class="fa fa-undo"></i></a>
+            <a href="{{ path('fhm_api_card_category_delete', {idCard:card.getId(),idCategory:document.getId(),template:template}) }}" title="{{ ('card.api.action.delete')|trans }}" data-confirm="{{ ('card.api.confirm.delete')|trans }}" data-ajax><i class="fa fa-trash"></i></a>
         {% else %}
             {% if document.getActive() %}
                 <a href="{{ path('fhm_api_card_category_deactivate', {idCard:card.getId(),idCategory:document.getId(),template:template}) }}" title="{{ ('card.api.action.deactivate')|trans }}" data-confirm="{{ ('card.api.confirm.deactivate')|trans }}" data-ajax><i class="fa fa-eye-slash"></i></a>

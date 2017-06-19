@@ -3,7 +3,13 @@
 namespace Fhm\CardBundle\Form\Type\Model;
 
 use Fhm\FhmBundle\Manager\TypeManager;
+use Fhm\MediaBundle\Form\Type\MediaType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -12,20 +18,40 @@ class DefaultIngredientCreateType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name', 'text', array('label' => $options['translation_route'] . '.api.create.form.name'))
-            ->add('description', 'textarea', array('label' => $options['translation_route'] . '.api.create.form.description', 'required' => false))
-            ->add('order', 'integer', array('label' => $options['translation_route'] . '.api.create.form.order', 'required' => false))
-            ->add('image', 'media', array(
-                'label'    => $options['translation_route'] . '.api.create.form.image',
-                'filter'   => 'image/*',
-                'required' => false
-            ))
+            ->add(
+                'name',
+                TextType::class,
+                array(
+                    'label' => $options['translation_route'] . '.api.create.form.name'
+                ))
+            ->add(
+                'description',
+                TextareaType::class,
+                array(
+                    'label'    => $options['translation_route'] . '.api.create.form.description',
+                    'required' => false
+                ))
+            ->add(
+                'order',
+                IntegerType::class,
+                array(
+                    'label'    => $options['translation_route'] . '.api.create.form.order',
+                    'required' => false
+                ))
+            ->add(
+                'image',
+                MediaType::class,
+                array(
+                    'label'    => $options['translation_route'] . '.api.create.form.image',
+                    'filter'   => 'image/*',
+                    'required' => false
+                ))
             ->add('products',
                 TypeManager::getType($options['object_manager']->getDBDriver()),
                 array(
                     'label'         => $options['translation_route'] . '.api.create.form.products',
                     'class'         => 'FhmCardBundle:CardProduct',
-                    'property'      => 'name',
+                    'choice_label'  => 'name',
                     'query_builder' => function () use ($options)
                     {
                         $dr = $options['object_manager']->getCurrentRepository('FhmCardBundle:CardProduct');
@@ -36,7 +62,12 @@ class DefaultIngredientCreateType extends AbstractType
                     'by_reference'  => false,
                     'required'      => false
                 ))
-            ->add('submitSave', 'submit', array('label' => $options['translation_route'] . '.api.create.form.submit.save'));
+            ->add(
+                'submitSave',
+                SubmitType::class,
+                array(
+                    'label' => $options['translation_route'] . '.api.create.form.submit.save'
+                ));
     }
 
     /**

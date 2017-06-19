@@ -1,4 +1,5 @@
 <?php
+
 namespace Fhm\CardBundle\Controller;
 
 use Fhm\CardBundle\Form\Type\Admin\CreateType;
@@ -15,6 +16,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
  * @Route("/admin/card")
  * -----------------------------------
  * Class AdminController
+ *
  * @package Fhm\CardBundle\Controller
  */
 class AdminController extends FhmController
@@ -24,12 +26,12 @@ class AdminController extends FhmController
      */
     public function __construct()
     {
-        self::$repository = "FhmCardBundle:Card";
-        self::$source = "fhm";
-        self::$domain = "FhmCardBundle";
-        self::$translation = "card";
-        self::$route = 'card';
-        self::$form = new \stdClass();
+        self::$repository          = "FhmCardBundle:Card";
+        self::$source              = "fhm";
+        self::$domain              = "FhmCardBundle";
+        self::$translation         = "card";
+        self::$route               = 'card';
+        self::$form                = new \stdClass();
         self::$form->createType    = CreateType::class;
         self::$form->createHandler = CreateHandler::class;
         self::$form->updateType    = UpdateType::class;
@@ -102,6 +104,20 @@ class AdminController extends FhmController
     public function detailAction($id)
     {
         return parent::detailAction($id);
+    }
+
+    /**
+     * @Route
+     * (
+     *      path="/tree/{id}",
+     *      name="fhm_admin_card_tree",
+     *      requirements={"id"="[a-z0-9]*"}
+     * )
+     * @Template("::FhmCard/Admin/tree.html.twig")
+     */
+    public function treeAction($id)
+    {
+        return $this->detailAction($id);
     }
 
     /**

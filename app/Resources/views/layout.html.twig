@@ -105,7 +105,11 @@
         {% endblock %}
         {% block body_javascripts_script %}
             <script>
-                $(document).foundation();
+                $(document).foundation({
+                    reveal: {
+                        multiple_opened: true
+                    }
+                });
                 $(document).formcollection();
                 $(document).media();
                 $(document).autocomplete();
