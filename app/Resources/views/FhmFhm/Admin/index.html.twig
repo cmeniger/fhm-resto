@@ -44,7 +44,7 @@
 
         {# Search #}
         {% block content_search %}
-            <form action="{% block content_search_url %}{{ path(instance.source ~ '_admin_' ~ instance.route) }}{% endblock %}" method="POST"  {% block content_search_parameter %}{% endblock %}>
+            <form action="{% block content_search_url %}{{ path(instance.source ~ '_admin_' ~ instance.route) }}{% endblock %}" method="POST" {% block content_search_parameter %}{% endblock %} data-required="false">
                 <div class="row collapse">
                     <div class="small-6 columns">
                         {{ form_widget(form) }}
@@ -60,7 +60,7 @@
 
     {# pagined List with sort field #}
     {% block content_data %}
-        <div class="row">
+        <div class="row" id="content_data">
             {% if pagination is defined %}
                 <table class="fullwidth">
                     <thead>
@@ -101,7 +101,7 @@
                                         {% endblock %}
                                     </td>
                                 {% endblock %}
-                                {% if object.getShare is defined  and not is_granted('ROLE_ADMIN') %}
+                                {% if object.getShare() is defined  and not is_granted('ROLE_ADMIN') %}
                                     {% block content_data_action_share %}
                                         <td>
                                             <div class="actions">
@@ -121,7 +121,7 @@
                                             </div>
                                         </td>
                                     {% endblock %}
-                                {% elseif object.getDelete is defined  %}
+                                {% elseif object.getDelete() %}
                                     {% block content_data_action_delete %}
                                         <td>
                                             <div class="actions">
@@ -199,11 +199,9 @@
                         {% endfor %}
                     </tbody>
                 </table>
-                <div class="navigation">
-                    <ul class="pagination-counter">
-                       <li class="arrow"><small>Total d'enregistrements : {{ pagination.getTotalItemCount }}</small></li>
-                    </ul>
+                <div class="pagination">
                     {{ knp_pagination_render(pagination) }}
+                    <div class="counter">{{ ('fhm.pagination.counter')|trans({}, 'FhmFhmBundle') }} : <span>{{ pagination.getTotalItemCount }}</span></div>
                 </div>
             {% else %}
                 {% block content_nodata %}

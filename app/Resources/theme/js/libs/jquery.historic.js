@@ -11,7 +11,6 @@
                      {
                          var parent = this;
                          this.initCompare();
-                         this.initRestaure();
                          this.initFilter();
                      },
         initCompare: function ()
@@ -36,34 +35,6 @@
                                                   $(parent.settings.modal.content).html(data);
                                                   $(parent.settings.modal.container).foundation('reveal', 'open');
                                                   parent.initFilter();
-                                              }
-                                 });
-                             }
-                         });
-                     },
-
-        initRestaure: function ()
-                     {
-                         var parent = this;
-                         $(parent.settings.restaure.container).click(function (e)
-                         {
-                             if($(event.target).is('a') || ($(event.target).is('i') && $(event.target).parent().is('a')))
-                             {
-                                 e.preventDefault();
-                                 $(parent.settings.modal.content).html(parent.settings.modal.default);
-                                 $(parent.settings.modal.container).foundation('reveal', 'open');
-                                 $.ajax
-                                 ({
-                                     type:    'POST',
-                                     url:     $(this).attr('data-url'),
-                                     data:    {
-                                         id: $(this).attr('data-id')
-                                     },
-                                     success: function (data)
-                                              {
-                                                  $(parent.settings.modal.content).html(data);
-                                                  $(parent.settings.modal.container).foundation('reveal', 'open');
-                                                  // parent.initFilter();
                                               }
                                  });
                              }
@@ -112,9 +83,6 @@
             },
             compare: {
                 container: '.historic a[data-compare]'
-            },
-            restaure: {
-                container: '.historic a[data-restaure]'
             },
             filter:  {
                 container: '.historic div[data-filter]',

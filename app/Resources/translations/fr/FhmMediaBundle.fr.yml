@@ -1,35 +1,13 @@
-fhm:
-    breadcrumb:                                 Accueil
-    admin:
-        breadcrumb:                             Admin
-        media:
-            breadcrumb:                         Média
-            create:
-                breadcrumb:                     Ajouter un média
-            update:
-                breadcrumb:                     Modifier
-            detail:
-                breadcrumb:                     Détails
-            tag:
-                breadcrumb:                         Tags Média
-                create:
-                    breadcrumb:                     Ajouter un Tag média
-                update:
-                    breadcrumb:                     Modifier
-                detail:
-                    breadcrumb:                     Détails
-project:
-    breadcrump:                                 Accueil
-    admin:
-        breadcrump:                             Admin
-        media:
-            breadcrump:                         Média
-            create:
-                breadcrumb:                     Ajouter un média
-            update:
-                breadcrumb:                     Modifier
-            detail:
-                breadcrumb:                     Détails
+breadcrumb:
+    media:                                      Médias
+    media_create:                               Ajouter
+    media_update:                               Modifier
+    media_detail:                               '%name%'
+    media_tag:                                  Tags
+    media_tag_create:                           Ajouter
+    media_tag_update:                           Modifier
+    media_tag_detail:                           '%name%'
+
 media:
     admin:
         index:
@@ -138,9 +116,9 @@ media:
                     watermark:                  Filigranes
 
         detail:
-            title:                              '%name%'
+            title:                              "%name%"
             link:                               Détail
-            breadcrumb:                         '%name%'
+            breadcrumb:                         "%name%"
             data:
                 title:                          Informations
                 id:                             ID
@@ -297,9 +275,9 @@ media:
                     text:                       La modification d'un média nécessite la validation d'un modérateur.
 
         detail:
-            title:                              '%name%'
+            title:                              "%name%"
             link:                               Détail
-            breadcrumb:                         '%name%'
+            breadcrumb:                         "%name%"
             data:
                 title:                          Informations
                 create:                         Création
@@ -328,7 +306,7 @@ media:
         default:                                Cliquer ou déposer des fichiers ici
         fallbackMessage:                        Votre navigateur ne supporte pas le téléchargement de fichiers de glisser-déposer.
         fallbackText:                           S'il vous plaît utilisez le formulaire ci-dessous de repli pour télécharger vos fichiers.
-        fileTooBig:                             Le fichier est trop gros ({{filesize}}MiB). Taille max {{maxFilesize}}MiB.
+        fileTooBig:                             "Le fichier est trop gros ({{filesize}}MiB). Taille max: {{maxFilesize}}MiB."
         invalidFileType:                        Vous ne pouvez pas télécharger ce type de fichier.
         responseError:                          Le serveur a répondu avec {{statusCode}} code.
         cancelUpload:                           Annuler le téléchargement
@@ -432,9 +410,9 @@ media:
                         options:                Options
 
             detail:
-                title:                          '%name%'
+                title:                          "%name%"
                 link:                           Détail
-                breadcrumb:                     '%name%'
+                breadcrumb:                     "%name%"
                 data:
                     title:                      Informations
                     id:                         ID
@@ -550,9 +528,9 @@ media:
                         text:                   La modification d'un tag nécessite la validation d'un modérateur.
 
             detail:
-                title:                          '%name%'
+                title:                          "%name%"
                 link:                           Détail
-                breadcrumb:                     '%name%'
+                breadcrumb:                     "%name%"
                 data:
                     title:                      Informations
                     create:                     Création

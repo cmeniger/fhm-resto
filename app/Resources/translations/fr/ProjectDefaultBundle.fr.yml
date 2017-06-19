@@ -1,6 +1,9 @@
 project:
-    breadcrump:                                 Accueil
     admin:
+        breadcrumb:                             Admin
+
+    api:
+        breadcrumb:                             Api
 
     home:
         breadcrumb:                             Accueil
@@ -8,21 +11,6 @@ project:
         return:                                 Retour
         conection:                              Connexion
         contact:                                Contact
-        aroundme:                               Autour de moi
-        placenote:                              Notez vos établissements
-        place:                                  Vous avez un établissement ?
-        placetext:                              Rejoignez <strong>gratuitement</strong> la communauté <br/><span class="blue"><strong>FhmTools</strong></span> pour augmenter votre <strong>visibilité </strong> </br>et attirer de <strong>nouveaux clients</strong>.
-        about:
-            title:                              A propos de nous
-            description:                        FhmTools est l’annuaire géolocalisé de référence qui recense les salons de thé chicha à travers le monde !
-            userplace:
-                title:                          Vous êtes gérant
-                description:                    Gagnez en visibilité en ajoutant votre salon de thé chicha !
-                button:                         Ajouter mon établissement
-            user:
-                title:                          Vous êtes client
-                description:                    Trouvez un salon de thé chicha facilement, où que vous soyez ! Notez, commentez et mettez en favoris vos chichas préférés
-                button:                         Créer mon compte
 
     tree:
         admin:                                  Administration
@@ -31,18 +19,18 @@ project:
         home:                                   Accueil
         back:                                   Retour
 
-    footer:                                     FhmTools 2017 Tous droits réservés. Site réalisé par
+    footer:                                     FHM Restos 2017 Tous droits réservés. Site réalisé par
 
     construct:
         title:                                  Site en cours de construction
         text:                                   Le site est en cours de construction par
-        date:                                   Ouverture du site prévue dans :
+        date:                                   "Ouverture du site prévue dans :"
         newsletter:                             Pour être tenu informé de l'ouverture du site, inscrivez-vous à notre newsletter.
 
     maintenance:
         title:                                  Site en cours de maintenance
         text:                                   Le site est actuellement en maintenance.<br/>Désolé pour la gêne occasionnée.
-        date:                                   Fin estimée de la maintenance dans :
+        date:                                   "Fin estimée de la maintenance dans :"
         newsletter:                             Pour être tenu informé de la réouverture du site, inscrivez-vous à notre newsletter.
 
     timer:
@@ -52,30 +40,9 @@ project:
         seconds:                                Secondes
 
     seo:
-        title:                                  Boucherie de la Ferme des Ormes
-        description:                            Boucherie de la Ferme des Ormes
-        keywords:                               Boucherie de la Ferme des Ormes
-
-    pagination:
-         counter:                               "Nombre de Places: '%count%' / '%all%'"
-    search:
-         title:                                 Rechercher
-         types:                                 Services
-         styles:                                Ambiances
-         features:                              Caractéristiques
-         result:                                établissements correspondent à vos critères
-         refresh:                               Actualiser la recherche
-         city:                                  Ville
-         detail:                                Détail
-         plus:                                  Affiner
-         open:                                  Ouvert
-         close:                                 Fermé
-         searchplus:                            Affiner la recherche
-         happyhour:                             Happy hour
-         delivery:                              Livraision
-         terrace:                               Terrasse
-         avanced:                               Avancée
-         cancel:                                Annuler
+        title:                                  FHM Restos
+        description:                            FHM Restos description
+        keywords:                               FHM Restos, word1, word2
 
     email:
-        sign:                                   A bientôt !<br><br><strong>L'équipe FhmTools</strong>
+        sign:                                   A bientôt !<br><br><strong>L'équipe FHM Restos</strong>

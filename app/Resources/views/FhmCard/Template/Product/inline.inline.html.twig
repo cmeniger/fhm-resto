@@ -1,9 +1,0 @@
-{% trans_default_domain instance.domain %}
-
-<li class="inline">
-    <span class="name left">{{ product.getName() }}</span>
-    <span class="price">{{ product.getPrice()|number_format(2) }}{{ product.getCurrency() }}</span>
-    {% if product.getIngredients().count() > 0 %}
-        {{ render(path('fhm_api_card_ingredient_embed', {idCard:card.getId(), idProduct:product.getId(), template:'inline'})) }}
-    {% endif %}
-</li>

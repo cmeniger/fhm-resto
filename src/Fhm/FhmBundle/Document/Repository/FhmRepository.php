@@ -1,4 +1,5 @@
 <?php
+
 namespace Fhm\FhmBundle\Document\Repository;
 
 use Doctrine\ODM\MongoDB\DocumentRepository;
@@ -18,15 +19,16 @@ class FhmRepository extends DocumentRepository
 
     /**
      * FhmRepository constructor.
+     *
      * @param DocumentManager $dm
-     * @param UnitOfWork $uow
-     * @param ClassMetadata $class
+     * @param UnitOfWork      $uow
+     * @param ClassMetadata   $class
      */
     public function __construct(DocumentManager $dm, UnitOfWork $uow, ClassMetadata $class)
     {
         parent::__construct($dm, $uow, $class);
         $this->parent = false;
-        $this->sort = array("order", "asc");
+        $this->sort   = array("order", "asc");
     }
 
 
@@ -43,7 +45,7 @@ class FhmRepository extends DocumentRepository
     }
 
     /**
-     * @param mixed $field
+     * @param mixed  $field
      * @param string $order
      *
      * @return $this
@@ -57,39 +59,46 @@ class FhmRepository extends DocumentRepository
 
     /**
      * @param string $search
-     * @param bool $roleSuperAdmin
+     * @param bool   $roleSuperAdmin
+     *
      * @return mixed
      */
     public function getAdminIndex($search = "", $roleSuperAdmin = false)
     {
         $builder = $search ? $this->search($search) : $this->createQueryBuilder();
         // Parent
-        if ($this->parent) {
+        if($this->parent)
+        {
             $builder->field('parent')->in(array('0', null));
         }
         // RoleSuperAdmin
-        if (!$roleSuperAdmin) {
+        if(!$roleSuperAdmin)
+        {
             $builder->field('delete')->equals(false);
         }
         // Common
         $this->builderSort($builder);
+
         return $builder->getQuery();
     }
 
     /**
      * @param string $search
-     * @param bool $roleSuperAdmin
+     * @param bool   $roleSuperAdmin
+     *
      * @return mixed
      */
     public function getAdminCount($search = "", $roleSuperAdmin = false)
     {
         $builder = $search ? $this->search($search) : $this->createQueryBuilder();
         // Parent
-        if ($this->parent) {
+        if($this->parent)
+        {
             $builder->field('parent')->in(array('0', null));
         }
         // RoleSuperAdmin
-        if (!$roleSuperAdmin) {
+        if(!$roleSuperAdmin)
+        {
             $builder->field('delete')->equals(false);
         }
 
@@ -98,13 +107,15 @@ class FhmRepository extends DocumentRepository
 
     /**
      * @param string $search
+     *
      * @return \Doctrine\ODM\MongoDB\Query\Query
      */
     public function getFrontIndex($search = "")
     {
         $builder = $search ? $this->search($search) : $this->createQueryBuilder();
         // Parent
-        if ($this->parent) {
+        if($this->parent)
+        {
             $builder->field('parent')->in(array('0', null));
         }
         // Common
@@ -117,13 +128,15 @@ class FhmRepository extends DocumentRepository
 
     /**
      * @param string $search
+     *
      * @return mixed
      */
     public function getFrontCount($search = "")
     {
         $builder = $search ? $this->search($search) : $this->createQueryBuilder();
         // Parent
-        if ($this->parent) {
+        if($this->parent)
+        {
             $builder->field('parent')->in(array('0', null));
         }
         // Common
@@ -140,7 +153,8 @@ class FhmRepository extends DocumentRepository
     {
         $builder = $this->createQueryBuilder();
         // Parent
-        if ($this->parent) {
+        if($this->parent)
+        {
             $builder->field('parent')->in(array('0', null));
         }
         // Common
@@ -158,7 +172,8 @@ class FhmRepository extends DocumentRepository
     {
         $builder = $this->createQueryBuilder();
         // Parent
-        if ($this->parent) {
+        if($this->parent)
+        {
             $builder->field('parent')->in(array('0', null));
         }
         // Common
@@ -176,7 +191,8 @@ class FhmRepository extends DocumentRepository
     {
         $builder = $this->createQueryBuilder();
         // Parent
-        if ($this->parent) {
+        if($this->parent)
+        {
             $builder->field('parent')->in(array('0', null));
         }
         // Common
@@ -192,7 +208,8 @@ class FhmRepository extends DocumentRepository
     {
         $builder = $this->createQueryBuilder();
         // Parent
-        if ($this->parent) {
+        if($this->parent)
+        {
             $builder->field('parent')->in(array('0', null));
         }
         // Common
@@ -201,8 +218,9 @@ class FhmRepository extends DocumentRepository
         $this->builderSort($builder);
         // Format list
         $documents = $builder->getQuery()->execute()->toArray();
-        $list = array();
-        foreach ($documents as $document) {
+        $list      = array();
+        foreach($documents as $document)
+        {
             $list[$document->getId()] = $document;
         }
 
@@ -211,21 +229,24 @@ class FhmRepository extends DocumentRepository
 
     /**
      * @param string $grouping
+     *
      * @return array
      */
     public function getListAll($grouping = "")
     {
         $builder = $this->createQueryBuilder();
         // Parent
-        if ($this->parent) {
+        if($this->parent)
+        {
             $builder->field('parent')->in(array('0', null));
         }
         // Common
         $this->builderSort($builder);
         // Format list
         $documents = $builder->getQuery()->execute()->toArray();
-        $list = array();
-        foreach ($documents as $document) {
+        $list      = array();
+        foreach($documents as $document)
+        {
             $list[$document->getId()] = $document;
         }
 
@@ -265,6 +286,7 @@ class FhmRepository extends DocumentRepository
 
     /**
      * @param bool $roleSuperAdmin
+     *
      * @return mixed
      */
     public function getAll($roleSuperAdmin = false)
@@ -287,7 +309,8 @@ class FhmRepository extends DocumentRepository
     {
         $builder = $this->createQueryBuilder();
         // Parent
-        if ($this->parent) {
+        if($this->parent)
+        {
             $builder->field('parent')->in(array('0', null));
         }
         // Common
@@ -317,25 +340,29 @@ class FhmRepository extends DocumentRepository
     }
 
     /**
-     * @param $document
-     * @param int $page
-     * @param int $count
+     * @param      $document
+     * @param int  $page
+     * @param int  $count
      * @param bool $roleSuperAdmin
+     *
      * @return mixed
      */
     public function getHistoricIndex($document, $page = 1, $count = 5, $roleSuperAdmin = false)
     {
         $builder = $this->createQueryBuilder();
         // Parent
-        if ($this->parent) {
+        if($this->parent)
+        {
             $builder->field('parent')->in(array('0', null));
         }
         // RoleSuperAdmin
-        if (!$roleSuperAdmin) {
+        if(!$roleSuperAdmin)
+        {
             $builder->field('delete')->equals(false);
         }
         // Pagination
-        if ($page > 0 && $count > 0) {
+        if($page > 0 && $count > 0)
+        {
             $builder->limit($count);
             $builder->skip(($page - 1) * $count);
         }
@@ -347,19 +374,22 @@ class FhmRepository extends DocumentRepository
     }
 
     /**
-     * @param $document
+     * @param      $document
      * @param bool $roleSuperAdmin
+     *
      * @return mixed
      */
     public function getHistoricCount($document, $roleSuperAdmin = false)
     {
         $builder = $this->createQueryBuilder();
         // Parent
-        if ($this->parent) {
+        if($this->parent)
+        {
             $builder->field('parent')->in(array('0', null));
         }
         // RoleSuperAdmin
-        if (!$roleSuperAdmin) {
+        if(!$roleSuperAdmin)
+        {
             $builder->field('delete')->equals(false);
         }
         // Common
@@ -370,13 +400,15 @@ class FhmRepository extends DocumentRepository
 
     /**
      * @param $document
+     *
      * @return mixed
      */
     public function getHistoricAll($document)
     {
         $builder = $this->createQueryBuilder();
         // Parent
-        if ($this->parent) {
+        if($this->parent)
+        {
             $builder->field('parent')->in(array('0', null));
         }
         // Common
@@ -388,13 +420,15 @@ class FhmRepository extends DocumentRepository
 
     /**
      * @param $document
+     *
      * @return mixed
      */
     public function getHistoricEnable($document)
     {
         $builder = $this->createQueryBuilder();
         // Parent
-        if ($this->parent) {
+        if($this->parent)
+        {
             $builder->field('parent')->in(array('0', null));
         }
         // Common
@@ -422,11 +456,14 @@ class FhmRepository extends DocumentRepository
      */
     public function getImport($data, $index = null)
     {
-        $value = !is_null($index) ? $data[$index] : $data['name'];
+        $value   = !is_null($index) ? $data[$index] : $data['name'];
         $results = $this->createQueryBuilder()->field('name')->equals($value)->getQuery()->execute()->toArray();
-        if (count($results) <= 1) {
+        if(count($results) <= 1)
+        {
             return array_pop($results);
-        } else {
+        }
+        else
+        {
             return 'error';
         }
     }
@@ -457,17 +494,19 @@ class FhmRepository extends DocumentRepository
      */
     protected function search($search)
     {
-        $qb = $this->createQueryBuilder();
-        $regx = '/.*'.$search.'.*/i';
+        $qb     = $this->createQueryBuilder();
+        $regx   = '/.*' . $search . '.*/i';
         $fields = array();
         // Search ID field (not supported regex search)
         $fields[] = $qb->expr()->field('_id')->equals($search);
         // Search all fields
-        foreach ($this->class->getFieldNames() as $field) {
+        foreach($this->class->getFieldNames() as $field)
+        {
             $fields[] = $qb->expr()->field($field)->equals(new \MongoRegex($regx));
         }
         // Add OR conditions
-        foreach ($fields as $field) {
+        foreach($fields as $field)
+        {
             $qb->addOr($field);
         }
 
@@ -490,10 +529,12 @@ class FhmRepository extends DocumentRepository
     protected function builderSort(\Doctrine\ODM\MongoDB\Query\Builder &$builder)
     {
         $builder->sort($this->sort[0], $this->sort[1]);
-        if ($this->sort[0] != 'order') {
+        if($this->sort[0] != 'order')
+        {
             $builder->sort('order');
         }
-        if ($this->sort[0] != 'name') {
+        if($this->sort[0] != 'name')
+        {
             $builder->sort('name');
         }
     }

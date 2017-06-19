@@ -1,0 +1,316 @@
+breadcrumb:
+    site:                                       Sites
+    site_create:                                Ajouter
+    site_update:                                Modifier
+    site_detail:                                '%name%'
+
+site:
+    admin:
+        index:
+            title:                              Gestion des sites
+            link:                               Sites
+            breadcrumb:                         Sites
+            nodata:                             Aucune donnée
+            form:
+                search:                         Rechercher
+            table:
+                header:
+                    name:                       Nom
+                    title:                      Titre
+                    menu:                       Menu
+                    action:                     Actions
+                    status:                     Statut
+                action:
+                    activate:                   Activer
+                    deactivate:                 Désactiver
+                    delete:                     Supprimer
+                    detail:                     Paramétrer
+                    duplicate:                  Dupliquer
+                    undelete:                   Restaurer
+                    update:                     Modifier
+                    default:                    Site par défaut
+                confirm:
+                    activate:                   Confirmer l'activation du site ?
+                    deactivate:                 Confirmer la désactivation du site ?
+                    delete:                     Confirmer la suppression du site ?
+                    undelete:                   Confirmer le déblocage du site ?
+                    default:                    Confirmer ce site par défaut ?
+
+        create:
+            title:                              Ajouter
+            link:                               Ajouter
+            breadcrumb:                         Ajouter un site
+            newmedia:                           Ajouter un media
+            flash:
+                ok:                             Le site a bien été créé.
+                ko:                             Le site n'a pas été créé.
+            form:
+                title:                          Titre
+                subtitle:                       Sous-titre
+                description:                    Description
+                name:                           Nom
+                menu:                           Menu
+                logo:                           Logo
+                slider:                         Slider
+                gallery:                        Galerie
+                background:                     Image de fond
+                news:                           Actualités
+                active:                         Activer
+                partner:                        Partenaires
+                contact:                        Contact
+                legalnotice:                    Mentions légales
+                social:
+                    placeholder:
+                        link:                   "http://"
+                        id:                     ID
+                    facebook:                   Facebook
+                    facebookId:                 ID Facebook
+                    twitter:                    Twitter
+                    twitterId:                  ID Twitter
+                    google:                     Google
+                    googleId:                   ID Google
+                    instagram:                  Instagram
+                    youtube:                    Youtube
+                    flux:                       Flux RSS
+                submit:
+                    save:                       Sauvegarder
+                    new:                        Sauvegarder et ajouter
+                    duplicate:                  Sauvegarder et dupliquer
+                    quit:                       Sauvegarder et quitter
+                    config:                     Sauvegarder et paramétrer
+                    cancel:                     Annuler
+                    import:                     Importer
+                    export:                     Exporter
+                fieldset:
+                    information:                Informations
+                    media:                      Médias
+                    social:                     Réseaux sociaux
+                    socialid:                   Id réseaux sociaux
+                    options:                    Options
+                    notice:                     Mentions légales
+
+        update:
+            title:                              Modifier
+            link:                               Modifier
+            breadcrumb:                         Modifier
+            flash:
+                ok:                             Le site a bien été modifié.
+                ko:                             Le site n'a pas été modifié.
+            form:
+                title:                          Titre
+                subtitle:                       Sous-titre
+                description:                    Description
+                name:                           Nom
+                menu:                           Menu
+                logo:                           Logo
+                slider:                         Slider
+                gallery:                        Galerie
+                background:                     Image de fond
+                news:                           Actualités
+                active:                         Activer
+                partner:                        Partenaires
+                contact:                        Contact
+                legalnotice:                    Mentions légales
+                social:
+                    placeholder:
+                        link:                   "http://"
+                        id:                     ID
+                    facebook:                   Facebook
+                    facebookId:                 ID Facebook
+                    twitter:                    Twitter
+                    twitterId:                  ID Twitter
+                    google:                     Google
+                    googleId:                   ID Google
+                    instagram:                  Instagram
+                    youtube:                    Youtube
+                    flux:                       Flux RSS
+                submit:
+                    save:                       Sauvegarder
+                    new:                        Sauvegarder et ajouter
+                    duplicate:                  Sauvegarder et dupliquer
+                    quit:                       Sauvegarder et quitter
+                    config:                     Sauvegarder et paramétrer
+                    cancel:                     Annuler
+                    import:                     Importer
+                    export:                     Exporter
+                    delete:                     Supprimer
+                fieldset:
+                    information:                Informations
+                    media:                      Médias
+                    social:                     Réseaux sociaux
+                    socialid:                   Id réseaux sociaux
+                    options:                    Options
+                    notice:                     Mentions légales
+
+        detail:
+            title:                              %name%
+            link:                               Détail
+            breadcrumb:                         %name%
+            data:
+                title:                          Informations
+                id:                             ID
+                create:                         Création
+                update:                         Modification
+                name:                           Nom
+                alias:                          Alias
+                description:                    Description
+                status:                         Statut
+            url:
+                title:                          Routes disponibles
+                admin:
+                    edit:                       Modifier
+                    detail:                     Paramétrer
+                front:
+                    id:                         Afficher via l'ID
+                    name:                       Afficher via le nom
+                    alias:                      Afficher via l'alias
+                    lite:                       Afficher via l'url simplifiée
+            view:
+                title:                          Aperçu des templates
+                default:                        Template "default" (%route%)
+                home:                           Template "home" (%route%)
+            admin:
+                title:                          Outils d'administration
+
+        export:
+            breadcrumb:                         Exporter
+            form:
+                submit:                         Exporter
+            link:                               Exporter
+            title:                              Exporter des sites
+
+        import:
+            breadcrumb:                         Importer
+            flash:
+                ok:                             Les sites ont bien été importés (%countAdd% ajout(s), %countUpdate% modification(s), %countError% erreur(s)).
+                ko:                             Les sites n'ont pas été importés.
+            form:
+                file:                           Fichier CSV
+                submit:                         Importer
+            link:                               Importer
+            title:                              Importer des sites
+
+        deactivate:
+            flash:
+                ok:                             Le site a bien été désactivé.
+
+        delete:
+            flash:
+                ok:                             Le site a bien été supprimé.
+                use:                            Impossible de supprimer, ce media est rattaché au module %module%  à l'élémént %element%.
+                used:
+                    news:                        Actualités
+                    article:                     Articles
+                    site:                        Sites
+                    page:                        Pages
+                    gallery:                     Galerie
+                    event:                       Evènements
+                    partner:                     Partenaires
+                    slider:                      Slider
+                    product:                     Produits
+                    menu:                        Menus
+
+        activate:
+            flash:
+                ok:                             Le site a bien été activé.
+
+        undelete:
+            flash:
+                ok:                             Le site a bien été restauré.
+
+        default:
+            flash:
+                ok:                             Le site a bien été mis par défaut.
+
+    front:
+        index:
+            title:                              Site
+            link:                               Site
+            breadcrumb:                         Site
+            nodata:                             Aucune donnée
+            form:
+                search:                         Rechercher
+            table:
+                header:
+                    name:                       Nom
+                    action:                     Actions
+                action:
+                    detail:                     Détail
+                    delete:                     Supprimer
+                confirm:
+                    delete:                     Confirmer la suppression du site ?
+
+        create:
+            title:                              Ajouter
+            link:                               Ajouter
+            breadcrumb:                         Ajouter un site
+            flash:
+                ok:                             Le site a bien été créé.
+                ko:                             Le site n'a pas été créé.
+            form:
+                name:                           Nom
+                description:                    Description
+                submit:
+                    save:                       Sauvegarder
+                    new:                        Sauvegarder et ajouter
+                    duplicate:                  Sauvegarder et dupliquer
+                    quit:                       Sauvegarder et quitter
+                    cancel:                     Annuler
+                alert:
+                    title:                      Information
+                    text:                       L'ajout d'un site nécessite la validation d'un modérateur pour être affiché.
+
+        update:
+            title:                              Modifier
+            link:                               Modifier
+            breadcrumb:                         Modifier
+            flash:
+                ok:                             Le site a bien été modifié.
+                ko:                             Le site n'a pas été modifié.
+            form:
+                name:                           Nom
+                description:                    Description
+                submit:
+                    save:                       Sauvegarder
+                    new:                        Sauvegarder et ajouter
+                    duplicate:                  Sauvegarder et dupliquer
+                    quit:                       Sauvegarder et quitter
+                    cancel:                     Annuler
+                alert:
+                    title:                      Information
+                    text:                       La modification d'un site nécessite la validation d'un modérateur pour être affiché.
+
+        detail:
+            title:                              %name%
+            link:                               Détail
+            breadcrumb:                         %name%
+            data:
+                title:                          Informations
+                create:                         Création
+                update:                         Modification
+                name:                           Nom
+                alias:                          Alias
+                description:                    Description
+
+        delete:
+            flash:
+                ok:                             Le site a bien été supprimé.
+
+    api:
+        index:
+            title:                              Site
+
+    pagination:
+        counter:                                "Nombre de sites: %count% / %all%"
+
+    error:
+        unknown:                                Le site n'existe pas.
+        delete:                                 Le site n'existe pas.
+        forbidden:                              Droits insuffisants.
+
+    grouping:
+        name:                                   Site(s)
+        add:                                    Ajouter au site "%name%"
+        title:                                  Gestion des sites
+        list1:                                  Disponibles
+        list2:                                  Sélectionnés

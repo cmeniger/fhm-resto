@@ -118,12 +118,12 @@ class FhmWithUser extends User
     public function __construct()
     {
         parent::__construct();
-        $this->active = false;
-        $this->delete = false;
-        $this->share = false;
-        $this->global = false;
-        $this->order = 0;
-        $this->alias = null;
+        $this->active        = false;
+        $this->delete        = false;
+        $this->share         = false;
+        $this->global        = false;
+        $this->order         = 0;
+        $this->alias         = null;
         $this->historic_sons = new ArrayCollection();
     }
 
@@ -505,7 +505,8 @@ class FhmWithUser extends User
     public function setHistoricSons(ArrayCollection $sons)
     {
         $this->resetHistoricSons();
-        foreach ($sons as $son) {
+        foreach($sons as $son)
+        {
             $son->setHistoricParent($this);
         }
         $this->historic_sons = $sons;
@@ -522,7 +523,8 @@ class FhmWithUser extends User
      */
     public function addHistoricSon($son)
     {
-        if (!$this->historic_sons->contains($son)) {
+        if(!$this->historic_sons->contains($son))
+        {
             $this->historic_sons->add($son);
         }
 
@@ -538,7 +540,8 @@ class FhmWithUser extends User
      */
     public function removeHistoricSon($son)
     {
-        if ($this->historic_sons->contains($son)) {
+        if($this->historic_sons->contains($son))
+        {
             $this->historic_sons->removeElement($son);
         }
 
@@ -552,7 +555,8 @@ class FhmWithUser extends User
      */
     public function resetHistoricSons()
     {
-        foreach ($this->historic_sons as $son) {
+        foreach($this->historic_sons as $son)
+        {
             $son->removeHistoricParent($this);
         }
         $this->historic_sons = new ArrayCollection();
@@ -592,7 +596,8 @@ class FhmWithUser extends User
      */
     public function removeHistoricParent()
     {
-        if ($this->historic_parent) {
+        if($this->historic_parent)
+        {
             $this->historic_parent->removeHistoricSon($this);
         }
         $this->historic_parent = null;
@@ -613,19 +618,19 @@ class FhmWithUser extends User
             $document->getUserUpdate()->getId()
         ) : null;
         // Rest
-        $this->name = $document->getName();
-        $this->alias = $document->getAlias();
-        $this->description = $document->getDescription();
-        $this->delete = $document->getDelete();
-        $this->active = $document->getActive();
-        $this->share = $document->getShare();
-        $this->global = $document->getGlobal();
-        $this->order = $document->getOrder();
-        $this->date_create = $document->getDateCreate();
-        $this->date_update = $document->getDateUpdate();
-        $this->seo_title = $document->getSeoTitle();
+        $this->name            = $document->getName();
+        $this->alias           = $document->getAlias();
+        $this->description     = $document->getDescription();
+        $this->delete          = $document->getDelete();
+        $this->active          = $document->getActive();
+        $this->share           = $document->getShare();
+        $this->global          = $document->getGlobal();
+        $this->order           = $document->getOrder();
+        $this->date_create     = $document->getDateCreate();
+        $this->date_update     = $document->getDateUpdate();
+        $this->seo_title       = $document->getSeoTitle();
         $this->seo_description = $document->getSeoDescription();
-        $this->seo_keywords = $document->getSeoKeywords();
+        $this->seo_keywords    = $document->getSeoKeywords();
 
         return $this;
     }
@@ -636,7 +641,8 @@ class FhmWithUser extends User
     public function historicDifference()
     {
         $count = 0;
-        if ($this->historic_parent) {
+        if($this->historic_parent)
+        {
             $count += $this->name != $this->historic_parent->name ? 1 : 0;
             $count += $this->alias != $this->historic_parent->alias ? 1 : 0;
             $count += $this->description != $this->historic_parent->description ? 1 : 0;
@@ -709,9 +715,9 @@ class FhmWithUser extends User
      */
     public function setCsvData($data)
     {
-        $this->name = (isset($data['name'])) ? $data['name'] : $this->name;
+        $this->name        = (isset($data['name'])) ? $data['name'] : $this->name;
         $this->description = (isset($data['description'])) ? $data['description'] : $this->description;
-        $this->alias = (isset($data['alias'])) ? $data['alias'] : $this->alias;
+        $this->alias       = (isset($data['alias'])) ? $data['alias'] : $this->alias;
 
         return $this;
     }

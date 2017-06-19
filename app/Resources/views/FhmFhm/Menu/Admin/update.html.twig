@@ -1,36 +1,15 @@
 {% trans_default_domain instance.domain %}
 {% extends "::FhmFhm/Admin/update.html.twig" %}
 
-{% block content_data_fields %}
-    <div class="form-bloc form-fields row">
-        {% block content_data_fields_data %}
-            <div class="large-6 medium-6 small-12 columns">
-                <fieldset>
-                    <legend>{{ (instance.translation ~ '.admin.update.form.fieldset.data')|trans }}</legend>
-                    <div class="row">
-                        {{ form_label(form.name) }}
-                        {{ form_errors(form.name) }}
-                        {{ form_widget(form.name) }}
-                    </div>
-                    <div class="row">
-                        {{ form_label(form.description) }}
-                        {{ form_errors(form.description) }}
-                        {{ form_widget(form.description) }}
-                    </div>
-                    <div class="row">
-                        <div class="large-12 columns">
-                            {{ form_label(form.icon) }}
-                            {{ form_errors(form.icon) }}
-                            {{ form_widget(form.icon) }}
-                        </div>
-                    </div>
-                    <div class="row">
-                        {{ form_label(form.route) }}
-                        {{ form_errors(form.route) }}
-                        {{ form_widget(form.route) }}
-                    </div>
-                </fieldset>
-            </div>
-        {% endblock %}
+{% block content_data_fields_data_add %}
+    <div class="row">
+        {{ form_label(form.icon) }}
+        {{ form_errors(form.icon) }}
+        {{ form_widget(form.icon) }}
+    </div>
+    <div class="row">
+        {{ form_label(form.route) }}
+        {{ form_errors(form.route) }}
+        {{ form_widget(form.route) }}
     </div>
 {% endblock %}

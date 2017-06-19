@@ -10,7 +10,29 @@
         init:     function ()
                   {
                       var parent = this;
+                      this.initForm();
                       this.initAjax();
+                  },
+        initForm: function ()
+                  {
+                      var parent = this;
+                      $('form').each(function (e)
+                      {
+                          if((typeof $(this).attr('data-required') == 'undefined' || $(this).attr('data-required') == true) && $(this).find('.form-required').length == 0)
+                          {
+                              $(this).append("<div class='form-required'>" + parent.settings.required + "</div>");
+                          }
+                      });
+                      if(parent.settings.form.select.multi_click)
+                      {
+                          $('form select option').unbind('mousedown').mousedown(function (e)
+                          {
+                              e.preventDefault();
+                              $(this).prop('selected', $(this).prop('selected') ? false : true);
+                              $(this).parent().change();
+                              return false;
+                          });
+                      }
                   },
         initAjax: function ()
                   {
@@ -51,7 +73,14 @@
     {
         var settings = $.extend
         ({
-            ajax: {
+            required: '',
+            form:     {
+                tag:    'data-required',
+                select: {
+                    multi_click: true
+                }
+            },
+            ajax:     {
                 form:    'form[data-type=ajax]',
                 content: 'data-content',
                 load:    '<i class="fa fa-circle-o-notch fa-spin"></i>'

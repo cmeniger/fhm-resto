@@ -1,2 +1,12 @@
 {% trans_default_domain instance.domain %}
 {% extends "::FhmFhm/Admin/index.html.twig" %}
+
+{% block content_data_header %}
+    <th {% if pagination.isSorted('create_date') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, (instance.translation ~ '.admin.index.table.header.date')|trans, 'create_date')|raw }}</th>
+    <th {% if pagination.isSorted('name') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, (instance.translation ~ '.admin.index.table.header.name')|trans, 'name')|raw }}</th>
+{% endblock %}
+
+{% block content_data_body %}
+    <td>{{ object.getDateCreate() | localizeddate('full', 'short', app.request.locale) }}</td>
+    <td>{{ object.getName() }}</td>
+{% endblock %}

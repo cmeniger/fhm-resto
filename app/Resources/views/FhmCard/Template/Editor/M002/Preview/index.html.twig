@@ -1,0 +1,7 @@
+{% trans_default_domain instance.domain %}
+<div class="preview hidden-for-small">
+    {{ render(path('fhm_api_card_embed', {id:document.getId(), template:'tabs'})) }}
+</div>
+<div class="preview hidden-for-medium-up">
+    {{ render(path('fhm_api_card_embed', {id:document.getId(), template:'accordion'})) }}
+</div>

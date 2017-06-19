@@ -1,0 +1,546 @@
+media:
+    admin:
+        index:
+            title:                              Medias management
+            link:                               Medias
+            breadcrumb:                         Medias
+            nodata:                             No data
+            form:
+                search:                         Search
+                new:                            New media
+                selector:                       List of medias
+            tags:
+                all:                            All the medias
+            table:
+                header:
+                    name:                       Name
+                    action:                     Actions
+                    status:                     Status
+                action:
+                    activate:                   Activate
+                    deactivate:                 Deactivate
+                    delete:                     Delete
+                    detail:                     Configure
+                    duplicate:                  Duplicate
+                    undelete:                   Restore
+                    update:                     Update
+                confirm:
+                    activate:                   Do you want to activate the media ?
+                    deactivate:                 Do you want to deactivate the media ?
+                    delete:                     Do you want to delete the media ?
+                    undelete:                   Do you want to undelete the media ?
+
+        create:
+            title:                              Add
+            link:                               Add
+            breadcrumb:                         Add a media
+            flash:
+                ok:                             The media has been created successfully.
+                ko:                             The media has not been created.
+            form:
+                name:                           Name
+                description:                    Description
+                watermark:                      Add a watermark
+                tag:                            New tag
+                parent:                         Interlink with the tag
+                tags:                           Link with the tags
+                private:                        Private
+                active:                         Activate
+                share:                          Share
+                global:                         Global
+                file:                           Add the file
+                submit:
+                    save:                       Save
+                    new:                        Save and add
+                    duplicate:                  Save and duplicate
+                    quit:                       Save and quit
+                    config:                     Save and configure
+                    cancel:                     Cancel
+                    import:                     Import
+                    export:                     Export
+                    add:                        Add
+                fieldset:
+                    data:                       Datas
+                    tags:                       Tags
+                    options:                    Options
+                    média:                      Media
+                    file:                       File(s)
+                    watermark:                  Watermarks
+
+        update:
+            title:                              Update
+            link:                               Update
+            breadcrumb:                         Update
+            flash:
+                ok:                             The media has been updated successfully.
+                ko:                             The media has not been updated.
+            form:
+                name:                           Name
+                description:                    Description
+                generate:                       Generate the images
+                watermark:                      Add a watermark
+                tag:                            New tag
+                parent:                         Interlink with the tag
+                tags:                           Link with the tags
+                private:                        Private
+                active:                         Activate
+                share:                          Share
+                global:                         Global
+                file:                           Add a file
+                submit:
+                    save:                       Save
+                    new:                        Save and add
+                    duplicate:                  Save and duplicate
+                    quit:                       Save and quit
+                    config:                     Save and configure
+                    cancel:                     Cancel
+                    import:                     Import
+                    export:                     Export
+                    delete:                     Delete
+                fieldset:
+                    data:                       Datas
+                    tags:                       Tags
+                    options:                    Options
+                    média:                      Media
+                    file:                       File
+                    watermark:                  Watermark
+
+        detail:
+            title:                              "%name%"
+            link:                               Detail
+            breadcrumb:                         "%name%"
+            data:
+                title:                          Informations
+                id:                             ID
+                create:                         Creation
+                update:                         Update
+                name:                           Name
+                alias:                          Alias
+                description:                    Description
+                status:                         Status
+            file:
+                title:                          Files
+            url:
+                title:                          Available routes
+                admin:
+                    edit:                       Update
+                    detail:                     Configure
+                front:
+                    id:                         Display via the ID
+                    name:                       Display via the name
+                    alias:                      Display via the alias
+                    lite:                       Display via the simplified url
+            admin:
+                title:                          Administration tools
+
+        export:
+            breadcrumb:                         Export
+            form:
+                submit:                         Export
+            link:                               Export
+            title:                              Export the medias
+
+        import:
+            breadcrumb:                         Import
+            flash:
+                ok:                             The medias have been imported successfully (%countAdd% element(s) added, %countUpdate% update(s), %countError% error(s)).
+                ko:                             The medias have not been imported.
+            form:
+                file:                           CSV file
+                submit:                         Import
+            link:                               Import
+            title:                              Import the medias
+
+        deactivate:
+            flash:
+                ok:                             The media has been deactivated successfully.
+
+        delete:
+            flash:
+                ok:                             The media has been deleted successfully.
+                use:                            Impossible to delete, this media is linked with the module %module% with the element %element%.
+                used:
+                    news:                       News
+                    article:                    Articles
+                    site:                       Sites
+                    page:                       Pages
+                    gallery:                    Gallery
+                    event:                      Events
+                    partner:                    Partners
+                    slider:                     Slider
+                    product:                    Products
+                    menu:                       Menus
+
+        activate:
+            flash:
+                ok:                             The media has been activated successfully.
+
+        undelete:
+            flash:
+                ok:                             The media has been restored successfully.
+
+        uploaded:
+            flash:
+                ok:                             The medias have been created successfully. (%accepted% element(s) added, %rejected% error(s)).
+
+        selector:
+            default:                            Click here to select a media
+            preview:
+                name:                           Name
+                extension:                      Extension
+                reset:                          Remore the media
+
+    front:
+        index:
+            title:                              Media
+            link:                               Media
+            breadcrumb:                         Media
+            nodata:                             No data
+            form:
+                search:                         Search
+            table:
+                header:
+                    name:                       Name
+                    action:                     Actions
+                action:
+                    detail:                     Detail
+                    delete:                     Delete
+                confirm:
+                    delete:                     Do you want to delete the media ?
+
+        create:
+            title:                              Add
+            link:                               Add
+            breadcrumb:                         Add a media
+            flash:
+                ok:                             The media has been created successfully.
+                ko:                             The media has not been created.
+            form:
+                name:                           Name
+                description:                    Description
+                watermark:                      Add a watermark
+                tag:                            New tag
+                parent:                         Interlink with the tag
+                tags:                           Link with the tags
+                active:                         Activate
+                share:                          Share
+                global:                         Global
+                file:                           Add the file
+                submit:
+                    save:                       Save
+                    new:                        Save and add
+                    duplicate:                  Save and duplicate
+                    quit:                       Save and quit
+                    config:                     Save and configure
+                    cancel:                     Cancel
+                    import:                     Import
+                    export:                     Export
+                    add:                        Add
+                fieldset:
+                    data:                       Datas
+                    tags:                       Tags
+                    options:                    Options
+                    média:                      Media
+                    file:                       File(s)
+                    watermark:                  Watermarks
+
+        update:
+            title:                              Update
+            link:                               Update
+            breadcrumb:                         Update
+            flash:
+                ok:                             The media has been updated successfully.
+                ko:                             The media has not been updated.
+            form:
+                name:                           Name
+                description:                    Description
+                submit:
+                    save:                       Save
+                    new:                        Save and add
+                    duplicate:                  Save and duplicate
+                    quit:                       Save and quit
+                    cancel:                     Cancel
+                alert:
+                    title:                      Information
+                    text:                       You need the validation of a moderator to update a media.
+
+        detail:
+            title:                              "%name%"
+            link:                               Detail
+            breadcrumb:                         "%name%"
+            data:
+                title:                          Informations
+                create:                         Creation
+                update:                         Update
+                name:                           Name
+                alias:                          Alias
+                description:                    Description
+
+        delete:
+            flash:
+                ok:                             The media has been deleted successfully.
+
+    api:
+        index:
+            title:                              Media
+
+    pagination:
+        counter:                                "Number of medias: %count% / %all%"
+
+    error:
+        unknown:                                The media does not exist.
+        delete:                                 The media does not exist.
+        forbidden:                              Access forbidden.
+
+    dropzone:
+        default:                                Click or drag and drop your files here
+        fallbackMessage:                        Your browser does not support the downloading of drag and drop files.
+        fallbackText:                           Please, make sure to use the form below to download your files.
+        fileTooBig:                             "The file is too heavy ({{filesize}}MiB). Max size: {{maxFilesize}}MiB."
+        invalidFileType:                        You cannot download this kind of file.
+        responseError:                          The servor has return a {{statusCode}} code.
+        cancelUpload:                           Cancel the downloading
+        cancelUploadConfirmation:               Do you really want to cancel the downloading process ?
+        removeFile:                             Do you really want to delete the file ?
+        removeFileConfirmation:                 The file has been deleted successfully.
+        maxFilesExceeded:                       You have reach the maximum number of files that can be downloaded at the same time.
+
+    bloc:
+        download:                               Download
+        detail:                                 Preview
+        insert:
+            image:                              Insert an image
+            link:                               Insert a link
+
+    tag:
+        admin:
+            index:
+                title:                          Media tags management
+                link:                           Media tags
+                breadcrumb:                     Media tags
+                nodata:                         No data
+                form:
+                    search:                     Search
+                table:
+                    header:
+                        name:                   Nom
+                        action:                 Actions
+                        status:                 Statut
+                    action:
+                        activate:               Activate
+                        deactivate:             Deactivate
+                        delete:                 Delete
+                        detail:                 Configure
+                        duplicate:              Duplicate
+                        undelete:               Restore
+                        update:                 Update
+                    confirm:
+                        activate:               Do you want to activate the tag ?
+                        deactivate:             Do you want to deactivate the tag ?
+                        delete:                 Do you want to delete the tag ?
+                        undelete:               Do you want to undelete the tag ?
+
+            create:
+                title:                          Add
+                link:                           Add
+                breadcrumb:                     Add a tag
+                flash:
+                    ok:                         The tag has been created successfully.
+                    ko:                         The tag has not been created.
+                form:
+                    name:                       Name
+                    description:                Description
+                    parent:                     Interlink with the tag
+                    color:                      Color
+                    private:                    Private
+                    active:                     Activate
+                    share:                      Share
+                    global:                     Global
+                    submit:
+                        save:                   Save
+                        new:                    Save and add
+                        duplicate:              Save and duplicate
+                        quit:                   Save and quit
+                        config:                 Save and configure
+                        cancel:                 Cancel
+                        import:                 Import
+                        export:                 Export
+                    fieldset:
+                        data:                   Data
+                        options:                Options
+
+            update:
+                title:                          Update
+                link:                           Update
+                breadcrumb:                     Update
+                flash:
+                    ok:                         The tag has been updated successfully.
+                    ko:                         The tag has not been updated.
+                form:
+                    name:                       Name
+                    description:                Description
+                    parent:                     Interlink with the tag
+                    color:                      Color
+                    private:                    Private
+                    active:                     Activate
+                    share:                      Share
+                    global:                     Global
+                    submit:
+                        save:                   Save
+                        new:                    Save and add
+                        duplicate:              Save and duplicate
+                        quit:                   Save and quit
+                        config:                 Save and configure
+                        cancel:                 Cancel
+                        import:                 Import
+                        export:                 Export
+                        delete:                 Delete
+                    fieldset:
+                        data:                   Datas
+                        options:                Options
+
+            detail:
+                title:                          "%name%"
+                link:                           Detail
+                breadcrumb:                     "%name%"
+                data:
+                    title:                      Informations
+                    id:                         ID
+                    create:                     Creation
+                    update:                     Update
+                    name:                       Name
+                    alias:                      Alias
+                    description:                Description
+                    status:                     Status
+                url:
+                    title:                      Available Routes
+                    admin:
+                        edit:                   Update
+                        detail:                 Configure
+                    front:
+                        id:                     Display via the ID
+                        name:                   Display via the name
+                        alias:                  Display via the alias
+                        lite:                   Display via the simplified url
+                admin:
+                    title:                      Administration tools
+
+            export:
+                breadcrumb:                     Export
+                form:
+                    submit:                     Export
+                link:                           Export
+                title:                          Export the tags
+
+            import:
+                breadcrumb:                     Import
+                flash:
+                    ok:                         The tag have been imported successfully (%countAdd% element(s) added, %countUpdate% update(s), %countError% error(s)).
+                    ko:                         The tag have not been imported.
+                form:
+                    file:                       CSV file
+                    submit:                     Import
+                link:                           Import
+                title:                          Import the tags
+
+            deactivate:
+                flash:
+                    ok:                         The tag has been deactivated successfully.
+
+            delete:
+                flash:
+                    ok:                         The tag has been deleted successfully.
+
+            activate:
+                flash:
+                    ok:                         The tag has been activated successfully.
+
+            undelete:
+                flash:
+                    ok:                         The tag has been restored successfully.
+
+        front:
+            index:
+                title:                          Media Tags
+                link:                           Media Tags
+                breadcrumb:                     Media Tags
+                nodata:                         No data
+                form:
+                    search:                     Search
+                table:
+                    header:
+                        name:                   Name
+                        action:                 Actions
+                    action:
+                        detail:                 Detail
+                        delete:                 Delete
+                    confirm:
+                        delete:                 Do you want to delete the tag ?
+
+            create:
+                title:                          Add
+                link:                           Add
+                breadcrumb:                     Add a tag
+                flash:
+                    ok:                         The tag has been created successfully.
+                    ko:                         The tag has not been created.
+                form:
+                    name:                       Name
+                    description:                Description
+                    submit:
+                        save:                   Save
+                        new:                    Save and add
+                        duplicate:              Save and duplicate
+                        quit:                   Save and quit
+                        cancel:                 Cancel
+                    alert:
+                        title:                  Information
+                        text:                   You need the validation of a moderator to add a tag.
+
+            update:
+                title:                          Update
+                link:                           Update
+                breadcrumb:                     Update
+                flash:
+                    ok:                         The tag has been updated successfully.
+                    ko:                         The tag has not been updated .
+                form:
+                    name:                       Name
+                    description:                Description
+                    submit:
+                        save:                   Save
+                        new:                    Save and add
+                        duplicate:              Save and duplicate
+                        quit:                   Save and quit
+                        cancel:                 Cancel
+                    alert:
+                        title:                  Information
+                        text:                   You need the validation of a moderator to update a tag.
+
+            detail:
+                title:                          "%name%"
+                link:                           Detail
+                breadcrumb:                     "%name%"
+                data:
+                    title:                      Informations
+                    create:                     Creation
+                    update:                     Update
+                    name:                       Name
+                    alias:                      Alias
+                    description:                Description
+
+            delete:
+                flash:
+                    ok:                         The tag has been deleted successfully.
+
+        api:
+            index:
+                title:                          Media Tags
+
+        pagination:
+            counter:                            "Number of tags: %count% / %all%"
+
+        error:
+            unknown:                            The tag does not exist.
+            delete:                             The tag does not exist.
+            forbidden:                          Access forbidden.

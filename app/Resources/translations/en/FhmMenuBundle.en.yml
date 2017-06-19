@@ -1,0 +1,312 @@
+menu:
+    admin:
+        index:
+            title:                              Menus management
+            link:                               Menus
+            breadcrumb:                         Menus
+            nodata:                             No data
+            form:
+                search:                         Search
+            table:
+                header:
+                    name:                       Name
+                    route:                      Route by default
+                    action:                     Actions
+                    status:                     Status
+                action:
+                    activate:                   Activate
+                    deactivate:                 Deactivate
+                    delete:                     Delete
+                    detail:                     Configure
+                    duplicate:                  Duplicate
+                    undelete:                   Undelete
+                    update:                     Update
+                confirm:
+                    activate:                   Do you want to activate the menu ?
+                    deactivate:                 Do you want to deactivate the menu ?
+                    delete:                     Do you want to delete the menu ?
+                    undelete:                   Do you want to undelete the menu ?
+
+        create:
+            title:                              Add
+            link:                               Add
+            breadcrumb:                         Add a menu
+            flash:
+                ok:                             The menu has been created successfully.
+                ko:                             The menu has not been created.
+            form:
+                name:                           Name
+                description:                    Description
+                route:                          Route
+                icon:                           Icon
+                page:                           Page
+                active:                         Activate
+                share:                          Share
+                global:                         Global
+                submit:
+                    save:                       Save
+                    new:                        Save and add
+                    duplicate:                  Save and duplicate
+                    quit:                       Save and quit
+                    config:                     Save and configure
+                    cancel:                     Cancel
+                    import:                     Import
+                    export:                     Export
+                fieldset:
+                    data:                       Datas
+                    options:                    Options
+                alert:
+                    title:                      Information
+                    text:                       "(1): A Route or a Page must be filled out. If these two fields are filled out, the Route will be the one to be used."
+
+        update:
+            title:                              Update
+            link:                               Update
+            breadcrumb:                         Update
+            flash:
+                ok:                             The menu has been updated successfully.
+                ko:                             The menu has not been updated.
+            form:
+                name:                           Name
+                description:                    Description
+                route:                          Route
+                icon:                           Icon
+                page:                           Page
+                active:                         Activate
+                share:                          Share
+                global:                         Global
+                submit:
+                    save:                       Save
+                    new:                        Save and add
+                    duplicate:                  Save and duplicate
+                    quit:                       Save and quit
+                    config:                     Save and configure
+                    cancel:                     Cancel
+                    import:                     Import
+                    export:                     Export
+                    delete:                     Delete
+                fieldset:
+                                data:                       Datas
+                                options:                    Options
+                alert:
+                    title:                      Information
+                    text:                       "(1): A Route or a Page must be filled out. If these two fields are filled out, the Route will be the one to be used."
+
+        detail:
+            title:                              "%name%"
+            link:                               Detail
+            breadcrumb:                         "%name%"
+            data:
+                title:                          Informations
+                id:                             ID
+                create:                         Creation
+                update:                         Update
+                name:                           Name
+                alias:                          Alias
+                description:                    Description
+                status:                         Status
+                route:                          Route
+                page:                           Page
+            url:
+                title:                          Available Routes
+                admin:
+                    edit:                       Update
+                    detail:                     Configure
+                front:
+                    id:                         Display via the ID
+                    name:                       Display via the name
+                    alias:                      Display via the alias
+                    lite:                       Display via the simplifed url
+            menu:
+                title:                          Menus
+                name:                           Name
+                create:                         Date of creation
+                update:                         Date of update
+                origin:                         Origin
+                add:
+                    title:                      Add a module
+                    module:                     Add un module
+                    form:
+                        name:                   Name
+                        module:                 Module
+                        data:                   Data
+                        icon:                   Icon
+                        description:            Description
+                        route:                  Route
+                        submit:                 Submit
+                        modules:
+                            news:               News
+                            text:               Acticle
+                            gallery:            Gallery
+                            videos:             Video
+                            media:              Media
+                            article:            Article
+                            slider:             Slider
+                            contact:            Contact
+                            newsGroup:          Newspapers
+                edit:
+                    title:                      Add a module
+                    module:                     Add a module
+                    form:
+                        name:                   Name
+                        module:                 Module
+                        data:                   Data
+                        icon:                   Icon
+                        description:            Description
+                        route:                  Route
+                        submit:                 Submit
+                        modules:
+                            news:               News
+                            text:               Acticle
+                            gallery:            Gallery
+                            videos:             Video
+                            media:              Media
+                            article:            Article
+                            slider:             Slider
+                            contact:            Contact
+                            newsGroup:          Newspapers
+            admin:
+                title:                          Administration tools
+
+        export:
+            breadcrumb:                         Export
+            form:
+                submit:                         Export
+            link:                               Export
+            title:                              Export the menus
+
+        import:
+            breadcrumb:                         Import
+            flash:
+                ok:                             The menus have been imported successfully (%countAdd% ajout(s), %countUpdate% modification(s), %countError% erreur(s)).
+                ko:                             The menus have not been imported.
+            form:
+                file:                           CSV file
+                submit:                         Import
+            link:                               Import
+            title:                              Import the menus
+
+        deactivate:
+            flash:
+                ok:                             The menu has been deactivated.
+
+        delete:
+            flash:
+                ok:                             Le menu a bien été supprimé.
+                use:                            Impossible de supprimer, ce media est rattaché au module %module%  à l'élémént %element%.
+                used:
+                    news:                       News
+                    article:                    Articles
+                    site:                       Sites
+                    page:                       Pages
+                    gallery:                    Gallery
+                    event:                      Events
+                    partner:                    Partners
+                    slider:                     Slider
+                    product:                    Products
+                    menu:                       Menus
+
+        activate:
+            flash:
+                ok:                             The menu has been activated successfully.
+
+        undelete:
+            flash:
+                ok:                             The menu has been undeleted successfully.
+
+        add:
+            title:                              Add a menu
+            name:                               Name
+            submit:                             Add
+            module:                             Add a module
+        edit:
+            title:                              Update the menu
+            name:                               Name
+            submit:                             Submit
+            module:                             Add a module
+
+    front:
+        index:
+            title:                              Menu
+            link:                               Menu
+            breadcrumb:                         Menu
+            nodata:                             No data
+            form:
+                search:                         Search
+            table:
+                header:
+                    name:                       Name
+                    action:                     Actions
+                action:
+                    detail:                     Detail
+                    delete:                     Delete
+                confirm:
+                    delete:                     Do you want to delete the menu ?
+
+        create:
+            title:                              Add
+            link:                               Add
+            breadcrumb:                         Add a menu
+            flash:
+                ok:                             The menu has been created successfully.
+                ko:                             The menu has not been created.
+            form:
+                name:                           Name
+                description:                    Description
+                submit:
+                    save:                       Save
+                    new:                        Save and add
+                    duplicate:                  Save and duplicate
+                    quit:                       Save and quit
+                    cancel:                     Cancel
+                alert:
+                    title:                      Information
+                    text:                       You need the validation of a moderator to add a menu and to display it.
+
+        update:
+            title:                              Update
+            link:                               Update
+            breadcrumb:                         Update
+            flash:
+                ok:                             The menu has been updated successfully.
+                ko:                             The menu has not been updated.
+            form:
+                name:                           Name
+                description:                    Description
+                submit:
+                    save:                       Save
+                    new:                        Save and add
+                    duplicate:                  Save and duplicate
+                    quit:                       Save and quit
+                    cancel:                     Cancel
+                alert:
+                    title:                      Information
+                    text:                       You need the validation of a moderator to update a menu and display it.
+
+        detail:
+            title:                              "%name%"
+            link:                               Detail
+            breadcrumb:                         "%name%"
+            data:
+                title:                          Informations
+                create:                         Creation
+                update:                         Modification
+                name:                           Name
+                alias:                          Alias
+                description:                    Description
+
+        delete:
+            flash:
+                ok:                             The menu has been deleted successfully.
+
+    api:
+        index:
+            title:                              Menu
+
+    pagination:
+        counter:                                "Number of menus: %count% / %all%"
+
+    error:
+        unknown:                                The menu does not exist.
+        delete:                                 The menu does not exist.
+        forbidden:                              Access forbidden.

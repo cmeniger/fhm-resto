@@ -1,0 +1,20 @@
+{% trans_default_domain instance.domain %}
+<div class="category menu">
+    <div class="bloc">
+        <div class="bloc-title">
+            <div class="name">{{ category.getName() }}</div>
+            <div class="price">{{ category.getPrice() }}{{ category.getCurrency() }}</div>
+            {% if category.getDescription() %}
+                <div class="description">
+                    {{ category.getDescription() }}
+                </div>
+            {% endif %}
+        </div>
+        {% if category.getProducts().count() > 0 %}
+            {{ render(path('fhm_api_card_product_embed', {idCard:card.getId(), idCategory:category.getId(), folder:folder, template:'menu'})) }}
+        {% endif %}
+        {% if category.getSons().count() > 0 %}
+            {{ render(path('fhm_api_card_category_embed', {idCard:card.getId(), idCategory:category.getId(), folder:folder, template:'index.menu'})) }}
+        {% endif %}
+    </div>
+</div>

@@ -1,4 +1,5 @@
 <?php
+
 namespace Fhm\FhmBundle\Form\Type\Front;
 
 use Symfony\Component\Form\AbstractType;
@@ -9,13 +10,14 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Class SearchType
+ *
  * @package Fhm\FhmBundle\Form\Type\Front
  */
 class SearchType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
-     * @param array $options
+     * @param array                $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -24,9 +26,9 @@ class SearchType extends AbstractType
             TextType::class,
             array(
                 'required' => false,
-                'attr' => array(
-                    'placeholder' => $options['translation_route'].'.front.index.form.search',
-                    'data-type' => 'list',
+                'attr'     => array(
+                    'placeholder' => 'fhm.front.search',
+                    'data-type'   => 'list',
                 ),
             )
         );

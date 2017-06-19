@@ -1,0 +1,59 @@
+project:
+    admin:
+
+    home:
+        breadcrumb:                             Home
+        link:                                   Home
+        return:                                 Back
+        conection:                              Log in
+        contact:                                Contact
+        aroundme:                               Around me
+        placenote:                              Rate your places
+        place:                                  Do you have a Hookah place ?
+        placetext:                              Join the <span class="blue"><strong>ChichaMaps</strong></span> community <strong>for free</strong> to get more <strong>visibility                                       </strong> and attract <strong>new customers</strong> !
+        about:
+            title:                              About us
+            description:                        ChichaMaps is the first global directory for Hookah bars and restaurants all over the world !
+            userplace:
+                title:                          You are the owner
+                description:                    Get more visibility by submitting your Hookah bar or restaurant for free !
+                button:                         Add my place
+            user:
+                title:                          You are the client
+                description:                    Find a Hookah bar easily, wherever you are ! Note, comment and save your favourite places !
+                button:                         Create an account
+
+    tree:
+        admin:                                  Administration
+        connected:                              "%username%"
+        console:                                Console
+        home:                                   Home
+        back:                                   Back
+
+    footer:                                     ChichaMaps 2016 All right reserved. Website developed by
+
+    construct:
+        title:                                  Website under construction
+        text:                                   Website under construction by
+        date:                                   The website will be launched in :"
+        newsletter:                             If you want to stay informed about the launching of the website, subscribe to our newsletter.
+
+    maintenance:
+        title:                                  The website is temporarily not available
+        text:                                   The website is temporarily not available.<br/>We apologize for the inconvenience.
+        date:                                   "The website will be available again in :"
+        newsletter:                             If you want to stay informed about the reopen of the website, subscribe to our newsletter.
+
+    timer:
+        days:                                   Days
+        hours:                                  Hours
+        minutes:                                Minutes
+        seconds:                                Seconds
+
+    seo:
+        title:                                  ChichaMaps
+        description:                            ChichaMaps description
+        keywords:                               ChichaMaps, word1, word2
+
+    email:
+        sign:                                   A bientôt !<br><br><strong>ChichaMaps team's</strong>

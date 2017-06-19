@@ -1,4 +1,5 @@
 <?php
+
 namespace Fhm\CardBundle\Document\Repository;
 
 use Fhm\FhmBundle\Document\Repository\FhmRepository;
@@ -15,9 +16,10 @@ class CardCategoryRepository extends FhmRepository
 {
     /**
      * CardCategoryRepository constructor.
+     *
      * @param DocumentManager $dm
-     * @param UnitOfWork $uow
-     * @param ClassMetadata $class
+     * @param UnitOfWork      $uow
+     * @param ClassMetadata   $class
      */
     public function __construct(DocumentManager $dm, UnitOfWork $uow, ClassMetadata $class)
     {
@@ -29,156 +31,245 @@ class CardCategoryRepository extends FhmRepository
      */
     public function getDefault()
     {
-        return $this->createQueryBuilder()->field('default')->equals(true)->field('active')->equals(true)->field(
-            'delete'
-        )->equals(false)->getQuery()->execute()->toArray();
+        return $this->createQueryBuilder()
+            ->field('default')->equals(true)
+            ->field('active')->equals(true)
+            ->field('delete')->equals(false)
+            ->getQuery()
+            ->execute()
+            ->toArray();
     }
 
     /**
      * @param \Fhm\CardBundle\Document\Card $card
+     * @param string                        $grouping
      *
      * @return mixed
      * @throws \Doctrine\ODM\MongoDB\MongoDBException
      */
-    public function getByCard(\Fhm\CardBundle\Document\Card $card)
+    public function getByCard(\Fhm\CardBundle\Document\Card $card, $grouping = "")
     {
         $builder = $this->createQueryBuilder();
         // Parent
-        if ($this->parent) {
+        if($this->parent)
+        {
             $builder->field('parent')->in(array('0', null));
         }
+        // Grouping
+        if($grouping != "")
+        {
+            $builder->addAnd(
+                $builder->expr()
+                    ->addOr($builder->expr()->field('grouping')->in((array) $grouping))
+                    ->addOr($builder->expr()->field('global')->equals(true))
+            );
+        }
         // Card
-        if ($card->getCategories()->count() > 0) {
+        if($card->getCategories()->count() > 0)
+        {
             $ids = array();
-            foreach ($card->getCategories() as $category) {
-                if ($category->getParents()->count() == 0) {
+            foreach($card->getCategories() as $category)
+            {
+                if($category->getParents()->count() == 0)
+                {
                     $ids[] = $category->getId();
                 }
             }
             $builder->field('id')->in($ids);
-        } else {
+        }
+        else
+        {
             return array();
         }
         // Common
         $builder->field('card.id')->equals($card->getId());
         $builder->field('active')->equals(true);
         $builder->field('delete')->equals(false);
-        $this->builderSort($builder);
+        $this->setSort('order')->builderSort($builder);
 
-        return $builder->getQuery()->execute()->toArray();
+        return $builder
+            ->getQuery()
+            ->execute()
+            ->toArray();
     }
 
     /**
      * @param \Fhm\CardBundle\Document\Card $card
+     * @param string                        $grouping
      *
      * @return mixed
      * @throws \Doctrine\ODM\MongoDB\MongoDBException
      */
-    public function getByCardAll(\Fhm\CardBundle\Document\Card $card)
+    public function getByCardAll(\Fhm\CardBundle\Document\Card $card, $grouping = "")
     {
         $builder = $this->createQueryBuilder();
         // Parent
-        if ($this->parent) {
+        if($this->parent)
+        {
             $builder->field('parent')->in(array('0', null));
         }
+        // Grouping
+        if($grouping != "")
+        {
+            $builder->addAnd(
+                $builder->expr()
+                    ->addOr($builder->expr()->field('grouping')->in((array) $grouping))
+                    ->addOr($builder->expr()->field('global')->equals(true))
+            );
+        }
         // Card
-        if ($card->getCategories()->count() > 0) {
+        if($card->getCategories()->count() > 0)
+        {
             $ids = array();
-            foreach ($card->getCategories() as $category) {
-                if ($category->getParents()->count() == 0) {
+            foreach($card->getCategories() as $category)
+            {
+                if($category->getParents()->count() == 0)
+                {
                     $ids[] = $category->getId();
                 }
             }
             $builder->field('id')->in($ids);
-        } else {
+        }
+        else
+        {
             return array();
         }
         // Common
         $builder->field('card.id')->equals($card->getId());
-        $this->builderSort($builder);
+        $this->setSort('order')->builderSort($builder);
 
-        return $builder->getQuery()->execute()->toArray();
+        return $builder
+            ->getQuery()
+            ->execute()
+            ->toArray();
     }
 
     /**
-     * @param \Fhm\CardBundle\Document\Card $card
+     * @param \Fhm\CardBundle\Document\Card         $card
      * @param \Fhm\CardBundle\Document\CardCategory $category
+     * @param string                                $grouping
      *
      * @return array
      * @throws \Doctrine\ODM\MongoDB\MongoDBException
      */
-    public function getSons(\Fhm\CardBundle\Document\Card $card, \Fhm\CardBundle\Document\CardCategory $category)
+    public function getSons(\Fhm\CardBundle\Document\Card $card, \Fhm\CardBundle\Document\CardCategory $category, $grouping = "")
     {
         $builder = $this->createQueryBuilder();
         // Parent
-        if ($this->parent) {
+        if($this->parent)
+        {
             $builder->field('parent')->in(array('0', null));
         }
+        // Grouping
+        if($grouping != "")
+        {
+            $builder->addAnd(
+                $builder->expr()
+                    ->addOr($builder->expr()->field('grouping')->in((array) $grouping))
+                    ->addOr($builder->expr()->field('global')->equals(true))
+            );
+        }
         // Category
-        if ($category->getSons()->count() > 0) {
+        if($category->getSons()->count() > 0)
+        {
             $ids = array();
-            foreach ($category->getSons() as $category) {
+            foreach($category->getSons() as $category)
+            {
                 $ids[] = $category->getId();
             }
             $builder->field('id')->in($ids);
-        } else {
+        }
+        else
+        {
             return array();
         }
         // Common
         $builder->field('card.id')->equals($card->getId());
         $builder->field('active')->equals(true);
         $builder->field('delete')->equals(false);
-        $this->builderSort($builder);
+        $this->setSort('order')->builderSort($builder);
 
-        return $builder->getQuery()->execute()->toArray();
+        return $builder
+            ->getQuery()
+            ->execute()
+            ->toArray();
     }
 
     /**
-     * @param \Fhm\CardBundle\Document\Card $card
+     * @param \Fhm\CardBundle\Document\Card         $card
      * @param \Fhm\CardBundle\Document\CardCategory $category
+     * @param string                                $grouping
      *
      * @return array
      * @throws \Doctrine\ODM\MongoDB\MongoDBException
      */
-    public function getSonsAll(\Fhm\CardBundle\Document\Card $card, \Fhm\CardBundle\Document\CardCategory $category)
+    public function getSonsAll(\Fhm\CardBundle\Document\Card $card, \Fhm\CardBundle\Document\CardCategory $category, $grouping = "")
     {
         $builder = $this->createQueryBuilder();
         // Parent
-        if ($this->parent) {
+        if($this->parent)
+        {
             $builder->field('parent')->in(array('0', null));
         }
+        // Grouping
+        if($grouping != "")
+        {
+            $builder->addAnd(
+                $builder->expr()
+                    ->addOr($builder->expr()->field('grouping')->in((array) $grouping))
+                    ->addOr($builder->expr()->field('global')->equals(true))
+            );
+        }
         // Category
-        if ($category->getSons()->count() > 0) {
+        if($category->getSons()->count() > 0)
+        {
             $ids = array();
-            foreach ($category->getSons() as $category) {
+            foreach($category->getSons() as $category)
+            {
                 $ids[] = $category->getId();
             }
             $builder->field('id')->in($ids);
-        } else {
+        }
+        else
+        {
             return array();
         }
         // Common
         $builder->field('card.id')->equals($card->getId());
-        $this->builderSort($builder);
+        $this->setSort('order')->builderSort($builder);
 
-        return $builder->getQuery()->execute()->toArray();
+        return $builder
+            ->getQuery()
+            ->execute()
+            ->toArray();
     }
 
     /**
-     * @param \Fhm\CardBundle\Document\Card $card
+     * @param string $card
+     * @param string $grouping
      *
      * @return mixed
      * @throws \Doctrine\ODM\MongoDB\MongoDBException
      */
-    public function getFormParents(\Fhm\CardBundle\Document\Card $card)
+    public function getFormParents($card, $grouping = "")
     {
         $builder = $this->createQueryBuilder();
         // Parent
-        if ($this->parent) {
+        if($this->parent)
+        {
             $builder->field('parent')->in(array('0', null));
         }
+        // Grouping
+        if($grouping != "")
+        {
+            $builder->addAnd(
+                $builder->expr()
+                    ->addOr($builder->expr()->field('grouping')->in((array) $grouping))
+                    ->addOr($builder->expr()->field('global')->equals(true))
+            );
+        }
         // Common
-        $builder->field('card.id')->equals($card->getId());
+        $builder->field('card.id')->equals($card);
         $builder->field('delete')->equals(false);
         $this->builderSort($builder);
 
@@ -186,20 +277,31 @@ class CardCategoryRepository extends FhmRepository
     }
 
     /**
-     * @param \Fhm\CardBundle\Document\Card $card
+     * @param string $card
+     * @param string $grouping
      *
      * @return mixed
      * @throws \Doctrine\ODM\MongoDB\MongoDBException
      */
-    public function getFormSons(\Fhm\CardBundle\Document\Card $card)
+    public function getFormSons($card, $grouping = "")
     {
         $builder = $this->createQueryBuilder();
         // Parent
-        if ($this->parent) {
+        if($this->parent)
+        {
             $builder->field('parent')->in(array('0', null));
         }
+        // Grouping
+        if($grouping != "")
+        {
+            $builder->addAnd(
+                $builder->expr()
+                    ->addOr($builder->expr()->field('grouping')->in((array) $grouping))
+                    ->addOr($builder->expr()->field('global')->equals(true))
+            );
+        }
         // Common
-        $builder->field('card.id')->equals($card->getId());
+        $builder->field('card.id')->equals($card);
         $builder->field('delete')->equals(false);
         $this->builderSort($builder);
 
@@ -207,20 +309,31 @@ class CardCategoryRepository extends FhmRepository
     }
 
     /**
-     * @param \Fhm\CardBundle\Document\Card $card
+     * @param string $card
+     * @param string $grouping
      *
      * @return mixed
      * @throws \Doctrine\ODM\MongoDB\MongoDBException
      */
-    public function getFormCard(\Fhm\CardBundle\Document\Card $card)
+    public function getFormCard($card, $grouping = "")
     {
         $builder = $this->createQueryBuilder();
         // Parent
-        if ($this->parent) {
+        if($this->parent)
+        {
             $builder->field('parent')->in(array('0', null));
         }
+        // Grouping
+        if($grouping != "")
+        {
+            $builder->addAnd(
+                $builder->expr()
+                    ->addOr($builder->expr()->field('grouping')->in((array) $grouping))
+                    ->addOr($builder->expr()->field('global')->equals(true))
+            );
+        }
         // Common
-        $builder->field('card.id')->equals($card->getId());
+        $builder->field('card.id')->equals($card);
         $builder->field('delete')->equals(false);
         $this->builderSort($builder);
 

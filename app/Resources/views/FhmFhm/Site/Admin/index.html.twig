@@ -3,12 +3,18 @@
 
 {% block content_data_header %}
     {{ parent() }}
-    <th>{{ (instance.translation ~ '.admin.index.table.header.title')|trans }}</th>
+    <th {% if pagination.isSorted('title') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, (instance.translation ~ '.admin.index.table.header.title')|trans, 'title')|raw }}</th>
+    <th>{{ (instance.translation ~ '.admin.index.table.header.menu')|trans }}</th>
 {% endblock %}
 
 {% block content_data_body %}
     {{ parent() }}
     <td>{{ object.getTitle() }}</td>
+    <td>
+        {% if object.getMenu() %}
+            <a href="{{ path('fhm_admin_menu_tree', {id:object.getMenu().getId()}) }}" target="_blank">{{ object.getMenu().getName() }}</a>
+        {% endif %}
+    </td>
 {% endblock %}
 
 {% block content_data_action_button %}

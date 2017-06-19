@@ -1,0 +1,17 @@
+{% trans_default_domain instance.domain %}
+<div class="category">
+    <div class="category-title">
+        <span>{{ category.getName() }}</span>
+    </div>
+    {% if category.getDescription() %}
+        <div class="category-description">
+            {{ category.getDescription() }}
+        </div>
+    {% endif %}
+    {% if category.getProducts().count() > 0 %}
+        {{ render(path('fhm_api_card_product_embed', {idCard:card.getId(), idCategory:category.getId(), folder:folder, template:embedProduct is defined ? embedProduct : 'inline'})) }}
+    {% endif %}
+    {% if category.getSons().count() > 0 %}
+        {{ render(path('fhm_api_card_category_embed', {idCard:card.getId(), idCategory:category.getId(), folder:folder, template:embedCategory is defined ? embedCategory : 'index.inline'})) }}
+    {% endif %}
+</div>

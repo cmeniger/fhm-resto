@@ -1,35 +1,13 @@
-fhm:
-    breadcrumb:                                 Accueil
-    admin:
-        breadcrumb:                             Admin
-        slider:
-            breadcrumb:                         Slider
-            create:
-                breadcrumb:                     Ajouter un slider
-            update:
-                breadcrumb:                     Modifier
-            detail:
-                breadcrumb:                     Détails
-            item:
-                breadcrumb:                     Images
-                create:
-                    breadcrumb:                 Ajouter
-                detail:
-                    breadcrumb:                 Détail
-                update:
-                    breadcrumb:                 Modifier
-project:
-    breadcrump:                                 Accueil
-    admin:
-        breadcrump:                             Admin
-        slider:
-            breadcrump:                         Slider
-            create:
-                breadcrumb:                     Ajouter un slider
-            update:
-                breadcrumb:                     Modifier
-            detail:
-                breadcrumb:                     Détails
+breadcrumb:
+    slider:                                     Sliders
+    slider_create:                              Ajouter
+    slider_update:                              Modifier
+    slider_detail:                              '%name%'
+    slider_item:                                Images
+    slider_item_create:                         Ajouter
+    slider_item_update:                         Modifier
+    slider_item_detail:                         '%name%'
+
 slider:
     admin:
         index:
@@ -297,7 +275,7 @@ slider:
     item:
         admin:
             index:
-                title:                          Gestion des images des sliders
+                title:                          "Gestion des sliders : images"
                 link:                           Images
                 breadcrumb:                     Images
                 nodata:                         Aucune donnée

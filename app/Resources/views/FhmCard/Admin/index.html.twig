@@ -44,10 +44,10 @@
 {% block content_data_header %}
     <th>{{ (instance.translation ~ '.admin.index.table.header.image')|trans }}</th>
     {{ parent() }}
-    <th>{{ (instance.translation ~ '.admin.index.table.header.parent')|trans }}</th>
-    <th>{{ (instance.translation ~ '.admin.index.table.header.categories')|trans }}</th>
-    <th>{{ (instance.translation ~ '.admin.index.table.header.products')|trans }}</th>
-    <th>{{ (instance.translation ~ '.admin.index.table.header.ingredients')|trans }}</th>
+    <th {% if pagination.isSorted('sort_parent') %}class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, (instance.translation ~ '.admin.index.table.header.parent')|trans, 'sort_parent')|raw }}</th>
+    <th {% if pagination.isSorted('sort_category') %}class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, (instance.translation ~ '.admin.index.table.header.categories')|trans, 'sort_category')|raw }}</th>
+    <th {% if pagination.isSorted('sort_product') %}class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, (instance.translation ~ '.admin.index.table.header.products')|trans, 'sort_product')|raw }}</th>
+    <th {% if pagination.isSorted('sort_ingredient') %}class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, (instance.translation ~ '.admin.index.table.header.ingredients')|trans, 'sort_ingredient')|raw }}</th>
 {% endblock %}
 
 {% block content_data_body %}

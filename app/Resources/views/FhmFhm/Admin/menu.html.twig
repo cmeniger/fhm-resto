@@ -14,8 +14,7 @@
         {# user #}
         <div class="link">
             <a href="{{ path("fhm_admin_user") }}" title="{{ ('user.admin.index.title')|trans({}, 'FhmUserBundle') }}"><i class="fa fa-fw fa-user menu"></i>{{ ('user.admin.index.link')|trans({}, 'FhmUserBundle') }}
-            </a>
-            <span>
+            </a> <span>
                 <a href="{{ path("fhm_admin_user_create") }}" title="{{ ('user.admin.create.link')|trans({}, 'FhmUserBundle') }}"><i class="fa fa-fw fa-plus"></i></a>
                 <a href="{{ path("fhm_admin_user_import") }}" title="{{ ('user.admin.import.link')|trans({}, 'FhmUserBundle') }}"><i class="fa fa-fw fa-download"></i></a>
                 <a href="{{ path("fhm_admin_user_export") }}" title="{{ ('user.admin.export.link')|trans({}, 'FhmUserBundle') }}"><i class="fa fa-fw fa-upload"></i></a>
@@ -24,16 +23,14 @@
         {# mail #}
         <div class="link">
             <a href="{{ path("fhm_admin_mail") }}" title="{{ ('mail.admin.index.title')|trans({}, 'FhmMailBundle') }}"><i class="fa fa-fw fa-envelope menu"></i>{{ ('mail.admin.index.link')|trans({}, 'FhmMailBundle') }}
-            </a>
-            <span>
+            </a> <span>
                 <a href="{{ path("fhm_admin_mail_model") }}" title="{{ ('mail.admin.model.link')|trans({}, 'FhmMailBundle') }}"><i class="fa fa-fw fa-picture-o"></i></a>
             </span>
         </div>
         {# notification #}
         <div class="link">
             <a href="{{ path("fhm_admin_notification") }}" title="{{ ('notification.admin.index.title')|trans({}, 'FhmNotificationBundle') }}"><i class="fa fa-fw fa-bell menu"></i>{{ ('notification.admin.index.link')|trans({}, 'FhmNotificationBundle') }}
-            </a>
-            <span>
+            </a> <span>
                 <a href="{{ path("fhm_admin_notification_import") }}" title="{{ ('notification.admin.import.link')|trans({}, 'FhmNotificationBundle') }}"><i class="fa fa-fw fa-download"></i></a>
                 <a href="{{ path("fhm_admin_notification_export") }}" title="{{ ('notification.admin.export.link')|trans({}, 'FhmNotificationBundle') }}"><i class="fa fa-fw fa-upload"></i></a>
             </span>
@@ -45,23 +42,31 @@
         {% endblock %}
         {# site #}
         <div class="link">
-            <a href="{{ path("fhm_admin_site") }}" title="{{ ('site.admin.index.title')|trans({}, 'FhmFhmSite') }}"><i class="fa fa-fw fa-desktop menu"></i>{{ ('site.admin.index.link')|trans({}, 'FhmFhmSite') }}
-            </a>
-            <span>
-                <a href="{{ path("fhm_admin_site_update_default") }}" title="{{ ('site.admin.update.link')|trans({}, 'FhmFhmSite') }}"><i class="fa fa-fw fa-star"></i></a>
-                <a href="{{ path("fhm_admin_site_create") }}" title="{{ ('site.admin.create.link')|trans({}, 'FhmFhmSite') }}"><i class="fa fa-fw fa-plus"></i></a>
-                <a href="{{ path("fhm_admin_site_import") }}" title="{{ ('site.admin.import.link')|trans({}, 'FhmFhmSite') }}"><i class="fa fa-fw fa-download"></i></a>
-                <a href="{{ path("fhm_admin_site_export") }}" title="{{ ('site.admin.export.link')|trans({}, 'FhmFhmSite') }}"><i class="fa fa-fw fa-upload"></i></a>
+            <a href="{{ path("fhm_admin_site") }}" title="{{ ('site.admin.index.title')|trans({}, 'FhmFhmSiteBundle') }}"><i class="fa fa-fw fa-desktop menu"></i>{{ ('site.admin.index.link')|trans({}, 'FhmFhmSiteBundle') }}
+            </a> <span>
+                <a href="{{ path("fhm_admin_site_update_default") }}" title="{{ ('site.admin.update.link')|trans({}, 'FhmFhmSiteBundle') }}"><i class="fa fa-fw fa-star"></i></a>
+                <a href="{{ path("fhm_admin_site_create") }}" title="{{ ('site.admin.create.link')|trans({}, 'FhmFhmSiteBundle') }}"><i class="fa fa-fw fa-plus"></i></a>
+                <a href="{{ path("fhm_admin_site_import") }}" title="{{ ('site.admin.import.link')|trans({}, 'FhmFhmSiteBundle') }}"><i class="fa fa-fw fa-download"></i></a>
+                <a href="{{ path("fhm_admin_site_export") }}" title="{{ ('site.admin.export.link')|trans({}, 'FhmFhmSiteBundle') }}"><i class="fa fa-fw fa-upload"></i></a>
             </span>
         </div>
         {# menu #}
         <div class="link">
-            <a href="{{ path("fhm_admin_menu") }}" title="{{ ('menu.admin.index.title')|trans({}, 'FhmFhmMenu') }}"><i class="fa fa-fw fa-bars menu"></i>{{ ('menu.admin.index.link')|trans({}, 'FhmFhmMenu') }}
-            </a>
-            <span>
-                <a href="{{ path("fhm_admin_menu_create") }}" title="{{ ('menu.admin.create.link')|trans({}, 'FhmFhmMenu') }}"><i class="fa fa-fw fa-plus"></i></a>
-                <a href="{{ path("fhm_admin_menu_import") }}" title="{{ ('menu.admin.import.link')|trans({}, 'FhmFhmMenu') }}"><i class="fa fa-fw fa-download"></i></a>
-                <a href="{{ path("fhm_admin_menu_export") }}" title="{{ ('menu.admin.export.link')|trans({}, 'FhmFhmMenu') }}"><i class="fa fa-fw fa-upload"></i></a>
+            <a href="{{ path("fhm_admin_menu") }}" title="{{ ('menu.admin.index.title')|trans({}, 'FhmFhmMenuBundle') }}"><i class="fa fa-fw fa-bars menu"></i>{{ ('menu.admin.index.link')|trans({}, 'FhmFhmMenuBundle') }}
+            </a> <span>
+                <a href="{{ path("fhm_admin_menu_create") }}" title="{{ ('menu.admin.create.link')|trans({}, 'FhmFhmMenuBundle') }}"><i class="fa fa-fw fa-plus"></i></a>
+                <a href="{{ path("fhm_admin_menu_import") }}" title="{{ ('menu.admin.import.link')|trans({}, 'FhmFhmMenuBundle') }}"><i class="fa fa-fw fa-download"></i></a>
+                <a href="{{ path("fhm_admin_menu_export") }}" title="{{ ('menu.admin.export.link')|trans({}, 'FhmFhmMenuBundle') }}"><i class="fa fa-fw fa-upload"></i></a>
+            </span>
+        </div>
+        {# media #}
+        <div class="link">
+            <a href="{{ path("fhm_admin_media") }}" title="{{ ('media.admin.index.title')|trans({}, 'FhmMediaBundle') }}"><i class="fa fa-fw fa-file-o menu"></i>{{ ('media.admin.index.link')|trans({}, 'FhmMediaBundle') }}
+            </a> <span>
+                <a href="{{ path("fhm_admin_media_tag") }}" title="{{ ('media.tag.admin.index.title')|trans({}, 'FhmMediaBundle') }}"><i class="fa fa-fw fa-tags"></i></a>
+                <a href="{{ path("fhm_admin_media_create") }}" title="{{ ('media.admin.create.link')|trans({}, 'FhmMediaBundle') }}"><i class="fa fa-fw fa-plus"></i></a>
+                <a href="{{ path("fhm_admin_media_import") }}" title="{{ ('media.admin.import.link')|trans({}, 'FhmMediaBundle') }}"><i class="fa fa-fw fa-download"></i></a>
+                <a href="{{ path("fhm_admin_media_export") }}" title="{{ ('media.admin.export.link')|trans({}, 'FhmMediaBundle') }}"><i class="fa fa-fw fa-upload"></i></a>
             </span>
         </div>
     {% endblock %}
@@ -72,8 +77,7 @@
         {# news #}
         <div class="link">
             <a href="{{ path("fhm_admin_news") }}" title="{{ ('news.admin.index.title')|trans({}, 'FhmNewsBundle') }}"><i class="fa fa-fw fa-newspaper-o menu"></i>{{ ('news.admin.index.link')|trans({}, 'FhmNewsBundle') }}
-            </a>
-            <span>
+            </a> <span>
                 <a href="{{ path("fhm_admin_news_group") }}" title="{{ ('news.group.admin.index.title')|trans({}, 'FhmNewsBundle') }}"><i class="fa fa-fw fa-book"></i></a>
                 <a href="{{ path("fhm_admin_news_create") }}" title="{{ ('news.admin.create.link')|trans({}, 'FhmNewsBundle') }}"><i class="fa fa-fw fa-plus"></i></a>
                 <a href="{{ path("fhm_admin_news_import") }}" title="{{ ('news.admin.import.link')|trans({}, 'FhmNewsBundle') }}"><i class="fa fa-fw fa-download"></i></a>
@@ -83,8 +87,7 @@
         {# article #}
         <div class="link">
             <a href="{{ path("fhm_admin_article") }}" title="{{ ('article.admin.index.title')|trans({}, 'FhmArticleBundle') }}"><i class="fa fa-fw fa-file-text-o menu"></i>{{ ('article.admin.index.link')|trans({}, 'FhmArticleBundle') }}
-            </a>
-            <span>
+            </a> <span>
                 <a href="{{ path("fhm_admin_article_create") }}" title="{{ ('article.admin.create.link')|trans({}, 'FhmArticleBundle') }}"><i class="fa fa-fw fa-plus"></i></a>
                 <a href="{{ path("fhm_admin_article_import") }}" title="{{ ('article.admin.import.link')|trans({}, 'FhmArticleBundle') }}"><i class="fa fa-fw fa-download"></i></a>
                 <a href="{{ path("fhm_admin_article_export") }}" title="{{ ('article.admin.export.link')|trans({}, 'FhmArticleBundle') }}"><i class="fa fa-fw fa-upload"></i></a>
@@ -93,8 +96,7 @@
         {# event #}
         <div class="link">
             <a href="{{ path("fhm_admin_event") }}" title="{{ ('event.admin.index.title')|trans({}, 'FhmEventBundle') }}"><i class="fa fa-fw fa-calendar-o menu"></i>{{ ('event.admin.index.link')|trans({}, 'FhmEventBundle') }}
-            </a>
-            <span>
+            </a> <span>
                 <a href="{{ path("fhm_admin_event_group") }}" title="{{ ('event.group.admin.index.title')|trans({}, 'FhmEventBundle') }}"><i class="fa fa-fw fa-calendar"></i></a>
                 <a href="{{ path("fhm_admin_event_create") }}" title="{{ ('event.admin.create.link')|trans({}, 'FhmEventBundle') }}"><i class="fa fa-fw fa-plus"></i></a>
                 <a href="{{ path("fhm_admin_event_import") }}" title="{{ ('event.admin.import.link')|trans({}, 'FhmEventBundle') }}"><i class="fa fa-fw fa-download"></i></a>
@@ -104,8 +106,7 @@
         {# gallery #}
         <div class="link">
             <a href="{{ path("fhm_admin_gallery") }}" title="{{ ('gallery.admin.index.title')|trans({}, 'FhmGalleryBundle') }}"><i class="fa fa-fw fa-th menu"></i>{{ ('gallery.admin.index.link')|trans({}, 'FhmGalleryBundle') }}
-            </a>
-            <span>
+            </a> <span>
                 <a href="{{ path("fhm_admin_gallery_album") }}" title="{{ ('gallery.album.admin.index.title')|trans({}, 'FhmGalleryBundle') }}"><i class="fa fa-fw fa-book"></i></a>
                 <a href="{{ path("fhm_admin_gallery_item") }}" title="{{ ('gallery.item.admin.index.title')|trans({}, 'FhmGalleryBundle') }}"><i class="fa fa-fw fa-picture-o"></i></a>
                 <a href="{{ path("fhm_admin_gallery_video") }}" title="{{ ('gallery.video.admin.index.title')|trans({}, 'FhmGalleryBundle') }}"><i class="fa fa-fw fa-video-camera"></i></a>
@@ -117,41 +118,36 @@
         {# slider #}
         <div class="link">
             <a href="{{ path("fhm_admin_slider") }}" title="{{ ('slider.admin.index.title')|trans({}, 'FhmSliderBundle') }}"><i class="fa fa-fw fa-arrows-h menu"></i>{{ ('slider.admin.index.link')|trans({}, 'FhmSliderBundle') }}
-            </a>
-            <span>
+            </a> <span>
                 <a href="{{ path("fhm_admin_slider_item") }}" title="{{ ('slider.item.admin.index.title')|trans({}, 'FhmSliderBundle') }}"><i class="fa fa-fw fa-picture-o"></i></a>
                 <a href="{{ path("fhm_admin_slider_create") }}" title="{{ ('slider.admin.create.link')|trans({}, 'FhmSliderBundle') }}"><i class="fa fa-fw fa-plus"></i></a>
                 <a href="{{ path("fhm_admin_slider_import") }}" title="{{ ('slider.admin.import.link')|trans({}, 'FhmSliderBundle') }}"><i class="fa fa-fw fa-download"></i></a>
                 <a href="{{ path("fhm_admin_slider_export") }}" title="{{ ('slider.admin.export.link')|trans({}, 'FhmSliderBundle') }}"><i class="fa fa-fw fa-upload"></i></a>
             </span>
         </div>
-        {# media #}
-        <div class="link">
-            <a href="{{ path("fhm_admin_media") }}" title="{{ ('media.admin.index.title')|trans({}, 'FhmMediaBundle') }}"><i class="fa fa-fw fa-file-o menu"></i>{{ ('media.admin.index.link')|trans({}, 'FhmMediaBundle') }}
-            </a>
-            <span>
-                <a href="{{ path("fhm_admin_media_tag") }}" title="{{ ('media.tag.admin.index.title')|trans({}, 'FhmMediaBundle') }}"><i class="fa fa-fw fa-tags"></i></a>
-                <a href="{{ path("fhm_admin_media_create") }}" title="{{ ('media.admin.create.link')|trans({}, 'FhmMediaBundle') }}"><i class="fa fa-fw fa-plus"></i></a>
-                <a href="{{ path("fhm_admin_media_import") }}" title="{{ ('media.admin.import.link')|trans({}, 'FhmMediaBundle') }}"><i class="fa fa-fw fa-download"></i></a>
-                <a href="{{ path("fhm_admin_media_export") }}" title="{{ ('media.admin.export.link')|trans({}, 'FhmMediaBundle') }}"><i class="fa fa-fw fa-upload"></i></a>
-            </span>
-        </div>
         {# partner #}
         <div class="link">
             <a href="{{ path("fhm_admin_partner") }}" title="{{ ('partner.admin.index.title')|trans({}, 'FhmPartnerBundle') }}"><i class="fa fa-fw fa-share-alt menu"></i>{{ ('partner.admin.index.link')|trans({}, 'FhmPartnerBundle') }}
-            </a>
-            <span>
+            </a> <span>
                 <a href="{{ path("fhm_admin_partner_group") }}" title="{{ ('partner.group.admin.index.title')|trans({}, 'FhmPartnerBundle') }}"><i class="fa fa-fw fa-cubes"></i></a>
                 <a href="{{ path("fhm_admin_partner_create") }}" title="{{ ('partner.admin.create.link')|trans({}, 'FhmPartnerBundle') }}"><i class="fa fa-fw fa-plus"></i></a>
                 <a href="{{ path("fhm_admin_partner_import") }}" title="{{ ('partner.admin.import.link')|trans({}, 'FhmPartnerBundle') }}"><i class="fa fa-fw fa-download"></i></a>
                 <a href="{{ path("fhm_admin_partner_export") }}" title="{{ ('partner.admin.export.link')|trans({}, 'FhmPartnerBundle') }}"><i class="fa fa-fw fa-upload"></i></a>
             </span>
         </div>
+        {# testimony #}
+        <div class="link">
+            <a href="{{ path("fhm_admin_testimony") }}" title="{{ ('testimony.admin.index.title')|trans({}, 'FhmTestimonyBundle') }}"><i class="fa fa-fw fa-quote-right menu"></i>{{ ('testimony.admin.index.link')|trans({}, 'FhmTestimonyBundle') }}
+            </a> <span>
+                <a href="{{ path("fhm_admin_testimony_create") }}" title="{{ ('testimony.admin.create.link')|trans({}, 'FhmTestimonyBundle') }}"><i class="fa fa-fw fa-plus"></i></a>
+                <a href="{{ path("fhm_admin_testimony_import") }}" title="{{ ('testimony.admin.import.link')|trans({}, 'FhmTestimonyBundle') }}"><i class="fa fa-fw fa-download"></i></a>
+                <a href="{{ path("fhm_admin_testimony_export") }}" title="{{ ('testimony.admin.export.link')|trans({}, 'FhmTestimonyBundle') }}"><i class="fa fa-fw fa-upload"></i></a>
+            </span>
+        </div>
         {# contact #}
         <div class="link">
             <a href="{{ path("fhm_admin_contact") }}" title="{{ ('contact.admin.index.title')|trans({}, 'FhmContactBundle') }}"><i class="fa fa-fw fa-map-marker menu"></i>{{ ('contact.admin.index.link')|trans({}, 'FhmContactBundle') }}
-            </a>
-            <span>
+            </a> <span>
                 <a href="{{ path("fhm_admin_contact_message") }}" title="{{ ('contact.message.admin.index.link')|trans({}, 'FhmContactBundle') }}"><i class="fa fa-fw fa-comments"></i></a>
                 <a href="{{ path("fhm_admin_contact_create") }}" title="{{ ('contact.admin.create.link')|trans({}, 'FhmContactBundle') }}"><i class="fa fa-fw fa-plus"></i></a>
                 <a href="{{ path("fhm_admin_contact_import") }}" title="{{ ('contact.admin.import.link')|trans({}, 'FhmContactBundle') }}"><i class="fa fa-fw fa-download"></i></a>
@@ -160,8 +156,8 @@
         </div>
         {# card #}
         <div class="link">
-            <a href="{{ path("fhm_admin_card") }}" title="{{ ('card.admin.index.title')|trans({}, 'FhmCardBundle') }}"><i class="fa fa-fw fa-map-o menu"></i>{{ ('card.admin.index.link')|trans({}, 'FhmCardBundle') }}</a>
-            <span>
+            <a href="{{ path("fhm_admin_card") }}" title="{{ ('card.admin.index.title')|trans({}, 'FhmCardBundle') }}"><i class="fa fa-fw fa-map-o menu"></i>{{ ('card.admin.index.link')|trans({}, 'FhmCardBundle') }}
+            </a> <span>
                 <a href="{{ path("fhm_admin_card_category") }}" title="{{ ('card.category.admin.index.title')|trans({}, 'FhmCardBundle') }}"><i class="fa fa-fw fa-folder"></i></a>
                 <a href="{{ path("fhm_admin_card_product") }}" title="{{ ('card.product.admin.index.title')|trans({}, 'FhmCardBundle') }}"><i class="fa fa-fw fa-cube"></i></a>
                 <a href="{{ path("fhm_admin_card_ingredient") }}" title="{{ ('card.ingredient.admin.index.title')|trans({}, 'FhmCardBundle') }}"><i class="fa fa-fw fa-tag"></i></a>
@@ -170,27 +166,40 @@
                 <a href="{{ path("fhm_admin_card_export") }}" title="{{ ('card.admin.export.link')|trans({}, 'FhmCardBundle') }}"><i class="fa fa-fw fa-upload"></i></a>
             </span>
         </div>
+    {% endblock %}
+    {% block menu_bloc4 %}
+        {% block menu_bloc4_separator %}
+            <hr>
+        {% endblock %}
+        {# newsletter #}
+        <div class="link">
+            <a href="{{ path("fhm_admin_newsletter") }}" title="{{ ('newsletter.admin.index.title')|trans({}, 'FhmNewsletterBundle') }}"><i class="fa fa-fw fa-at menu"></i>{{ ('newsletter.admin.index.link')|trans({}, 'FhmNewsletterBundle') }}
+            </a> <span>
+                <a href="{{ path("fhm_admin_newsletter_create") }}" title="{{ ('newsletter.admin.create.link')|trans({}, 'FhmNewsletterBundle') }}"><i class="fa fa-fw fa-plus"></i></a>
+                <a href="{{ path("fhm_admin_newsletter_import") }}" title="{{ ('newsletter.admin.import.link')|trans({}, 'FhmNewsletterBundle') }}"><i class="fa fa-fw fa-download"></i></a>
+                <a href="{{ path("fhm_admin_newsletter_export") }}" title="{{ ('newsletter.admin.export.link')|trans({}, 'FhmNewsletterBundle') }}"><i class="fa fa-fw fa-upload"></i></a>
+            </span>
+        </div>
         {# note #}
         <div class="link">
-            <a href="{{ path("fhm_admin_note") }}" title="{{ ('note.admin.index.title')|trans({}, 'FhmNoteBundle') }}"><i class="fa fa-fw fa-star-o menu"></i>{{ ('note.admin.index.link')|trans({}, 'FhmNoteBundle') }}</a>
-            <span>
+            <a href="{{ path("fhm_admin_note") }}" title="{{ ('note.admin.index.title')|trans({}, 'FhmNoteBundle') }}"><i class="fa fa-fw fa-star-o menu"></i>{{ ('note.admin.index.link')|trans({}, 'FhmNoteBundle') }}
+            </a> <span>
                 <a href="{{ path("fhm_admin_note_import") }}" title="{{ ('note.admin.import.link')|trans({}, 'FhmNoteBundle') }}"><i class="fa fa-fw fa-download"></i></a>
                 <a href="{{ path("fhm_admin_note_export") }}" title="{{ ('note.admin.export.link')|trans({}, 'FhmNoteBundle') }}"><i class="fa fa-fw fa-upload"></i></a>
             </span>
         </div>
-    {% block menu_project %}
-    {% endblock %}
+        {% block menu_project %}{% endblock %}
     {% endblock %}
     {% block menu_action %}
         {% block menu_action_separator %}
             <hr>
         {% endblock %}
         {#<a href="{{ path("fhm_admin_historic") }}" title="{{ ('historic.admin.index.link')|trans({}, 'FhmHistoricBundle') }}" class="action button tiny radius secondary">#}
-            {#{{ ('historic.admin.index.link')|trans({}, 'FhmHistoricBundle') }}#}
+        {#{{ ('historic.admin.index.link')|trans({}, 'FhmHistoricBundle') }}#}
         {#</a>#}
         {#<hr>#}
         {#<a href="{{ path("fhm_admin_cache") }}" title="{{ ('fhm.menu.action.cache')|trans({}, 'FhmFhmBundle') }}" class="action button tiny radius secondary">#}
-            {#{{ ('fhm.menu.action.cache')|trans({}, 'FhmFhmBundle') }}#}
+        {#{{ ('fhm.menu.action.cache')|trans({}, 'FhmFhmBundle') }}#}
         {#</a>#}
     {% endblock %}
 {% endblock %}

@@ -1,29 +1,9 @@
-fhm:
-    breadcrumb:                                 Accueil
-    admin:
-        breadcrumb:                             Admin
-        mail:
-            breadcrumb:                         Mail
-            create:
-                breadcrumb:                     Ajouter un mail
-            update:
-                breadcrumb:                     Modifier
-            detail:
-                breadcrumb:                     Détails
-            model:
-                breadcrumb:                     Modèles
-project:
-    breadcrump:                                 Accueil
-    admin:
-        breadcrump:                             Admin
-        mail:
-            breadcrump:                         Mail
-            create:
-                breadcrumb:                     Ajouter un mail
-            update:
-                breadcrumb:                     Modifier
-            detail:
-                breadcrumb:                     Détails
+breadcrumb:
+    mail:                                       Emails
+    mail_create:                                Ajouter
+    mail_update:                                Modifier
+    mail_detail:                                '%name%'
+
 mail:
     admin:
         index:

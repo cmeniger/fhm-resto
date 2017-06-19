@@ -1,63 +1,50 @@
-$hover-color: #007095;
+$hover-color: rgba($primary-color, 0.8);
 
 @mixin modules() {
-    &.module
-    {
+    &.module{
         font-family: 'FontAwesome';
         font-size:   60px;
         font-weight: normal;
-        &:before
-        {
+        &:before{
             content: $fa-var-file-o;
         }
     }
-    &.module-text
-    {
-        &:before
-        {
+    &.module-text{
+        &:before{
             content: $fa-var-file-text-o;
         }
     }
-    &.module-videos
-    {
-        &:before
-        {
+    &.module-videos{
+        &:before{
             content: $fa-var-file-video-o;
         }
     }
-    &.module-gallery
-    {
-        &:before
-        {
+    &.module-gallery{
+        &:before{
             content: $fa-var-file-image-o;
         }
     }
-    &.module-news
-    {
-        &:before
-        {
+    &.module-news{
+        &:before{
             content: $fa-var-list;
         }
     }
 }
 
-.dd-sort
-{
+.dd-sort{
     position: relative;
     margin:   0;
     padding:  20px;
     overflow: auto;
     border:   1px solid $gainsboro;
-    .dd-sort-list
-    {
+    .dd-sort-list{
         display:    block;
         position:   relative;
         margin:     0;
         padding:    0;
         list-style: none;
     }
-    .dd-sort-item
-    {
+    .dd-sort-item{
         display:     block;
         position:    relative;
         margin:      0;
@@ -66,8 +53,7 @@ $hover-color: #007095;
         font-size:   14px;
         line-height: 30px;
     }
-    .dd-sort-placeholder
-    {
+    .dd-sort-placeholder{
         display:     block;
         position:    relative;
         margin:      0;
@@ -78,8 +64,7 @@ $hover-color: #007095;
         background:  rgba(0, 112, 149, 0.1);
         border:      1px dashed $primary-color;
     }
-    .dd-sort-handle
-    {
+    .dd-sort-handle{
         display:     block;
         position:    absolute;
         margin:      0;
@@ -96,13 +81,11 @@ $hover-color: #007095;
         background:  $primary-color;
         cursor:      pointer;
         transition:  background-color 300ms ease-out;
-        &:hover
-        {
+        &:hover{
             background: $hover-color;
         }
     }
-    .dd-sort-content
-    {
+    .dd-sort-content{
         display:     block;
         margin:      10px 0;
         padding:     0 0 0 30px;
@@ -112,18 +95,14 @@ $hover-color: #007095;
         border:      1px solid $iron;
         background:  $white;
         transition:  background-color 50ms ease-out;
-        &:hover
-        {
+        &:hover{
             background: rgba(0, 112, 149, 0.1);
         }
-        &.deactive
-        {
+        &.deactive{
         }
-        &.delete
-        {
+        &.delete{
         }
-        .bloc-icon
-        {
+        .bloc-icon{
             float:       left;
             width:       100px;
             height:      100%;
@@ -132,53 +111,45 @@ $hover-color: #007095;
             text-align:  center;
             transition:  color 300ms ease-out;
             @include modules();
-            &:hover
-            {
+            &:hover{
                 color: $hover-color;
             }
         }
-        .bloc-page
-        {
+        .bloc-page{
             float:       left;
             height:      100%;
             padding:     0 10px;
             border-left: 1px solid $iron;
-            p
-            {
+            p{
                 color:      $black;
                 font-size:  12px;
                 text-align: justify;
                 overflow:   hidden;
             }
         }
-        .bloc-module
-        {
+        .bloc-module{
             overflow: auto;
         }
-        .bloc-actions
-        {
+        .bloc-actions{
             float:       right;
             width:       40px;
             height:      100%;
             padding:     0 10px;
             text-align:  center;
             border-left: 1px solid $iron;
-            a
-            {
+            a{
                 display:   block;
                 clear:     both;
                 font-size: 20px;
             }
         }
     }
-    .dd-sort-master
-    {
+    .dd-sort-master{
         position: relative;
         margin:   0;
         padding:  0;
         height:   70px;
-        .icon
-        {
+        .icon{
             float:            left;
             margin:           0 10px 0 0;
             width:            70px;
@@ -187,13 +158,11 @@ $hover-color: #007095;
             background-color: $primary-color;
             text-align:       center;
             transition:       background-color 300ms ease-out;
-            &:hover
-            {
+            &:hover{
                 background: $hover-color;
             }
         }
-        a
-        {
+        a{
             color:      $white;
             font-size:  40px;
             transition: background-color 50ms ease-out;
@@ -201,18 +170,15 @@ $hover-color: #007095;
     }
 }
 
-.dd-sort-list
-{
-    &.dd-sort-drag
-    {
+.dd-sort-list{
+    &.dd-sort-drag{
         position:    absolute;
         z-index:     9999;
         list-style:  none;
         font-size:   0.875rem;
         line-height: 30px;
         box-shadow:  0px 0px 4px $base;
-        .dd-sort-handle
-        {
+        .dd-sort-handle{
             display:     block;
             position:    absolute;
             margin:      0;
@@ -229,8 +195,7 @@ $hover-color: #007095;
             border:      1px solid $primary-color;
             background:  $white;
             overflow:    hidden;
-            &:before
-            {
+            &:before{
                 display:     block;
                 position:    absolute;
                 font-family: 'FontAwesome';
@@ -242,8 +207,7 @@ $hover-color: #007095;
                 text-indent: 0;
             }
         }
-        .dd-sort-content
-        {
+        .dd-sort-content{
             display:     block;
             margin:      0;
             padding:     0 0 0 30px;
@@ -252,14 +216,11 @@ $hover-color: #007095;
             color:       $black;
             border:      1px solid $primary-color;
             background:  $white;
-            &.deactive
-            {
+            &.deactive{
             }
-            &.delete
-            {
+            &.delete{
             }
-            .bloc-icon
-            {
+            .bloc-icon{
                 float:       left;
                 width:       100px;
                 height:      100%;
@@ -268,19 +229,16 @@ $hover-color: #007095;
                 text-align:  center;
                 transition:  color 300ms ease-out;
                 @include modules();
-                &:hover
-                {
+                &:hover{
                     color: $hover-color;
                 }
             }
-            .bloc-page
-            {
+            .bloc-page{
                 float:       left;
                 height:      100%;
                 padding:     0 10px;
                 border-left: 1px solid $iron;
-                p
-                {
+                p{
                     height:     60px;
                     color:      $black;
                     font-size:  12px;
@@ -288,16 +246,14 @@ $hover-color: #007095;
                     overflow:   hidden;
                 }
             }
-            .bloc-actions
-            {
+            .bloc-actions{
                 float:       right;
                 width:       40px;
                 height:      100%;
                 padding:     0 10px;
                 text-align:  center;
                 border-left: 1px solid $iron;
-                a
-                {
+                a{
                     display:   block;
                     clear:     both;
                     font-size: 20px;
@@ -307,8 +263,7 @@ $hover-color: #007095;
     }
 }
 
-.dd-sort-module
-{
+.dd-sort-module{
     margin:      0 0 1rem;
     padding:     20px;
     width:       100%;
@@ -320,43 +275,35 @@ $hover-color: #007095;
     text-align:  center;
     transition:  background-color 50ms ease-out;
     @include modules();
-    &:hover
-    {
+    &:hover{
         background: rgba(0, 112, 149, 0.1);
     }
-    &.select
-    {
+    &.select{
         color: $primary-color;
     }
-    &.load
-    {
-        &:before
-        {
+    &.load{
+        &:before{
             content: $fa-var-refresh;
         }
     }
 }
 
-.dd-tree
-{
+.dd-tree{
     position: relative;
     margin:   0 0 20px 0;
     padding:  15px;
-    border:   1px solid $gainsboro;
-    .dd-tree-list
-    {
+    border:   1px solid $secondary-color;
+    .dd-tree-list{
         display:    block;
         position:   relative;
         margin:     0;
         padding:    0 0 0 30px;
         list-style: none;
-        .dd-tree-list
-        {
+        .dd-tree-list{
             padding-left: 30px;
         }
     }
-    .dd-tree-item
-    {
+    .dd-tree-item{
         display:     block;
         position:    relative;
         margin:      0;
@@ -365,8 +312,7 @@ $hover-color: #007095;
         font-size:   14px;
         line-height: 30px;
     }
-    .dd-tree-placeholder
-    {
+    .dd-tree-placeholder{
         display:     block;
         position:    relative;
         margin:      0;
@@ -377,8 +323,7 @@ $hover-color: #007095;
         background:  rgba(0, 112, 149, 0.1);
         border:      1px dashed $primary-color;
     }
-    .dd-tree-handle
-    {
+    .dd-tree-handle{
         display:     block;
         position:    absolute;
         margin:      0;
@@ -394,100 +339,137 @@ $hover-color: #007095;
         background:  $primary-color;
         cursor:      pointer;
         transition:  background-color 300ms ease-out;
-        &:hover
-        {
+        &:hover{
             background: $hover-color;
         }
     }
-    .dd-tree-content
-    {
-        display:     block;
-        margin:      10px 0;
-        padding:     0 10px 0 40px;
-        height:      30px;
-        font-weight: bold;
-        color:       $black;
-        border:      1px solid $iron;
-        background:  $smoke;
-        transition:  background-color 50ms ease-out;
-        &:hover
-        {
-            background: rgba(0, 112, 149, 0.1);
+    .dd-tree-content{
+        display:       block;
+        margin-bottom: 10px;
+        padding:       0 10px 0 40px;
+        height:        30px;
+        font-weight:   bold;
+        color:         $black;
+        border:        1px solid $iron;
+        background:    $white;
+        transition:    background-color 50ms ease-out;
+        .name{
+            font-size: 0.8em;
+            @media #{$medium} {
+                font-size: 1em;
+            }
+            @media #{$large} {
+            }
         }
-        &.deactive
-        {
+        .actions{
+            position:     absolute;
+            top:          1px;
+            right:        1px;
+            height:       28px;
+            background:   $white;
+            padding-left: 0.5rem;
+            span{
+                width:       20px;
+                text-indent: -9000em;
+                cursor:      default;
+                @media #{$medium} {
+                    width:       auto;
+                    text-indent: 0;
+                }
+                @media #{$large} {
+                }
+            }
         }
-        &.delete
-        {
+        &:hover{
+            background: $secondary-color;
+            .actions{
+                background: $secondary-color;
+            }
+            .dd-tree-comment{
+                color: $white;
+            }
         }
-        .dd-tree-status
-        {
+        &.deactive{
+        }
+        &.delete{
+        }
+        .dd-tree-comment{
+            color:       $secondary-color;
+            font-size:   0.8em;
+            padding:     0 1em;
+            border-left: 1px solid $smoke;
+            &:first-child{
+                margin-left: 1em;
+            }
+        }
+        .dd-tree-status{
             float:        left;
-            margin-right: 15px;
+            margin-right: 10px;
         }
-        .dd-tree-page
-        {
+        .dd-tree-page{
             float:        left;
             font-size:    18px;
-            margin-right: 15px;
+            margin-right: 10px;
             color:        $black;
-            .nodata
-            {
+            .nodata{
                 color: $iron;
             }
         }
-        .dd-tree-actions
-        {
-            float:      left;
-            text-align: center;
-            width:      80px;
+        .dd-tree-actions{
+            float:        left;
+            text-align:   center;
+            margin-right: 10px;
         }
     }
-    .dd-tree-master
-    {
+    .dd-tree-master{
         position:    relative;
         margin:      0;
         padding:     0;
         min-height:  30px;
         font-size:   14px;
         line-height: 30px;
-        .dd-tree-handle
-        {
-            color:      $primary-color;
-            border:     1px solid $iron;
-            background: $white;
+        .dd-tree-handle{
+            color:        $white;
+            background:   $secondary-color;
+            border:       1px solid $secondary-color;
+            border-right: 1px solid $white;
+            cursor:       default;
         }
-        .dd-tree-content
-        {
-            margin: 0 0 10px 0;
+        .dd-tree-content{
+            margin:     0 0 10px 0;
+            color:      $white;
+            background: $secondary-color;
+            border:     1px solid $secondary-color;
+            .actions{
+                background: $secondary-color;
+                font-size:  0.8em;
+                a{
+                    color: $white;
+                }
+            }
         }
     }
 }
 
-.dd-tree-list
-{
-    &.dd-tree-drag
-    {
+.dd-tree-list{
+    &.dd-tree-drag{
         position:    absolute;
         z-index:     9999;
         list-style:  none;
         font-size:   0.875rem;
         line-height: 30px;
         box-shadow:  0px 0px 4px $base;
-        .dd-tree-list
-        {
+        .dd-tree-list{
             display:    block;
             position:   relative;
             margin:     0;
             padding:    0 0 0 30px;
             list-style: none;
-            .dd-tree-list
-            {
+            .dd-tree-list{
                 padding-left: 30px;
             }
         }
-        .dd-tree-item
-        {
+        .dd-tree-item{
             display:     block;
             position:    relative;
             margin:      0;
@@ -496,8 +478,7 @@ $hover-color: #007095;
             font-size:   14px;
             line-height: 30px;
         }
-        .dd-tree-placeholder
-        {
+        .dd-tree-placeholder{
             display:     block;
             position:    relative;
             margin:      0;
@@ -508,8 +489,7 @@ $hover-color: #007095;
             background:  rgba(0, 112, 149, 0.1);
             border:      1px dashed $primary-color;
         }
-        .dd-tree-handle
-        {
+        .dd-tree-handle{
             display:     block;
             position:    absolute;
             margin:      0;
@@ -526,46 +506,79 @@ $hover-color: #007095;
             cursor:      pointer;
             transition:  background-color 300ms ease-out;
         }
-        .dd-tree-content
-        {
-            display:     block;
-            margin:      0;
-            padding:     0 10px 0 40px;
-            height:      30px;
-            font-weight: bold;
-            color:       $black;
-            border:      1px solid $iron;
-            background:  $white;
-            &.deactive
-            {
+        .dd-tree-content{
+            display:       block;
+            margin-bottom: 10px;
+            padding:       0 10px 0 40px;
+            height:        30px;
+            font-weight:   bold;
+            color:         $black;
+            border:        1px solid $iron;
+            background:    $white;
+            transition:    background-color 50ms ease-out;
+            .name{
+                font-size: 0.8em;
+                @media #{$medium} {
+                    font-size: 1em;
+                }
+                @media #{$large} {
+                }
             }
-            &.delete
-            {
+            .actions{
+                position:     absolute;
+                top:          1px;
+                right:        1px;
+                height:       28px;
+                background:   $white;
+                padding-left: 0.5rem;
+                span{
+                    width:       20px;
+                    text-indent: -9000em;
+                    cursor:      default;
+                    @media #{$medium} {
+                        width:       auto;
+                        text-indent: 0;
+                    }
+                    @media #{$large} {
+                    }
+                }
             }
-            .dd-tree-status
-            {
+            &.deactive{
+            }
+            &.delete{
+            }
+            .dd-tree-comment{
+                color:       $secondary-color;
+                font-size:   0.8em;
+                padding:     0 1em;
+                border-left: 1px solid $smoke;
+                &:first-child{
+                    margin-left: 1em;
+                }
+            }
+            .dd-tree-status{
                 float:        left;
-                margin-right: 15px;
+                margin-right: 10px;
             }
-            .dd-tree-page
-            {
+            .dd-tree-page{
                 float:        left;
-                color:        $base;
                 font-size:    18px;
-                margin-right: 15px;
+                margin-right: 10px;
+                color:        $black;
+                .nodata{
+                    color: $iron;
+                }
             }
-            .dd-tree-actions
-            {
-                float:      left;
-                text-align: center;
-                width:      80px;
+            .dd-tree-actions{
+                float:        left;
+                text-align:   center;
+                margin-right: 10px;
             }
         }
     }
 }
 
-.dd-list
-{
+.dd-list{
     position: relative;
     margin:   0;
     padding:  10px;
@@ -573,15 +586,13 @@ $hover-color: #007095;
     height:   300px;
     width:    250px;
     border:   1px solid $gainsboro;
-    .dd-list-list
-    {
+    .dd-list-list{
         margin:     0;
         padding:    0;
         overflow:   auto;
         list-style: none;
     }
-    .dd-list-item
-    {
+    .dd-list-item{
         display:  block;
         position: relative;
         margin:   2px 0;
@@ -589,8 +600,7 @@ $hover-color: #007095;
         width:    100%;
         height:   30px;
     }
-    .dd-list-placeholder
-    {
+    .dd-list-placeholder{
         margin:     2px 0;
         padding:    0;
         width:      100%;
@@ -598,8 +608,7 @@ $hover-color: #007095;
         background: rgba(0, 112, 149, 0.1);
         border:     1px dashed $primary-color;
     }
-    .dd-list-handle
-    {
+    .dd-list-handle{
         display:     block;
         position:    absolute;
         margin:      0;
@@ -616,13 +625,11 @@ $hover-color: #007095;
         background:  $primary-color;
         cursor:      pointer;
         transition:  background-color 300ms ease-out;
-        &:hover
-        {
+        &:hover{
             background: $hover-color;
         }
     }
-    .dd-list-content
-    {
+    .dd-list-content{
         display:     block;
         position:    relative;
         margin:      0;
@@ -636,31 +643,26 @@ $hover-color: #007095;
         border:      1px solid $iron;
         background:  $smoke;
         overflow:    hidden;
-        &.current
-        {
+        &.current{
             color:      $white;
             background: $success-color;
             border:     1px solid $success-color;
         }
-        span
-        {
+        span{
             position: absolute;
             z-index:  2;
-            &.action
-            {
+            &.action{
                 height:      30px;
                 line-height: 30px;
                 right:       3px;
             }
-            &.status
-            {
+            &.status{
                 right: 20px;
-                top: 5px;
+                top:   5px;
             }
         }
     }
-    .dd-list-empty
-    {
+    .dd-list-empty{
         margin:     2px 0;
         padding:    0;
         width:      100%;
@@ -670,16 +672,13 @@ $hover-color: #007095;
     }
 }
 
-.dd-list-list
-{
-    &.dd-list-drag
-    {
+.dd-list-list{
+    &.dd-list-drag{
         position:   absolute;
         z-index:    9999;
         box-shadow: 0px 0px 4px $base;
         list-style: none;
-        .dd-list-handle
-        {
+        .dd-list-handle{
             display:     block;
             position:    absolute;
             margin:      0;
@@ -696,8 +695,7 @@ $hover-color: #007095;
             border:      1px solid $primary-color;
             background:  $primary-color;
         }
-        .dd-list-content
-        {
+        .dd-list-content{
             display:     block;
             position:    relative;
             margin:      0;
@@ -711,28 +709,24 @@ $hover-color: #007095;
             border:      1px solid $warning-color;
             background:  $warning-color;
             overflow:    hidden;
-            span
-            {
+            span{
                 position: absolute;
                 z-index:  2;
-                &.action
-                {
+                &.action{
                     height:      30px;
                     line-height: 30px;
                     right:       3px;
                 }
-                &.status
-                {
+                &.status{
                     right: 20px;
-                    top: 5px;
+                    top:   5px;
                 }
             }
         }
     }
 }
 
-.dd-list-module
-{
+.dd-list-module{
     float:    left;
     margin:   0 20px 0 0;
     overflow: auto;

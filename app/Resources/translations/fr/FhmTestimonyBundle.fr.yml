@@ -1,27 +1,9 @@
-fhm:
-    breadcrumb:                                 Accueil
-    admin:
-        breadcrumb:                             Admin
-        testimoney:
-            breadcrumb:                         Témoignages
-            create:
-                breadcrumb:                     Ajouter un témoignage
-            update:
-                breadcrumb:                     Modifier
-            detail:
-                breadcrumb:                     Détails
-project:
-    breadcrump:                                 Accueil
-    admin:
-        breadcrump:                             Admin
-        testimoney:
-            breadcrump:                         Témoignage
-            create:
-                breadcrumb:                     Ajouter un témoignage
-            update:
-                breadcrumb:                     Modifier
-            detail:
-                breadcrumb:                     Détails
+breadcrumb:
+    testimony:                                  Témoignages
+    testimony_create:                           Ajouter
+    testimony_update:                           Modifier
+    testimony_detail:                           '%name%'
+    
 testimony:
     admin:
         index:
@@ -33,9 +15,10 @@ testimony:
                 search:                         Rechercher
             table:
                 header:
+                    date:                       Date
                     name:                       Nom
                     action:                     Actions
-                    status:                     Status
+                    status:                     Statut
                 action:
                     activate:                   Activer
                     deactivate:                 Désactiver
@@ -119,7 +102,7 @@ testimony:
                 description:                    Commentaire
                 befphoto:                       Image Avant
                 aftphoto:                       Image Après
-                status:                         Status
+                status:                         Statut
             url:
                 title:                          Routes disponibles
                 admin:

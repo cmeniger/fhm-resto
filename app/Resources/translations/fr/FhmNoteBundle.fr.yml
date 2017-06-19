@@ -1,27 +1,9 @@
-fhm:
-    breadcrumb:                                 Accueil
-    admin:
-        breadcrumb:                             Admin
-        note:
-            breadcrumb:                         Note
-            create:
-                breadcrumb:                     Ajouter une note
-            update:
-                breadcrumb:                     Modifier
-            detail:
-                breadcrumb:                     Détails
-project:
-    breadcrump:                                 Accueil
-    admin:
-        breadcrump:                             Admin
-        note:
-            breadcrump:                         Note
-            create:
-                breadcrumb:                     Ajouter une note
-            update:
-                breadcrumb:                     Modifier
-            detail:
-                breadcrumb:                     Détails
+breadcrumb:
+    note:                                       Notes
+    note_create:                                Ajouter
+    note_update:                                Modifier
+    note_detail:                                '%name%'
+
 note:
     admin:
         index:
@@ -33,7 +15,7 @@ note:
                 search:                         Rechercher
             table:
                 header:
-                    parent:                     Etablissement
+                    parent:                     Parent
                     user:                       Utilisateur
                     date:                       Date
                     note:                       Note
@@ -107,9 +89,9 @@ note:
                     options:                    Options
 
         detail:
-            title:                              '%name%'
+            title:                              "%name%"
             link:                               Détail
-            breadcrumb:                         '%name%'
+            breadcrumb:                         "%name%"
             data:
                 title:                          Informations
                 id:                             ID
@@ -237,9 +219,9 @@ note:
                     text:                       La modification d'une note nécessite la validation d'un modérateur.
 
         detail:
-            title:                              '%name%'
+            title:                              "%name%"
             link:                               Détail
-            breadcrumb:                         '%name%'
+            breadcrumb:                         "%name%"
             data:
                 title:                          Informations
                 create:                         Création
@@ -289,7 +271,7 @@ note:
 
 
     pagination:
-        counter:                                "Nombre de notes: %count% / %all%"
+        counter:                                "Nombre de notes : %count% / %all%"
 
     autocomplete:
         nodata:                                 Aucun résultat

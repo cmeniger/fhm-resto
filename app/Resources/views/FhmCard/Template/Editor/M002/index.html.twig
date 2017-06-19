@@ -1,0 +1,49 @@
+{% trans_default_domain instance.domain %}
+
+<div class="card card-editor hidden-for-small">
+    <ul class="inline-list editor-tabs">
+        {% for category in categories %}
+            <li><a href="#tab-category-{{ category.getId() }}" class="{{ loop.index0 == 0 ? 'active' : '' }}" data-url="{{ path('fhm_api_card_category_editor',{idCard:document.getId(), idCategory:category.getId(), template:template}) }}">{{ category.getName() }}</a></li>
+        {% endfor %}
+        <li><a href="#" id="tab-preview" class="preview" data-url="{{ path('fhm_api_card_editor_preview',{id:document.getId(), template:template}) }}">{{ ('card.api.tabs.preview')|trans }}</a></li>
+    </ul>
+    <div class="editor-content" id="editor-content">
+        {{ render(path('fhm_api_card_category_editor',{idCard:document.getId(), idCategory:(categories|first).getId(), template:template})) }}
+    </div>
+</div>
+<div class="card card-editor hidden-for-medium-up">
+    <ul class="accordion editor-accordion" data-accordion>
+        {% for category in categories %}
+            <li class="accordion-navigation">
+                <a href="#tab-category-{{ category.getId() }}" class="title accordion-title">{{ category.getName() }}</a>
+                <div class="content accordion-content {{ loop.index0 == 0 ? 'active' : '' }}">
+                    {{ render(path('fhm_api_card_category_editor',{idCard:document.getId(), idCategory:category.getId(), template:template})) }}
+                </div>
+            </li>
+        {% endfor %}
+        <li class="accordion-navigation">
+            <a href="#tab-preview" class="title accordion-title">{{ ('card.api.tabs.preview')|trans }}</a>
+            <div id="tab-preview" class="content accordion-content">
+                {{ render(path('fhm_api_card_editor_preview',{id:document.getId(), template:template})) }}
+            </div>
+        </li>
+    </ul>
+</div>
+<div id="modal-editor-category" class="reveal-modal small" data-reveal>
+    <h2 class="text-center">{{ ('card.api.modal.category')|trans }}</h2>
+    <div class="content">
+        <div class="loader">
+            <i class="fa fa-spin fa-circle-o-notch"></i>
+        </div>
+    </div>
+    <a class="close-reveal-modal" aria-label="Close">&#215;</a>
+</div>
+<div id="modal-editor-product" class="reveal-modal small" data-reveal>
+    <h2 class="text-center">{{ ('card.api.modal.product')|trans }}</h2>
+    <div class="content">
+        <div class="loader">
+            <i class="fa fa-spin fa-circle-o-notch"></i>
+        </div>
+    </div>
+    <a class="close-reveal-modal" aria-label="Close">&#215;</a>
+</div>

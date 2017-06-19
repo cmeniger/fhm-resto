@@ -20,27 +20,27 @@
 {% block content_data_header %}
     <th>{{ (instance.translation ~ '.admin.index.table.header.image')|trans }}</th>
     {{ parent() }}
-    <th>{{ (instance.translation ~ '.admin.index.table.header.card')|trans }}</th>
-    <th>{{ (instance.translation ~ '.admin.index.table.header.products')|trans }}</th>
-    <th>{{ (instance.translation ~ '.admin.index.table.header.order')|trans }}</th>
+    <th {% if pagination.isSorted('sort_card') %}class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, (instance.translation ~ '.admin.index.table.header.card')|trans, 'sort_card')|raw }}</th>
+    <th {% if pagination.isSorted('sort_product') %}class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, (instance.translation ~ '.admin.index.table.header.products')|trans, 'sort_product')|raw }}</th>
+    <th {% if pagination.isSorted('order') %}class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, (instance.translation ~ '.admin.index.table.header.order')|trans, 'order')|raw }}</th>
 {% endblock %}
 
 {% block content_data_header_status %}
-    <th>{{ (instance.translation ~ '.admin.index.table.header.default')|trans }}</th>
+    <th {% if pagination.isSorted('default') %}class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, (instance.translation ~ '.admin.index.table.header.default')|trans, 'default')|raw }}</th>
     {{ parent() }}
 {% endblock %}
 
 {% block content_data_body %}
-    <td>{{ document.getImage()|image('s',50)|raw }}</td>
+    <td>{{ object.getImage()|image('s',50)|raw }}</td>
     {{ parent() }}
-    <td>{{ document.getVarSort('card') }}</td>
-    <td>{{ document.getVarSort('product') }}</td>
-    <td>{{ document.getOrder() }}</td>
+    <td>{{ object.getVarSort('card') }}</td>
+    <td>{{ object.getVarSort('product') }}</td>
+    <td>{{ object.getOrder() }}</td>
 {% endblock %}
 
 {% block content_data_status %}
     <td>
-        {% if document.getDefault() %}
+        {% if object.getDefault() %}
             <span class="status success radius label">{{ ('fhm.status.yes')|trans({}, 'FhmFhmBundle') }}</span>
         {% else %}
             <span class="status warning radius label">{{ ('fhm.status.no')|trans({}, 'FhmFhmBundle') }}</span>

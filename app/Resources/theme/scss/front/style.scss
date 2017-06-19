@@ -46,124 +46,126 @@ body{
 }
 
 #header{
-    @include transition(all, 0.2s, linear);
-    width:      100%;
-    height:     70px;
-    position:   absolute;
-    top:        0;
-    left:       0;
-    text-align: center;
-    z-index:    4;
-    background: $white;
-    color:      $black;
-    padding:    0 20px;
-    .nav-left{
-        display: none;
-    }
-    .nav-right{
-        display: none;
-    }
-    .logo-wrap{
-        float:  left;
-        height: 100%;
-        img{
-            height:     60px;
-            margin-top: 5px;
+    &.home{
+        @include transition(all, 0.2s, linear);
+        width:      100%;
+        height:     70px;
+        position:   absolute;
+        top:        0;
+        left:       0;
+        text-align: center;
+        z-index:    4;
+        background: $white;
+        color:      $black;
+        padding:    0 20px;
+        .nav-left{
+            display: none;
         }
-    }
-    .menu-top-wrap{
-        display: none;
-    }
-    .menu-icon-wrap{
-        @include css3-prefix(transition, all 0.2s ease);
-        display:      block;
-        float:        right;
-        border-left:  1px solid $light-grey;
-        padding-left: 20px;
-        height:       70px;
-        position:     relative;
-        width:        56px;
-        a{
-            @include css3-prefix(transform, translateY(-50%));
-            overflow: hidden;
-            position: absolute;
-            top:      50%;
-            right:    0;
-            display:  block;
-            width:    30px;
-            height:   auto;
-            &:hover{
-                span{
-                    &:nth-child(1){
-                        @include css3-prefix(animation, animationFrames1 linear 1s);
-                        @include css3-prefix(animation-iteration-count, infinite);
-                        @include css3-prefix(transform-origin, 50% 50%);
-                    }
-                    &:nth-child(2){
-                        @include css3-prefix(animation, animationFrames2 linear 0.8s);
-                        @include css3-prefix(animation-iteration-count, infinite);
-                        @include css3-prefix(transform-origin, 50% 50%);
-                    }
-                    &:nth-child(3){
-                        @include css3-prefix(animation, animationFrames3 linear 1.2s);
-                        @include css3-prefix(animation-iteration-count, infinite);
-                        @include css3-prefix(transform-origin, 50% 50%);
+        .nav-right{
+            display: none;
+        }
+        .logo-wrap{
+            float:  left;
+            height: 100%;
+            img{
+                height:     60px;
+                margin-top: 5px;
+            }
+        }
+        .menu-top-wrap{
+            display: none;
+        }
+        .menu-icon-wrap{
+            @include css3-prefix(transition, all 0.2s ease);
+            display:      block;
+            float:        right;
+            border-left:  1px solid $light-grey;
+            padding-left: 20px;
+            height:       70px;
+            position:     relative;
+            width:        56px;
+            a{
+                @include css3-prefix(transform, translateY(-50%));
+                overflow: hidden;
+                position: absolute;
+                top:      50%;
+                right:    0;
+                display:  block;
+                width:    30px;
+                height:   auto;
+                &:hover{
+                    span{
+                        &:nth-child(1){
+                            @include css3-prefix(animation, animationFrames1 linear 1s);
+                            @include css3-prefix(animation-iteration-count, infinite);
+                            @include css3-prefix(transform-origin, 50% 50%);
+                        }
+                        &:nth-child(2){
+                            @include css3-prefix(animation, animationFrames2 linear 0.8s);
+                            @include css3-prefix(animation-iteration-count, infinite);
+                            @include css3-prefix(transform-origin, 50% 50%);
+                        }
+                        &:nth-child(3){
+                            @include css3-prefix(animation, animationFrames3 linear 1.2s);
+                            @include css3-prefix(animation-iteration-count, infinite);
+                            @include css3-prefix(transform-origin, 50% 50%);
+                        }
                     }
                 }
             }
-        }
-        @include keyframes(animationFrames1){
-            0%{
-                width: 24px;
+            @include keyframes(animationFrames1){
+                0%{
+                    width: 24px;
+                }
+                50%{
+                    width: 20px;
+                }
+                80%{
+                    width: 26px;
+                }
+                100%{
+                    width: 26px;
+                }
             }
-            50%{
-                width: 20px;
+            @include keyframes(animationFrames2){
+                0%{
+                    width: 20px;
+                }
+                50%{
+                    width: 16px;
+                }
+                80%{
+                    width: 22px;
+                }
+                100%{
+                    width: 22px;
+                }
             }
-            80%{
-                width: 26px;
+            @include keyframes(animationFrames3){
+                0%{
+                    width: 24px;
+                }
+                50%{
+                    width: 22px;
+                }
+                80%{
+                    width: 26px;
+                }
+                100%{
+                    width: 26px;
+                }
             }
-            100%{
-                width: 26px;
-            }
-        }
-        @include keyframes(animationFrames2){
-            0%{
-                width: 20px;
-            }
-            50%{
-                width: 16px;
-            }
-            80%{
-                width: 22px;
-            }
-            100%{
-                width: 22px;
-            }
-        }
-        @include keyframes(animationFrames3){
-            0%{
-                width: 24px;
-            }
-            50%{
-                width: 22px;
-            }
-            80%{
-                width: 26px;
-            }
-            100%{
-                width: 26px;
-            }
-        }
-        span{
-            width:      24px;
-            height:     2px;
-            background: $black;
-            display:    block;
-            margin:     1px 0;
-            float:      right;
-            @include css3-prefix(transition, all 2s ease);
-            &:nth-child(2){
-                width: 20px;
+            span{
+                width:      24px;
+                height:     2px;
+                background: $black;
+                display:    block;
+                margin:     1px 0;
+                float:      right;
+                @include css3-prefix(transition, all 2s ease);
+                &:nth-child(2){
+                    width: 20px;
+                }
             }
         }
     }
@@ -178,128 +180,131 @@ body{
         }
     }
     @media #{$large} {
-        background: none;
-        .nav-left{
-            display: inline-block;
-        }
-        .nav-right{
-            display: inline-block;
-        }
-        .logo-wrap{
-            display: inline-block;
-            float:   none;
-            padding: 0 20px;
-            img{
-                height: 130px;
+        &.home{
+            background: none;
+            .nav-left{
+                display: inline-block;
             }
-        }
-        .menu-icon-wrap{
-            display: none;
-        }
-        nav{
-            vertical-align: middle;
-            ul{
-                margin:  0;
-                padding: 0;
+            .nav-right{
+                display: inline-block;
             }
-            li{
-                margin:   0;
-                padding:  0 10px;
-                display:  inline-block;
-                position: relative;
-                > a{
-                    line-height: 70px;
-                    @include css3-prefix(transition, all 0.2s linear);
-                }
-                &:hover{
-                    > .sub-menu{
-                        display: block;
-                    }
-                }
-                &.has-submenu{
-                    &:after{
-                        content:   "+";
-                        position:  absolute;
-                        font-size: 12px;
-                        right:     20px;
-                        top:       50%;
-                        @include css3-prefix(transform, translateY(-50%));
-                    }
+            .logo-wrap{
+                display: inline-block;
+                float:   none;
+                padding: 0 20px;
+                img{
+                    height: 130px;
                 }
             }
-            a{
-                color:       $color-red;
-                font-size:   14px;
-                font-weight: bold;
-                font-family: $font-family-merriweather;
-                opacity:     1;
-                transition:  opacity 0.4s ease;
-                &:hover{
-                    opacity:         0.5;
-                    text-decoration: none;
-                }
+            .menu-icon-wrap{
+                display: none;
             }
-            .sub-menu{
-                display:       none;
-                background:    $white;
-                padding:       20px 0;
-                position:      absolute;
-                top:           100%;
-                left:          0;
-                z-index:       3;
-                border-radius: 6px;
-                li{
-                    position:    relative;
-                    white-space: nowrap;
-                    text-align:  left;
-                    padding:     6px 60px 6px 25px;
-                }
-                a{
-                    font-family:    $font-family-opensans;
-                    font-size:      13px;
-                    font-style:     normal;
-                    font-weight:    400;
-                    text-transform: none;
-                    line-height:    13px;
-                    letter-spacing: -.2px;
-                    color:          #5C5C5C;
-                    line-height:    initial !important;
-                }
-            }
-            .nest-menu-depth{
-                left:        100%;
-                top:         -20px;
-                margin-left: 10px;
-                &:before{
-                    content:    "";
-                    width:      14px;
-                    height:     100%;
-                    top:        0;
-                    background: transparent;
-                    position:   absolute;
-                    right:      100%;
+            nav{
+                vertical-align: middle;
+                ul{
+                    margin:  0;
+                    padding: 0;
                 }
                 li{
-                    display: block;
-                    &:first-child{
-                        &:before{
-                            content:       "";
-                            position:      absolute;
-                            left:          -5px;
-                            top:           50%;
-                            width:         0;
-                            height:        0;
-                            border-top:    5px solid transparent;
-                            border-bottom: 5px solid transparent;
-                            border-right:  5px solid $white;
+                    margin:   0;
+                    padding:  0 10px;
+                    display:  inline-block;
+                    position: relative;
+                    > a{
+                        line-height: 70px;
+                        @include css3-prefix(transition, all 0.2s linear);
+                    }
+                    &:hover{
+                        > .sub-menu{
+                            display: block;
+                        }
+                    }
+                    &.has-submenu{
+                        &:after{
+                            content:   "+";
+                            position:  absolute;
+                            font-size: 12px;
+                            right:     20px;
+                            top:       50%;
                             @include css3-prefix(transform, translateY(-50%));
                         }
                     }
                 }
-            }
+                a{
+                    color:       $color-red;
+                    font-size:   14px;
+                    font-weight: bold;
+                    font-family: $font-family-merriweather;
+                    opacity:     1;
+                    transition:  opacity 0.4s ease;
+                    &:hover{
+                        opacity:         0.5;
+                        text-decoration: none;
+                    }
+                }
+                .sub-menu{
+                    display:       none;
+                    background:    $white;
+                    padding:       20px 0;
+                    position:      absolute;
+                    top:           100%;
+                    left:          0;
+                    z-index:       3;
+                    border-radius: 6px;
+                    li{
+                        position:    relative;
+                        white-space: nowrap;
+                        text-align:  left;
+                        padding:     6px 60px 6px 25px;
+                    }
+                    a{
+                        font-family:    $font-family-opensans;
+                        font-size:      13px;
+                        font-style:     normal;
+                        font-weight:    400;
+                        text-transform: none;
+                        line-height:    13px;
+                        letter-spacing: -.2px;
+                        color:          #5C5C5C;
+                        line-height:    initial !important;
+                    }
+                }
+                .nest-menu-depth{
+                    left:        100%;
+                    top:         -20px;
+                    margin-left: 10px;
+                    &:before{
+                        content:    "";
+                        width:      14px;
+                        height:     100%;
+                        top:        0;
+                        background: transparent;
+                        position:   absolute;
+                        right:      100%;
+                    }
+                    li{
+                        display: block;
+                        &:first-child{
+                            &:before{
+                                content:       "";
+                                position:      absolute;
+                                left:          -5px;
+                                top:           50%;
+                                width:         0;
+                                height:        0;
+                                border-top:    5px solid transparent;
+                                border-bottom: 5px solid transparent;
+                                border-right:  5px solid $white;
+                                @include css3-prefix(transform, translateY(-50%));
+                            }
+                        }
+                    }
+                }
 
+            }
         }
         &.sticky{
+            background: rgba($black, 0.7);
             .logo-wrap{
                 position: absolute;
                 left:     0;
@@ -1584,12 +1589,6 @@ html, body{
 body{
     @include font2();
     width: 100%;
-}
-
-#header{
-    .master-slider{
-        padding: $column-gutter;
-    }
 }
 
 #footer{

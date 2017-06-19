@@ -1,4 +1,5 @@
 <?php
+
 namespace Fhm\CardBundle\Controller\Product;
 
 use Doctrine\Common\Collections\ArrayCollection;
@@ -18,6 +19,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
  * @Route("/api/cardproduct")
  * -----------------------------------------
  * Class ApiController
+ *
  * @package Fhm\CardBundle\Controller\Product
  */
 class ApiController extends FhmController
@@ -27,12 +29,12 @@ class ApiController extends FhmController
      */
     public function __construct()
     {
-        self::$repository = "FhmCardBundle:CardProduct";
-        self::$source = "fhm";
-        self::$domain = "FhmCardBundle";
-        self::$translation = "card.product";
-        self::$route = "card_product";
-        self::$form = new \stdClass();
+        self::$repository          = "FhmCardBundle:CardProduct";
+        self::$source              = "fhm";
+        self::$domain              = "FhmCardBundle";
+        self::$translation         = "card.product";
+        self::$route               = "card_product";
+        self::$form                = new \stdClass();
         self::$form->createType    = CreateType::class;
         self::$form->createHandler = CreateHandler::class;
         self::$form->updateType    = UpdateType::class;
@@ -68,38 +70,34 @@ class ApiController extends FhmController
     /**
      * @Route
      * (
-     *      path="/embed/{template}/{idCard}/{idCategory}",
+     *      path="/embed/{folder}/{template}/{idCard}/{idCategory}",
      *      name="fhm_api_card_product_embed",
      *      requirements={"idCard"="[a-z0-9]*", "idCategory"="[a-z0-9]*"},
-     *      defaults={"template"="inline"}
+     *      defaults={"folder"="default", "template"="inline"}
      * )
      */
-    public function embedAction(Request $request, $idCard, $idCategory, $template)
+    public function embedAction(Request $request, $idCard, $idCategory, $folder, $template)
     {
-        $card = $this->get('fhm_tools')->dmRepository('FhmCardBundle:Card')->find($idCard);
+        $card     = $this->get('fhm_tools')->dmRepository('FhmCardBundle:Card')->find($idCard);
         $category = $this->get('fhm_tools')->dmRepository('FhmCardBundle:CardCategory')->find($idCategory);
         // ERROR - unknown
-        if ($card == "") {
-            throw $this->createNotFoundException(
-                $this->get('translator')->trans('card.error.unknown', array(), self::$domain)
-            );
+        if($card == "")
+        {
+            throw $this->createNotFoundException($this->get('translator')->trans('card.error.unknown', array(), self::$domain));
         }
-        if ($category == "") {
-            throw $this->createNotFoundException(
-                $this->get('translator')->trans(self::$translation.'.error.unknown', array(), self::$domain)
-            );
+        if($category == "")
+        {
+            throw $this->createNotFoundException($this->get('translator')->trans(self::$translation . '.error.unknown', array(), self::$domain));
         }
 
         return new Response(
             $this->renderView(
-                "::FhmCard/Template/Product/".$template.".html.twig",
+                "::FhmCard/Template/Embed/" . ucfirst(strtolower($folder)) . "/Product/" . $template . ".html.twig",
                 array(
-                    "card" => $card,
+                    "card"     => $card,
                     "category" => $category,
-                    "products" => $this->get('fhm_tools')->dmRepository('FhmCardBundle:CardProduct')->getByCategory(
-                        $card,
-                        $category
-                    ),
+                    "products" => $this->get('fhm_tools')->dmRepository(self::$repository)->getByCategory($card, $category),
+                    "folder"   => ucfirst(strtolower($folder))
                 )
             )
         );
@@ -108,369 +106,142 @@ class ApiController extends FhmController
     /**
      * @Route
      * (
-     *      path="/editor/{id}",
+     *      path="/editor/{template}/{idCard}/{idCategory}",
      *      name="fhm_api_card_product_editor",
-     *      requirements={"id"="[a-z0-9]*"}
+     *      requirements={"idCard"="[a-z0-9]*"},
+     *      defaults={"template"="default", "idCategory"=0}
      * )
      */
-    public function editorAction(Request $request, $id)
+    public function editorAction($idCard, $idCategory, $template)
     {
-        $card = $this->get('fhm_tools')->dmRepository('FhmCardBundle:Card')->find($id);
-        $this->__authorized($card);
-        $categories = $this->get('fhm_tools')->dmRepository('FhmCardBundle:CardCategory')->getByCardAll(
-            $card
-        );
-        $trees = $this->__tree($card, $categories);
-
-        return new Response(
-            $this->renderView(
-                "::FhmCard/Template/Editor/product.html.twig",
-                array(
-                    "card" => $card,
-                    "products" => $this->get('fhm_tools')->dmRepository('FhmCardBundle:CardProduct')->setSort(
-                        'alias'
-                    )->getByCardAll(
-                        $card
-                    ),
-                    "trees" => $trees,
-                )
-            )
-        );
+        return $this->_model($template)->productIndex($idCard, $idCategory);
     }
 
     /**
      * @Route
      * (
-     *      path="/search/{id}",
+     *      path="/search/{template}/{idCard}",
      *      name="fhm_api_card_product_search",
-     *      requirements={"id"="[a-z0-9]*"}
+     *      requirements={"idCard"="[a-z0-9]*"},
+     *      defaults={"template"="default"}
      * )
      */
-    public function searchAction(Request $request, $id)
+    public function searchAction(Request $request, $idCard, $template)
     {
-        $card = $this->get('fhm_tools')->dmRepository('FhmCardBundle:Card')->find($id);
-        $this->__authorized($card);
-
-        return new Response(
-            $this->renderView(
-                "::FhmCard/Template/Editor/product.search.html.twig",
-                array(
-                    "card" => $card,
-                    "products" => $this->get('fhm_tools')->dmRepository('FhmCardBundle:CardProduct')->setSort(
-                        'alias'
-                    )->getByCardSearch(
-                        $card,
-                        $request->get('search')
-                    ),
-                )
-            )
-        );
+        return $this->_model($template)->productSearch($request, $idCard);
     }
 
     /**
      * @Route
      * (
-     *      path="/sort/{idCard}/{idCategory}",
+     *      path="/sort/{template}/{idCard}/{idMaster}",
      *      name="fhm_api_card_product_sort",
-     *      requirements={"idCard"="[a-z0-9]*", "idCategory"="[a-z0-9]*"},
+     *      requirements={"idCard"="[a-z0-9]*"},
+     *      defaults={"template"="default", "idMaster"=0}
      * )
      */
-    public function sortAction(Request $request, $idCard, $idCategory)
+    public function sortAction(Request $request, $idCard, $idMaster, $template)
     {
-        $card = $this->get('fhm_tools')->dmRepository('FhmCardBundle:Card')->find($idCard);
-        $this->__authorized($card);
-        $list = json_decode($request->get('list'));
-        $order = 1;
-        foreach ($list as $obj) {
-            $object = $this->get('fhm_tools')->dmRepository(self::$repository)->find($obj->id);
-            $object->setOrder($order);
-            $this->get('fhm_tools')->dmPersist($object);
-            $order++;
-        }
-
-        return $this->__refresh($card);
+        return $this->_model($template)->productSort($request, $idCard, $idMaster);
     }
 
     /**
      * @Route
      * (
-     *      path="/create/{idCard}/{idCategory}",
+     *      path="/create/{template}/{idCard}/{idMaster}/{idCategory}",
      *      name="fhm_api_card_product_create",
      *      requirements={"idCard"="[a-z0-9]*", "idCategory"="[a-z0-9]*"},
-     *      defaults={"idCategory"="0"}
+     *      defaults={"template"="default", "idMaster"="0", "idCategory"=0}
      * )
-     * @Template("::FhmCard/Template/Product/create.html.twig")
      */
-    public function createAction(Request $request, $idCard, $idCategory)
+    public function createAction(Request $request, $idCard, $idMaster, $idCategory, $template)
     {
-        $card = $this->get('fhm_tools')->dmRepository('FhmCardBundle:Card')->find($idCard);
-        $category = $this->get('fhm_tools')->dmRepository('FhmCardBundle:CardCategory')->find($idCategory);
-        $this->__authorized($card);
-        self::$class = $this->get('fhm.object.manager')->getCurrentModelName(self::$repository);
-        $object = new self::$class;
-        if ($category) {
-            $object->addCategory($category);
-        }
-        $form = $this->createForm(
-            self::$form->createType,
-            $object,
-            ['data_class' => self::$class, 'object_manager' => $this->get('fhm.object.manager')]
-        );
-        $handler = new self::$form->createHandler($form, $request);
-        $process = $handler->process();
-        if ($process) {
-            $object->setCard($card);
-            $this->get('fhm_tools')->dmPersist($object);
-
-            return $this->__refresh($card);
-        }
-
-        return array(
-            'card' => $card,
-            'category' => $category,
-            'form' => $form->createView(),
-        );
+        return $this->_model($template)->productCreate($request, $idCard, $idCategory, $idMaster);
     }
 
     /**
      * @Route
      * (
-     *      path="/update/{idCard}/{idProduct}",
+     *      path="/update/{template}/{idCard}/{idMaster}/{idCategory}/{idProduct}",
      *      name="fhm_api_card_product_update",
-     *      requirements={"idCard"="[a-z0-9]*", "idProduct"="[a-z0-9]*"}
+     *      requirements={"idCard"="[a-z0-9]*", "idProduct"="[a-z0-9]*"},
+     *      defaults={"template"="default", "idMaster"=0, "idCategory"=0}
      * )
-     * @Template("::FhmCard/Template/Product/update.html.twig")
      */
-    public function updateAction(Request $request, $idCard, $idProduct)
+    public function updateAction(Request $request, $idCard, $idMaster, $idCategory, $idProduct, $template)
     {
-        $card = $this->get('fhm_tools')->dmRepository('FhmCardBundle:Card')->find($idCard);
-        $object = $this->get('fhm_tools')->dmRepository(self::$repository)->find($idProduct);
-        $this->__authorized($card);
-        if ($object == "") {
-            throw $this->createNotFoundException(
-                $this->get('translator')->trans(self::$translation.'.error.unknown', array(), self::$domain)
-            );
-        }
-        self::$class = $this->get('fhm.object.manager')->getCurrentModelName(self::$repository);
-        $form = $this->createForm(
-            self::$form->updateType,
-            $object,
-            ['data_class' => self::$class, 'object_manager' => $this->get('fhm.object.manager')]
-        );
-        $handler = new self::$form->updateHandler($form, $request);
-        $process = $handler->process();
-        if ($process) {
-            $this->get('fhm_tools')->dmPersist($object);
-
-            return $this->__refresh($card);
-        }
-
-        return array(
-            'card' => $card,
-            'object' => $object,
-            'form' => $form->createView(),
-        );
+        return $this->_model($template)->productUpdate($request, $idCard, $idCategory, $idProduct, $idMaster);
     }
 
     /**
      * @Route
      * (
-     *      path="/activate/{idCard}/{idProduct}",
+     *      path="/activate/{template}/{idCard}/{idMaster}/{idCategory}/{idProduct}",
      *      name="fhm_api_card_product_activate",
-     *      requirements={"idCard"="[a-z0-9]*", "idProduct"="[a-z0-9]*"}
+     *      requirements={"idCard"="[a-z0-9]*", "idProduct"="[a-z0-9]*"},
+     *      defaults={"template"="default", "idMaster"="0", "idCategory"=0}
      * )
      */
-    public function activateAction(Request $request, $idCard, $idProduct)
+    public function activateAction($idCard, $idMaster, $idCategory, $idProduct, $template)
     {
-        $card = $this->get('fhm_tools')->dmRepository('FhmCardBundle:Card')->find($idCard);
-        $object = $this->get('fhm_tools')->dmRepository(self::$repository)->find($idProduct);
-        $this->__authorized($card);
-        if ($object == "") {
-            throw $this->createNotFoundException(
-                $this->get('translator')->trans(self::$translation.'.error.unknown', array(), self::$domain)
-            );
-        }
-        $object->setActive(true);
-        $this->get('fhm_tools')->dmPersist($object);
-
-        return $this->__refresh($card);
+        return $this->_model($template)->productActivate($idCard, $idCategory, $idProduct, $idMaster);
     }
 
     /**
      * @Route
      * (
-     *      path="/deactivate/{idCard}/{idProduct}",
+     *      path="/deactivate/{template}/{idCard}/{idMaster}/{idCategory}/{idProduct}",
      *      name="fhm_api_card_product_deactivate",
-     *      requirements={"idCard"="[a-z0-9]*", "idProduct"="[a-z0-9]*"}
+     *      requirements={"idCard"="[a-z0-9]*", "idProduct"="[a-z0-9]*"},
+     *      defaults={"template"="default", "idMaster"=0, "idCategory"=0}
      * )
      */
-    public function deactivateAction(Request $request, $idCard, $idProduct)
+    public function deactivateAction($idCard, $idCategory, $idMaster, $idProduct, $template)
     {
-        $card = $this->get('fhm_tools')->dmRepository('FhmCardBundle:Card')->find($idCard);
-        $object = $this->get('fhm_tools')->dmRepository(self::$repository)->find($idProduct);
-        $this->__authorized($card);
-        if ($object == "") {
-            throw $this->createNotFoundException(
-                $this->get('translator')->trans(self::$translation.'.error.unknown', array(), self::$domain)
-            );
-        }
-        $object->setActive(false);
-        $this->get('fhm_tools')->dmPersist($object);
-
-        return $this->__refresh($card);
+        return $this->_model($template)->productDeactivate($idCard, $idCategory, $idProduct, $idMaster);
     }
 
     /**
      * @Route
      * (
-     *      path="/delete/{idCard}/{idProduct}",
+     *      path="/delete/{template}/{idCard}/{idMaster}/{idCategory}/{idProduct}",
      *      name="fhm_api_card_product_delete",
-     *      requirements={"idCard"="[a-z0-9]*", "idProduct"="[a-z0-9]*"}
+     *      requirements={"idCard"="[a-z0-9]*", "idProduct"="[a-z0-9]*"},
+     *      defaults={"template"="default", "idMaster"=0, "idCategory"=0}
      * )
      */
-    public function deleteAction(Request $request, $idCard, $idProduct)
+    public function deleteAction($idCard, $idCategory, $idMaster, $idProduct, $template)
     {
-        $card = $this->get('fhm_tools')->dmRepository('FhmCardBundle:Card')->find($idCard);
-        $object = $this->get('fhm_tools')->dmRepository(self::$repository)->find($idProduct);
-        $this->__authorized($card);
-        if ($object == "") {
-            throw $this->createNotFoundException(
-                $this->get('translator')->trans(self::$translation.'.error.unknown', array(), self::$domain)
-            );
-        }
-        // Delete
-        if ($object->getDelete()) {
-            $this->get('fhm_tools')->dmRemove($object);
-        } else {
-            $object->setDelete(true);
-            $this->get('fhm_tools')->dmPersist($object);
-        }
-
-        return $this->__refresh($card);
+        return $this->_model($template)->productDelete($idCard, $idCategory, $idProduct, $idMaster);
     }
 
     /**
      * @Route
      * (
-     *      path="/undelete/{idCard}/{idProduct}",
+     *      path="/undelete/{template}/{idCard}/{idMaster}/{idCategory}/{idProduct}",
      *      name="fhm_api_card_product_undelete",
-     *      requirements={"idCard"="[a-z0-9]*", "idProduct"="[a-z0-9]*"}
+     *      requirements={"idCard"="[a-z0-9]*", "idProduct"="[a-z0-9]*"},
+     *      defaults={"template"="default", "idMaster"=0, "idCategory"=0}
      * )
      */
-    public function undeleteAction(Request $request, $idCard, $idProduct)
+    public function undeleteAction($idCard, $idCategory, $idMaster, $idProduct, $template)
     {
-        $card = $this->get('fhm_tools')->dmRepository('FhmCardBundle:Card')->find($idCard);
-        $object = $this->get('fhm_tools')->dmRepository(self::$repository)->find($idProduct);
-        $this->__authorized($card);
-        if ($object == "") {
-            throw $this->createNotFoundException(
-                $this->get('translator')->trans(self::$translation.'.error.unknown', array(), self::$domain)
-            );
-        }
-        // Undelete
-        $object->setDelete(false);
-        $this->get('fhm_tools')->dmPersist($object);
-
-        return $this->__refresh($card);
+        return $this->_model($template)->productUndelete($idCard, $idCategory, $idProduct, $idMaster);
     }
 
     /**
-     * @param      $card
-     * @param      $categories
-     * @param null $use
+     * @param $template
      *
-     * @return array
+     * @return string
      */
-    private function __tree($card, $categories, &$use = null)
+    private function _model($template)
     {
-        $use = $use ? $use : new ArrayCollection();
-        $tree = array();
-        foreach ($categories as $category) {
-            if (!$use->contains($category)) {
-                $use->add($category);
-                $sons = $this->get('fhm_tools')->dmRepository('FhmCardBundle:CardCategory')->getSonsAll(
-                    $card,
-                    $category
-                );
-                $tree[] = array(
-                    'category' => $category,
-                    'products' => $this->get('fhm_tools')->dmRepository(self::$repository)->getByCategoryAll(
-                        $card,
-                        $category
-                    ),
-                );
-                if ($sons) {
-                    $tree = array_merge($tree, $this->__tree($card, $sons, $use));
-                }
-            }
+        $model = $this->get('fhm_card_model_default');
+        if($this->has('fhm_card_model_' . $template))
+        {
+            $model = $this->get('fhm_card_model_' . $template);
         }
 
-        return $tree;
-    }
-
-    /**
-     * @param $card
-     *
-     * @return JsonResponse
-     * @throws \Exception
-     */
-    private function __refresh($card)
-    {
-        $categories = $this->get('fhm_tools')->dmRepository('FhmCardBundle:CardCategory')->getByCardAll(
-            $card
-        );
-        $trees = $this->__tree($card, $categories);
-        $response = new JsonResponse();
-        $response->setData(
-            array(
-                'status' => 200,
-                'html' => $this->renderView(
-                    "::FhmCard/Template/Editor/product.html.twig",
-                    array(
-                        "card" => $card,
-                        "products" => $this->get('fhm_tools')->dmRepository(self::$repository)->setSort(
-                            'alias'
-                        )->getByCardAll(
-                            $card
-                        ),
-                        "trees" => $trees,
-                    )
-                ),
-            )
-        );
-
-        return $response;
-    }
-
-    /**
-     * User is authorized
-     *
-     * @param $card
-     *
-     * @return $this
-     */
-    protected function __authorized($card)
-    {
-        if ($card == "") {
-            throw $this->createNotFoundException(
-                $this->get('translator')->trans('card.error.unknown', array(), self::$domain)
-            );
-        }
-        if ($card->getParent() && method_exists($card->getParent(), 'hasModerator')) {
-            if (!$this->getUser()->isSuperAdmin() && !$this->getUser()->hasRole('ROLE_ADMIN') && !$card->getParent(
-                )->hasModerator($this->getUser())
-            ) {
-                throw new HttpException(
-                    403,
-                    $this->get('translator')->trans(
-                        self::$translation.'.error.forbidden',
-                        array(),
-                        self::$domain
-                    )
-                );
-            }
-        }
-
-        return $this;
+        return $model;
     }
 }

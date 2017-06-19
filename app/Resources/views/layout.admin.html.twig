@@ -11,7 +11,7 @@
         {# Menu #}
         {% block menu %}
             {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-                {{ render_hinclude(url('fhm_api_menu_detail', {'template':'admin'})) }}
+                {{ render_hinclude(url('fhm_api_menu_detail', {'template':'admin'}), {attributes:{'evaljs':'true'}}) }}
             {% endif %}
         {% endblock %}
         {# Header #}

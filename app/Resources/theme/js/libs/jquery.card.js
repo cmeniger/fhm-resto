@@ -53,6 +53,7 @@
                                          success: function (data)
                                                   {
                                                       $(parent.settings.search.content).html(data);
+                                                      parent.refresh();
                                                   }
                                      });
                                  });
@@ -72,7 +73,7 @@
                                              data:    {},
                                              success: function (data)
                                                       {
-                                                          $(parent.settings.tabs.content).html(data.html);
+                                                          $(typeof data.content == 'undefined' ? parent.settings.tabs.content : data.content).html(data.html);
                                                           parent.refresh();
                                                       }
                                          });
@@ -202,6 +203,14 @@
                                      });
                                  });
                              },
+        initExternal:        function ()
+                             {
+                                 var parent = this;
+                                 $(document).foundation();
+                                 $(document).media();
+                                 $(document).form({required: parent.settings.form.required});
+                                 ddTree();
+                             },
         getHtml:             function (data, selector)
                              {
                                  var parent = this;
@@ -216,9 +225,7 @@
                                  parent.initModalCategory();
                                  parent.initModalProduct();
                                  parent.initModalIngredient();
-                                 $(document).foundation();
-                                 $(document).media();
-                                 ddTree();
+                                 parent.initExternal();
                              }
     };
     $.fn.card = function (options)
@@ -226,39 +233,42 @@
         var settings = $.extend
         ({
             tabs:   {
-                container: '.card .editor .editor-tabs a[data-url]',
+                container: '.card.card-editor .editor-tabs a[data-url]',
                 content:   '#editor-content'
             },
             search: {
-                container: '.card .editor .search',
+                container: '.card.card-editor .search',
                 content:   '#editor-search'
             },
             modal:  {
-                ajax:       '.card .editor a[data-ajax]',
+                ajax:       '.card.card-editor a[data-ajax]',
                 category:   {
-                    container: '.card .editor a[data-modal=category]',
-                    content:   '#modal-editor .content',
-                    form:      '#modal-editor .content form',
-                    id:        '#modal-editor',
+                    container: '.card.card-editor a[data-modal=category]',
+                    content:   '#modal-editor-category .content',
+                    form:      '#modal-editor-category .content form',
+                    id:        '#modal-editor-category',
                     tab:       '#tab-category',
                     image:     'modal-image'
                 },
                 product:    {
-                    container: '.card .editor a[data-modal=product]',
-                    content:   '#modal-editor .content',
-                    form:      '#modal-editor .content form',
-                    id:        '#modal-editor',
+                    container: '.card.card-editor a[data-modal=product]',
+                    content:   '#modal-editor-product .content',
+                    form:      '#modal-editor-product .content form',
+                    id:        '#modal-editor-product',
                     tab:       '#tab-product',
                     image:     'modal-image'
                 },
                 ingredient: {
-                    container: '.card .editor a[data-modal=ingredient]',
-                    content:   '#modal-editor .content',
-                    form:      '#modal-editor .content form',
-                    id:        '#modal-editor',
+                    container: '.card.card-editor a[data-modal=ingredient]',
+                    content:   '#modal-editor-ingredient .content',
+                    form:      '#modal-editor-ingredient .content form',
+                    id:        '#modal-editor-ingredient',
                     tab:       '#tab-ingredient',
                     image:     'modal-image'
                 }
+            },
+            form:   {
+                required: ''
             }
         }, options);
         new Plugin(settings);

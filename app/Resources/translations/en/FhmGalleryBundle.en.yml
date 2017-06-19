@@ -1,0 +1,1073 @@
+gallery:
+    admin:
+        index:
+            title:                              Gestion des galeries
+            link:                               Galeries
+            breadcrumb:                         Galeries
+            nodata:                             No data
+            form:
+                search:                         Search
+            table:
+                header:
+                    name:                       Name
+                    action:                     Actions
+                    status:                     Status
+                    images:                     Images
+                    videos:                     Vidéos
+                    albums:                     Albums
+                action:
+                    activate:                   Activate
+                    deactivate:                 Deactivate
+                    delete:                     Delete
+                    detail:                     Configure
+                    duplicate:                  Duplicate
+                    undelete:                   Undelete
+                    update:                     Update
+                    preview:                    Preview
+                confirm:
+                    activate:                   Confirmer l'activation de la galerie ?
+                    deactivate:                 Confirmer la désactivation de la galerie ?
+                    delete:                     Confirmer la suppression de la galerie ?
+                    undelete:                   Confirmer le déblocage de la galerie ?
+
+        create:
+            title:                              Ajouter
+            link:                               Ajouter
+            breadcrumb:                         Ajouter
+            flash:
+                ok:                             La galerie a bien été créée.
+                ko:                             La galerie n'a pas été créée.
+            form:
+                title:                          Titre
+                subtitle:                       Sous-titre
+                resume:                         Accroche
+                content:                        Contenu
+                order:                          Ordre d'affichage
+                image:                          Image
+                items:                          Images
+                videos:                         Vidéos
+                albums:                         Albums
+                order_item:                     Ordre d'affichage
+                order_video:                    Ordre d'affichage
+                add_global_item:                Ajouter les images globales
+                add_global_video:               Ajouter les vidéos globales
+                active:                         Activate
+                share:                          Partager
+                link:                           Lien
+                global:                         Globale
+                submit:
+                    save:                       Save
+                    new:                        Save and add
+                    duplicate:                  Save and duplicate
+                    quit:                       Save and quit
+                    config:                     Save and configure
+                    cancel:                     Cancel
+                    import:                     Import
+                    export:                     Export
+                fieldset:
+                    data:                       Données
+                    media:                      Medias
+                    items:                      Images rattachées
+                    videos:                     Vidéos rattachées
+                    albums:                     Albums rattachés
+                    options:                    Options
+
+        update:
+            title:                              Update
+            link:                               Update
+            breadcrumb:                         Update
+            flash:
+                ok:                             La galerie a bien été modifiée.
+                ko:                             La galerie n'a pas été modifiée.
+            form:
+                title:                          Titre
+                subtitle:                       Sous-titre
+                resume:                         Accroche
+                content:                        Contenu
+                order:                          Ordre d'affichage
+                image:                          Image
+                items:                          Images
+                videos:                         Vidéos
+                albums:                         Albums
+                order_item:                     Ordre d'affichage
+                order_video:                    Ordre d'affichage
+                add_global_item:                Ajouter les images globales
+                add_global_video:               Ajouter les vidéos globales
+                active:                         Activate
+                share:                          Partager
+                link:                           Lien
+                global:                         Globale
+                submit:
+                    save:                       Save
+                    new:                        Save and add
+                    duplicate:                  Save and duplicate
+                    quit:                       Save and quit
+                    config:                     Save and configure
+                    cancel:                     Cancel
+                    import:                     Import
+                    export:                     Export
+                    delete:                     Delete
+                fieldset:
+                    data:                       Données
+                    media:                      Medias
+                    items:                      Images rattachées
+                    videos:                     Vidéos rattachées
+                    albums:                     Albums rattachés
+                    options:                    Options
+
+        detail:
+            title:                              "%name%"
+            link:                               Détail
+            breadcrumb:                         "%name%"
+            data:
+                title:                          Informations
+                id:                             ID
+                create:                         Création
+                update:                         Modification
+                name:                           Name
+                alias:                          Alias
+                description:                    Description
+                status:                         Status
+            album:
+                title:                          Albums
+                list1:                          Disponibles
+                list2:                          Sélectionnés
+            item:
+                title:                          Images
+                list1:                          Disponibles
+                list2:                          Sélectionnés
+            url:
+                title:                          Routes disponibles
+                admin:
+                    edit:                       Update
+                    detail:                     Configure
+                front:
+                    id:                         Afficher via l'ID
+                    name:                       Afficher via le nom
+                    alias:                      Afficher via l'alias
+                    lite:                       Afficher via l'url simplifiée
+            admin:
+                title:                          Outils d'administration
+
+        export:
+            breadcrumb:                         Export
+            form:
+                submit:                         Export
+            link:                               Export
+            title:                              Export des galeries
+
+        import:
+            breadcrumb:                         Import
+            flash:
+                ok:                             Les galeries ont bien été importées (%countAdd% ajout(s), %countUpdate% modification(s), %countError% erreur(s)).
+                ko:                             Les galeries n'ont pas été importées.
+            form:
+                file:                           Fichier CSV
+                submit:                         Import
+            link:                               Import
+            title:                              Import des galeries
+
+        deactivate:
+            flash:
+                ok:                             La galerie a bien été désactivée.
+
+        delete:
+            flash:
+                ok:                             La galerie a bien été supprimée.
+
+        activate:
+            flash:
+                ok:                             La galerie a bien été activée.
+
+        undelete:
+            flash:
+                ok:                             La galerie a bien été restaurée.
+        sort:
+            title:
+                asc:                            Titre croissant
+                desc:                           Titre décroissant
+            order:
+                asc:                            Ordre croissant
+                desc:                           Ordre décroissant
+            create:
+                asc:                            Date de création croissant
+                desc:                           Date de création décroissant
+            update:
+                asc:                            Date de modification croissant
+                desc:                           Date de modification décroissant
+
+    front:
+        index:
+            title:                              Galeries
+            link:                               Galeries
+            breadcrumb:                         Galeries
+            nodata:                             No data
+            form:
+                search:                         Search
+            table:
+                header:
+                    name:                       Name
+                    action:                     Actions
+                action:
+                    detail:                     Détail
+                    delete:                     Delete
+                confirm:
+                    delete:                     Confirmer la suppression de la galerie ?
+
+        create:
+            title:                              Ajouter
+            link:                               Ajouter
+            breadcrumb:                         Ajouter une galerie
+            flash:
+                ok:                             La galerie a bien été créée.
+                ko:                             La galerie n'a pas été créée.
+            form:
+                name:                           Name
+                description:                    Description
+                submit:
+                    save:                       Save
+                    new:                        Save and add
+                    duplicate:                  Save and duplicate
+                    quit:                       Save and quit
+                    cancel:                     Cancel
+                alert:
+                    title:                      Information
+                    text:                       L'ajout d'une galerie nécessite la validation d'un modérateur.
+
+        update:
+            title:                              Update
+            link:                               Update
+            breadcrumb:                         Update
+            flash:
+                ok:                             La galerie a bien été modifiée.
+                ko:                             La galerie n'a pas été modifiée.
+            form:
+                name:                           Name
+                description:                    Description
+                submit:
+                    save:                       Save
+                    new:                        Save and add
+                    duplicate:                  Save and duplicate
+                    quit:                       Save and quit
+                    cancel:                     Cancel
+                alert:
+                    title:                      Information
+                    text:                       La modification d'une galerie nécessite la validation d'un modérateur.
+
+        detail:
+            title:                              "%name%"
+            link:                               Détail
+            breadcrumb:                         "%name%"
+            data:
+                title:                          Informations
+                create:                         Création
+                update:                         Modification
+                name:                           Name
+                alias:                          Alias
+                description:                    Description
+            item:
+                title:                          Images
+            video:
+                title:                          Vidéos
+
+        delete:
+            flash:
+                ok:                             La galerie a bien été supprimée.
+
+    api:
+        index:
+            title:                              Galleries
+
+    pagination:
+        counter:                                "Nombre de galeries: %count% / %all%"
+
+    error:
+        unknown:                                La galerie n'existe pas.
+        delete:                                 La galerie n'existe pas.
+        forbidden:                              Droits insuffisants.
+
+    item:
+        admin:
+            index:
+                title:                          "Gestion des galeries : images"
+                link:                           Images
+                breadcrumb:                     Images
+                nodata:                         No data
+                form:
+                    search:                     Search
+                table:
+                    header:
+                        image:                  Image
+                        name:                   Name
+                        action:                 Actions
+                        status:                 Status
+                        galleries:              Galeries
+                    action:
+                        activate:               Activate
+                        deactivate:             Deactivate
+                        delete:                 Delete
+                        detail:                 Configure
+                        duplicate:              Duplicate
+                        undelete:               Undelete
+                        update:                 Update
+                    confirm:
+                        activate:               Confirmer l'activation de l'image ?
+                        deactivate:             Confirmer la désactivation de l'image ?
+                        delete:                 Confirmer la suppression de l'image ?
+                        undelete:               Confirmer le déblocage de l'image ?
+
+            create:
+                title:                          Ajouter
+                link:                           Ajouter
+                breadcrumb:                     Ajouter
+                flash:
+                    ok:                         l'image a bien été créée.
+                    ko:                         l'image n'a pas été créée.
+                form:
+                    title:                      Titre
+                    subtitle:                   Sous-titre
+                    content:                    Contenu
+                    link:                       Lien
+                    order:                      Ordre d'affichage
+                    image:                      Image
+                    galleries:                  Galeries
+                    active:                     Activate
+                    share:                      Partager
+                    global:                     Globale
+                    submit:
+                        save:                   Save
+                        new:                    Save and add
+                        duplicate:              Save and duplicate
+                        quit:                   Save and quit
+                        config:                 Save and configure
+                        cancel:                 Cancel
+                        import:                 Import
+                        export:                 Export
+                    fieldset:
+                        data:                   Données
+                        media:                  Medias
+                        galleries:              Galeries rattachées
+                        options:                Options
+
+            multiple:
+                title:                          Multiple
+                link:                           Multiple
+                breadcrumb:                     Multiple
+                flash:
+                    ok:                         les images ont bien été créées.
+                    ko:                         les images n'ont pas été créées.
+                form:
+                    title:                      Titre
+                    subtitle:                   Sous-titre
+                    content:                    Contenu
+                    link:                       Lien
+                    galleries:                  Galeries
+                    file:                       Ajouter le fichier
+                    watermark:                  Ajouter un filigrane
+                    tag:                        Nouveau tag
+                    parent:                     Imbriquer dans le tag
+                    tags:                       Associer aux tags
+                    active:                     Activate
+                    share:                      Partager
+                    global:                     Globale
+                    submit:
+                        save:                   Save
+                    fieldset:
+                        data:                   Données
+                        media:                  Medias
+                        galleries:              Galeries rattachées
+                        options:                Options
+                        file:                   Image(s)
+                        watermark:              Filigranes
+                        tags:                   Tags
+
+            update:
+                title:                          Update
+                link:                           Update
+                breadcrumb:                     Update
+                flash:
+                    ok:                         l'image a bien été modifiée.
+                    ko:                         l'image n'a pas été modifiée.
+                form:
+                    title:                      Titre
+                    subtitle:                   Sous-titre
+                    content:                    Contenu
+                    link:                       Lien
+                    order:                      Ordre d'affichage
+                    image:                      Image
+                    galleries:                  Galeries
+                    active:                     Activate
+                    share:                      Partager
+                    global:                     Globale
+                    submit:
+                        save:                   Save
+                        new:                    Save and add
+                        duplicate:              Save and duplicate
+                        quit:                   Save and quit
+                        config:                 Save and configure
+                        cancel:                 Cancel
+                        import:                 Import
+                        export:                 Export
+                        delete:                 Delete
+                    fieldset:
+                        data:                   Données
+                        media:                  Medias
+                        galleries:              Galeries rattachées
+                        options:                Options
+
+            detail:
+                title:                          "%name%"
+                link:                           Détail
+                breadcrumb:                     "%name%"
+                data:
+                    title:                      Informations
+                    id:                         ID
+                    create:                     Création
+                    update:                     Modification
+                    name:                       Name
+                    alias:                      Alias
+                    description:                Description
+                    status:                     Status
+                    image:                      Image
+                url:
+                    title:                      Routes disponibles
+                    admin:
+                        edit:                   Update
+                        detail:                 Configure
+                    front:
+                        id:                     Afficher via l'ID
+                        name:                   Afficher via le nom
+                        alias:                  Afficher via l'alias
+                        lite:                   Afficher via l'url simplifiée
+                admin:
+                    title:                      Outils d'administration
+                gallery:
+                    title:                      Galeries
+                    list1:                      Disponibles
+                    list2:                      Sélectionnés
+                item:
+                    title:                      Image
+
+            export:
+                breadcrumb:                     Export
+                form:
+                    submit:                     Export
+                link:                           Export
+                title:                          Export des groupes
+
+            import:
+                title:                          Import des groupes
+                link:                           Import
+                breadcrumb:                     Import
+                flash:
+                    ok:                         Les images ont bien été importées (%countAdd% ajout(s), %countUpdate% modification(s), %countError% erreur(s)).
+                    ko:                         Les images n'ont pas été importées.
+                form:
+                    file:                       Fichier CSV
+                    submit:                     Import
+
+            deactivate:
+                flash:
+                    ok:                         l'image a bien été désactivée.
+
+            delete:
+                flash:
+                    ok:                         l'image a bien été supprimée.
+
+            activate:
+                flash:
+                    ok:                         l'image a bien été activée.
+
+            undelete:
+                flash:
+                    ok:                         l'image a bien été restaurée.
+
+        front:
+            index:
+                title:                          Images
+                link:                           Images
+                breadcrumb:                     Images
+                nodata:                         No data
+                form:
+                    search:                     Search
+                table:
+                    header:
+                        name:                   Name
+                        action:                 Actions
+                    action:
+                        detail:                 Détail
+                        delete:                 Delete
+                    confirm:
+                        delete:                 Confirmer la suppression de l'image ?
+
+            create:
+                title:                          Ajouter une image de galerie
+                link:                           Ajouter
+                breadcrumb:                     Ajouter
+                flash:
+                    ok:                         L'image a bien été créée.
+                    ko:                         L'image n'a pas été créée.
+                form:
+                    name:                       Name
+                    description:                Description
+                    submit:
+                        save:                   Save
+                        new:                    Save and add
+                        duplicate:              Save and duplicate
+                        quit:                   Save and quit
+                        cancel:                 Cancel
+                    alert:
+                        title:                  Information
+                        text:                   L'ajout d'une image nécessite la validation d'un modérateur pour être affichée.
+
+            update:
+                title:                          Update une image de galerie
+                link:                           Update
+                breadcrumb:                     Update
+                flash:
+                    ok:                         L'image a bien été modifiée.
+                    ko:                         L'image n'a pas été modifiée.
+                form:
+                    name:                       Name
+                    description:                Description
+                    submit:
+                        save:                   Save
+                        new:                    Save and add
+                        duplicate:              Save and duplicate
+                        quit:                   Save and quit
+                        cancel:                 Cancel
+                    alert:
+                        title:                  Information
+                        text:                   La modification d'une image nécessite la validation d'un modérateur pour être affichée.
+
+            detail:
+                title:                          "%name%"
+                link:                           Détail
+                breadcrumb:                     "%name%"
+                data:
+                    title:                      Informations
+                    create:                     Création
+                    update:                     Modification
+                    name:                       Name
+                    alias:                      Alias
+                    description:                Description
+
+            delete:
+                flash:
+                    ok:                         L'image a bien été supprimée.
+        pagination:
+            counter:                            "Nombre d'images: %count% / %all%"
+
+        error:
+            unknown:                            L'image n'existe pas.
+            delete:                             L'image n'existe pas.
+            forbidden:                          Droits insuffisants.
+
+    video:
+        admin:
+            index:
+                title:                          "Gestion des galeries : vidéos"
+                link:                           Vidéos
+                breadcrumb:                     Vidéos
+                nodata:                         No data
+                form:
+                    search:                     Search
+                table:
+                    header:
+                        name:                   Name
+                        video:                  Url de la vidéo
+                        galleries:              Galeries
+                        action:                 Actions
+                        status:                 Status
+                    action:
+                        activate:               Activate
+                        deactivate:             Deactivate
+                        delete:                 Delete
+                        detail:                 Configure
+                        duplicate:              Duplicate
+                        undelete:               Undelete
+                        update:                 Update
+                    confirm:
+                        activate:               Confirmer l'activation de la vidéo ?
+                        deactivate:             Confirmer la désactivation de la vidéo ?
+                        delete:                 Confirmer la suppression de la vidéo ?
+                        undelete:               Confirmer le déblocage de la vidéo ?
+
+            create:
+                title:                          Ajouter
+                link:                           Ajouter
+                breadcrumb:                     Ajouter
+                flash:
+                    ok:                         la vidéo a bien été créée.
+                    ko:                         la vidéo n'a pas été créée.
+                form:
+                    title:                      Titre
+                    subtitle:                   Sous-titre
+                    content:                    Contenu
+                    link:                       Lien
+                    order:                      Ordre d'affichage
+                    video:                      URL de la vidéo
+                    galleries:                  Galeries
+                    active:                     Activate
+                    share:                      Partager
+                    global:                     Globale
+                    submit:
+                        save:                   Save
+                        new:                    Save and add
+                        duplicate:              Save and duplicate
+                        quit:                   Save and quit
+                        config:                 Save and configure
+                        cancel:                 Cancel
+                        import:                 Import
+                        export:                 Export
+                    fieldset:
+                        data:                   Données
+                        media:                  Medias
+                        galleries:              Galeries rattachées
+                        options:                Options
+
+            update:
+                title:                          Update
+                link:                           Update
+                breadcrumb:                     Update
+                flash:
+                    ok:                         la vidéo a bien été modifiée.
+                    ko:                         la vidéo n'a pas été modifiée.
+                form:
+                    title:                      Titre
+                    subtitle:                   Sous-titre
+                    content:                    Contenu
+                    link:                       Lien
+                    order:                      Ordre d'affichage
+                    video:                      URL de la vidéo
+                    galleries:                  Galeries
+                    active:                     Activate
+                    share:                      Partager
+                    global:                     Globale
+                    submit:
+                        save:                   Save
+                        new:                    Save and add
+                        duplicate:              Save and duplicate
+                        quit:                   Save and quit
+                        config:                 Save and configure
+                        cancel:                 Cancel
+                        import:                 Import
+                        export:                 Export
+                        delete:                 Delete
+                    fieldset:
+                        data:                   Données
+                        media:                  Medias
+                        galleries:              Galeries rattachées
+                        options:                Options
+
+            detail:
+                title:                          "%name%"
+                link:                           Détail
+                breadcrumb:                     "%name%"
+                data:
+                    title:                      Informations
+                    id:                         ID
+                    create:                     Création
+                    update:                     Modification
+                    name:                       Name
+                    alias:                      Alias
+                    description:                Description
+                    status:                     Status
+                    video:                      Vidéo
+                url:
+                    title:                      Routes disponibles
+                    admin:
+                        edit:                   Update
+                        detail:                 Configure
+                    front:
+                        id:                     Afficher via l'ID
+                        name:                   Afficher via le nom
+                        alias:                  Afficher via l'alias
+                        lite:                   Afficher via l'url simplifiée
+                admin:
+                    title:                      Outils d'administration
+                gallery:
+                    title:                      Galeries
+                    list1:                      Disponibles
+                    list2:                      Sélectionnés
+                video:
+                    title:                      Vidéo
+
+            export:
+                breadcrumb:                     Export
+                form:
+                    submit:                     Export
+                link:                           Export
+                title:                          Export des groupes
+
+            import:
+                title:                          Import des groupes
+                link:                           Import
+                breadcrumb:                     Import
+                flash:
+                    ok:                         Les vidéos ont bien été importées (%countAdd% ajout(s), %countUpdate% modification(s), %countError% erreur(s)).
+                    ko:                         Les vidéos n'ont pas été importées.
+                form:
+                    file:                       Fichier CSV
+                    submit:                     Import
+
+            deactivate:
+                flash:
+                    ok:                         la vidéo a bien été désactivée.
+
+            delete:
+                flash:
+                    ok:                         la vidéo a bien été supprimée.
+
+            activate:
+                flash:
+                    ok:                         la vidéo a bien été activée.
+
+            undelete:
+                flash:
+                    ok:                         la vidéo a bien été restaurée.
+
+        front:
+            index:
+                title:                          Vidéos
+                link:                           Vidéos
+                breadcrumb:                     Vidéos
+                nodata:                         No data
+                form:
+                    search:                     Search
+                table:
+                    header:
+                        name:                   Name
+                        action:                 Actions
+                    action:
+                        detail:                 Détail
+                        delete:                 Delete
+                    confirm:
+                        delete:                 Confirmer la suppression de la vidéo ?
+
+            create:
+                title:                          Ajouter une vidéo de galerie
+                link:                           Ajouter
+                breadcrumb:                     Ajouter
+                flash:
+                    ok:                         La vidéo a bien été créée.
+                    ko:                         La vidéo n'a pas été créée.
+                form:
+                    name:                       Name
+                    description:                Description
+                    submit:
+                        save:                   Save
+                        new:                    Save and add
+                        duplicate:              Save and duplicate
+                        quit:                   Save and quit
+                        cancel:                 Cancel
+                    alert:
+                        title:                  Information
+                        text:                   L'ajout d'une vidéo nécessite la validation d'un modérateur pour être affichée.
+
+            update:
+                title:                          Update une vidéo de galerie
+                link:                           Update
+                breadcrumb:                     Update
+                flash:
+                    ok:                         La vidéo a bien été modifiée.
+                    ko:                         La vidéo n'a pas été modifiée.
+                form:
+                    name:                       Name
+                    description:                Description
+                    submit:
+                        save:                   Save
+                        new:                    Save and add
+                        duplicate:              Save and duplicate
+                        quit:                   Save and quit
+                        cancel:                 Cancel
+                    alert:
+                        title:                  Information
+                        text:                   La modification d'une vidéo nécessite la validation d'un modérateur pour être affichée.
+
+            detail:
+                title:                          "%name%"
+                link:                           Détail
+                breadcrumb:                     "%name%"
+                data:
+                    title:                      Informations
+                    create:                     Création
+                    update:                     Modification
+                    name:                       Name
+                    alias:                      Alias
+                    description:                Description
+
+            delete:
+                flash:
+                    ok:                         La vidéo a bien été supprimée.
+        pagination:
+            counter:                            "Nombre de vidéos: %count% / %all%"
+
+        error:
+            unknown:                            La vidéo n'existe pas.
+            delete:                             La vidéo n'existe pas.
+            forbidden:                          Droits insuffisants.
+            
+    album:
+        admin:
+            index:
+                title:                          "Gestion des galeries : albums"
+                link:                           Albums
+                breadcrumb:                     Albums
+                nodata:                         No data
+                form:
+                    search:                     Search
+                table:
+                    header:
+                        image:                  Image
+                        name:                   Name
+                        action:                 Actions
+                        status:                 Status
+                        galleries:              Galeries
+                    action:
+                        activate:               Activate
+                        deactivate:             Deactivate
+                        delete:                 Delete
+                        detail:                 Configure
+                        duplicate:              Duplicate
+                        undelete:               Undelete
+                        update:                 Update
+                        preview:                Preview
+                    confirm:
+                        activate:               Confirmer l'activation de l'album ?
+                        deactivate:             Confirmer la désactivation l'album ?
+                        delete:                 Confirmer la suppression l'album ?
+                        undelete:               Confirmer le déblocage l'album ?
+
+            create:
+                title:                          Ajouter
+                link:                           Ajouter
+                breadcrumb:                     Ajouter
+                flash:
+                    ok:                         l'album a bien été créé.
+                    ko:                         l'album n'a pas été créé.
+                form:
+                    title:                      Titre
+                    subtitle:                   Sous-titre
+                    content:                    Contenu
+                    link:                       Lien
+                    order:                      Ordre
+                    image:                      Image
+                    sort:                       Ordre d'affichage
+                    add_global:                 Ajouter les galeries globales
+                    galleries:                  Galeries
+                    active:                     Activate
+                    share:                      Partager
+                    global:                     Globale
+                    submit:
+                        save:                   Save
+                        new:                    Save and add
+                        duplicate:              Save and duplicate
+                        quit:                   Save and quit
+                        config:                 Save and configure
+                        cancel:                 Cancel
+                        import:                 Import
+                        export:                 Export
+                    fieldset:
+                        data:                   Données
+                        media:                  Medias
+                        galleries:              Galeries rattachées
+                        options:                Options
+
+            update:
+                title:                          Update
+                link:                           Update
+                breadcrumb:                     Update
+                flash:
+                    ok:                         l'album a bien été modifié.
+                    ko:                         l'album n'a pas été modifié.
+                form:
+                    title:                      Titre
+                    subtitle:                   Sous-titre
+                    content:                    Contenu
+                    link:                       Lien
+                    order:                      Ordre
+                    image:                      Image
+                    sort:                       Ordre d'affichage
+                    add_global:                 Ajouter les galeries globales
+                    galleries:                  Galeries
+                    active:                     Activate
+                    share:                      Partager
+                    global:                     Globale
+                    submit:
+                        save:                   Save
+                        new:                    Save and add
+                        duplicate:              Save and duplicate
+                        quit:                   Save and quit
+                        config:                 Save and configure
+                        cancel:                 Cancel
+                        import:                 Import
+                        export:                 Export
+                        delete:                 Delete
+                    fieldset:
+                        data:                   Données
+                        media:                  Medias
+                        galleries:              Galeries rattachées
+                        options:                Options
+
+            detail:
+                title:                          "%name%"
+                link:                           Détail
+                breadcrumb:                     "%name%"
+                data:
+                    title:                      Informations
+                    id:                         ID
+                    create:                     Création
+                    update:                     Modification
+                    name:                       Name
+                    alias:                      Alias
+                    description:                Description
+                    status:                     Status
+                url:
+                    title:                      Routes disponibles
+                    admin:
+                        edit:                   Update
+                        detail:                 Configure
+                    front:
+                        id:                     Afficher via l'ID
+                        name:                   Afficher via le nom
+                        alias:                  Afficher via l'alias
+                        lite:                   Afficher via l'url simplifiée
+                admin:
+                    title:                      Outils d'administration
+                gallery:
+                    title:                      Galeries
+                    list1:                      Disponibles
+                    list2:                      Sélectionnés
+
+            export:
+                breadcrumb:                     Export
+                form:
+                    submit:                     Export
+                link:                           Export
+                title:                          Export des groupes
+
+            import:
+                title:                          Import des groupes
+                link:                           Import
+                breadcrumb:                     Import
+                flash:
+                    ok:                         Les albums ont bien été importés (%countAdd% ajout(s), %countUpdate% modification(s), %countError% erreur(s)).
+                    ko:                         Les albums n'ont pas été importés.
+                form:
+                    file:                       Fichier CSV
+                    submit:                     Import
+
+            deactivate:
+                flash:
+                    ok:                         l'album a bien été désactivé.
+
+            delete:
+                flash:
+                    ok:                         l'album a bien été supprimé.
+
+            activate:
+                flash:
+                    ok:                         l'album a bien été activé.
+
+            undelete:
+                flash:
+                    ok:                         l'album a bien été restauré.
+
+            sort:
+                title:
+                    asc:                        Titre croissant
+                    desc:                       Titre décroissant
+                order:
+                    asc:                        Ordre croissant
+                    desc:                       Ordre décroissant
+                start:
+                    asc:                        Date de publication croissant
+                    desc:                       Date de publication décroissant
+                create:
+                    asc:                        Date de création croissant
+                    desc:                       Date de création décroissant
+                update:
+                    asc:                        Date de modification croissant
+                    desc:                       Date de modification décroissant
+
+        front:
+            index:
+                title:                          Albums
+                link:                           Albums
+                breadcrumb:                     Albums
+                nodata:                         No data
+                form:
+                    search:                     Search
+                table:
+                    header:
+                        name:                   Name
+                        action:                 Actions
+                    action:
+                        detail:                 Détail
+                        delete:                 Delete
+                    confirm:
+                        delete:                 Confirmer la suppression de l'album ?
+
+            create:
+                title:                          Ajouter un album de galerie
+                link:                           Ajouter
+                breadcrumb:                     Ajouter
+                flash:
+                    ok:                         L'album a bien été créé.
+                    ko:                         L'album n'a pas été créé.
+                form:
+                    name:                       Name
+                    description:                Description
+                    submit:
+                        save:                   Save
+                        new:                    Save and add
+                        duplicate:              Save and duplicate
+                        quit:                   Save and quit
+                        cancel:                 Cancel
+                    alert:
+                        title:                  Information
+                        text:                   L'ajout d'un album nécessite la validation d'un modérateur pour être affichée.
+
+            update:
+                title:                          Update un album de galerie
+                link:                           Update
+                breadcrumb:                     Update
+                flash:
+                    ok:                         L'album a bien été modifié.
+                    ko:                         L'album n'a pas été modifié.
+                form:
+                    name:                       Name
+                    description:                Description
+                    submit:
+                        save:                   Save
+                        new:                    Save and add
+                        duplicate:              Save and duplicate
+                        quit:                   Save and quit
+                        cancel:                 Cancel
+                    alert:
+                        title:                  Information
+                        text:                   La modification d'un album nécessite la validation d'un modérateur pour être affichée.
+
+            detail:
+                title:                          "%name%"
+                link:                           Détail
+                breadcrumb:                     "%name%"
+                data:
+                    title:                      Informations
+                    create:                     Création
+                    update:                     Modification
+                    name:                       Name
+                    alias:                      Alias
+                    description:                Description
+
+            delete:
+                flash:
+                    ok:                         L'album a bien été supprimé.
+        pagination:
+            counter:                            "Nombre d'albums: %count% / %all%"
+
+        error:
+            unknown:                            L'album n'existe pas.
+            delete:                             L'album n'existe pas.
+            forbidden:                          Droits insuffisants.

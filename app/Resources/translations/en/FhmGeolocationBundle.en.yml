@@ -1,0 +1,5 @@
+geolocation:
+    aroundme:                                   Around me
+    here:                                       You are here.
+    error:
+        geolocation:                            We were unable to locate you. You must activate the option in your browser settings.

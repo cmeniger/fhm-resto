@@ -25,7 +25,8 @@
                             parent.current = {
                                 path:       this.settings.url,
                                 data:       this.settings.container.data,
-                                pagination: this.settings.container.pagination
+                                pagination: this.settings.container.pagination,
+                                post:       {}
                             };
                         },
         initSearch:     function ()
@@ -52,7 +53,8 @@
                                 parent.current = {
                                     path:       $(this).attr('data-path'),
                                     data:       '#' + $(this).attr('data-id-data'),
-                                    pagination: '#' + $(this).attr('data-id-pagination')
+                                    pagination: '#' + $(this).attr('data-id-pagination'),
+                                    post:       JSON.parse($(this).attr('data-post'))
                                 };
                                 parent.pagination = $(this).attr('data-pagination');
                                 parent.refresh();
@@ -70,30 +72,31 @@
                                 parent.refresh();
                             });
                         },
-        initExtern:       function ()
+        initExternal:   function ()
                         {
                             var parent = this;
                             $(document).historic();
                         },
-        refresh:        function (index)
+        refresh:        function ()
                         {
                             var parent = this;
+                            var defaults = {
+                                FhmSearch:     {
+                                    search: parent.search
+                                },
+                                FhmPagination: {
+                                    pagination: parent.pagination
+                                },
+                                FhmSort:       {
+                                    field: parent.sort.field,
+                                    order: parent.sort.order
+                                }
+                            };
                             $.ajax
                             ({
                                 type:    'POST',
                                 url:     parent.current.path,
-                                data:    {
-                                    FhmSearch:     {
-                                        search: parent.search
-                                    },
-                                    FhmPagination: {
-                                        pagination: parent.pagination
-                                    },
-                                    FhmSort:       {
-                                        field: parent.sort.field,
-                                        order: parent.sort.order
-                                    }
-                                },
+                                data:    $.extend({}, defaults, parent.current.post),
                                 success: function (data)
                                          {
                                              $(parent.current.data).fadeToggle(400, "linear", function ()
@@ -104,7 +107,8 @@
                                                  parent.initSearch();
                                                  parent.initPagination();
                                                  parent.initSort();
-                                                 parent.initExtern();
+                                                 parent.initExternal();
+                                                 $(window).scrollTop(0);
                                              });
                                          }
                             });
@@ -130,7 +134,6 @@
             },
             pagination: {
                 container: 'a[data-pagination]',
-                tag:       'pagination'
             },
             sort:       {
                 container: 'a[data-sort]'

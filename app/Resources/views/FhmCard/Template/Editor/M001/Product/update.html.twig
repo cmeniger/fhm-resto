@@ -1,0 +1,68 @@
+{% trans_default_domain instance.domain %}
+<div class="form form-update">
+    <form action="{{ path('fhm_api_card_product_update',{idCard:card.getId(), idProduct:product.getId(), template:template}) }}" method="POST" {{ form_enctype(form) }}>
+        {% if form.vars.errors|length > 0 %}
+            <div class="form-bloc form-error">
+                <div class="row">
+                    {{ form_errors(form) }}
+                </div>
+            </div>
+        {% endif %}
+        <div class="form-bloc form-fields row">
+            <div class="large-6 columns">
+                <fieldset>
+                    <legend>{{ (instance.translation ~ '.api.update.form.fieldset.data')|trans }}</legend>
+                    <div class="row">
+                        {{ form_label(form.name) }}
+                        {{ form_errors(form.name) }}
+                        {{ form_widget(form.name) }}
+                    </div>
+                    <div class="row">
+                        {{ form_label(form.ingredient) }}
+                        {{ form_errors(form.ingredient) }}
+                        {{ form_widget(form.ingredient) }}
+                    </div>
+                    <div class="row">
+                        <div class="row collapse">
+                            {{ form_label(form.price) }}
+                            <div class="small-10 columns">
+                                {{ form_errors(form.price) }}
+                                {{ form_widget(form.price) }}
+                            </div>
+                            <div class="small-2 columns">
+                                {{ form_errors(form.currency) }}
+                                {{ form_widget(form.currency) }}
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+            <div class="large-6 columns">
+                <fieldset>
+                    <legend>{{ (instance.translation ~ '.api.update.form.fieldset.forward')|trans }}</legend>
+                    <div class="row">
+                        {{ form_errors(form.forward) }}
+                        {{ form_label(form.forward) }}
+                        <div class="switch">
+                            {{ form_widget(form.forward) }}
+                            <label for="{{ form.forward.vars.id }}"></label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        {{ form_label(form.image) }}
+                        {{ form_errors(form.image) }}
+                        {{ form_widget(form.image) }}
+                    </div>
+                </fieldset>
+            </div>
+        </div>
+        <div class="form-bloc form-submit text-center">
+            {{ form_widget(form.submitSave, {'attr':{'class':'small button-icon button-save button'}}) }}
+        </div>
+        <div class="form-bloc form-rest">
+            <div class="row">
+                {{ form_rest(form) }}
+            </div>
+        </div>
+    </form>
+</div>

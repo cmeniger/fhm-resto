@@ -1,51 +1,27 @@
-fhm:
-    breadcrumb:                                 Accueil
-    admin:
-        breadcrumb:                             Admin
-        card:
-            breadcrumb:                         Carte Menu
-            create:
-                breadcrumb:                     Ajouter une Carte Menu
-            update:
-                breadcrumb:                     Modifier
-            detail:
-                breadcrumb:                     Détails
-            category:
-                breadcrumb:                     Catégorie
-                create:
-                    breadcrumb:                 Ajouter une catégorie
-                update:
-                    breadcrumb:                 Modifier
-            product:
-                breadcrumb:                     Produits
-                create:
-                    breadcrumb:                 Ajouter un produit
-                update:
-                    breadcrumb:                 Modifier
-            ingredient:
-                breadcrumb:                     Ingrédient
-                create:
-                    breadcrumb:                 Ajouter un ingrédient
-                update:
-                    breadcrumb:                 Modifier
-project:
-    breadcrump:                                 Accueil
-    admin:
-        breadcrump:                             Admin
-        card:
-            breadcrump:                         Carte Menu
-            create:
-                breadcrumb:                     Ajouter
-            update:
-                breadcrumb:                     Modifier
-            detail:
-                breadcrumb:                     Détails
+breadcrumb:
+    card:                                       Cartes
+    card_create:                                Ajouter
+    card_update:                                Modifier
+    card_detail:                                '%name%'
+    card_category:                              Catégories
+    card_category_create:                       Ajouter
+    card_category_update:                       Modifier
+    card_category_detail:                       '%name%'
+    card_product:                               Produits
+    card_product_create:                        Ajouter
+    card_product_update:                        Modifier
+    card_product_detail:                        '%name%'
+    card_ingredient:                            Ingrédients
+    card_ingredient_create:                     Ajouter
+    card_ingredient_update:                     Modifier
+    card_ingredient_detail:                     '%name%'
+
 card:
     admin:
         index:
             title:                              Gestion des cartes
-            link:                               Cartes Menu
-            breadcrumb:                         Cartes Menu
+            link:                               Cartes
+            breadcrumb:                         Cartes
             nodata:                             Aucune donnée
             form:
                 search:                         Rechercher
@@ -77,7 +53,7 @@ card:
         create:
             title:                              Ajouter
             link:                               Ajouter
-            breadcrumb:                         Ajouter une carte menu
+            breadcrumb:                         Ajouter une carte
             flash:
                 ok:                             La carte a bien été créée.
                 ko:                             La carte n'a pas été créée.
@@ -144,10 +120,10 @@ card:
                     options:                    Options
 
         detail:
-            title:                              '%name%'
+            title:                              %name%
             categories:                         Gestion des catégories
             link:                               Détail
-            breadcrumb:                         '%name%'
+            breadcrumb:                         %name%
             card:
                 anchor:                         Carte
                 title:                          Carte
@@ -280,12 +256,12 @@ card:
                     text:                       La modification d'une carte nécessite la validation d'un modérateur.
 
         detail:
-            title:                              '%name%'
+            title:                              "%name%"
             categories:                         Gestion des Catégories
             products:                           Gestion des Produits
             ingredients:                        Gestion des Ingrédients
             link:                               Détail
-            breadcrumb:                         '%name%'
+            breadcrumb:                         "%name%"
             data:
                 title:                          Informations
                 create:                         Création
@@ -317,6 +293,8 @@ card:
             undelete:                           Restaurer
             update:                             Modifier
             add:                                Ajouter
+            add_category:                       Ajouter une catégorie
+            add_product:                        Ajouter un produit
         confirm:
             activate:                           Confirmer l'activation ?
             deactivate:                         Confirmer la désactivation ?
@@ -345,7 +323,7 @@ card:
     category:
         admin:
             index:
-                title:                          Gestion des catégories de carte
+                title:                          "Gestion des cartes : catégories"
                 link:                           Catégories
                 breadcrumb:                     Catégories
                 nodata:                         Aucune donnée
@@ -409,7 +387,6 @@ card:
                         cancel:                 Annuler
                         import:                 Importer
                         export:                 Exporter
-                        delete:                 Supprimer
                     fieldset:
                         data:                   Données
                         options:                Options
@@ -449,7 +426,6 @@ card:
                         cancel:                 Annuler
                         import:                 Importer
                         export:                 Exporter
-                        delete:                 Supprimer
                     fieldset:
                         data:                   Données
                         options:                Options
@@ -458,9 +434,9 @@ card:
                         categories:             Catégories rattachées
 
             detail:
-                title:                          '%name%'
+                title:                          "%name%"
                 link:                           Détail
-                breadcrumb:                     '%name%'
+                breadcrumb:                     "%name%"
                 card:
                     tile:                       Carte
                     anchor:                     Carte
@@ -533,7 +509,7 @@ card:
 
         front:
             index:
-                title:                          Catégories de produit
+                title:                          "Card : catégories"
                 link:                           Catégories
                 breadcrumb:                     Catégories
                 nodata:                         Aucune donnée
@@ -590,9 +566,9 @@ card:
                         text:                   La modification d'une catégorie nécessite la validation d'un modérateur.
 
             detail:
-                title:                          '%name%'
+                title:                          "%name%"
                 link:                           Détail
-                breadcrumb:                     '%name%'
+                breadcrumb:                     "%name%"
                 data:
                     title:                      Informations
                     create:                     Création
@@ -607,7 +583,7 @@ card:
 
         api:
             index:
-                title:                          Catégories de produits
+                title:                          "Cartes : catégories"
 
             create:
                 form:
@@ -626,6 +602,7 @@ card:
                         media:                  Médias
                         products:               Produits rattachés
                         categories:             Catégories rattachées
+                        menu:                   Menu
 
             update:
                 form:
@@ -644,9 +621,10 @@ card:
                         media:                  Médias
                         products:               Produits rattachés
                         categories:             Catégories rattachées
+                        menu:                   Menu
 
         pagination:
-            counter:                            'Nombre de catégories: %count% / %all%'
+            counter:                            "Nombre de catégories: %count% / %all%"
 
         autocomplete:
             nodata:                             Aucun résultat
@@ -659,7 +637,7 @@ card:
     product:
         admin:
             index:
-                title:                          Gestion des produits d'une carte
+                title:                          "Gestion des cartes : produits"
                 link:                           Produits
                 breadcrumb:                     Produits
                 nodata:                         Aucune donnée
@@ -764,9 +742,9 @@ card:
                         data2:                  Catégories et ingrédients
 
             detail:
-                title:                          '%name%'
+                title:                          "%name%"
                 link:                           Détail
-                breadcrumb:                     '%name%'
+                breadcrumb:                     "%name%"
                 card:
                     tile:                       Carte
                     anchor:                     Carte
@@ -838,7 +816,7 @@ card:
 
         front:
             index:
-                title:                          Card ':' produits
+                title:                          "Card : produits"
                 link:                           Produits
                 breadcrumb:                     Produits
                 nodata:                         Aucune donnée
@@ -895,9 +873,9 @@ card:
                         text:                   La modification d'un produit nécessite la validation d'un modérateur.
 
             detail:
-                title:                          '%name%'
+                title:                          "%name%"
                 link:                           Détail
-                breadcrumb:                     '%name%'
+                breadcrumb:                     "%name%"
                 data:
                     title:                      Informations
                     create:                     Création
@@ -912,12 +890,13 @@ card:
 
         api:
             index:
-                title:                          Card ':' produits
+                title:                          "Card : produits"
 
             create:
                 form:
                     name:                       Nom
                     description:                Description
+                    ingredient:                 Ingrédients (séparé par une virgule)
                     price:                      Prix
                     forward:                    En avant
                     image:                      Image
@@ -931,11 +910,13 @@ card:
                         media:                  Médias
                         categories:             Catégories rattachées
                         ingredients:            Ingrédients rattachés
+                        forward:                En avant
 
             update:
                 form:
                     name:                       Nom
                     description:                Description
+                    ingredient:                 Ingrédients (séparé par une virgule)
                     price:                      Prix
                     forward:                    En avant
                     image:                      Image
@@ -949,9 +930,10 @@ card:
                         media:                  Médias
                         categories:             Catégories rattachées
                         ingredients:            Ingrédients rattachés
+                        forward:                En avant
 
         pagination:
-            counter:                            'Nombre de produits: %count% / %all%'
+            counter:                            "Nombre de produits: %count% / %all%"
 
         autocomplete:
             nodata:                             Aucun résultat
@@ -964,7 +946,7 @@ card:
     ingredient:
         admin:
             index:
-                title:                          Gestion des ingrédients
+                title:                          "Gestion des cartes : ingrédients"
                 link:                           Ingrédients
                 breadcrumb:                     Ingrédients
                 nodata:                         Aucune donnée
@@ -1060,9 +1042,9 @@ card:
                         products:               Produits rattachés
 
             detail:
-                title:                          '%name%'
+                title:                          "%name%"
                 link:                           Détail
-                breadcrumb:                     '%name%'
+                breadcrumb:                     "%name%"
                 card:
                     tile:                       Carte
                     anchor:                     Carte
@@ -1134,7 +1116,7 @@ card:
 
         front:
             index:
-                title:                          Card ':' ingrédients
+                title:                          "Card : ingrédients"
                 link:                           Ingrédients
                 breadcrumb:                     Ingrédients
                 nodata:                         Aucune donnée
@@ -1191,9 +1173,9 @@ card:
                         text:                   La modification d'un ingrédient nécessite la validation d'un modérateur.
 
             detail:
-                title:                          '%name%'
+                title:                          "%name%"
                 link:                           Détail
-                breadcrumb:                     '%name%'
+                breadcrumb:                     "%name%"
                 data:
                     title:                      Informations
                     create:                     Création
@@ -1208,7 +1190,7 @@ card:
 
         api:
             index:
-                title:                          Card ':' ingrédients
+                title:                          "Card : ingrédients"
 
             create:
                 form:

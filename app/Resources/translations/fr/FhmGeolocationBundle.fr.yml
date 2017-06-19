@@ -1,27 +1,5 @@
-fhm:
-    breadcrumb:                                 Accueil
-    admin:
-        breadcrumb:                             Admin
-        geolocation:
-            breadcrumb:                         Gealocation
-            create:
-                breadcrumb:                     Ajouter un géolocation
-            update:
-                breadcrumb:                     Modifier
-            detail:
-                breadcrumb:                     Détails
-project:
-    breadcrump:                                 Accueil
-    admin:
-        breadcrump:                             Admin
-        geolocation:
-            breadcrump:                         Géolocation
-            create:
-                breadcrumb:                     Ajouter un géolocation
-            update:
-                breadcrumb:                     Modifier
-            detail:
-                breadcrumb:                     Détails
 geolocation:
     aroundme:                                   Autour de moi
     here:                                       Vous êtes ici.
+    error:
+        geolocation:                            Nous n'avons pas pu vous localiser. Vous devez activer l'option dans les paramètres de votre navigateur.

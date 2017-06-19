@@ -1,0 +1,142 @@
+fhm:
+    admin:
+        breadcrumb:                             Admin
+        link:                                   Console
+        title:                                  Administration
+        nodata:                                 Available soon...
+        search:                                 Search
+
+    menu:
+        title:                                  Administration
+        action:
+            cache:                              Clear the cache 
+
+    error:
+        route:                                  The route does not exist.
+        forbidden:                              Access forbidden.
+
+    status:
+        delete:                                 Deleted
+        enable:                                 Activated
+        disable:                                Deactivated
+        share:                                  Shared
+        global:                                 Global
+        private:                                Private
+        yes:                                    Yes
+        no:                                     No
+
+    grouping:
+        name:                                   Groupe(s)
+        add:                                    Add to the group "%name%"
+        title:                                  Groups management
+        list1:                                  Available
+        list2:                                  Selected
+
+    language:
+        fieldset:                               Languages
+        label:                                  Available languages
+        title:                                  Language(s)
+        code:
+            all:                                All the languages
+
+    seo:
+        fieldset:                               Natural referencing 
+        title:                                  Title (up to 50 characters)
+        description:                            Description (up to 150 characters)
+        keywords:                               Key words (separated by a comma)
+
+    autocomplete:
+        nodata:                                 No result
+        placeholder:                            Search
+
+    schedules:
+        title:                                  Opening Hours
+        nodata:                                 Not specified 
+        days:
+            1:                                  Monday
+            2:                                  Tuesday
+            3:                                  Wednesday
+            4:                                  Thursday
+            5:                                  Friday
+            6:                                  Saturday
+            7:                                  Sunday
+        day:
+            start:                              Start
+            end:                                End
+            close:                              Closed
+            hour:                               "%start% to %end%"
+            closed:                             Closed
+            reopen:                             "Scheduled re-opening : %date%"
+        close:
+            check:                              Closed
+            reason:                             Reason 
+            date:                               Re-opening
+        state:
+            nodata:                             Not specified 
+            open:                               Open
+            close:                              Closed
+
+    mail:
+        flash:
+            disable:                            Sending e-mail is deactivated
+
+    recaptcha:
+        label:                                  Security
+
+    anchor:
+        title:                                  Page
+        top:                                    Top
+        data:                                   Informations
+        url:                                    Routes
+        historic:                               Revision history
+        admin:                                  Administration
+
+    historic:
+        title:                                  Revision history
+        table:
+            header:
+                date:                           Date
+                user:                           User
+                difference:                     Differences
+                action:                         Actions
+            action:
+                compare:                        Compare
+                delete:                         Delete
+                undelete:                       Restore
+                copy:                           Copy
+            confirm:
+                copy:                           Do you want to copy the revision history ?
+                delete:                         Do you want to delete the revision history ?
+                undelete:                       Do you want to undelete the revision history ?
+        pagination:
+            counter:                            "Number of revision history: %count% / %all%"
+        modal:
+            title:                              Revision history - Comparison
+            left:                               Revision history
+            right:                              Currently
+            filter:                             Filter
+            nodata:                             Empty
+            body:
+                name:                           Name
+                description:                    Description
+                delete:                         Deleted
+                active:                         Activated
+                share:                          Shared
+                global:                         Global
+                order:                          Order
+                grouping:                       Group(s)
+                language:                       Language(s)
+                seo:
+                    title:                      Natural referencing - Title
+                    description:                Natural referencing - Description
+                    keywords:                   Natural referencing - Key words
+    pagination:
+            counter:                            "Number of Places: %count% / %all%"
+
+    sex:
+        label:                                  Sex
+        m:                                      Mr
+        f:                                      Ms
+
+    form:
+        required:                               Required fields

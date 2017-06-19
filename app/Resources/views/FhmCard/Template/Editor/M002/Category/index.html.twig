@@ -1,0 +1,155 @@
+{% trans_default_domain instance.domain %}
+
+{# @var card     \Fhm\CardBundle\Document\Card #}
+{# @var tree     array #}
+{# @var template string #}
+{# @var instance object #}
+{% macro category(card, tree, template, instance) %}
+    {% trans_default_domain instance.domain %}
+    {% import _self as this %}
+
+    <div class="content inline" id="tab-category-{{ tree.category.getId() }}">
+        {{ this.categoryActionsMaster(card, tree.category, tree.category, template, instance) }}
+        {% if tree.category.getDescription() %}
+            <div class="description">
+                {{ category.getDescription() }}
+            </div>
+        {% endif %}
+        {{ this.product(card, tree.category, tree.category, template, instance) }}
+        {{ this.categoryBranchs(card, tree, template, false, instance) }}
+    </div>
+{% endmacro %}
+
+{# Ajouter des branches #}
+{# @var card     \Fhm\CardBundle\Document\Card #}
+{# @var tree     array #}
+{# @var template string #}
+{# @var master   boolean #}
+{# @var instance object #}
+{% macro categoryBranchs(card, tree, template, master, instance) %}
+    {% trans_default_domain instance.domain %}
+    {% import _self as this %}
+
+    {% if tree.sons|length > 0 %}
+        {% for branch in tree.sons %}
+            <div class="category">
+                <div class="category-title">
+                    <span>{{ branch.category.getName() }}</span>
+                </div>
+                {{ this.categoryActions(card, tree.category, branch.category, template, instance) }}
+                {% if branch.category.getDescription() %}
+                    <div class="category-description">
+                        {{ branch.category.getDescription() }}
+                    </div>
+                {% endif %}
+                {{ this.product(card, tree.category, branch.category, template, instance) }}
+            </div>
+        {% endfor %}
+    {% endif %}
+{% endmacro %}
+
+{# Actions #}
+{# @var card     \Fhm\CardBundle\Document\Card #}
+{# @var master   \Fhm\CardBundle\Document\CardCategory #}
+{# @var category \Fhm\CardBundle\Document\CardCategory #}
+{# @var template string #}
+{# @var instance object #}
+{% macro categoryActions(card, master, category, template, instance) %}
+    {% trans_default_domain instance.domain %}
+    {% import _self as this %}
+
+    <div class="editor-actions">
+        <div class="status">
+            {% if category.getMenu() is defined and category.getMenu() %}
+                <span class="status regular radius label" title="{{ ('card.api.status.menu')|trans({}, 'FhmCardBundle') }}">{{ ('card.api.status.menu')|trans({}, 'FhmCardBundle') }}</span>
+            {% endif %}
+            {% if category.getShare() and not category.hasGrouping(instance.grouping.used) %}
+                <span class="status regular radius label" title="{{ ('fhm.status.share')|trans({}, 'FhmFhmBundle') }}">{{ ('fhm.status.share')|trans({}, 'FhmFhmBundle') }}</span>
+            {% endif %}
+            {% if category.getGlobal() %}
+                <span class="status regular radius label" title="{{ ('fhm.status.global')|trans({}, 'FhmFhmBundle') }}">{{ ('fhm.status.global')|trans({}, 'FhmFhmBundle') }}</span>
+            {% endif %}
+            {% if category.getDelete() %}
+                <span class="status alert radius label" title="{{ ('fhm.status.delete')|trans({}, 'FhmFhmBundle') }}">{{ ('fhm.status.delete')|trans({}, 'FhmFhmBundle') }}</span>
+            {% elseif not category.getActive() %}
+                <span class="status warning radius label" title="{{ ('fhm.status.disable')|trans({}, 'FhmFhmBundle') }}">{{ ('fhm.status.disable')|trans({}, 'FhmFhmBundle') }}</span>
+            {% else %}
+                <span class="status success radius label" title="{{ ('fhm.status.enable')|trans({}, 'FhmFhmBundle') }}">{{ ('fhm.status.enable')|trans({}, 'FhmFhmBundle') }}</span>
+            {% endif %}
+        </div>
+        <div class="actions">
+            <a href="#" data-reveal-id="modal-editor-product" data-modal="product" data-url="{{ path('fhm_api_card_product_create',{idCard:card.getId(),idMaster:master.getId(),idCategory:category.getId(),template:template}) }}" title="{{ ('card.api.action.add_product')|trans }}" class="icon-add"><i class="fa fa-cube"></i></a>
+            <a href="#" data-reveal-id="modal-editor-category" data-modal="category" data-url="{{ path('fhm_api_card_category_update',{idCard:card.getId(),idMaster:master.getId(),idCategory:category.getId(),template:template}) }}" title="{{ ('card.api.action.update')|trans }}"><i class="fa fa-pencil"></i></a>
+            {% if category.getDelete() %}
+                {% if instance.user.admin %}
+                    <a href="{{ path('fhm_api_card_category_undelete', {idCard:card.getId(),idMaster:master.getId(),idCategory:category.getId(),template:template}) }}" title="{{ ('card.api.action.undelete')|trans }}" data-confirm="{{ ('card.api.confirm.undelete')|trans }}" data-ajax><i class="fa fa-undo"></i></a>
+                    <a href="{{ path('fhm_api_card_category_delete', {idCard:card.getId(),idMaster:master.getId(),idCategory:category.getId(),template:template}) }}" title="{{ ('card.api.action.delete')|trans }}" data-confirm="{{ ('card.api.confirm.delete')|trans }}" data-ajax><i class="fa fa-trash"></i></a>
+                {% endif %}
+            {% else %}
+                {% if category.getActive() %}
+                    <a href="{{ path('fhm_api_card_category_deactivate', {idCard:card.getId(),idMaster:master.getId(),idCategory:category.getId(),template:template}) }}" title="{{ ('card.api.action.deactivate')|trans }}" data-confirm="{{ ('card.api.confirm.deactivate')|trans }}" data-ajax><i class="fa fa-eye-slash"></i></a>
+                {% else %}
+                    <a href="{{ path('fhm_api_card_category_activate', {idCard:card.getId(),idMaster:master.getId(),idCategory:category.getId(),template:template}) }}" title="{{ ('card.api.action.activate')|trans }}" data-confirm="{{ ('card.api.confirm.activate')|trans }}" data-ajax><i class="fa fa-eye"></i></a>
+                {% endif %}
+                <a href="{{ path('fhm_api_card_category_delete', {idCard:card.getId(),idMaster:master.getId(),idCategory:category.getId(),template:template}) }}" title="{{ ('card.api.action.delete')|trans }}" data-confirm="{{ ('card.api.confirm.delete')|trans }}" data-ajax><i class="fa fa-trash-o"></i></a>
+            {% endif %}
+        </div>
+    </div>
+{% endmacro %}
+
+{# Actions #}
+{# @var card     \Fhm\CardBundle\Document\Card #}
+{# @var master   \Fhm\CardBundle\Document\CardCategory #}
+{# @var category \Fhm\CardBundle\Document\CardCategory #}
+{# @var template string #}
+{# @var instance object #}
+{% macro categoryActionsMaster(card, master, category, template, instance) %}
+    {% trans_default_domain instance.domain %}
+    {% import _self as this %}
+
+    <div class="editor-actions">
+        <div class="status">
+            {% if category.getMenu() is defined and category.getMenu() %}
+                <span class="status regular radius label" title="{{ ('card.api.status.menu')|trans({}, 'FhmCardBundle') }}">{{ ('card.api.status.menu')|trans({}, 'FhmCardBundle') }}</span>
+            {% endif %}
+            {% if category.getShare() and not category.hasGrouping(instance.grouping.used) %}
+                <span class="status regular radius label" title="{{ ('fhm.status.share')|trans({}, 'FhmFhmBundle') }}">{{ ('fhm.status.share')|trans({}, 'FhmFhmBundle') }}</span>
+            {% endif %}
+            {% if category.getGlobal() %}
+                <span class="status regular radius label" title="{{ ('fhm.status.global')|trans({}, 'FhmFhmBundle') }}">{{ ('fhm.status.global')|trans({}, 'FhmFhmBundle') }}</span>
+            {% endif %}
+            {% if category.getDelete() %}
+                <span class="status alert radius label" title="{{ ('fhm.status.delete')|trans({}, 'FhmFhmBundle') }}">{{ ('fhm.status.delete')|trans({}, 'FhmFhmBundle') }}</span>
+            {% elseif not category.getActive() %}
+                <span class="status warning radius label" title="{{ ('fhm.status.disable')|trans({}, 'FhmFhmBundle') }}">{{ ('fhm.status.disable')|trans({}, 'FhmFhmBundle') }}</span>
+            {% else %}
+                <span class="status success radius label" title="{{ ('fhm.status.enable')|trans({}, 'FhmFhmBundle') }}">{{ ('fhm.status.enable')|trans({}, 'FhmFhmBundle') }}</span>
+            {% endif %}
+        </div>
+        <div class="actions">
+            <a href="#" data-reveal-id="modal-editor-category" data-modal="category" data-url="{{ path('fhm_api_card_category_create',{idCard:card.getId(),idMaster:master.getId(),idCategory:category.getId(),template:template}) }}" title="{{ ('card.api.action.add_category')|trans }}" class="icon-add"><i class="fa fa-folder"></i></a>
+            <a href="#" data-reveal-id="modal-editor-product" data-modal="product" data-url="{{ path('fhm_api_card_product_create',{idCard:card.getId(),idMaster:master.getId(),idCategory:master.getId(), template:template}) }}" title="{{ ('card.api.action.add_product')|trans }}" class="icon-add"><i class="fa fa-cube"></i></a>
+            {% if category.getActive() %}
+                <a href="{{ path('fhm_api_card_category_deactivate', {idCard:card.getId(),idMaster:master.getId(),idCategory:category.getId(),template:template}) }}" title="{{ ('card.api.action.deactivate')|trans }}" data-confirm="{{ ('card.api.confirm.deactivate')|trans }}" data-ajax><i class="fa fa-eye-slash"></i></a>
+            {% else %}
+                <a href="{{ path('fhm_api_card_category_activate', {idCard:card.getId(),idMaster:master.getId(),idCategory:category.getId(),template:template}) }}" title="{{ ('card.api.action.activate')|trans }}" data-confirm="{{ ('card.api.confirm.activate')|trans }}" data-ajax><i class="fa fa-eye"></i></a>
+            {% endif %}
+        </div>
+    </div>
+{% endmacro %}
+
+{# Product #}
+{# @var card     \Fhm\CardBundle\Document\Card #}
+{# @var master   \Fhm\CardBundle\Document\CardCategory #}
+{# @var category \Fhm\CardBundle\Document\CardCategory #}
+{# @var template string #}
+{# @var instance object #}
+{% macro product(card, master, category, template, instance) %}
+    {% trans_default_domain instance.domain %}
+    {% import _self as this %}
+    {% import "::FhmCard/Template/Editor/M002/Product/index.html.twig" as macroProduct %}
+
+    {{ macroProduct.product(card, master, category, template, instance) }}
+{% endmacro %}
+
+{{ _self.category(card, tree, template, instance) }}

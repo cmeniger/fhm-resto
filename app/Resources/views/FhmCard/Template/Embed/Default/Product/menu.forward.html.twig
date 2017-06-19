@@ -1,0 +1,9 @@
+{% trans_default_domain instance.domain %}
+
+<li>
+    <div class="content" style="background:url('{{ product.getImage()|media('s') }}') center center no-repeat">
+        <div class="ingredient-content">
+            <span class="title">{{ product.getName() }}</span>
+        </div>
+    </div>
+</li>

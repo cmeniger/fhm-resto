@@ -1,0 +1,258 @@
+notification:
+    admin:
+        index:
+            title:                              Gestion des notifications
+            link:                               Notifications
+            breadcrumb:                         Notifications
+            nodata:                             No data
+            form:
+                search:                         Search
+            table:
+                header:
+                    name:                       Name
+                    date:                       Date
+                    template:                   Modèle
+                    user:                       Destinataire
+                    new:                        Nouveau
+                    action:                     Actions
+                    status:                     Status
+                action:
+                    activate:                   Activate
+                    deactivate:                 Deactivate
+                    delete:                     Delete
+                    detail:                     Détail
+                    duplicate:                  Duplicate
+                    undelete:                   Undelete
+                    update:                     Update
+                confirm:
+                    activate:                   Confirmer l'activation de la notification ?
+                    deactivate:                 Confirmer la désactivation de la notification ?
+                    delete:                     Confirmer la suppression de la notification ?
+                    undelete:                   Confirmer le déblocage de la notification ?
+
+        create:
+            title:                              Ajouter
+            link:                               Ajouter
+            breadcrumb:                         Ajouter une notification
+            flash:
+                ok:                             La notification a bien été créée.
+                ko:                             La notification n'a pas été créée.
+            form:
+                name:                           Name
+                description:                    Description
+                user:                           Utilisateur
+                content:                        Message
+                active:                         Activate
+                share:                          Partager
+                global:                         Globale
+                submit:
+                    save:                       Save
+                    new:                        Save and add
+                    duplicate:                  Save and duplicate
+                    quit:                       Save and quit
+                    config:                     Save and configure
+                    cancel:                     Cancel
+                    import:                     Import
+                    export:                     Export
+                fieldset:
+                    data:                       Données
+                    options:                    Options
+
+        update:
+            title:                              Update
+            link:                               Update
+            breadcrumb:                         Update
+            flash:
+                ok:                             La notification a bien été modifiée.
+                ko:                             La notification n'a pas été modifiée.
+            form:
+                name:                           Name
+                description:                    Description
+                user:                           Utilisateur
+                content:                        Message
+                active:                         Activate
+                share:                          Partager
+                global:                         Globale
+                submit:
+                    save:                       Save
+                    new:                        Save and add
+                    duplicate:                  Save and duplicate
+                    quit:                       Save and quit
+                    config:                     Save and configure
+                    cancel:                     Cancel
+                    import:                     Import
+                    export:                     Export
+                    delete:                     Delete
+                fieldset:
+                    data:                       Données
+                    options:                    Options
+
+        detail:
+            title:                              "%name%"
+            link:                               Détail
+            breadcrumb:                         "%name%"
+            data:
+                title:                          Informations
+                id:                             ID
+                create:                         Création
+                update:                         Modification
+                name:                           Name
+                alias:                          Alias
+                description:                    Description
+                status:                         Status
+                template:                       Modèle
+                user:                           Destinataire
+            url:
+                title:                          Routes disponibles
+                admin:
+                    edit:                       Update
+                    detail:                     Configure
+                front:
+                    id:                         Afficher via l'ID
+                    name:                       Afficher via le nom
+                    alias:                      Afficher via l'alias
+                    lite:                       Afficher via l'url simplifiée
+            admin:
+                title:                          Outils d'administration
+
+        export:
+            breadcrumb:                         Export
+            form:
+                submit:                         Export
+            link:                               Export
+            title:                              Export des notifications
+
+        import:
+            breadcrumb:                         Import
+            flash:
+                ok:                             Les notifications ont bien été importées (%countAdd% ajout(s), %countUpdate% modification(s), %countError% erreur(s)).
+                ko:                             Les notifications n'ont pas été importées.
+            form:
+                file:                           Fichier CSV
+                submit:                         Import
+            link:                               Import
+            title:                              Import des notifications
+
+        deactivate:
+            flash:
+                ok:                             La notification a bien été désactivée.
+
+        delete:
+            flash:
+                ok:                             La notification a bien été supprimée.
+
+        activate:
+            flash:
+                ok:                             La notification a bien été activée.
+
+        undelete:
+            flash:
+                ok:                             La notification a bien été restaurée.
+
+    front:
+        index:
+            title:                              Notifications
+            link:                               Notifications
+            breadcrumb:                         Notifications
+            nodata:                             No data
+            form:
+                search:                         Search
+            table:
+                header:
+                    name:                       Name
+                    action:                     Actions
+                action:
+                    detail:                     Détail
+                    delete:                     Delete
+                confirm:
+                    delete:                     Confirmer la suppression de la notification ?
+
+        create:
+            title:                              Ajouter
+            link:                               Ajouter
+            breadcrumb:                         Ajouter une notification
+            flash:
+                ok:                             La notification a bien été créée.
+                ko:                             La notification n'a pas été créée.
+            form:
+                name:                           Name
+                description:                    Description
+                submit:
+                    save:                       Save
+                    new:                        Save and add
+                    duplicate:                  Save and duplicate
+                    quit:                       Save and quit
+                    cancel:                     Cancel
+                alert:
+                    title:                      Information
+                    text:                       L'ajout d'une notification nécessite la validation d'un modérateur.
+
+        update:
+            title:                              Update
+            link:                               Update
+            breadcrumb:                         Update
+            flash:
+                ok:                             La notification a bien été modifiée.
+                ko:                             La notification n'a pas été modifiée.
+            form:
+                name:                           Name
+                description:                    Description
+                submit:
+                    save:                       Save
+                    new:                        Save and add
+                    duplicate:                  Save and duplicate
+                    quit:                       Save and quit
+                    cancel:                     Cancel
+                alert:
+                    title:                      Information
+                    text:                       La modification d'une notification nécessite la validation d'un modérateur.
+
+        detail:
+            title:                              "%name%"
+            link:                               Détail
+            breadcrumb:                         "%name%"
+            data:
+                title:                          Informations
+                create:                         Création
+                update:                         Modification
+                name:                           Name
+                alias:                          Alias
+                description:                    Description
+
+        delete:
+            flash:
+                ok:                             La notification a bien été supprimée.
+
+    api:
+        index:
+            title:                              Notifications
+
+    pagination:
+        counter:                                "Nombre de notifications: %count% / %all%"
+
+    autocomplete:
+        nodata:                                 Aucun résultat
+
+    error:
+        unknown:                                La notification n'existe pas.
+        delete:                                 La notification n'existe pas.
+        forbidden:                              Droits insuffisants.
+
+    modal:
+        title:
+            new:                                Notifications
+            all:                                All notifications
+        nodata:                                 No notification
+        all:                                    All notifications
+        new:                                    New notifications
+
+    item:
+        title:
+            new:                                Notifications
+            all:                                All notifications
+        nodata:                                 No notification
+        all:                                    All notifications
+        delete:                                 Delete
+        confirm:                                Confirm deletion of notification?
+        new:                                    Mark as unread
+        old:                                    Mark as read

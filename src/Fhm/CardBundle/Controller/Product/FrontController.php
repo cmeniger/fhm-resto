@@ -43,6 +43,56 @@ class FrontController extends FhmController
     /**
      * @Route
      * (
+     *      path="/create",
+     *      name="fhm_card_product_create"
+     * )
+     * @Template("::FhmCard/Front/Product/create.html.twig")
+     */
+    public function createAction(Request $request)
+    {
+        // For activate this route, delete next line
+        throw $this->createNotFoundException($this->get('translator')->trans('fhm.error.route', array(), 'FhmFhmBundle'));
+
+        return parent::createAction($request);
+    }
+
+    /**
+     * @Route
+     * (
+     *      path="/duplicate/{id}",
+     *      name="fhm_card_product_duplicate",
+     *      requirements={"id"="[a-z0-9]*"}
+     * )
+     * @Template("::FhmCard/Front/Product/create.html.twig")
+     */
+    public function duplicateAction(Request $request, $id)
+    {
+        // For activate this route, delete next line
+        throw $this->createNotFoundException($this->get('translator')->trans('fhm.error.route', array(), 'FhmFhmBundle'));
+
+        return parent::duplicateAction($request, $id);
+    }
+
+    /**
+     * @Route
+     * (
+     *      path="/update/{id}",
+     *      name="fhm_card_product_update",
+     *      requirements={"id"="[a-z0-9]*"}
+     * )
+     * @Template("::FhmCard/Front/Product/update.html.twig")
+     */
+    public function updateAction(Request $request, $id)
+    {
+        // For activate this route, delete next line
+        throw $this->createNotFoundException($this->get('translator')->trans('fhm.error.route', array(), 'FhmFhmBundle'));
+
+        return parent::updateAction($request, $id);
+    }
+
+    /**
+     * @Route
+     * (
      *      path="/detail/{id}",
      *      name="fhm_card_product_detail",
      *      requirements={"id"=".+"}
@@ -64,115 +114,10 @@ class FrontController extends FhmController
      */
     public function deleteAction($id)
     {
-        $object = $this->get('fhm_tools')->dmRepository(self::$repository)->find($id);
-        if ($object == "") {
-            throw $this->createNotFoundException(
-                $this->get('translator')->trans(self::$translation.'.error.unknown', array(), self::$domain)
-            );
-        }
-        $object->setDelete(true);
-        $this->get('fhm_tools')->dmPersist($object);
-        $this->get('session')->getFlashBag()->add(
-            'notice',
-            $this->get('translator')->trans(
-                self::$translation.'.admin.activate.flash.ok',
-                array(),
-                self::$domain
-            )
-        );
+        // For activate this route, delete next line
+        throw $this->createNotFoundException($this->get('translator')->trans('fhm.error.route', array(), 'FhmFhmBundle'));
 
-        return $this->redirect($this->get('fhm_tools')->getLastRoute($this->get('request_stack')->getCurrentRequest()));
-    }
-
-    /**
-     * @Route
-     * (
-     *      path="/undelete/{id}",
-     *      name="fhm_card_product_undelete",
-     *      requirements={"id"="[a-z0-9]*"}
-     * )
-     */
-    public function undeleteAction($id)
-    {
-        $object = $this->get('fhm_tools')->dmRepository(self::$repository)->find($id);
-        if ($object == "") {
-            throw $this->createNotFoundException(
-                $this->get('translator')->trans(self::$translation.'.error.unknown', array(), self::$domain)
-            );
-        }
-        $object->setDelete(false);
-        $this->get('fhm_tools')->dmPersist($object);
-        $this->get('session')->getFlashBag()->add(
-            'notice',
-            $this->get('translator')->trans(
-                self::$translation.'.admin.undelete.flash.ok',
-                array(),
-                self::$domain
-            )
-        );
-
-        return $this->redirect($this->get('fhm_tools')->getLastRoute($this->get('request_stack')->getCurrentRequest()));
-    }
-
-
-    /**
-     * @Route
-     * (
-     *      path="/activate/{id}",
-     *      name="fhm_card_product_activate",
-     *      requirements={"id"="[a-z0-9]*"}
-     * )
-     */
-    public function activateAction($id)
-    {
-        $object = $this->get('fhm_tools')->dmRepository(self::$repository)->find($id);
-        if ($object == "") {
-            throw $this->createNotFoundException(
-                $this->get('translator')->trans(self::$translation.'.error.unknown', array(), self::$domain)
-            );
-        }
-        $object->setActive(true);
-        $this->get('fhm_tools')->dmPersist($object);
-        $this->get('session')->getFlashBag()->add(
-            'notice',
-            $this->get('translator')->trans(
-                self::$translation.'.admin.activate.flash.ok',
-                array(),
-                self::$domain
-            )
-        );
-
-        return $this->redirect($this->get('fhm_tools')->getLastRoute($this->get('request_stack')->getCurrentRequest()));
-    }
-
-    /**
-     * @Route
-     * (
-     *      path="/deactivate/{id}",
-     *      name="fhm_card_product_deactivate",
-     *      requirements={"id"="[a-z0-9]*"}
-     * )
-     */
-    public function deactivateAction($id)
-    {
-        $object = $this->get('fhm_tools')->dmRepository(self::$repository)->find($id);
-        if ($object == "") {
-            throw $this->createNotFoundException(
-                $this->get('translator')->trans(self::$translation.'.error.unknown', array(), self::$domain)
-            );
-        }
-        $object->setActive(false);
-        $this->get('fhm_tools')->dmPersist($object);
-        $this->get('session')->getFlashBag()->add(
-            'notice',
-            $this->get('translator')->trans(
-                self::$translation.'.admin.activate.flash.ok',
-                array(),
-                self::$domain
-            )
-        );
-
-        return $this->redirect($this->get('fhm_tools')->getLastRoute($this->get('request_stack')->getCurrentRequest()));
+        return parent::deleteAction($id);
     }
 
     /**

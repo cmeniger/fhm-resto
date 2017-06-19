@@ -1,31 +1,13 @@
-fhm:
-    breadcrumb:                                 Accueil
-    admin:
-        breadcrumb:                             Admin
-        contact:
-            breadcrumb:                         Contact
-            message:
-                breadcrumb:                     Message
-                update:
-                    breadcrumb:                  Modifier
-            create:
-                breadcrumb:                     Ajouter un contact
-            update:
-                breadcrumb:                     Modifier
-            detail:
-                breadcrumb:                     Détails
-project:
-    breadcrump:                                 Accueil
-    admin:
-        breadcrump:                             Admin
-        contact:
-            breadcrump:                         Contact
-            create:
-                breadcrumb:                     Ajouter un contact
-            update:
-                breadcrumb:                     Modifier
-            detail:
-                breadcrumb:                     Détails
+breadcrumb:
+    contact:                                    Contacts
+    contact_create:                             Ajouter
+    contact_update:                             Modifier
+    contact_detail:                             '%name%'
+    contact_message:                            Messages
+    contact_message_create:                     Ajouter
+    contact_message_update:                     Modifier
+    contact_message_detail:                     '%name%'
+    
 contact:
     admin:
         index:
@@ -94,18 +76,6 @@ contact:
                 active:                         Activer
                 share:                          Partager
                 global:                         Globale
-                social:
-                    http:                       http://
-                    facebook:                   Facebook
-                    facebookId:                 ID Facebook
-                    twitter:                    Twitter
-                    twitterId:                  ID Twitter
-                    google:                     Google
-                    googleId:                   ID Google
-                    instagram:                  Instagram
-                    youtube:                    Youtube
-                    flux:                       Flux RSS
-                    site:                       Site internet
                 submit:
                     save:                       Sauvegarder
                     new:                        Sauvegarder et ajouter
@@ -124,7 +94,7 @@ contact:
                     options:                    Options
 
         update:
-            title:                              '%name%'
+            title:                              %name%
             link:                               Modifier
             breadcrumb:                         Modifier
             flash:
@@ -155,18 +125,6 @@ contact:
                 active:                         Activer
                 share:                          Partager
                 global:                         Globale
-                social:
-                    http:                       http://
-                    facebook:                   Facebook
-                    facebookId:                 ID Facebook
-                    twitter:                    Twitter
-                    twitterId:                  ID Twitter
-                    google:                     Google
-                    googleId:                   ID Google
-                    instagram:                  Instagram
-                    youtube:                    Youtube
-                    flux:                       Flux RSS
-                    site:                       Site internet
                 submit:
                     save:                       Sauvegarder
                     new:                        Sauvegarder et ajouter
@@ -176,7 +134,6 @@ contact:
                     cancel:                     Annuler
                     import:                     Importer
                     export:                     Exporter
-                    delete:                     Supprimer
                 fieldset:
                     informations:               Informations générales
                     map:                        Géolocalisation
@@ -186,9 +143,9 @@ contact:
                     options:                    Options
 
         detail:
-            title:                              '%name%'
+            title:                              %name%
             link:                               Détail
-            breadcrumb:                         '%name%'
+            breadcrumb:                         %name%
             data:
                 title:                          Informations
                 id:                             ID
@@ -273,7 +230,7 @@ contact:
         detail:
             title:                              Contact
             link:                               Détail
-            breadcrumb:                         '%name%'
+            breadcrumb:                         %name%
 
         form:
             firstname:                          Prénom
@@ -300,8 +257,8 @@ contact:
         forbidden:                              Droits insuffisants.
 
     email:
-        object:                                 FHMTools - Nous traitons votre message
-        body:                                   Bonjour %firstname%,<br><br>Votre message a bien été pris en compte, il sera traité dans les meilleurs délais par notre équipe.
+        object:                                 Chichamaps - Nous traitons votre message
+        body:                                   Hello %firstname%,<br><br>Votre message a bien été pris en compte, il sera traité dans les meilleurs délais par notre équipe.
         list:
             item1:                              Référence
             item2:                              Prénom
@@ -336,9 +293,9 @@ contact:
                         undelete:               Confirmer le déblocage du message ?
 
             detail:
-                title:                          '%name%'
+                title:                          %name%
                 link:                           Détail
-                breadcrumb:                     '%name%'
+                breadcrumb:                     %name%
                 data:
                     title:                      Informations
                     id:                         ID

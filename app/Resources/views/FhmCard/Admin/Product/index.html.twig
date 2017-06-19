@@ -20,14 +20,14 @@
 {% block content_data_header %}
     <th>{{ (instance.translation ~ '.admin.index.table.header.image')|trans }}</th>
     {{ parent() }}
-    <th>{{ (instance.translation ~ '.admin.index.table.header.card')|trans }}</th>
-    <th>{{ (instance.translation ~ '.admin.index.table.header.categories')|trans }}</th>
-    <th>{{ (instance.translation ~ '.admin.index.table.header.ingredients')|trans }}</th>
-    <th>{{ (instance.translation ~ '.admin.index.table.header.order')|trans }}</th>
+    <th {% if pagination.isSorted('sort_card') %}class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, (instance.translation ~ '.admin.index.table.header.card')|trans, 'sort_card')|raw }}</th>
+    <th {% if pagination.isSorted('sort_category') %}class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, (instance.translation ~ '.admin.index.table.header.categories')|trans, 'sort_category')|raw }}</th>
+    <th {% if pagination.isSorted('sort_ingredient') %}class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, (instance.translation ~ '.admin.index.table.header.ingredients')|trans, 'sort_ingredient')|raw }}</th>
+    <th {% if pagination.isSorted('order') %}class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, (instance.translation ~ '.admin.index.table.header.order')|trans, 'order')|raw }}</th>
 {% endblock %}
 
 {% block content_data_header_status %}
-    <th>{{ (instance.translation ~ '.admin.index.table.header.default')|trans }}</th>
+    <th {% if pagination.isSorted('default') %}class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, (instance.translation ~ '.admin.index.table.header.default')|trans, 'default')|raw }}</th>
     {{ parent() }}
 {% endblock %}
 

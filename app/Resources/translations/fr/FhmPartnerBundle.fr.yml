@@ -1,33 +1,13 @@
-fhm:
-    breadcrumb:                                 Accueil
-    admin:
-        breadcrumb:                             Admin
-        partner:
-            breadcrumb:                         Partenaire
-            group:
-                breadcrumb:                     Groupe
-                update:
-                    breadcrumb:                 Modifier
-                create:
-                    breadcrumb:                 Ajouter un groupe de partenaire
-            create:
-                breadcrumb:                     Ajouter un partenaire
-            update:
-                breadcrumb:                     Modifier
-            detail:
-                breadcrumb:                     Détails
-project:
-    breadcrump:                                 Accueil
-    admin:
-        breadcrump:                             Admin
-        partner:
-            breadcrump:                         Partenaire
-            create:
-                breadcrumb:                     Ajouter un partenaire
-            update:
-                breadcrumb:                     Modifier
-            detail:
-                breadcrumb:                     Détails
+breadcrumb:
+    partner:                                    Partenaires
+    partner_create:                             Ajouter
+    partner_update:                             Modifier
+    partner_detail:                             '%name%'
+    partner_group:                              Groupes
+    partner_group_create:                       Ajouter
+    partner_group_update:                       Modifier
+    partner_group_detail:                       '%name%'
+    
 partner:
     admin:
         index:
@@ -295,9 +275,9 @@ partner:
     group:
         admin:
             index:
-                title:                          Gestion des groupes de partenaires
-                link:                           Groupes de partenaires
-                breadcrumb:                     Groupes de partenaires
+                title:                          "Gestion des partenaires : groupes"
+                link:                           Groupes
+                breadcrumb:                     Groupes
                 nodata:                         Aucune donné
                 form:
                     search:                     Rechercher

@@ -2,41 +2,16 @@
 {% extends "::FhmFhm/Admin/create.html.twig" %}
 {% import "::Macros/dd.tree.html.twig" as macroTree %}
 
-{% block content_data_fields_data %}
+{% block content_data_fields_data_add %}
     <div class="row">
-        <div class="large-6 columns">
-            <fieldset>
-                <legend>{{ (instance.translation ~ '.admin.create.form.fieldset.data')|trans }}</legend>
-                <div class="row">
-                    <div class="large-12 columns">
-                        {{ form_label(form.name) }}
-                        {{ form_errors(form.name) }}
-                        {{ form_widget(form.name) }}
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="large-12 columns">
-                        {{ form_label(form.description) }}
-                        {{ form_errors(form.description) }}
-                        {{ form_widget(form.description) }}
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="large-12 columns">
-                        {{ form_label(form.icon) }}
-                        {{ form_errors(form.icon) }}
-                        {{ form_widget(form.icon) }}
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="large-12 columns">
-                        {{ form_label(form.route) }}
-                        {{ form_errors(form.route) }}
-                        {{ form_widget(form.route) }}
-                    </div>
-                </div>
-            </fieldset>
-        </div>
+        {{ form_label(form.icon) }}
+        {{ form_errors(form.icon) }}
+        {{ form_widget(form.icon) }}
+    </div>
+    <div class="row">
+        {{ form_label(form.route) }}
+        {{ form_errors(form.route) }}
+        {{ form_widget(form.route) }}
     </div>
 {% endblock %}
 

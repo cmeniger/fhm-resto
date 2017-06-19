@@ -1,61 +1,21 @@
-fhm:
-    breadcrumb:                                 Accueil
-    admin:
-        breadcrumb:                             Admin
-        gallery:
-            breadcrumb:                         Galerie
-            create:
-                breadcrumb:                     Ajouter une galerie
-            update:
-                breadcrumb:                     Modifier
-            detail:
-                breadcrumb:                     Détails
-            album:
-                breadcrumb:                     Album
-                create:
-                    breadcrumb:                 Ajouter
-                update:
-                    breadcrumb:                 Modifier
-                detail:
-                    breadcrumb:                 Détail
-            video:
-                breadcrumb:                     Vidéo
-                create:
-                    breadcrumb:                 Ajouter
-                update:
-                    breadcrumb:                 Modifier
-                detail:
-                    breadcrumb:                 Détail
-                update:
-                    breadcrumb:                 Modifier
-            item:
-                multiple:
-                    breadcrumb:                 Multiple
-                breadcrumb:                     Image
-                create:
-                    breadcrumb:                 Ajouter
-                update:
-                    breadcrumb:                 Modifier
-            video:
-                breadcrumb:                     Vidéo
-                create:
-                    breadcrumb:                 Ajouter
-                detail:
-                    breadcrumb:                 Détail
-                update:
-                    breadcrumb:                 Modifier
-project:
-    breadcrump:                                 Accueil
-    admin:
-        breadcrump:                             Admin
-        gallery:
-            breadcrump:                         Gallery
-            create:
-                breadcrumb:                     Ajouter une galerie
-            update:
-                breadcrumb:                     Modifier
-            detail:
-                breadcrumb:                     Détails
+breadcrumb:
+    gallery:                                    Galeries
+    gallery_create:                             Ajouter
+    gallery_update:                             Modifier
+    gallery_detail:                             '%name%'
+    gallery_album:                              Albums
+    gallery_album_create:                       Ajouter
+    gallery_album_update:                       Modifier
+    gallery_album_detail:                       '%name%'
+    gallery_item:                               Images
+    gallery_item_create:                        Ajouter
+    gallery_item_update:                        Modifier
+    gallery_item_detail:                        '%name%'
+    gallery_video:                              Vidéos
+    gallery_video_create:                       Ajouter
+    gallery_video_update:                       Modifier
+    gallery_video_detail:                       '%name%'
+
 gallery:
     admin:
         index:
@@ -174,9 +134,9 @@ gallery:
                     options:                    Options
 
         detail:
-            title:                              '%name%'
+            title:                              "%name%"
             link:                               Détail
-            breadcrumb:                         '%name%'
+            breadcrumb:                         "%name%"
             data:
                 title:                          Informations
                 id:                             ID
@@ -194,10 +154,6 @@ gallery:
                 title:                          Images
                 list1:                          Disponibles
                 list2:                          Sélectionnés
-            video:
-                list1:                          Vidéos disponibles
-                list2:                          Vidéos séléctionnées
-                title:                          Vidéos
             url:
                 title:                          Routes disponibles
                 admin:
@@ -317,9 +273,9 @@ gallery:
                     text:                       La modification d'une galerie nécessite la validation d'un modérateur.
 
         detail:
-            title:                              '%name%'
+            title:                              "%name%"
             link:                               Détail
-            breadcrumb:                         '%name%'
+            breadcrumb:                         "%name%"
             data:
                 title:                          Informations
                 create:                         Création
@@ -351,7 +307,7 @@ gallery:
     item:
         admin:
             index:
-                title:                          'Gestion des galeries : images'
+                title:                          "Gestion des galeries : images"
                 link:                           Images
                 breadcrumb:                     Images
                 nodata:                         Aucune donnée
@@ -478,9 +434,9 @@ gallery:
                         options:                Options
 
             detail:
-                title:                          '%name%'
+                title:                          "%name%"
                 link:                           Détail
-                breadcrumb:                     '%name%'
+                breadcrumb:                     "%name%"
                 data:
                     title:                      Informations
                     id:                         ID
@@ -603,9 +559,9 @@ gallery:
                         text:                   La modification d'une image nécessite la validation d'un modérateur pour être affichée.
 
             detail:
-                title:                          '%name%'
+                title:                          "%name%"
                 link:                           Détail
-                breadcrumb:                     '%name%'
+                breadcrumb:                     "%name%"
                 data:
                     title:                      Informations
                     create:                     Création
@@ -628,7 +584,7 @@ gallery:
     video:
         admin:
             index:
-                title:                          'Gestion des galeries : vidéos'
+                title:                          "Gestion des galeries : vidéos"
                 link:                           Vidéos
                 breadcrumb:                     Vidéos
                 nodata:                         Aucune donnée
@@ -723,9 +679,9 @@ gallery:
                         options:                Options
 
             detail:
-                title:                          '%name%'
+                title:                          "%name%"
                 link:                           Détail
-                breadcrumb:                     '%name%'
+                breadcrumb:                     "%name%"
                 data:
                     title:                      Informations
                     id:                         ID
@@ -848,9 +804,9 @@ gallery:
                         text:                   La modification d'une vidéo nécessite la validation d'un modérateur pour être affichée.
 
             detail:
-                title:                          '%name%'
+                title:                          "%name%"
                 link:                           Détail
-                breadcrumb:                     '%name%'
+                breadcrumb:                     "%name%"
                 data:
                     title:                      Informations
                     create:                     Création
@@ -973,9 +929,9 @@ gallery:
                         options:                Options
 
             detail:
-                title:                          '%name%'
+                title:                          "%name%"
                 link:                           Détail
-                breadcrumb:                     '%name%'
+                breadcrumb:                     "%name%"
                 data:
                     title:                      Informations
                     id:                         ID
@@ -1112,9 +1068,9 @@ gallery:
                         text:                   La modification d'un album nécessite la validation d'un modérateur pour être affichée.
 
             detail:
-                title:                          '%name%'
+                title:                          "%name%"
                 link:                           Détail
-                breadcrumb:                     '%name%'
+                breadcrumb:                     "%name%"
                 data:
                     title:                      Informations
                     create:                     Création

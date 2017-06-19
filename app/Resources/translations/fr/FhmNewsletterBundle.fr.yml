@@ -1,27 +1,9 @@
-fhm:
-    breadcrumb:                                 Accueil
-    admin:
-        breadcrumb:                             Admin
-        newsletter:
-            breadcrumb:                         Newsletter
-            create:
-                breadcrumb:                     Ajouter un newsletter
-            update:
-                breadcrumb:                     Modifier
-            detail:
-                breadcrumb:                     Détails
-project:
-    breadcrump:                                 Accueil
-    admin:
-        breadcrump:                             Admin
-        newsletter:
-            breadcrump:                         Newsletter
-            create:
-                breadcrumb:                     Ajouter un newsletter
-            update:
-                breadcrumb:                     Modifier
-            detail:
-                breadcrumb:                     Détails
+breadcrumb:
+    newsletter:                                 Newsletters
+    newsletter_create:                          Ajouter
+    newsletter_update:                          Modifier
+    newsletter_detail:                          '%name%'
+
 newsletter:
     admin:
         index:
@@ -108,9 +90,9 @@ newsletter:
                     options:                    Options
 
         detail:
-            title:                              '%name%'
+            title:                              "%name%"
             link:                               Détail
-            breadcrumb:                         '%name%'
+            breadcrumb:                         "%name%"
             data:
                 title:                          Informations
                 id:                             ID
@@ -230,9 +212,9 @@ newsletter:
                     text:                       La modification d'un email nécessite la validation d'un modérateur.
 
         detail:
-            title:                              '%name%'
+            title:                              "%name%"
             link:                               Détail
-            breadcrumb:                         '%name%'
+            breadcrumb:                         "%name%"
             data:
                 title:                          Informations
                 create:                         Création

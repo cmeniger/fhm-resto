@@ -1,25 +1,15 @@
-fhm:
-    breadcrumb:                                 Accueil
-    admin:
-        breadcrumb:                             Admin
-        historic:
-            breadcrumb:                         Historique
-            detail:
-                breadcrumb:                     Détails
-project:
-    breadcrump:                                 Accueil
-    admin:
-        breadcrump:                             Admin
-        historic:
-            breadcrump:                         Historique
-            detail:
-                breadcrumb:                     Détails
+breadcrumb:
+    historic:                                   Historiques
+    historic_create:                            Ajouter
+    historic_update:                            Modifier
+    historic_detail:                            '%name%'
+    
 historic:
     admin:
         index:
-            title:                              Gestion de l'historique
-            link:                               Historique
-            breadcrumb:                         Historique
+            title:                              Gestion des historiques
+            link:                               Historiques
+            breadcrumb:                         Historiques
             nodata:                             Aucune donnée
             form:
                 search:                         Rechercher

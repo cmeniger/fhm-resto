@@ -1,0 +1,75 @@
+{% trans_default_domain instance.domain %}
+
+{# @var card     \Fhm\CardBundle\Document\Card #}
+{# @var master   \Fhm\CardBundle\Document\CardCategory #}
+{# @var category \Fhm\CardBundle\Document\CardCategory #}
+{# @var template string #}
+{# @var instance object #}
+{% macro product(card, master, category, template, instance) %}
+    {% trans_default_domain instance.domain %}
+    {% import _self as this %}
+
+    {% if category.getProducts()|length > 0 %}
+        <div class="product">
+            <ul class="product-inline">
+                {% for product in category.getProducts() %}
+                    <li>
+                        <span class="name left">{{ product.getName() }}</span>
+                        <span class="actions-bar">{{ this.productActions(card, master, category, product, template, instance) }}</span>
+                        <span class="price">{{ product.getPrice() }}{{ product.getCurrency() }}</span>
+                        {% if product.getIngredients().count() > 0 %}
+                            {{ render(path('fhm_api_card_ingredient_embed', {idCard:card.getId(), idProduct:product.getId(), template:'inline'})) }}
+                        {% endif %}
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+{% endmacro %}
+
+{# Actions #}
+{# @var card     \Fhm\CardBundle\Document\Card #}
+{# @var master     \Fhm\CardBundle\Document\CardCategory #}
+{# @var category \Fhm\CardBundle\Document\CardCategory #}
+{# @var document \Fhm\CardBundle\Document\CardProduct #}
+{# @var template string #}
+{# @var instance object #}
+{% macro productActions(card, master, category, document, template, instance) %}
+    {% trans_default_domain instance.domain %}
+    {% import _self as this %}
+
+    <span class="status">
+        {% if document.getForward() is defined and document.getForward() %}
+            <span class="status regular radius label" title="{{ ('card.api.status.forward')|trans({}, 'FhmCardBundle') }}">{{ ('card.api.status.forward')|trans({}, 'FhmCardBundle') }}</span>
+        {% endif %}
+        {% if document.getShare() and not document.hasGrouping(instance.grouping.used) %}
+            <span class="status regular radius label" title="{{ ('fhm.status.share')|trans({}, 'FhmFhmBundle') }}">{{ ('fhm.status.share')|trans({}, 'FhmFhmBundle') }}</span>
+        {% endif %}
+        {% if document.getGlobal() %}
+            <span class="status regular radius label" title="{{ ('fhm.status.global')|trans({}, 'FhmFhmBundle') }}">{{ ('fhm.status.global')|trans({}, 'FhmFhmBundle') }}</span>
+        {% endif %}
+        {% if document.getDelete() %}
+            <span class="status alert radius label" title="{{ ('fhm.status.delete')|trans({}, 'FhmFhmBundle') }}">{{ ('fhm.status.delete')|trans({}, 'FhmFhmBundle') }}</span>
+        {% elseif not document.getActive() %}
+            <span class="status warning radius label" title="{{ ('fhm.status.disable')|trans({}, 'FhmFhmBundle') }}">{{ ('fhm.status.disable')|trans({}, 'FhmFhmBundle') }}</span>
+        {% else %}
+            <span class="status success radius label" title="{{ ('fhm.status.enable')|trans({}, 'FhmFhmBundle') }}">{{ ('fhm.status.enable')|trans({}, 'FhmFhmBundle') }}</span>
+        {% endif %}
+    </span>
+    <span class="actions">
+        <a href="#" data-reveal-id="modal-editor-product" data-modal="product" data-url="{{ path('fhm_api_card_product_update',{idCard:card.getId(),idCategory:category.getId(),idMaster:master.getId(),idProduct:document.getId(), template:template}) }}" title="{{ ('card.api.action.update')|trans }}"><i class="fa fa-pencil"></i></a>
+        {% if document.getDelete() %}
+            {% if instance.user.admin %}
+                <a href="{{ path('fhm_api_card_product_undelete', {idCard:card.getId(),idCategory:category.getId(),idMaster:master.getId(),idProduct:document.getId(), template:template}) }}" title="{{ ('card.api.action.undelete')|trans }}" data-confirm="{{ ('card.api.confirm.undelete')|trans }}" data-ajax><i class="fa fa-undo"></i></a>
+                <a href="{{ path('fhm_api_card_product_delete', {idCard:card.getId(),idCategory:category.getId(),idMaster:master.getId(),idProduct:document.getId(), template:template}) }}" title="{{ ('card.api.action.delete')|trans }}" data-confirm="{{ ('card.api.confirm.delete')|trans }}" data-ajax><i class="fa fa-trash"></i></a>
+            {% endif %}
+        {% else %}
+            {% if document.getActive() %}
+                <a href="{{ path('fhm_api_card_product_deactivate', {idCard:card.getId(),idCategory:category.getId(),idMaster:master.getId(),idProduct:document.getId(), template:template}) }}" title="{{ ('card.api.action.deactivate')|trans }}" data-confirm="{{ ('card.api.confirm.deactivate')|trans }}" data-ajax><i class="fa fa-eye-slash"></i></a>
+            {% else %}
+                <a href="{{ path('fhm_api_card_product_activate', {idCard:card.getId(),idCategory:category.getId(),idMaster:master.getId(),idProduct:document.getId(), template:template}) }}" title="{{ ('card.api.action.activate')|trans }}" data-confirm="{{ ('card.api.confirm.activate')|trans }}" data-ajax><i class="fa fa-eye"></i></a>
+            {% endif %}
+            <a href="{{ path('fhm_api_card_product_delete', {idCard:card.getId(),idCategory:category.getId(),idMaster:master.getId(),idProduct:document.getId(), template:template}) }}" title="{{ ('card.api.action.delete')|trans }}" data-confirm="{{ ('card.api.confirm.delete')|trans }}" data-ajax><i class="fa fa-trash-o"></i></a>
+        {% endif %}
+    </span>
+{% endmacro %}

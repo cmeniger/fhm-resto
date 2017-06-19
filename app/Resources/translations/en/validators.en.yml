@@ -1,0 +1,8 @@
+user:
+    email:
+        mismatch:                               The two emails mismatch
+    password:
+        mismatch:                               The two passwords mismatch
+
+geolocation:
+    unique:                                     These coordinates are already in use.

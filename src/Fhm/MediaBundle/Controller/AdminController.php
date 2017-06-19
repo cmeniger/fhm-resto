@@ -1,4 +1,5 @@
 <?php
+
 namespace Fhm\MediaBundle\Controller;
 
 use Fhm\FhmBundle\Controller\RefAdminController as FhmController;
@@ -17,6 +18,7 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
  * @Route("/admin/media")
  * ----------------------------------
  * Class AdminController
+ *
  * @package Fhm\MediaBundle\Controller
  */
 class AdminController extends FhmController
@@ -26,15 +28,15 @@ class AdminController extends FhmController
      */
     public function __construct()
     {
-        self::$repository = "FhmMediaBundle:Media";
-        self::$source = "fhm";
-        self::$domain = "FhmMediaBundle";
-        self::$translation = "media";
-        self::$route = "media";
-        self::$form = new \stdClass();
-        self::$form->createType = CreateType::class;
+        self::$repository          = "FhmMediaBundle:Media";
+        self::$source              = "fhm";
+        self::$domain              = "FhmMediaBundle";
+        self::$translation         = "media";
+        self::$route               = "media";
+        self::$form                = new \stdClass();
+        self::$form->createType    = CreateType::class;
         self::$form->createHandler = CreateHandler::class;
-        self::$form->updateType = UpdateType::class;
+        self::$form->updateType    = UpdateType::class;
         self::$form->updateHandler = UpdateHandler::class;
     }
 
@@ -63,30 +65,34 @@ class AdminController extends FhmController
     public function createAction(Request $request)
     {
         self::$class = $this->get('fhm.object.manager')->getCurrentModelName('FhmMediaBundle:Media');
-        $object = new self::$class;
-        $form = $this->createForm(
+        $object      = new self::$class;
+        $form        = $this->createForm(
             self::$form->createType,
             $object,
             array(
-                'user_admin' => $this->getUser()->hasRole('ROLE_SUPER_ADMIN'),
-                'data_class' => self::$class,
+                'user_admin'     => $this->getUser()->hasRole('ROLE_SUPER_ADMIN'),
+                'data_class'     => self::$class,
                 'object_manager' => $this->get('fhm.object.manager'),
             )
         );
-        $handler = new self::$form->createHandler($form, $request);
-        $process = $handler->process();
-        if ($process) {
+        $handler     = new self::$form->createHandler($form, $request);
+        $process     = $handler->process();
+        if($process)
+        {
             $data = $request->get($form->getName());
-            if (isset($data['tag']) && $data['tag']) {
+            if(isset($data['tag']) && $data['tag'])
+            {
                 $tagClasName = $this->get('fhm.object.manager')->getCurrentModelName('FhmMediaBundle:MediaTag');
-                $tag = $this->get('fhm.object.manager')->getCurrentRepository('FhmMediaBundle:MediaTag')->findOneBy(
+                $tag         = $this->get('fhm.object.manager')->getCurrentRepository('FhmMediaBundle:MediaTag')->findOneBy(
                     ['name' => $data['tag']]
                 );
-                if (!$tag) {
+                if(!$tag)
+                {
                     $tag = new $tagClasName;
                     $tag->setName($data['tag']);
                     $tag->setActive(true);
-                    if (isset($data['parent']) && $data['parent']) {
+                    if(isset($data['parent']) && $data['parent'])
+                    {
                         $tag->setParent(
                             $this->get('fhm_tools')->dmRepository('FhmMediaBundle:MediaTag')->find($data['parent'])
                         );
@@ -96,7 +102,7 @@ class AdminController extends FhmController
             }
             $file = $request->files->get('file');
             $object->setFile($file);
-            $tab = explode('.', $file->getClientOriginalName());
+            $tab  = explode('.', $file->getClientOriginalName());
             $name = $data['name'] ? $this->get('fhm_tools')->getUnique(
                 $object->getId(),
                 $data['name'],
@@ -106,14 +112,14 @@ class AdminController extends FhmController
             $object->setAlias($object->getName());
             // Persist
             $object->setName($name);
-            $object->setWatermark((array)$request->get('watermark'));
+            $object->setWatermark((array) $request->get('watermark'));
             $this->get('fhm_tools')->dmPersist($object);
             $this->get('fhm_media_service')->setDocument($object)->setWatermark($request->get('watermark'))->execute();
         }
 
         return array(
-            'form' => $form->createView(),
-            'watermarks' => $this->get('fhm_tools')->getParameters('watermark', 'fhm_media') ? $this->get(
+            'form'        => $form->createView(),
+            'watermarks'  => $this->get('fhm_tools')->getParameters('watermark', 'fhm_media') ? $this->get(
                 'fhm_tools'
             )->getParameters(
                 'files',
@@ -155,40 +161,47 @@ class AdminController extends FhmController
     {
         $object = $this->get('fhm_tools')->dmRepository(self::$repository)->find($id);
         // ERROR - unknown
-        if ($object == "") {
-            throw $this->createNotFoundException($this->trans(self::$translation.'.error.unknown'));
+        if($object == "")
+        {
+            throw $this->createNotFoundException($this->trans(self::$translation . '.error.unknown'));
         }
-        if (!$this->getUser()->hasRole('ROLE_ADMIN')) {
-            throw new HttpException(403, $this->trans(self::$translation.'.error.forbidden'));
+        if(!$this->getUser()->hasRole('ROLE_ADMIN'))
+        {
+            throw new HttpException(403, $this->trans(self::$translation . '.error.forbidden'));
         }
-        if (!$this->getUser()->hasRole('ROLE_SUPER_ADMIN') && $object->getDelete()) {
-            throw new HttpException(403, $this->trans(self::$translation.'.error.forbidden'));
+        if(!$this->getUser()->hasRole('ROLE_SUPER_ADMIN') && $object->getDelete())
+        {
+            throw new HttpException(403, $this->trans(self::$translation . '.error.forbidden'));
         }
         self::$class = $this->get('fhm.object.manager')->getCurrentModelName('FhmMediaBundle:Media');
-        $form = $this->createForm(
+        $form        = $this->createForm(
             self::$form->updateType,
             $object,
             array(
-                'user_admin' => $this->getUser()->hasRole('ROLE_SUPER_ADMIN'),
-                'data_class' => self::$class,
+                'user_admin'     => $this->getUser()->hasRole('ROLE_SUPER_ADMIN'),
+                'data_class'     => self::$class,
                 'object_manager' => $this->get('fhm.object.manager'),
             )
         );
-        $handler = new self::$form->updateHandler($form, $request);
-        $process = $handler->process();
-        if ($process) {
+        $handler     = new self::$form->updateHandler($form, $request);
+        $process     = $handler->process();
+        if($process)
+        {
             $data = $request->get($form->getName());
             // Tag
-            if (isset($data['tag']) && $data['tag']) {
+            if(isset($data['tag']) && $data['tag'])
+            {
                 $tagClasName = $this->get('fhm.object.manager')->getCurrentModelName('FhmMediaBundle:MediaTag');
-                $tag = $this->get('fhm.object.manager')->getCurrentRepository('FhmMediaBundle:MediaTag')->findOneBy(
+                $tag         = $this->get('fhm.object.manager')->getCurrentRepository('FhmMediaBundle:MediaTag')->findOneBy(
                     ['name' => $data['tag']]
                 );
-                if (!$tag) {
+                if(!$tag)
+                {
                     $tag = new $tagClasName;
                     $tag->setName($data['tag']);
                     $tag->setActive(true);
-                    if (isset($data['parent']) && $data['parent']) {
+                    if(isset($data['parent']) && $data['parent'])
+                    {
                         $tag->setParent(
                             $this->get('fhm_tools')->dmRepository('FhmMediaBundle:MediaTag')->find($data['parent'])
                         );
@@ -198,25 +211,28 @@ class AdminController extends FhmController
             }
             // Persist
             $process = $this->get('fhm_media_service')->setModel($object);
-            if ($request->get('generate') || $object->getWatermark() != $request->get('watermark')) {
+            if($request->get('generate') || $object->getWatermark() != $request->get('watermark'))
+            {
                 $process->generateImage();
-                $object->setWatermark((array)$request->get('watermark'));
-            } else {
+                $object->setWatermark((array) $request->get('watermark'));
+            }
+            else
+            {
                 $process->setWatermark($request->get('watermark'))->execute();
             }
             $this->get('fhm_tools')->dmPersist($object);
             $this->get('session')->getFlashBag()->add(
                 'notice',
-                $this->trans(self::$translation.'.admin.update.flash.ok')
+                $this->trans(self::$translation . '.admin.update.flash.ok')
             );
 
             return $this->redirectUrl($data, $object);
         }
 
         return array(
-            'object' => $object,
-            'form' => $form->createView(),
-            'watermarks' => $this->get('fhm_tools')->getParameters('watermark', 'fhm_media') ? $this->get(
+            'object'      => $object,
+            'form'        => $form->createView(),
+            'watermarks'  => $this->get('fhm_tools')->getParameters('watermark', 'fhm_media') ? $this->get(
                 'fhm_tools'
             )->getParameters(
                 'files',
@@ -263,32 +279,37 @@ class AdminController extends FhmController
     {
         $object = $this->get('fhm_tools')->dmRepository(self::$repository)->find($id);
         // ERROR - Unknown
-        if ($object == "") {
-            throw $this->createNotFoundException($this->trans(self::$translation.'.error.unknown'));
+        if($object == "")
+        {
+            throw $this->createNotFoundException($this->trans(self::$translation . '.error.unknown'));
         } // ERROR - Forbidden
-        elseif ($object->getDelete() && !$this->getUser()->isSuperAdmin()) {
-            throw new HttpException(403, $this->trans(self::$translation.'.error.forbidden'));
+        elseif($object->getDelete() && !$this->getUser()->isSuperAdmin())
+        {
+            throw new HttpException(403, $this->trans(self::$translation . '.error.forbidden'));
         }
         // Delete
-        if ($object->getDelete()) {
+        if($object->getDelete())
+        {
             $this->get($this->get('fhm_tools')->getParameters('service', 'fhm_media'))->setDocument($object)->remove();
             $this->get('fhm_tools')->dmRemove($object);
             // Message
             $this->get('session')->getFlashBag()->add(
                 'notice',
-                $this->trans(self::$translation.'.admin.delete.flash.ok')
+                $this->trans(self::$translation . '.admin.delete.flash.ok')
             );
-        } else {
+        }
+        else
+        {
             $object->setDelete(true);
             $this->get('fhm_tools')->dmPersist($object);
             // Message
             $this->get('session')->getFlashBag()->add(
                 'notice',
-                $this->trans(self::$translation.'.admin.delete.flash.ok')
+                $this->trans(self::$translation . '.admin.delete.flash.ok')
             );
         }
 
-        return $this->redirect($this->getUrl('fhm_admin_'.self::$route));
+        return $this->redirect($this->getUrl('fhm_admin_' . self::$route));
     }
 
     /**

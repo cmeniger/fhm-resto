@@ -1,4 +1,5 @@
 <?php
+
 namespace Fhm\CardBundle\Controller;
 
 use Fhm\FhmBundle\Controller\RefApiController as FhmController;
@@ -12,6 +13,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
  * @Route("/api/card")
  * ----------------------------------
  * Class ApiController
+ *
  * @package Fhm\CardBundle\Controller
  */
 class ApiController extends FhmController
@@ -21,11 +23,11 @@ class ApiController extends FhmController
      */
     public function __construct()
     {
-        self::$repository = "FhmCardBundle:Card";
-        self::$source = "fhm";
-        self::$domain = "FhmCardBundle";
+        self::$repository  = "FhmCardBundle:Card";
+        self::$source      = "fhm";
+        self::$domain      = "FhmCardBundle";
         self::$translation = "card";
-        self::$route = 'card';
+        self::$route       = 'card';
     }
 
     /**
@@ -60,26 +62,24 @@ class ApiController extends FhmController
      *      path="/embed/{template}/{id}",
      *      name="fhm_api_card_embed",
      *      requirements={"id"="[a-z0-9]*"},
-     *      defaults={"template"="inline"}
+     *      defaults={"template"="default"}
      * )
      */
-    public function embedAction(Request $request, $id, $template)
+    public function embedAction($id, $template)
     {
-        $object = $this->get('fhm_tools')->dmRepository(self::$repository)->find($id);
-        if ($object == "") {
-            throw $this->createNotFoundException(
-                $this->get('translator')->trans(self::$translation.'.error.unknown', array(), self::$domain)
-            );
+        $document = $this->get('fhm_tools')->dmRepository(self::$repository)->find($id);
+        // ERROR - unknown
+        if($document == "")
+        {
+            throw $this->createNotFoundException($this->get('translator')->trans(self::$translation . '.error.unknown', array(), self::$domain));
         }
 
         return new Response(
             $this->renderView(
-                "::FhmCard/Template/".ucfirst(strtolower($template))."/index.html.twig",
+                "::FhmCard/Template/Embed/" . ucfirst(strtolower($template)) . "/index.html.twig",
                 array(
-                    "object" => $object,
-                    "objects" => $this->get('fhm_tools')->dmRepository('FhmCardBundle:CardCategory')->getByCard(
-                        $object
-                    ),
+                    "document"  => $document,
+                    "documents" => $this->get('fhm_tools')->dmRepository('FhmCardBundle:CardCategory')->getByCard($document),
                 )
             )
         );
@@ -88,77 +88,44 @@ class ApiController extends FhmController
     /**
      * @Route
      * (
-     *      path="/editor/{id}",
+     *      path="/editor/{template}/{id}",
      *      name="fhm_api_card_editor",
-     *      requirements={"id"="[a-z0-9]*"}
+     *      requirements={"id"="[a-z0-9]*"},
+     *      defaults={"template"="default"}
      * )
      */
-    public function editorAction(Request $request, $id)
+    public function editorAction($id, $template)
     {
-        $object = $this->get('fhm_tools')->dmRepository(self::$repository)->find($id);
-        $this->__authorized($object);
-
-        return new Response(
-            $this->renderView(
-                "::FhmCard/Template/Editor/index.html.twig",
-                array(
-                    "object" => $object,
-                )
-            )
-        );
+        return $this->_model($template)->index($id);
     }
 
     /**
      * @Route
      * (
-     *      path="/editor/preview/{id}",
+     *      path="/editor/preview/{template}/{id}",
      *      name="fhm_api_card_editor_preview",
-     *      requirements={"id"="[a-z0-9]*"}
+     *      requirements={"id"="[a-z0-9]*"},
+     *      defaults={"template"="default"}
      * )
      */
-    public function editorPreviewAction(Request $request, $id)
+    public function editorPreviewAction($id, $template)
     {
-        $object = $this->get('fhm_tools')->dmRepository(self::$repository)->find($id);
-        $this->__authorized($object);
-
-        return new Response(
-            $this->renderView(
-                "::FhmCard/Template/Editor/preview.html.twig",
-                array(
-                    "object" => $object,
-                )
-            )
-        );
+        return $this->_model($template)->previewIndex($id);
     }
 
     /**
-     * User is authorized
+     * @param $template
      *
-     * @param $card
-     *
-     * @return $this
+     * @return string
      */
-    protected function __authorized($card)
+    private function _model($template)
     {
-        if ($card == "") {
-            throw $this->createNotFoundException(
-                $this->get('translator')->trans('card.error.unknown', array(), self::$domain)
-            );
-        }
-        if ($card->getParent() && method_exists($card->getParent(), 'hasModerator')) {
-            if (!$this->getUser()->isSuperAdmin() && !$this->getUser()->hasRole('ROLE_ADMIN') && !$card->getParent(
-                )->hasModerator($this->getUser())
-            ) {
-                throw new HttpException(
-                    403, $this->get('translator')->trans(
-                    self::$translation.'.error.forbidden',
-                    array(),
-                    self::$domain
-                )
-                );
-            }
+        $model = $this->get('fhm_card_model_default');
+        if($this->has('fhm_card_model_' . $template))
+        {
+            $model = $this->get('fhm_card_model_' . $template);
         }
 
-        return $this;
+        return $model;
     }
 }

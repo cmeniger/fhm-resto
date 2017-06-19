@@ -1,0 +1,13 @@
+{% trans_default_domain instance.domain %}
+
+<div class="card card-editor">
+    <ul class="inline-list editor-tabs">
+        <li><a href="#" id="tab-category" class="active" data-url="{{ path('fhm_api_card_category_editor',{idCard:document.getId(), template:template}) }}">{{ ('card.api.tabs.category')|trans }}</a></li>
+        <li><a href="#" id="tab-product" data-url="{{ path('fhm_api_card_product_editor',{idCard:document.getId(), template:template}) }}">{{ ('card.api.tabs.product')|trans }}</a></li>
+        <li><a href="#" id="tab-ingredient" data-url="{{ path('fhm_api_card_ingredient_editor',{idCard:document.getId(), template:template}) }}">{{ ('card.api.tabs.ingredient')|trans }}</a></li>
+        <li><a href="#" id="tab-preview" class="preview" data-url="{{ path('fhm_api_card_editor_preview',{id:document.getId(), template:template}) }}">{{ ('card.api.tabs.preview')|trans }}</a></li>
+    </ul>
+    <div class="editor-content" id="editor-content">
+        {{ render(path('fhm_api_card_category_editor',{idCard:document.getId(), template:template})) }}
+    </div>
+</div>

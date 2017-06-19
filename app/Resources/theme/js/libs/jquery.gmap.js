@@ -18,6 +18,10 @@
         init:          function ()
                        {
                            var parent = this;
+                           this.initLocale();
+                       },
+        initMap:       function ()
+                       {
                            this.mapCanvas = document.getElementById(this.settings.anchors.map);
                            this.map = new google.maps.Map(this.mapCanvas, this.settings.map);
                            this.infowindow = new google.maps.InfoWindow();
@@ -26,8 +30,14 @@
                            {
                                this.clusterer = new MarkerClusterer(this.map, [], this.settings.cluster);
                            }
+                           this.initError();
                            this.initCounter();
                            this.initAroundme();
+                       },
+        initError:     function ()
+                       {
+                           var parent = this;
+                           $('body').append('<div id="' + parent.settings.error.modal + '" class="reveal-modal tiny modal" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog"><div id="' + parent.settings.error.content + '"></div><a class="close-reveal-modal" aria-label="Close">&#215;</a></div>');
                        },
         initCounter:   function ()
                        {
@@ -45,6 +55,36 @@
                                             parent.addMarkers();
                                         }
                            });
+                       },
+        initLocale:    function ()
+                       {
+                           var parent = this;
+                           if(parent.settings.map.locale)
+                           {
+                               var success = function (position)
+                               {
+                                   parent.settings.map.center.lat = position.coords.latitude;
+                                   parent.settings.map.center.lng = position.coords.longitude;
+                                   parent.initMap();
+                               };
+                               var error = function (error)
+                               {
+                                   console.warn('ERROR(' + error.code + '): ' + error.message);
+                                   parent.initMap();
+                               };
+                               if(navigator.geolocation)
+                               {
+                                   navigator.geolocation.getCurrentPosition(success, error, parent.settings.aroundme);
+                               }
+                               else
+                               {
+                                   parent.initMap();
+                               }
+                           }
+                           else
+                           {
+                               parent.initMap();
+                           }
                        },
         initAroundme:  function ()
                        {
@@ -70,6 +110,8 @@
                                var error = function (error)
                                {
                                    console.warn('ERROR(' + error.code + '): ' + error.message);
+                                   $('#' + parent.settings.error.content).html(parent.settings.error.text.geolocation);
+                                   $('#' + parent.settings.error.modal).foundation('reveal', 'open');
                                };
                                $('#' + parent.settings.anchors.aroundme).click(function (e)
                                {
@@ -229,6 +271,7 @@
                 zoomControl:        true,
                 counter:            true,
                 aroundme:           true,
+                locale:             true,
                 cluster:            false,
                 styles:             []
             },
@@ -272,6 +315,13 @@
                         height:     50
                     }
                 ]
+            },
+            error:    {
+                modal:   'map-error',
+                content: 'map-error-content',
+                text:    {
+                    geolocation: ''
+                }
             }
         }, options);
         new Plugin(settings);

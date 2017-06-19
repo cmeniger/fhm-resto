@@ -1,0 +1,412 @@
+user:
+    admin:
+        index:
+            title:                              Users management
+            link:                               Users
+            breadcrumb:                         Users
+            nodata:                             No data
+            form:
+                search:                         Search
+            table:
+                header:
+                    username:                   ID
+                    password:                   Password
+                    email:                      Email
+                    firstname:                  First name
+                    lastname:                   Last name
+                    create:                     Creation
+                    action:                     Actions
+                    status:                     Status
+                action:
+                    activate:                   Activate
+                    deactivate:                 Deactivate
+                    delete:                     Delete
+                    detail:                     Configure
+                    duplicate:                  Duplicate
+                    undelete:                   Restore
+                    update:                     Update
+                confirm:
+                    activate:                   Do you want to activate the user ?
+                    deactivate:                 Do you want to deactivate the user ?
+                    delete:                     Do you want to delete the user ?
+                    undelete:                   Do you want to undelete the user ?
+        create:
+            title:                              Add a user
+            link:                               Add
+            breadcrumb:                         Add
+            flash:
+                ok:                             The user has been added successfully.
+                ko:                             The user has not been added.
+            form:
+                username:                       ID
+                email:                          Email
+                password:                       Password
+                password_confirmation:          Confirm password
+                first_name:                     First name
+                last_name:                      Last name
+                birth_date:                     Date of birth
+                tel1:                           Landline
+                tel2:                           Mobile phone
+                address_search:                 Search an address
+                address_main:                   Address
+                address_additional:             Additional address
+                city:                           City
+                zip_code:                       Zip Code
+                country:                        Country
+                latitude:                       Latitude
+                longitude:                      Longitude
+                sign:                           Signature
+                avatar:                         Avatar
+                enabled:                        Activate
+                locked:                         Undelete
+                social:
+                    facebook:                   Facebook
+                    facebookId:                 Facebook ID
+                    twitter:                    Twitter
+                    twitterId:                  Twitter ID
+                    google:                     Google
+                    googleId:                   Google ID
+                    instagram:                  Instagram
+                    youtube:                    Youtube
+                    flux:                       RSS Feed
+                    site:                       Web Site
+                submit:
+                    save:                       Save
+                    new:                        Save and add
+                    duplicate:                  Save and duplicate
+                    quit:                       Save and quit
+                    config:                     Save and configure
+                    cancel:                     Cancel
+                    import:                     Import
+                    export:                     Export
+                fieldset:
+                    social:                     Social Media
+                    connection:                 Login information
+                    informations:               Additional information
+                    map:                        Address
+                    options:                    Options
+
+        update:
+            title:                              "%name%"
+            link:                               Update
+            breadcrumb:                         Update
+            flash:
+                ok:                             The user has been updated successfully.
+                ko:                             The user has not been updated.
+            form:
+                username:                       ID
+                email:                          Email
+                password:                       Password
+                password_confirmation:          Confirm password
+                first_name:                     First name
+                last_name:                      Last name
+                birth_date:                     Date of birth
+                tel1:                           Landline
+                tel2:                           Mobile phone
+                address_search:                 Search an address
+                address_main:                   Search
+                address_additional:             Additional address
+                city:                           City
+                zip_code:                       Zip Code
+                country:                        Country
+                latitude:                       Latitude
+                longitude:                      Longitude
+                sign:                           Signature
+                avatar:                         Avatar
+                enabled:                        Activate
+                locked:                         Undelete
+                social:
+                    facebook:                   Facebook
+                    facebookId:                 Facebook ID
+                    twitter:                    Twitter
+                    twitterId:                  Twitter ID
+                    google:                     Google
+                    googleId:                   Google ID
+                    instagram:                  Instagram
+                    youtube:                    Youtube
+                    flux:                       RSS Feed
+                    site:                       Web site
+                submit:
+                    save:                       Save
+                    new:                        Save and add
+                    duplicate:                  Save and duplicate
+                    quit:                       Save and quit
+                    config:                     Save and configure
+                    cancel:                     Cancel
+                    import:                     Import
+                    export:                     Export
+                    delete:                     Delete
+                fieldset:
+                    social:                     Social Media
+                    connection:                 Login information
+                    informations:               Additional information
+                    map:                        Address
+                    options:                    Options
+
+        detail:
+            title:                              "%name%"
+            link:                               Detail
+            breadcrumb:                         "%name%"
+            data:
+                title:                          Informations
+                id:                             ID
+                create:                         Creation
+                update:                         Update
+                activity:                       Last account activity
+                username:                       ID
+                email:                          Email
+                firstname:                      First name
+                lastname:                       Last name
+                birthdate:                      Date of birth
+                address:                        Address
+                tel1:                           Landline
+                tel2:                           Mobile phone
+                alias:                          Alias
+                status:                         Status
+                sign:                           Signature
+                avatar:                         Avatar
+            url:
+                title:                          Available routes
+                admin:
+                    edit:                       Update
+                    detail:                     Configure
+                front:
+                    id:                         Display via the ID
+                    name:                       Display via the name
+                    alias:                      Display via the alias
+                    lite:                       Display via the simplified url
+            roles:
+                title:                          Roles management
+                list1:                          Available
+                list2:                          Selected
+            password:
+                title:                          Change the password
+                password:                       Password
+                password_confirmation:          Confirm password
+                submit:                         Sumbit
+                flash:
+                    ok:                         The password has been updated successfully.
+            admin:
+                title:                          Administration tools
+
+        export:
+            title:                              Export the users
+            link:                               Export
+            breadcrumb:                         Export
+            form:
+                submit:                         Export
+
+        import:
+            title:                              Import the users
+            link:                               Import
+            breadcrumb:                         Import
+            form:
+                file:                           CSV files
+                submit:                         Import
+            flash:
+                ok:                             The users have been imported successfully (%countAdd% ajout(s), %countUpdate% modification(s), %countError% erreur(s)).
+                ko:                             The users have not been imported.
+
+        deactivate:
+            flash:
+                ok:                             The user has been deactivated successfully.
+
+        delete:
+            flash:
+                ok:                             The user has been deleted successfully.
+
+        activate:
+            flash:
+                ok:                             The user has been activated successfully.
+
+        undelete:
+            flash:
+                ok:                             The user has been restored successfully.
+
+    front:
+        create:
+            title:                              Create an account
+            link:                               Create an account
+            breadcrumb:                         Create an account
+            form:
+                username:                       Username
+                password:                       Password
+                password_confirmation:          Confirm password
+                email:                          Email address
+                email_confirmation:             Confirm your email address
+                submit:
+                    save:                       Register
+                    cancel:                     Cancel
+            checkemail:
+                title:                          Congratulations %username%
+                mail:
+                    title:                      Your subscription has been registered.
+                    text:                       "A confirmation email has been automatically sent to this email address :"
+            confirmed:
+                title:                          Congratulations %username%
+                message:
+                    title:                      We are pleased to inform you that your account has been activated.
+                    text:                       You can now log into the web site.
+                start:
+                    title:                      The right way to start
+                    text:                       "We advise you to :"
+                    list1:                      Complete your <a href="%route%"><profile>profil</strong></a>.
+
+        update:
+            title:                              Update my profile
+            link:                               Update my profile
+            breadcrumb:                         Update my profile
+            form:
+                username:                       ID
+                email:                          Email
+                first_name:                     First name
+                last_name:                      Last name
+                birth_date:                     Date de naissance
+                tel1:                           Landline
+                tel2:                           Mobile phone
+                address_search:                 Search an address
+                address_main:                   Address
+                address_additional:             Additional address
+                city:                           City
+                zip_code:                       Zip code
+                country:                        Country
+                latitude:                       Latitude
+                longitude:                      Longitude
+                sign:                           Signature
+                avatar:                         Avatar
+                password:                       Current password
+                social:
+                    facebook:                   Facebook
+                    facebookId:                 Facebook ID
+                    twitter:                    Twitter
+                    twitterId:                  Twitter ID
+                    google:                     Google
+                    googleId:                   Google ID
+                    instagram:                  Instagram
+                    youtube:                    Youtube
+                    flux:                       RSS Feed
+                    site:                       Web site
+                submit:
+                    save:                       Save
+                    cancel:                     Cancel
+                fieldset:
+                    connection:                 Login information
+                    informations:               Additional information
+                    map:                        Address
+                    social:                     Social Media
+                    security:                   Security
+
+        password:
+            title:                              Change my password
+            link:                               Change my password
+            breadcrumb:                         Change my password
+            form:
+                password:                       Current password
+                password_new:                   New password
+                password_confirmation:          Confirm password
+                submit:
+                    save:                       Save
+                    cancel:                     Cancel
+
+        detail:
+            title:                              My profile
+            link:                               My profile
+            breadcrumb:                         My profile
+            data:
+                title:                          Informations
+                create:                         Creation
+                update:                         Update
+                activity:                       Last account activity
+                username:                       ID
+                email:                          Email
+                firstname:                      First name
+                lastname:                       Last name
+                birthdate:                      Date de naissance
+                address:                        Address
+                tel1:                           Landline
+                tel2:                           Mobile phone
+                avatar:                         Avatar
+                sign:                           Signature
+
+        login:
+            title:                              Login
+            link:                               Login
+            breadcrumb:                         Login
+            alternate:                          Or
+            form:
+                forget:                         Password forgotten 
+                password:                       Password
+                remember:                       Remember me
+                submit:                         Login
+                username:                       ID or Email
+            social:
+                facebook:                       Connect via Facebook
+                twitter:                        Connect via Twitter
+                google:                         Connect via Google
+
+        logout:
+            title:                              Logout
+            link:                               Logout
+
+        resetting:
+            request:
+                title:                          Password forgotten
+                link:                           Password forgotten
+                breadcrumb:                     Password forgotten
+                form:
+                    error:                      Unknown ID.
+                    submit:                     Sudmit
+                    username:                   ID or Email
+            checkemail:
+                title:                          Password forgotten
+                link:                           Password forgotten
+                breadcrumb:                     Password forgotten
+                mail:
+                    title:                      Your request has been registered.
+                    text:                       "A confirmation email has been automatically sent to this email address:"
+            error:
+                title:                          Password forgotten
+                link:                           Password forgotten
+                breadcrumb:                     Password forgotten
+                mail:
+                    title:                      Your request has not been registered.
+                    text:                       A confirmation email has already been sent to you in the past 24 hours.
+            reset:
+                title:                          Reset my password
+                link:                           Reset my password
+                breadcrumb:                     Reset my password
+                form:
+                    password_new:               Password
+                    password_confirmation:      Confirm password
+                    submit:                     Reset
+
+    api:
+        index:
+            breadcrumb:                         User - Api
+            link:                               User - Api
+            title:                              User - Api
+
+    pagination:
+        counter:                                "Number of users: %count% / %all%"
+
+    error:
+        unknown:                                The user does not exist.
+        delete:                                 The user does not exist.
+        forbidden:                              Access forbidden.
+
+    status:
+        locked:                                 Locked
+        expired:                                Expired
+
+    email:
+        register:
+            object:                             Welcome to ChichaMaps
+            body:                               "Hello %firstname%,<br><br>Your user account has been created successfully.<br>In order to activte it, please click of the following button :"
+            button:                             Activate mon compte
+
+        reset:
+            object:                             ChichaMaps - Reset my password
+            body:                               Hello %firstname%,<br><br>In order to reset your password, please click of the following button :"
+            button:                             Reset
+
+"Bad credentials":                              Wrong ID and/or password

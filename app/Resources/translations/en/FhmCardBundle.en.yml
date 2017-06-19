@@ -1,0 +1,1214 @@
+card:
+    admin:
+        index:
+            title:                              Menu management
+            link:                               Menus
+            breadcrumb:                         Menus
+            nodata:                             No data
+            form:
+                search:                         Search
+            table:
+                header:
+                    image:                      Image
+                    name:                       Name
+                    parent:                     Parent
+                    categories:                 Categories
+                    products:                   Products
+                    ingredients:                Ingredients
+                    action:                     Actions
+                    status:                     Status
+                action:
+                    activate:                   Activate
+                    deactivate:                 Deactivate
+                    delete:                     Delete
+                    detail:                     Configure
+                    duplicate:                  Duplicate
+                    undelete:                   Undelete
+                    update:                     Update
+                    preview:                    Preview
+                confirm:
+                    activate:                   Do you want to activate the menu ?
+                    deactivate:                 Do you want to deactivate the menu ?
+                    delete:                     Do you want to delete the menu ?
+                    undelete:                   Do you want to undelete the menu ?
+
+        create:
+            title:                              Add
+            link:                               Add
+            breadcrumb:                         Add a menu
+            flash:
+                ok:                             The menu has been created successfully.
+                ko:                             The menu has not been created.
+            form:
+                name:                           Name
+                description:                    Description
+                image:                          Image
+                categories:                     Categories
+                products:                       Products
+                ingredients:                    Ingredients
+                active:                         Activate
+                share:                          Share
+                global:                         Global
+                submit:
+                    save:                       Save
+                    new:                        Save and add
+                    duplicate:                  Save and duplicate
+                    quit:                       Save and quit
+                    config:                     Save and configure
+                    cancel:                     Cancel
+                    import:                     Import
+                    export:                     Export
+                fieldset:
+                    data:                       Datas
+                    categories:                 Related categories
+                    products:                   Related products
+                    ingredients:                Related ingredients
+                    media:                      Medias
+                    options:                    Options
+
+        update:
+            title:                              Update
+            link:                               Update
+            breadcrumb:                         Update
+            flash:
+                ok:                             The menu has been updated successfully.
+                ko:                             The menu has not been updated.
+            form:
+                name:                           Name
+                description:                    Description
+                image:                          Image
+                categories:                     Categories
+                products:                       Products
+                ingredients:                    Ingredients
+                active:                         Activate
+                share:                          Share
+                global:                         Global
+                submit:
+                    save:                       Save
+                    new:                        Save and add
+                    duplicate:                  Save and duplicate
+                    quit:                       Save and quit
+                    config:                     Save and configure
+                    cancel:                     Cancel
+                    import:                     Import
+                    export:                     Export
+                    delete:                     Delete
+                fieldset:
+                    data:                       Datas
+                    categories:                 Related categories
+                    products:                   Related products
+                    ingredients:                Related ingredients
+                    media:                      Medias
+                    options:                    Options
+
+        detail:
+            title:                              "%name%"
+            categories:                         Categories management
+            link:                               Detail
+            breadcrumb:                         "%name%"
+            card:
+                anchor:                         Menu
+                title:                          Menu
+                category:                       Categories
+                product:                        Products
+                ingredient:                     Ingredients
+                preview:                        Preview
+            data:
+                title:                          Informations
+                id:                             ID
+                create:                         Creation
+                update:                         Update
+                name:                           Name
+                alias:                          Alias
+                description:                    Description
+                status:                         Status
+            url:
+                title:                          Available Routes
+                admin:
+                    edit:                       Update
+                    detail:                     Configure
+                front:
+                    id:                         Display via the ID
+                    name:                       Display via the name
+                    alias:                      Display via the alias
+                    lite:                       Display via the simplified url
+            admin:
+                title:                          Administration tools
+
+        export:
+            breadcrumb:                         Export
+            form:
+                submit:                         Export
+            link:                               Export
+            title:                              Export the menus
+
+        import:
+            breadcrumb:                         Import
+            flash:
+                ok:                             The menus have been imported successfully (%countAdd% ajout(s), %countUpdate% modification(s), %countError% erreur(s)).
+                ko:                             The menus have not been imported.
+            form:
+                file:                           CSV file
+                submit:                         Import
+            link:                               Import
+            title:                              Import the menu
+
+        deactivate:
+            flash:
+                ok:                             The menus have been deactivated successfully.
+
+        delete:
+            flash:
+                ok:                             The menus have been deleted successfully.
+
+        activate:
+            flash:
+                ok:                             The menus have been activated successfully.
+
+        undelete:
+            flash:
+                ok:                             The menus have been undeleted successfully.
+        add:
+            title:                              Add a category
+            name:                               Name
+            submit:                             Add
+            module:                             Add a module
+        edit:
+            title:                              Update the menu
+            name:                               Name
+            submit:                             Submit
+            module:                             Add a module
+
+    front:
+        index:
+            title:                              Menus
+            link:                               Menus
+            breadcrumb:                         Menus
+            nodata:                             No data
+            form:
+                search:                         Search
+            table:
+                header:
+                    name:                       Name
+                    action:                     Actions
+                action:
+                    detail:                     Detail
+                    delete:                     Delete
+                confirm:
+                    delete:                     Do you want to delete the menu ?
+
+        create:
+            title:                              Add
+            link:                               Add
+            breadcrumb:                         Add a menu
+            flash:
+                ok:                             The menu has been created successfully.
+                ko:                             The menu has not been created.
+            form:
+                name:                           Name
+                description:                    Description
+                submit:
+                    save:                       Save
+                    new:                        Save and add
+                    duplicate:                  Save and duplicate
+                    quit:                       Save and quit
+                    cancel:                     Cancel
+                alert:
+                    title:                      Information
+                    text:                       You need the validation of a moderator to add a menu.
+
+        update:
+            title:                              Update
+            link:                               Update
+            breadcrumb:                         Update
+            flash:
+                ok:                             The menu has been updated successfully.
+                ko:                             The menu has not been updated.
+            form:
+                name:                           Name
+                description:                    Description
+                submit:
+                    save:                       Save
+                    new:                        Save and add
+                    duplicate:                  Save and duplicate
+                    quit:                       Save and quit
+                    cancel:                     Cancel
+                alert:
+                    title:                      Information
+                    text:                       You need the validation of a moderator to update a menu.
+
+        detail:
+            title:                              "%name%"
+            categories:                         Categories management
+            products:                           Products management
+            ingredients:                        Ingredients management
+            link:                               Detail
+            breadcrumb:                         "%name%"
+            data:
+                title:                          Informations
+                create:                         Creation
+                update:                         Update
+                name:                           Name
+                alias:                          Alias
+                description:                    Description
+
+        delete:
+            flash:
+                ok:                             The menu has been deleted successfully.
+
+    api:
+        index:
+            title:                              Menus
+        tabs:
+            category:                           Categories
+            product:                            Products
+            ingredient:                         Ingredients
+            preview:                            Preview
+        status:
+            menu:                               Menu
+            default:                            Default
+            forward:                            Put forward
+        action:
+            activate:                           Activate
+            deactivate:                         Deactivate
+            delete:                             Delete
+            undelete:                           Undelete
+            update:                             Update
+            add:                                Add
+            add_category:                       Add category
+            add_product:                        Add product
+        confirm:
+            activate:                           Do you want to activate ?
+            deactivate:                         Do you want to deactivate ?
+            delete:                             Do you want to delete ?
+            undelete:                           Do you want to undelete ?
+        modal:
+            category:                           Categories management
+            product:                            Products management
+            ingredient:                         Ingredients management
+        form:
+            search:                             Search
+            nodata:                             No data
+            counter:                            "Number: %count%"
+
+    pagination:
+        counter:                                "Number of menus: %count% / %all%"
+
+    autocomplete:
+        nodata:                                 No result
+
+    error:
+        unknown:                                The menu does not exist.
+        delete:                                 The menu does not exist.
+        forbidden:                              Access forbidden.
+
+    category:
+        admin:
+            index:
+                title:                          "Menus management : categories"
+                link:                           Categories
+                breadcrumb:                     Categories
+                nodata:                         No data
+                form:
+                    search:                     Search
+                table:
+                    header:
+                        image:                  Image
+                        name:                   Name
+                        card:                   Menu
+                        route:                  Route
+                        products:               Products
+                        menu:                   Menu
+                        order:                  Order
+                        default:                By default
+                        action:                 Actions
+                        status:                 Status
+                    action:
+                        activate:               Activate
+                        deactivate:             Deactivate
+                        delete:                 Delete
+                        detail:                 Configure
+                        duplicate:              Duplicate
+                        undelete:               Undelete
+                        update:                 Update
+                    confirm:
+                        activate:               Do you want to activate the categorie ?
+                        deactivate:             Do you want to deactivate the categorie ?
+                        delete:                 Do you want to delete the categorie ?
+                        undelete:               Do you want to undelete the categorie ?
+
+            create:
+                title:                          Add
+                link:                           Add
+                breadcrumb:                     Add a categorie
+                flash:
+                    ok:                         The menu has been created successfully.
+                    ko:                         The menu has not been created.
+                form:
+                    name:                       Name
+                    description:                Description
+                    price:                      Price
+                    menu:                       Menu
+                    image:                      Image
+                    card:                       Menu
+                    order:                      Order
+                    cards:                      Menus
+                    parents:                    Parents
+                    sons:                       Sons
+                    products:                   Products
+                    default:                    By default
+                    active:                     Activate
+                    share:                      Share
+                    global:                     Global
+                    submit:
+                        save:                   Save
+                        new:                    Save and add
+                        duplicate:              Save and duplicate
+                        quit:                   Save and quit
+                        config:                 Save and configure
+                        cancel:                 Cancel
+                        import:                 Import
+                        export:                 Export
+                    fieldset:
+                        data:                   Datas
+                        options:                Options
+                        cards:                  Related menus
+                        products:               Related products
+                        categories:             Related categories
+
+            update:
+                title:                          Update
+                link:                           Update
+                breadcrumb:                     Update
+                flash:
+                    ok:                         The menu has been updated successfully.
+                    ko:                         The menu has not been updated.
+                form:
+                    name:                       Name
+                    description:                Description
+                    price:                      Price
+                    menu:                       Menu
+                    image:                      Image
+                    card:                       Menu
+                    order:                      Order
+                    cards:                      Menus
+                    parents:                    Parents
+                    sons:                       Sons
+                    products:                   Products
+                    default:                    By default
+                    active:                     Activate
+                    share:                      Share
+                    global:                     Global
+                    submit:
+                        save:                   Save
+                        new:                    Save and add
+                        duplicate:              Save and duplicate
+                        quit:                   Save and quit
+                        config:                 Save and configure
+                        cancel:                 Cancel
+                        import:                 Import
+                        export:                 Export
+                    fieldset:
+                        data:                   Datas
+                        options:                Options
+                        cards:                  Related menus
+                        products:               Related products
+                        categories:             Related categories
+
+            detail:
+                title:                          "%name%"
+                link:                           Detail
+                breadcrumb:                     "%name%"
+                card:
+                    tile:                       Menu
+                    anchor:                     Menu
+                data:
+                    title:                      Informations
+                    id:                         ID
+                    create:                     Creation
+                    update:                     Update
+                    name:                       Name
+                    alias:                      Alias
+                    description:                Description
+                    status:                     Status
+                url:
+                    title:                      Available routes
+                    admin:
+                        edit:                   Update
+                        detail:                 Configure
+                    front:
+                        id:                     Display via the ID
+                        name:                   Display via the name
+                        alias:                  Display via the alias
+                        lite:                   Display via the simplified url
+                admin:
+                    title:                      Administration tools
+
+            export:
+                breadcrumb:                     Export
+                form:
+                    submit:                     Export
+                link:                           Export
+                title:                          Export the categories
+
+            add:
+                title:                          Add a categorie
+                name:                           Name
+                submit:                         Add
+                module:                         Add a categorie
+                son:
+                    title:                      Add a new product or select an existing product
+                    name:                       Name
+                    submit:                     Add
+                    module:                     Add a module
+
+            import:
+                breadcrumb:                     Import
+                flash:
+                    ok:                         The categories have been imported successfully (%countAdd% ajout(s), %countUpdate% modification(s), %countError% erreur(s)).
+                    ko:                         The categories have not been imported successfully.
+                form:
+                    file:                       CSV file
+                    submit:                     Import
+                link:                           Import
+                title:                          Import the categories
+
+            deactivate:
+                flash:
+                    ok:                         The categories have been deactivated successfully.
+
+            delete:
+                flash:
+                    ok:                         The categories have been deleted successfully.
+
+            activate:
+                flash:
+                    ok:                         The categories have been activated successfully.
+
+            undelete:
+                flash:
+                    ok:                         The categories have been undeleted successfully.
+
+        front:
+            index:
+                title:                          "Card : categories"
+                link:                           Categories
+                breadcrumb:                     Categories
+                nodata:                         No data
+                form:
+                    search:                     Search
+                table:
+                    header:
+                        name:                   Name
+                        action:                 Actions
+                    action:
+                        detail:                 Detail
+                        delete:                 Delete
+                    confirm:
+                        delete:                 Do you want to delete the categorie ?
+
+            create:
+                title:                          Add
+                link:                           Add
+                breadcrumb:                     Add a categorie
+                flash:
+                    ok:                         The categories have been created successfully.
+                    ko:                         The categories have not been created.
+                form:
+                    name:                       Name
+                    description:                Description
+                    submit:
+                        save:                   Save
+                        new:                    Save and add
+                        duplicate:              Save and duplicate
+                        quit:                   Save and quit
+                        cancel:                 Cancel
+                    alert:
+                        title:                  Information
+                        text:                   You need the validation of a moderator do add a category.
+
+            update:
+                title:                          Update
+                link:                           Update
+                breadcrumb:                     Update
+                flash:
+                    ok:                         The categories have been updated successfully.
+                    ko:                         The categories have not been updated.
+                form:
+                    name:                       Name
+                    description:                Description
+                    submit:
+                        save:                   Save
+                        new:                    Save and add
+                        duplicate:              Save and duplicate
+                        quit:                   Save and quit
+                        cancel:                 Cancel
+                    alert:
+                        title:                  Information
+                        text:                   You need the validation of a moderator do update a category.
+
+            detail:
+                title:                          "%name%"
+                link:                           Detail
+                breadcrumb:                     "%name%"
+                data:
+                    title:                      Informations
+                    create:                     Creation
+                    update:                     Update
+                    name:                       Name
+                    alias:                      Alias
+                    description:                Description
+
+            delete:
+                flash:
+                    ok:                         The category has been updated successfully.
+
+        api:
+            index:
+                title:                          "Menus : categories"
+
+            create:
+                form:
+                    name:                       Name
+                    description:                Description
+                    price:                      Price
+                    menu:                       Menu
+                    image:                      Image
+                    order:                      Order
+                    parents:                    Parents
+                    products:                   Products
+                    submit:
+                        save:                   Save
+                    fieldset:
+                        data:                   Datas
+                        media:                  Medias
+                        products:               Related products
+                        categories:             Related categories
+                        menu:                   Menu
+
+            update:
+                form:
+                    name:                       Name
+                    description:                Description
+                    price:                      Price
+                    menu:                       Menu
+                    image:                      Image
+                    order:                      Order
+                    parents:                    Parents
+                    products:                   Products
+                    submit:
+                        save:                   Save
+                    fieldset:
+                        data:                   Datas
+                        media:                  Medias
+                        products:               Related products
+                        categories:             Related categories
+                        menu:                   Menu
+
+        pagination:
+            counter:                            "Number of categories: %count% / %all%"
+
+        autocomplete:
+            nodata:                             No result
+
+        error:
+            unknown:                            The category does not exist.
+            delete:                             The category does not exist.
+            forbidden:                          Access forbidden.
+
+    product:
+        admin:
+            index:
+                title:                          "Menus management : products"
+                link:                           Products
+                breadcrumb:                     Products
+                nodata:                         No data
+                form:
+                    search:                     Search
+                table:
+                    header:
+                        image:                  Image
+                        name:                   Name
+                        card:                   Menu
+                        categories:             Categories
+                        ingredients:            Ingredients
+                        order:                  Order
+                        default:                By default
+                        action:                 Actions
+                        status:                 Status
+                    action:
+                        activate:               Activate
+                        deactivate:             Deactivate
+                        delete:                 Delete
+                        detail:                 Configure
+                        duplicate:              Duplicate
+                        undelete:               Undelete
+                        update:                 Update
+                    confirm:
+                        activate:               Do you want to activate the product ?
+                        deactivate:             Do you want to deactivate the product ?
+                        delete:                 Do you want to delete the product ?
+                        undelete:               Do you want to undelete the product ?
+
+            create:
+                title:                          Add
+                link:                           Add
+                breadcrumb:                     Add a product
+                flash:
+                    ok:                         The product has been created successfully.
+                    ko:                         The product has not been created.
+                form:
+                    name:                       Name
+                    description:                Description
+                    categories:                 Categories
+                    ingredients:                Ingredients
+                    price:                      Price
+                    order:                      Order
+                    image:                      Image
+                    card:                       Menu
+                    forward:                    Put forward
+                    default:                    By default
+                    active:                     Activate
+                    share:                      Share
+                    global:                     Global
+                    submit:
+                        save:                   Save
+                        new:                    Save and add
+                        duplicate:              Save and duplicate
+                        quit:                   Save and quit
+                        config:                 Save and configure
+                        cancel:                 Cancel
+                        import:                 Import
+                        export:                 Export
+                    fieldset:
+                        data:                   Datas
+                        options:                Options
+                        data2:                  Categories and ingredients
+                        new:                    Add a new product
+                        old:                    Select the products
+
+            update:
+                title:                          Update
+                link:                           Update
+                breadcrumb:                     Update
+                flash:
+                    ok:                         The product has been updated successfully.
+                    ko:                         The product has not been updated.
+                form:
+                    name:                       Name
+                    description:                Description
+                    categories:                 Categories
+                    ingredients:                Ingredients
+                    price:                      Price
+                    order:                      Order
+                    image:                      Image
+                    card:                       Menu
+                    forward:                    Put forward
+                    default:                    By default
+                    active:                     Activate
+                    share:                      Share
+                    global:                     Global
+                    submit:
+                        save:                   Save
+                        new:                    Save and add
+                        duplicate:              Save and duplicate
+                        quit:                   Save and quit
+                        config:                 Save and configure
+                        cancel:                 Cancel
+                        import:                 Import
+                        export:                 Export
+                        delete:                 Delete
+                    fieldset:
+                        data:                   Datas
+                        options:                Options
+                        data2:                  Categories and ingredients
+
+            detail:
+                title:                          "%name%"
+                link:                           Detail
+                breadcrumb:                     "%name%"
+                card:
+                    tile:                       Menu
+                    anchor:                     Menu
+                data:
+                    title:                      Informations
+                    id:                         ID
+                    create:                     Creation
+                    update:                     Update
+                    name:                       Name
+                    alias:                      Alias
+                    description:                Description
+                    status:                     Status
+                url:
+                    title:                      Available routes
+                    admin:
+                        edit:                   Update
+                        detail:                 Configure
+                    front:
+                        id:                     Display via the ID
+                        name:                   Display via the name
+                        alias:                  Display via the alias
+                        lite:                   Display via the simplified url
+                admin:
+                    title:                      Administration tools
+
+            export:
+                breadcrumb:                     Export
+                form:
+                    submit:                     Export
+                link:                           Export
+                title:                          Export the produics
+
+            import:
+                breadcrumb:                     Import
+                flash:
+                    ok:                         The products have been imported successfully (%countAdd% ajout(s), %countUpdate% modification(s), %countError% erreur(s)).
+                    ko:                         The products have not been imported.
+                form:
+                    file:                       CSV file
+                    submit:                     Import
+                link:                           Import
+                title:                          Import the products
+
+            deactivate:
+                flash:
+                    ok:                         The product has been deactivated successfully.
+
+            delete:
+                flash:
+                    ok:                         The product has been deleted successfully.
+
+            activate:
+                flash:
+                    ok:                         The product has been activated successfully.
+
+            undelete:
+                flash:
+                    ok:                         The product has been undeleted successfully.
+            add:
+              title:                            Add a  new product or select within the existing products.
+              name:                             Name
+              submit:                           Add
+              module:                           Add a module
+              son:
+                 title:                         Add a new ingredient or select within the existing ingredients.
+                 name:                          Name
+                 submit:                        Add
+                 module:                        Add a module
+
+        front:
+            index:
+                title:                          "Menu : products"
+                link:                           Products
+                breadcrumb:                     Products
+                nodata:                         No data
+                form:
+                    search:                     Search
+                table:
+                    header:
+                        name:                   Name
+                        action:                 Actions
+                    action:
+                        detail:                 Detail
+                        delete:                 Delete
+                    confirm:
+                        delete:                 Do you want to delete the product ?
+
+            create:
+                title:                          Add
+                link:                           Add
+                breadcrumb:                     Add a product
+                flash:
+                    ok:                         The product has been created successfully.
+                    ko:                         The product has not been created.
+                form:
+                    name:                       Name
+                    description:                Description
+                    submit:
+                        save:                   Save
+                        new:                    Save and add
+                        duplicate:              Save and duplicate
+                        quit:                   Save and quit
+                        cancel:                 Cancel
+                    alert:
+                        title:                  Information
+                        text:                   You need the validation of a moderator to add a product.
+
+            update:
+                title:                          Update
+                link:                           Update
+                breadcrumb:                     Update
+                flash:
+                    ok:                         The product has been updated successfully.
+                    ko:                         The product has not been updated.
+                form:
+                    name:                       Name
+                    description:                Description
+                    submit:
+                        save:                   Save
+                        new:                    Save and add
+                        duplicate:              Save and duplicate
+                        quit:                   Save and quit
+                        cancel:                 Cancel
+                    alert:
+                        title:                  Information
+                        text:                   You need the validation of a moderator to update a product.
+
+            detail:
+                title:                          "%name%"
+                link:                           Detail
+                breadcrumb:                     "%name%"
+                data:
+                    title:                      Informations
+                    create:                     Creation
+                    update:                     Update
+                    name:                       Name
+                    alias:                      Alias
+                    description:                Description
+
+            delete:
+                flash:
+                    ok:                         The product has been deleted successfully.
+
+        api:
+            index:
+                title:                          "Menu : products"
+
+            create:
+                form:
+                    name:                       Name
+                    description:                Description
+                    ingredient:                 Ingredients (separated by commas)
+                    price:                      Price
+                    forward:                    Put forward
+                    image:                      Image
+                    order:                      Order
+                    categories:                 Categories
+                    ingredients:                Ingredients
+                    submit:
+                        save:                   Save
+                    fieldset:
+                        data:                   Datas
+                        media:                  Medias
+                        categories:             Related categories
+                        ingredients:            Related ingredients
+                        forward:                Put forward
+
+            update:
+                form:
+                    name:                       Name
+                    description:                Description
+                    ingredient:                 Ingredients (separated by commas)
+                    price:                      Price
+                    forward:                    Put forward
+                    image:                      Image
+                    order:                      Order
+                    categories:                 Caegories
+                    ingredients:                Ingredients
+                    submit:
+                        save:                   Save
+                    fieldset:
+                        data:                   Datas
+                        media:                  Medias
+                        categories:             Related categories
+                        ingredients:            Related ingredients
+                        forward:                Put forward
+
+        pagination:
+            counter:                            "Number of products: %count% / %all%"
+
+        autocomplete:
+            nodata:                             No result
+
+        error:
+            unknown:                            The product doest not exist.
+            delete:                             The product doest not exist.
+            forbidden:                          Access forbidden.
+
+    ingredient:
+        admin:
+            index:
+                title:                          "Menus management : ingredients"
+                link:                           Ingredients
+                breadcrumb:                     Ingredients
+                nodata:                         No data
+                form:
+                    search:                     Search
+                table:
+                    header:
+                        image:                  Image
+                        name:                   Name
+                        card:                   Menu
+                        products:               Products
+                        order:                  Order
+                        default:                By default
+                        action:                 Actions
+                        status:                 Status
+                    action:
+                        activate:               Activate
+                        deactivate:             Deactivate
+                        delete:                 Delete
+                        detail:                 Configure
+                        duplicate:              Duplicate
+                        undelete:               Undelete
+                        update:                 Update
+                    confirm:
+                        activate:               Do you want to activate the ingredient ?
+                        deactivate:             Do you want to deactivate the ingredient ?
+                        delete:                 Do you want to delete the ingredient ?
+                        undelete:               Do you want to undelete the ingredient ?
+
+            create:
+                title:                          Add
+                link:                           Add
+                breadcrumb:                     Add an ingredient
+                flash:
+                    ok:                         The ingredient has been created successfully.
+                    ko:                         The ingredient has not been created.
+                form:
+                    name:                       Name
+                    description:                Description
+                    order:                      Order
+                    image:                      Image
+                    card:                       Menu
+                    products:                   Products
+                    default:                    By default
+                    active:                     Activate
+                    share:                      Share
+                    global:                     Global
+                    submit:
+                        save:                   Save
+                        new:                    Save and add
+                        duplicate:              Save and duplicate
+                        quit:                   Save and quit
+                        config:                 Save and configure
+                        cancel:                 Cancel
+                        import:                 Import
+                        export:                 Export
+                    fieldset:
+                        data:                   Datas
+                        options:                Options
+                        products:               Related products
+
+            update:
+                title:                          Update
+                link:                           Update
+                breadcrumb:                     Update
+                flash:
+                    ok:                         The ingredient has been updated successfully.
+                    ko:                         The ingredient has not been updated.
+                form:
+                    name:                       Name
+                    description:                Description
+                    order:                      Order
+                    image:                      Image
+                    card:                       Menu
+                    products:                   Products
+                    default:                    By default
+                    active:                     Activate
+                    share:                      Share
+                    global:                     Global
+                    submit:
+                        save:                   Save
+                        new:                    Save and add
+                        duplicate:              Save and duplicate
+                        quit:                   Save and quit
+                        config:                 Save and configure
+                        cancel:                 Cancel
+                        import:                 Import
+                        export:                 Export
+                        delete:                 Delete
+                    fieldset:
+                        data:                   Datas
+                        options:                Options
+                        products:               Related products
+
+            detail:
+                title:                          "%name%"
+                link:                           Detail
+                breadcrumb:                     "%name%"
+                card:
+                    tile:                       Menu
+                    anchor:                     Menu
+                data:
+                    title:                      Informations
+                    id:                         ID
+                    create:                     Creation
+                    update:                     Update
+                    name:                       Name
+                    alias:                      Alias
+                    description:                Description
+                    status:                     Status
+                url:
+                    title:                      Available routes
+                    admin:
+                        edit:                   Update
+                        detail:                 Configure
+                    front:
+                        id:                     Display via the ID
+                        name:                   Display via the name
+                        alias:                  Display via the alias
+                        lite:                   Display via the simplified url
+                admin:
+                    title:                      Administration tools
+
+            export:
+                breadcrumb:                     Export
+                form:
+                    submit:                     Export
+                link:                           Export
+                title:                          Export the ingredients
+
+            import:
+                breadcrumb:                     Import
+                flash:
+                    ok:                         The ingredients have been imported successfully (%countAdd% ajout(s), %countUpdate% modification(s), %countError% erreur(s)).
+                    ko:                         The ingredients have not been imported.
+                form:
+                    file:                       CSV file
+                    submit:                     Import
+                link:                           Import
+                title:                          Import the ingredients
+
+            deactivate:
+                flash:
+                    ok:                         The ingredient has been deactivated successfully.
+
+            delete:
+                flash:
+                    ok:                         The ingredient has been deleted successfully.
+
+            activate:
+                flash:
+                    ok:                         The ingredient has been activated successfully.
+
+            undelete:
+                flash:
+                    ok:                         The ingredient has been undeleted successfully.
+            add:
+                title:                          Add an ingredient
+                name:                           Name
+                submit:                         Add
+                module:                         Add a module
+            edit:
+                title:                          Update an ingrediient
+                name:                           Name
+                submit:                         Submit
+                module:                         Add a module
+
+        front:
+            index:
+                title:                          "Menu : ingredients"
+                link:                           Ingredients
+                breadcrumb:                     Ingrédients
+                nodata:                         No data
+                form:
+                    search:                     Search
+                table:
+                    header:
+                        name:                   Name
+                        action:                 Actions
+                    action:
+                        detail:                 Detail
+                        delete:                 Delete
+                    confirm:
+                        delete:                 Do you want to delete the ingredient ?
+
+            create:
+                title:                          Add
+                link:                           Add
+                breadcrumb:                     Add an ingredient
+                flash:
+                    ok:                         The ingredient has been created successfully.
+                    ko:                         The ingredient has not been created.
+                form:
+                    name:                       Name
+                    description:                Description
+                    submit:
+                        save:                   Save
+                        new:                    Save and add
+                        duplicate:              Save and duplicate
+                        quit:                   Save and quit
+                        cancel:                 Cancel
+                    alert:
+                        title:                  Information
+                        text:                   You need the validation of a moderator to add an ingredient.
+
+            update:
+                title:                          Update
+                link:                           Update
+                breadcrumb:                     Update
+                flash:
+                    ok:                         The ingredient has been updated successfully.
+                    ko:                         The ingredient has not been updated.
+                form:
+                    name:                       Name
+                    description:                Description
+                    submit:
+                        save:                   Save
+                        new:                    Save and add
+                        duplicate:              Save and duplicate
+                        quit:                   Save and quit
+                        cancel:                 Cancel
+                    alert:
+                        title:                  Information
+                        text:                   You need the validation of a moderator to update an ingredient.
+
+            detail:
+                title:                          "%name%"
+                link:                           Detail
+                breadcrumb:                     "%name%"
+                data:
+                    title:                      Informations
+                    create:                     Creation
+                    update:                     Update
+                    name:                       Name
+                    alias:                      Alias
+                    description:                Description
+
+            delete:
+                flash:
+                    ok:                         The ingredient has been deleted successfully.
+
+        api:
+            index:
+                title:                          "Menu : ingredients"
+
+            create:
+                form:
+                    name:                       Name
+                    description:                Description
+                    image:                      Image
+                    order:                      Order
+                    products:                   Products
+                    submit:
+                        save:                   Save
+                    fieldset:
+                        data:                   Datas
+                        media:                  Medias
+                        products:               Related products
+
+            update:
+                form:
+                    name:                       Name
+                    description:                Description
+                    image:                      Image
+                    order:                      Order
+                    products:                   Products
+                    submit:
+                        save:                   Save
+                    fieldset:
+                        data:                   Datas
+                        media:                  Medias
+                        products:               Related products
+
+        pagination:
+            counter:                            "Number of ingredients: %count% / %all%"
+
+        autocomplete:
+            nodata:                             No result
+
+        error:
+            unknown:                            The ingredient does not exist.
+            delete:                             The ingredient does not exist.
+            forbidden:                          Access forbidden.

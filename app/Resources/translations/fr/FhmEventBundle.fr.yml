@@ -1,33 +1,13 @@
-fhm:
-    breadcrumb:                                 Accueil
-    admin:
-        breadcrumb:                             Admin
-        event:
-            breadcrumb:                         événement
-            create:
-                breadcrumb:                     Ajouter un évènement
-            update:
-                breadcrumb:                     Modifier
-            detail:
-                breadcrumb:                     Détails
-            group:
-                breadcrumb:                     Calendiers
-                create:
-                    breadcrumb:                 Ajouter
-                update:
-                    breadcrumb:                 Modifier
-project:
-    breadcrump:                                 Accueil
-    admin:
-        breadcrump:                             Admin
-        event:
-            breadcrump:                         Evenement
-            create:
-                breadcrumb:                     Ajouter un évènement
-            update:
-                breadcrumb:                     Modifier
-            detail:
-                breadcrumb:                     Détails
+breadcrumb:
+    event:                                      Évènements
+    event_create:                               Ajouter
+    event_update:                               Modifier
+    event_detail:                               '%name%'
+    event_group:                                Calendriers
+    event_group_create:                         Ajouter
+    event_group_update:                         Modifier
+    event_group_detail:                         '%name%'
+    
 event:
     admin:
         index:

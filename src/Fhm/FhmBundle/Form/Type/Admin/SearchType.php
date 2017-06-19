@@ -1,4 +1,5 @@
 <?php
+
 namespace Fhm\FhmBundle\Form\Type\Admin;
 
 use Symfony\Component\Form\AbstractType;
@@ -8,13 +9,14 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Class SearchType
+ *
  * @package Fhm\FhmBundle\Form\Type\Admin
  */
 class SearchType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
-     * @param array $options
+     * @param array                $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -22,11 +24,11 @@ class SearchType extends AbstractType
             'search',
             TextType::class,
             array(
-                'label' => 'fhm.admin.index.form.search',
+                'label'    => false,
                 'required' => false,
-                'attr' => array(
-                    'placeholder' => 'fhm.admin.index.form.search',
-                    'data-type' => 'list',
+                'attr'     => array(
+                    'placeholder' => 'fhm.admin.search',
+                    'data-type'   => 'list',
                 ),
             )
         );

@@ -1,0 +1,276 @@
+note:
+    admin:
+        index:
+            title:                              Ratings management
+            link:                               Ratings
+            breadcrumb:                         Ratings
+            nodata:                             No data
+            form:
+                search:                         Search
+            table:
+                header:
+                    parent:                     Place
+                    user:                       User
+                    date:                       Date
+                    note:                       Note
+                    action:                     Actions
+                    status:                     Status
+                action:
+                    activate:                   Activate
+                    deactivate:                 Deactivate
+                    delete:                     Delete
+                    detail:                     Detail
+                    duplicate:                  Duplicate
+                    undelete:                   Undelete
+                    update:                     Update
+                confirm:
+                    activate:                   Do you want to activate the rating ?
+                    deactivate:                 Do you want to deactivate the rating ?
+                    delete:                     Do you want to delete the rating ?
+                    undelete:                   Do you want to undelete the rating ?
+
+        create:
+            title:                              Add
+            link:                               Add
+            breadcrumb:                         Add a rating
+            flash:
+                ok:                             The rating has been created successfully.
+                ko:                             The rating has not been created.
+            form:
+                name:                           Name
+                description:                    Description
+                active:                         Activate
+                share:                          Share
+                global:                         Global
+                submit:
+                    save:                       Save
+                    new:                        Save and add
+                    duplicate:                  Save and duplicate
+                    quit:                       Save and quit
+                    config:                     Save and configure
+                    cancel:                     Cancel
+                    import:                     Import
+                    export:                     Export
+                fieldset:
+                    data:                       Datas
+                    options:                    Options
+
+        update:
+            title:                              Update
+            link:                               Update
+            breadcrumb:                         Update
+            flash:
+                ok:                             The rating has been updated successfully.
+                ko:                             The rating has not been updated.
+            form:
+                name:                           Name
+                description:                    Description
+                active:                         Activate
+                share:                          Share
+                global:                         Global
+                submit:
+                    save:                       Save
+                    new:                        Save and add
+                    duplicate:                  Save and duplicate
+                    quit:                       Save and quit
+                    config:                     Save and configure
+                    cancel:                     Cancel
+                    import:                     Import
+                    export:                     Export
+                    delete:                     Delete
+                fieldset:
+                    data:                       Datas
+                    options:                    Options
+
+        detail:
+            title:                              "%name%"
+            link:                               Detail
+            breadcrumb:                         "%name%"
+            data:
+                title:                          Informations
+                id:                             ID
+                parent:                         Place
+                user:                           User
+                date:                           Date
+                note:                           Rating
+                content:                        Message
+            parent:
+                title:                          Place
+                id:                             ID
+                name:                           Name
+                alias:                          Alias
+                address:                        Address
+            user:
+                title:                          User
+                id:                             ID
+                username:                       User name
+                firstname:                      First name
+                lastname:                       Last name
+                email:                          Email
+            url:
+                title:                          Available Routes
+                admin:
+                    edit:                       Update
+                    detail:                     Configure
+                front:
+                    id:                         Display via the ID
+                    name:                       Display via the name
+                    alias:                      Display via the alias
+                    lite:                       Display via the simplified url
+            admin:
+                title:                          Administration tools
+
+        export:
+            breadcrumb:                         Export
+            form:
+                submit:                         Export
+            link:                               Export
+            title:                              Export the ratings notes
+
+        import:
+            breadcrumb:                         Import
+            flash:
+                ok:                             The rating has been imported successfully. (%countAdd% ajout(s), %countUpdate% modification(s), %countError% erreur(s)).
+                ko:                             The rating has not been imported.
+            form:
+                file:                           CSV File
+                submit:                         Import
+            link:                               Import
+            title:                              Import the ratings
+
+        deactivate:
+            flash:
+                ok:                             The rating has been deactivated successfully.
+
+        delete:
+            flash:
+                ok:                             The rating has been deleted successfully.
+
+        activate:
+            flash:
+                ok:                             The rating has been activated successfully.
+
+        undelete:
+            flash:
+                ok:                             The rating has been undeleted successfully.
+
+    front:
+        index:
+            title:                              Ratings
+            link:                               Ratings
+            breadcrumb:                         Ratings
+            nodata:                             No data
+            form:
+                search:                         Search
+            table:
+                header:
+                    name:                       Name
+                    action:                     Actions
+                action:
+                    detail:                     Detail
+                    delete:                     Delete
+                confirm:
+                    delete:                     Do you want to delete the ratings ?
+
+        create:
+            title:                              Add
+            link:                               Add
+            breadcrumb:                         Add a rating
+            flash:
+                ok:                             The rating has been created successfully.
+                ko:                             The rating has not been created.
+            form:
+                name:                           Name
+                description:                    Description
+                submit:
+                    save:                       Save
+                    new:                        Save and add
+                    duplicate:                  Save and duplicate
+                    quit:                       Save and quit
+                    cancel:                     Cancel
+                alert:
+                    title:                      Information
+                    text:                       You need the validation of a moderator to add a rating.
+
+        update:
+            title:                              Update
+            link:                               Update
+            breadcrumb:                         Update
+            flash:
+                ok:                             The rating has been updated successfully.
+                ko:                             The rating has not been updated.
+            form:
+                name:                           Name
+                description:                    Description
+                submit:
+                    save:                       Save
+                    new:                        Save and add
+                    duplicate:                  Save and duplicate
+                    quit:                       Save and quit
+                    cancel:                     Cancel
+                alert:
+                    title:                      Information
+                    text:                       You need the validation of a moderator to update a rating.
+
+        detail:
+            title:                              "%name%"
+            link:                               Detail
+            breadcrumb:                         "%name%"
+            data:
+                title:                          Informations
+                create:                         Creation
+                update:                         Update
+                name:                           Name
+                alias:                          Alias
+                description:                    Description
+
+        delete:
+            flash:
+                ok:                             The rating has been deleted successfully.
+
+    api:
+        index:
+            title:                              Ratings
+
+        embed:
+            add:
+                title:                          Rate this place
+                button:                         Rate
+                comment:                        Give your opinion.
+                submit:                         Submit
+                value:
+                    1:                          Bad
+                    2:                          Average
+                    3:                          Good
+                    4:                          Very good
+                    5:                          Excellent
+            edit:
+                title:                          Update your rating
+                button:                         Rate
+                comment:                        Give your opinion.
+                submit:                         Update
+                delete:                         Delete
+                confirm:
+                    delete:                     Do you want to delete the rating ?
+                value:
+                    1:                          Bad
+                    2:                          Average
+                    3:                          Good
+                    4:                          Very good
+                    5:                          Excellent
+            comment:
+                resume:                         Rating
+                comment:                        Comments
+                nodata:                         No comment
+
+
+    pagination:
+        counter:                                "Number of ratings: %count% / %all%"
+
+    autocomplete:
+        nodata:                                 No result
+
+    error:
+        unknown:                                The rating does not exist.
+        delete:                                 The rating does not exist.
+        forbidden:                              Access forbidden.

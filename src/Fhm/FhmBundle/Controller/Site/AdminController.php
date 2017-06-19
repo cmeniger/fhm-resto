@@ -1,4 +1,5 @@
 <?php
+
 namespace Fhm\FhmBundle\Controller\Site;
 
 use Fhm\FhmBundle\Controller\RefAdminController as FhmController;
@@ -15,6 +16,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
  * @Route("/admin/site")
  * ---------------------------------------
  * Class AdminController
+ *
  * @package Fhm\FhmBundle\Controller\Site
  */
 class AdminController extends FhmController
@@ -24,15 +26,15 @@ class AdminController extends FhmController
      */
     public function __construct()
     {
-        self::$repository = "FhmFhmBundle:Site";
-        self::$source = "fhm";
-        self::$domain = "FhmFhmSite";
-        self::$translation = "site";
-        self::$route = "site";
-        self::$form = new \stdClass();
-        self::$form->createType = CreateType::class;
+        self::$repository          = "FhmFhmBundle:Site";
+        self::$source              = "fhm";
+        self::$domain              = "FhmFhmSiteBundle";
+        self::$translation         = "site";
+        self::$route               = "site";
+        self::$form                = new \stdClass();
+        self::$form->createType    = CreateType::class;
         self::$form->createHandler = CreateHandler::class;
-        self::$form->updateType = UpdateType::class;
+        self::$form->updateType    = UpdateType::class;
         self::$form->updateHandler = UpdateHandler::class;
     }
 
@@ -60,8 +62,9 @@ class AdminController extends FhmController
     public function createAction(Request $request)
     {
         $response = parent::createAction($request);
-        $objects = $this->get('fhm_tools')->dmRepository(self::$repository)->findAll();
-        if (count($objects) == 1) {
+        $objects  = $this->get('fhm_tools')->dmRepository(self::$repository)->findAll();
+        if(count($objects) == 1)
+        {
             $object = $objects[0];
             $object->setDefault(true);
             $object->setActive(true);
@@ -95,11 +98,14 @@ class AdminController extends FhmController
     public function updateDefaultAction(Request $request)
     {
         $object = $this->get('fhm_tools')->dmRepository(self::$repository)->getDefault();
-        if ($object) {
+        if($object)
+        {
             return $this->redirect(
                 $this->getUrl(array('id' => $object->getId()), 'fhm_admin_site_update')
             );
-        } else {
+        }
+        else
+        {
             return $this->redirect($this->getUrl(array(), 'fhm_admin_site'));
         }
     }
@@ -143,8 +149,9 @@ class AdminController extends FhmController
     public function deleteAction($id)
     {
         $object = $this->get('fhm_tools')->dmRepository(self::$repository)->find($id);
-        if ($object && $object->getDefault()) {
-            throw new HttpException(403, $this->trans(self::$source.'.error.forbidden'));
+        if($object && $object->getDefault())
+        {
+            throw new HttpException(403, $this->trans(self::$source . '.error.forbidden'));
         }
 
         return parent::deleteAction($id);
@@ -187,8 +194,9 @@ class AdminController extends FhmController
     public function deactivateAction($id)
     {
         $object = $this->get('fhm_tools')->dmRepository(self::$repository)->find($id);
-        if ($object && $object->getDefault()) {
-            throw new HttpException(403, $this->trans(self::$source.'.error.forbidden'));
+        if($object && $object->getDefault())
+        {
+            throw new HttpException(403, $this->trans(self::$source . '.error.forbidden'));
         }
 
         return parent::deactivateAction($id);
@@ -232,11 +240,13 @@ class AdminController extends FhmController
     {
         $object = $this->get('fhm_tools')->dmRepository(self::$repository)->find($id);
         // ERROR - Unknown
-        if ($object == "") {
-            throw $this->createNotFoundException($this->trans(self::$translation.'.error.unknown'));
+        if($object == "")
+        {
+            throw $this->createNotFoundException($this->trans(self::$translation . '.error.unknown'));
         }
-        if (!$this->get('security.authorization_checker')->isGranted('ROLE_SUPER_ADMIN')) {
-            throw new HttpException(403, $this->trans(self::$translation.'.error.forbidden'));
+        if(!$this->get('security.authorization_checker')->isGranted('ROLE_SUPER_ADMIN'))
+        {
+            throw new HttpException(403, $this->trans(self::$translation . '.error.forbidden'));
         }
         // Deactivate
         $this->get('fhm_tools')->dmRepository(self::$repository)->resetDefault();
@@ -244,8 +254,8 @@ class AdminController extends FhmController
         $object->setActive(true);
         $this->get('fhm_tools')->dmPersist($object);
         // Message
-        $this->get('session')->getFlashBag()->add('notice', $this->trans(self::$translation.'.admin.default.flash.ok'));
+        $this->get('session')->getFlashBag()->add('notice', $this->trans(self::$translation . '.admin.default.flash.ok'));
 
-        return $this->redirect($this->getUrl(array(), 'fhm_admin_'.self::$route));
+        return $this->redirect($this->getUrl(array(), 'fhm_admin_' . self::$route));
     }
 }

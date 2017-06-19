@@ -1,4 +1,4 @@
-$hover-color: #007095;
+$hover-color: rgba($primary-color, 0.8);
 
 @mixin modules() {
     &.module{
@@ -292,7 +292,7 @@ $hover-color: #007095;
     position: relative;
     margin:   0 0 20px 0;
     padding:  15px;
-    border:   1px solid $gainsboro;
+    border:   1px solid $secondary-color;
     .dd-tree-list{
         display:    block;
         position:   relative;
@@ -351,32 +351,74 @@ $hover-color: #007095;
         font-weight:   bold;
         color:         $black;
         border:        1px solid $iron;
-        background:    $smoke;
+        background:    $white;
         transition:    background-color 50ms ease-out;
+        .name{
+            font-size: 0.8em;
+            @media #{$medium} {
+                font-size: 1em;
+            }
+            @media #{$large} {
+            }
+        }
+        .actions{
+            position:     absolute;
+            top:          1px;
+            right:        1px;
+            height:       28px;
+            background:   $white;
+            padding-left: 0.5rem;
+            span{
+                width:       20px;
+                text-indent: -9000em;
+                cursor:      default;
+                @media #{$medium} {
+                    width:       auto;
+                    text-indent: 0;
+                }
+                @media #{$large} {
+                }
+            }
+        }
         &:hover{
-            background: rgba(0, 112, 149, 0.1);
+            background: $secondary-color;
+            .actions{
+                background: $secondary-color;
+            }
+            .dd-tree-comment{
+                color: $white;
+            }
         }
         &.deactive{
         }
         &.delete{
         }
+        .dd-tree-comment{
+            color:       $secondary-color;
+            font-size:   0.8em;
+            padding:     0 1em;
+            border-left: 1px solid $smoke;
+            &:first-child{
+                margin-left: 1em;
+            }
+        }
         .dd-tree-status{
             float:        left;
-            margin-right: 15px;
+            margin-right: 10px;
         }
         .dd-tree-page{
             float:        left;
             font-size:    18px;
-            margin-right: 15px;
+            margin-right: 10px;
             color:        $black;
             .nodata{
                 color: $iron;
             }
         }
         .dd-tree-actions{
-            float:      left;
-            text-align: center;
-            width:      80px;
+            float:        left;
+            text-align:   center;
+            margin-right: 10px;
         }
     }
     .dd-tree-master{
@@ -387,12 +429,24 @@ $hover-color: #007095;
         font-size:   14px;
         line-height: 30px;
         .dd-tree-handle{
-            color:      $primary-color;
-            border:     1px solid $iron;
-            background: $white;
+            color:        $white;
+            background:   $secondary-color;
+            border:       1px solid $secondary-color;
+            border-right: 1px solid $white;
+            cursor:       default;
         }
         .dd-tree-content{
-            margin: 0 0 10px 0;
+            margin:     0 0 10px 0;
+            color:      $white;
+            background: $secondary-color;
+            border:     1px solid $secondary-color;
+            .actions{
+                background: $secondary-color;
+                font-size:  0.8em;
+                a{
+                    color: $white;
+                }
+            }
         }
     }
 }
@@ -453,32 +507,72 @@ $hover-color: #007095;
             transition:  background-color 300ms ease-out;
         }
         .dd-tree-content{
-            display:     block;
-            margin:      0;
-            padding:     0 10px 0 40px;
-            height:      30px;
-            font-weight: bold;
-            color:       $black;
-            border:      1px solid $iron;
-            background:  $white;
+            display:       block;
+            margin-bottom: 10px;
+            padding:       0 10px 0 40px;
+            height:        30px;
+            font-weight:   bold;
+            color:         $black;
+            border:        1px solid $iron;
+            background:    $white;
+            transition:    background-color 50ms ease-out;
+            .name{
+                font-size: 0.8em;
+                @media #{$medium} {
+                    font-size: 1em;
+                }
+                @media #{$large} {
+                }
+            }
+            .actions{
+                position:     absolute;
+                top:          1px;
+                right:        1px;
+                height:       28px;
+                background:   $white;
+                padding-left: 0.5rem;
+                span{
+                    width:       20px;
+                    text-indent: -9000em;
+                    cursor:      default;
+                    @media #{$medium} {
+                        width:       auto;
+                        text-indent: 0;
+                    }
+                    @media #{$large} {
+                    }
+                }
+            }
             &.deactive{
             }
             &.delete{
             }
+            .dd-tree-comment{
+                color:       $secondary-color;
+                font-size:   0.8em;
+                padding:     0 1em;
+                border-left: 1px solid $smoke;
+                &:first-child{
+                    margin-left: 1em;
+                }
+            }
             .dd-tree-status{
                 float:        left;
-                margin-right: 15px;
+                margin-right: 10px;
             }
             .dd-tree-page{
                 float:        left;
-                color:        $base;
                 font-size:    18px;
-                margin-right: 15px;
+                margin-right: 10px;
+                color:        $black;
+                .nodata{
+                    color: $iron;
+                }
             }
             .dd-tree-actions{
-                float:      left;
-                text-align: center;
-                width:      80px;
+                float:        left;
+                text-align:   center;
+                margin-right: 10px;
             }
         }
     }

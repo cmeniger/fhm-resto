@@ -1,29 +1,17 @@
 {% trans_default_domain instance.domain %}
 {% extends "::FhmFhm/Front/detail.html.twig" %}
 
-{% block breadcrumbs %}{% endblock %}
 {% block content_link %}{% endblock %}
 
-{% block tagline %}
-    <div class="row">
-        <div class="column tagline  hide-for-small">
-            <a href="{{ path('project_home') }}" class="logo">
-                {% if site %}
-                    {{ site.getLogo()|image('s','','/images/logo.png')|raw }}
-                {% else %}
-                    <img src="{{ asset('/images/logo.png') }}" alt=""/>
-                {% endif %}
-            </a>
+{% block content_data %}
+    <div class="row hidden-for-small">
+        <div class="column">
+            {{ render(path('fhm_api_card_embed', {id:object.getId(), template:'tabs'})) }}
         </div>
     </div>
-{% endblock %}
-
-{% block content_data %}
-    <div id="content_data">
-        <div class="row gutter-margin-top">
-            <div class="column">
-                {{ render(path('fhm_api_card_embed', {id:document.getId(), template:'tabs'})) }}
-            </div>
+    <div class="row hidden-for-medium-up">
+        <div class="column">
+            {{ render(path('fhm_api_card_embed', {id:object.getId(), template:'accordion'})) }}
         </div>
     </div>
 {% endblock %}

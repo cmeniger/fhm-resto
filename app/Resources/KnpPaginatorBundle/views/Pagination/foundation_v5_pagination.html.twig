@@ -25,12 +25,12 @@
     <ul class="pagination">
         {% if previous is defined %}
                  <li class="arrow">
-                     <a href="{{ path(route, query|merge({(pageParameterName): previous})) }}">&laquo; {{ 'fhm.admin.previous'|trans }}</a>
+                     <a href="{{ path(route, query|merge({(pageParameterName): previous})) }}">&laquo; {{ 'fhm.pagination.previous'|trans }}</a>
                  </li>
         {% else %}
             <li class="arrow unavailable">
                 <a>
-                    &laquo; {{ 'fhm.admin.previous'|trans }}
+                    &laquo; {{ 'fhm.pagination.previous'|trans }}
                 </a>
             </li>
         {% endif %}
@@ -87,13 +87,13 @@
         {% if next is defined %}
             <li class="arrow">
                 <a href="{{ path(route, query|merge({(pageParameterName): next})) }}">
-                    {{ 'fhm.admin.next'|trans }} &nbsp;&raquo;
+                    {{ 'fhm.pagination.next'|trans }} &nbsp;&raquo;
                 </a>
             </li>
         {% else %}
             <li class="arrow unavailable">
                 <a>
-                    {{ 'fhm.admin.next'|trans }} &nbsp;&raquo;
+                    {{ 'fhm.pagination.next'|trans }} &nbsp;&raquo;
                 </a>
             </li>
         {% endif %}

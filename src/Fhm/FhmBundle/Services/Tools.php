@@ -1,4 +1,5 @@
 <?php
+
 namespace Fhm\FhmBundle\Services;
 
 use Symfony\Component\HttpFoundation\Request;
@@ -9,12 +10,14 @@ use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Class Tools
+ *
  * @package Fhm\FhmBundle\Services
  */
 class Tools
 {
     /**
      * Tools constructor.
+     *
      * @param ContainerInterface $container
      */
     public function __construct(ContainerInterface $container)
@@ -34,13 +37,15 @@ class Tools
      * @param $datas
      * @param $filename
      * @param $csvDelimiter
+     *
      * @return Response
      */
     public function csvExport($datas, $filename, $csvDelimiter)
     {
         $flp = fopen('php://output', 'w');
         ob_start();
-        foreach ($datas as $data) {
+        foreach($datas as $data)
+        {
             fputcsv($flp, $data, $csvDelimiter);
         }
         fclose($flp);
@@ -50,7 +55,7 @@ class Tools
         $response->headers->set('Content-Type', 'text/csv');
         $response->headers->set(
             'Content-Disposition',
-            'attachment;filename='.(($filename == '') ? date('YmdHis').'_export.csv' : $filename)
+            'attachment;filename=' . (($filename == '') ? date('YmdHis') . '_export.csv' : $filename)
         );
         $response->setContent($csv);
 
@@ -66,8 +71,9 @@ class Tools
     public function formRename($name, $datas)
     {
         $post = array();
-        foreach ((array)$datas as $key => $value) {
-            $post[$name."[".$key."]"] = $value;
+        foreach((array) $datas as $key => $value)
+        {
+            $post[$name . "[" . $key . "]"] = $value;
         }
 
         return $post;
@@ -104,9 +110,9 @@ class Tools
     public function getLastRoute(Request $request)
     {
         $referer = $request->headers->get('referer');
-        $route = ($referer && $request->getBaseUrl() == '') ? $referer : '';
-        $route = ($referer == '' && $request->getBaseUrl()) ? $request->getBaseUrl() : $route;
-        $route = ($referer && $request->getBaseUrl()) ? str_replace(
+        $route   = ($referer && $request->getBaseUrl() == '') ? $referer : '';
+        $route   = ($referer == '' && $request->getBaseUrl()) ? $request->getBaseUrl() : $route;
+        $route   = ($referer && $request->getBaseUrl()) ? str_replace(
             $request->getBaseUrl(),
             '',
             substr($referer, strpos($referer, $request->getBaseUrl()))
@@ -124,9 +130,9 @@ class Tools
      */
     public function getAlias($id, $name, $repository)
     {
-        $alias = "";
-        $unique = false;
-        $code = 0;
+        $alias   = "";
+        $unique  = false;
+        $code    = 0;
         $replace = array(
             'À' => 'a',
             'Á' => 'a',
@@ -175,13 +181,14 @@ class Tools
             'œ' => 'oe',
             '$' => 's',
         );
-        while ($alias == "" || !$unique) {
-            $alias = $name;
-            $alias = strtr($alias, $replace);
-            $alias = preg_replace('#[^A-Za-z0-9]+#', '-', $alias);
-            $alias = trim($alias, '-');
-            $alias = strtolower($alias);
-            $alias = ($code > 0) ? $alias.'-'.$code : $alias;
+        while($alias == "" || !$unique)
+        {
+            $alias  = $name;
+            $alias  = strtr($alias, $replace);
+            $alias  = preg_replace('#[^A-Za-z0-9]+#', '-', $alias);
+            $alias  = trim($alias, '-');
+            $alias  = strtolower($alias);
+            $alias  = ($code > 0) ? $alias . '-' . $code : $alias;
             $unique = $this->dmRepository($repository)->isUnique($id, $alias);
             $code++;
         }
@@ -193,19 +200,20 @@ class Tools
      * @param            $id
      * @param            $name
      * @param bool|false $multiple
-     * @param null $repository
-     * @param int $length
+     * @param null       $repository
+     * @param int        $length
      *
      * @return string
      */
     public function getUnique($id, $name, $multiple = false, $repository = null, $length = 4)
     {
-        $alias = "";
+        $alias  = "";
         $unique = false;
-        $code = $multiple ? 1 : 0;
-        while ($alias == "" || !$unique) {
-            $alias = $name;
-            $alias = ($code > 0) ? $alias.'_'.str_pad($code, $length, '0', STR_PAD_LEFT) : $alias;
+        $code   = $multiple ? 1 : 0;
+        while($alias == "" || !$unique)
+        {
+            $alias  = $name;
+            $alias  = ($code > 0) ? $alias . '_' . str_pad($code, $length, '0', STR_PAD_LEFT) : $alias;
             $unique = $this->dmRepository($repository)->isUnique($id, $alias);
             $code++;
         }
@@ -221,7 +229,8 @@ class Tools
     public function getCollection($datas)
     {
         $collection = new ArrayCollection();
-        foreach ($datas as $data) {
+        foreach($datas as $data)
+        {
             $collection->add($data);
         }
 
@@ -236,8 +245,10 @@ class Tools
     public function getList($datas)
     {
         $list = array();
-        foreach ($datas as $data) {
-            if ($data->getActive() && !$data->getDelete()) {
+        foreach($datas as $data)
+        {
+            if($data->getActive() && !$data->getDelete())
+            {
                 $list[$data->getId()] = $data;
             }
         }
@@ -254,8 +265,9 @@ class Tools
     public function getParameters($route, $parent)
     {
         $parameters = $this->container->getParameter($parent);
-        $value = $parameters;
-        foreach ((array)$route as $sub) {
+        $value      = $parameters;
+        foreach((array) $route as $sub)
+        {
             $value = $value[$sub];
         }
 
@@ -264,8 +276,8 @@ class Tools
 
     /**
      * @param array $parameters
-     * @param null $route
-     * @param null $referenceType
+     * @param null  $route
+     * @param null  $referenceType
      *
      * @return string
      */
@@ -283,7 +295,8 @@ class Tools
      */
     public function getUser()
     {
-        if ($this->container->get('security.token_storage')->getToken()) {
+        if($this->container->get('security.token_storage')->getToken())
+        {
             return $this->container->get('security.token_storage')->getToken()->getUser();
         }
 
@@ -303,11 +316,12 @@ class Tools
      * @param $parameters
      * @param $domain
      * @param $translation
+     *
      * @return string
      */
-    public function trans($key, $parameters, $domain, $translation)
+    public function trans($key, $parameters, $domain, $translation = '')
     {
-        $key = $key[0] == '.' ? $translation.$key : $key;
+        $key = $key[0] == '.' ? $translation . $key : $key;
 
         return $this->container->get('translator')->trans($key, $parameters, $domain);
     }
@@ -322,6 +336,7 @@ class Tools
 
     /**
      * @param $obj
+     *
      * @return $this
      */
     public function dmPersist(&$obj)
@@ -334,6 +349,7 @@ class Tools
 
     /**
      * @param $repository
+     *
      * @return \Doctrine\Common\Persistence\ObjectRepository
      */
     public function dmRepository($repository)
@@ -354,38 +370,86 @@ class Tools
     }
 
     /**
-     * @param $options
+     * @param      $options
      * @param null $element
+     *
      * @return array
      */
     public function generateBreadcrumbs($options, $element = null)
     {
-        $breaCrumbs = [];
-        $route = $options['_route'];
-        $steps = explode('_', $route);
-        end($steps);
-        $endkey = key($steps);
-        reset($steps);
-        $lastText = $lastUrl = '';
-        foreach ($steps as $key => $step) {
-            $lastText .= $step;
-            $lastUrl .= $step;
-            if ($this->routeExists($lastUrl)) {
-                $breaCrumbs[] = array(
-                    'link' => $this->getUrl(
-                        $lastUrl,
-                        ($key == $endkey and $element) ? ['id' => $element->getId()] : []
-                    ),
-                    'text' => $this->trans($lastText.'.breadcrumb', [], $options['domain'], ''),
-                );
+        $breadcrumbs = [];
+        $route       = $options['_route'];
+        $steps       = explode('_', $route);
+        $trans       = '';
+        $current     = '';
+        // Home
+        $breadcrumbs[] = array(
+            'link' => $this->getUrl('project_home'),
+            'text' => $this->trans('project.home.breadcrumb', [], 'ProjectDefaultBundle', '')
+        );
+        // Path
+        foreach($steps as $step)
+        {
+            $current .= $current == '' ? $step : '_' . $step;
+            if($this->routeExists($current))
+            {
+                if($step == 'admin' || $step == 'api')
+                {
+                    $breadcrumbs[] = array(
+                        'link' => $this->getUrl($current),
+                        'text' => $this->trans('project.' . $step . '.breadcrumb', [], 'ProjectDefaultBundle', '')
+                    );
+                }
+                else
+                {
+                    $trans .= $trans == '' ? $step : '_' . $step;
+                    if($step == 'update' && $steps[1] == 'admin')
+                    {
+                        $breadcrumbs[] = array(
+                            'link' => $this->getUrl(str_replace('update', 'detail', $current), array('id' => $element->getId())),
+                            'text' => $this->trans('breadcrumb.' . str_replace('update', 'detail', $trans), ['%name%' => $element->getAlias()], $options['domain'], '')
+                        );
+                        $breadcrumbs[] = array(
+                            'link' => $this->getUrl($current, array('id' => $element->getId())),
+                            'text' => $this->trans('breadcrumb.' . $trans, [], $options['domain'], '')
+                        );
+                    }
+                    elseif($step == 'update')
+                    {
+                        $breadcrumbs[] = array(
+                            'link' => $this->getUrl(str_replace('update', 'lite', $current), array('id' => $element->getAlias())),
+                            'text' => $this->trans('breadcrumb.' . str_replace('update', 'detail', $trans), ['%name%' => $element->getAlias()], $options['domain'], '')
+                        );
+                        $breadcrumbs[] = array(
+                            'link' => $this->getUrl($current, array('id' => $element->getId())),
+                            'text' => $this->trans('breadcrumb.' . $trans, [], $options['domain'], '')
+                        );
+                    }
+                    elseif(($step == 'detail' || $step == 'tree') && $steps[1] == 'admin')
+                    {
+                        $breadcrumbs[] = array(
+                            'link' => $this->getUrl($current, array('id' => $element->getId())),
+                            'text' => $this->trans('breadcrumb.' . $trans, ['%name%' => $element->getAlias()], $options['domain'], '')
+                        );
+                    }
+                    elseif($step == 'detail' || $step == 'lite')
+                    {
+                        $breadcrumbs[] = array(
+                            'link' => $this->getUrl($current, array('id' => $element->getAlias())),
+                            'text' => $this->trans('breadcrumb.' . str_replace('lite', 'detail', $trans), ['%name%' => $element->getAlias()], $options['domain'], '')
+                        );
+                    }
+                    else
+                    {
+                        $breadcrumbs[] = array(
+                            'link' => $this->getUrl($current),
+                            'text' => $this->trans('breadcrumb.' . $trans, [], $options['domain'], '')
+                        );
+                    }
+                }
             }
-            $lastText .= '.';
-            $lastUrl .= '_';
-        }
-        if ($element) {
-            $breaCrumbs[] = array('link' => '#', 'text' => $element->getName());
         }
 
-        return $breaCrumbs;
+        return $breadcrumbs;
     }
 }

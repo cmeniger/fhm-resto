@@ -11,7 +11,7 @@
         <h2 id="anchor-admin-card">{{ (instance.translation ~ '.admin.detail.card.title')|trans }}</h2>
     </div>
     <div class="row card">
-        {{ render(path("fhm_api_card_editor",{id:document.getId()})) }}
+        {{ render(path("fhm_api_card_editor",{id:object.getId()})) }}
     </div>
     {{ parent() }}
 {% endblock %}

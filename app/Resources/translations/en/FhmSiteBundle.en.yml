@@ -1,0 +1,301 @@
+site:
+    admin:
+        index:
+            title:                              Sites management
+            link:                               Sites
+            breadcrumb:                         Sites
+            nodata:                             No data
+            form:
+                search:                         Search
+            table:
+                header:
+                    name:                       Name
+                    title:                      Title
+                    action:                     Actions
+                    status:                     Status
+                action:
+                    activate:                   Activate
+                    deactivate:                 Deactivate
+                    delete:                     Delete
+                    detail:                     configure
+                    duplicate:                  Duplicate
+                    undelete:                   Undelete
+                    update:                     Update
+                    default:                    Site par défaut
+                confirm:
+                    activate:                   Do you want to activate the site ?
+                    deactivate:                 Do you want to deactivate the site ?
+                    delete:                     Do you want to delete the site ?
+                    undelete:                   Do you want to undelete the site ?
+                    default:                    Confirmer ce site par défaut ?
+
+        create:
+            title:                              Add
+            link:                               Add
+            breadcrumb:                         Add a site
+            newmedia:                           Add a media
+            flash:
+                ok:                             The site has been created successfully.
+                ko:                             The site has not been created.
+            form:
+                title:                          Title
+                subtitle:                       Subtitle
+                description:                    Description
+                name:                           Name
+                menu:                           Menu
+                logo:                           Logo
+                slider:                         Slider
+                gallery:                        Gallery
+                background:                     Background image
+                news:                           News
+                active:                         Activate
+                partner:                        Partners
+                legalnotice:                    Legal mentions
+                social:
+                    facebook:                   Facebook
+                    facebookId:                 Facebook ID
+                    twitter:                    Twitter
+                    twitterId:                  Twitter ID
+                    google:                     Google
+                    googleId:                   Google ID
+                    instagram:                  Instagram
+                    youtube:                    Youtube
+                    flux:                       RSS feed
+                submit:
+                    save:                       Save
+                    new:                        Save and add
+                    duplicate:                  Save and duplicate
+                    quit:                       Save and quit
+                    config:                     Save and configure
+                    cancel:                     Cancel
+                    import:                     Import
+                    export:                     Export
+                fieldset:
+                    information:                Informations
+                    media:                      Medias
+                    social:                     Social Media
+                    socialid:                   Social Media ID
+                    options:                    Options
+                    notice:                     Legal mentions
+
+        update:
+            title:                              Update
+            link:                               Update
+            breadcrumb:                         Update
+            flash:
+                ok:                             The site has been updated successfully.
+                ko:                             The site has not been updated.
+            form:
+                title:                          Title
+                subtitle:                       Subtitle
+                description:                    Description
+                name:                           Name
+                menu:                           Menu
+                logo:                           Logo
+                slider:                         Slider
+                gallery:                        Gallery
+                background:                     Background image
+                news:                           News
+                active:                         Activate
+                partner:                        Partners
+                legalnotice:                    Legal mentions
+                social:
+                    facebook:                   Facebook
+                    facebookId:                 Facebook ID
+                    twitter:                    Twitter
+                    twitterId:                  Twitter ID
+                    google:                     Google
+                    googleId:                   Google ID
+                    instagram:                  Instagram
+                    youtube:                    Youtube
+                    flux:                       RSS Feed
+                submit:
+                    save:                       Save
+                    new:                        Save and add
+                    duplicate:                  Save and duplicate
+                    quit:                       Save and quit
+                    config:                     Save and coonfigure
+                    cancel:                     Cancel
+                    import:                     Import
+                    export:                     Export
+                    delete:                     Delete
+                fieldset:
+                    information:                Informations
+                    media:                      Medias
+                    social:                     Social Media
+                    socialid:                   Social Media ID
+                    options:                    Options
+                    notice:                     Legal mentions
+
+        detail:
+            title:                              "%name%"
+            link:                               Detail
+            breadcrumb:                         "%name%"
+            data:
+                title:                          Informations
+                id:                             ID
+                create:                         Creation
+                update:                         Update
+                name:                           Name
+                alias:                          Alias
+                description:                    Description
+                status:                         Status
+            url:
+                title:                          Available Routes
+                admin:
+                    edit:                       Update
+                    detail:                     Configure
+                front:
+                    id:                         Display via the ID
+                    name:                       Display via the name
+                    alias:                      Display via the alias
+                    lite:                       Display via the simplified url
+            view:
+                title:                          Templates preview
+                default:                        Template "default" (%route%)
+                home:                           Template "home" (%route%)
+            admin:
+                title:                          Administration tools
+
+        export:
+            breadcrumb:                         Export
+            form:
+                submit:                         Export
+            link:                               Export
+            title:                              Export sites
+
+        import:
+            breadcrumb:                         Import
+            flash:
+                ok:                             The sites have been imported successfully (%countAdd% ajout(s), %countUpdate% modification(s), %countError% erreur(s)).
+                ko:                             The sites have not been imported.
+            form:
+                file:                           CSV file
+                submit:                         Import
+            link:                               Import
+            title:                              Import sites
+
+        deactivate:
+            flash:
+                ok:                             The sites have been deactivated successfully.
+
+        delete:
+            flash:
+                ok:                             The site has been deactivated successfully.
+                use:                            Impossible to delete, this media is related to the module %module%  to the element %element%.
+                used:
+                    news:                        News
+                    article:                     Articles
+                    site:                        Sites
+                    page:                        Pages
+                    gallery:                     Gallery
+                    event:                       Events
+                    partner:                     Partners
+                    slider:                      Slider
+                    product:                     Products
+                    menu:                        Menus
+
+        activate:
+            flash:
+                ok:                             The sites have been activated successfully.
+
+        undelete:
+            flash:
+                ok:                             The sites have been undeleted successfully.
+
+        default:
+            flash:
+                ok:                             The site is now by default.
+
+    front:
+        index:
+            title:                              Site
+            link:                               Site
+            breadcrumb:                         Site
+            nodata:                             No data
+            form:
+                search:                         Search
+            table:
+                header:
+                    name:                       Name
+                    action:                     Actions
+                action:
+                    detail:                     Detail
+                    delete:                     Delete
+                confirm:
+                    delete:                     Do you want to delete the site ?
+
+        create:
+            title:                              Add
+            link:                               Add
+            breadcrumb:                         Add a site
+            flash:
+                ok:                             The site has been created successfully.
+                ko:                             The site has not been created.
+            form:
+                name:                           Name
+                description:                    Description
+                submit:
+                    save:                       Save
+                    new:                        Save and add
+                    duplicate:                  Save and duplicate
+                    quit:                       Save and quit
+                    cancel:                     Cancel
+                alert:
+                    title:                      Information
+                    text:                       You need the validation of a moderator to add a site and display it.
+
+        update:
+            title:                              Update
+            link:                               Update
+            breadcrumb:                         Update
+            flash:
+                ok:                             The site has been updated successfully.
+                ko:                             The site has not been updated.
+            form:
+                name:                           Name
+                description:                    Description
+                submit:
+                    save:                       Save
+                    new:                        Save and add
+                    duplicate:                  Save and duplicate
+                    quit:                       Save and quit
+                    cancel:                     Cancel
+                alert:
+                    title:                      Information
+                    text:                       You need the validation of a moderator to update a site and display it.
+
+        detail:
+            title:                              "%name%"
+            link:                               Detail
+            breadcrumb:                         "%name%"
+            data:
+                title:                          Informations
+                create:                         Creation
+                update:                         Update
+                name:                           Name
+                alias:                          Alias
+                description:                    Description
+
+        delete:
+            flash:
+                ok:                             The site has been deleted successfully.
+
+    api:
+        index:
+            title:                              Site
+
+    pagination:
+        counter:                                "Number of sites: %count% / %all%"
+
+    error:
+        unknown:                                The site does not exist.
+        delete:                                 The site does not exist.
+        forbidden:                              Access forbidden.
+
+    grouping:
+        name:                                   Site(s)
+        add:                                    Add a site "%name%"
+        title:                                  Sites management
+        list1:                                  Available
+        list2:                                  Selected

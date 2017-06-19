@@ -1,18 +1,18 @@
 {% trans_default_domain instance.domain %}
 <div class="date">
-    {{ document.getUser().getDateCreate()|localizeddate('full', 'short', app.request.locale) }}
+    {{ object.getUser().getDateCreate()|localizeddate('full', 'short', app.request.locale) }}
 </div>
 <div class="action">
-    {% if document.getNew() %}
-        <a href="#" data-url="{{ path('fhm_api_notification_new', {'id': document.getId(), 'code': 0}) }}" data-action title="{{ ('notification.item.old')|trans }}"><i class="fa fa-fw fa-bell-slash"></i>
+    {% if object.getNew() %}
+        <a href="#" data-url="{{ path('fhm_api_notification_new', {'id': object.getId(), 'code': 0}) }}" data-action title="{{ ('notification.item.old')|trans }}"><i class="fa fa-fw fa-bell-slash"></i>
         </a>
     {% else %}
-        <a href="#" data-url="{{ path('fhm_api_notification_new', {'id': document.getId(), 'code': 1}) }}" data-action title="{{ ('notification.item.new')|trans }}"><i class="fa fa-fw fa-bell"></i>
+        <a href="#" data-url="{{ path('fhm_api_notification_new', {'id': object.getId(), 'code': 1}) }}" data-action title="{{ ('notification.item.new')|trans }}"><i class="fa fa-fw fa-bell"></i>
         </a>
     {% endif %}
-    <a href="#" data-url="{{ path('fhm_api_notification_delete', {'id': document.getId()}) }}" data-action title="{{ ('notification.item.delete')|trans }}" onclick="return confirm('{{ ('notification.item.confirm')|trans }}')"><i class="fa fa-fw fa-trash-o"></i>
+    <a href="#" data-url="{{ path('fhm_api_notification_delete', {'id': object.getId()}) }}" data-action title="{{ ('notification.item.delete')|trans }}" onclick="return confirm('{{ ('notification.item.confirm')|trans }}')"><i class="fa fa-fw fa-trash-o"></i>
     </a>
 </div>
 <div class="content">
-    {{ document.getContent()|raw }}
+    {{ object.getContent()|raw }}
 </div>

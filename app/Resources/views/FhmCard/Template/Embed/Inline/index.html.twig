@@ -1,0 +1,7 @@
+{% trans_default_domain instance.domain %}
+
+<div class="card card-embed card-embed-inline">
+    {% for category in documents %}
+        {% include category.getMenu() ? "::FhmCard/Template/Embed/Inline/menu.html.twig" : "::FhmCard/Template/Embed/Inline/inline.html.twig" %}
+    {% endfor %}
+</div>

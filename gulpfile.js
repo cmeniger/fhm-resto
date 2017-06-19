@@ -31,31 +31,49 @@ var parameters =
                 src:  [
                     'bower_components/foundation/js/foundation.js'
                 ],
-                dest: 'web/js'
+                dest: 'web/js/vendor'
             },
             slick:      {
                 src:  [
                     'bower_components/slick-carousel/slick/slick.js'
                 ],
-                dest: 'web/js'
+                dest: 'web/js/vendor'
             },
             gmap_cluster:      {
                 src:  [
                     'bower_components/js-marker-clusterer/src/markerclusterer_compiled.js'
                 ],
-                dest: 'web/js'
+                dest: 'web/js/vendor'
             },
             inview:      {
                 src:  [
                     'bower_components/inview/inview.js'
                 ],
-                dest: 'web/js'
+                dest: 'web/js/vendor'
             },
             nestable:      {
                 src:  [
                     'bower_components/nestable2/jquery.nestable.js'
                 ],
-                dest: 'web/js'
+                dest: 'web/js/vendor'
+            },
+            hinclude:      {
+                src:  [
+                    'bower_components/hinclude/hinclude.js'
+                ],
+                dest: 'web/js/vendor'
+            },
+            flip:      {
+                src:  [
+                    'bower_components/flip/dist/jquery.flip.js'
+                ],
+                dest: 'web/js/vendor'
+            },
+            parallax:      {
+                src:  [
+                    'bower_components/parallax/deploy/jquery.parallax.js'
+                ],
+                dest: 'web/js/vendor'
             }
         },
         sass:      {
@@ -255,6 +273,15 @@ gulp.task('js', function ()
     // Process - Nestable
     gulp.src(parameters.js.nestable.src)
         .pipe(gulp.dest(parameters.js.nestable.dest));
+    // Process - Hinclude
+    gulp.src(parameters.js.hinclude.src)
+        .pipe(gulp.dest(parameters.js.hinclude.dest));
+    // Process - Flip
+    gulp.src(parameters.js.flip.src)
+        .pipe(gulp.dest(parameters.js.flip.dest));
+    // Process - Parallax
+    gulp.src(parameters.js.parallax.src)
+        .pipe(gulp.dest(parameters.js.parallax.dest));
 });
 //----------------------------------------
 // TASK - JS PROD
@@ -296,6 +323,18 @@ gulp.task('js-prod', function ()
         gulp.src(parameters.js.nestable.src)
             .pipe(uglify())
             .pipe(gulp.dest(parameters.js.nestable.dest));
+        // Process - Hinclude
+        gulp.src(parameters.js.hinclude.src)
+            .pipe(uglify())
+            .pipe(gulp.dest(parameters.js.hinclude.dest));
+        // Process - Flip
+        gulp.src(parameters.js.flip.src)
+            .pipe(uglify())
+            .pipe(gulp.dest(parameters.js.flip.dest));
+        // Process - Parallax
+        gulp.src(parameters.js.parallax.src)
+            .pipe(uglify())
+            .pipe(gulp.dest(parameters.js.parallax.dest));
     };
     // Clean
     if(parameters.js.clean)

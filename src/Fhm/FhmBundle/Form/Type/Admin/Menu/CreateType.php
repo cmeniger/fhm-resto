@@ -1,4 +1,5 @@
 <?php
+
 namespace Fhm\FhmBundle\Form\Type\Admin\Menu;
 
 use Fhm\FhmBundle\Form\Type\Admin\CreateType as FhmType;
@@ -10,13 +11,14 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Class CreateType
+ *
  * @package Fhm\FhmBundle\Form\Type\Admin
  */
 class CreateType extends FhmType
 {
     /**
      * @param FormBuilderInterface $builder
-     * @param array $options
+     * @param array                $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -24,11 +26,11 @@ class CreateType extends FhmType
         $builder->add(
             'icon',
             TextType::class,
-            array('label' => $options['translation_route'].'.admin.create.form.icon', 'required' => false)
+            array('label' => $options['translation_route'] . '.admin.create.form.icon', 'required' => false)
         )->add(
             'route',
             LinkType::class,
-            array('label' => $options['translation_route'].'.admin.create.form.route', 'required' => false)
+            array('label' => $options['translation_route'] . '.admin.create.form.route', 'required' => false)
         )->add(
             'id',
             HiddenType::class,
@@ -43,12 +45,12 @@ class CreateType extends FhmType
     {
         $resolver->setDefaults(
             array(
-                'data_class' => '',
-                'translation_domain' => 'FhmFhmMenu',
+                'data_class'         => '',
+                'translation_domain' => 'FhmFhmMenuBundle',
                 'cascade_validation' => true,
-                'translation_route' => 'menu',
-                'user_admin' => '',
-                'object_manager'=>''
+                'translation_route'  => 'menu',
+                'user_admin'         => '',
+                'object_manager'     => ''
             )
         );
     }

@@ -1,0 +1,135 @@
+{% trans_default_domain instance.domain %}
+
+{# @var card     \Fhm\CardBundle\Document\Card #}
+{# @var tree     array #}
+{# @var template string #}
+{# @var instance object #}
+{% macro product(card, tree, template, instance) %}
+    {% trans_default_domain instance.domain %}
+    {% import _self as this %}
+
+    {% for branch in tree %}
+        <div class="dd-tree" data-depth="1" data-id="{{ branch.category.getId() }}" data-url="{{ path('fhm_api_card_product_sort',{idCard:card.getId(), idCategory:branch.category.getId()}) }}">
+            <div class="dd-tree-master">
+                <div class="dd-tree-handle"><i class="fa fa-folder"></i></div>
+                <div class="dd-tree-content {{ branch.category.getActive() ? "" : "deactive" }} {{ branch.category.getDelete() ? "delete" : "" }}">
+                    <div class="name">{{ branch.category|cardCategoryInline(instance)|raw }}</div>
+                    <div class="actions">
+                        <div class="dd-tree-actions">
+                            <a href="#" data-reveal-id="modal-editor-product" data-modal="product" data-url="{{ path('fhm_api_card_product_create',{idCard:card.getId(), idCategory:branch.category.getId(), template:template}) }}" title="{{ ('card.api.action.add')|trans }}"><i class="fa fa-plus"></i> {{ ('card.api.action.add')|trans }}
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {{ this.productBranchs(card, branch, template, instance) }}
+        </div>
+    {% endfor %}
+
+    <div id="modal-editor-product" class="reveal-modal" data-reveal>
+        <h2>{{ ('card.api.modal.product')|trans }}</h2>
+        <div class="content">
+            <div class="loader">
+                <i class="fa fa-spin fa-circle-o-notch"></i>
+            </div>
+        </div>
+        <a class="close-reveal-modal" aria-label="Close">&#215;</a>
+    </div>
+{% endmacro %}
+
+{# Ajouter des branches #}
+{# @var card     \Fhm\CardBundle\Document\Card #}
+{# @var branch   array #}
+{# @var template string #}
+{# @var instance object #}
+{% macro productBranchs(card, branch, template, instance) %}
+    {% trans_default_domain instance.domain %}
+    {% import _self as this %}
+
+    {% if branch.products|length > 0 %}
+        <ol class="dd-tree-list">
+            {% for product in branch.products %}
+                <li class="dd-tree-item" data-id="{{ product.getId() }}">
+                    <div class="dd-tree-handle"><i class="fa fa-arrows-v"></i></div>
+                    <div class="dd-tree-content {{ product.getActive() ? "" : "deactive" }} {{ product.getDelete() ? "delete" : "" }}">
+                        <div class="name">{{ product.getName() }}
+                            <span class="dd-tree-comment">{{ product.getPrice() }}{{ product.getCurrency() }}</span>
+                        </div>
+                        <div class="actions">{{ this.productActions(card, branch.category, product, template, instance) }}</div>
+                    </div>
+                </li>
+            {% endfor %}
+        </ol>
+    {% endif %}
+{% endmacro %}
+
+{# Actions #}
+{# @var card     \Fhm\CardBundle\Document\Card #}
+{# @var category \Fhm\CardBundle\Document\CardCategory #}
+{# @var document \Fhm\CardBundle\Document\CardProduct #}
+{# @var template string #}
+{# @var instance object #}
+{% macro productActions(card, category, document, template, instance) %}
+    {% trans_default_domain instance.domain %}
+    {% import _self as this %}
+
+    <div class="dd-tree-status">
+        {% if document.getForward() is defined and document.getForward() %}
+            <span class="status regular radius label" title="{{ ('card.api.status.forward')|trans({}, 'FhmCardBundle') }}">{{ ('card.api.status.forward')|trans({}, 'FhmCardBundle') }}</span>
+        {% endif %}
+        {% if document.getShare() and not document.hasGrouping(instance.grouping.used) %}
+            <span class="status regular radius label" title="{{ ('fhm.status.share')|trans({}, 'FhmFhmBundle') }}">{{ ('fhm.status.share')|trans({}, 'FhmFhmBundle') }}</span>
+        {% endif %}
+        {% if document.getGlobal() %}
+            <span class="status regular radius label" title="{{ ('fhm.status.global')|trans({}, 'FhmFhmBundle') }}">{{ ('fhm.status.global')|trans({}, 'FhmFhmBundle') }}</span>
+        {% endif %}
+        {% if document.getDelete() %}
+            <span class="status alert radius label" title="{{ ('fhm.status.delete')|trans({}, 'FhmFhmBundle') }}">{{ ('fhm.status.delete')|trans({}, 'FhmFhmBundle') }}</span>
+        {% elseif not document.getActive() %}
+            <span class="status warning radius label" title="{{ ('fhm.status.disable')|trans({}, 'FhmFhmBundle') }}">{{ ('fhm.status.disable')|trans({}, 'FhmFhmBundle') }}</span>
+        {% else %}
+            <span class="status success radius label" title="{{ ('fhm.status.enable')|trans({}, 'FhmFhmBundle') }}">{{ ('fhm.status.enable')|trans({}, 'FhmFhmBundle') }}</span>
+        {% endif %}
+    </div>
+    <div class="dd-tree-actions">
+        <a href="#" data-reveal-id="modal-editor-product" data-modal="product" data-url="{{ path('fhm_api_card_product_update',{idCard:card.getId(),idCategory:category.getId(),idProduct:document.getId(), template:template}) }}" title="{{ ('card.api.action.update')|trans }}"><i class="fa fa-pencil"></i></a>
+        {% if document.getDelete() %}
+            {% if instance.user.admin %}
+                <a href="{{ path('fhm_api_card_product_undelete', {idCard:card.getId(),idCategory:category.getId(),idProduct:document.getId(), template:template}) }}" title="{{ ('card.api.action.undelete')|trans }}" data-confirm="{{ ('card.api.confirm.undelete')|trans }}" data-ajax><i class="fa fa-undo"></i></a>
+                <a href="{{ path('fhm_api_card_product_delete', {idCard:card.getId(),idCategory:category.getId(),idProduct:document.getId(), template:template}) }}" title="{{ ('card.api.action.delete')|trans }}" data-confirm="{{ ('card.api.confirm.delete')|trans }}" data-ajax><i class="fa fa-trash"></i></a>
+            {% endif %}
+        {% else %}
+            {% if document.getActive() %}
+                <a href="{{ path('fhm_api_card_product_deactivate', {idCard:card.getId(),idCategory:category.getId(),idProduct:document.getId(), template:template}) }}" title="{{ ('card.api.action.deactivate')|trans }}" data-confirm="{{ ('card.api.confirm.deactivate')|trans }}" data-ajax><i class="fa fa-eye-slash"></i></a>
+            {% else %}
+                <a href="{{ path('fhm_api_card_product_activate', {idCard:card.getId(),idCategory:category.getId(),idProduct:document.getId(), template:template}) }}" title="{{ ('card.api.action.activate')|trans }}" data-confirm="{{ ('card.api.confirm.activate')|trans }}" data-ajax><i class="fa fa-eye"></i></a>
+            {% endif %}
+            <a href="{{ path('fhm_api_card_product_delete', {idCard:card.getId(),idCategory:category.getId(),idProduct:document.getId(), template:template}) }}" title="{{ ('card.api.action.delete')|trans }}" data-confirm="{{ ('card.api.confirm.delete')|trans }}" data-ajax><i class="fa fa-trash-o"></i></a>
+        {% endif %}
+    </div>
+{% endmacro %}
+<div class="dd-tree" data-id="{{ card.getId() }}">
+    <div class="dd-tree-master">
+        <div class="dd-tree-handle"><i class="fa fa-cube"></i></div>
+        <div class="dd-tree-content {{ card.getActive() ? "" : "deactive" }} {{ card.getDelete() ? "delete" : "" }}">
+            <div class="name">{{ card.getName() }}</div>
+            <div class="actions">
+                <div class="dd-tree-actions">
+                    <a href="#" data-reveal-id="modal-editor-product" data-modal="product" data-url="{{ path('fhm_api_card_product_create',{idCard:card.getId(), template:template}) }}" title="{{ ('card.api.action.add')|trans }}"><i class="fa fa-plus"></i> {{ ('card.api.action.add')|trans }}
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="column medium-6 large-4">
+    <div class="editor-list">
+        <input type="text" class="search" value="" placeholder="{{ ('card.api.form.search')|trans }}" data-url="{{ path('fhm_api_card_product_search',{idCard:card.getId()}) }}">
+        <div id="editor-search">
+            {{ render(path('fhm_api_card_product_search',{idCard:card.getId(), template:template})) }}
+        </div>
+    </div>
+</div>
+<div class="column medium-6 large-8">
+    {{ _self.product(card, tree, template, instance) }}
+</div>

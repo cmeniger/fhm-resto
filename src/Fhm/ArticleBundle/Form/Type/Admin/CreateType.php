@@ -1,4 +1,5 @@
 <?php
+
 namespace Fhm\ArticleBundle\Form\Type\Admin;
 
 use Fhm\FhmBundle\Form\Type\Admin\CreateType as FhmType;
@@ -12,79 +13,88 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Class CreateType
+ *
  * @package Fhm\ArticleBundle\Form\Type\Admin
  */
 class CreateType extends FhmType
 {
     /**
      * @param FormBuilderInterface $builder
-     * @param array $options
+     * @param array                $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         parent::buildForm($builder, $options);
-        $builder->add(
-            'title',
-            TextType::class,
-            array(
-                'label' => $options['translation_route'] . '.admin.create.form.title',
+        $builder
+            ->add(
+                'title',
+                TextType::class,
+                array(
+                    'label' => $options['translation_route'] . '.admin.create.form.title',
+                )
             )
-        )->add(
-            'subtitle',
-            TextType::class,
-            array('label' => $options['translation_route'] . '.admin.create.form.subtitle', 'required' => false)
-        )->add(
-            'resume',
-            TextareaType::class,
-            array(
-                'label' => $options['translation_route'] . '.admin.create.form.resume',
-                'attr' => array('class' => 'editor'),
+            ->add(
+                'subtitle',
+                TextType::class,
+                array('label' => $options['translation_route'] . '.admin.create.form.subtitle', 'required' => false)
             )
-        )->add(
-            'content',
-            TextareaType::class,
-            array(
-                'label' => $options['translation_route'] . '.admin.create.form.content',
-                'attr' => array('class' => 'editor'),
+            ->add(
+                'resume',
+                TextareaType::class,
+                array(
+                    'label' => $options['translation_route'] . '.admin.create.form.resume',
+                    'attr'  => array('class' => 'editor'),
+                )
             )
-        )->add(
-            'image',
-            TypeManager::getType($options['object_manager']->getDBDriver()),
-            array(
-                'label' => $options['translation_route'] . '.admin.create.form.gallery',
-                'class' => 'FhmMediaBundle:Media',
-                'query_builder' => function () use ($options) {
-                    $dr = $options['object_manager']->getCurrentRepository('FhmMediaBundle:Media');
-                    return $dr->getFormEnable();
-                },
-                'required' => false,
+            ->add(
+                'content',
+                TextareaType::class,
+                array(
+                    'label' => $options['translation_route'] . '.admin.create.form.content',
+                    'attr'  => array('class' => 'editor'),
+                )
             )
-        )->add(
-            'gallery',
-            TypeManager::getType($options['object_manager']->getDBDriver()),
-            array(
-                'label' => $options['translation_route'] . '.admin.create.form.gallery',
-                'class' => 'FhmGalleryBundle:Gallery',
-                'query_builder' => function () use ($options) {
-                    $dr = $options['object_manager']->getCurrentRepository('FhmGalleryBundle:Gallery');
-                    return $dr->getFormEnable();
-                },
-                'required' => false,
+            ->add(
+                'image',
+                MediaType::class,
+                array(
+                    'label'    => $options['translation_route'] . '.admin.create.form.image',
+                    'filter'   => 'image/*',
+                    'required' => false,
+                )
             )
-        )->add(
-            'author',
-            TypeManager::getType($options['object_manager']->getDBDriver()),
-            array(
-                'label' => $options['translation_route'] . '.admin.create.form.author',
-                'class' => 'FhmUserBundle:User',
-                'query_builder' => function () use ($options) {
-                    $dr = $options['object_manager']->getCurrentRepository('FhmUserBundle:User');
-                    return $dr->getFormEnable();
-                },
-//                'url' => 'fhm_api_user_autocomplete',
-                'required' => false,
+            ->add(
+                'gallery',
+                TypeManager::getType($options['object_manager']->getDBDriver()),
+                array(
+                    'label'         => $options['translation_route'] . '.admin.create.form.gallery',
+                    'class'         => 'FhmGalleryBundle:Gallery',
+                    'query_builder' => function () use ($options)
+                    {
+                        $dr = $options['object_manager']->getCurrentRepository('FhmGalleryBundle:Gallery');
+
+                        return $dr->getFormEnable();
+                    },
+                    'required'      => false,
+                )
             )
-        )->remove('global')->remove('name')->remove('description');
+            ->add(
+                'author',
+                TypeManager::getType($options['object_manager']->getDBDriver()),
+                array(
+                    'label'         => $options['translation_route'] . '.admin.create.form.author',
+                    'class'         => 'FhmUserBundle:User',
+                    'query_builder' => function () use ($options)
+                    {
+                        $dr = $options['object_manager']->getCurrentRepository('FhmUserBundle:User');
+
+                        return $dr->getFormEnable();
+                    },
+                    //                'url' => 'fhm_api_user_autocomplete',
+                    'required'      => false,
+                )
+            )
+            ->remove('global')->remove('name')->remove('description');
     }
 
     /**
@@ -94,12 +104,12 @@ class CreateType extends FhmType
     {
         $resolver->setDefaults(
             array(
-                'data_class' => '',
+                'data_class'         => '',
                 'translation_domain' => 'FhmArticleBundle',
                 'cascade_validation' => true,
-                'translation_route' => 'article',
-                'user_admin' => '',
-                'object_manager' => ''
+                'translation_route'  => 'article',
+                'user_admin'         => '',
+                'object_manager'     => ''
             )
         );
     }

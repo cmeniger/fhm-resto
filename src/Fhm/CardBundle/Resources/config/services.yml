@@ -1,7 +1,19 @@
 services:
     fhm_card:
         class: Fhm\CardBundle\Services\Card
-        arguments: ["@fhm_tools"]
+        arguments: ['@fhm_tools']
+
+    fhm_card_model_default:
+        class: Fhm\CardBundle\Services\ModelDefault
+        arguments: ['@fhm_tools','@fhm.object.manager', '@templating', '@form.factory']
+
+#    fhm_card_model_m001:
+#        class: Fhm\CardBundle\Services\Model001
+#        arguments: ['@fhm_tools', '@templating']
+#
+#    fhm_card_model_m002:
+#        class: Fhm\CardBundle\Services\Model002
+#        arguments: ['@fhm_tools', '@templating']
 
     fhm.twig.card_extension:
         class: Fhm\CardBundle\Twig\CardExtension

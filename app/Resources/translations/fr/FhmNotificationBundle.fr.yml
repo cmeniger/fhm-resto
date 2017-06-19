@@ -1,27 +1,9 @@
-fhm:
-    breadcrumb:                                 Accueil
-    admin:
-        breadcrumb:                             Admin
-        notification:
-            breadcrumb:                         Notification
-            create:
-                breadcrumb:                     Ajouter une notification
-            update:
-                breadcrumb:                     Modifier
-            detail:
-                breadcrumb:                     Détails
-project:
-    breadcrump:                                 Accueil
-    admin:
-        breadcrump:                             Admin
-        notification:
-            breadcrump:                         Notification
-            create:
-                breadcrumb:                     Ajouter une notification
-            update:
-                breadcrumb:                     Modifier
-            detail:
-                breadcrumb:                     Détails
+breadcrumb:
+    notification:                               Notifications
+    notification_create:                        Ajouter
+    notification_update:                        Modifier
+    notification_detail:                        '%name%'
+    
 notification:
     admin:
         index:
@@ -112,9 +94,9 @@ notification:
                     options:                    Options
 
         detail:
-            title:                              '%name%'
+            title:                              %name%
             link:                               Détail
-            breadcrumb:                         '%name%'
+            breadcrumb:                         %name%
             data:
                 title:                          Informations
                 id:                             ID
@@ -232,9 +214,9 @@ notification:
                     text:                       La modification d'une notification nécessite la validation d'un modérateur.
 
         detail:
-            title:                              '%name%'
+            title:                              %name%
             link:                               Détail
-            breadcrumb:                         '%name%'
+            breadcrumb:                         %name%
             data:
                 title:                          Informations
                 create:                         Création

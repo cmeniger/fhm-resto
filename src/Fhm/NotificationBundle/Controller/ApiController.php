@@ -1,4 +1,5 @@
 <?php
+
 namespace Fhm\NotificationBundle\Controller;
 
 use Fhm\FhmBundle\Controller\RefApiController as FhmController;
@@ -13,6 +14,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
  * @Route("/api/notification")
  * ------------------------------------------
  * Class ApiController
+ *
  * @package Fhm\NotificationBundle\Controller
  */
 class ApiController extends FhmController
@@ -22,11 +24,11 @@ class ApiController extends FhmController
      */
     public function __construct()
     {
-        self::$repository = "FhmNotificationBundle:Notification";
-        self::$source = "fhm";
-        self::$domain = "FhmNotificationBundle";
+        self::$repository  = "FhmNotificationBundle:Notification";
+        self::$source      = "fhm";
+        self::$domain      = "FhmNotificationBundle";
         self::$translation = "notification";
-        self::$route = "notification";
+        self::$route       = "notification";
     }
 
     /**
@@ -100,7 +102,7 @@ class ApiController extends FhmController
     public function modalNewAction(Request $request)
     {
         return array(
-            'object' => $this->get('fhm_tools')->dmRepository(self::$repository)->getIndexNew($this->getUser()),
+            'objects' => $this->get('fhm_tools')->dmRepository(self::$repository)->getIndexNew($this->getUser()),
         );
     }
 
@@ -132,20 +134,21 @@ class ApiController extends FhmController
         $object = $this->get('fhm_tools')->dmRepository(self::$repository)->getById($id);
         $object = ($object) ? $object : $this->get('fhm_tools')->dmRepository(self::$repository)->getByAlias($id);
         $object = ($object) ? $object : $this->get('fhm_tools')->dmRepository(self::$repository)->getByName($id);
-        if ($object == "") {
+        if($object == "")
+        {
             throw $this->createNotFoundException($this->trans('.error.unknown'));
         } // ERROR - Forbidden
-        elseif (!$this->get('security.authorization_checker')->isGranted('ROLE_ADMIN') && ($object->getDelete(
-                ) || !$object->getActive())
-        ) {
+        elseif(!$this->get('security.authorization_checker')->isGranted('ROLE_ADMIN') && ($object->getDelete() || !$object->getActive())
+        )
+        {
             throw new HttpException(403, $this->trans('.error.forbidden'));
         }
 
         return new Response(
             $this->renderView(
-                "::FhmNotification/Template/template.".($this->get('templating')->exists(
-                    "::FhmNotification/Template/template.".$object->getTemplate().".html.twig"
-                ) ? $object->getTemplate() : "default").".html.twig",
+                "::FhmNotification/Template/template." . ($this->get('templating')->exists(
+                    "::FhmNotification/Template/template." . $object->getTemplate() . ".html.twig"
+                ) ? $object->getTemplate() : "default") . ".html.twig",
                 array(
                     'object' => $object,
                 )
@@ -166,14 +169,17 @@ class ApiController extends FhmController
         $object = $this->get('fhm_tools')->dmRepository(self::$repository)->getById($id);
         $object = ($object) ? $object : $this->get('fhm_tools')->dmRepository(self::$repository)->getByAlias($id);
         $object = ($object) ? $object : $this->get('fhm_tools')->dmRepository(self::$repository)->getByName($id);
-        if ($object == "") {
+        if($object == "")
+        {
             throw $this->createNotFoundException($this->trans('notification.error.unknown'));
-        } elseif ($object->getUser() != $this->getUser()) {
+        }
+        elseif($object->getUser() != $this->getUser())
+        {
             throw new HttpException(403, $this->trans('notification.error.forbidden'));
         } // ERROR - Forbidden
-        elseif (!$this->get('security.authorization_checker')->isGranted('ROLE_ADMIN') && ($object->getDelete(
-                ) || !$object->getActive())
-        ) {
+        elseif(!$this->get('security.authorization_checker')->isGranted('ROLE_ADMIN') && ($object->getDelete() || !$object->getActive())
+        )
+        {
             throw new HttpException(403, $this->trans('notification.error.forbidden'));
         }
         $object->setDelete(true);
@@ -195,14 +201,17 @@ class ApiController extends FhmController
         $object = $this->get('fhm_tools')->dmRepository(self::$repository)->getById($id);
         $object = ($object) ? $object : $this->get('fhm_tools')->dmRepository(self::$repository)->getByAlias($id);
         $object = ($object) ? $object : $this->get('fhm_tools')->dmRepository(self::$repository)->getByName($id);
-        if ($object == "") {
+        if($object == "")
+        {
             throw $this->createNotFoundException($this->trans('notification.error.unknown'));
-        } elseif ($object->getUser() != $this->getUser()) {
+        }
+        elseif($object->getUser() != $this->getUser())
+        {
             throw new HttpException(403, $this->trans('notification.error.forbidden'));
         } // ERROR - Forbidden
-        elseif (!$this->get('security.authorization_checker')->isGranted('ROLE_ADMIN') && ($object->getDelete(
-                ) || !$object->getActive())
-        ) {
+        elseif(!$this->get('security.authorization_checker')->isGranted('ROLE_ADMIN') && ($object->getDelete() || !$object->getActive())
+        )
+        {
             throw new HttpException(403, $this->trans('notification.error.forbidden'));
         }
         $object->setNew($code);

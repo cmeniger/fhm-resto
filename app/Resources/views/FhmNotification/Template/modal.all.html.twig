@@ -8,10 +8,10 @@
             {{ 'notification.modal.new'|trans }}
         </a>
     </div>
-    {% if documents %}
-        {% for document in documents %}
-            <div class="item {{ document.getNew() ? 'new' : '' }}">
-                {{ render(path('fhm_api_notification_detail', {id:document.getId()})) }}
+    {% if objects %}
+        {% for object in objects %}
+            <div class="item {{ object.getNew() ? 'new' : '' }}">
+                {{ render(path('fhm_api_notification_detail', {id:object.getId()})) }}
             </div>
         {% endfor %}
     {% else %}

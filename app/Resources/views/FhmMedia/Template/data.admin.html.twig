@@ -40,11 +40,9 @@
         {% endif %}
     </div>
 </div>
-<div class="navigation">
-    <ul class="pagination-counter">
-        <li class="arrow"><small>Total d'enregistrements : {{ pagination.getTotalItemCount }}</small></li>
-    </ul>
+<div class="pagination">
     {{ knp_pagination_render(pagination) }}
+    <div class="counter">{{ ('fhm.pagination.counter')|trans({}, 'FhmFhmBundle') }} : <span>{{ pagination.getTotalItemCount }}</span></div>
 </div>
 <div id="modal-media-zoom" class="reveal-modal" data-reveal>
     <div class="media-zoom"></div>

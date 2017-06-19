@@ -1,0 +1,15 @@
+error:
+    default:
+        title:                                  Error
+        page:                                   Sorry, you encountered an error.
+    403:
+        title:                                  Error 403
+        page:                                   Insufficient rights.
+    404:
+        title:                                  Error 404
+        page:                                   Sorry, page not found
+    500:
+        title:                                  Error 500
+        page:                                   Sorry, you encountered an error.
+
+"Access Denied":                                Insufficient rights.

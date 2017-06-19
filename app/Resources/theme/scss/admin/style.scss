@@ -269,31 +269,20 @@ li{
 // Pagination
 //
 
-ul{
-    &.pagination{
-        margin-left: 0;
-    }
-    &.tag{
-        margin:      0;
-        line-height: 0;
-        list-style:  none;
+.pagination{
+    text-align: center;
+    ul{
+        margin: 1rem 0;
         li{
-            display:     inline-block;
-            margin-left: 2px;
-            padding:     0;
-            &:first-child{
-                margin-left: 0;
-            }
-            .label{
-                &.parent{
-                    background-color: #E7E7E7;
-                    color:            #333;
-                }
-                &.current{
-                    background-color: #999;
-                    color:            #333;
-                }
-            }
+            float:   none;
+            display: inline-block;
+        }
+    }
+    .counter{
+        color:     $pagination-link-font-color;
+        font-size: 0.8em;
+        span{
+            color: $primary-color;
         }
     }
 }
@@ -312,6 +301,10 @@ ul{
                 margin-left: -0.4em !important;
                 margin-top:  -0.4em !important;
             }
+        }
+        &.no-split
+        {
+            padding: 0.7em 1em !important;
         }
     }
     ul{
@@ -341,9 +334,10 @@ ul{
 //#card-menu{
 //  background: rgba(255,255,255,.5) !important;
 //}
-#card-menu {
-  background: rgba(255,255,255,.5) !important;
+#card-menu{
+    background: rgba(255, 255, 255, .5) !important;
 }
+
 .top-bar-section ul li{
-  background: transparent !important;
+    background: transparent !important;
 }

@@ -1,4 +1,5 @@
 <?php
+
 namespace Fhm\FhmBundle\Document;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
@@ -106,10 +107,10 @@ class Fhm
     {
         $this->active = false;
         $this->delete = false;
-        $this->share = false;
+        $this->share  = false;
         $this->global = false;
-        $this->order = 0;
-        $this->alias = null;
+        $this->order  = 0;
+        $this->alias  = null;
     }
 
     /**
@@ -525,11 +526,11 @@ class Fhm
      */
     public function setCsvData($data)
     {
-        $this->name = (isset($data['name'])) ? $data['name'] : $this->name;
+        $this->name        = (isset($data['name'])) ? $data['name'] : $this->name;
         $this->description = (isset($data['description'])) ? $data['description'] : $this->description;
-        $this->alias = (isset($data['alias'])) ? $data['alias'] : $this->alias;
-        $this->delete = (isset($data['delete'])) ? $data['delete'] : $this->delete;
-        $this->active = (isset($data['active'])) ? $data['active'] : $this->active;
+        $this->alias       = (isset($data['alias'])) ? $data['alias'] : $this->alias;
+        $this->delete      = (isset($data['delete'])) ? $data['delete'] : $this->delete;
+        $this->active      = (isset($data['active'])) ? $data['active'] : $this->active;
 
         return $this;
     }
@@ -543,15 +544,18 @@ class Fhm
      */
     public function getVarSort($index = '')
     {
-        if ($index) {
-            $index = substr($index, 0, 5) === 'sort_' ? $index : 'sort_'.$index;
+        if($index)
+        {
+            $index = substr($index, 0, 5) === 'sort_' ? $index : 'sort_' . $index;
 
             return isset($this->$index) ? $this->$index : 0;
         }
         $response = array();
-        $vars = get_object_vars($this);
-        foreach ($vars as $key => $value) {
-            if (substr($key, 0, 5) === 'sort_') {
+        $vars     = get_object_vars($this);
+        foreach($vars as $key => $value)
+        {
+            if(substr($key, 0, 5) === 'sort_')
+            {
                 $response[substr($key, 5)] = $value;
             }
         }
@@ -637,6 +641,6 @@ class Fhm
      */
     public function __toString()
     {
-        return (string)$this->getName();
+        return (string) $this->getName();
     }
 }

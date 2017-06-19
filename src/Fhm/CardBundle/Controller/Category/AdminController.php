@@ -186,16 +186,12 @@ class AdminController extends FhmController
     /**
      * @Route
      * (
-     *      path="/sort",
-     *      name="fhm_admin_card_category_sort"
+     *      path="/grouping",
+     *      name="fhm_admin_card_category_grouping"
      * )
      */
-    public function sortAction(Request $request)
+    public function groupingAction(Request $request)
     {
-        $id   = $request->get('master');
-        $list = json_decode($request->get('list'));
-        $this->get('fhm_tools')->_treeSort($id, $list);
-
-        return new Response();
+        return parent::groupingAction($request);
     }
 }

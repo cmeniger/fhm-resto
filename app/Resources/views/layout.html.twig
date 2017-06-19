@@ -60,67 +60,73 @@
             </div>
         {% endblock %}
         {% block body_footer %}
-            {#<div id="footer">#}
-                {#{% block footer %}#}
-                    {#<footer id="footer">#}
-                        {#<div class="row">#}
-                            {#<div class="large-4 columns nopadding">#}
-                                {#<a href="#"><img src="/images/logo1.png" alt=""/></a>#}
-                            {#</div>#}
-                            {#<div class="large-4 columns copyright nopadding">#}
-                                {#<p>&copy; Boucherie de la Ferme des Ormes.</p>#}
-                            {#</div>#}
-                            {#<div class="large-4 columns nopadding">#}
-                                {#<a href="#"></a>#}
-                            {#</div>#}
-                            {#<div class="row copyright center">#}
-                                {#{{ ('project.footer')|trans({}, 'ProjectDefaultBundle') }}#}
-                                {#<a href="http://www.fhmsolutions.com/">FHM Solutions</a>#}
-                            {#</div>#}
-                        {#</div>#}
-
-                    {#</footer>#}
-
-                {#{% endblock %}#}
-            {#</div>#}
+            <div id="footer">
+                {% block footer %}
+                    <div class="row copyright center">
+                        {{ ('project.footer')|trans({}, 'ProjectDefaultBundle') }}
+                        <a href="http://www.fhmsolutions.com/">FHM Solutions</a>
+                    </div>
+                {% endblock %}
+            </div>
         {% endblock %}
         {% block body_javascripts %}
         {% block body_javascripts_file %}
-            {#<script src="{{ asset('js/jquery.js') }}"></script>#}
-            <script src="{{ asset('js/jquery.nestable.js') }}"></script>
+            {# LOCAL #}
             <script src="{{ asset('js/jquery.addresspicker.js') }}"></script>
-            <script src="{{ asset('js/jquery.datetimepicker.js') }}"></script>
+            <script src="{{ asset('js/jquery.autocomplete.js') }}"></script>
+            <script src="{{ asset('js/jquery.card.js') }}"></script>
             <script src="{{ asset('js/jquery.colorpicker.js') }}"></script>
+            <script src="{{ asset('js/jquery.contact.js') }}"></script>
+            <script src="{{ asset('js/jquery.datetimepicker.js') }}"></script>
             <script src="{{ asset('js/jquery.form.js') }}"></script>
             <script src="{{ asset('js/jquery.formcollection.js') }}"></script>
+            <script src="{{ asset('js/jquery.historic.js') }}"></script>
+            <script src="{{ asset('js/jquery.list.js') }}"></script>
             <script src="{{ asset('js/jquery.media.js') }}"></script>
-            <script src="{{ asset('js/jquery.autocomplete.js') }}"></script>
-            <script src="{{ asset('js/jquery.contact.js') }}"></script>
-            <script src="{{ asset('js/jquery.timer.js') }}"></script>
-            <script src="{{ asset('js/jquery.card.js') }}"></script>
-            <script src="{{ asset('js/jquery.note.js') }}"></script>
-            <script src="{{ asset('js/foundation.js') }}"></script>
-            <script src="{{ asset('js/slick.js') }}"></script>
-            <script src="{{ asset('js/inview.js') }}"></script>
-            <script src="{{ asset('js/main.js') }}"></script>
-            <script src="{{ asset('js/parallax.min.js') }}"></script>
+            <script src="{{ asset('js/jquery.nestable.js') }}"></script>
             <script src="{{ asset('js/jquery.nice-select.js') }}"></script>
-            <script src="{{ asset('js/jquery.datepicker.js') }}"></script>
-            <script src="{{ asset('js/slick.min.js') }}"></script>
-            <script src="{{ asset('js/flip.js') }}"></script>
-            <script src="{{ asset('js/hinclude.js') }}"></script>
+            <script src="{{ asset('js/jquery.note.js') }}"></script>
+            <script src="{{ asset('js/jquery.notification.js') }}"></script>
+            <script src="{{ asset('js/jquery.timepicker.js') }}"></script>
+            <script src="{{ asset('js/jquery.timer.js') }}"></script>
+            {#<script src="{{ asset('js/jquery.vmap.js') }}"></script>#}
+            {#<script src="{{ asset('js/jquery.workflow.js') }}"></script>#}
+            <script src="{{ asset('js/main.js') }}"></script>
+            {# LIBRARIES #}
             <script src="{{ asset('libraries/tinymce/tinymce.js') }}"></script>
+            {# VENDOR #}
+            <script src="{{ asset('js/vendor/foundation.js') }}"></script>
+            <script src="{{ asset('js/vendor/hinclude.js') }}"></script>
+            <script src="{{ asset('js/vendor/inview.js') }}"></script>
+            <script src="{{ asset('js/vendor/jquery.flip.js') }}"></script>
+            <script src="{{ asset('js/vendor/jquery.nestable.js') }}"></script>
+            <script src="{{ asset('js/vendor/jquery.parallax.js') }}"></script>
+            <script src="{{ asset('js/vendor/slick.js') }}"></script>
         {% endblock %}
         {% block body_javascripts_script %}
             <script>
                 $(document).foundation();
-                $(document).form();
                 $(document).formcollection();
                 $(document).media();
                 $(document).autocomplete();
+                $(document).list();
+                //$(document).workflow();
                 $(document).contact();
-                $(document).card();
+                $(document).historic();
                 $(document).note();
+                $(document).card({
+                    form: {
+                        required: '{{ 'fhm.form.required'|trans({},'FhmFhmBundle') }}'
+                    }
+                });
+                $(document).form({
+                    required: '{{ 'fhm.form.required'|trans({},'FhmFhmBundle') }}'
+                });
+                $(document).notification({
+                    project: {
+                        construct:{{ project.construct ? 1 : 0 }},
+                        maintenance:{{ project.maintenance ? 1 : 0 }}}
+                });
                 $(document).timer({
                     translate: {
                         days:    '{{ 'project.timer.days'|trans({},'ProjectDefaultBundle') }}',
@@ -188,14 +194,13 @@
                         a = s.createElement(o),
                             m = s.getElementsByTagName(o)[0];
                         a.async = 1;
-                        a.src   = g;
+                        a.src = g;
                         m.parentNode.insertBefore(a, m)
                     })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
                     ga('create', '{{ project.analytics.id }}', 'auto');
                     ga('send', 'pageview');
                     {% endif %}
                 });
-
             </script>
         {% endblock %}
         {% endblock %}

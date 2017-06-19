@@ -1,0 +1,14 @@
+{% trans_default_domain instance.domain %}
+{% extends "::FhmFhm/Admin/detail.html.twig" %}
+{% import "::Macros/dd.tree.html.twig" as macroTree %}
+
+{% block content_anchor %}{% endblock %}
+{% block content_url %}{% endblock %}
+{% block content_historic %}{% endblock %}
+{% block content_admin %}{% endblock %}
+
+{% block content_data %}
+    <div class="row">
+        {{ macroTree.admin(tree, treemap, object, modules,instance.translation ~ '.admin.detail.menu', instance) }}
+    </div>
+{% endblock %}

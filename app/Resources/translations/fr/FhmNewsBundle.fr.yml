@@ -1,39 +1,13 @@
-fhm:
-    breadcrumb:                                 Accueil
-    admin:
-        breadcrumb:                             Admin
-        news:
-            breadcrumb:                         Actualités
-            create:
-                breadcrumb:                     Ajouter une actualité
-            update:
-                breadcrumb:                     Modifier
-            detail:
-                breadcrumb:                     Détails
-            group:
-                breadcrumb:                         Journal
-                create:
-                    breadcrumb:                     Ajouter un journal
-                update:
-                    breadcrumb:                     Modifier
-                detail:
-                    breadcrumb:                     Détails
-    news:
-        breadcrumb:                         Actualités
-        create:
-            breadcrumb:                     Ajouter une actualité
-        update:
-            breadcrumb:                     Modifier
-        detail:
-            breadcrumb:                     Détails
-        group:
-            breadcrumb:                         Journal
-            create:
-                breadcrumb:                     Ajouter un journal
-            update:
-                breadcrumb:                     Modifier
-            detail:
-                breadcrumb:                     Détails
+breadcrumb:
+    news:                                       Actualités
+    news_create:                                Ajouter
+    news_update:                                Modifier
+    news_detail:                                '%name%'
+    news_group:                                 Journaux
+    news_group_create:                          Ajouter
+    news_group_update:                          Modifier
+    news_group_detail:                          '%name%'
+
 project:
     breadcrump:                                 Accueil
     admin:
@@ -335,7 +309,7 @@ news:
     group:
         admin:
             index:
-                title:                          Gestion des journaux
+                title:                          "Gestion des actualités : journaux"
                 link:                           Journaux
                 breadcrumb:                     Journaux
                 nodata:                         Aucune donnée

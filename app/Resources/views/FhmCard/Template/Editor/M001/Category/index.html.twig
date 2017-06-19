@@ -1,0 +1,154 @@
+{% trans_default_domain instance.domain %}
+
+{# @var card     \Fhm\CardBundle\Document\Card #}
+{# @var tree     array #}
+{# @var template string #}
+{# @var instance object #}
+{% macro category(card, tree, template, instance) %}
+    {% trans_default_domain instance.domain %}
+    {% import _self as this %}
+
+    {% if tree|length > 0 %}
+        {% for branch in tree %}
+            <div class="dd-tree" data-id="{{ branch.category.getId() }}" data-url="{{ path('fhm_api_card_category_sort',{idCard:card.getId(), idCategory:branch.category.getId(), template:template}) }}">
+                <div class="dd-tree-master">
+                    <div class="dd-tree-handle"><i class="fa fa-folder"></i></div>
+                    <div class="dd-tree-content {{ branch.category.getActive() ? "" : "deactive" }} {{ branch.category.getDelete() ? "delete" : "" }}">
+                        <div class="name">{{ branch.category.getName() }}</div>
+                        <div class="actions">{{ this.categoryActionsMaster(card, branch.category, template, instance) }}</div>
+                    </div>
+                </div>
+                {% if branch.sons|length > 0 %}
+                    {{ this.categoryBranchs(card, branch.sons, template, false, instance) }}
+                {% endif %}
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <div id="modal-editor-category" class="reveal-modal medium" data-reveal>
+        <h2 class="text-center">{{ ('card.api.modal.category')|trans }}</h2>
+        <div class="content">
+            <div class="loader">
+                <i class="fa fa-spin fa-circle-o-notch"></i>
+            </div>
+        </div>
+        <a class="close-reveal-modal" aria-label="Close">&#215;</a>
+    </div>
+{% endmacro %}
+
+{# Ajouter des branches #}
+{# @var card     \Fhm\CardBundle\Document\Card #}
+{# @var tree     array #}
+{# @var template string #}
+{# @var master   boolean #}
+{# @var instance object #}
+{% macro categoryBranchs(card, tree, template, master, instance) %}
+    {% trans_default_domain instance.domain %}
+    {% import _self as this %}
+
+    {% if tree|length > 0 %}
+        <ol class="dd-tree-list">
+            {% for branch in tree %}
+                <li class="dd-tree-item" data-id="{{ branch.category.getId() }}">
+                    <div class="dd-tree-handle"><i class="fa fa-arrows"></i></div>
+                    <div class="dd-tree-content {{ branch.category.getActive() ? "" : "deactive" }} {{ branch.category.getDelete() ? "delete" : "" }}">
+                        <div class="name">{{ branch.category.getName() }}
+                            <span class="dd-tree-comment">{{ ('card.api.tabs.product')|trans }}
+                                : {{ branch.category.getProducts().count() }}</span>{% if branch.category.getMenu() %}
+                            <span class="dd-tree-comment">{{ branch.category.getPrice() }}{{ branch.category.getCurrency() }}</span>{% endif %}
+                        </div>
+                        <div class="actions">{{ master ? this.categoryActionsMaster(card, branch.category, template, instance) : this.categoryActions(card, branch.category, template, instance) }}</div>
+                    </div>
+                    {% if branch.sons|length > 0 %}
+                        {{ this.categoryBranchs(card, branch.sons, template, false, instance) }}
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ol>
+    {% endif %}
+{% endmacro %}
+
+{# Actions #}
+{# @var card     \Fhm\CardBundle\Document\Card #}
+{# @var document \Fhm\CardBundle\Document\CardCategory #}
+{# @var template string #}
+{# @var instance object #}
+{% macro categoryActions(card, document, template, instance) %}
+    {% trans_default_domain instance.domain %}
+    {% import _self as this %}
+
+    <div class="dd-tree-status">
+        {% if document.getMenu() is defined and document.getMenu() %}
+            <span class="status regular radius label" title="{{ ('card.api.status.menu')|trans({}, 'FhmCardBundle') }}">{{ ('card.api.status.menu')|trans({}, 'FhmCardBundle') }}</span>
+        {% endif %}
+        {% if document.getShare() and not document.hasGrouping(instance.grouping.used) %}
+            <span class="status regular radius label" title="{{ ('fhm.status.share')|trans({}, 'FhmFhmBundle') }}">{{ ('fhm.status.share')|trans({}, 'FhmFhmBundle') }}</span>
+        {% endif %}
+        {% if document.getGlobal() %}
+            <span class="status regular radius label" title="{{ ('fhm.status.global')|trans({}, 'FhmFhmBundle') }}">{{ ('fhm.status.global')|trans({}, 'FhmFhmBundle') }}</span>
+        {% endif %}
+        {% if document.getDelete() %}
+            <span class="status alert radius label" title="{{ ('fhm.status.delete')|trans({}, 'FhmFhmBundle') }}">{{ ('fhm.status.delete')|trans({}, 'FhmFhmBundle') }}</span>
+        {% elseif not document.getActive() %}
+            <span class="status warning radius label" title="{{ ('fhm.status.disable')|trans({}, 'FhmFhmBundle') }}">{{ ('fhm.status.disable')|trans({}, 'FhmFhmBundle') }}</span>
+        {% else %}
+            <span class="status success radius label" title="{{ ('fhm.status.enable')|trans({}, 'FhmFhmBundle') }}">{{ ('fhm.status.enable')|trans({}, 'FhmFhmBundle') }}</span>
+        {% endif %}
+    </div>
+    <div class="dd-tree-actions">
+        <a href="#" data-reveal-id="modal-editor-category" data-modal="category" data-url="{{ path('fhm_api_card_category_create',{idCard:card.getId(),idCategory:document.getId(),template:template}) }}" title="{{ ('card.api.action.add')|trans }}"><i class="fa fa-plus"></i></a>
+        <a href="#" data-reveal-id="modal-editor-category" data-modal="category" data-url="{{ path('fhm_api_card_category_update',{idCard:card.getId(),idCategory:document.getId(),template:template}) }}" title="{{ ('card.api.action.update')|trans }}"><i class="fa fa-pencil"></i></a>
+        {% if document.getDelete() %}
+            {% if instance.user.admin %}
+                <a href="{{ path('fhm_api_card_category_undelete', {idCard:card.getId(),idCategory:document.getId(),template:template}) }}" title="{{ ('card.api.action.undelete')|trans }}" data-confirm="{{ ('card.api.confirm.undelete')|trans }}" data-ajax><i class="fa fa-undo"></i></a>
+                <a href="{{ path('fhm_api_card_category_delete', {idCard:card.getId(),idCategory:document.getId(),template:template}) }}" title="{{ ('card.api.action.delete')|trans }}" data-confirm="{{ ('card.api.confirm.delete')|trans }}" data-ajax><i class="fa fa-trash"></i></a>
+            {% endif %}
+        {% else %}
+            {% if document.getActive() %}
+                <a href="{{ path('fhm_api_card_category_deactivate', {idCard:card.getId(),idCategory:document.getId(),template:template}) }}" title="{{ ('card.api.action.deactivate')|trans }}" data-confirm="{{ ('card.api.confirm.deactivate')|trans }}" data-ajax><i class="fa fa-eye-slash"></i></a>
+            {% else %}
+                <a href="{{ path('fhm_api_card_category_activate', {idCard:card.getId(),idCategory:document.getId(),template:template}) }}" title="{{ ('card.api.action.activate')|trans }}" data-confirm="{{ ('card.api.confirm.activate')|trans }}" data-ajax><i class="fa fa-eye"></i></a>
+            {% endif %}
+            <a href="{{ path('fhm_api_card_category_delete', {idCard:card.getId(),idCategory:document.getId(),template:template}) }}" title="{{ ('card.api.action.delete')|trans }}" data-confirm="{{ ('card.api.confirm.delete')|trans }}" data-ajax><i class="fa fa-trash-o"></i></a>
+        {% endif %}
+    </div>
+{% endmacro %}
+
+{# Actions #}
+{# @var card     \Fhm\CardBundle\Document\Card #}
+{# @var document \Fhm\CardBundle\Document\CardCategory #}
+{# @var template string #}
+{# @var instance object #}
+{% macro categoryActionsMaster(card, document, template, instance) %}
+    {% trans_default_domain instance.domain %}
+    {% import _self as this %}
+
+    <div class="dd-tree-status">
+        {% if document.getMenu() is defined and document.getMenu() %}
+            <span class="status regular radius label" title="{{ ('card.api.status.menu')|trans({}, 'FhmCardBundle') }}">{{ ('card.api.status.menu')|trans({}, 'FhmCardBundle') }}</span>
+        {% endif %}
+        {% if document.getShare() and not document.hasGrouping(instance.grouping.used) %}
+            <span class="status regular radius label" title="{{ ('fhm.status.share')|trans({}, 'FhmFhmBundle') }}">{{ ('fhm.status.share')|trans({}, 'FhmFhmBundle') }}</span>
+        {% endif %}
+        {% if document.getGlobal() %}
+            <span class="status regular radius label" title="{{ ('fhm.status.global')|trans({}, 'FhmFhmBundle') }}">{{ ('fhm.status.global')|trans({}, 'FhmFhmBundle') }}</span>
+        {% endif %}
+        {% if document.getDelete() %}
+            <span class="status alert radius label" title="{{ ('fhm.status.delete')|trans({}, 'FhmFhmBundle') }}">{{ ('fhm.status.delete')|trans({}, 'FhmFhmBundle') }}</span>
+        {% elseif not document.getActive() %}
+            <span class="status warning radius label" title="{{ ('fhm.status.disable')|trans({}, 'FhmFhmBundle') }}">{{ ('fhm.status.disable')|trans({}, 'FhmFhmBundle') }}</span>
+        {% else %}
+            <span class="status success radius label" title="{{ ('fhm.status.enable')|trans({}, 'FhmFhmBundle') }}">{{ ('fhm.status.enable')|trans({}, 'FhmFhmBundle') }}</span>
+        {% endif %}
+    </div>
+    <div class="dd-tree-actions">
+        <a href="#" data-reveal-id="modal-editor-category" data-modal="category" data-url="{{ path('fhm_api_card_category_create',{idCard:card.getId(),idCategory:document.getId(),template:template}) }}" title="{{ ('card.api.action.add')|trans }}"><i class="fa fa-plus"></i></a>
+        {% if document.getActive() %}
+            <a href="{{ path('fhm_api_card_category_deactivate', {idCard:card.getId(),idCategory:document.getId(),template:template}) }}" title="{{ ('card.api.action.deactivate')|trans }}" data-confirm="{{ ('card.api.confirm.deactivate')|trans }}" data-ajax><i class="fa fa-eye-slash"></i></a>
+        {% else %}
+            <a href="{{ path('fhm_api_card_category_activate', {idCard:card.getId(),idCategory:document.getId(),template:template}) }}" title="{{ ('card.api.action.activate')|trans }}" data-confirm="{{ ('card.api.confirm.activate')|trans }}" data-ajax><i class="fa fa-eye"></i></a>
+        {% endif %}
+    </div>
+{% endmacro %}
+
+{{ _self.category(card, tree, template, instance) }}

@@ -1,0 +1,16 @@
+{% trans_default_domain instance.domain %}
+
+{% set forward = false %}
+{% if products %}
+    <div class="product">
+        <ul class="product-inline">
+            {% for product in products %}
+                {% if product.getForward() != forward %}
+                    </ul><ul class="{{ product.getForward() ? 'product-forward small-block-grid-2 medium-block-grid-3 large-block-grid-4' : 'product-inline' }}">
+                    {% set forward = product.getForward() %}
+                {% endif %}
+                {% include product.getForward() ? "::FhmCard/Template/Embed/" ~ folder ~ "/Product/inline.forward.html.twig" : "::FhmCard/Template/Embed/" ~ folder ~ "/Product/inline.inline.html.twig" %}
+            {% endfor %}
+        </ul>
+    </div>
+{% endif %}

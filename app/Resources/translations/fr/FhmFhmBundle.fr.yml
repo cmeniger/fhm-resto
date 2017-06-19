@@ -1,19 +1,14 @@
 fhm:
-    breadcrumb:                                 Accueil
     admin:
-        breadcrumb:                             Admin
         link:                                   Console
         title:                                  Administration
         nodata:                                 Bientôt disponible...
-        previous:                               Précédent
-        next:                                   Suivant
-        index:
-            form:
-                search:                         Rechercher
+        search:                                 Rechercher
+
     front:
-        index:
-             form:
-                 search:                        Rechercher
+        title:                                  Accueil
+        nodata:                                 Bientôt disponible...
+        search:                                 Rechercher
 
     menu:
         title:                                  Administration
@@ -73,9 +68,9 @@ fhm:
             start:                              Début
             end:                                Fin
             close:                              Fermé
-            hour:                               "%start% à %end%"
+            hour:                               %start% à %end%
             closed:                             Fermé
-            reopen:                             Réouverture prévue le "%date%"
+            reopen:                             Réouverture prévue le %date%
         close:
             check:                              Fermé
             reason:                             Raison
@@ -113,7 +108,6 @@ fhm:
                 delete:                         Supprimer
                 undelete:                       Restaurer
                 copy:                           Copier
-                restore:                        Restaurer
             confirm:
                 copy:                           Confirmer la copie de l\'historique ?
                 delete:                         Confirmer la suppression de l\'historique ?
@@ -141,9 +135,14 @@ fhm:
                     description:                Référencement - Description
                     keywords:                   Référencement - Mots clés
     pagination:
-        counter:                                "Nombre de Places: %count% / %all%"
+        counter:                                Enregistrements
+        previous:                               Précédent
+        next:                                   Suivant
 
     sex:
         label:                                  Sexe
         m:                                      Monsieur
         f:                                      Madame
+
+    form:
+        required:                               Champs obligatoires

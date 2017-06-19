@@ -1,0 +1,253 @@
+mail:
+    admin:
+        index:
+            title:                              Emails envoyés
+            link:                               Emails
+            breadcrumb:                         Emails
+            nodata:                             No data
+            form:
+                search:                         Search
+            table:
+                header:
+                    name:                       Name
+                    date:                       Date
+                    model:                      Modèle
+                    to:                         Destinataire
+                    subject:                    Objet
+                    type:                       Type
+                    action:                     Actions
+                    status:                     Status
+                action:
+                    activate:                   Activate
+                    deactivate:                 Deactivate
+                    delete:                     Delete
+                    detail:                     Détail
+                    duplicate:                  Duplicate
+                    undelete:                   Undelete
+                    update:                     Update
+                confirm:
+                    activate:                   Confirmer l'activation de l'email ?
+                    deactivate:                 Confirmer la désactivation de l'email ?
+                    delete:                     Confirmer la suppression de l'email ?
+                    undelete:                   Confirmer le déblocage de l'email ?
+
+        create:
+            title:                              Nouveau message
+            link:                               Nouveau message
+            breadcrumb:                         Nouveau message
+            flash:
+                ok:                             Le message a bien été envoyé.
+                ko:                             Le message n'a pas été envoyé.
+            form:
+                to:                             Email
+                object:                         Objet
+                body:                           Message
+                submit:
+                    save:                       Envoyer
+                    cancel:                     Cancel
+
+        update:
+            title:                              Update
+            link:                               Update
+            breadcrumb:                         Update
+            flash:
+                ok:                             L'email a bien été modifié.
+                ko:                             L'email n'a pas été modifié.
+            form:
+                name:                           Name
+                description:                    Description
+                active:                         Activate
+                share:                          Partager
+                global:                         Globale
+                submit:
+                    save:                       Save
+                    new:                        Save and add
+                    duplicate:                  Save and duplicate
+                    quit:                       Save and quit
+                    config:                     Save and configure
+                    cancel:                     Cancel
+                    import:                     Import
+                    export:                     Export
+                    delete:                     Delete
+                fieldset:
+                    data:                       Données
+                    options:                    Options
+
+        detail:
+            title:                              "%name%"
+            link:                               Détail
+            breadcrumb:                         "%name%"
+            data:
+                title:                          Informations
+                id:                             ID
+                create:                         Création
+                model:                          Modèle
+                type:                           Type
+                from:                           Expéditeur
+                to:                             Destinataire
+                subject:                        Objet
+                body:                           Message
+            url:
+                title:                          Routes disponibles
+                admin:
+                    edit:                       Update
+                    detail:                     Configure
+                front:
+                    id:                         Afficher via l'ID
+                    name:                       Afficher via le nom
+                    alias:                      Afficher via l'alias
+                    lite:                       Afficher via l'url simplifiée
+            admin:
+                title:                          Outils d'administration
+
+        export:
+            breadcrumb:                         Export
+            form:
+                submit:                         Export
+            link:                               Export
+            title:                              Export des emails
+
+        import:
+            breadcrumb:                         Import
+            flash:
+                ok:                             Les emails ont bien été importés (%countAdd% ajout(s), %countUpdate% modification(s), %countError% erreur(s)).
+                ko:                             Les emails n'ont pas été importés.
+            form:
+                file:                           Fichier CSV
+                submit:                         Import
+            link:                               Import
+            title:                              Import des emails
+
+        deactivate:
+            flash:
+                ok:                             L'email a bien été désactivé.
+
+        delete:
+            flash:
+                ok:                             L'email a bien été supprimé.
+
+        activate:
+            flash:
+                ok:                             L'email a bien été activé.
+
+        undelete:
+            flash:
+                ok:                             L'email a bien été restauré.
+
+        model:
+            breadcrumb:                         Modèles
+            link:                               Modèles
+            title:                              Modèles
+            user:
+                fieldset:                       Utilisateurs
+                register:                       Nouveau compte
+                reset:                          Update mot de passe
+            contact:
+                fieldset:                       Contacts
+                default:                        Défaut
+            place:
+                create:
+                    fieldset:                   Etablissement - Création
+                    admin:                      Admin
+                    user:                       Utilisateur
+                    accept:                     Accepter
+                    refuse:                     Refuser
+                    cancel:                     Cancel
+
+    front:
+        index:
+            title:                              Emails
+            link:                               Emails
+            breadcrumb:                         Emails
+            nodata:                             No data
+            form:
+                search:                         Search
+            table:
+                header:
+                    name:                       Name
+                    action:                     Actions
+                action:
+                    detail:                     Détail
+                    delete:                     Delete
+                confirm:
+                    delete:                     Confirmer la suppression de l'email ?
+
+        create:
+            title:                              Ajouter
+            link:                               Ajouter
+            breadcrumb:                         Ajouter un email
+            flash:
+                ok:                             L'email a bien été créé.
+                ko:                             L'email n'a pas été créé.
+            form:
+                name:                           Name
+                description:                    Description
+                submit:
+                    save:                       Save
+                    new:                        Save and add
+                    duplicate:                  Save and duplicate
+                    quit:                       Save and quit
+                    cancel:                     Cancel
+                alert:
+                    title:                      Information
+                    text:                       L'ajout d'un email nécessite la validation d'un modérateur.
+
+        update:
+            title:                              Update
+            link:                               Update
+            breadcrumb:                         Update
+            flash:
+                ok:                             L'email a bien été modifié.
+                ko:                             L'email n'a pas été modifié.
+            form:
+                name:                           Name
+                description:                    Description
+                submit:
+                    save:                       Save
+                    new:                        Save and add
+                    duplicate:                  Save and duplicate
+                    quit:                       Save and quit
+                    cancel:                     Cancel
+                alert:
+                    title:                      Information
+                    text:                       La modification d'un email nécessite la validation d'un modérateur.
+
+        detail:
+            title:                              "%name%"
+            link:                               Détail
+            breadcrumb:                         "%name%"
+            data:
+                title:                          Informations
+                create:                         Création
+                update:                         Modification
+                name:                           Name
+                alias:                          Alias
+                description:                    Description
+
+        delete:
+            flash:
+                ok:                             L'email a bien été supprimé.
+
+    api:
+        index:
+            title:                              Emails
+
+    pagination:
+        counter:                                "Nombre d'emails: %count% / %all%"
+
+    error:
+        unknown:                                L'email n'existe pas.
+        delete:                                 L'email n'existe pas.
+        forbidden:                              Droits insuffisants.
+
+    flash:
+        disable:                                L'envoi d'e-mail est désactivé
+
+    type:
+        mail:                                   success
+        message:                                warning
+
+    test:
+        title:                                  Envoyer un email de test
+        flash:
+            ok:                                 L'email de test a bien été envoyé à %email%.

@@ -10,7 +10,7 @@
 {% endblock %}
 
 {% block content_search %}
-    <form action="#" method="get" id="formSearch">
+    <form action="#" method="GET" id="formSearch" data-required="false">
         <div class="row collapse">
             <div class="small-6 columns">
                 {{ form_widget(form.search, {'attr':{'data-type':'search', 'class':'FhmSearch_search'}}) }}

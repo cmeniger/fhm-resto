@@ -1,4 +1,5 @@
 <?php
+
 namespace Fhm\FhmBundle\Form\Type\Admin\Menu;
 
 use Fhm\FhmBundle\Form\Type\Admin\UpdateType as FhmType;
@@ -9,13 +10,14 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Class UpdateType
+ *
  * @package Fhm\FhmBundle\Form\Type\Admin
  */
 class UpdateType extends FhmType
 {
     /**
      * @param FormBuilderInterface $builder
-     * @param array $options
+     * @param array                $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -23,13 +25,14 @@ class UpdateType extends FhmType
         $builder->add(
             'icon',
             TextType::class,
-            array('label' => $options['translation_route'].'.admin.update.form.icon', 'required' => false)
+            array('label' => $options['translation_route'] . '.admin.update.form.icon', 'required' => false)
         )->add(
             'route',
             LinkType::class,
-            array('label' => $options['translation_route'].'.admin.update.form.route', 'required' => false)
+            array('label' => $options['translation_route'] . '.admin.update.form.route', 'required' => false)
         )->remove('share')->remove('global');
     }
+
     /**
      * @param OptionsResolver $resolver
      */
@@ -37,12 +40,12 @@ class UpdateType extends FhmType
     {
         $resolver->setDefaults(
             array(
-                'data_class' => '',
-                'translation_domain' => 'FhmFhmMenu',
+                'data_class'         => '',
+                'translation_domain' => 'FhmFhmMenuBundle',
                 'cascade_validation' => true,
-                'translation_route' => 'menu',
-                'user_admin' => '',
-                'object_manager'=>''
+                'translation_route'  => 'menu',
+                'user_admin'         => '',
+                'object_manager'     => ''
             )
         );
     }
