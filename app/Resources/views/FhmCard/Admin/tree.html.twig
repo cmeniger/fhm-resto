@@ -8,6 +8,6 @@
 
 {% block content_data %}
     <div class="row card">
-        {{ render(path("fhm_api_card_editor",{id:object.getId()})) }}
+        {{ render(path("fhm_api_card_editor",{id:object.getId(), template:'M001'})) }}
     </div>
 {% endblock %}

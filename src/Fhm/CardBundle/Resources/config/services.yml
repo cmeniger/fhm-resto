@@ -7,10 +7,10 @@ services:
         class: Fhm\CardBundle\Services\ModelDefault
         arguments: ['@fhm_tools','@fhm.object.manager', '@templating', '@form.factory', '@security.token_storage']
 
-#    fhm_card_model_m001:
-#        class: Fhm\CardBundle\Services\Model001
-#        arguments: ['@fhm_tools', '@templating']
-#
+    fhm_card_model_m001:
+        class: Fhm\CardBundle\Services\Model001
+        arguments: ['@fhm_tools','@fhm.object.manager', '@templating', '@form.factory', '@security.token_storage']
+
 #    fhm_card_model_m002:
 #        class: Fhm\CardBundle\Services\Model002
 #        arguments: ['@fhm_tools', '@templating']

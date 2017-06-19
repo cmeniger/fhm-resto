@@ -3,6 +3,8 @@
 namespace Fhm\CardBundle\Form\Type\Model;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -11,8 +13,18 @@ class M001IngredientCreateType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name', 'text', array('label' => $options['translation_route'] . '.api.create.form.name'))
-            ->add('submitSave', 'submit', array('label' => $options['translation_route'] . '.api.create.form.submit.save'));
+            ->add(
+                'name',
+                TextType::class,
+                array(
+                    'label' => $options['translation_route'] . '.api.create.form.name'
+                ))
+            ->add(
+                'submitSave',
+                SubmitType::class,
+                array(
+                    'label' => $options['translation_route'] . '.api.create.form.submit.save'
+                ));
     }
 
     /**
