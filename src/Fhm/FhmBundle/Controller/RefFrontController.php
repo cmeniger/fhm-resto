@@ -59,7 +59,7 @@ class RefFrontController extends GenericController
         {
             $data = $request->get($form->getName());
             $object->setAlias($this->get('fhm_tools')->getAlias($object->getId(), $object->getName(), self::$repository));
-            $object->setCreateUser($this->getUser());
+            $object->setUserCreate($this->getUser());
             $this->get('fhm_tools')->dmPersist($object);
             $this->get('session')->getFlashBag()->add(
                 'notice',
@@ -122,7 +122,7 @@ class RefFrontController extends GenericController
         if($process)
         {
             $object->setAlias($this->getAlias($object->getId(), $object->getName(), self::$repository));
-            $object->setUpdateUser($this->getUser());
+            $object->setUserUpdate($this->getUser());
             $object->setActive(false);
             $this->get('fhm_tools')->dmPersist($object);
             $this->get('session')->getFlashBag()->add(

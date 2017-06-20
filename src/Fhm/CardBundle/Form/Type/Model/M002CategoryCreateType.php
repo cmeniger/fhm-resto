@@ -3,6 +3,11 @@
 namespace Fhm\CardBundle\Form\Type\Model;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -11,10 +16,32 @@ class M002CategoryCreateType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name', 'text', array('label' => $options['translation_route'] . '.api.create.form.name'))
-            ->add('description', 'textarea', array('label' => $options['translation_route'] . '.api.create.form.description', 'required' => false))
-            ->add('order', 'text', array('label' => $options['translation_route'] . '.api.create.form.order', 'required' => false))
-            ->add('submitSave', 'submit', array('label' => $options['translation_route'] . '.api.create.form.submit.save'));
+            ->add(
+                'name',
+                TextType::class,
+                array(
+                    'label' => $options['translation_route'] . '.api.create.form.name'
+                ))
+            ->add(
+                'description',
+                TextareaType::class,
+                array(
+                    'label'    => $options['translation_route'] . '.api.create.form.description',
+                    'required' => false
+                ))
+            ->add(
+                'order',
+                IntegerType::class,
+                array(
+                    'label'    => $options['translation_route'] . '.api.create.form.order',
+                    'required' => false
+                ))
+            ->add(
+                'submitSave',
+                SubmitType::class,
+                array(
+                    'label' => $options['translation_route'] . '.api.create.form.submit.save'
+                ));
     }
 
     /**

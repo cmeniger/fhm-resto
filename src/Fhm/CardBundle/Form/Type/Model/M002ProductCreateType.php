@@ -1,7 +1,14 @@
 <?php
+
 namespace Fhm\CardBundle\Form\Type\Model;
 
+use Fhm\MediaBundle\Form\Type\MediaType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -10,12 +17,47 @@ class M002ProductCreateType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name', 'text', array('label' => $options['translation_route'] . '.api.create.form.name'))
-            ->add('ingredient', 'text', array('label' => $options['translation_route'] . '.api.create.form.ingredient', 'required' => false, "mapped" => false))
-            ->add('price', 'text', array('label' => $options['translation_route'] . '.api.create.form.price'))
-            ->add('currency', 'text', array('label' => $options['translation_route'] . '.api.create.form.currency'))
-            ->add('order', 'text', array('label' => $options['translation_route'] . '.api.create.form.order', 'required' => false))
-            ->add('submitSave', 'submit', array('label' => $options['translation_route'] . '.api.create.form.submit.save'));
+            ->add(
+                'name',
+                TextType::class,
+                array(
+                    'label' => $options['translation_route'] . '.api.create.form.name'
+                ))
+            ->add(
+                'ingredient',
+                TextareaType::class,
+                array(
+                    'label'    => $options['translation_route'] . '.api.create.form.ingredient',
+                    'required' => false,
+                    'mapped'   => false
+                ))
+            ->add(
+                'order',
+                IntegerType::class,
+                array(
+                    'label'    => $options['translation_route'] . '.api.create.form.order',
+                    'required' => false
+                ))
+            ->add(
+                'price',
+                TextType::class,
+                array(
+                    'label'    => $options['translation_route'] . '.api.create.form.price',
+                    'required' => false
+                ))
+            ->add(
+                'currency',
+                TextType::class,
+                array(
+                    'label'    => $options['translation_route'] . '.api.create.form.currency',
+                    'required' => false
+                ))
+            ->add(
+                'submitSave',
+                SubmitType::class,
+                array(
+                    'label' => $options['translation_route'] . '.api.create.form.submit.save'
+                ));
     }
 
     /**

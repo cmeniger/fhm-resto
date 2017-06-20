@@ -327,6 +327,9 @@
             .column{
                 padding: 0;
             }
+            .description{
+                text-align: center;
+            }
             @media #{$medium} {
                 .editor-list{
                     margin-right: 1rem;

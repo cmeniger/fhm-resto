@@ -1,4 +1,5 @@
 <?php
+
 namespace Fhm\CardBundle\Services;
 
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -19,11 +20,20 @@ class Model002 extends ModelDefault
     /**
      * Model002 constructor.
      *
-     * @param ContainerInterface $container
+     * @param \Fhm\FhmBundle\Services\Tools                                              $tools
+     * @param \Fhm\FhmBundle\Manager\FhmObjectManager                                    $manager
+     * @param \Symfony\Bundle\TwigBundle\TwigEngine                                      $twig_engine
+     * @param \Symfony\Component\Form\FormFactory                                        $form_factory
+     * @param \Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage $token_storage
      */
-    public function __construct(ContainerInterface $container)
-    {
-        parent::__construct($container);
+    public function __construct(
+        \Fhm\FhmBundle\Services\Tools $tools,
+        \Fhm\FhmBundle\Manager\FhmObjectManager $manager,
+        \Symfony\Bundle\TwigBundle\TwigEngine $twig_engine,
+        \Symfony\Component\Form\FormFactory $form_factory,
+        \Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage $token_storage
+    ) {
+        parent::__construct($tools, $manager, $twig_engine, $form_factory, $token_storage);
         $this->initData('M002');
     }
 
@@ -34,19 +44,16 @@ class Model002 extends ModelDefault
      */
     public function index($idCard)
     {
-        $card     = $this->dmRepository('FhmCardBundle:Card')->find($idCard);
-        $instance = $this->instanceData($card);
+        $card = $this->fhm_tools->dmRepository('FhmCardBundle:Card')->find($idCard);
         $this->authorized($card);
-        $categories = $this->dmRepository('FhmCardBundle:CardCategory')->getByCardAll($card, $instance->grouping->filtered);
 
         return new Response(
-            $this->container->get('templating')->render(
+            $this->twig_engine->render(
                 "::FhmCard/Template/Editor/" . $this->template . "/index.html.twig",
                 array(
                     "document"   => $card,
-                    "categories" => $categories,
-                    "template"   => strtolower($this->template),
-                    "instance"   => $instance,
+                    "categories" => $this->fhm_tools->dmRepository('FhmCardBundle:CardCategory')->getByCardAll($card, $this->user->hasRole('ROLE_SUPER_ADMIN')),
+                    "template"   => strtolower($this->template)
                 )
             )
         );
@@ -60,25 +67,25 @@ class Model002 extends ModelDefault
      */
     public function categoryIndex($idCard, $idCategory)
     {
-        $card     = $this->dmRepository('FhmCardBundle:Card')->find($idCard);
-        $instance = $this->instanceData($card);
+        $card = $this->fhm_tools->dmRepository('FhmCardBundle:Card')->find($idCard);
         $this->authorized($card);
-        $category = $this->dmRepository('FhmCardBundle:CardCategory')->find($idCategory);
-        $sons     = $this->dmRepository('FhmCardBundle:CardCategory')->getSonsAll($card, $category, $instance->grouping->filtered);
-        $tree     = array(
+        $categories = $this->fhm_tools->dmRepository('FhmCardBundle:CardCategory')->getByCardAll($card, $this->user->hasRole('ROLE_SUPER_ADMIN'));
+        $category   = $this->fhm_tools->dmRepository('FhmCardBundle:CardCategory')->find($idCategory);
+        $sons       = $this->fhm_tools->dmRepository('FhmCardBundle:CardCategory')->getSonsAll($card, $category);
+        $tree       = array(
             'category' => $category,
-            'sons'     => $sons ? $this->categoryTree($card, $sons, $instance) : null
+            'sons'     => $sons ? $this->categoryTree($card, $sons) : null
         );
 
         return new Response(
-            $this->container->get('templating')->render(
+            $this->twig_engine->render(
                 "::FhmCard/Template/Editor/" . $this->template . "/Category/index.html.twig",
                 array(
-                    "card"     => $card,
-                    "products" => $this->dmRepository('FhmCardBundle:CardProduct')->getByCardAll($card, $instance->grouping->filtered),
-                    "tree"     => $tree,
-                    "template" => strtolower($this->template),
-                    "instance" => $instance,
+                    "card"       => $card,
+                    "categories" => $categories,
+                    "products"   => $this->fhm_tools->dmRepository('FhmCardBundle:CardProduct')->getByCardAll($card, $this->user->hasRole('ROLE_SUPER_ADMIN')),
+                    "tree"       => $tree,
+                    "template"   => strtolower($this->template)
                 )
             )
         );
@@ -88,30 +95,29 @@ class Model002 extends ModelDefault
      * @param $card
      * @param $category
      * @param $master
-     * @param $instance
      *
      * @return JsonResponse
      * @throws \Exception
      */
-    public function categoryRefresh($card, $category, $master, $instance)
+    public function categoryRefresh($card, $category, $master)
     {
-        $sons     = $this->dmRepository('FhmCardBundle:CardCategory')->getSonsAll($card, $master, $instance->grouping->filtered);
-        $tree     = array(
+        $categories = $this->fhm_tools->dmRepository('FhmCardBundle:CardCategory')->getByCardAll($card, $this->user->hasRole('ROLE_SUPER_ADMIN'));
+        $sons       = $this->fhm_tools->dmRepository('FhmCardBundle:CardCategory')->getSonsAll($card, $master);
+        $tree       = array(
             'category' => $master,
-            'sons'     => $sons ? $this->categoryTree($card, $sons, $instance) : null
+            'sons'     => $sons ? $this->categoryTree($card, $sons) : null
         );
-        $response = new JsonResponse();
+        $response   = new JsonResponse();
         $response->setData(array(
-            'status'  => 200,
-            'content' => '#tab-category-' . $master->getId(),
-            'html'    => $this->container->get('templating')->render(
+            'status' => 200,
+            'html'   => $this->twig_engine->render(
                 "::FhmCard/Template/Editor/" . $this->template . "/Category/index.html.twig",
                 array(
-                    "card"     => $card,
-                    "products" => $this->dmRepository('FhmCardBundle:CardProduct')->setSort('alias')->getByCardAll($card, $instance->grouping->filtered),
-                    "tree"     => $tree,
-                    "template" => strtolower($this->template),
-                    "instance" => $instance,
+                    "card"       => $card,
+                    "categories" => $categories,
+                    "products"   => $this->fhm_tools->dmRepository('FhmCardBundle:CardProduct')->setSort('alias')->getByCardAll($card, $this->user->hasRole('ROLE_SUPER_ADMIN')),
+                    "tree"       => $tree,
+                    "template"   => strtolower($this->template),
                 ))
         ));
 
@@ -128,36 +134,43 @@ class Model002 extends ModelDefault
      */
     public function categoryCreate(Request $request, $idCard, $idCategory, $idMaster)
     {
-        $card     = $this->dmRepository('FhmCardBundle:Card')->find($idCard);
-        $parent   = $this->dmRepository('FhmCardBundle:CardCategory')->find($idCategory);
-        $master   = $this->dmRepository('FhmCardBundle:CardCategory')->find($idMaster);
-        $instance = $this->instanceData();
+        $card   = $this->fhm_tools->dmRepository('FhmCardBundle:Card')->find($idCard);
+        $parent = $this->fhm_tools->dmRepository('FhmCardBundle:CardCategory')->find($idCategory);
+        $master = $this->fhm_tools->dmRepository('FhmCardBundle:CardCategory')->find($idMaster);
         $this->authorized($card);
-        $category = new \Fhm\CardBundle\Document\CardCategory();
+        $class    = $this->fhm_manager->getCurrentModelName('FhmCardBundle:CardCategory');
+        $category = new $class;
         if($parent)
         {
             $category->addParent($parent);
         }
-        $classType    = $this->form->category->create;
-        $classHandler = $this->form->handler->create;
-        $form         = $this->createForm(new $classType($instance, $category, $card), $category);
-        $handler      = new $classHandler($form, $request);
-        $process      = $handler->process();
+        $form    = $this->form_factory->create(
+            $this->form->category->create,
+            $category,
+            array(
+                'user_admin'     => $this->user->hasRole('ROLE_ADMIN'),
+                'data_class'     => $class,
+                'object_manager' => $this->fhm_manager,
+                'card'           => $idCard
+            )
+        );
+        $handler = new $this->form->handler->create($form, $request);
+        $process = $handler->process();
         if($process)
         {
             $data = $request->get($form->getName());
             // Persist
-            $category->setUserCreate($this->getUser());
-            $category->setAlias($this->getAlias($category->getId(), $category->getName()));
+            $category->setUserCreate($this->user);
+            $category->setAlias($this->fhm_tools->getAlias($category->getId(), $category->getName(), 'FhmCardBundle:CardCategory'));
             $category->setCard($card);
             $category->setActive(true);
-            $this->dmPersist($category);
+            $this->fhm_tools->dmPersist($category);
 
-            return $this->categoryRefresh($card, $category, $master, $instance);
+            return $this->categoryRefresh($card, $category, $master);
         }
 
         return new Response(
-            $this->container->get('templating')->render(
+            $this->twig_engine->render(
                 "::FhmCard/Template/Editor/" . $this->template . "/Category/create.html.twig",
                 array(
                     "card"     => $card,
@@ -165,8 +178,7 @@ class Model002 extends ModelDefault
                     "parent"   => $parent,
                     "master"   => $master,
                     "form"     => $form->createView(),
-                    "template" => strtolower($this->template),
-                    "instance" => $instance
+                    "template" => strtolower($this->template)
                 )
             )
         );
@@ -175,15 +187,14 @@ class Model002 extends ModelDefault
     /**
      * @param $card
      * @param $category
+     * @param $master
      * @param $product
-     * @param $instance
      *
      * @return JsonResponse
-     * @throws \Exception
      */
-    public function productRefresh($card, $category, $master, $product, $instance)
+    public function productRefresh($card, $category, $master, $product)
     {
-        return $this->categoryRefresh($card, $category, $master, $instance);
+        return $this->categoryRefresh($card, $category, $master);
     }
 
     /**
@@ -196,27 +207,34 @@ class Model002 extends ModelDefault
      */
     public function productCreate(Request $request, $idCard, $idCategory, $idMaster)
     {
-        $card     = $this->dmRepository('FhmCardBundle:Card')->find($idCard);
-        $category = $this->dmRepository('FhmCardBundle:CardCategory')->find($idCategory);
-        $master   = $this->dmRepository('FhmCardBundle:CardCategory')->find($idMaster);
-        $instance = $this->instanceData();
+        $card     = $this->fhm_tools->dmRepository('FhmCardBundle:Card')->find($idCard);
+        $category = $this->fhm_tools->dmRepository('FhmCardBundle:CardCategory')->find($idCategory);
+        $master   = $this->fhm_tools->dmRepository('FhmCardBundle:CardCategory')->find($idMaster);
         $this->authorized($card);
-        $product = new \Fhm\CardBundle\Document\CardProduct();
+        $class   = $this->fhm_manager->getCurrentModelName('FhmCardBundle:CardProduct');
+        $product = new $class;
         if($category)
         {
             $product->addCategory($category);
         }
-        $classType    = $this->form->product->create;
-        $classHandler = $this->form->handler->create;
-        $form         = $this->createForm(new $classType($instance, $product, $card), $product);
-        $handler      = new $classHandler($form, $request);
-        $process      = $handler->process();
+        $form    = $this->form_factory->create(
+            $this->form->product->create,
+            $product,
+            array(
+                'user_admin'     => $this->user->hasRole('ROLE_ADMIN'),
+                'data_class'     => $class,
+                'object_manager' => $this->fhm_manager,
+                'card'           => $idCard
+            )
+        );
+        $handler = new $this->form->handler->create($form, $request);
+        $process = $handler->process();
         if($process)
         {
             $data = $request->get($form->getName());
             // Persist
-            $product->setUserCreate($this->getUser());
-            $product->setAlias($this->getAlias($category->getId(), $category->getName()));
+            $product->setUserCreate($this->user);
+            $product->setAlias($this->fhm_tools->getAlias($product->getId(), $product->getName(), 'FhmCardBundle:CardProduct'));
             $product->setCard($card);
             $product->setActive(true);
             // Ingredients
@@ -227,27 +245,27 @@ class Model002 extends ModelDefault
                 $ingredient = trim($ingredient);
                 if($ingredient != '')
                 {
-                    $object = $this->dmRepository('FhmCardBundle:CardIngredient')->getByName($ingredient);
+                    $object = $this->fhm_tools->dmRepository('FhmCardBundle:CardIngredient')->getByName($ingredient);
                     if($object == '')
                     {
                         $object = new \Fhm\CardBundle\Document\CardIngredient();
                         $object->setCard($product->getCard());
                         $object->setName($ingredient);
-                        $object->setAlias($this->getAlias('', $ingredient));
-                        $object->setUserCreate($this->getUser());
+                        $object->setAlias($this->fhm_tools->getAlias($object->getId(), $object->getName(), 'FhmCardBundle:CardIngredient'));
+                        $object->setUserCreate($this->user);
                         $object->setActive(true);
-                        $this->dmPersist($object);
+                        $this->fhm_tools->dmPersist($object);
                     }
                     $product->addIngredient($object);
                 }
             }
-            $this->dmPersist($product);
+            $this->fhm_tools->dmPersist($product);
 
-            return $this->productRefresh($card, $category, $master, $product, $instance);
+            return $this->productRefresh($card, $category, $master, $product);
         }
 
         return new Response(
-            $this->container->get('templating')->render(
+            $this->twig_engine->render(
                 "::FhmCard/Template/Editor/" . $this->template . "/Product/create.html.twig",
                 array(
                     "card"     => $card,
@@ -255,8 +273,7 @@ class Model002 extends ModelDefault
                     "master"   => $master,
                     "product"  => $product,
                     "form"     => $form->createView(),
-                    "template" => strtolower($this->template),
-                    "instance" => $instance
+                    "template" => strtolower($this->template)
                 )
             )
         );
@@ -272,27 +289,34 @@ class Model002 extends ModelDefault
      */
     public function productUpdate(Request $request, $idCard, $idCategory, $idProduct, $idMaster)
     {
-        $card     = $this->dmRepository('FhmCardBundle:Card')->find($idCard);
-        $category = $this->dmRepository('FhmCardBundle:CardCategory')->find($idCategory);
-        $master   = $this->dmRepository('FhmCardBundle:CardCategory')->find($idMaster);
-        $product  = $this->dmRepository('FhmCardBundle:CardProduct')->find($idProduct);
-        $instance = $this->instanceData();
+        $card     = $this->fhm_tools->dmRepository('FhmCardBundle:Card')->find($idCard);
+        $category = $this->fhm_tools->dmRepository('FhmCardBundle:CardCategory')->find($idCategory);
+        $master   = $this->fhm_tools->dmRepository('FhmCardBundle:CardCategory')->find($idMaster);
+        $product  = $this->fhm_tools->dmRepository('FhmCardBundle:CardProduct')->find($idProduct);
         $this->authorized($card);
         if($product == "")
         {
-            throw new NotFoundHttpException($this->trans('.error.unknown'));
+            throw new NotFoundHttpException($this->fhm_tools->trans('card.product.error.unknown', array(), 'FhmCardBundle'));
         }
-        $classType    = $this->form->product->update;
-        $classHandler = $this->form->handler->update;
-        $form         = $this->createForm(new $classType($instance, $product, $card), $product);
-        $handler      = new $classHandler($form, $request);
-        $process      = $handler->process();
+        $class   = $this->fhm_manager->getCurrentModelName('FhmCardBundle:CardProduct');
+        $form    = $this->form_factory->create(
+            $this->form->product->create,
+            $product,
+            array(
+                'user_admin'     => $this->user->hasRole('ROLE_ADMIN'),
+                'data_class'     => $class,
+                'object_manager' => $this->fhm_manager,
+                'card'           => $idCard
+            )
+        );
+        $handler = new $this->form->handler->create($form, $request);
+        $process = $handler->process();
         if($process)
         {
             $data = $request->get($form->getName());
             // Persist
-            $product->setUserUpdate($this->getUser());
-            $product->setAlias($this->getAlias($product->getId(), $product->getName()));
+            $product->setUserUpdate($this->user);
+            $product->setAlias($this->fhm_tools->getAlias($product->getId(), $product->getName(), 'FhmCardBundle:CardProduct'));
             $product->setCard($card);
             // Ingredients
             $ingredients = explode(',', $data['ingredient']);
@@ -302,27 +326,27 @@ class Model002 extends ModelDefault
                 $ingredient = trim($ingredient);
                 if($ingredient != '')
                 {
-                    $object = $this->dmRepository('FhmCardBundle:CardIngredient')->getByName($ingredient);
+                    $object = $this->fhm_tools->dmRepository('FhmCardBundle:CardIngredient')->getByName($ingredient);
                     if($object == '')
                     {
                         $object = new \Fhm\CardBundle\Document\CardIngredient();
                         $object->setCard($product->getCard());
                         $object->setName($ingredient);
-                        $object->setAlias($this->getAlias('', $ingredient));
-                        $object->setUserCreate($this->getUser());
+                        $object->setAlias($this->fhm_tools->getAlias($object->getId(), $object->getName(), 'FhmCardBundle:CardIngredient'));
+                        $object->setUserCreate($this->user);
                         $object->setActive(true);
-                        $this->dmPersist($object);
+                        $this->fhm_tools->dmPersist($object);
                     }
                     $product->addIngredient($object);
                 }
             }
-            $this->dmPersist($product);
+            $this->fhm_tools->dmPersist($product);
 
-            return $this->productRefresh($card, $category, $master, $product, $instance);
+            return $this->productRefresh($card, $category, $master, $product);
         }
 
         return new Response(
-            $this->container->get('templating')->render(
+            $this->twig_engine->render(
                 "::FhmCard/Template/Editor/" . $this->template . "/Product/update.html.twig",
                 array(
                     "card"     => $card,
@@ -330,8 +354,7 @@ class Model002 extends ModelDefault
                     "master"   => $master,
                     "product"  => $product,
                     "form"     => $form->createView(),
-                    "template" => strtolower($this->template),
-                    "instance" => $instance
+                    "template" => strtolower($this->template)
                 )
             )
         );

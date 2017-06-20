@@ -69,7 +69,7 @@ class RefAdminController extends GenericController
         if($process)
         {
             $object->setAlias($this->get('fhm_tools')->getAlias($object->getId(), $object->getName(), self::$repository));
-            $object->setCreateUser($this->getUser());
+            $object->setUserCreate($this->getUser());
             $this->get('fhm_tools')->dmPersist($object);
             $this->get('session')->getFlashBag()->add(
                 'notice',
@@ -122,7 +122,7 @@ class RefAdminController extends GenericController
         if($process)
         {
             $object->setAlias($this->get('fhm_tools')->getAlias($object->getId(), $object->getName(), self::$repository));
-            $object->setCreateUser($this->getUser());
+            $object->setUserCreate($this->getUser());
             $this->get('fhm_tools')->dmPersist($object);
             $this->get('session')->getFlashBag()->add(
                 'notice',
@@ -173,7 +173,7 @@ class RefAdminController extends GenericController
         if($process)
         {
             $object->setAlias($this->get('fhm_tools')->getAlias($object->getId(), $object->getName(), self::$repository));
-            $object->setUpdateUser($this->getUser());
+            $object->setUserUpdate($this->getUser());
             $this->get('fhm_tools')->dmPersist($object);
             $this->get('session')->getFlashBag()->add(
                 'notice',

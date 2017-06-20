@@ -12,7 +12,7 @@
         {{ this.categoryActionsMaster(card, tree.category, tree.category, template, instance) }}
         {% if tree.category.getDescription() %}
             <div class="description">
-                {{ category.getDescription() }}
+                {{ tree.category.getDescription() }}
             </div>
         {% endif %}
         {{ this.product(card, tree.category, tree.category, template, instance) }}
@@ -81,10 +81,8 @@
             <a href="#" data-reveal-id="modal-editor-product" data-modal="product" data-url="{{ path('fhm_api_card_product_create',{idCard:card.getId(),idMaster:master.getId(),idCategory:category.getId(),template:template}) }}" title="{{ ('card.api.action.add_product')|trans }}" class="icon-add"><i class="fa fa-cube"></i></a>
             <a href="#" data-reveal-id="modal-editor-category" data-modal="category" data-url="{{ path('fhm_api_card_category_update',{idCard:card.getId(),idMaster:master.getId(),idCategory:category.getId(),template:template}) }}" title="{{ ('card.api.action.update')|trans }}"><i class="fa fa-pencil"></i></a>
             {% if category.getDelete() %}
-                {% if instance.user.admin %}
-                    <a href="{{ path('fhm_api_card_category_undelete', {idCard:card.getId(),idMaster:master.getId(),idCategory:category.getId(),template:template}) }}" title="{{ ('card.api.action.undelete')|trans }}" data-confirm="{{ ('card.api.confirm.undelete')|trans }}" data-ajax><i class="fa fa-undo"></i></a>
-                    <a href="{{ path('fhm_api_card_category_delete', {idCard:card.getId(),idMaster:master.getId(),idCategory:category.getId(),template:template}) }}" title="{{ ('card.api.action.delete')|trans }}" data-confirm="{{ ('card.api.confirm.delete')|trans }}" data-ajax><i class="fa fa-trash"></i></a>
-                {% endif %}
+                <a href="{{ path('fhm_api_card_category_undelete', {idCard:card.getId(),idMaster:master.getId(),idCategory:category.getId(),template:template}) }}" title="{{ ('card.api.action.undelete')|trans }}" data-confirm="{{ ('card.api.confirm.undelete')|trans }}" data-ajax><i class="fa fa-undo"></i></a>
+                <a href="{{ path('fhm_api_card_category_delete', {idCard:card.getId(),idMaster:master.getId(),idCategory:category.getId(),template:template}) }}" title="{{ ('card.api.action.delete')|trans }}" data-confirm="{{ ('card.api.confirm.delete')|trans }}" data-ajax><i class="fa fa-trash"></i></a>
             {% else %}
                 {% if category.getActive() %}
                     <a href="{{ path('fhm_api_card_category_deactivate', {idCard:card.getId(),idMaster:master.getId(),idCategory:category.getId(),template:template}) }}" title="{{ ('card.api.action.deactivate')|trans }}" data-confirm="{{ ('card.api.confirm.deactivate')|trans }}" data-ajax><i class="fa fa-eye-slash"></i></a>

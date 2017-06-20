@@ -59,16 +59,15 @@
     <span class="actions">
         <a href="#" data-reveal-id="modal-editor-product" data-modal="product" data-url="{{ path('fhm_api_card_product_update',{idCard:card.getId(),idCategory:category.getId(),idMaster:master.getId(),idProduct:document.getId(), template:template}) }}" title="{{ ('card.api.action.update')|trans }}"><i class="fa fa-pencil"></i></a>
         {% if document.getDelete() %}
-            {% if instance.user.admin %}
-                <a href="{{ path('fhm_api_card_product_undelete', {idCard:card.getId(),idCategory:category.getId(),idMaster:master.getId(),idProduct:document.getId(), template:template}) }}" title="{{ ('card.api.action.undelete')|trans }}" data-confirm="{{ ('card.api.confirm.undelete')|trans }}" data-ajax><i class="fa fa-undo"></i></a>
-                <a href="{{ path('fhm_api_card_product_delete', {idCard:card.getId(),idCategory:category.getId(),idMaster:master.getId(),idProduct:document.getId(), template:template}) }}" title="{{ ('card.api.action.delete')|trans }}" data-confirm="{{ ('card.api.confirm.delete')|trans }}" data-ajax><i class="fa fa-trash"></i></a>
-            {% endif %}
+            <a href="{{ path('fhm_api_card_product_undelete', {idCard:card.getId(),idCategory:category.getId(),idMaster:master.getId(),idProduct:document.getId(), template:template}) }}" title="{{ ('card.api.action.undelete')|trans }}" data-confirm="{{ ('card.api.confirm.undelete')|trans }}" data-ajax><i class="fa fa-undo"></i></a>
+            <a href="{{ path('fhm_api_card_product_delete', {idCard:card.getId(),idCategory:category.getId(),idMaster:master.getId(),idProduct:document.getId(), template:template}) }}" title="{{ ('card.api.action.delete')|trans }}" data-confirm="{{ ('card.api.confirm.delete')|trans }}" data-ajax><i class="fa fa-trash"></i></a>
         {% else %}
             {% if document.getActive() %}
                 <a href="{{ path('fhm_api_card_product_deactivate', {idCard:card.getId(),idCategory:category.getId(),idMaster:master.getId(),idProduct:document.getId(), template:template}) }}" title="{{ ('card.api.action.deactivate')|trans }}" data-confirm="{{ ('card.api.confirm.deactivate')|trans }}" data-ajax><i class="fa fa-eye-slash"></i></a>
             {% else %}
                 <a href="{{ path('fhm_api_card_product_activate', {idCard:card.getId(),idCategory:category.getId(),idMaster:master.getId(),idProduct:document.getId(), template:template}) }}" title="{{ ('card.api.action.activate')|trans }}" data-confirm="{{ ('card.api.confirm.activate')|trans }}" data-ajax><i class="fa fa-eye"></i></a>
             {% endif %}
+
             <a href="{{ path('fhm_api_card_product_delete', {idCard:card.getId(),idCategory:category.getId(),idMaster:master.getId(),idProduct:document.getId(), template:template}) }}" title="{{ ('card.api.action.delete')|trans }}" data-confirm="{{ ('card.api.confirm.delete')|trans }}" data-ajax><i class="fa fa-trash-o"></i></a>
         {% endif %}
     </span>
