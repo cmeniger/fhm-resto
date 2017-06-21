@@ -1,15 +1,136 @@
 {% trans_default_domain instance.domain %}
 
-<div class="card card-embed card-embed-tabs">
-    <ul class="tabs" data-tab>
-        {% for category in documents %}
-            <li class="tab-title {{ loop.index0 == 0 ? 'active' : '' }}">
-                <a href="#tab{{ category.getId() }}" class="tabs-title" data-image="{{ category.getImage()|media('s') }}"><span>{{ category.getName() }}</span></a></li>
-        {% endfor %}
-    </ul>
-    <div class="tabs-content">
-        {% for category in documents %}
-            {% include category.getMenu() ? "::FhmCard/Template/Embed/Tabs/menu.html.twig" : "::FhmCard/Template/Embed/Tabs/inline.html.twig" %}
-        {% endfor %}
+{% if demo is defined %}
+    <div class="card card-embed card-embed-tabs">
+        <ul class="tabs" data-tab>
+            <li class="tab-title active">
+                <a href="#tab1" class="tabs-title" data-image="{{ asset('images/demo/card/card-item1.jpg') }}"><span>Vivamus</span></a>
+            </li>
+            <li class="tab-title">
+                <a href="#tab2" class="tabs-title" data-image="{{ asset('images/demo/card/card-item2.jpg') }}"><span>Fringilla</span></a>
+            </li>
+            <li class="tab-title">
+                <a href="#tab3" class="tabs-title" data-image="{{ asset('images/demo/card/card-item3.jpg') }}"><span>Amet</span></a>
+            </li>
+        </ul>
+        <div class="tabs-content">
+            <div class="content inline active" id="tab1">
+                <div class="description">Vivamus in erat ut urna cursus vestibulum</div>
+                <div class="product">
+                    <ul class="product-forward small-block-grid-2 medium-block-grid-3 large-block-grid-4">
+                        <li>
+                            <div class="content" style="background:url('{{ asset('images/demo/card/card-item1.jpg') }}') center center no-repeat">
+                                <span class="name">Cursus</span> <span class="price">5€</span>
+                                <div class="ingredient-content">
+                                    <span class="title">{{ 'card.ingredient.front.index.link'|trans }}</span>
+                                    <span class="ingredient text-left">in, erat, ut, urna</span>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="content" style="background:url('{{ asset('images/demo/card/card-item2.jpg') }}') center center no-repeat">
+                                <span class="name">Augue</span> <span class="price">10€</span>
+                                <div class="ingredient-content">
+                                    <span class="title">{{ 'card.ingredient.front.index.link'|trans }}</span>
+                                    <span class="ingredient text-left">in, erat, ut, urna</span>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="content" style="background:url('{{ asset('images/demo/card/card-item3.jpg') }}') center center no-repeat">
+                                <span class="name">Nullam</span> <span class="price">15.50€</span>
+                                <div class="ingredient-content">
+                                    <span class="title">{{ 'card.ingredient.front.index.link'|trans }}</span>
+                                    <span class="ingredient text-left">in, erat, ut, urna</span>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                    <ul class="product-inline">
+                        <li>
+                            <span class="name left">Dapibus</span> <span class="price">9€</span>
+                            <span class="ingredient text-left">in, erat, ut, urna</span>
+                        </li>
+                        <li>
+                            <span class="name left">Nunc</span> <span class="price">9€</span>
+                            <span class="ingredient text-left">in, erat, ut, urna</span>
+                        </li>
+                        <li>
+                            <span class="name left">Tincidunt</span> <span class="price">9€</span>
+                            <span class="ingredient text-left">in, erat, ut, urna</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="content inline active" id="tab2">
+                <div class="description">Vivamus in erat ut urna cursus vestibulum</div>
+                <div class="product">
+                    <ul class="product-inline">
+                        <li>
+                            <span class="name left">Dapibus</span> <span class="price">9€</span>
+                            <span class="ingredient text-left">in, erat, ut, urna</span>
+                        </li>
+                        <li>
+                            <span class="name left">Nunc</span> <span class="price">9€</span>
+                            <span class="ingredient text-left">in, erat, ut, urna</span>
+                        </li>
+                        <li>
+                            <span class="name left">Tincidunt</span> <span class="price">9€</span>
+                            <span class="ingredient text-left">in, erat, ut, urna</span>
+                        </li>
+                        <li>
+                            <span class="name left">Sit</span> <span class="price">9€</span>
+                            <span class="ingredient text-left">in, erat, ut, urna</span>
+                        </li>
+                        <li>
+                            <span class="name left">Poda</span> <span class="price">9€</span>
+                            <span class="ingredient text-left">in, erat, ut, urna</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="content inline active" id="tab3">
+                <div class="description">Vivamus in erat ut urna cursus vestibulum</div>
+                <div class="product">
+                    <ul class="product-inline">
+                        <li>
+                            <span class="name left">Dapibus</span> <span class="price">9€</span>
+                            <span class="ingredient text-left">in, erat, ut, urna</span>
+                        </li>
+                        <li>
+                            <span class="name left">Nunc</span> <span class="price">9€</span>
+                            <span class="ingredient text-left">in, erat, ut, urna</span>
+                        </li>
+                        <li>
+                            <span class="name left">Tincidunt</span> <span class="price">9€</span>
+                            <span class="ingredient text-left">in, erat, ut, urna</span>
+                        </li>
+                        <li>
+                            <span class="name left">Sit</span> <span class="price">9€</span>
+                            <span class="ingredient text-left">in, erat, ut, urna</span>
+                        </li>
+                        <li>
+                            <span class="name left">Poda</span> <span class="price">9€</span>
+                            <span class="ingredient text-left">in, erat, ut, urna</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
     </div>
-</div>
+{% else %}
+    <div class="card card-embed card-embed-tabs">
+        <ul class="tabs" data-tab>
+            {% for category in categories %}
+                <li class="tab-title {{ loop.index0 == 0 ? 'active' : '' }}">
+                    <a href="#tab{{ category.getId() }}" class="tabs-title" data-image="{{ category.getImage()|media('s') }}"><span>{{ category.getName() }}</span></a>
+                </li>
+            {% endfor %}
+        </ul>
+        <div class="tabs-content">
+            {% for category in categories %}
+                {% include category.getMenu() ? "::FhmCard/Template/Embed/Tabs/menu.html.twig" : "::FhmCard/Template/Embed/Tabs/inline.html.twig" %}
+            {% endfor %}
+        </div>
+    </div>
+{% endif %}

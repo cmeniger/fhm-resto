@@ -34,7 +34,7 @@
                 a{
                     @include border-radius(1000px);
                     color:          $white;
-                    background:     $color-red;
+                    background:     $button-color;
                     padding:        10px;
                     text-transform: uppercase;
                     font-size:      0.8em;
@@ -74,14 +74,14 @@
         .slick-prev{
             left: -45px;
             &:before{
-                color:     $color-red;
+                color:     $button-color;
                 font-size: 50px;
             }
         }
         .slick-next{
             right: -45px;
             &:before{
-                color:     $color-red;
+                color:     $button-color;
                 font-size: 50px;
             }
         }

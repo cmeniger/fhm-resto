@@ -1,13 +1,3 @@
-body{
-    margin:      0;
-    padding:     0;
-    font-family: $font-family-opensans;
-    font-size:   14px;
-    color:       $default-color;
-    background:  $white;
-    line-height: 28px;
-}
-
 #anchor-top{
     @include border-radius-separate(1000px, 1000px, 0, 0);
     display:     none;
@@ -17,7 +7,7 @@ body{
     width:       100px;
     height:      50px;
     margin-left: -50px;
-    background:  $color-red;
+    background:  $button-color;
     color:       $white;
     line-height: 50px;
     text-align:  center;
@@ -231,10 +221,10 @@ body{
                     }
                 }
                 a{
-                    color:       $color-red;
+                    @include font-title();
+                    color:       $button-color;
                     font-size:   14px;
                     font-weight: bold;
-                    font-family: $font-family-merriweather;
                     opacity:     1;
                     transition:  opacity 0.4s ease;
                     &:hover{
@@ -258,15 +248,13 @@ body{
                         padding:     6px 60px 6px 25px;
                     }
                     a{
-                        font-family:    $font-family-opensans;
                         font-size:      13px;
                         font-style:     normal;
                         font-weight:    400;
                         text-transform: none;
-                        line-height:    13px;
                         letter-spacing: -.2px;
-                        color:          #5C5C5C;
-                        line-height:    initial !important;
+                        color:          $medium-grey;
+                        line-height:    initial;
                     }
                 }
                 .nest-menu-depth{
@@ -325,10 +313,41 @@ body{
     width: 100%;
     .row-wrapper{
         position: relative;
+        .wrapper-title{
+            width:      100%;
+            text-align: center;
+            padding:    50px 0;
+            h2{
+                color:          $button-color;
+                font-size:      38px;
+                font-weight:    700;
+                text-transform: none;
+                line-height:    55px;
+                letter-spacing: -1.5px;
+                margin:         0;
+                @include css3-prefix(transition, all 2s ease);
+                &:after{
+                    content:    "";
+                    display:    block;
+                    background: url(/images/logo-icon-wave-brown.png) no-repeat 0 0;
+                    width:      150px;
+                    height:     25px;
+                    margin:     10px auto 0;
+                }
+            }
+            h3{
+                color:       $button-color;
+                font-weight: 400;
+                font-style:  normal;
+                font-size:   28px;
+                margin:      0;
+                @include css3-prefix(transition, all 1.5s ease);
+            }
+        }
         &.banner-wrap{
             overflow: hidden;
             height:   898px;
-            .image-banner{
+            .parallax-image-banner{
                 position:   absolute;
                 min-height: 898px;
                 top:        0;
@@ -343,17 +362,15 @@ body{
                 transform:  translateY(-50%);
                 z-index:    2;
                 h1{
-                    color:          $color-red;
+                    color:          $button-color;
                     font-size:      2.5em;
-                    font-family:    $font-family-merriweather;
                     text-transform: none;
                     margin:         0;
                 }
                 h2{
-                    font-family:    $font-family-stalemate;
                     text-align:     center;
                     width:          100%;
-                    color:          $color-red;
+                    color:          $button-color;
                     font-size:      2em;
                     margin-bottom:  10px;
                     text-transform: none;
@@ -372,6 +389,21 @@ body{
                     }
                 }
             }
+        }
+        &.offer-wrap{
+            overflow: hidden;
+            height:   898px;
+            .parallax-image-offer{
+                position:   absolute;
+                min-height: 898px;
+                top:        0;
+                left:       0;
+                width:      100%;
+            }
+        }
+        &.card-wrap{
+            @include css3-prefix(box-shadow, 0 30px 120px 0 rgba($black, 0.25));
+            background: $white;
         }
         &.padding{
             margin-top: -150px;
@@ -429,10 +461,9 @@ body{
         display:    block;
         text-align: center;
         h4{
-            font-size:   18px;
-            color:       $white;
-            font-family: $font-family-merriweather;
-            margin:      0;
+            font-size: 18px;
+            color:     $white;
+            margin:    0;
         }
         p{
             font-size: 13px;
@@ -445,62 +476,8 @@ body{
                 margin:     15px auto 0;
                 display:    block;
                 text-align: center;
-                background: url(/images/small_white_delim.png) no-repeat 0 0;
+                background: url(/images/tag-small-white.png) no-repeat 0 0;
             }
-        }
-    }
-}
-
-.header-title{
-    width:          100%;
-    text-align:     center;
-    padding-top:    100px;
-    padding-bottom: 46px;
-    h2{
-        color:          $white;
-        font-family:    $font-family-merriweather;
-        font-size:      38px;
-        font-weight:    700;
-        text-transform: none;
-        line-height:    55px;
-        letter-spacing: -1.5px;
-        margin:         0;
-        @include css3-prefix(transition, all 2s ease);
-        &:after{
-            content:    "";
-            display:    block;
-            background: url(/images/delim_white.png) no-repeat 0 0;
-            width:      124px;
-            height:     25px;
-            margin:     10px auto 0;
-        }
-    }
-    h3{
-        font-family: $font-family-stalemate;
-        font-weight: 400;
-        font-style:  normal;
-        font-size:   28px;
-        color:       $white;
-        margin:      0;
-        @include css3-prefix(transition, all 1.5s ease);
-    }
-    &.gray{
-        h2{
-            color: #2D2D2D;
-            &:after{
-                background: url(/images/delim_small.png) no-repeat 0 0;
-            }
-        }
-        h3{
-            color: #383838;
-        }
-    }
-    &.onscreen{
-        h3{
-            font-size: 32px;
-        }
-        h2{
-            font-size: 45px;
         }
     }
 }
@@ -554,7 +531,7 @@ body{
             &.active{
                 a{
                     color:      $white;
-                    background: #E72D43;
+                    background: $button-color;
                 }
             }
         }
@@ -619,12 +596,11 @@ body{
             @include css3-prefix(transform, translateY(-50%));
         }
         h4{
-            color:       #3F3F3F;
-            font-size:   18px;
-            font-family: $font-family-merriweather;
-            margin:      0;
-            padding:     0;
-            position:    relative;
+            color:     #3F3F3F;
+            font-size: 18px;
+            margin:    0;
+            padding:   0;
+            position:  relative;
             span{
                 display:       inline-block;
                 background:    $white;
@@ -757,14 +733,13 @@ body{
         }
     }
     .title-animation-left{
-        background:    #E72D43;
+        background:    $button-color;
         color:         $white;
         display:       inline-block;
         line-height:   normal;
         margin-bottom: 16px;
         font-size:     10px;
         padding:       6px 10px;
-        font-family:   $font-family-montserrat;
         font-weight:   600;
         position:      relative;
         &:before{
@@ -779,14 +754,13 @@ body{
         }
     }
     .title-animation-right{
-        background:    #E72D43;
+        background:    $button-color;
         color:         $white;
         display:       inline-block;
         line-height:   normal;
         margin-bottom: 16px;
         font-size:     10px;
         padding:       6px 10px;
-        font-family:   $font-family-montserrat;
         font-weight:   600;
         position:      relative;
         &:before{
@@ -803,7 +777,6 @@ body{
     h4{
         color:       #313131;
         font-size:   25px;
-        font-family: $font-family-merriweather;
         font-weight: 700;
         margin:      0;
         span{
@@ -813,7 +786,7 @@ body{
             content:    "";
             margin:     15px auto 20px;
             display:    block;
-            background: url(/images/delim.png) no-repeat 0 0;
+            background: url(/images/tag-color-small.png) no-repeat 0 0;
             width:      43px;
             height:     13px;
         }
@@ -823,9 +796,9 @@ body{
         line-height: 28px;
     }
     .price{
+        @include font-title();
         color:       #313131;
         font-size:   30px;
-        font-family: $font-family-merriweather;
         font-weight: 700;
         margin:      0;
         line-height: normal;
@@ -845,7 +818,6 @@ body{
         text-align: center;
     }
     h3{
-        font-family:    $font-family-merriweather;
         font-size:      18px;
         font-style:     normal;
         font-weight:    700;
@@ -884,7 +856,6 @@ body{
         margin-bottom: 30px;
     }
     p{
-        font-family:    $font-family-opensans;
         font-size:      14px;
         font-style:     normal;
         font-weight:    400;
@@ -948,7 +919,7 @@ body{
                 font-size:   30px;
                 line-height: normal;
                 &:after{
-                    background: url(/images/delim_small.png) no-repeat 0 0;
+                    background: url(/images/tag_small.png) no-repeat 0 0;
                 }
             }
         }
@@ -956,7 +927,7 @@ body{
             color:     $white;
             font-size: 14px;
             &.day{
-                font-family:    $font-family-merriweather;
+                @include font-title();
                 font-size:      16px;
                 font-style:     normal;
                 font-weight:    700;
@@ -967,7 +938,7 @@ body{
                 margin-bottom:  5px;
             }
             &.phone{
-                font-family:    $font-family-merriweather;
+                @include font-title();
                 font-size:      25px;
                 font-style:     normal;
                 font-weight:    700;
@@ -1010,7 +981,6 @@ body{
                         input[type='text']{
                             border:        none;
                             color:         #7B7B7B;
-                            font-family:   $font-family-opensans;
                             font-size:     13px;
                             line-height:   13px;
                             background:    $white;
@@ -1091,7 +1061,7 @@ body{
         width:  80%;
         margin: 0 auto 35px;
         .slick-slide{
-            font-family:     $font-family-merriweather;
+            @include font-title();
             font-size:       17px;
             color:           #444;
             letter-spacing:  -0.5px;
@@ -1162,7 +1132,6 @@ body{
             }
             p{
                 display:       none;
-                font-family:   $font-family-opensans;
                 font-size:     13px;
                 line-height:   27px;
                 color:         #868686;
@@ -1170,8 +1139,8 @@ body{
                 text-align:    center;
                 @include css3-prefix(transition, all 0.3s ease);
                 &.title{
+                    @include font-title();
                     color:         #2B2B2B;
-                    font-family:   $font-family-merriweather;
                     font-size:     14px;
                     line-height:   24px;
                     font-weight:   700;
@@ -1322,7 +1291,6 @@ body{
         position:       relative;
         a{
             display:        block;
-            font-family:    $font-family-montserrat;
             font-size:      10px;
             font-style:     normal;
             font-weight:    700;
@@ -1409,7 +1377,6 @@ body{
         display: none;
         li{
             a{
-                font-family:    $font-family-opensans;
                 font-size:      13px;
                 padding-left:   35px;
                 font-weight:    normal;
@@ -1447,634 +1414,4 @@ body{
             @include css3-prefix(transform, translateY(-50%));
         }
     }
-}
-
-//
-// Gradient
-//
-
-//
-// Tools
-//
-
-.reset-margin{
-    margin: 0 !important;
-}
-
-.reset-margin-bottom{
-    margin-bottom: 0 !important;
-}
-
-.reset-margin-top{
-    margin-top: 0 !important;
-}
-
-.reset-margin-right{
-    margin-right: 0 !important;
-}
-
-.reset-margin-left{
-    margin-left: 0 !important;
-}
-
-.gutter-margin{
-    margin: $column-gutter !important;
-}
-
-.gutter-margin-top{
-    margin-top: $column-gutter !important;
-}
-
-.gutter-margin-bottom{
-    margin-bottom: $column-gutter !important;
-}
-
-.gutter-margin-right{
-    margin-right: $column-gutter !important;
-}
-
-.gutter-margin-left{
-    margin-left: $column-gutter !important;
-}
-
-.reset-padding{
-    padding: 0 !important;
-}
-
-.reset-padding-bottom{
-    padding-bottom: 0 !important;
-}
-
-.reset-padding-top{
-    padding-top: 0 !important;
-}
-
-.reset-padding-right{
-    padding-right: 0 !important;
-}
-
-.reset-padding-left{
-    padding-left: 0 !important;
-}
-
-.gutter-padding{
-    padding: $column-gutter !important;
-}
-
-.gutter-padding-top{
-    padding-top: $column-gutter !important;
-}
-
-.gutter-padding-bottom{
-    padding-bottom: $column-gutter !important;
-}
-
-.gutter-padding-right{
-    padding-right: $column-gutter !important;
-}
-
-.gutter-padding-left{
-    padding-left: $column-gutter !important;
-}
-
-.align-center{
-    display: block;
-    margin:  0 auto;
-}
-
-.fullwidth{
-    width: 100%;
-}
-
-h1, h2, h3, h4, h5, h6{
-
-}
-
-h1{
-}
-
-h2{
-}
-
-h3{
-}
-
-h4{
-}
-
-h5{
-}
-
-h6{
-}
-
-//
-// Colors
-//
-
-a{
-    @include transition(all, .3s, ease-in);
-}
-
-li{
-    list-style: none;
-}
-
-html, body{
-    height:  100%;
-    margin:  0;
-    padding: 0;
-}
-
-body{
-    @include font2();
-    width: 100%;
-}
-
-#footer{
-    display:    block;
-    height:     2em;
-    width:      100%;
-    text-align: center;
-    padding:    10px;
-    font-size:  0.8em;
-}
-
-#content{
-}
-
-//
-// Menu
-//
-
-.tree{
-    .title-area{
-        .name{
-            a{
-                @include font1();
-                color:          white;
-                display:        block;
-                padding:        0 15px;
-                line-height:    45px;
-                font-size:      25px;
-                text-transform: uppercase;
-                transition:     color 300ms ease-out;
-                &:hover{
-                    color: rgba(255, 255, 255, 0.7);
-                }
-            }
-        }
-    }
-}
-
-//
-// Pagination
-//
-
-ul{
-    &.pagination{
-        margin-left: 0;
-    }
-    &.tag{
-        margin:      0;
-        line-height: 0;
-        list-style:  none;
-        li{
-            display:     inline-block;
-            margin-left: 2px;
-            padding:     0;
-            &:first-child{
-                margin-left: 0;
-            }
-            .label{
-                &.parent{
-                    background-color: #E7E7E7;
-                    color:            #333;
-                }
-                &.current{
-                    background-color: #999;
-                    color:            #333;
-                }
-            }
-        }
-    }
-}
-
-//
-// News
-//
-
-.news{
-    .news-full{
-        h1{
-        }
-        h2{
-            font-size: 20px;
-        }
-        .news-image{
-            padding-top:     350px;
-            background-size: cover !important;
-        }
-        .news-date{
-            text-align:  right;
-            font-size:   14px;
-            font-weight: bold;
-            color:       #999;
-        }
-        .news-resume{
-            margin: 80px 0;
-            color:  #555;
-        }
-        .news-content{
-            margin: 80px 0;
-        }
-        .news-author{
-            margin:      80px 0;
-            padding-top: 20px;
-            border-top:  1px solid #CCC;
-        }
-    }
-    .news-short{
-        border:        1px solid #EEE;
-        margin-bottom: 1em;
-        .news-image{
-            height:          200px;
-            background-size: cover !important;
-        }
-        .news-text{
-        }
-    }
-    .news-brief{
-        a{
-            display:       block;
-            margin-bottom: 1px;
-            overflow:      auto;
-            .news-date{
-                float:      left;
-                padding:    2px 5px;
-                color:      $white;
-                background: #333;
-            }
-            .news-text{
-                float:   left;
-                padding: 2px 5px;
-            }
-        }
-    }
-}
-
-//
-// NewsGroup
-//
-
-.newsgroup{
-    .newsgroup-short{
-        .newsgroup-image{
-            height:          100px;
-            background-size: cover !important;
-        }
-        .newsgroup-text{
-        }
-    }
-}
-
-//
-// Event
-//
-
-.event{
-    .event-full{
-        h1{
-        }
-        h2{
-            font-size: 20px;
-        }
-        .event-image{
-            padding-top:     350px;
-            background-size: cover !important;
-        }
-        .event-date{
-            text-align:  right;
-            font-size:   14px;
-            font-weight: bold;
-            color:       #999;
-        }
-        .event-resume{
-            margin: 80px 0;
-            color:  #555;
-        }
-        .event-content{
-            margin: 80px 0;
-        }
-        .event-author{
-            margin:      80px 0;
-            padding-top: 20px;
-            border-top:  1px solid #CCC;
-        }
-    }
-    .event-short{
-        clear: both;
-        .event-image{
-            height:          200px;
-            background-size: cover !important;
-        }
-        .event-text{
-        }
-    }
-    .event-brief{
-        a{
-            display:       block;
-            margin-bottom: 1px;
-            overflow:      auto;
-            .event-date{
-                float:      left;
-                padding:    2px 5px;
-                color:      $white;
-                background: #333;
-            }
-            .event-text{
-                float:   left;
-                padding: 2px 5px;
-            }
-        }
-    }
-}
-
-//
-// EventGroup
-//
-
-.eventgroup{
-    .eventgroup-short{
-        .eventgroup-image{
-            height:          100px;
-            background-size: cover !important;
-        }
-        .eventgroup-text{
-        }
-    }
-}
-
-//
-// Contact
-//
-
-.contact{
-    .contact-profile-header{
-        position:      relative;
-        background:    $primary-color;
-        margin-top:    35px;
-        margin-bottom: 35px;
-        height:        50px;
-        @media #{$medium-up}{
-            margin-top:    90px;
-            margin-bottom: 90px;
-        }
-        h2{
-            @include font2();
-            display:       block;
-            position:      absolute;
-            left:          50%;
-            width:         110px;
-            height:        110px;
-            line-height:   110px;
-            margin-top:    -30px;
-            margin-left:   -55px;
-            border-radius: 50%;
-            border:        6px solid $primary-color;
-            background:    $white;
-            @media #{$medium-up}{
-                width:       190px;
-                height:      190px;
-                line-height: 190px;
-                margin-top:  -70px;
-                margin-left: -95px;
-            }
-        }
-    }
-    .contact-profile-row{
-        text-align: center;
-        .contact-profile{
-            float:       none !important;
-            display:     inline-block;
-            margin:      1em 2em;
-            padding-top: 30px;
-            width:       200px;
-            text-align:  center;
-            background:  $primary-color;
-            @media #{$small-only} {
-                margin-bottom: 35px;
-            }
-            .top-content{
-                position: relative;
-                .image-box{
-                    a{
-                        margin:              0 auto;
-                        position:            relative;
-                        border:              5px solid white;
-                        display:             block;
-                        height:              150px;
-                        width:               150px;
-                        border-radius:       50%;
-                        background-size:     cover !important;
-                        background-position: center center !important;
-                        background-repeat:   no-repeat !important;
-                    }
-                }
-                .mascotte-container{
-                    position: absolute;
-                    top:      0;
-                }
-                .mascotte-antoine{
-                    width: 35px;
-                    top:   -21px;
-                    right: 116px;
-                }
-                .mascotte-christophe{
-                    top:   -30px;
-                    right: 67px;
-                }
-            }
-            .bottom-content{
-                .name{
-                    font-size:      rem-calc(20);
-                    @include font2();
-                    margin:         15px 0 5px 0;
-                    text-transform: uppercase;
-                    color:          darken($primary-color, 35%);
-                }
-                .summary{
-                    font-size:     13px;
-                    color:         rgba(white, .6);
-                    margin-bottom: 5px;
-
-                }
-                .phone{
-                    margin: $column-gutter/4 0;
-                    a{
-                        color: rgba(white, .6);
-                        i{
-                            margin-right: 5px;
-                        }
-                    }
-                }
-                .inline-list{
-                    display:     inline-block;
-                    margin-left: -0.5rem;
-                    li{
-                        margin-left: 0.5rem;
-                        a{
-                            .fa{
-                                color: rgba(white, .6);
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-    .contact-profile-brief{
-        .contact-profile{
-            float:       none !important;
-            display:     block;
-            margin:      0;
-            padding-top: 0;
-            width:       200px;
-            text-align:  center;
-            background:  none;
-            @media #{$small-only} {
-                margin-bottom: 35px;
-            }
-        }
-    }
-    .contact-form-header{
-        position:      relative;
-        background:    $primary-color;
-        margin-top:    35px;
-        margin-bottom: 35px;
-        height:        50px;
-        @media #{$medium-up}{
-            margin-top:    90px;
-            margin-bottom: 90px;
-        }
-        .map{
-            display:       block;
-            position:      absolute;
-            left:          50%;
-            width:         110px;
-            height:        110px;
-            margin-top:    -30px;
-            margin-left:   -55px;
-            border-radius: 50%;
-            border:        6px solid $primary-color;
-            background:    $white;
-            @media #{$medium-up}{
-                width:       190px;
-                height:      190px;
-                line-height: 190px;
-                margin-top:  -70px;
-                margin-left: -95px;
-            }
-        }
-    }
-    .contact-form-row{
-        .contact-form{
-            h2{
-                @include font2();
-                text-align: center;
-            }
-            .contact-form-data{
-                .row{
-                    margin: 1em 0;
-                }
-                .inline-list{
-                    display:     inline-block;
-                    margin-left: -1rem;
-                    li{
-                        margin-left: 1rem;
-                        a{
-                            .fa{
-                                font-size: 2em;
-                            }
-                        }
-                    }
-                }
-                .contact-icon{
-                    i{
-                        width:            40px;
-                        height:           40px;
-                        line-height:      40px;
-                        font-size:        1.2em;
-                        text-align:       center;
-                        border-radius:    50%;
-                        background-color: $primary-color;
-                        color:            $white;
-                    }
-                    span{
-                        line-height: 40px;
-                    }
-                }
-                .contact-social{
-                    padding-top: 1em;
-                    border-top:  1px solid #EEE;
-                }
-            }
-        }
-    }
-    form{
-        textarea{
-            height: 150px;
-        }
-    }
-}
-
-//
-// Map
-//
-
-.jvectormap-container{
-    width:    100%;
-    height:   100%;
-    position: relative;
-    overflow: hidden;
-}
-
-.jvectormap-tip{
-    position:      absolute;
-    display:       none;
-    border:        solid 1px #CDCDCD;
-    border-radius: 3px;
-    background:    #292929;
-    color:         white;
-    font-family:   sans-serif, Verdana;
-    font-size:     smaller;
-    padding:       3px;
-    z-index:       9999;
-}
-
-.jvectormap-zoomin, .jvectormap-zoomout, .jvectormap-goback{
-    display: none
-}
-
-//
-// Gallery
-//
-
-.gallery-items{
-    ul{
-        li{
-            a{
-                display:             block;
-                height:              150px;
-                background-size:     cover !important;
-                background-position: center center !important;
-                background-repeat:   no-repeat !important;
-                border:              solid 5px $white;
-                box-shadow:          0 0 0 1px rgba(0, 0, 0, 0.2);
-            }
-        }
-    }
-}
-
-.gallery-videos{
 }

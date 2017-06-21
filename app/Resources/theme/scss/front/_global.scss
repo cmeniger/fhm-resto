@@ -10,13 +10,10 @@ html, body{
     @include box-sizing(border-box);
 }
 
-html,
-body{
-    font-size: $base-font-size;
-}
-
 // Default body styles
 body{
+    @include font-body();
+    @include box-sizing(border-box);
     background:  $body-bg;
     color:       $body-font-color;
     padding:     0;
@@ -24,9 +21,22 @@ body{
     font-family: $body-font-family;
     font-weight: $body-font-weight;
     font-style:  $body-font-style;
-    line-height: $base-line-height; // Set to $base-line-height to take on browser default of 150%
+    font-size:   14px;
+    line-height: 28px;
     position:    relative;
     cursor:      $cursor-auto-value;
+}
+
+// Title
+h1, h2, h3, h4, h5{
+    @include font-title();
+    &.subtitle{
+        @include font-subtitle();
+    }
+}
+
+.fullwidth{
+    width: 100%;
 }
 
 a:hover{
@@ -52,11 +62,10 @@ img{
 
 .default-button{
     border:         none;
-    background:     #E72D43;
+    background:     $button-color;
     border-radius:  43px;
     color:          $white;
     display:        inline-block;
-    font-family:    $font-family-montserrat;
     font-weight:    500;
     font-size:      11px;
     height:         45px;
@@ -134,4 +143,106 @@ textarea{
 // Make select elements 100% width by default
 select{
     width: 100%;
+}
+
+//
+// Tools
+//
+
+.reset-margin{
+    margin: 0 !important;
+}
+
+.reset-margin-bottom{
+    margin-bottom: 0 !important;
+}
+
+.reset-margin-top{
+    margin-top: 0 !important;
+}
+
+.reset-margin-right{
+    margin-right: 0 !important;
+}
+
+.reset-margin-left{
+    margin-left: 0 !important;
+}
+
+.gutter-margin{
+    margin: $column-gutter !important;
+}
+
+.gutter-margin-top{
+    margin-top: $column-gutter !important;
+}
+
+.gutter-margin-bottom{
+    margin-bottom: $column-gutter !important;
+}
+
+.gutter-margin-right{
+    margin-right: $column-gutter !important;
+}
+
+.gutter-margin-left{
+    margin-left: $column-gutter !important;
+}
+
+.reset-padding{
+    padding: 0 !important;
+}
+
+.reset-padding-bottom{
+    padding-bottom: 0 !important;
+}
+
+.reset-padding-top{
+    padding-top: 0 !important;
+}
+
+.reset-padding-right{
+    padding-right: 0 !important;
+}
+
+.reset-padding-left{
+    padding-left: 0 !important;
+}
+
+.gutter-padding{
+    padding: $column-gutter !important;
+}
+
+.gutter-padding-top{
+    padding-top: $column-gutter !important;
+}
+
+.gutter-padding-bottom{
+    padding-bottom: $column-gutter !important;
+}
+
+.gutter-padding-right{
+    padding-right: $column-gutter !important;
+}
+
+.gutter-padding-left{
+    padding-left: $column-gutter !important;
+}
+
+.align-center{
+    display: block;
+    margin:  0 auto;
+}
+
+// GRID
+
+[class*="block-grid-"]{
+    &.block-centered{
+        text-align: center;
+        font-size:  0;
+        > li{
+            float:   none;
+            display: inline-block;
+        }
+    }
 }

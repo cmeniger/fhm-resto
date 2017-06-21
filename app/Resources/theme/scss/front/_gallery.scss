@@ -2,6 +2,7 @@
     &.home-top{
         @include css3-prefix(box-shadow, 0 30px 120px 0 rgba($black, 0.25));
         margin-bottom: 150px;
+        background:    $white;
         .gallery-item{
             .image{
                 background-size:     contain !important;
@@ -20,20 +21,18 @@
                 height:     auto;
                 outline:    none;
                 position:   relative;
-                background: $white;
                 padding:    20px;
                 text-align: center;
                 h2{
                     color:         $dark-grey;
-                    font-family:   $font-family-merriweather;
                     font-size:     30px;
                     line-height:   1em;
                     margin-bottom: 30px;
                     &:after{
                         content:    "";
                         display:    block;
-                        background: url(/images/delim_small.png) no-repeat 0 0;
-                        width:      124px;
+                        background: url(/images/logo-icon-wave-brown.png) no-repeat 0 0;
+                        width:      150px;
                         height:     25px;
                         margin:     12px auto 0;
                     }
@@ -41,7 +40,6 @@
                 h3{
                     color:       $dark-grey;
                     font-size:   32px;
-                    font-family: $font-family-stalemate;
                     font-weight: normal;
                 }
                 p{
@@ -100,7 +98,6 @@
             padding:    0 20px;
             h2{
                 color:         $dark-grey;
-                font-family:   $font-family-merriweather;
                 font-size:     30px;
                 line-height:   1em;
                 text-align:    center;
@@ -108,8 +105,8 @@
                 &:after{
                     content:    "";
                     display:    block;
-                    background: url(/images/delim_small.png) no-repeat 0 0;
-                    width:      124px;
+                    background: url(/images/logo-icon-wave-brown.png) no-repeat 0 0;
+                    width:      150px;
                     height:     25px;
                     margin:     12px auto 0;
                 }

@@ -31,49 +31,49 @@ var parameters =
                 src:  [
                     'bower_components/foundation/js/foundation.js'
                 ],
-                dest: 'web/js/vendor'
+                dest: 'web/js/dist'
             },
             slick:      {
                 src:  [
                     'bower_components/slick-carousel/slick/slick.js'
                 ],
-                dest: 'web/js/vendor'
+                dest: 'web/js/dist'
             },
             gmap_cluster:      {
                 src:  [
                     'bower_components/js-marker-clusterer/src/markerclusterer_compiled.js'
                 ],
-                dest: 'web/js/vendor'
+                dest: 'web/js/dist'
             },
             inview:      {
                 src:  [
-                    'bower_components/inview/inview.js'
+                    'bower_components/inView/dist/inView.js'
                 ],
-                dest: 'web/js/vendor'
+                dest: 'web/js/dist'
             },
             nestable:      {
                 src:  [
                     'bower_components/nestable2/jquery.nestable.js'
                 ],
-                dest: 'web/js/vendor'
+                dest: 'web/js/dist'
             },
             hinclude:      {
                 src:  [
                     'bower_components/hinclude/hinclude.js'
                 ],
-                dest: 'web/js/vendor'
+                dest: 'web/js/dist'
             },
             flip:      {
                 src:  [
                     'bower_components/flip/dist/jquery.flip.js'
                 ],
-                dest: 'web/js/vendor'
+                dest: 'web/js/dist'
             },
             parallax:      {
                 src:  [
-                    'bower_components/parallax/deploy/jquery.parallax.js'
+                    'bower_components/parallax.js/parallax.js'
                 ],
-                dest: 'web/js/vendor'
+                dest: 'web/js/dist'
             }
         },
         sass:      {

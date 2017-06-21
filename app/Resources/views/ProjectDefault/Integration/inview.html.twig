@@ -12,17 +12,17 @@
     <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
     <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
     <br><br><br><br><br><br><br><br><br><br><br><br><br>
-    <div class="title" data-color="#F00">TITRE 1</div>
+    <div class="inview-class" data-color="#F00">TITRE 1</div>
     <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
     <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
     <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
     <br><br><br><br><br><br><br><br><br><br><br><br><br>
-    <div class="title" data-color="#0F0">TITRE 2</div>
+    <div class="inview-class" data-color="#0F0">TITRE 2</div>
     <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
     <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
     <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
     <br><br><br><br><br><br><br><br><br><br><br><br><br>
-    <div class="title" data-color="#00F">TITRE 3</div>
+    <div class="inview-class" data-color="#00F">TITRE 3</div>
     <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
     <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
     <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
@@ -34,21 +34,16 @@
     <script>
         (function ()
         {
-            $('.title').each(function ()
-            {
-                InView(this, function (isInView, data)
+            $(".inview-class")
+                .on("inViewBegin", function ()
                 {
-                    if(isInView)
-                    {
-                        console.log($(this).html());
-                        $(this).css('color', $(this).attr('data-color'));
-                    }
-                    else
-                    {
-                        $(this).css('color', '#000');
-                    }
+                    console.log($(this).html());
+                    $(this).css('color', $(this).attr('data-color'));
+                })
+                .on("inViewEnd", function ()
+                {
+                    $(this).css('color', '#000');
                 });
-            });
         })();
     </script>
 {% endblock %}

@@ -1,13 +1,20 @@
 //
 // Fonts
 //
-
-@mixin font1() {
-    font-family: "Oswald", sans-serif;
+@mixin font-title() {
+    font-family: $font-title;
 }
 
-@mixin font2() {
-    font-family: "Open Sans", sans-serif;
+@mixin font-subtitle() {
+    font-family: $font-subtitle;
+}
+
+@mixin font-body() {
+    font-family: $font-body;
+}
+
+@mixin font-custom($font) {
+    font-family: $font;
 }
 
 /* -------------------------------------------------------------

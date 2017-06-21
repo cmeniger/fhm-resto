@@ -1,0 +1,385 @@
+{% trans_default_domain instance.domain %}
+
+{% if demo is defined %}
+    <div class="card card-embed card-embed-m002">
+        <ul class="tabs" data-tab>
+            <li class="tab-title active">
+                <a href="#tab1" class="tabs-title" data-image="{{ asset('images/demo/card/card-item1.jpg') }}"><span>Vivamus</span></a>
+            </li>
+            <li class="tab-title">
+                <a href="#tab2" class="tabs-title" data-image="{{ asset('images/demo/card/card-item2.jpg') }}"><span>Fringilla</span></a>
+            </li>
+            <li class="tab-title">
+                <a href="#tab3" class="tabs-title" data-image="{{ asset('images/demo/card/card-item3.jpg') }}"><span>Amet</span></a>
+            </li>
+        </ul>
+        <div class="tabs-content">
+            <div class="content inline active" id="tab1">
+                <div class="product">
+                    <ul class="product-forward block-centered small-block-grid-2 medium-block-grid-3 large-block-grid-4">
+                        <li>
+                            <div class="item">
+                                <div class="front" style="background:url('{{ asset('images/demo/card/card-item1.jpg') }}') center center no-repeat">
+                                    <span class="title">Cursus</span> <span class="price">5<span>€</span></span>
+                                </div>
+                                <div class="back">
+                                    <span class="title">Cursus</span> <span class="ingredient">in, erat, ut, urna</span>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="item">
+                                <div class="front" style="background:url('{{ asset('images/demo/card/card-item2.jpg') }}') center center no-repeat">
+                                    <span class="title">Phasellus</span> <span class="price">9.90<span>€</span></span>
+                                </div>
+                                <div class="back">
+                                    <span class="title">Phasellus</span> <span class="ingredient">in, erat, ut, urna</span>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="item">
+                                <div class="front" style="background:url('{{ asset('images/demo/card/card-item3.jpg') }}') center center no-repeat">
+                                    <span class="title">Suspendisse</span> <span class="price">125.95<span>€</span></span>
+                                </div>
+                                <div class="back">
+                                    <span class="title">Suspendisse</span> <span class="ingredient">in, erat, ut, urna</span>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="item">
+                                <div class="front" style="background:url('{{ asset('images/default-card.jpg') }}') center center no-repeat">
+                                    <span class="title">Lipsum</span> <span class="price">125.95<span>€</span></span>
+                                </div>
+                                <div class="back">
+                                    <span class="title">Lipsum</span> <span class="ingredient">in, erat, ut, urna</span>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                    <ul class="product-inline small-block-grid-1 large-block-grid-2">
+                        <li>
+                            <div class="thumb" style="background:url('{{ asset('images/demo/card/card-item1.jpg') }}') center center no-repeat"></div>
+                            <div class="text">
+                                <span class="name left">Dapibus</span>
+                                <span class="price">9<span>€</span></span>
+                                <span class="ingredient text-left">in, erat, ut, urna</span>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="thumb" style="background:url('{{ asset('images/demo/card/card-item2.jpg') }}') center center no-repeat"></div>
+                            <div class="text">
+                                <span class="name left">Nunc</span>
+                                <span class="price">5.50<span>€</span></span>
+                                <span class="ingredient text-left">in, erat, ut, urna</span>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="thumb" style="background:url('{{ asset('images/demo/card/card-item3.jpg') }}') center center no-repeat"></div>
+                            <div class="text">
+                                <span class="name left">Tincidunt</span>
+                                <span class="price">12.50<span>€</span></span>
+                                <span class="ingredient text-left">in, erat, ut, urna</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="content inline" id="tab2">
+                <div class="description">Vivamus in erat ut urna cursus vestibulum</div>
+                <div class="product">
+                    <ul class="product-inline small-block-grid-1 large-block-grid-2">
+                        <li>
+                            <div class="thumb" style="background:url('{{ asset('images/demo/card/card-item1.jpg') }}') center center no-repeat"></div>
+                            <div class="text">
+                                <span class="name left">Dapibus</span>
+                                <span class="price">9<span>€</span></span>
+                                <span class="ingredient text-left">in, erat, ut, urna</span>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="thumb" style="background:url('{{ asset('images/demo/card/card-item2.jpg') }}') center center no-repeat"></div>
+                            <div class="text">
+                                <span class="name left">Nunc</span>
+                                <span class="price">5.50<span>€</span></span>
+                                <span class="ingredient text-left">in, erat, ut, urna</span>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="thumb" style="background:url('{{ asset('images/demo/card/card-item3.jpg') }}') center center no-repeat"></div>
+                            <div class="text">
+                                <span class="name left">Tincidunt</span>
+                                <span class="price">12.50<span>€</span></span>
+                                <span class="ingredient text-left">in, erat, ut, urna</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="content inline" id="tab3">
+                <div class="description">Vivamus in erat ut urna cursus vestibulum</div>
+                <div class="product">
+                    <ul class="product-inline small-block-grid-1 large-block-grid-2">
+                        <li>
+                            <div class="thumb" style="background:url('{{ asset('images/demo/card/card-item1.jpg') }}') center center no-repeat"></div>
+                            <div class="text">
+                                <span class="name left">Dapibus</span>
+                                <span class="price">9<span>€</span></span>
+                                <span class="ingredient text-left">in, erat, ut, urna</span>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="thumb" style="background:url('{{ asset('images/demo/card/card-item2.jpg') }}') center center no-repeat"></div>
+                            <div class="text">
+                                <span class="name left">Nunc</span>
+                                <span class="price">5.50<span>€</span></span>
+                                <span class="ingredient text-left">in, erat, ut, urna</span>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="thumb" style="background:url('{{ asset('images/demo/card/card-item3.jpg') }}') center center no-repeat"></div>
+                            <div class="text">
+                                <span class="name left">Tincidunt</span>
+                                <span class="price">12.50<span>€</span></span>
+                                <span class="ingredient text-left">in, erat, ut, urna</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="category">
+                    <div class="category-title">
+                        <span>Vivamus</span>
+                    </div>
+                    <div class="category-description">Vivamus in erat ut urna cursus vestibulum</div>
+                    <div class="product">
+                        <ul class="product-inline small-block-grid-1 large-block-grid-2">
+                            <li>
+                                <div class="thumb" style="background:url('{{ asset('images/demo/card/card-item1.jpg') }}') center center no-repeat"></div>
+                                <div class="text">
+                                    <span class="name left">Dapibus</span>
+                                    <span class="price">9<span>€</span></span>
+                                    <span class="ingredient text-left">in, erat, ut, urna</span>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="thumb" style="background:url('{{ asset('images/demo/card/card-item2.jpg') }}') center center no-repeat"></div>
+                                <div class="text">
+                                    <span class="name left">Nunc</span>
+                                    <span class="price">5.50<span>€</span></span>
+                                    <span class="ingredient text-left">in, erat, ut, urna</span>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="thumb" style="background:url('{{ asset('images/demo/card/card-item3.jpg') }}') center center no-repeat"></div>
+                                <div class="text">
+                                    <span class="name left">Tincidunt</span>
+                                    <span class="price">12.50<span>€</span></span>
+                                    <span class="ingredient text-left">in, erat, ut, urna</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="category">
+                    <div class="category-title">
+                        <span>Cursus</span>
+                    </div>
+                    <div class="category-description">Vivamus in erat ut urna cursus vestibulum</div>
+                    <div class="product">
+                        <ul class="product-inline small-block-grid-1 large-block-grid-2">
+                            <li>
+                                <div class="thumb" style="background:url('{{ asset('images/demo/card/card-item1.jpg') }}') center center no-repeat"></div>
+                                <div class="text">
+                                    <span class="name left">Dapibus</span>
+                                    <span class="price">9<span>€</span></span>
+                                    <span class="ingredient text-left">in, erat, ut, urna</span>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="thumb" style="background:url('{{ asset('images/demo/card/card-item2.jpg') }}') center center no-repeat"></div>
+                                <div class="text">
+                                    <span class="name left">Nunc</span>
+                                    <span class="price">5.50<span>€</span></span>
+                                    <span class="ingredient text-left">in, erat, ut, urna</span>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="thumb" style="background:url('{{ asset('images/demo/card/card-item3.jpg') }}') center center no-repeat"></div>
+                                <div class="text">
+                                    <span class="name left">Tincidunt</span>
+                                    <span class="price">12.50<span>€</span></span>
+                                    <span class="ingredient text-left">in, erat, ut, urna</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="category">
+                    <div class="category-title">
+                        <span>Urna</span>
+                    </div>
+                    <div class="category menu">
+                        <div class="bloc">
+                            <div class="bloc-title">
+                                <div class="name">Urna flu</div>
+                                <div class="price">18<span>€</span></div>
+                                <div class="description">Vivamus in erat ut urna cursus vestibulum</div>
+                            </div>
+                            <div class="product menu">
+                                <ul class="product-inline">
+                                    <li>
+                                        <span class="name">Dapibus</span>
+                                    </li>
+                                    <li>
+                                        <span class="name">Nunc</span>
+                                    </li>
+                                    <li>
+                                        <span class="name">Tincidunt</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="category">
+                        <div class="category-title">
+                            <span>Urna ut</span>
+                        </div>
+                        <div class="product">
+                            <ul class="product-inline small-block-grid-1 large-block-grid-2">
+                                <li>
+                                    <div class="thumb" style="background:url('{{ asset('images/demo/card/card-item1.jpg') }}') center center no-repeat"></div>
+                                    <div class="text">
+                                        <span class="name left">Dapibus</span>
+                                        <span class="price">9<span>€</span></span>
+                                        <span class="ingredient text-left">in, erat, ut, urna</span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="thumb" style="background:url('{{ asset('images/demo/card/card-item2.jpg') }}') center center no-repeat"></div>
+                                    <div class="text">
+                                        <span class="name left">Nunc</span>
+                                        <span class="price">5.50<span>€</span></span>
+                                        <span class="ingredient text-left">in, erat, ut, urna</span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="thumb" style="background:url('{{ asset('images/demo/card/card-item3.jpg') }}') center center no-repeat"></div>
+                                    <div class="text">
+                                        <span class="name left">Tincidunt</span>
+                                        <span class="price">12.50<span>€</span></span>
+                                        <span class="ingredient text-left">in, erat, ut, urna</span>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="category">
+                        <div class="category-title">
+                            <span>Urna in</span>
+                        </div>
+                        <div class="product">
+                            <ul class="product-inline small-block-grid-1 large-block-grid-2">
+                                <li>
+                                    <div class="thumb" style="background:url('{{ asset('images/demo/card/card-item1.jpg') }}') center center no-repeat"></div>
+                                    <div class="text">
+                                        <span class="name left">Dapibus</span>
+                                        <span class="price">9<span>€</span></span>
+                                        <span class="ingredient text-left">in, erat, ut, urna</span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="thumb" style="background:url('{{ asset('images/demo/card/card-item2.jpg') }}') center center no-repeat"></div>
+                                    <div class="text">
+                                        <span class="name left">Nunc</span>
+                                        <span class="price">5.50<span>€</span></span>
+                                        <span class="ingredient text-left">in, erat, ut, urna</span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="thumb" style="background:url('{{ asset('images/demo/card/card-item3.jpg') }}') center center no-repeat"></div>
+                                    <div class="text">
+                                        <span class="name left">Tincidunt</span>
+                                        <span class="price">12.50<span>€</span></span>
+                                        <span class="ingredient text-left">in, erat, ut, urna</span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="thumb" style="background:url('{{ asset('images/default-card.jpg') }}') center center no-repeat"></div>
+                                    <div class="text">
+                                        <span class="name left">Dapibus</span>
+                                        <span class="price">9<span>€</span></span>
+                                        <span class="ingredient text-left">in, erat, ut, urna</span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="thumb" style="background:url('{{ asset('images/demo/card/card-item2.jpg') }}') center center no-repeat"></div>
+                                    <div class="text">
+                                        <span class="name left">Nunc</span>
+                                        <span class="price">5.50<span>€</span></span>
+                                        <span class="ingredient text-left">in, erat, ut, urna</span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="thumb" style="background:url('{{ asset('images/demo/card/card-item3.jpg') }}') center center no-repeat"></div>
+                                    <div class="text">
+                                        <span class="name left">Tincidunt</span>
+                                        <span class="price">12.50<span>€</span></span>
+                                        <span class="ingredient text-left">in, erat, ut, urna</span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="thumb" style="background:url('{{ asset('images/default-card.jpg') }}') center center no-repeat"></div>
+                                    <div class="text">
+                                        <span class="name left">Dapibus</span>
+                                        <span class="price">9<span>€</span></span>
+                                        <span class="ingredient text-left">in, erat, ut, urna, in, erat, ut, urna, in, erat, ut, urna, in, erat, ut, urna, in, erat, ut, urna, in, erat, ut, urna, in, erat, ut, urna</span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="thumb" style="background:url('{{ asset('images/demo/card/card-item2.jpg') }}') center center no-repeat"></div>
+                                    <div class="text">
+                                        <span class="name left">Nunc</span>
+                                        <span class="price">5.50<span>€</span></span>
+                                        <span class="ingredient text-left">in, erat, ut, urna</span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="thumb" style="background:url('{{ asset('images/demo/card/card-item3.jpg') }}') center center no-repeat"></div>
+                                    <div class="text">
+                                        <span class="name left">Tincidunt</span>
+                                        <span class="price">12.50<span>€</span></span>
+                                        <span class="ingredient text-left">in, erat, ut, urna</span>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% else %}
+    <div class="card card-embed card-embed-m002">
+        <ul class="tabs" data-tab>
+            {% for category in categories %}
+                <li class="tab-title {{ loop.index0 == 0 ? 'active' : '' }}">
+                    <a href="#tab{{ category.getId() }}" class="tabs-title" data-image="{{ category.getImage()|media('s') }}"><span>{{ category.getName() }}</span></a>
+                </li>
+            {% endfor %}
+        </ul>
+        <div class="tabs-content">
+            {% for category in categories %}
+                {% include category.getMenu() ? "::FhmCard/Template/Embed/M002/menu.html.twig" : "::FhmCard/Template/Embed/M002/inline.html.twig" %}
+            {% endfor %}
+        </div>
+    </div>
+{% endif %}
+<script>
+    $(document).ready(function ()
+    {
+        $(".product-forward .item").flip({
+            trigger: 'hover'
+        });
+    });
+</script>

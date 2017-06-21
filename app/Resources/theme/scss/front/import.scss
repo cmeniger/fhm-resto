@@ -1,14 +1,14 @@
 @import "../../../../../bower_components/foundation/scss/foundation/components/global";
 @import "../../../../../bower_components/foundation/scss/foundation/functions";
 @import "__fonts";
+@import "__theme";
 @import "__mixins";
 @import "__settings";
-@import "__theme";
 @import "../../../../../bower_components/foundation/scss/foundation";
 @import "../../../../../bower_components/fontawesome/scss/font-awesome";
 @import "../../../../../bower_components/elusive-iconfont/sass/elusive-webfont";
 @import "../../../../../bower_components/slick-carousel/slick/slick.scss";
 @import "../../../../../bower_components/slick-carousel/slick/slick-theme.scss";
 @import "../../../../../bower_components/hover/scss/hover";
-@import "../../../../../bower_components/animate.css/animate.css";
+@import "../../../../../bower_components/animate-sass/animate";
 @import "responsive";

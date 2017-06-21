@@ -48,6 +48,7 @@
 // 34. Top Bar
 // 36. Visibility Classes
 // 37. Slick Default Variables
+// 38. Animate.css
 
 // a. Base
 // - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -1494,3 +1495,103 @@ $slick-next-character: "\f0da";
 // $slick-opacity-default: 0.75;
 // $slick-opacity-on-hover: 1;
 // $slick-opacity-not-active: 0.25;
+
+// 38. Animate.css
+// -----------
+
+$base-duration: 1s; // used in 1-base module
+$base-origin: top center;
+$base-degrees: 30deg; // used in lightspeed & special modules
+$base-fill-mode: both;
+$base-iteration-count: infinite;
+$base-timing-function-in: ease-in;
+$base-timing-function-out: ease-out;
+$base-timing-function-in-out: ease-in-out;
+$base-distance: 10px; // used in fade, shake and bounce modules
+$base-distance-big: 1000px; // used in fadeBig and bounce modules
+$rotate-degrees: 90deg;
+$rotate-degrees-max: 200deg;
+$rotate-origin: center center;
+$flipper-perspective: 400px;
+$flipper-translate: 150px;
+$flipper-degrees: 10deg;
+$flipper-degrees-max: 90deg;
+$hinge-origin: top left;
+$hinge-degrees-max: 80deg;
+$hinge-translate: 700px;
+$use-fadeIn: true;
+$use-fadeInUp: true;
+$use-fadeInUpBig: true;
+$use-fadeInDown: true;
+$use-fadeInDownBig: true;
+$use-fadeInLeft: true;
+$use-fadeInLeftBig: true;
+$use-fadeInRight: true;
+$use-fadeInRightBig: true;
+$use-fadeOut: true;
+$use-fadeOutUp: true;
+$use-fadeOutUpBig: true;
+$use-fadeOutDown: true;
+$use-fadeOutDownBig: true;
+$use-fadeOutLeft: true;
+$use-fadeOutLeftBig: true;
+$use-fadeOutRight: true;
+$use-fadeOutRightBig: true;
+$use-bounceIn: true;
+$use-bounceInUp: true;
+$use-bounceInDown: true;
+$use-bounceInLeft: true;
+$use-bounceInRight: true;
+$use-bounceOut: true;
+$use-bounceOutUp: true;
+$use-bounceOutDown: true;
+$use-bounceOutLeft: true;
+$use-bounceOutRight: true;
+$use-rotateIn: true;
+$use-rotateInUpLeft: true;
+$use-rotateInUpRight: true;
+$use-rotateInDownLeft: true;
+$use-rotateInDownRight: true;
+$use-rotateOut: true;
+$use-rotateOutUpLeft: true;
+$use-rotateOutUpRight: true;
+$use-rotateOutDownLeft: true;
+$use-rotateOutDownRight: true;
+$use-slideIn: true;
+$use-slideInUp: true;
+$use-slideInDown: true;
+$use-slideInLeft: true;
+$use-slideInRight: true;
+$use-slideOut: true;
+$use-slideOutUp: true;
+$use-slideOutDown: true;
+$use-slideOutLeft: true;
+$use-slideOutRight: true;
+$use-flip: true;
+$use-flipInX: true;
+$use-flipInY: true;
+$use-flipOutX: true;
+$use-flipOutY: true;
+$use-lightSpeedIn: true;
+$use-lightSpeedOut: true;
+$use-bounce: true;
+$use-flash: true;
+$use-pulse: true;
+$use-wiggle: true;
+$use-swing: true;
+$use-shake: true;
+$use-tada: true;
+$use-wobble: true;
+$use-hinge: true;
+$use-rollIn: true;
+$use-rollOut: true;
+$use-zoomIn: true;
+$use-zoomInDown: true;
+$use-zoomInLeft: true;
+$use-zoomInRight: true;
+$use-zoomInUp: true;
+$use-zoomOut: true;
+$use-zoomOutDown: true;
+$use-zoomOutLeft: true;
+$use-zoomOutRight: true;
+$use-zoomOutUp: true;

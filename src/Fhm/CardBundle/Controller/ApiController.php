@@ -67,6 +67,20 @@ class ApiController extends FhmController
      */
     public function embedAction($id, $template)
     {
+        if($id == 'demo')
+        {
+            return new Response(
+                $this->renderView(
+                    "::FhmCard/Template/Embed/" . ucfirst(strtolower($template)) . "/index.html.twig",
+                    array(
+                        "demo"       => true,
+                        "document"   => null,
+                        "categories" => null,
+                        "products"   => null,
+                    )
+                )
+            );
+        }
         $document = $this->get('fhm_tools')->dmRepository(self::$repository)->find($id);
         // ERROR - unknown
         if($document == "")
@@ -78,8 +92,9 @@ class ApiController extends FhmController
             $this->renderView(
                 "::FhmCard/Template/Embed/" . ucfirst(strtolower($template)) . "/index.html.twig",
                 array(
-                    "document"  => $document,
-                    "documents" => $this->get('fhm_tools')->dmRepository('FhmCardBundle:CardCategory')->getByCard($document),
+                    "document"   => $document,
+                    "categories" => $this->get('fhm_tools')->dmRepository('FhmCardBundle:CardCategory')->getByCard($document),
+                    "products"   => $this->get('fhm_tools')->dmRepository('FhmCardBundle:CardProduct')->getByCard($document),
                 )
             )
         );

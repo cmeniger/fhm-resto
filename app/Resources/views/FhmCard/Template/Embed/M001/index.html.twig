@@ -1,0 +1,110 @@
+{% trans_default_domain instance.domain %}
+
+{% if demo is defined %}
+    <div class="card card-embed card-embed-m001">
+        <div class="item">
+            <div class="front" style="background:url('{{ asset('images/demo/card/card-item1.jpg') }}') center center no-repeat">
+                <span class="title">Cursus</span> <span class="price">5<span>€</span></span>
+            </div>
+            <div class="back">
+                <span class="title">Cursus</span> <span class="description">Nulla sit amet est.. Phasellus leo dolor, tempus non, auctor et, hendrerit quis, nisi. Suspendisse pulvinar, augue ac venenatis condimentum, sem libero volutpat nibh, nec pellentesque velit pede quis nunc. Praesent venenatis metus at tortor pulvinar varius.</span>
+            </div>
+        </div>
+        <div class="item">
+            <div class="front" style="background:url('{{ asset('images/demo/card/card-item2.jpg') }}') center center no-repeat">
+                <span class="title">Phasellus</span> <span class="price">9.90<span>€</span></span>
+            </div>
+            <div class="back">
+                <span class="title">Phasellus</span> <span class="description">Nulla sit amet est.. Phasellus leo dolor, tempus non, auctor et, hendrerit quis, nisi. Suspendisse pulvinar, augue ac venenatis condimentum, sem libero volutpat nibh, nec pellentesque velit pede quis nunc. Praesent venenatis metus at tortor pulvinar varius.</span>
+            </div>
+        </div>
+        <div class="item">
+            <div class="front" style="background:url('{{ asset('images/demo/card/card-item3.jpg') }}') center center no-repeat">
+                <span class="title">Suspendisse</span> <span class="price">125.95<span>€</span></span>
+            </div>
+            <div class="back">
+                <span class="title">Suspendisse</span> <span class="description">Nulla sit amet est.. Phasellus leo dolor, tempus non, auctor et, hendrerit quis, nisi. Suspendisse pulvinar, augue ac venenatis condimentum, sem libero volutpat nibh, nec pellentesque velit pede quis nunc. Praesent venenatis metus at tortor pulvinar varius.</span>
+            </div>
+        </div>
+        <div class="item">
+            <div class="front" style="background:url('{{ asset('images/default-card.jpg') }}') center center no-repeat">
+                <span class="title">Nulla</span> <span class="price">5<span>€</span></span>
+            </div>
+            <div class="back">
+                <span class="title">Nulla</span> <span class="description">Nulla sit amet est.. Phasellus leo dolor, tempus non, auctor et, hendrerit quis, nisi. Suspendisse pulvinar, augue ac venenatis condimentum, sem libero volutpat nibh, nec pellentesque velit pede quis nunc. Praesent venenatis metus at tortor pulvinar varius.</span>
+            </div>
+        </div>
+        <div class="item">
+            <div class="front" style="background:url('{{ asset('images/demo/card/card-item2.jpg') }}') center center no-repeat">
+                <span class="title">Auctor</span> <span class="price">19.90<span>€</span></span>
+            </div>
+            <div class="back">
+                <span class="title">Auctor</span> <span class="description">Nulla sit amet est.. Phasellus leo dolor, tempus non, auctor et, hendrerit quis, nisi. Suspendisse pulvinar, augue ac venenatis condimentum, sem libero volutpat nibh, nec pellentesque velit pede quis nunc. Praesent venenatis metus at tortor pulvinar varius.</span>
+            </div>
+        </div>
+        <div class="item">
+            <div class="front" style="background:url('{{ asset('images/demo/card/card-item3.jpg') }}') center center no-repeat">
+                <span class="title">Hendrerit</span> <span class="price">1.95<span>€</span></span>
+            </div>
+            <div class="back">
+                <span class="title">Hendrerit</span> <span class="description">Nulla sit amet est.. Phasellus leo dolor, tempus non, auctor et, hendrerit quis, nisi. Suspendisse pulvinar, augue ac venenatis condimentum, sem libero volutpat nibh, nec pellentesque velit pede quis nunc. Praesent venenatis metus at tortor pulvinar varius.</span>
+            </div>
+        </div>
+    </div>
+{% else %}
+    <div class="card card-embed card-embed-m001">
+        {% for product in products %}
+            <div class="item">
+                <div class="front" style="background:url('{{ product.getImage()|media('s', 'images/default-card.jpg') }}') center center no-repeat">
+                    <span class="title">{{ product.getName() }}</span> <span class="price">{{ product.getPrice() }}<span>{{ product.getCurrency() }}</span></span>
+                </div>
+                <div class="back">
+                    <span class="title">{{ product.getName() }}</span> <span class="description">{{ product.getDescription() }}</span>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endif %}
+<script>
+    $(document).ready(function ()
+    {
+        $('.card-embed-m001').slick({
+            autoplay:       true,
+            dots:           true,
+            infinite:       true,
+            speed:          300,
+            slidesToShow:   3,
+            slidesToScroll: 3,
+            responsive:     [
+                {
+                    breakpoint: 1024,
+                    settings:   {
+                        slidesToShow:   2,
+                        slidesToScroll: 2
+                    }
+                },
+                {
+                    breakpoint: 768,
+                    settings:   {
+                        slidesToShow:   1,
+                        slidesToScroll: 1
+                    }
+                }
+            ]
+        });
+        $(".card-embed-m001 .item:even")
+            .on("inViewBegin", function ()
+            {
+                $(this).addClass("animated").addClass("bounceInUp");
+            });
+        $(".card-embed-m001 .item:odd")
+            .on("inViewBegin", function ()
+            {
+                $(this).addClass("animated").addClass("bounceInDown");
+            });
+        $(".card-embed-m001 .item").flip({
+            trigger: 'hover',
+            axis:    'x'
+        });
+    });
+</script>

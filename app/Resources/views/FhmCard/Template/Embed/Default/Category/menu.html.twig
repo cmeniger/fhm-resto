@@ -3,7 +3,7 @@
     <div class="bloc">
         <div class="bloc-title">
             <div class="name">{{ category.getName() }}</div>
-            <div class="price">{{ category.getPrice() }}{{ category.getCurrency() }}</div>
+            <div class="price">{{ category.getPrice() }}<span>{{ category.getCurrency() }}</span></div>
             {% if category.getDescription() %}
                 <div class="description">
                     {{ category.getDescription() }}

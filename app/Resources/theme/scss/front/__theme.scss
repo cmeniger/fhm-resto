@@ -1,24 +1,27 @@
 //
-// Theme
+// Fonts
 //
+$font-title: "Merriweather", sans-serif;
+$font-subtitle: "Stalemate", cursive, sans-serif;
+$font-body: "Open Sans", sans-serif;
 
 //
 // Colors
 //
-$color-red: #A32921;
+$primary-color: #7B7B7B;
+$secondary-color: #E7E7E7;
+$alert-color: #F04124;
+$success-color: #43AC6A;
+$warning-color: #F08A24;
+$info-color: #A0D3E8;
+$button-color: #A32921;
+$light-grey: #E7E7E7;
+$medium-grey: #A5A5A5;
+$dark-grey: #313131;
 
 //
-// Forms
+// Body
 //
-
-//
-// Toottip
-//
-
-//
-// Buttons
-//
-
-//
-// Footer
-//
+$body-bg: $white;
+$body-font-color: $primary-color;
+$body-font-family: $font-body;
