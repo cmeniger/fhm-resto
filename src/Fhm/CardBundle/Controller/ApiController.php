@@ -74,7 +74,7 @@ class ApiController extends FhmController
                     "::FhmCard/Template/Embed/" . ucfirst(strtolower($template)) . "/index.html.twig",
                     array(
                         "demo"       => true,
-                        "document"   => null,
+                        "card"       => null,
                         "categories" => null,
                         "products"   => null,
                     )
@@ -92,7 +92,7 @@ class ApiController extends FhmController
             $this->renderView(
                 "::FhmCard/Template/Embed/" . ucfirst(strtolower($template)) . "/index.html.twig",
                 array(
-                    "document"   => $document,
+                    "card"       => $document,
                     "categories" => $this->get('fhm_tools')->dmRepository('FhmCardBundle:CardCategory')->getByCard($document),
                     "products"   => $this->get('fhm_tools')->dmRepository('FhmCardBundle:CardProduct')->getByCard($document),
                 )

@@ -1,5 +1,5 @@
 {% trans_default_domain instance.domain %}
 
-{% for category in documents %}
+{% for category in categories %}
     {% include "::FhmCard/Template/Embed/" ~ folder ~ "/Category/inline.html.twig" with {embedProduct: 'menu'} %}
 {% endfor %}

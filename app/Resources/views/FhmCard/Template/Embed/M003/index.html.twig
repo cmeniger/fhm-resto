@@ -1,0 +1,71 @@
+{% trans_default_domain instance.domain %}
+
+{% if demo is defined %}
+    <div class="card card-embed card-embed-m003">
+        <ul class="small-block-grid-1 medium-block-grid-1 large-block-grid-2">
+            <li>
+                <div class="image" style="background:url({{ asset('images/demo/card/card-item1.jpg') }})"></div>
+                <div class="caption">
+                    <span class="name">Tincidunt</span> <span class="description">Vivamus in erat ut urna cursus vestibulum</span>
+                    <span class="ingredient">in, erat, ut, urna</span> <span class="price">12.50<span>€</span></span>
+                </div>
+            </li>
+            <li>
+                <div class="image" style="background:url({{ asset('images/demo/card/card-item2.jpg') }})"></div>
+                <div class="caption">
+                    <span class="name">Dapibus</span> <span class="description">Vivamus in erat ut urna cursus vestibulum</span>
+                    <span class="ingredient">in, erat, ut, urna, in, erat, ut, urna, in, erat, ut, urna</span>
+                    <span class="price">5<span>€</span></span>
+                </div>
+            </li>
+            <li>
+                <div class="image" style="background:url({{ asset('images/default-card.jpg') }})"></div>
+                <div class="caption">
+                    <span class="name">Nunc</span>
+                    <span class="description">Vivamus in erat ut urna cursus vestibulum</span> <span class="ingredient">in, erat, ut, urna, in, erat, ut, urna</span>
+                    <span class="price">9.90<span>€</span></span>
+                </div>
+            </li>
+            <li>
+                <div class="image" style="background:url({{ asset('images/demo/card/card-item3.jpg') }})"></div>
+                <div class="caption">
+                    <span class="name">Lipsum</span>
+                    <span class="description">Vivamus in erat ut urna cursus vestibulum</span> <span class="ingredient">in, erat, ut, urna</span>
+                    <span class="price">125.50<span>€</span></span>
+                </div>
+            </li>
+        </ul>
+    </div>
+{% else %}
+    <div class="card card-embed card-embed-m003">
+        <ul class="small-block-grid-1 medium-block-grid-1 large-block-grid-2">
+            {% for product in products %}
+                <li>
+                    <div class="image" style="background:url({{ product.getImage()|media('s', 'images/default-card.jpg') }})"></div>
+                    <div class="caption">
+                        <span class="name">{{ product.getName() }}</span>
+                        <span class="description">{{ product.getDescription() }}</span>
+                        {% if product.getIngredients().count() > 0 %}
+                            {{ render(path('fhm_api_card_ingredient_embed', {idCard:card.getId(), idProduct:product.getId(), template:'inline'})) }}
+                        {% endif %}
+                        <span class="price">{{ product.getPrice() }}<span>{{ product.getCurrency() }}</span></span>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endif %}
+<script>
+    $(document).ready(function ()
+    {
+        $(".card-embed-m003 .caption")
+            .on("inViewBegin", function ()
+            {
+                $(this).addClass("animated").addClass("zoomIn");
+            })
+            .on("inViewEnd", function ()
+            {
+                $(this).removeClass("animated").removeClass("zoomIn");
+            });
+    });
+</script>

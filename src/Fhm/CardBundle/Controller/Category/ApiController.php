@@ -92,10 +92,10 @@ class ApiController extends FhmController
             $this->renderView(
                 "::FhmCard/Template/Embed/" . ucfirst(strtolower($folder)) . "/Category/" . $template . ".html.twig",
                 array(
-                    "card"      => $card,
-                    "document"  => $document,
-                    "documents" => $this->get('fhm_tools')->dmRepository(self::$repository)->getSons($card, $document),
-                    "folder"    => ucfirst(strtolower($folder))
+                    "card"       => $card,
+                    "category"   => $document,
+                    "categories" => $this->get('fhm_tools')->dmRepository(self::$repository)->getSons($card, $document),
+                    "folder"     => ucfirst(strtolower($folder))
                 )
             )
         );

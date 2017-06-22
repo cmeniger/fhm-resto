@@ -6,7 +6,7 @@
         <span class="name left">{{ product.getName() }}</span>
         <span class="price">{{ product.getPrice() }}<span>{{ product.getCurrency() }}</span></span>
         {% if product.getIngredients().count() > 0 %}
-            {{ render(path('fhm_api_card_ingredient_embed', {idCard:card.getId(), idProduct:product.getId(), folder:folder, template:'inline'})) }}
+            {{ render(path('fhm_api_card_ingredient_embed', {idCard:card.getId(), idProduct:product.getId(), template:'inline'})) }}
         {% endif %}
     </div>
 </li>

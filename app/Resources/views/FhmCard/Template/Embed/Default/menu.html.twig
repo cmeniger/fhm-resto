@@ -3,7 +3,7 @@
 <div class="content menu {{ loop.index0 == 0 ? 'active' : '' }}" id="tab{{ category.getId() }}">
     <div class="bloc">
         <div class="title">
-            <span class="price">{{ category.getPrice() }}{{ category.getCurrency() }}</span>
+            <span class="price">{{ category.getPrice() }}<span>{{ category.getCurrency() }}</span></span>
         </div>
         {% if category.getDescription() %}
             <div class="description">
@@ -11,10 +11,10 @@
             </div>
         {% endif %}
         {% if category.getProducts().count() > 0 %}
-            {{ render(path('fhm_api_card_product_embed', {idCard:document.getId(), idCategory:category.getId(), template:'menu'})) }}
+            {{ render(path('fhm_api_card_product_embed', {idCard:card.getId(), idCategory:category.getId(), template:'menu'})) }}
         {% endif %}
         {% if category.getSons().count() > 0 %}
-            {{ render(path('fhm_api_card_category_embed', {idCard:document.getId(), idCategory:category.getId(), template:'index'})) }}
+            {{ render(path('fhm_api_card_category_embed', {idCard:card.getId(), idCategory:category.getId(), template:'index'})) }}
         {% endif %}
     </div>
 </div>

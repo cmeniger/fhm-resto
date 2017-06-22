@@ -6,7 +6,7 @@
                         {
                             this.menuSticky();
                             this.menuSide();
-                            this.inview();
+                            this.inView();
                             this.parallaxImage();
                             this.bannerHeight();
                             // this.tabListMove();
@@ -33,26 +33,20 @@
                         },
         menuSide:       function ()
                         {
-                            $('.menu-icon-wrap .menu-icon').click(function (e)
+                            $('.menu-icon a').click(function (e)
                             {
                                 e.preventDefault();
-                                $('.device-menu-wrap').toggleClass('expand');
-                                $('.wrap-mask').fadeToggle();
+                                $('.menu-side-content').toggleClass('expand');
+                                $('.menu-side-overlay').fadeToggle();
                             });
-                            $('.close-menu,.wrap-mask').click(function (e)
+                            $('.menu-side-overlay, .menu-side-content a').click(function (e)
                             {
                                 e.preventDefault();
-                                $('.device-menu-wrap').removeClass('expand');
-                                $('.wrap-mask').fadeOut();
-                            });
-                            $('.sidr-dropdown-toggler').click(function (e)
-                            {
-                                e.preventDefault();
-                                $(this).toggleClass('expand');
-                                $(this).next().slideToggle();
+                                $('.menu-side-content').removeClass('expand');
+                                $('.menu-side-overlay').fadeOut();
                             });
                         },
-        inview:         function ()
+        inView:         function ()
                         {
                             $(".row-wrapper .title h2")
                                 .on("inViewBegin", function ()
@@ -62,23 +56,28 @@
                         },
         parallaxImage:  function ()
                         {
-                            if($('.parallax-image-banner').length)
+                            if($('.parallax-image-top').length)
                             {
-                                $('.parallax-image-banner').parallax({
-                                    imageSrc: $('.parallax-image-banner').data('image-src'),
-                                    speed:    0.8
-                                });
+                                $('.parallax-image-top').parallax(
+                                    {
+                                        imageSrc: $('.parallax-image-top').data('image-src'),
+                                        speed:    0.8
+                                    });
                             }
-                            if($('.parallax-image-offer').length)
+                            if($('.parallax-image-card').length)
                             {
-                                $('.parallax-image-offer').parallax({imageSrc: $('.parallax-image-offer').data('image-src')});
+                                $('.parallax-image-card').parallax(
+                                    {
+                                        imageSrc: $('.parallax-image-card').data('image-src')
+                                    });
                             }
-                            if($('.parallax-image-shop').length)
+                            if($('.parallax-image-contact').length)
                             {
-                                $('.parallax-image-shop').parallax({
-                                    imageSrc: $('.parallax-image-shop').data('image-src'),
-                                    speed:    0.6
-                                });
+                                $('.parallax-image-contact').parallax(
+                                    {
+                                        imageSrc: $('.parallax-image-contact').data('image-src'),
+                                        speed:    0.6
+                                    });
                             }
                         },
         bannerHeight:   function ()

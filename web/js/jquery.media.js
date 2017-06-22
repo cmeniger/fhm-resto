@@ -1,1 +1,355 @@
-!function(t,i,a){function e(t){this.settings=t,this.tag="",this.search="",this.pagination=1,this.selectors=[],this.cache=[],this.init()}e.prototype={init:function(){this.initTags(),this.initSearch(),this.initPagination(),this.initSelector(),this.initZoom()},initTags:function(){var i=this;t(i.settings.tag.container).unbind("click").click(function(a){a.preventDefault(),i.tag=t(this).attr(i.settings.tag.attribute),i.pagination=1,i.refresh(t(this).attr("data-selector"))})},initSearch:function(){var i=this;t(i.settings.search.container).closest("form").unbind("submit").submit(function(a){a.preventDefault(),i.search=t(this).find(i.settings.search.field).val(),i.pagination=1,i.refresh(t(this).attr("data-selector"))})},initPagination:function(){var i=this;t("a["+i.settings.pagination.attribute+"]").unbind("click").click(function(a){return 0!=t(this).attr("data-active")&&(t("li.pagination-loader").show("fast"),i.pagination=t(this).attr(i.settings.pagination.attribute),void i.refresh(t(this).attr("data-selector")))})},initSelector:function(){var i=this,a=0;t(i.settings.selector.container).each(function(){if(i.cache[t(this).attr("data-id")]={id:t(this).attr("data-id"),"private":t(this).attr("data-private"),root:t(this).attr("data-root"),filter:t(this).attr("data-filter"),index:a},t(this).removeAttr("data-private").removeAttr("data-root").removeAttr("data-filter"),t(this).hasClass("disabled"))t(this).unbind("click").click(function(t){return t.preventDefault(),!1});else{if(""!=t("#"+t(this).attr("data-id")).val()){var e=this;t.ajax({type:"POST",url:i.settings.clickable.initialization,data:{id:t("#"+t(this).attr("data-id")).val()},success:function(a){t(e).find(i.settings.selector["default"]).hide(),t(e).find(i.settings.selector.preview).html(a).show(),t(i.settings.reset.container+"[data-id="+t(e).attr("data-id")+"]").show(),i.initReset(),i.initTarget(e)}})}t(this).attr("data-selector",a).unbind("click").click(function(a){var e=this;t.ajax({type:"POST",url:i.settings.selector.initialization,data:{selector:{index:t(e).attr("data-selector"),filter:i.cache[t(this).attr("data-id")].filter,root:i.cache[t(this).attr("data-id")].root,"private":i.cache[t(this).attr("data-id")]["private"],selected:t("#"+t(this).attr("data-id")).val(),"new":t(this).attr("data-reveal-id")+"-new"}},success:function(a){t("#"+t(e).attr("data-reveal-id")).html(a),i.initTags(),i.initPagination(),i.initSearch(),i.initClickable(),i.initReset(),i.initNew(),i.initTarget(e),i.refreshSelector(t(e).attr("data-selector"))}})}),i.selectors.push(this),a+=1}})},initClickable:function(){var i=this;t(i.settings.clickable.container).unbind("click").click(function(a){t("#"+t(i.selectors[t(this).attr("data-selector")]).attr("data-id")+"-field").val(t(this).attr("media-id")),t("#"+t(i.selectors[t(this).attr("data-selector")]).attr("data-id")).val(t(this).attr("media-id")).trigger("change")})},initZoom:function(){var i=this;t(i.settings.zoom.container).unbind("click").click(function(a){a.preventDefault();var e=this;t.ajax({type:"POST",url:i.settings.zoom.initialization,data:{id:t(e).attr("media-id")},success:function(a){t("#"+t(e).attr("data-reveal-id")).find("."+i.settings.zoom.attribute).html(a)}})})},initReset:function(){var i=this;t(i.settings.reset.container).unbind("click").click(function(i){i.preventDefault(),t("#"+t(this).attr("data-id")+"-field").val(""),t("#"+t(this).attr("data-id")).val("").trigger("change")})},initNew:function(){var i=this;t(i.settings["new"].container).unbind("click").click(function(a){var e=this;t.ajax({type:"POST",url:i.settings["new"].initialization,data:{selector:{index:t(e).attr("data-selector"),selector:t(i.selectors[t(e).attr("data-selector")]).attr("data-reveal-id"),target:i.cache[t(i.selectors[t(e).attr("data-selector")]).attr("data-id")].id,filter:i.cache[t(i.selectors[t(e).attr("data-selector")]).attr("data-id")].filter,root:i.cache[t(i.selectors[t(e).attr("data-selector")]).attr("data-id")].root,"private":i.cache[t(i.selectors[t(e).attr("data-selector")]).attr("data-id")]["private"]}},success:function(a){t("#"+t(i.selectors[t(e).attr("data-selector")]).attr("data-reveal-id")+"-new").html(a)}})})},initTarget:function(i){var a=this;t("#"+t(i).attr("data-id")).change(function(){var e=t(this).val();""==e?(t(i).find(a.settings.selector["default"]).show(),t(i).find(a.settings.selector.preview).hide(),t(a.settings.reset.container+"[data-id="+t(i).attr("data-id")+"]").hide()):t.ajax({type:"POST",url:a.settings.clickable.initialization,data:{id:e},success:function(e){t(i).find(a.settings.selector["default"]).hide(),t(i).find(a.settings.selector.preview).html(e).show(),t(a.settings.reset.container+"[data-id="+t(i).attr("data-id")+"]").show()}}),t("#"+t(a.selectors[t(i).attr("data-selector")]).attr("data-reveal-id")).foundation("reveal","close")})},refresh:function(i){var a=this;t.ajax({type:"POST",url:t(a.settings.container).attr("data-path"),data:{media:{tag:this.tag,search:this.search,pagination:this.pagination},selector:{filter:"undefined"!=typeof i?a.cache[t(a.selectors[i]).attr("data-id")].filter:null,root:"undefined"!=typeof i?a.cache[t(a.selectors[i]).attr("data-id")].root:null,"private":"undefined"!=typeof i?a.cache[t(a.selectors[i]).attr("data-id")]["private"]:null,selected:"undefined"!=typeof i?t("#"+t(a.selectors[i]).attr("data-id")).val():null,"new":"undefined"!=typeof i?t(a.selectors[i]).attr("data-reveal-id")+"-new":null}},success:function(e){if("undefined"!=typeof i){var n=t("#"+t(a.selectors[i]).attr("data-reveal-id"));n.find(a.settings.container).fadeToggle(400,"linear",function(){n.find(a.settings.container).html(a.getHtml(e,a.settings.container)).fadeToggle(400,"linear"),a.initTags(),a.initPagination(),a.initClickable(),a.initNew(),a.initZoom(),a.refreshSelector(i)})}else t(a.settings.container).fadeToggle(400,"linear",function(){t(a.settings.container).html(a.getHtml(e,a.settings.container)).fadeToggle(400,"linear"),a.initTags(),a.initPagination(),a.initClickable(),a.initNew(),a.initZoom()})}})},refreshSelector:function(i){var a=this,e=t("#"+t(a.selectors[i]).attr("data-reveal-id"));e.find(a.settings.pagination.container).attr("data-selector",i),e.find(a.settings.tag.container).attr("data-selector",i),e.find(a.settings.search.container).closest("form").attr("data-selector",i),e.find(a.settings.clickable.container).attr("data-selector",i),e.find(a.settings["new"].container).attr("data-selector",i),t(a.settings.reset.container+"[data-id="+t(a.selectors[i]).attr("data-id")+"]").attr("data-selector",i)},getHtml:function(i,a){var e=t(t.parseHTML(i));return e.filter(a).add(e.find(a)).html()}},t.fn.media=function(i){var a=t.extend({container:".media",tag:{container:"a[media-tag]",attribute:"media-tag"},search:{container:"input[data-type=search]",field:".FhmSearch_search"},pagination:{container:"a[media-pagination]",attribute:"media-pagination"},clickable:{container:".data.clickable",initialization:"/api/media/data/preview"},zoom:{container:"a[media-zoom]",attribute:"media-zoom",initialization:"/api/media/data/zoom"},reset:{container:".media-reset"},selector:{container:".media-selector",initialization:"/api/media/data/selector","default":".default",preview:".preview"},"new":{container:".media-new",modal:"modal-media-new",initialization:"/api/media/data/new"}},i);new e(a)}}(jQuery,window,window.document);
+(function ($, window, document)
+{
+    function Plugin(settings)
+    {
+        this.settings = settings;
+        this.tag = '';
+        this.search = '';
+        this.pagination = 1;
+        this.selectors = [];
+        this.cache = [];
+        this.init();
+    }
+
+    Plugin.prototype = {
+        init:            function ()
+                         {
+                             var parent = this;
+                             this.initTags();
+                             this.initSearch();
+                             this.initPagination();
+                             this.initSelector();
+                             this.initZoom();
+                         },
+        initTags:        function ()
+                         {
+                             var parent = this;
+                             $(parent.settings.tag.container).unbind('click').click(function (e)
+                             {
+                                 e.preventDefault();
+                                 parent.tag = $(this).attr(parent.settings.tag.attribute);
+                                 parent.pagination = 1;
+                                 parent.refresh($(this).attr('data-selector'));
+                             });
+                         },
+        initSearch:      function ()
+                         {
+                             var parent = this;
+                             $(parent.settings.search.container).closest('form').unbind('submit').submit(function (e)
+                             {
+                                 e.preventDefault();
+                                 parent.search = $(this).find(parent.settings.search.field).val();
+                                 parent.pagination = 1;
+                                 parent.refresh($(this).attr('data-selector'));
+                             });
+                         },
+        initPagination:  function ()
+                         {
+                             var parent = this;
+                             $("a[" + parent.settings.pagination.attribute + "]").unbind('click').click(function (e)
+                             {
+                                 if($(this).attr("data-active") == 0)
+                                 {
+                                     return false;
+                                 }
+                                 $("li.pagination-loader").show("fast");
+                                 parent.pagination = $(this).attr(parent.settings.pagination.attribute);
+                                 parent.refresh($(this).attr('data-selector'));
+                             });
+                         },
+        initSelector:    function ()
+                         {
+                             var parent = this;
+                             var index = 0;
+                             $(parent.settings.selector.container).each(function ()
+                             {
+                                 // Cache
+                                 parent.cache[$(this).attr('data-id')] = {
+                                     id:      $(this).attr('data-id'),
+                                     private: $(this).attr('data-private'),
+                                     root:    $(this).attr('data-root'),
+                                     filter:  $(this).attr('data-filter'),
+                                     index:   index
+                                 };
+                                 $(this).removeAttr('data-private').removeAttr('data-root').removeAttr('data-filter');
+                                 // Disabled
+                                 if($(this).hasClass('disabled'))
+                                 {
+                                     $(this).unbind('click').click(function (e)
+                                     {
+                                         e.preventDefault();
+                                         return false;
+                                     });
+                                 }
+                                 else
+                                 {
+                                     if($('#' + $(this).attr('data-id')).val() != '')
+                                     {
+                                         var current = this;
+                                         $.ajax
+                                         ({
+                                             type:    'POST',
+                                             url:     parent.settings.clickable.initialization,
+                                             data:    {
+                                                 id: $('#' + $(this).attr('data-id')).val()
+                                             },
+                                             success: function (data)
+                                                      {
+                                                          $(current).find(parent.settings.selector.default).hide();
+                                                          $(current).find(parent.settings.selector.preview).html(data).show();
+                                                          $(parent.settings.reset.container + '[data-id=' + $(current).attr('data-id') + ']').show();
+                                                          parent.initReset();
+                                                          parent.initTarget(current);
+                                                      }
+                                         });
+                                     }
+                                     $(this).attr('data-selector', index).unbind('click').click(function (e)
+                                     {
+                                         var current = this;
+                                         $.ajax
+                                         ({
+                                             type:    'POST',
+                                             url:     parent.settings.selector.initialization,
+                                             data:    {
+                                                 selector: {
+                                                     index:    $(current).attr('data-selector'),
+                                                     filter:   parent.cache[$(this).attr('data-id')].filter,
+                                                     root:     parent.cache[$(this).attr('data-id')].root,
+                                                     private:  parent.cache[$(this).attr('data-id')].private,
+                                                     selected: $('#' + $(this).attr('data-id')).val(),
+                                                     new:      $(this).attr('data-reveal-id') + '-new'
+                                                 }
+                                             },
+                                             success: function (data)
+                                                      {
+                                                          $('#' + $(current).attr('data-reveal-id')).html(data);
+                                                          parent.initTags();
+                                                          parent.initPagination();
+                                                          parent.initSearch();
+                                                          parent.initClickable();
+                                                          parent.initReset();
+                                                          parent.initNew();
+                                                          parent.initTarget(current);
+                                                          parent.refreshSelector($(current).attr('data-selector'));
+                                                      }
+                                         });
+                                     });
+                                     parent.selectors.push(this);
+                                     index = index + 1;
+                                 }
+                             });
+                         },
+        initClickable:   function ()
+                         {
+                             var parent = this;
+                             $(parent.settings.clickable.container).unbind('click').click(function (e)
+                             {
+                                 $('#' + $(parent.selectors[$(this).attr('data-selector')]).attr('data-id') + '-field').val($(this).attr('media-id'));
+                                 $('#' + $(parent.selectors[$(this).attr('data-selector')]).attr('data-id')).val($(this).attr('media-id')).trigger('change');
+                             });
+                         },
+        initZoom:        function ()
+                         {
+                             var parent = this;
+                             $(parent.settings.zoom.container).unbind('click').click(function (e)
+                             {
+                                 e.preventDefault();
+                                 var current = this;
+                                 $.ajax
+                                 ({
+                                     type:    'POST',
+                                     url:     parent.settings.zoom.initialization,
+                                     data:    {
+                                         id: $(current).attr('media-id')
+                                     },
+                                     success: function (data)
+                                              {
+                                                  $('#' + $(current).attr("data-reveal-id")).find("." + parent.settings.zoom.attribute).html(data);
+                                              }
+                                 });
+                             });
+                         },
+        initReset:       function ()
+                         {
+                             var parent = this;
+                             $(parent.settings.reset.container).unbind('click').click(function (e)
+                             {
+                                 e.preventDefault();
+                                 $('#' + $(this).attr('data-id') + '-field').val('');
+                                 $('#' + $(this).attr('data-id')).val('').trigger('change');
+                             });
+                         },
+        initNew:         function ()
+                         {
+                             var parent = this;
+                             $(parent.settings.new.container).unbind('click').click(function (e)
+                             {
+                                 var current = this;
+                                 $.ajax
+                                 ({
+                                     type:    'POST',
+                                     url:     parent.settings.new.initialization,
+                                     data:    {
+                                         selector: {
+                                             index:    $(current).attr('data-selector'),
+                                             selector: $(parent.selectors[$(current).attr('data-selector')]).attr('data-reveal-id'),
+                                             target:   parent.cache[$(parent.selectors[$(current).attr('data-selector')]).attr('data-id')].id,
+                                             filter:   parent.cache[$(parent.selectors[$(current).attr('data-selector')]).attr('data-id')].filter,
+                                             root:     parent.cache[$(parent.selectors[$(current).attr('data-selector')]).attr('data-id')].root,
+                                             private:  parent.cache[$(parent.selectors[$(current).attr('data-selector')]).attr('data-id')].private
+                                         }
+                                     },
+                                     success: function (data)
+                                              {
+                                                  $('#' + $(parent.selectors[$(current).attr('data-selector')]).attr('data-reveal-id') + '-new').html(data);
+                                              }
+                                 });
+                             });
+                         },
+        initTarget:      function (current)
+                         {
+                             var parent = this;
+                             $('#' + $(current).attr('data-id')).change(function ()
+                             {
+                                 var id = $(this).val();
+                                 if(id == '')
+                                 {
+                                     $(current).find(parent.settings.selector.default).show();
+                                     $(current).find(parent.settings.selector.preview).hide();
+                                     $(parent.settings.reset.container + '[data-id=' + $(current).attr('data-id') + ']').hide();
+                                 }
+                                 else
+                                 {
+                                     $.ajax
+                                     ({
+                                         type:    'POST',
+                                         url:     parent.settings.clickable.initialization,
+                                         data:    {
+                                             id: id
+                                         },
+                                         success: function (data)
+                                                  {
+                                                      $(current).find(parent.settings.selector.default).hide();
+                                                      $(current).find(parent.settings.selector.preview).html(data).show();
+                                                      $(parent.settings.reset.container + '[data-id=' + $(current).attr('data-id') + ']').show();
+                                                  }
+                                     });
+                                 }
+                                 $('#' + $(parent.selectors[$(current).attr('data-selector')]).attr('data-reveal-id')).foundation('reveal', 'close');
+                             });
+                         },
+        refresh:         function (index)
+                         {
+                             var parent = this;
+                             $.ajax
+                             ({
+                                 type:    'POST',
+                                 url:     $(parent.settings.container).attr('data-path'),
+                                 data:    {
+                                     media:    {
+                                         tag:        this.tag,
+                                         search:     this.search,
+                                         pagination: this.pagination
+                                     },
+                                     selector: {
+                                         filter:   (typeof index != "undefined") ? parent.cache[$(parent.selectors[index]).attr('data-id')].filter : null,
+                                         root:     (typeof index != "undefined") ? parent.cache[$(parent.selectors[index]).attr('data-id')].root : null,
+                                         private:  (typeof index != "undefined") ? parent.cache[$(parent.selectors[index]).attr('data-id')].private : null,
+                                         selected: (typeof index != "undefined") ? $('#' + $(parent.selectors[index]).attr('data-id')).val() : null,
+                                         new:      (typeof index != "undefined") ? $(parent.selectors[index]).attr('data-reveal-id') + '-new' : null
+                                     }
+                                 },
+                                 success: function (data)
+                                          {
+                                              if(typeof index != "undefined")
+                                              {
+                                                  var modal = $('#' + $(parent.selectors[index]).attr('data-reveal-id'));
+                                                  modal.find(parent.settings.container).fadeToggle(400, "linear", function ()
+                                                  {
+                                                      modal.find(parent.settings.container).html(parent.getHtml(data, parent.settings.container)).fadeToggle(400, "linear");
+                                                      parent.initTags();
+                                                      parent.initPagination();
+                                                      parent.initClickable();
+                                                      parent.initNew();
+                                                      parent.initZoom();
+                                                      parent.refreshSelector(index);
+                                                  });
+                                              }
+                                              else
+                                              {
+                                                  $(parent.settings.container).fadeToggle(400, "linear", function ()
+                                                  {
+                                                      $(parent.settings.container).html(parent.getHtml(data, parent.settings.container)).fadeToggle(400, "linear");
+                                                      parent.initTags();
+                                                      parent.initPagination();
+                                                      parent.initClickable();
+                                                      parent.initNew();
+                                                      parent.initZoom();
+                                                  });
+                                              }
+                                          }
+                             });
+                         },
+        refreshSelector: function (index)
+                         {
+                             var parent = this;
+                             var modal = $('#' + $(parent.selectors[index]).attr('data-reveal-id'));
+                             modal.find(parent.settings.pagination.container).attr('data-selector', index);
+                             modal.find(parent.settings.tag.container).attr('data-selector', index);
+                             modal.find(parent.settings.search.container).closest('form').attr('data-selector', index);
+                             modal.find(parent.settings.clickable.container).attr('data-selector', index);
+                             modal.find(parent.settings.new.container).attr('data-selector', index);
+                             $(parent.settings.reset.container + '[data-id=' + $(parent.selectors[index]).attr('data-id') + ']').attr('data-selector', index);
+                         },
+        getHtml:         function (data, selector)
+                         {
+                             var parent = this;
+                             var $data = $($.parseHTML(data));
+                             return $data.filter(selector).add($data.find(selector)).html();
+                         }
+    };
+    $.fn.media = function (options)
+    {
+        var settings = $.extend
+        ({
+            container:  '.media',
+            tag:        {
+                container: 'a[media-tag]',
+                attribute: 'media-tag'
+            },
+            search:     {
+                container: 'input[data-type=search]',
+                field:     '.FhmSearch_search'
+            },
+            pagination: {
+                container: 'a[media-pagination]',
+                attribute: 'media-pagination'
+            },
+            clickable:  {
+                container:      '.data.clickable',
+                initialization: '/api/media/data/preview'
+            },
+            zoom:       {
+                container:      'a[media-zoom]',
+                attribute:      'media-zoom',
+                initialization: '/api/media/data/zoom'
+            },
+            reset:      {
+                container: '.media-reset'
+            },
+            selector:   {
+                container:      '.media-selector',
+                initialization: '/api/media/data/selector',
+                default:        '.default',
+                preview:        '.preview'
+            },
+            new:        {
+                container:      '.media-new',
+                modal:          'modal-media-new',
+                initialization: '/api/media/data/new'
+            }
+        }, options);
+        new Plugin(settings);
+    };
+}
+(jQuery, window, window.document));

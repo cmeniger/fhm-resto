@@ -1,0 +1,27 @@
+{% trans_default_domain instance.domain %}
+
+{% if demo is defined %}
+    <div class="menu-side-overlay"></div>
+    <div class="menu-side-content">
+        <a href="#" class="close-menu"><i class="fa fa-times" aria-hidden="true"></i></a>
+        <nav>
+            <ul>
+                <li>
+                    <a href="{{ path('project_home') }}">Accueil</a>
+                </li>
+                <li>
+                    <a href="#anchor-about">A propos</a>
+                </li>
+                <li>
+                    <a href="#anchor-card">Notre carte</a>
+                </li>
+                <li>
+                    <a href="#anchor-contact">Nous contacter</a>
+                </li>
+                <li>
+                    <a href="#anchor-testimony">Témoignages</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+{% endif %}
