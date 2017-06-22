@@ -452,6 +452,10 @@
                 }
             }
         }
+        &.section-slider{
+        }
+        &.section-gallery-top{
+        }
         &.section-card-slider{
             overflow: hidden;
             height:   900px;
@@ -468,18 +472,25 @@
             background: $white;
         }
         &.section-card-forward{
-            margin-top: -150px;
+            ul{
+                margin: 0;
+            }
         }
-        &.section-contact{
+        &.section-testimony{
             overflow: hidden;
             height:   900px;
-            .parallax-image-contact{
+            .parallax-image-testimony{
                 position:   absolute;
                 min-height: 900px;
                 top:        0;
                 left:       0;
                 width:      100%;
             }
+        }
+        &.section-contact{
+        }
+        &.section-gallery-bottom{
+            padding-top: 150px;
         }
         header{
             width:      100%;
@@ -490,7 +501,6 @@
                 font-size:      38px;
                 font-weight:    700;
                 text-transform: none;
-                line-height:    55px;
                 letter-spacing: -1.5px;
                 margin:         0;
                 @include css3-prefix(transition, all 2s ease);

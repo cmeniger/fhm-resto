@@ -25,10 +25,10 @@
                 <h1 class="animated bounceInUp">{{ 'project.home.default.title'|trans }}</h1>
             </div>
         </section>
-        <section class="margin">
-            {# SLIDER #}
+        <section class="section-slider margin">
             {{ render(path('fhm_api_slider_detail',{template:'home','id':'demo'})) }}
-            {# GALLERY TOP #}
+        </section>
+        <section class="section-gallery-top">
             <a id="anchor-about" class="anchor"></a>
             {{ render(path('fhm_api_gallery_detail',{template:'home-top','id':'demo'})) }}
         </section>
@@ -44,10 +44,10 @@
             </div>
         </section>
         <section class="section-card-main margin row">
-            <div class="wrapper-title">
+            <header>
                 <h3 class="subtitle">{{ 'project.home.default.subtitle'|trans }}</h3>
                 <h2>{{ 'project.home.default.title'|trans }}</h2>
-            </div>
+            </header>
             {{ render(path('fhm_api_card_embed', {id:'demo', template:'M002'})) }}
         </section>
         <section class="section-card-forward">
@@ -57,71 +57,17 @@
             </header>
             {{ render(path('fhm_api_card_embed', {id:'demo', template:'M003'})) }}
         </section>
-        <section class="section-contact">
+        <section class="section-testimony">
+            <a id="anchor-testimony" class="anchor"></a>
+            <div class="parallax-image-testimony" data-parallax="scroll" data-image-src="{{ asset('images/default-parallax.jpg') }}"></div>
+        </section>
+        <section class="section-contact margin">
             <a id="anchor-contact" class="anchor"></a>
-            <div class="parallax-image-contact" data-parallax="scroll" data-image-src="{{ asset('images/default-parallax.jpg') }}"></div>
             {{ render(path('fhm_api_contact_detail', {id:'demo', template:'home'})) }}
         </section>
-        <div class="row-slide">
-            <header class="header-title header-slide gray">
-                <h3>Luctus ultrices posuere cubilia</h3>
-                <h2>Some words from our visitors</h2>
-            </header>
-            <div class="row">
-                <div class="large-12 columns">
-                    <div class="slider-for">
-                        <div class="slick-slide">Ut iaculis ligula arcu, sit amet efficitur elit rutrum at. Cum sociis
-                            natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Maecenas lacinia
-                            consectetur nibh, a ultricies turpis blandit sit amet. Duis ac metus in lacus elementum
-                            imperdiet sodales sed ex. Curabitur convallis eget leo a sagittis.
-                        </div>
-                        <div class="slick-slide">Ut iaculis ligula arcu, sit amet efficitur elit rutrum at. Cum sociis
-                            natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Maecenas lacinia
-                            consectetur nibh, a ultricies turpis blandit sit amet. Duis ac metus in lacus elementum
-                            imperdiet sodales sed ex. Curabitur convallis eget leo a sagittis.
-                        </div>
-                        <div class="slick-slide">Ut iaculis ligula arcu, sit amet efficitur elit rutrum at. Cum sociis
-                            natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Maecenas lacinia
-                            consectetur nibh, a ultricies turpis blandit sit amet. Duis ac metus in lacus elementum
-                            imperdiet sodales sed ex. Curabitur convallis eget leo a sagittis.
-                        </div>
-                    </div>
-                    <div class="syn-slider">
-                        <div>
-                            <img src="/images/user_5-135x135.jpg" alt=""/>
-                            <p class="title">Mark Stephenson</p>
-                            <p>Mauris quis facilisis mi</p>
-                        </div>
-                        <div>
-                            <img src="/images/user_3-135x135.jpg" alt=""/>
-                            <p class="title">Mark Stephenson</p>
-                            <p>Mauris quis facilisis mi</p>
-                        </div>
-                        <div>
-                            <img src="/images/user_1-135x135.jpg" alt=""/>
-                            <p class="title">Mark Stephenson</p>
-                            <p>Mauris quis facilisis mi</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="bottom-four-cols">
-            <div class="row full-width four-cols-footer">
-                <div class="large-3 columns nopadding animation-top">
-                    <img src="/images/11.jpg" alt=""/>
-                </div>
-                <div class="large-3 columns nopadding animation-bottom">
-                    <img src="/images/22.jpg" alt=""/>
-                </div>
-                <div class="large-3 columns nopadding animation-top">
-                    <img src="/images/33.jpg" alt=""/>
-                </div>
-                <div class="large-3 columns nopadding animation-bottom">
-                    <img src="/images/44.jpg" alt=""/>
-                </div>
-            </div>
-        </div>
+        <section class="section-gallery-bottom">
+            {{ render(path('fhm_api_gallery_detail',{template:'home-bottom','id':'demo'})) }}
+        </section>
     </section>
     <footer id="footer">
         <div class="row">

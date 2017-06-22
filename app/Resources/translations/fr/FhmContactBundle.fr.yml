@@ -242,6 +242,11 @@ contact:
             submit:                             Envoyer
             load:                               Envoi en cours...
 
+        home:
+            schedules:                          Nos horaires
+            contact:                            Contactez-nous
+            social:                             Retrouvez-nous
+
     api:
         index:
             breadcrumb:                         Contact - Api

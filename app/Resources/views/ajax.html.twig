@@ -1,11 +1,13 @@
 {% block content %}{% endblock %}
 
 <script language="JavaScript">
-    {% block javascript %}
+    $(document).ready(function(){
+        {% block javascript %}
         $(document).foundation({
             reveal: {
                 multiple_opened: true
             }
         });
-    {% endblock %}
+        {% endblock %}
+    });
 </script>

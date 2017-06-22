@@ -1,0 +1,71 @@
+{% trans_default_domain instance.domain %}
+
+{% if demo is defined %}
+    <div class="gallery home-bottom">
+        <ul class="small-block-grid-2 medium-block-grid-3 large-block-grid-4">
+            <li>
+                <div class="image" style="background:url({{ asset('images/demo/gallery/gallery-item1.jpg') }})"></div>
+            </li>
+            <li>
+                <div class="image" style="background:url({{ asset('images/demo/gallery/gallery-item6.jpg') }})"></div>
+            </li>
+            <li>
+                <div class="image" style="background:url({{ asset('images/demo/gallery/gallery-item3.jpg') }})"></div>
+            </li>
+            <li>
+                <div class="image" style="background:url({{ asset('images/demo/gallery/gallery-item5.jpg') }})"></div>
+            </li>
+            <li>
+                <div class="image" style="background:url({{ asset('images/demo/gallery/gallery-item2.jpg') }})"></div>
+            </li>
+            <li>
+                <div class="image" style="background:url({{ asset('images/demo/gallery/gallery-item7.jpg') }})"></div>
+            </li>
+            <li>
+                <iframe width='250' height='200' src='https://player.vimeo.com/video/122647096' frameborder='0' allowfullscreen></iframe>
+            </li>
+            <li>
+                <iframe width='250' height='200' src='https://player.vimeo.com/video/122647096' frameborder='0' allowfullscreen></iframe>
+            </li>
+            <li>
+                <iframe width='250' height='200' src='https://player.vimeo.com/video/122647096' frameborder='0' allowfullscreen></iframe>
+            </li>
+            <li>
+                <iframe width='250' height='200' src='https://player.vimeo.com/video/122647096' frameborder='0' allowfullscreen></iframe>
+            </li>
+        </ul>
+    </div>
+{% else %}
+    <div class="gallery home-bottom">
+        <ul class="small-block-grid-2 medium-block-grid-3 large-block-grid-4">
+            {% if items|length > 0 %}
+                {% for item in items %}
+                    <li>
+                        <div class="image" style="background:url({{ item.getImage()|media('m') }})"></div>
+                    </li>
+                {% endfor %}
+            {% endif %}
+            {% if videos|length > 0 %}
+                {% for video in videos %}
+                    <li>
+                        {{ video.getVideo()|video(250,200)|raw }}
+                    </li>
+                {% endfor %}
+            {% endif %}
+        </ul>
+    </div>
+{% endif %}
+<script>
+    $(document).ready(function ()
+    {
+        $(".gallery.home-bottom li")
+            .on("inViewBegin", function ()
+            {
+                $(this).addClass("animated").addClass("zoomIn");
+            })
+            .on("inViewEnd", function ()
+            {
+                $(this).removeClass("animated").removeClass("zoomIn");
+            });
+    });
+</script>

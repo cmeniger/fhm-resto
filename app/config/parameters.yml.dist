@@ -40,6 +40,7 @@ parameters:
     #RECAPTCHA
     recaptcha_public_key: 6LfZ9SQTAAAAAKHbN5Sp8eaEZrX7OIA5m8S_vvGR
     recaptcha_private_key: 6LfZ9SQTAAAAAEIP0FVscmWH3U3VUE5wmrJnmtJy
+    #AWS
     aws:
         sdk:
             key: AKIAJH54WHWXZIXWLL7A
@@ -60,6 +61,9 @@ parameters:
         analytics:
             active: true
             id: UA-60572981-4
+    #GOOGLE MAPS
+    google_map_api_key: 'null'
+    #PROJECT
     fhm_mailer:
         enable: true
         project: FHM-Restos

@@ -48,6 +48,7 @@ twig:
         project: "%project%"
         mailer: "%fhm_mailer%"
         oauth_facebook_id: "%oauth.facebook.id%"
+        google_map_api_key: %google_map_api_key%
         switch_roles:
             ROLE_USER: 'ROLE_USER'
             ROLE_MEMBER: 'ROLE_MEMBER'

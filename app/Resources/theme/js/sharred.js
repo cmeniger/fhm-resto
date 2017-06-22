@@ -53,6 +53,15 @@
                                 {
                                     $(this).addClass("animated").addClass("bounceInUp");
                                 });
+                            $("section header h2, section header h4")
+                                .on("inViewBegin", function ()
+                                {
+                                    $(this).addClass("animated").addClass("zoomIn");
+                                })
+                                .on("inViewEnd", function ()
+                                {
+                                    $(this).removeClass("animated").removeClass("zoomIn");
+                                });
                         },
         parallaxImage:  function ()
                         {
@@ -71,11 +80,11 @@
                                         imageSrc: $('.parallax-image-card').data('image-src')
                                     });
                             }
-                            if($('.parallax-image-contact').length)
+                            if($('.parallax-image-testimony').length)
                             {
-                                $('.parallax-image-contact').parallax(
+                                $('.parallax-image-testimony').parallax(
                                     {
-                                        imageSrc: $('.parallax-image-contact').data('image-src'),
+                                        imageSrc: $('.parallax-image-testimony').data('image-src'),
                                         speed:    0.6
                                     });
                             }

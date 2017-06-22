@@ -1,3 +1,16 @@
+{% extends "::ajax.html.twig" %}
 {% trans_default_domain instance.domain %}
 {% import "::Macros/dd.tree.html.twig" as macroTree %}
-{{ macroTree.html(tree, instance) }}
+
+{% block content %}
+    {{ macroTree.html(tree, instance) }}
+{% endblock %}
+
+{% block javascript %}
+    {{ parent() }}
+    $(document).notification({
+        project: {
+        construct:{{ project.construct ? 1 : 0 }},
+        maintenance:{{ project.maintenance ? 1 : 0 }}}
+    });
+{% endblock %}

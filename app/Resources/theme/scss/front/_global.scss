@@ -246,3 +246,50 @@ select{
         }
     }
 }
+
+// SOCIAL BAR
+
+.social-bar{
+    ul{
+        margin:     0;
+        text-align: center;
+        li{
+            display: inline-block;
+            float:   none;
+            margin:  0 0.2rem;
+            a{
+                @include border-radius(1000px);
+                display:     inline-block;
+                width:       45px;
+                height:      45px;
+                line-height: 45px;
+                text-align:  center;
+                background:  $medium-grey;
+                color:       $white;
+                font-size:   1.5em;
+                &.facebook{
+                    background-color: $color-social-facebook;
+                }
+                &.twitter{
+                    background-color: $color-social-twitter;
+                }
+                &.google{
+                    background-color: $color-social-google;
+                }
+                &.instagram{
+                    background-color: $color-social-instagram;
+                }
+                &.youtube{
+                    background-color: $color-social-youtube;
+                }
+                &.flux{
+                    background-color: $color-social-flux;
+                }
+                &:hover{
+                    background: $button-color;
+                    color:      $white;
+                }
+            }
+        }
+    }
+}
