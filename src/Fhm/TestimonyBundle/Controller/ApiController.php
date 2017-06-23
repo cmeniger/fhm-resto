@@ -1,17 +1,19 @@
 <?php
+
 namespace Fhm\TestimonyBundle\Controller;
 
 use Fhm\FhmBundle\Controller\RefApiController as FhmController;
-use Fhm\FhmBundle\Form\Type\Admin\SearchType;
 use Fhm\TestimonyBundle\Document\Testimony;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @Route("/api/testimony")
  * ---------------------------------------
  * Class ApiController
+ *
  * @package Fhm\TestimonyBundle\Controller
  */
 class ApiController extends FhmController
@@ -21,12 +23,12 @@ class ApiController extends FhmController
      */
     public function __construct()
     {
-        self::$repository = "FhmTestimonyBundle:Testimony";
-        self::$source = "fhm";
-        self::$domain = "FhmTestimonyBundle";
+        self::$repository  = "FhmTestimonyBundle:Testimony";
+        self::$source      = "fhm";
+        self::$domain      = "FhmTestimonyBundle";
         self::$translation = "testimony";
-        self::$class = Testimony::class;
-        self::$route = "testimony";
+        self::$class       = Testimony::class;
+        self::$route       = "testimony";
     }
 
     /**
@@ -45,28 +47,57 @@ class ApiController extends FhmController
     /**
      * @Route
      * (
-     *      path="/detail/{template}/{rows}/{pagination}",
+     *      path="/detail/{template}/{id}",
      *      name="fhm_api_testimony_detail",
-     *      requirements={"rows"="\d*", "pagination"="[0-1]"},
-     *      defaults={"rows"=null, "pagination"=1}
+     *      requirements={"id"=".+"},
+     *      defaults={"template"="default"}
      * )
      */
-    public function detailAction($template, $rows, $pagination)
+    public function detailAction($template, $id)
     {
-        $document = "";
-        $form = $this->createForm(SearchType::class);
-        $form->setData($this->get('request_stack')->get($form->getName()));
-        $dataSearch = $form->getData();
-        $documents = $this->get('fhm_tools')->dmRepository(self::$repository)->getFrontIndex(
-            $dataSearch['search']
-        );
+        if($id == 'demo')
+        {
+            return new Response(
+                $this->renderView(
+                    "::FhmTestimony/Template/" . $template . ".html.twig",
+                    array(
+                        'object'  => null,
+                        'objects' => null,
+                        'demo'    => true
+                    )
+                )
+            );
+        }
+        if($id != '')
+        {
+            $object = $this->get('fhm_tools')->dmRepository(self::$repository)->getById($id);
+            $object = ($object) ?: $this->get('fhm_tools')->dmRepository(self::$repository)->getByAlias($id);
+            $object = ($object) ?: $this->get('fhm_tools')->dmRepository(self::$repository)->getByName($id);
+            // ERROR - unknown
+            if($object == "")
+            {
+                throw $this->createNotFoundException(
+                    $this->trans(self::$translation . '.error.unknown', array(), self::$domain)
+                );
+            }
+            // ERROR - Forbidden
+            elseif($object->getDelete() || !$object->getActive())
+            {
+                throw new HttpException(
+                    403, $this->trans(self::$translation . '.error.forbidden', array(), self::$domain)
+                );
+            }
+        }
+        else{
+            $object = null;
+        }
+
         return new Response(
             $this->renderView(
-                "::FhmTestimony/Template/".$template.".html.twig",
+                "::FhmTestimony/Template/" . $template . ".html.twig",
                 array(
-                    'document' => $document,
-                    'documents' => $documents,
-                    'form' => $form ? $form->createView() : $form,
+                    'object'  => $object,
+                    'objects' => $this->get('fhm_tools')->dmRepository(self::$repository)->getAllEnable(),
                 )
             )
         );

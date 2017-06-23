@@ -1,27 +1,111 @@
 {% trans_default_domain instance.domain %}
-<div class="testimony">
-    {% for document in documents %}
-        <div class="row">
-            <div class="column medium-4">
-                <img src="{{ document.getImage()|media('s') }}"/>
-            </div>
-            <div class="column medium-8">
-                <p class="gutter-padding-top content">
-                    <i class="fa fa-quote-left"></i>{{ document.getDescription() }}<i class="fa fa-quote-right"></i>
+
+{% if demo is defined %}
+    <div class="testimony home">
+        <div class="testimony-text">
+            <div class="testimony-item">
+                <p>
+                    <i class="fa fa-quote-left"></i>Curabitur ligula sapien, tincidunt non, euismod vitae, posuere
+                    imperdiet, leo. Mauris turpis nunc, blandit et, volutpat molestie, porta ut, ligula. Etiam imperdiet
+                    imperdiet orci.<i class="fa fa-quote-right"></i>
                 </p>
-                <p class="right name">
-                    {{ document.getName() }}
+            </div>
+            <div class="testimony-item">
+                <p>
+                    <i class="fa fa-quote-left"></i>Curabitur ligula sapien, tincidunt non, euismod vitae, posuere
+                    imperdiet, leo. Mauris turpis nunc, blandit et, volutpat molestie, porta ut, ligula. Etiam imperdiet
+                    imperdiet orci.<i class="fa fa-quote-right"></i>
+                </p>
+            </div>
+            <div class="testimony-item">
+                <p>
+                    <i class="fa fa-quote-left"></i>Curabitur ligula sapien, tincidunt non, euismod vitae, posuere
+                    imperdiet, leo. Mauris turpis nunc, blandit et, volutpat molestie, porta ut, ligula. Etiam imperdiet
+                    imperdiet orci.<i class="fa fa-quote-right"></i>
+                </p>
+            </div>
+            <div class="testimony-item">
+                <p>
+                    <i class="fa fa-quote-left"></i>Curabitur ligula sapien, tincidunt non, euismod vitae, posuere
+                    imperdiet, leo. Mauris turpis nunc, blandit et, volutpat molestie, porta ut, ligula. Etiam imperdiet
+                    imperdiet orci.<i class="fa fa-quote-right"></i>
                 </p>
             </div>
         </div>
-    {% endfor %}
-</div>
+        <div class="testimony-avatar">
+            <div class="testimony-item">
+                <div class="avatar" style="background: url({{ asset('images/demo/testimony/testimony-item1.jpg') }})"></div>
+                <div class="name">Curabitur</div>
+            </div>
+            <div class="testimony-item">
+                <div class="avatar" style="background: url({{ asset('images/demo/testimony/testimony-item2.jpg') }})"></div>
+                <div class="name">Sapien Vitae</div>
+            </div>
+            <div class="testimony-item">
+                <div class="avatar" style="background: url({{ asset('images/demo/testimony/testimony-item3.jpg') }})"></div>
+                <div class="name">Mauris</div>
+            </div>
+            <div class="testimony-item">
+                <div class="avatar" style="background: url({{ asset('images/default-avatar.jpg') }})"></div>
+                <div class="name">Etiam</div>
+            </div>
+        </div>
+    </div>
+{% else %}
+    <div class="testimony home">
+        <div class="testimony-text">
+            {% for document in documents %}
+                <div class="testimony-item">
+                    <p>
+                        <i class="fa fa-quote-left"></i>{{ document.getDescription() }}<i class="fa fa-quote-right"></i>
+                    </p>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="testimony-avatar">
+            {% for document in documents %}
+                <div class="testimony-item">
+                    <div class="avatar" style="background: url({{ document.getImage()|media('s', asset('/images/default-avatar.jpg')) }})"></div>
+                    <div class="name">{{ document.getName() }}</div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endif %}
 <script>
     $(document).ready(function ()
     {
-        $('.testimony').slick({
-            autoplay:      true,
-            autoplaySpeed: 10000
+        $('.testimony-text').slick({
+            autoplay:       true,
+            autoplaySpeed:  10000,
+            slidesToShow:   1,
+            slidesToScroll: 1,
+            asNavFor:       '.testimony-avatar'
+        });
+        $('.testimony-avatar').slick({
+            arrows:        false,
+            centerMode:    true,
+            centerPadding: '60px',
+            slidesToShow:  3,
+            asNavFor:      '.testimony-text',
+            responsive:    [
+                {
+                    breakpoint: 768,
+                    settings:   {
+                        centerMode:    true,
+                        centerPadding: '40px',
+                        slidesToShow:  3
+                    }
+                },
+                {
+                    breakpoint: 480,
+                    settings:   {
+                        centerMode:    true,
+                        centerPadding: '40px',
+                        slidesToShow:  1
+                    }
+                }
+            ]
         });
     });
 </script>

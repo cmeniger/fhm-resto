@@ -43,7 +43,26 @@
                     }
                 }
             }
-            @media #{$medium}{
+        }
+        .slick-prev{
+            left: -45px;
+            &:before{
+                color:     $button-color;
+                font-size: 50px;
+            }
+        }
+        .slick-next{
+            right: -45px;
+            &:before{
+                color:     $button-color;
+                font-size: 50px;
+            }
+        }
+        .slick-dots{
+            margin: 0;
+        }
+        @media #{$medium}{
+            .slider-item{
                 height: 450px;
                 .caption{
                     h2{
@@ -58,7 +77,9 @@
                     }
                 }
             }
-            @media #{$large}{
+        }
+        @media #{$large}{
+            .slider-items{
                 height: 600px;
                 .caption{
                     h2{
@@ -69,20 +90,6 @@
                         font-size:  1.2em;
                     }
                 }
-            }
-        }
-        .slick-prev{
-            left: -45px;
-            &:before{
-                color:     $button-color;
-                font-size: 50px;
-            }
-        }
-        .slick-next{
-            right: -45px;
-            &:before{
-                color:     $button-color;
-                font-size: 50px;
             }
         }
     }

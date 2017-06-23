@@ -238,6 +238,7 @@ menu:
             link:                               Menu
             breadcrumb:                         Menu
             nodata:                             Aucune donnée
+            sitemap:                            Sitemap
             form:
                 search:                         Rechercher
             table:

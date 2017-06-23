@@ -17,7 +17,7 @@
     </header>
     <section id="main-content">
         <section class="section-top">
-            <div class="parallax-image-top" data-parallax="scroll" data-image-src="{{ asset('images/default-parallax.jpg') }}"></div>
+            <div class="parallax-image-top" data-parallax="scroll" data-image-src="{{ asset('images/default.jpg') }}"></div>
             <div class="introduction">
                 <div class="content">
                     <h2 class="title title-centered subtitle" data-bg-color="">{{ 'project.home.default.subtitle'|trans }}</h2>
@@ -34,7 +34,7 @@
         </section>
         <section class="section-card-slider">
             <a id="anchor-card" class="anchor"></a>
-            <div class="parallax-image-card" data-parallax="scroll" data-image-src="{{ asset('images/default-parallax.jpg') }}"></div>
+            <div class="parallax-image-card" data-parallax="scroll" data-image-src="{{ asset('images/default.jpg') }}"></div>
             <header>
                 <h3 class="subtitle">{{ 'project.home.default.subtitle'|trans }}</h3>
                 <h2>{{ 'project.home.default.title'|trans }}</h2>
@@ -59,7 +59,14 @@
         </section>
         <section class="section-testimony">
             <a id="anchor-testimony" class="anchor"></a>
-            <div class="parallax-image-testimony" data-parallax="scroll" data-image-src="{{ asset('images/default-parallax.jpg') }}"></div>
+            <div class="parallax-image-testimony" data-parallax="scroll" data-image-src="{{ asset('images/default.jpg') }}"></div>
+            <header>
+                <h3 class="subtitle">{{ 'project.home.default.subtitle'|trans }}</h3>
+                <h2>{{ 'project.home.default.title'|trans }}</h2>
+            </header>
+            <div class="row">
+                {{ render(path('fhm_api_testimony_detail', {id:'demo', template:'home'})) }}
+            </div>
         </section>
         <section class="section-contact margin">
             <a id="anchor-contact" class="anchor"></a>
@@ -69,18 +76,4 @@
             {{ render(path('fhm_api_gallery_detail',{template:'home-bottom','id':'demo'})) }}
         </section>
     </section>
-    <footer id="footer">
-        <div class="row">
-            <div class="large-4 columns nopadding">
-                <a href="#"><img src="/images/logo.png" alt=""/></a>
-            </div>
-            <div class="large-4 columns copyright nopadding">
-                <p>&copy; DynamicFrameworks - Elite ThemeForest Author.</p>
-            </div>
-            <div class="large-4 columns nopadding">
-                <a href="#"></a>
-            </div>
-        </div>
-    </footer>
-    </div>
 {% endblock %}

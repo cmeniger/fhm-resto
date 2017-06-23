@@ -48,6 +48,7 @@
         {% endblock %}
     </head>
     <body class="{% block body_class %}{% endblock %}" {% block body_attribut %}{% endblock %}>
+        <a id="anchor-top" class="anchor"></a>
         {% block body_all %}
         {% block body_header %}
             <div id="header">
@@ -62,7 +63,7 @@
         {% block body_footer %}
             <div id="footer">
                 {% block footer %}
-                    <div class="row copyright center">
+                    <div class="row copyright text-center">
                         {{ ('project.footer')|trans({}, 'ProjectDefaultBundle') }}
                         <a href="http://www.fhmsolutions.com/">FHM Solutions</a>
                     </div>

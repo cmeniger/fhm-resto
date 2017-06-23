@@ -1,4 +1,4 @@
-#anchor-top{
+#scroll-top{
     @include border-radius-separate(1000px, 1000px, 0, 0);
     display:     none;
     position:    fixed;
@@ -526,21 +526,78 @@
 }
 
 #footer{
-    position:   relative;
-    min-height: 74px;
-    overflow:   hidden;
-    padding:    20px 0;
-    background: #323232;
-    z-index:    1;
-
+    background: $dark-grey;
+    padding:    1rem 1rem 60px;
+    margin:     0;
+    text-align: center;
+    h2{
+        color:          $white;
+        font-size:      1.2em;
+        font-weight:    700;
+        text-transform: none;
+        letter-spacing: -1.5px;
+        padding-top:    1rem;
+        &:after{
+            content:    "";
+            display:    block;
+            background: url(/images/logo-wave-white.png) no-repeat 0 0;
+            width:      66px;
+            height:     25px;
+            margin:     auto;
+        }
+        &.icon{
+            &:after{
+                background: url(/images/logo-icon-wave-white.png) no-repeat 0 0;
+                width:      150px;
+            }
+        }
+    }
+    img{
+        height:        80px;
+        width:         auto;
+        margin-bottom: 1rem;
+    }
+    nav{
+        text-align: center;
+        ul{
+            margin:  0;
+            padding: 0;
+            li{
+                display:        block;
+                margin:         0;
+                padding:        0;
+                border-bottom:  1px solid lighten($dark-grey, 5%);
+                width:          100%;
+                font-size:      14px;
+                font-weight:    400;
+                text-transform: none;
+                line-height:    28px;
+                letter-spacing: 0;
+                a{
+                    display:        block;
+                    font-size:      10px;
+                    font-style:     normal;
+                    font-weight:    700;
+                    text-transform: uppercase;
+                    line-height:    10px;
+                    letter-spacing: .8px;
+                    color:          $white;
+                    padding:        15px 25px;
+                    position:       relative;
+                }
+                &:hover{
+                    background: $button-color;
+                }
+            }
+        }
+    }
     .copyright{
-        height: 38px;
-        p{
-            color:     rgba($white, 0.6);
-            font-size: 13px;
-            position:  relative;
-            top:       50%;
-            @include css3-prefix(transform, translateY(-50%));
+        padding-top: 2rem;
+        a{
+            color: $white;
+            &:hover{
+                color: $button-color;
+            }
         }
     }
 }
