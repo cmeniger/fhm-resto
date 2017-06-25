@@ -64,8 +64,8 @@
 {% block footer %}
     <div class="clearfix">
         <div class="hidden-for-large-up text-center">
-            <img src="{{ site is defined and site.getLogo()|media('s', asset('images/logo.png')) }}" alt=""/>
-            <h2 class="icon">{{ site is defined and site.getTitle() ? site.getTitle()|raw : 'project.home.default.title'|trans({},'ProjectDefaultBundle') }}</h2>
+            <img src="{{ site is defined and site.getLogo() and not site.getDemo() ? site.getLogo()|media('s', asset('images/logo.png')) : asset('images/logo.png') }}" alt=""/>
+            <h2 class="icon">{{ site is defined and site.getTitle() and not site.getDemo() ? site.getTitle()|raw : 'project.home.default.title'|trans({},'ProjectDefaultBundle') }}</h2>
         </div>
         <div class="columns large-4">
             <h2>{{ 'menu.front.index.sitemap'|trans({},'FhmFhmMenuBundle') }}</h2>
@@ -75,8 +75,8 @@
         </div>
         <div class="columns large-4">
             <div class="hidden-for-medium-down">
-                <img src="{{ site is defined and site.getLogo()|media('s', asset('images/logo.png')) }}" alt=""/>
-                <h2 class="icon">{{ site is defined and site.getTitle() ? site.getTitle()|raw : 'project.home.default.title'|trans({},'ProjectDefaultBundle') }}</h2>
+                <img src="{{ site is defined and site.getLogo() and not site.getDemo() ? site.getLogo()|media('s', asset('images/logo.png')) : asset('images/logo.png') }}" alt=""/>
+                <h2 class="icon">{{ site is defined and site.getTitle() and not site.getDemo() ? site.getTitle()|raw : 'project.home.default.title'|trans({},'ProjectDefaultBundle') }}</h2>
             </div>
         </div>
         <div class="columns large-4">
@@ -84,34 +84,34 @@
             {{ render(path('fhm_api_newsletter_embed')) }}
             <div class="social-bar">
                 <ul>
-                    {% if site is defined and site.getSocialFacebook() %}
+                    {% if site is defined and (site.getSocialFacebook() or site.getDemo()) %}
                         <li>
-                            <a href='{{ site.getSocialFacebook() }}' class="facebook" title="Facebook" target="_blank"><i class='fa fa-facebook'></i></a>
+                            <a href='{{ site.getDemo() ? '#' : site.getSocialFacebook() }}' class="facebook" title="Facebook" target="_blank"><i class='fa fa-facebook'></i></a>
                         </li>
                     {% endif %}
-                    {% if site is defined and site.getSocialTwitter() %}
+                    {% if site is defined and (site.getSocialTwitter() or site.getDemo()) %}
                         <li>
-                            <a href='{{ site.getSocialTwitter() }}' class="twitter" title="Twitter" target="_blank"><i class='fa fa-twitter'></i></a>
+                            <a href='{{ site.getDemo() ? '#' : site.getSocialTwitter() }}' class="twitter" title="Twitter" target="_blank"><i class='fa fa-twitter'></i></a>
                         </li>
                     {% endif %}
-                    {% if site is defined and site.getSocialGoogle() %}
+                    {% if site is defined and (site.getSocialGoogle() or site.getDemo()) %}
                         <li>
-                            <a href='{{ site.getSocialGoogle() }}' class="google" title="Google" target="_blank"><i class='fa fa-google'></i></a>
+                            <a href='{{ site.getDemo() ? '#' : site.getSocialGoogle() }}' class="google" title="Google" target="_blank"><i class='fa fa-google'></i></a>
                         </li>
                     {% endif %}
-                    {% if site is defined and site.getSocialInstagram() %}
+                    {% if site is defined and (site.getSocialInstagram() or site.getDemo()) %}
                         <li>
-                            <a href='{{ site.getSocialInstagram() }}' class="instagram" title="Instagram" target="_blank"><i class='fa fa-instagram'></i></a>
+                            <a href='{{ site.getDemo() ? '#' : site.getSocialInstagram() }}' class="instagram" title="Instagram" target="_blank"><i class='fa fa-instagram'></i></a>
                         </li>
                     {% endif %}
-                    {% if site is defined and site.getSocialYoutube() %}
+                    {% if site is defined and (site.getSocialYoutube() or site.getDemo()) %}
                         <li>
-                            <a href='{{ site.getSocialYoutube() }}' class="youtube" title="Youtube" target="_blank"><i class='fa fa-youtube'></i></a>
+                            <a href='{{ site.getDemo() ? '#' : site.getSocialYoutube() }}' class="youtube" title="Youtube" target="_blank"><i class='fa fa-youtube'></i></a>
                         </li>
                     {% endif %}
-                    {% if site is defined and site.getSocialFlux() %}
+                    {% if site is defined and (site.getSocialFlux() or site.getDemo()) %}
                         <li>
-                            <a href='{{ site.getSocialFlux() }}' class="flux" title="Flux RSS" target="_blank"><i class='fa fa-rss'></i></a>
+                            <a href='{{ site.getDemo() ? '#' : site.getSocialFlux() }}' class="flux" title="Flux RSS" target="_blank"><i class='fa fa-rss'></i></a>
                         </li>
                     {% endif %}
                 </ul>
