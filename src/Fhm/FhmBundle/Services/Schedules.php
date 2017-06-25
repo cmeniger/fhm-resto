@@ -1,7 +1,8 @@
 <?php
+
 namespace Fhm\FhmBundle\Services;
 
-use Symfony\Bundle\FrameworkBundle\Translation\Translator;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Class Schedules
@@ -10,21 +11,21 @@ use Symfony\Bundle\FrameworkBundle\Translation\Translator;
  */
 class Schedules
 {
+    protected $container;
+    protected $translator;
     protected $data;
     protected $data_implode;
-    protected $translator;
-    protected $templating;
 
     /**
      * Schedules constructor.
-     * @param Translator $translator
-     * @param $templating
+     *
+     * @param ContainerInterface $container
      */
-    public function __construct(Translator $translator, $templating)
+    public function __construct(ContainerInterface $container)
     {
-        $this->translator = $translator;
-        $this->templating = $templating;
-        $this->data = array();
+        $this->container    = $container;
+        $this->translator   = $container->get('translator');
+        $this->data         = array();
         $this->data_implode = array();
     }
 
@@ -51,7 +52,7 @@ class Schedules
      */
     public function setData($data)
     {
-        $this->data = $data;
+        $this->data         = $data;
         $this->data_implode = $this->entityToForm($data);
 
         return $this;
@@ -64,15 +65,16 @@ class Schedules
      */
     public function getValue($key = '')
     {
-        if ($key) {
+        if($key)
+        {
             return isset($this->data_implode[$key]) ? $this->data_implode[$key] : null;
         }
 
-        return $this->templating->render(
+        return $this->container->get('templating')->render(
             '::FhmFhm/Template/schedules.html.twig',
             array(
-                'data' => $this->data,
-                'dataImplode' => $this->data_implode,
+                'data'          => $this->data,
+                'dataImplode'   => $this->data_implode,
                 'dataFormatted' => $this->_format(),
             )
         );
@@ -86,18 +88,20 @@ class Schedules
      */
     public function setValue($key, $value)
     {
-        if ($key == 'close_date' && is_string($value)) {
-            $d = substr($value, 0, 2);
-            $m = substr($value, 3, 2);
-            $y = substr($value, 6, 4);
-            $h = substr($value, 10);
-            $value = new \DateTime($y.'/'.$m.'/'.$d.' '.$h);
+        if($key == 'close_date' && is_string($value))
+        {
+            $d     = substr($value, 0, 2);
+            $m     = substr($value, 3, 2);
+            $y     = substr($value, 6, 4);
+            $h     = substr($value, 10);
+            $value = new \DateTime($y . '/' . $m . '/' . $d . ' ' . $h);
         }
-        if ($key == 'close_enable') {
+        if($key == 'close_enable')
+        {
             $value = $value == 0 ? false : true;
         }
         $this->data_implode[$key] = $value;
-        $this->data = $this->formToEntity($this->data_implode);
+        $this->data               = $this->formToEntity($this->data_implode);
 
         return $this;
     }
@@ -109,7 +113,8 @@ class Schedules
      */
     public function setValues($array)
     {
-        foreach ($array as $key => $value) {
+        foreach($array as $key => $value)
+        {
             $this->setValue($key, $value);
         }
 
@@ -121,20 +126,27 @@ class Schedules
      */
     public function getState()
     {
-        if ($this->getValue('close_enable')) {
+        if($this->getValue('close_enable'))
+        {
             $state = 'close';
-        } else {
-            $now = new \DateTime();
-            $day = $now->format('N');
-            $hours = $now->format('G');
-            $minutes = $now->format('i');
-            $formated = $hours.$minutes;
-            $datas = $this->_formatState($day);
-            $state = $datas ? 'close' : 'nodata';
-            foreach ($datas as $data) {
-                if (is_array($data)) {
+        }
+        else
+        {
+            $now      = new \DateTime();
+            $day      = $now->format('N');
+            $hours    = $now->format('G');
+            $minutes  = $now->format('i');
+            $formated = $hours . $minutes;
+            $datas    = $this->_formatState($day);
+            $state    = $datas ? 'close' : 'nodata';
+            foreach($datas as $data)
+            {
+                if(is_array($data))
+                {
                     $state = $formated >= $data[0] && $formated < $data[1] ? 'open' : $state;
-                } else {
+                }
+                else
+                {
                     $state = $state != 'open' ? $data : $state;
                 }
             }
@@ -150,11 +162,13 @@ class Schedules
      */
     public function entityToForm($data)
     {
-        if (isset($data['close']) && isset($data['close']['date'])) {
+        if(isset($data['close']) && isset($data['close']['date']))
+        {
             $data['close']['date'] = new \DateTime($data['close']['date']['date']);
         }
         $transform = array();
-        foreach ($data as $key => $value) {
+        foreach($data as $key => $value)
+        {
             $transform = array_merge($transform, $this->_arrayImplode($value, $key));
         }
 
@@ -182,11 +196,15 @@ class Schedules
     private function _arrayImplode($data, $prefix = '')
     {
         $list = array();
-        if (is_array($data)) {
-            foreach ($data as $key => $value) {
-                $list = array_merge($list, $this->_arrayImplode($value, $prefix.'_'.$key));
+        if(is_array($data))
+        {
+            foreach($data as $key => $value)
+            {
+                $list = array_merge($list, $this->_arrayImplode($value, $prefix . '_' . $key));
             }
-        } else {
+        }
+        else
+        {
             $list[$prefix] = $data;
         }
 
@@ -201,15 +219,17 @@ class Schedules
     private function _arrayExplode($data)
     {
         $list = array();
-        foreach ($data as $key => $value) {
-            $new = array();
+        foreach($data as $key => $value)
+        {
+            $new     = array();
             $current = &$new;
-            $paths = explode('_', $key);
-            foreach ($paths as $path) {
+            $paths   = explode('_', $key);
+            foreach($paths as $path)
+            {
                 $current = &$current[$path];
             }
             $current = $value;
-            $list = array_replace_recursive($list, $new);
+            $list    = array_replace_recursive($list, $new);
         }
 
         return $list;
@@ -220,48 +240,56 @@ class Schedules
      */
     private function _format()
     {
-        $formatted = array('days' => array());
+        $formatted  = array('days' => array());
         $transClose = $this->translator->trans('fhm.schedules.day.close', array(), 'FhmFhmBundle');
-        if (isset($this->data['days'])) {
-            foreach ($this->data['days'] as $key => $value) {
+        if(isset($this->data['days']))
+        {
+            foreach($this->data['days'] as $key => $value)
+            {
                 $am = '-';
                 $pm = '-';
-                if ((isset($value[0]) && $value[0] == 'close') || (isset($value[1]) && $value[1] == 'close')) {
+                if((isset($value[0]) && $value[0] == 'close') || (isset($value[1]) && $value[1] == 'close'))
+                {
                     $am = $transClose;
-                } elseif (isset($value[0]) && isset($value[1]) && $value[0] != '' && $value[1] != '') {
+                }
+                elseif(isset($value[0]) && isset($value[1]) && $value[0] != '' && $value[1] != '')
+                {
                     $am = $this->translator->trans(
                         'fhm.schedules.day.hour',
                         array('%start%' => $value[0], '%end%' => $value[1]),
                         'FhmFhmBundle'
                     );
                 }
-                if ((isset($value[2]) && $value[2] == 'close') || (isset($value[3]) && $value[3] == 'close')) {
+                if((isset($value[2]) && $value[2] == 'close') || (isset($value[3]) && $value[3] == 'close'))
+                {
                     $pm = $transClose;
-                } elseif (isset($value[2]) && isset($value[3]) && $value[2] != '' && $value[3] != '') {
+                }
+                elseif(isset($value[2]) && isset($value[3]) && $value[2] != '' && $value[3] != '')
+                {
                     $pm = $this->translator->trans(
                         'fhm.schedules.day.hour',
                         array('%start%' => $value[2], '%end%' => $value[3]),
                         'FhmFhmBundle'
                     );
                 }
-                $all = ($am == $pm) ? $am : ($am == '-' ? $pm : ($pm == '-' ? $am : ''));
+                $all                     = ($am == $pm) ? $am : ($am == '-' ? $pm : ($pm == '-' ? $am : ''));
                 $formatted['days'][$key] = array(
-                    'label' => $this->translator->trans(
-                        'fhm.schedules.days.'.$key,
+                    'label'    => $this->translator->trans(
+                        'fhm.schedules.days.' . $key,
                         array(),
                         'FhmFhmBundle'
                     ),
-                    'am' => $am,
-                    'pm' => $pm,
-                    'all' => $all,
-                    'classAM' => $am == $transClose ? 'closed' : ($am == '-' ? 'empty' : ''),
-                    'classPM' => $pm == $transClose ? 'closed' : ($pm == '-' ? 'empty' : ''),
+                    'am'       => $am,
+                    'pm'       => $pm,
+                    'all'      => $all,
+                    'classAM'  => $am == $transClose ? 'closed' : ($am == '-' ? 'empty' : ''),
+                    'classPM'  => $pm == $transClose ? 'closed' : ($pm == '-' ? 'empty' : ''),
                     'classALL' => $all == $transClose ? 'closed' : ($all == '-' ? 'empty' : ''),
                 );
             }
         }
         $formatted['close_enable'] = $this->getValue('close_enable');
-        $formatted['close_date'] = $this->getValue('close_date');
+        $formatted['close_date']   = $this->getValue('close_date');
         $formatted['close_reason'] = $this->getValue('close_reason');
 
         return $formatted;
@@ -273,8 +301,9 @@ class Schedules
     private function _formatState($day)
     {
         $formatted = array();
-        if (isset($this->data['days'][$day - 1])) {
-            $formattedDay = $this->data['days'][$day - 1];
+        if(isset($this->data['days'][$day - 1]))
+        {
+            $formattedDay   = $this->data['days'][$day - 1];
             $formattedValue = array(
                 isset($formattedDay[0]) && $formattedDay[0] != '' && $formattedDay[0] != 'close' ? str_replace(
                     ':',
@@ -297,17 +326,20 @@ class Schedules
                     $formattedDay[3]
                 ) : '',
             );
-            if ($formattedValue[0] != '' && $formattedValue[1] != '' && $formattedValue[0] > $formattedValue[1]) {
+            if($formattedValue[0] != '' && $formattedValue[1] != '' && $formattedValue[0] > $formattedValue[1])
+            {
                 $formatted[] = array('0000', $formattedValue[1]);
             }
-            if ($formattedValue[2] != '' && $formattedValue[3] != '' && $formattedValue[2] > $formattedValue[3]) {
+            if($formattedValue[2] != '' && $formattedValue[3] != '' && $formattedValue[2] > $formattedValue[3])
+            {
                 $formatted[] = array('0000', $formattedValue[3]);
             }
         }
-        if (isset($formattedDay)) {
-            $am = 'nodata';
-            $pm = 'nodata';
-            $formattedDay = $this->data['days'][$day];
+        if(isset($formattedDay))
+        {
+            $am             = 'nodata';
+            $pm             = 'nodata';
+            $formattedDay   = $this->data['days'][$day];
             $formattedValue = array(
                 isset($formattedDay[0]) && $formattedDay[0] != '' && $formattedDay[0] != 'close' ? str_replace(
                     ':',
@@ -330,35 +362,56 @@ class Schedules
                     $formattedDay[3]
                 ) : '',
             );
-            if (isset($formattedDay[0]) && isset($formattedDay[1])) {
-                if ($formattedDay[0] == 'close' || $formattedDay[1] == 'close') {
+            if(isset($formattedDay[0]) && isset($formattedDay[1]))
+            {
+                if($formattedDay[0] == 'close' || $formattedDay[1] == 'close')
+                {
                     $am = 'close';
-                } elseif ($formattedValue[0] != '' && $formattedValue[1] != '') {
-                    if ($formattedValue[0] > $formattedValue[1]) {
+                }
+                elseif($formattedValue[0] != '' && $formattedValue[1] != '')
+                {
+                    if($formattedValue[0] > $formattedValue[1])
+                    {
                         $am = array($formattedValue[0], '2400');
-                    } else {
+                    }
+                    else
+                    {
                         $am = array($formattedValue[0], $formattedValue[1]);
                     }
                 }
             }
-            if (isset($formattedDay[2]) && isset($formattedDay[3])) {
-                if ($formattedDay[2] == 'close' || $formattedDay[3] == 'close') {
+            if(isset($formattedDay[2]) && isset($formattedDay[3]))
+            {
+                if($formattedDay[2] == 'close' || $formattedDay[3] == 'close')
+                {
                     $pm = 'close';
-                } elseif ($formattedValue[2] != '' && $formattedValue[2] != '') {
-                    if ($formattedValue[2] > $formattedValue[3]) {
+                }
+                elseif($formattedValue[2] != '' && $formattedValue[2] != '')
+                {
+                    if($formattedValue[2] > $formattedValue[3])
+                    {
                         $pm = array($formattedValue[2], '2400');
-                    } else {
+                    }
+                    else
+                    {
                         $pm = array($formattedValue[2], $formattedValue[3]);
                     }
                 }
             }
-            if ($am == 'nodata' && $pm == 'nodata') {
+            if($am == 'nodata' && $pm == 'nodata')
+            {
                 $formatted[] = 'nodata';
-            } elseif ($am == 'nodata') {
+            }
+            elseif($am == 'nodata')
+            {
                 $formatted[] = $pm;
-            } elseif ($pm == 'nodata') {
+            }
+            elseif($pm == 'nodata')
+            {
                 $formatted[] = $am;
-            } else {
+            }
+            else
+            {
                 $formatted[] = $am;
                 $formatted[] = $pm;
             }

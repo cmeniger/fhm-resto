@@ -47,18 +47,26 @@ site:
             form:
                 title:                          Titre
                 subtitle:                       Sous-titre
-                description:                    Description
-                name:                           Nom
                 menu:                           Menu
+                menu_home_left:                 Accueil gauche
+                menu_home_right:                Accueil droite
+                menu_home_side:                 Accueil côté
+                menu_footer:                    Bas de page
                 logo:                           Logo
+                background_top:                 Fond haut
+                background_card:                Fond carte
+                background_testimony:           Fond témoignage
                 slider:                         Slider
-                gallery:                        Galerie
-                background:                     Image de fond
-                news:                           Actualités
-                active:                         Activer
-                partner:                        Partenaires
+                gallery_top:                    Galerie haut
+                gallery_bottom:                 Galerie bas
+                card:                           Carte
                 contact:                        Contact
-                legalnotice:                    Mentions légales
+                news:                           Actualités
+                partner:                        Partenaires
+                name:                           Nom
+                description:                    Description
+                demo:                           Mode démo
+                active:                         Activer
                 social:
                     placeholder:
                         link:                   "http://"
@@ -83,11 +91,15 @@ site:
                     export:                     Exporter
                 fieldset:
                     information:                Informations
+                    menu:                       Menus
+                    image:                      Images
                     media:                      Médias
+                    card_slider:                Carte slider
+                    card_main:                  Carte principale
+                    card_forward:               Carte en avant
+                    testimony:                  Témoignage
                     social:                     Réseaux sociaux
-                    socialid:                   Id réseaux sociaux
                     options:                    Options
-                    notice:                     Mentions légales
 
         update:
             title:                              Modifier
@@ -99,18 +111,26 @@ site:
             form:
                 title:                          Titre
                 subtitle:                       Sous-titre
-                description:                    Description
-                name:                           Nom
                 menu:                           Menu
+                menu_home_left:                 Accueil gauche
+                menu_home_right:                Accueil droite
+                menu_home_side:                 Accueil côté
+                menu_footer:                    Bas de page
                 logo:                           Logo
+                background_top:                 Fond haut
+                background_card:                Fond carte
+                background_testimony:           Fond témoignage
                 slider:                         Slider
-                gallery:                        Galerie
-                background:                     Image de fond
-                news:                           Actualités
-                active:                         Activer
-                partner:                        Partenaires
+                gallery_top:                    Galerie haut
+                gallery_bottom:                 Galerie bas
+                card:                           Carte
                 contact:                        Contact
-                legalnotice:                    Mentions légales
+                news:                           Actualités
+                partner:                        Partenaires
+                name:                           Nom
+                description:                    Description
+                demo:                           Mode démo
+                active:                         Activer
                 social:
                     placeholder:
                         link:                   "http://"
@@ -133,14 +153,17 @@ site:
                     cancel:                     Annuler
                     import:                     Importer
                     export:                     Exporter
-                    delete:                     Supprimer
                 fieldset:
                     information:                Informations
+                    menu:                       Menus
+                    image:                      Images
                     media:                      Médias
+                    card_slider:                Carte slider
+                    card_main:                  Carte principale
+                    card_forward:               Carte en avant
+                    testimony:                  Témoignage
                     social:                     Réseaux sociaux
-                    socialid:                   Id réseaux sociaux
                     options:                    Options
-                    notice:                     Mentions légales
 
         detail:
             title:                              %name%

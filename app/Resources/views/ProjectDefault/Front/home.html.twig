@@ -4,76 +4,113 @@
 {% block body_header %}{% endblock %}
 
 {% block body_content %}
-    {{ render(path('fhm_api_menu_detail',{template:'home-side','id':'demo'})) }}
+    {% if site.getMenuHomeSide() %}
+        {{ render(path('fhm_api_menu_detail',{template:'home-side','id':site.getDemo() ? 'demo' : site.getMenuHomeSide().getId()})) }}
+    {% endif %}
     <header id="header" class="home">
         <div class="menu-icon">
             <a href="#"> <span></span> <span></span> <span></span> </a>
         </div>
-        {{ render(path('fhm_api_menu_detail',{template:'home-left','id':'demo'})) }}
+        {% if site.getMenuHomeLeft() or site.getDemo() %}
+            {{ render(path('fhm_api_menu_detail',{template:'home-left','id':site.getDemo() ? 'demo' : site.getMenuHomeLeft().getId()})) }}
+        {% endif %}
         <div class="menu-logo">
-            <a href="{{ path('project_home') }}" class="logo"><img src="{{ asset('images/logo.png') }}" alt=""></a>
+            <a href="{{ path('project_home') }}" class="logo"><img src="{{ site.getDemo() ? asset('images/logo.png') : site.getLogo()|media('s', asset('images/logo.png')) }}" alt=""></a>
         </div>
-        {{ render(path('fhm_api_menu_detail',{template:'home-right','id':'demo'})) }}
+        {% if site.getMenuHomeRight() or site.getDemo() %}
+            {{ render(path('fhm_api_menu_detail',{template:'home-right','id':site.getDemo() ? 'demo' : site.getMenuHomeRight().getId()})) }}
+        {% endif %}
     </header>
     <section id="main-content">
         <section class="section-top">
-            <div class="parallax-image-top" data-parallax="scroll" data-image-src="{{ asset('images/default.jpg') }}"></div>
+            <div class="parallax-image-top" data-parallax="scroll" data-image-src="{{ site.getDemo() ? asset('images/default.jpg') : site.getBackgroundTop()|media }}"></div>
             <div class="introduction">
                 <div class="content">
-                    <h2 class="title title-centered subtitle" data-bg-color="">{{ 'project.home.default.subtitle'|trans }}</h2>
+                    <h2 class="title title-centered subtitle" data-bg-color="">{{ (site.getSubtitle() and not site.getDemo() ? site.getSubtitle() : 'project.home.default.subtitle'|trans)|raw }}</h2>
                 </div>
-                <h1 class="animated bounceInUp">{{ 'project.home.default.title'|trans }}</h1>
+                <h1 class="animated bounceInUp">{{ (site.getTitle() and not site.getDemo() ? site.getTitle() : 'project.home.default.title'|trans)|raw }}</h1>
             </div>
         </section>
-        <section class="section-slider margin">
-            {{ render(path('fhm_api_slider_detail',{template:'home','id':'demo'})) }}
-        </section>
-        <section class="section-gallery-top">
-            <a id="anchor-about" class="anchor"></a>
-            {{ render(path('fhm_api_gallery_detail',{template:'home-top','id':'demo'})) }}
-        </section>
-        <section class="section-card-slider">
-            <a id="anchor-card" class="anchor"></a>
-            <div class="parallax-image-card" data-parallax="scroll" data-image-src="{{ asset('images/default.jpg') }}"></div>
-            <header>
-                <h3 class="subtitle">{{ 'project.home.default.subtitle'|trans }}</h3>
-                <h2>{{ 'project.home.default.title'|trans }}</h2>
-            </header>
-            <div class="row">
-                {{ render(path('fhm_api_card_embed', {id:'demo', template:'M001'})) }}
-            </div>
-        </section>
-        <section class="section-card-main margin row">
-            <header>
-                <h3 class="subtitle">{{ 'project.home.default.subtitle'|trans }}</h3>
-                <h2>{{ 'project.home.default.title'|trans }}</h2>
-            </header>
-            {{ render(path('fhm_api_card_embed', {id:'demo', template:'M002'})) }}
-        </section>
-        <section class="section-card-forward">
-            <header>
-                <h3 class="subtitle">{{ 'project.home.default.subtitle'|trans }}</h3>
-                <h2>{{ 'project.home.default.title'|trans }}</h2>
-            </header>
-            {{ render(path('fhm_api_card_embed', {id:'demo', template:'M003'})) }}
-        </section>
+        {% if site.getSlider() or site.getDemo() %}
+            <section class="section-slider margin">
+                {{ render(path('fhm_api_slider_detail',{template:'home','id':site.getDemo() ? 'demo' : site.getSlider().getId()})) }}
+            </section>
+        {% endif %}
+        {% if site.getGalleryTop() or site.getDemo() %}
+            <section class="section-gallery-top {{ site.getSlider() == '' and not site.getDemo() ? 'margin' : '' }}">
+                <a id="anchor-about" class="anchor"></a>
+                {{ render(path('fhm_api_gallery_detail',{template:'home-top','id':site.getDemo() ? 'demo' : site.galleryTop().getId()})) }}
+            </section>
+        {% endif %}
+        {% if site.getCardSlider() or site.getDemo() %}
+            <section class="section-card-slider">
+                <a id="anchor-card" class="anchor"></a>
+                <div class="parallax-image-card" data-parallax="scroll" data-image-src="{{ site.getDemo() ? asset('images/default.jpg') : site.getBackgroundCard()|media }}"></div>
+                <header>
+                    {% if site.getSubtitleCardSlider() or site.getDemo() %}
+                        <h3 class="subtitle">{{ site.getDemo() ? 'project.home.default.subtitle'|trans : site.getSubtitleCardSlider()|raw }}</h3>
+                    {% endif %}
+                    {% if site.getTitleCardSlider() or site.getDemo() %}
+                        <h2>{{ site.getDemo() ? 'project.home.default.title'|trans : site.getTitleCardSlider()|raw }}</h2>
+                    {% endif %}
+                </header>
+                <div class="row">
+                    {{ render(path('fhm_api_card_embed', {id:site.getDemo() ? 'demo' : site.getCardSlider().getId(), template:'M001'})) }}
+                </div>
+            </section>
+        {% endif %}
+        {% if site.getCardMain() or site.getDemo() %}
+            <section class="section-card-main row {{ site.getCardSlider() and not site.getDemo() ? 'margin' : '' }}">
+                <header>
+                    {% if site.getSubtitleCardMain() or site.getDemo() %}
+                        <h3 class="subtitle">{{ site.getDemo() ? 'project.home.default.subtitle'|trans : site.getSubtitleCardMain()|raw }}</h3>
+                    {% endif %}
+                    {% if site.getTitleCardMain() or site.getDemo() %}
+                        <h2>{{ site.getDemo() ? 'project.home.default.title'|trans : site.getTitleCardMain()|raw }}</h2>
+                    {% endif %}
+                </header>
+                {{ render(path('fhm_api_card_embed', {id:site.getDemo() ? 'demo' : site.getCardMain().getId(), template:'M002'})) }}
+            </section>
+        {% endif %}
+        {% if site.getCardForward() or site.getDemo() %}
+            <section class="section-card-forward">
+                <header>
+                    {% if site.getSubtitleCardForward() or site.getDemo() %}
+                        <h3 class="subtitle">{{ site.getDemo() ? 'project.home.default.subtitle'|trans : site.getSubtitleCardForward()|raw }}</h3>
+                    {% endif %}
+                    {% if site.getTitleCardForward() or site.getDemo() %}
+                        <h2>{{ site.getDemo() ? 'project.home.default.title'|trans : site.getTitleCardForward()|raw }}</h2>
+                    {% endif %}
+                </header>
+                {{ render(path('fhm_api_card_embed', {id:site.getDemo() ? 'demo' : site.getCardForward().getId(), template:'M003'})) }}
+            </section>
+        {% endif %}
         <section class="section-testimony">
             <a id="anchor-testimony" class="anchor"></a>
-            <div class="parallax-image-testimony" data-parallax="scroll" data-image-src="{{ asset('images/default.jpg') }}"></div>
+            <div class="parallax-image-testimony" data-parallax="scroll" data-image-src="{{ site.getBackgroundTestimony()|media }}"></div>
             <header>
-                <h3 class="subtitle">{{ 'project.home.default.subtitle'|trans }}</h3>
-                <h2>{{ 'project.home.default.title'|trans }}</h2>
+                {% if site.getSubtitleTestimony() or site.getDemo() %}
+                    <h3 class="subtitle">{{ site.getDemo() ? 'project.home.default.subtitle'|trans : site.getSubtitleTestimony()|raw }}</h3>
+                {% endif %}
+                {% if site.getTitleTestimony() or site.getDemo() %}
+                    <h2>{{ site.getDemo() ? 'project.home.default.title'|trans : site.getTitleTestimony()|raw }}</h2>
+                {% endif %}
             </header>
             <div class="row">
-                {{ render(path('fhm_api_testimony_detail', {id:'demo', template:'home'})) }}
+                {{ render(path('fhm_api_testimony_detail', {template:'home', id:site.getDemo() ? 'demo' : ''})) }}
             </div>
         </section>
-        <section class="section-contact margin">
-            <a id="anchor-contact" class="anchor"></a>
-            {{ render(path('fhm_api_contact_detail', {id:'demo', template:'home'})) }}
-        </section>
-        <section class="section-gallery-bottom">
-            {{ render(path('fhm_api_gallery_detail',{template:'home-bottom','id':'demo'})) }}
-        </section>
+        {% if site.getContact() or site.getDemo() %}
+            <section class="section-contact margin">
+                <a id="anchor-contact" class="anchor"></a>
+                {{ render(path('fhm_api_contact_detail', {id:site.getDemo() ? 'demo' : site.getContact().getId(), template:'home'})) }}
+            </section>
+        {% endif %}
+        {% if site.getGalleryBottom() or site.getDemo() %}
+            <section class="section-gallery-bottom">
+                <a id="anchor-about" class="anchor"></a>
+                {{ render(path('fhm_api_gallery_detail',{template:'home-bottom','id':site.getDemo() ? 'demo' : site.getGalleryBottom().getId()})) }}
+            </section>
+        {% endif %}
     </section>
 {% endblock %}

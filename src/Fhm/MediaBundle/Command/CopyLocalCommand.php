@@ -37,7 +37,7 @@ EOT
         // Copy
         foreach($medias as $media)
         {
-            $this->getcontainer()->get('fhm_media_s3')->setDocument($media)->copyLocal();
+            $this->getcontainer()->get('fhm_media_s3')->setModel($media)->copyLocal();
             if(is_dir($urlWeb . $media->getId()))
             {
                 $output->writeln($media->getId() . ' | ' . $media->getType() . ' | ' . $media->getExtension());

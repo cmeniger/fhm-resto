@@ -121,7 +121,7 @@ class MediaTagExtension extends \Twig_Extension
         return $env->render(
             '::FhmMedia/Template/Bloc/admin.tag.html.twig',
             array(
-                'document' => $tag
+                'object' => $tag
             )
         );
     }
@@ -136,7 +136,7 @@ class MediaTagExtension extends \Twig_Extension
         return $env->render(
             '::FhmMedia/Template/Bloc/front.tag.html.twig',
             array(
-                'document' => $tag
+                'object' => $tag
             )
         );
     }
@@ -151,7 +151,7 @@ class MediaTagExtension extends \Twig_Extension
         return $env->render(
             '::FhmMedia/Template/Bloc/selector.tag.html.twig',
             array(
-                'document' => $tag
+                'object' => $tag
             )
         );
     }
@@ -166,7 +166,7 @@ class MediaTagExtension extends \Twig_Extension
         return $env->render(
             '::FhmMedia/Template/Bloc/editor.tag.html.twig',
             array(
-                'document' => $tag
+                'object' => $tag
             )
         );
     }

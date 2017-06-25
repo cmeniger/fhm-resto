@@ -1,4 +1,5 @@
 <?php
+
 namespace Fhm\FhmBundle\Document;
 
 use Fhm\ContactBundle\Document\Contact;
@@ -23,7 +24,47 @@ class Site extends FhmFhm
     /**
      * @MongoDB\Field(type="string")
      */
+    protected $title_card_slider;
+
+    /**
+     * @MongoDB\Field(type="string")
+     */
+    protected $title_card_main;
+
+    /**
+     * @MongoDB\Field(type="string")
+     */
+    protected $title_card_forward;
+
+    /**
+     * @MongoDB\Field(type="string")
+     */
+    protected $title_testimony;
+
+    /**
+     * @MongoDB\Field(type="string")
+     */
     protected $subtitle;
+
+    /**
+     * @MongoDB\Field(type="string")
+     */
+    protected $subtitle_card_slider;
+
+    /**
+     * @MongoDB\Field(type="string")
+     */
+    protected $subtitle_card_main;
+
+    /**
+     * @MongoDB\Field(type="string")
+     */
+    protected $subtitle_card_forward;
+
+    /**
+     * @MongoDB\Field(type="string")
+     */
+    protected $subtitle_testimony;
 
     /**
      * @MongoDB\ReferenceOne(targetDocument="Fhm\FhmBundle\Document\Menu", nullable=true)
@@ -31,14 +72,24 @@ class Site extends FhmFhm
     protected $menu;
 
     /**
-     * @MongoDB\ReferenceOne(targetDocument="Fhm\SliderBundle\Document\Slider", nullable=true)
+     * @MongoDB\ReferenceOne(targetDocument="Fhm\FhmBundle\Document\Menu", nullable=true)
      */
-    protected $slider;
+    protected $menu_home_left;
 
     /**
-     * @MongoDB\ReferenceOne(targetDocument="Fhm\GalleryBundle\Document\Gallery", nullable=true)
+     * @MongoDB\ReferenceOne(targetDocument="Fhm\FhmBundle\Document\Menu", nullable=true)
      */
-    protected $gallery;
+    protected $menu_home_right;
+
+    /**
+     * @MongoDB\ReferenceOne(targetDocument="Fhm\FhmBundle\Document\Menu", nullable=true)
+     */
+    protected $menu_home_side;
+
+    /**
+     * @MongoDB\ReferenceOne(targetDocument="Fhm\FhmBundle\Document\Menu", nullable=true)
+     */
+    protected $menu_footer;
 
     /**
      * @MongoDB\ReferenceOne(targetDocument="Fhm\MediaBundle\Document\Media", cascade={"persist"}, nullable=true)
@@ -48,7 +99,52 @@ class Site extends FhmFhm
     /**
      * @MongoDB\ReferenceOne(targetDocument="Fhm\MediaBundle\Document\Media", cascade={"persist"}, nullable=true)
      */
-    protected $background;
+    protected $background_top;
+
+    /**
+     * @MongoDB\ReferenceOne(targetDocument="Fhm\MediaBundle\Document\Media", cascade={"persist"}, nullable=true)
+     */
+    protected $background_card;
+
+    /**
+     * @MongoDB\ReferenceOne(targetDocument="Fhm\MediaBundle\Document\Media", cascade={"persist"}, nullable=true)
+     */
+    protected $background_testimony;
+
+    /**
+     * @MongoDB\ReferenceOne(targetDocument="Fhm\SliderBundle\Document\Slider", nullable=true)
+     */
+    protected $slider;
+
+    /**
+     * @MongoDB\ReferenceOne(targetDocument="Fhm\GalleryBundle\Document\Gallery", nullable=true)
+     */
+    protected $gallery_top;
+
+    /**
+     * @MongoDB\ReferenceOne(targetDocument="Fhm\GalleryBundle\Document\Gallery", nullable=true)
+     */
+    protected $gallery_bottom;
+
+    /**
+     * @MongoDB\ReferenceOne(targetDocument="Fhm\CardBundle\Document\Card", nullable=true)
+     */
+    protected $card_slider;
+
+    /**
+     * @MongoDB\ReferenceOne(targetDocument="Fhm\CardBundle\Document\Card", nullable=true)
+     */
+    protected $card_main;
+
+    /**
+     * @MongoDB\ReferenceOne(targetDocument="Fhm\CardBundle\Document\Card", nullable=true)
+     */
+    protected $card_forward;
+
+    /**
+     * @MongoDB\ReferenceOne(targetDocument="Fhm\ContactBundle\Document\Contact", nullable=true)
+     */
+    protected $contact;
 
     /**
      * @MongoDB\ReferenceOne(targetDocument="Fhm\NewsBundle\Document\NewsGroup", nullable=true)
@@ -59,10 +155,6 @@ class Site extends FhmFhm
      * @MongoDB\ReferenceOne(targetDocument="Fhm\PartnerBundle\Document\PartnerGroup", nullable=true)
      */
     protected $partner;
-    /**
-     * @MongoDB\ReferenceOne(targetDocument="Fhm\ContactBundle\Document\Contact", nullable=true)
-     */
-    protected $contact;
 
     /**
      * @MongoDB\Field(type="string")
@@ -112,12 +204,12 @@ class Site extends FhmFhm
     /**
      * @MongoDB\Field(type="boolean")
      */
-    protected $default;
+    protected $demo;
 
     /**
-     * @MongoDB\Field(type="string")
+     * @MongoDB\Field(type="boolean")
      */
-    protected $legal_notice;
+    protected $default;
 
     /**
      * Constructor
@@ -125,25 +217,12 @@ class Site extends FhmFhm
     public function __construct()
     {
         parent::__construct();
+        $this->demo    = false;
         $this->default = false;
     }
 
     /**
-     * Set title
-     *
-     * @param string $title
-     *
-     * @return self
-     */
-    public function setTitle($title)
-    {
-        $this->title = $title;
-    }
-
-    /**
-     * Get title
-     *
-     * @return string $title
+     * @return mixed
      */
     public function getTitle()
     {
@@ -151,21 +230,99 @@ class Site extends FhmFhm
     }
 
     /**
-     * Set subtitle
+     * @param $title
      *
-     * @param string $subtitle
-     *
-     * @return self
+     * @return $this
      */
-    public function setSubtitle($subtitle)
+    public function setTitle($title)
     {
-        $this->subtitle = $subtitle;
+        $this->title = $title;
+
+        return $this;
     }
 
     /**
-     * Get subtitle
+     * @return mixed
+     */
+    public function getTitleCardSlider()
+    {
+        return $this->title_card_slider;
+    }
+
+    /**
+     * @param $title_card_slider
      *
-     * @return string $subtitle
+     * @return $this
+     */
+    public function setTitleCardSlider($title_card_slider)
+    {
+        $this->title_card_slider = $title_card_slider;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTitleCardMain()
+    {
+        return $this->title_card_main;
+    }
+
+    /**
+     * @param $title_card_main
+     *
+     * @return $this
+     */
+    public function setTitleCardMain($title_card_main)
+    {
+        $this->title_card_main = $title_card_main;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTitleCardForward()
+    {
+        return $this->title_card_forward;
+    }
+
+    /**
+     * @param $title_card_forward
+     *
+     * @return $this
+     */
+    public function setTitleCardForward($title_card_forward)
+    {
+        $this->title_card_forward = $title_card_forward;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTitleTestimony()
+    {
+        return $this->title_testimony;
+    }
+
+    /**
+     * @param $title_testimony
+     *
+     * @return $this
+     */
+    public function setTitleTestimony($title_testimony)
+    {
+        $this->title_testimony = $title_testimony;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
      */
     public function getSubtitle()
     {
@@ -173,9 +330,107 @@ class Site extends FhmFhm
     }
 
     /**
-     * Set menu
+     * @return mixed
+     */
+    public function getSubtitleCardSlider()
+    {
+        return $this->subtitle_card_slider;
+    }
+
+    /**
+     * @param $subtitle_card_slider
      *
-     * @param \Fhm\FhmBundle\Document\Menu $menu
+     * @return $this
+     */
+    public function setSubtitleCardSlider($subtitle_card_slider)
+    {
+        $this->subtitle_card_slider = $subtitle_card_slider;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSubtitleCardMain()
+    {
+        return $this->subtitle_card_main;
+    }
+
+    /**
+     * @param $subtitle_card_main
+     *
+     * @return $this
+     */
+    public function setSubtitleCardMain($subtitle_card_main)
+    {
+        $this->subtitle_card_main = $subtitle_card_main;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSubtitleCardForward()
+    {
+        return $this->subtitle_card_forward;
+    }
+
+    /**
+     * @param $subtitle_card_forward
+     *
+     * @return $this
+     */
+    public function setSubtitleCardForward($subtitle_card_forward)
+    {
+        $this->subtitle_card_forward = $subtitle_card_forward;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSubtitleTestimony()
+    {
+        return $this->subtitle_testimony;
+    }
+
+    /**
+     * @param $subtitle_testimony
+     *
+     * @return $this
+     */
+    public function setSubtitleTestimony($subtitle_testimony)
+    {
+        $this->subtitle_testimony = $subtitle_testimony;
+
+        return $this;
+    }
+
+    /**
+     * @param $subtitle
+     *
+     * @return $this
+     */
+    public function setSubtitle($subtitle)
+    {
+        $this->subtitle = $subtitle;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getMenu()
+    {
+        return $this->menu;
+    }
+
+    /**
+     * @param $menu
      *
      * @return $this
      */
@@ -187,69 +442,97 @@ class Site extends FhmFhm
     }
 
     /**
-     * Get menu
-     *
-     * @return \Fhm\FhmBundle\Document\Menu $menu
-     */
-    public function getMenu()
-    {
-        return $this->menu;
-    }
-
-    /**
-     * Set slider
-     *
-     * @param \Fhm\SliderBundle\Document\Slider $slider
-     *
-     * @return self
-     */
-    public function setSlider($slider)
-    {
-        $this->slider = ($slider instanceof \Fhm\SliderBundle\Document\Slider) ? $slider : null;
-
-        return $this;
-    }
-
-    /**
-     * Get slider
-     *
-     * @return \Fhm\SliderBundle\Document\Slider $slider
-     */
-    public function getSlider()
-    {
-        return $this->slider;
-    }
-
-    /**
-     * Set gallery
-     *
-     * @param \Fhm\GalleryBundle\Document\Gallery $gallery
-     *
-     * @return self
-     */
-    public function setGallery($gallery)
-    {
-        $this->gallery = ($gallery instanceof \Fhm\GalleryBundle\Document\Gallery) ? $gallery : null;
-
-        return $this;
-    }
-
-    /**
-     * Get gallery
-     *
      * @return mixed
      */
-    public function getGallery()
+    public function getMenuHomeLeft()
     {
-        return $this->gallery;
+        return $this->menu_home_left;
     }
 
     /**
-     * Set logo
+     * @param $menu
      *
-     * @param \Fhm\MediaBundle\Document\Media $media
+     * @return $this
+     */
+    public function setMenuHomeLeft($menu)
+    {
+        $this->menu_home_left = ($menu instanceof \Fhm\FhmBundle\Document\Menu) ? $menu : null;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getMenuHomeRight()
+    {
+        return $this->menu_home_right;
+    }
+
+    /**
+     * @param $menu
      *
-     * @return self
+     * @return $this
+     */
+    public function setMenuHomeRight($menu)
+    {
+        $this->menu_home_right = ($menu instanceof \Fhm\FhmBundle\Document\Menu) ? $menu : null;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getMenuHomeSide()
+    {
+        return $this->menu_home_side;
+    }
+
+    /**
+     * @param $menu
+     *
+     * @return $this
+     */
+    public function setMenuHomeSide($menu)
+    {
+        $this->menu_home_side = ($menu instanceof \Fhm\FhmBundle\Document\Menu) ? $menu : null;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getMenuFooter()
+    {
+        return $this->menu_footer;
+    }
+
+    /**
+     * @param $menu
+     *
+     * @return $this
+     */
+    public function setMenuFooter($menu)
+    {
+        $this->menu_footer = ($menu instanceof \Fhm\FhmBundle\Document\Menu) ? $menu : null;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLogo()
+    {
+        return $this->logo;
+    }
+
+    /**
+     * @param $media
+     *
+     * @return $this
      */
     public function setLogo($media)
     {
@@ -259,325 +542,123 @@ class Site extends FhmFhm
     }
 
     /**
-     * Get logo
-     *
-     * @return \Fhm\MediaBundle\Document\Media $logo
+     * @return mixed
      */
-    public function getLogo()
+    public function getBackgroundTop()
     {
-        return $this->logo;
+        return $this->background_top;
     }
 
     /**
-     * Set background
+     * @param $media
      *
-     * @param \Fhm\MediaBundle\Document\Media $media
-     *
-     * @return self
+     * @return $this
      */
-    public function setBackground($media)
+    public function setBackgroundTop($media)
     {
-        $this->background = ($media instanceof \Fhm\MediaBundle\Document\Media) ? $media : null;
+        $this->background_top = ($media instanceof \Fhm\MediaBundle\Document\Media) ? $media : null;
 
         return $this;
     }
 
     /**
-     * Get background
-     *
-     * @return \Fhm\MediaBundle\Document\Media $background
+     * @return mixed
      */
-    public function getBackground()
+    public function getBackgroundCard()
     {
-        return $this->background;
+        return $this->background_card;
     }
 
     /**
-     * Set news
+     * @param $media
      *
-     * @param \Fhm\NewsBundle\Document\NewsGroup $news
-     *
-     * @return self
+     * @return $this
      */
-    public function setNews($news)
+    public function setBackgroundCard($media)
     {
-        $this->news = ($news instanceof \Fhm\NewsBundle\Document\NewsGroup) ? $news : null;
+        $this->background_card = ($media instanceof \Fhm\MediaBundle\Document\Media) ? $media : null;
 
         return $this;
     }
 
     /**
-     * Get news
-     *
-     * @return \Fhm\NewsBundle\Document\NewsGroup $news
+     * @return mixed
      */
-    public function getNews()
+    public function getBackgroundTestimony()
     {
-        return $this->news;
+        return $this->background_testimony;
     }
 
     /**
-     * Set partner
+     * @param $media
      *
-     * @param \Fhm\PartnerBundle\Document\PartnerGroup $partner
-     *
-     * @return self
+     * @return $this
      */
-    public function setPartner($partner)
+    public function setBackgroundTestimony($media)
     {
-        $this->partner = ($partner instanceof \Fhm\PartnerBundle\Document\PartnerGroup) ? $partner : null;
+        $this->background_testimony = ($media instanceof \Fhm\MediaBundle\Document\Media) ? $media : null;
 
         return $this;
     }
 
     /**
-     * Get partner
-     *
-     * @return \Fhm\PartnerBundle\Document\PartnerGroup $partner
+     * @return mixed
      */
-    public function getPartner()
+    public function getSlider()
     {
-        return $this->partner;
+        return $this->slider;
     }
 
     /**
-     * Set socialFacebook
+     * @param $slider
      *
-     * @param string $socialFacebook
-     *
-     * @return self
+     * @return $this
      */
-    public function setSocialFacebook($socialFacebook)
+    public function setSlider($slider)
     {
-        $this->social_facebook = $socialFacebook;
+        $this->slider = ($slider instanceof \Fhm\SliderBundle\Document\Slider) ? $slider : null;
 
         return $this;
     }
 
     /**
-     * Get socialFacebook
-     *
-     * @return string $socialFacebook
+     * @return mixed
      */
-    public function getSocialFacebook()
+    public function getGalleryTop()
     {
-        return $this->social_facebook;
+        return $this->gallery_top;
     }
 
     /**
-     * Set socialFacebookId
+     * @param $gallery
      *
-     * @param string $socialFacebookId
-     *
-     * @return self
+     * @return $this
      */
-    public function setSocialFacebookId($socialFacebookId)
+    public function setGalleryTop($gallery)
     {
-        $this->social_facebook_id = $socialFacebookId;
+        $this->gallery_top = ($gallery instanceof \Fhm\GalleryBundle\Document\Gallery) ? $gallery : null;
 
         return $this;
     }
 
     /**
-     * Get socialFacebookId
-     *
-     * @return string $socialFacebookId
+     * @return mixed
      */
-    public function getSocialFacebookId()
+    public function getGalleryBottom()
     {
-        return $this->social_facebook_id;
+        return $this->gallery_bottom;
     }
 
     /**
-     * Set socialTwitter
+     * @param $gallery
      *
-     * @param string $socialTwitter
-     *
-     * @return self
+     * @return $this
      */
-    public function setSocialTwitter($socialTwitter)
+    public function setGalleryBottom($gallery)
     {
-        $this->social_twitter = $socialTwitter;
+        $this->gallery_bottom = ($gallery instanceof \Fhm\GalleryBundle\Document\Gallery) ? $gallery : null;
 
         return $this;
-    }
-
-    /**
-     * Get socialTwitter
-     *
-     * @return string $socialTwitter
-     */
-    public function getSocialTwitter()
-    {
-        return $this->social_twitter;
-    }
-
-    /**
-     * Set socialTwitterId
-     *
-     * @param string $socialTwitterId
-     *
-     * @return self
-     */
-    public function setSocialTwitterId($socialTwitterId)
-    {
-        $this->social_twitter_id = $socialTwitterId;
-
-        return $this;
-    }
-
-    /**
-     * Get socialTwitterId
-     *
-     * @return string $socialTwitterId
-     */
-    public function getSocialTwitterId()
-    {
-        return $this->social_twitter_id;
-    }
-
-    /**
-     * Set socialGoogle
-     *
-     * @param string $socialGoogle
-     *
-     * @return self
-     */
-    public function setSocialGoogle($socialGoogle)
-    {
-        $this->social_google = $socialGoogle;
-
-        return $this;
-    }
-
-    /**
-     * Get socialGoogle
-     *
-     * @return string $socialGoogle
-     */
-    public function getSocialGoogle()
-    {
-        return $this->social_google;
-    }
-
-    /**
-     * Set socialGoogleId
-     *
-     * @param string $socialGoogleId
-     *
-     * @return self
-     */
-    public function setSocialGoogleId($socialGoogleId)
-    {
-        $this->social_google_id = $socialGoogleId;
-
-        return $this;
-    }
-
-    /**
-     * Get socialGoogleId
-     *
-     * @return string $socialGoogleId
-     */
-    public function getSocialGoogleId()
-    {
-        return $this->social_google_id;
-    }
-
-    /**
-     * Set socialYoutube
-     *
-     * @param string $socialYoutube
-     *
-     * @return self
-     */
-    public function setSocialYoutube($socialYoutube)
-    {
-        $this->social_youtube = $socialYoutube;
-
-        return $this;
-    }
-
-    /**
-     * Get socialYoutube
-     *
-     * @return string $socialYoutube
-     */
-    public function getSocialYoutube()
-    {
-        return $this->social_youtube;
-    }
-
-    /**
-     * Set socialInstagram
-     *
-     * @param string $socialInstagram
-     *
-     * @return self
-     */
-    public function setSocialInstagram($socialInstagram)
-    {
-        $this->social_instagram = $socialInstagram;
-
-        return $this;
-    }
-
-    /**
-     * Get socialInstagram
-     *
-     * @return string $socialInstagram
-     */
-    public function getSocialInstagram()
-    {
-        return $this->social_instagram;
-    }
-
-    /**
-     * Set socialFlux
-     *
-     * @param string $socialFlux
-     *
-     * @return self
-     */
-    public function setSocialFlux($socialFlux)
-    {
-        $this->social_flux = $socialFlux;
-
-        return $this;
-    }
-
-    /**
-     * Get socialFlux
-     *
-     * @return string $socialFlux
-     */
-    public function getSocialFlux()
-    {
-        return $this->social_flux;
-    }
-
-    /**
-     * Set default
-     *
-     * @param boolean $default
-     *
-     * @return self
-     */
-    public function setDefault($default)
-    {
-        $this->default = $default;
-
-        return $this;
-    }
-
-    /**
-     * Get default
-     *
-     * @return boolean $default
-     */
-    public function getDefault()
-    {
-        return $this->default;
     }
 
     /**
@@ -595,7 +676,7 @@ class Site extends FhmFhm
      */
     public function setContact(Contact $contact)
     {
-        $this->contact = $contact;
+        $this->contact = ($contact instanceof \Fhm\ContactBundle\Document\Contact) ? $contact : null;
 
         return $this;
     }
@@ -603,17 +684,320 @@ class Site extends FhmFhm
     /**
      * @return mixed
      */
-    public function getLegalNotice()
+    public function getCardSlider()
     {
-        return $this->legal_notice;
+        return $this->card_slider;
     }
 
     /**
-     * @param mixed $legal_notice
+     * @param $card
+     *
+     * @return $this
      */
-    public function setLegalNotice($legal_notice)
+    public function setCardSlider($card)
     {
-        $this->legal_notice = $legal_notice;
+        $this->card_slider = ($card instanceof \Fhm\CardBundle\Document\Card) ? $card : null;
+
+        return $this;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getCardMain()
+    {
+        return $this->card_main;
+    }
+
+    /**
+     * @param $card
+     *
+     * @return $this
+     */
+    public function setCardMain($card)
+    {
+        $this->card_main = ($card instanceof \Fhm\CardBundle\Document\Card) ? $card : null;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCardForward()
+    {
+        return $this->card_forward;
+    }
+
+    /**
+     * @param $card
+     *
+     * @return $this
+     */
+    public function setCardForward($card)
+    {
+        $this->card_forward = ($card instanceof \Fhm\CardBundle\Document\Card) ? $card : null;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getNews()
+    {
+        return $this->news;
+    }
+
+    /**
+     * @param $news
+     *
+     * @return $this
+     */
+    public function setNews($news)
+    {
+        $this->news = ($news instanceof \Fhm\NewsBundle\Document\NewsGroup) ? $news : null;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPartner()
+    {
+        return $this->partner;
+    }
+
+    /**
+     * @param $partner
+     *
+     * @return $this
+     */
+    public function setPartner($partner)
+    {
+        $this->partner = ($partner instanceof \Fhm\PartnerBundle\Document\PartnerGroup) ? $partner : null;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSocialFacebook()
+    {
+        return $this->social_facebook;
+    }
+
+    /**
+     * @param $socialFacebook
+     *
+     * @return $this
+     */
+    public function setSocialFacebook($socialFacebook)
+    {
+        $this->social_facebook = $socialFacebook;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSocialFacebookId()
+    {
+        return $this->social_facebook_id;
+    }
+
+    /**
+     * @param $socialFacebookId
+     *
+     * @return $this
+     */
+    public function setSocialFacebookId($socialFacebookId)
+    {
+        $this->social_facebook_id = $socialFacebookId;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSocialTwitter()
+    {
+        return $this->social_twitter;
+    }
+
+    /**
+     * @param $socialTwitter
+     *
+     * @return $this
+     */
+    public function setSocialTwitter($socialTwitter)
+    {
+        $this->social_twitter = $socialTwitter;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSocialTwitterId()
+    {
+        return $this->social_twitter_id;
+    }
+
+    /**
+     * @param $socialTwitterId
+     *
+     * @return $this
+     */
+    public function setSocialTwitterId($socialTwitterId)
+    {
+        $this->social_twitter_id = $socialTwitterId;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSocialGoogle()
+    {
+        return $this->social_google;
+    }
+
+    /**
+     * @param $socialGoogle
+     *
+     * @return $this
+     */
+    public function setSocialGoogle($socialGoogle)
+    {
+        $this->social_google = $socialGoogle;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSocialGoogleId()
+    {
+        return $this->social_google_id;
+    }
+
+    /**
+     * @param $socialGoogleId
+     *
+     * @return $this
+     */
+    public function setSocialGoogleId($socialGoogleId)
+    {
+        $this->social_google_id = $socialGoogleId;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSocialYoutube()
+    {
+        return $this->social_youtube;
+    }
+
+    /**
+     * @param $socialYoutube
+     *
+     * @return $this
+     */
+    public function setSocialYoutube($socialYoutube)
+    {
+        $this->social_youtube = $socialYoutube;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSocialInstagram()
+    {
+        return $this->social_instagram;
+    }
+
+    /**
+     * @param $socialInstagram
+     *
+     * @return $this
+     */
+    public function setSocialInstagram($socialInstagram)
+    {
+        $this->social_instagram = $socialInstagram;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSocialFlux()
+    {
+        return $this->social_flux;
+    }
+
+    /**
+     * @param $socialFlux
+     *
+     * @return $this
+     */
+    public function setSocialFlux($socialFlux)
+    {
+        $this->social_flux = $socialFlux;
+
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getDemo()
+    {
+        return $this->demo;
+    }
+
+    /**
+     * @param $demo
+     *
+     * @return $this
+     */
+    public function setDemo($demo)
+    {
+        $this->demo = $demo;
+
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getDefault()
+    {
+        return $this->default;
+    }
+
+    /**
+     * @param $default
+     *
+     * @return $this
+     */
+    public function setDefault($default)
+    {
+        $this->default = $default;
+
+        return $this;
+    }
 }

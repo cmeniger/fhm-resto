@@ -11,4 +11,14 @@
             </li>
         </ul>
     </nav>
+{% else %}
+    <nav class="nav-left">
+        <ul>
+            {% for branch in tree.branchs %}
+                <li>
+                    <a href="{{ branch.getRoute() }}">{{ branch.getName() }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+    </nav>
 {% endif %}

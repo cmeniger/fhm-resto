@@ -114,7 +114,7 @@ class AdminController extends FhmController
             $object->setName($name);
             $object->setWatermark((array) $request->get('watermark'));
             $this->get('fhm_tools')->dmPersist($object);
-            $this->get('fhm_media_service')->setDocument($object)->setWatermark($request->get('watermark'))->execute();
+            $this->get('fhm_media_service')->setModel($object)->setWatermark($request->get('watermark'))->execute();
         }
 
         return array(
@@ -164,10 +164,6 @@ class AdminController extends FhmController
         if($object == "")
         {
             throw $this->createNotFoundException($this->trans(self::$translation . '.error.unknown'));
-        }
-        if(!$this->getUser()->hasRole('ROLE_ADMIN'))
-        {
-            throw new HttpException(403, $this->trans(self::$translation . '.error.forbidden'));
         }
         if(!$this->getUser()->hasRole('ROLE_SUPER_ADMIN') && $object->getDelete())
         {
@@ -290,7 +286,7 @@ class AdminController extends FhmController
         // Delete
         if($object->getDelete())
         {
-            $this->get($this->get('fhm_tools')->getParameters('service', 'fhm_media'))->setDocument($object)->remove();
+            $this->get($this->get('fhm_tools')->getParameters('service', 'fhm_media'))->setModel($object)->remove();
             $this->get('fhm_tools')->dmRemove($object);
             // Message
             $this->get('session')->getFlashBag()->add(

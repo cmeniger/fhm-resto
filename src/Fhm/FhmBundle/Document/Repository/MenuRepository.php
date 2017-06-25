@@ -21,6 +21,7 @@ class MenuRepository extends FhmRepository
     public function __construct(DocumentManager $dm, UnitOfWork $uow, ClassMetadata $class)
     {
         parent::__construct($dm, $uow, $class);
+        $this->setParent(true);
     }
 
     /**

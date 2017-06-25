@@ -6,11 +6,11 @@ services:
 
     fhm_schedules:
         class: Fhm\FhmBundle\Services\Schedules
-        arguments: ["@translator.default", "@templating"]
+        arguments: ["@service_container"]
 
     fhm.twig.fhm_extension:
         class: Fhm\FhmBundle\Twig\FhmExtension
-        arguments: ["@session", "@translator.default"]
+        arguments: ["@fhm_schedules","@session", "@translator.default"]
         tags:
             - { name: twig.extension }
 
@@ -33,7 +33,7 @@ services:
 
     fhm.form.type.schedules:
         class: Fhm\FhmBundle\Form\Type\SchedulesType
-        arguments: ["@translator.default", "@templating"]
+        arguments: ["@fhm_schedules"]
         tags:
             - { name: form.type, alias: schedules }
 

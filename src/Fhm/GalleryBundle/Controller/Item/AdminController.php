@@ -1,4 +1,5 @@
 <?php
+
 namespace Fhm\GalleryBundle\Controller\Item;
 
 use Fhm\FhmBundle\Controller\RefAdminController as FhmController;
@@ -17,6 +18,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
  * @Route("/admin/galleryitem")
  * -----------------------------------------
  * Class AdminController
+ *
  * @package Fhm\GalleryBundle\Controller\Item
  */
 class AdminController extends FhmController
@@ -26,12 +28,12 @@ class AdminController extends FhmController
      */
     public function __construct()
     {
-        self::$repository = "FhmGalleryBundle:GalleryItem";
-        self::$source = "fhm";
-        self::$domain = "FhmGalleryBundle";
-        self::$translation = "gallery.item";
-        self::$route = "gallery_item";
-        self::$form = new \stdClass();
+        self::$repository          = "FhmGalleryBundle:GalleryItem";
+        self::$source              = "fhm";
+        self::$domain              = "FhmGalleryBundle";
+        self::$translation         = "gallery.item";
+        self::$route               = "gallery_item";
+        self::$form                = new \stdClass();
         self::$form->createType    = CreateType::class;
         self::$form->createHandler = CreateHandler::class;
         self::$form->updateType    = UpdateType::class;
@@ -74,47 +76,50 @@ class AdminController extends FhmController
      */
     public function multipleAction(Request $request)
     {
-        self::$class = $this->get('fhm.object.manager')->getCurrentModelName(self::$repository);
-        $object = new self::$class;
-        $classType = MultipleType::class;
+        self::$class  = $this->get('fhm.object.manager')->getCurrentModelName(self::$repository);
+        $object       = new self::$class;
+        $classType    = MultipleType::class;
         $classHandler = CreateHandler::class;
-        $form = $this->createForm(
+        $form         = $this->createForm(
             $classType,
             $object,
             array(
-                'data_class' => self::$class,
+                'data_class'     => self::$class,
                 'object_manager' => $this->get('fhm.object.manager'),
-                'user_admin' => $this->getUser()->hasRole('ROLE_ADMIN'),
+                'user_admin'     => $this->getUser()->hasRole('ROLE_ADMIN'),
             )
         );
-        $handler = new $classHandler($form, $request);
-        $process = $handler->process();
-        if ($process) {
+        $handler      = new $classHandler($form, $request);
+        $process      = $handler->process();
+        if($process)
+        {
             $data = $request->get($form->getName());
             // File
             $fileData = array(
-                'tmp_name' => isset($_FILES['file']) ? $_FILES['file']['tmp_name'] : $_FILES[$form->getName(
-                )]['tmp_name']['file'],
-                'name' => isset($_FILES['file']) ? $_FILES['file']['name'] : $_FILES[$form->getName()]['name']['file'],
-                'type' => isset($_FILES['file']) ? $_FILES['file']['type'] : $_FILES[$form->getName()]['type']['file'],
+                'tmp_name' => isset($_FILES['file']) ? $_FILES['file']['tmp_name'] : $_FILES[$form->getName()]['tmp_name']['file'],
+                'name'     => isset($_FILES['file']) ? $_FILES['file']['name'] : $_FILES[$form->getName()]['name']['file'],
+                'type'     => isset($_FILES['file']) ? $_FILES['file']['type'] : $_FILES[$form->getName()]['type']['file'],
             );
-            $file = new UploadedFile($fileData['tmp_name'], $fileData['name'], $fileData['type']);
-            $tab = explode('.', $fileData['name']);
-            $name = $data['title'] ? $this->get('fhm_tools')->getUnique(null, $data['title'], true) : $tab[0];
+            $file     = new UploadedFile($fileData['tmp_name'], $fileData['name'], $fileData['type']);
+            $tab      = explode('.', $fileData['name']);
+            $name     = $data['title'] ? $this->get('fhm_tools')->getUnique(null, $data['title'], true, self::$repository) : $tab[0];
             // Persist media
             $media = $this->get('fhm.object.manager')->getCurrentModelName('FhmMediaBundle:Media');
             $media->setName($name);
             $media->setFile($file);
-            $media->setWatermark((array)$request->get('watermark'));
+            $media->setWatermark((array) $request->get('watermark'));
             // Tag
-            if (isset($data['tag']) && $data['tag']) {
+            if(isset($data['tag']) && $data['tag'])
+            {
                 $tag = $this->get('fhm_tools')->dmRepository('FhmMediaBundle:MediaTag')->getByName($data['tag']);
-                if ($tag == "") {
+                if($tag == "")
+                {
                     $tag = $this->get('fhm.object.manager')->getCurrentModelName('FhmMediaBundle:MediaTag');
                     $tag->setName($data['tag']);
                     $tag->setActive(true);
                 }
-                if (isset($data['parent']) && $data['parent']) {
+                if(isset($data['parent']) && $data['parent'])
+                {
                     $tag->setParent(
                         $this->get('fhm_tools')->dmRepository('FhmMediaBundle:MediaTag')->find($data['parent'])
                     );
@@ -122,31 +127,24 @@ class AdminController extends FhmController
                 $this->get('fhm_tools')->dmPersist($tag);
                 $media->addTag($tag);
             }
-            if (isset($data['tags']) && $data['tags']) {
-                foreach ($data['tags'] as $tagId) {
+            if(isset($data['tags']) && $data['tags'])
+            {
+                foreach($data['tags'] as $tagId)
+                {
                     $media->addTag($this->get('fhm_tools')->dmRepository('FhmMediaBundle:MediaTag')->find($tagId));
                 }
             }
             $this->get('fhm_tools')->dmPersist($media);
             //upload file
-            $this->get($this->get('fhm_tools')->getParameter('service', 'fhm_media'))->setDocument(
-                $media
-            )->setWatermark(
-                $request->get('watermark')
-            )->execute();
+            $this->get($this->get('fhm_tools')->getParameter('service', 'fhm_media'))->setModel($media)->setWatermark($request->get('watermark'))->execute();
             $object->setTitle($name);
             $object->setImage($media);
             $this->get('fhm_tools')->dmPersist($object);
         }
 
         return array(
-            'form' => $form->createView(),
-            'watermarks' => $this->get('fhm_tools')->getParameters('watermark', 'fhm_media') ? $this->get(
-                'fhm_tools'
-            )->getParameter(
-                'files',
-                'fhm_media'
-            ) : '',
+            'form'        => $form->createView(),
+            'watermarks'  => $this->get('fhm_tools')->getParameters('watermark', 'fhm_media') ? $this->get('fhm_tools')->getParameter('files', 'fhm_media') : '',
             'breadcrumbs' => $this->get('fhm_tools')->generateBreadcrumbs(
                 array(
                     'domain' => self::$domain,
@@ -294,12 +292,14 @@ class AdminController extends FhmController
      */
     public function listGalleryAction(Request $request)
     {
-        $datas = json_decode($request->get('list'));
+        $datas  = json_decode($request->get('list'));
         $object = $this->get('fhm_tools')->dmRepository(self::$repository)->find($request->get('id'));
-        foreach ($object->getGalleries() as $gallery) {
+        foreach($object->getGalleries() as $gallery)
+        {
             $object->removeGallery($gallery);
         }
-        foreach ($datas as $key => $data) {
+        foreach($datas as $key => $data)
+        {
             $object->addGallery($this->get('fhm_tools')->dmRepository('FhmGalleryBundle:Gallery')->find($data->id));
         }
         $this->get('fhm_tools')->dmPersist($object);

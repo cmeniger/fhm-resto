@@ -20,7 +20,7 @@ class Configuration implements ConfigurationInterface
         $treeBuilder = new TreeBuilder();
         $rootNode = $treeBuilder->root('fhm_media');
 // Here you should define the parameters that are allowed to
-// configure your bundle. See the documentation linked above for
+// configure your bundle. See the objectation linked above for
 // more information on that topic.
 return $treeBuilder;
 }

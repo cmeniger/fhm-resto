@@ -27,9 +27,9 @@
         {% endif %}
         {% if pagination %}
             <div class="row bloc medias">
-                {% for document in pagination %}
+                {% for object in pagination %}
                     <div class="large-3 medium-4 small-6 columns end">
-                        {{ document|blocAdmin|raw }}
+                        {{ object|blocAdmin|raw }}
                     </div>
                 {% endfor %}
             </div>

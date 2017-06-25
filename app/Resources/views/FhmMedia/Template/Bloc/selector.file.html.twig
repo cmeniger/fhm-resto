@@ -1,10 +1,10 @@
 {% trans_default_domain instance.domain %}
 
-<div class='data clickable file {{ document.getExtension() }} {{ document.getId() == selected ? 'selected' : '' }}' media-id='{{ document.getId() }}' media-name='{{ document.getName() }}' media-extension='{{ document.getExtension() }}' media-type='file' title='{{ document.getName() }}'>
+<div class='data clickable file {{ object.getExtension() }} {{ object.getId() == selected ? 'selected' : '' }}' media-id='{{ object.getId() }}' media-name='{{ object.getName() }}' media-extension='{{ object.getExtension() }}' media-type='file' title='{{ object.getName() }}'>
     <div class="name">
-        {{ document.getName() }}
+        {{ object.getName() }}
     </div>
     <div class="extension right">
-        <span class="radius label secondary">{{ document.getExtension() }}</span>
+        <span class="radius label secondary">{{ object.getExtension() }}</span>
     </div>
 </div>

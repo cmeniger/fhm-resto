@@ -40,7 +40,7 @@ EOT
             if(is_dir($urlWeb . $media->getId()))
             {
                 $output->writeln($media->getId() . ' | ' . $media->getType() . ' | ' . $media->getExtension());
-                $this->getcontainer()->get('fhm_media_s3')->setDocument($media)->copy($urlWeb . $media->getId() . '/', '/datas/' . $media->getId() . '/');
+                $this->getcontainer()->get('fhm_media_s3')->setModel($media)->copy($urlWeb . $media->getId() . '/', '/datas/' . $media->getId() . '/');
             }
             else
             {
@@ -49,7 +49,7 @@ EOT
             // Media
             if(file_exists($urlOrigin . $media->getId()))
             {
-                $this->getcontainer()->get('fhm_media_s3')->setDocument($media)->copy($urlOrigin . $media->getId(), '/media/' . $media->getId(), true);
+                $this->getcontainer()->get('fhm_media_s3')->setModel($media)->copy($urlOrigin . $media->getId(), '/media/' . $media->getId(), true);
             }
         }
         $output->writeln("End");

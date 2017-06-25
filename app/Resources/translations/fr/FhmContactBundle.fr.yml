@@ -88,6 +88,7 @@ contact:
                 fieldset:
                     informations:               Informations générales
                     map:                        Géolocalisation
+                    schedules:                  Horaires
                     social:                     Liens extérieurs
                     form:                       Formulaire
                     profile:                    Profil
@@ -137,6 +138,7 @@ contact:
                 fieldset:
                     informations:               Informations générales
                     map:                        Géolocalisation
+                    schedules:                  Horaires
                     social:                     Liens extérieurs
                     form:                       Formulaire
                     profile:                    Profil

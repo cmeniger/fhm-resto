@@ -105,12 +105,7 @@ class ApiController extends FhmController
         $tagSons    = (isset($data['tag'])) ? $this->get('fhm_tools')->dmRepository('FhmMediaBundle:MediaTag')->getSons($data['tag']) : '';
         $tag        = (isset($data['tag'])) ? $this->get('fhm_tools')->dmRepository('FhmMediaBundle:MediaTag')->find($data['tag']) : '';
         $search     = (isset($data['search'])) ? $data['search'] : '';
-        $query      = $this->get('fhm_tools')->dmRepository(self::$repository)->setTag(
-            (isset($data['tag'])) ? $data['tag'] : ''
-        )->getAdminIndex(
-            $search,
-            $this->getUser()->hasRole('ROLE_SUPER_ADMIN')
-        );
+        $query      = $this->get('fhm_tools')->dmRepository(self::$repository)->setTag((isset($data['tag'])) ? $data['tag'] : '')->getAdminIndex($search, $this->getUser()->hasRole('ROLE_SUPER_ADMIN'));
         $pagination = $this->get('knp_paginator')->paginate(
             $query,
             $request->query->getInt('page', $page),
@@ -167,21 +162,17 @@ class ApiController extends FhmController
         $selector     = $request->get('selector');
         $mediaService = $this->get('fhm_tools')->getParameters('service', 'fhm_media');
         $root         = !is_null($mediaService) ? $this->get($mediaService)->tagRoot($selector['root']) : '';
-        $tagMains     = $this->get('fhm_tools')->dmRepository('FhmMediaBundle:MediaTag')->setParent(true)->setRoot(
-            $root
-        )->setPrivate($selector['private'])->getAllEnable();
-        $tagSons      = (isset($data['tag'])) ? $this->get('fhm_tools')->dmRepository('FhmMediaBundle:MediaTag')->setPrivate(
-            $selector['private']
-        )->getSonsEnable($data['tag']) : '';
-        $tag          = (isset($data['tag'])) ? $this->get('fhm_tools')->dmRepository('FhmMediaBundle:MediaTag')->find(
-            $data['tag']
-        ) : '';
+        $tagMains     = $this->get('fhm_tools')->dmRepository('FhmMediaBundle:MediaTag')->setParent(true)->setRoot($root)->setPrivate($selector['private'])->getAllEnable();
+        $tagSons      = (isset($data['tag'])) ? $this->get('fhm_tools')->dmRepository('FhmMediaBundle:MediaTag')->setPrivate($selector['private'])->getSonsEnable($data['tag']) : '';
+        $tag          = (isset($data['tag'])) ? $this->get('fhm_tools')->dmRepository('FhmMediaBundle:MediaTag')->find($data['tag']) : '';
         $search       = (isset($data['search'])) ? $data['search'] : '';
-        $objects      = $this->get('fhm_tools')->dmRepository(self::$repository)->setTag(
-            (isset($data['tag']) && $data['tag']) ? $data['tag'] : $root
-        )->setFilter($selector['filter'])->setParent(true)->setPrivate($selector['private'])->getFrontIndex(
-            $search
-        );
+        $objects      = $this->get('fhm_tools')
+            ->dmRepository(self::$repository)
+            ->setTag((isset($data['tag']) && $data['tag']) ? $data['tag'] : $root)
+            ->setFilter($selector['filter'])
+            ->setParent(true)
+            ->setPrivate($selector['private'])
+            ->getFrontIndex($search);
 
         return array(
             'selectorIndex' => isset($selector['index']) ? $selector['index'] : null,
@@ -208,21 +199,22 @@ class ApiController extends FhmController
         $data     = $request->get('media');
         $selector = $request->get('selector');
         $root     = $this->get($this->get('fhm_tools')->getParameters('service', 'fhm_media'))->tagRoot($selector['root']);
-        $tagMains = $this->get('fhm_tools')->dmRepository('FhmMediaBundle:MediaTag')->setParent(true)->setRoot(
-            $root
-        )->setPrivate($selector['private'])->getAllEnable();
-        $tagSons  = (isset($data['tag'])) ? $this->get('fhm_tools')->dmRepository('FhmMediaBundle:MediaTag')->setPrivate(
-            $selector['private']
-        )->getSonsEnable($data['tag']) : '';
-        $tag      = (isset($data['tag'])) ? $this->get('fhm_tools')->dmRepository('FhmMediaBundle:MediaTag')->find(
-            $data['tag']
-        ) : '';
+        $tagMains = $this->get('fhm_tools')
+            ->dmRepository('FhmMediaBundle:MediaTag')
+            ->setParent(true)
+            ->setRoot($root)
+            ->setPrivate($selector['private'])
+            ->getAllEnable();
+        $tagSons  = (isset($data['tag'])) ? $this->get('fhm_tools')->dmRepository('FhmMediaBundle:MediaTag')->setPrivate($selector['private'])->getSonsEnable($data['tag']) : '';
+        $tag      = (isset($data['tag'])) ? $this->get('fhm_tools')->dmRepository('FhmMediaBundle:MediaTag')->find($data['tag']) : '';
         $search   = (isset($data['search'])) ? $data['search'] : '';
-        $objects  = $this->get('fhm_tools')->dmRepository(self::$repository)->setTag(
-            (isset($data['tag']) && $data['tag']) ? $data['tag'] : $root
-        )->setFilter($selector['filter'])->setParent(true)->setPrivate($selector['private'])->getFrontIndex(
-            $search
-        );
+        $objects  = $this->get('fhm_tools')
+            ->dmRepository(self::$repository)
+            ->setTag((isset($data['tag']) && $data['tag']) ? $data['tag'] : $root)
+            ->setFilter($selector['filter'])
+            ->setParent(true)
+            ->setPrivate($selector['private'])
+            ->getFrontIndex($search);
 
         return array(
             'selector' => $selector,
@@ -423,7 +415,7 @@ class ApiController extends FhmController
             $object->setWatermark((array) $request->get('watermark'));
             $object->setActive(true);
             $this->get('fhm_tools')->dmPersist($object);
-            $this->get($mediaService)->setDocument($object)->setWatermark($request->get('watermark'))->execute();
+            $this->get($mediaService)->setModel($object)->setWatermark($request->get('watermark'))->execute();
             // Response
             $response = new JsonResponse();
 

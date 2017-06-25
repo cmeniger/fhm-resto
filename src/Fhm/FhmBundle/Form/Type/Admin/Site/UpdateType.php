@@ -4,7 +4,9 @@ namespace Fhm\FhmBundle\Form\Type\Admin\Site;
 
 use Fhm\FhmBundle\Form\Type\Admin\UpdateType as FhmType;
 use Fhm\FhmBundle\Manager\TypeManager;
+use Fhm\MediaBundle\Form\Type\MediaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -29,18 +31,54 @@ class UpdateType extends FhmType
                 array('label' => $options['translation_route'] . '.admin.update.form.title', 'required' => false)
             )
             ->add(
+                'title_card_slider',
+                TextType::class,
+                array('label' => $options['translation_route'] . '.admin.update.form.title', 'required' => false)
+            )
+            ->add(
+                'title_card_main',
+                TextType::class,
+                array('label' => $options['translation_route'] . '.admin.update.form.title', 'required' => false)
+            )
+            ->add(
+                'title_card_forward',
+                TextType::class,
+                array('label' => $options['translation_route'] . '.admin.update.form.title', 'required' => false)
+            )
+            ->add(
+                'title_testimony',
+                TextType::class,
+                array('label' => $options['translation_route'] . '.admin.update.form.title', 'required' => false)
+            )
+            ->add(
                 'subtitle',
                 TextType::class,
                 array('label' => $options['translation_route'] . '.admin.update.form.subtitle', 'required' => false)
             )
             ->add(
-                'legal_notice',
+                'subtitle_card_slider',
                 TextType::class,
-                array(
-                    'label'    => $options['translation_route'] . '.admin.update.form.legalnotice',
-                    'required' => false,
-                    'attr'     => array('class' => 'editor'),
-                )
+                array('label' => $options['translation_route'] . '.admin.update.form.subtitle', 'required' => false)
+            )
+            ->add(
+                'subtitle_card_main',
+                TextType::class,
+                array('label' => $options['translation_route'] . '.admin.update.form.subtitle', 'required' => false)
+            )
+            ->add(
+                'subtitle_card_forward',
+                TextType::class,
+                array('label' => $options['translation_route'] . '.admin.update.form.subtitle', 'required' => false)
+            )
+            ->add(
+                'subtitle_testimony',
+                TextType::class,
+                array('label' => $options['translation_route'] . '.admin.update.form.subtitle', 'required' => false)
+            )
+            ->add(
+                'demo',
+                CheckboxType::class,
+                array('label' => $options['translation_route'].'.admin.update.form.demo', 'required' => false)
             )
             ->add(
                 'menu',
@@ -51,6 +89,207 @@ class UpdateType extends FhmType
                     'query_builder' => function () use ($options)
                     {
                         $dr = $options['object_manager']->getCurrentRepository('FhmFhmBundle:Menu');
+
+                        return $dr->getFormEnable();
+                    },
+                    'required'      => false,
+                )
+            )
+            ->add(
+                'menu_home_left',
+                TypeManager::getType($options['object_manager']->getDBDriver()),
+                array(
+                    'label'         => $options['translation_route'] . '.admin.update.form.menu_home_left',
+                    'class'         => 'FhmFhmBundle:Menu',
+                    'query_builder' => function () use ($options)
+                    {
+                        $dr = $options['object_manager']->getCurrentRepository('FhmFhmBundle:Menu');
+
+                        return $dr->getFormEnable();
+                    },
+                    'required'      => false,
+                )
+            )
+            ->add(
+                'menu_home_right',
+                TypeManager::getType($options['object_manager']->getDBDriver()),
+                array(
+                    'label'         => $options['translation_route'] . '.admin.update.form.menu_home_right',
+                    'class'         => 'FhmFhmBundle:Menu',
+                    'query_builder' => function () use ($options)
+                    {
+                        $dr = $options['object_manager']->getCurrentRepository('FhmFhmBundle:Menu');
+
+                        return $dr->getFormEnable();
+                    },
+                    'required'      => false,
+                )
+            )
+            ->add(
+                'menu_home_side',
+                TypeManager::getType($options['object_manager']->getDBDriver()),
+                array(
+                    'label'         => $options['translation_route'] . '.admin.update.form.menu_home_side',
+                    'class'         => 'FhmFhmBundle:Menu',
+                    'query_builder' => function () use ($options)
+                    {
+                        $dr = $options['object_manager']->getCurrentRepository('FhmFhmBundle:Menu');
+
+                        return $dr->getFormEnable();
+                    },
+                    'required'      => false,
+                )
+            )
+            ->add(
+                'menu_footer',
+                TypeManager::getType($options['object_manager']->getDBDriver()),
+                array(
+                    'label'         => $options['translation_route'] . '.admin.update.form.menu_footer',
+                    'class'         => 'FhmFhmBundle:Menu',
+                    'query_builder' => function () use ($options)
+                    {
+                        $dr = $options['object_manager']->getCurrentRepository('FhmFhmBundle:Menu');
+
+                        return $dr->getFormEnable();
+                    },
+                    'required'      => false,
+                )
+            )
+            ->add(
+                'logo',
+                MediaType::class,
+                array(
+                    'label'    => $options['translation_route'] . '.admin.update.form.logo',
+                    'filter'   => 'image/*',
+                    'required' => false,
+                )
+            )
+            ->add(
+                'background_top',
+                MediaType::class,
+                array(
+                    'label'    => $options['translation_route'] . '.admin.update.form.background_top',
+                    'filter'   => 'image/*',
+                    'required' => false,
+                )
+            )
+            ->add(
+                'background_card',
+                MediaType::class,
+                array(
+                    'label'    => $options['translation_route'] . '.admin.update.form.background_card',
+                    'filter'   => 'image/*',
+                    'required' => false,
+                )
+            )
+            ->add(
+                'background_testimony',
+                MediaType::class,
+                array(
+                    'label'    => $options['translation_route'] . '.admin.update.form.background_testimony',
+                    'filter'   => 'image/*',
+                    'required' => false,
+                )
+            )
+            ->add(
+                'slider',
+                TypeManager::getType($options['object_manager']->getDBDriver()),
+                array(
+                    'label'         => $options['translation_route'] . '.admin.update.form.slider',
+                    'class'         => 'FhmSliderBundle:Slider',
+                    'query_builder' => function () use ($options)
+                    {
+                        $dr = $options['object_manager']->getCurrentRepository('FhmSliderBundle:Slider');
+
+                        return $dr->getFormEnable();
+                    },
+                    'required'      => false,
+                )
+            )
+            ->add(
+                'gallery_top',
+                TypeManager::getType($options['object_manager']->getDBDriver()),
+                array(
+                    'label'         => $options['translation_route'] . '.admin.update.form.gallery_top',
+                    'class'         => 'FhmGalleryBundle:Gallery',
+                    'query_builder' => function () use ($options)
+                    {
+                        $dr = $options['object_manager']->getCurrentRepository('FhmGalleryBundle:Gallery');
+
+                        return $dr->getFormEnable();
+                    },
+                    'required'      => false,
+                )
+            )
+            ->add(
+                'gallery_bottom',
+                TypeManager::getType($options['object_manager']->getDBDriver()),
+                array(
+                    'label'         => $options['translation_route'] . '.admin.update.form.gallery_bottom',
+                    'class'         => 'FhmGalleryBundle:Gallery',
+                    'query_builder' => function () use ($options)
+                    {
+                        $dr = $options['object_manager']->getCurrentRepository('FhmGalleryBundle:Gallery');
+
+                        return $dr->getFormEnable();
+                    },
+                    'required'      => false,
+                )
+            )
+            ->add(
+                'card_slider',
+                TypeManager::getType($options['object_manager']->getDBDriver()),
+                array(
+                    'label'         => $options['translation_route'] . '.admin.update.form.card',
+                    'class'         => 'FhmCardBundle:Card',
+                    'query_builder' => function () use ($options)
+                    {
+                        $dr = $options['object_manager']->getCurrentRepository('FhmCardBundle:Card');
+
+                        return $dr->getFormEnable();
+                    },
+                    'required'      => false,
+                )
+            )
+            ->add(
+                'card_main',
+                TypeManager::getType($options['object_manager']->getDBDriver()),
+                array(
+                    'label'         => $options['translation_route'] . '.admin.update.form.card',
+                    'class'         => 'FhmCardBundle:Card',
+                    'query_builder' => function () use ($options)
+                    {
+                        $dr = $options['object_manager']->getCurrentRepository('FhmCardBundle:Card');
+
+                        return $dr->getFormEnable();
+                    },
+                    'required'      => false,
+                )
+            )
+            ->add(
+                'card_forward',
+                TypeManager::getType($options['object_manager']->getDBDriver()),
+                array(
+                    'label'         => $options['translation_route'] . '.admin.update.form.card',
+                    'class'         => 'FhmCardBundle:Card',
+                    'query_builder' => function () use ($options)
+                    {
+                        $dr = $options['object_manager']->getCurrentRepository('FhmCardBundle:Card');
+
+                        return $dr->getFormEnable();
+                    },
+                    'required'      => false,
+                )
+            )
+            ->add(
+                'contact',
+                TypeManager::getType($options['object_manager']->getDBDriver()),
+                array(
+                    'label'         => $options['translation_route'] . '.admin.update.form.contact',
+                    'class'         => 'FhmContactBundle:Contact',
+                    'query_builder' => function () use ($options)
+                    {
+                        $dr = $options['object_manager']->getCurrentRepository('FhmContactBundle:Contact');
 
                         return $dr->getFormEnable();
                     },
@@ -81,81 +320,6 @@ class UpdateType extends FhmType
                     'query_builder' => function () use ($options)
                     {
                         $dr = $options['object_manager']->getCurrentRepository('FhmPartnerBundle:PartnerGroup');
-
-                        return $dr->getFormEnable();
-                    },
-                    'required'      => false,
-                )
-            )
-            ->add(
-                'slider',
-                TypeManager::getType($options['object_manager']->getDBDriver()),
-                array(
-                    'label'         => $options['translation_route'] . '.admin.update.form.slider',
-                    'class'         => 'FhmSliderBundle:Slider',
-                    'query_builder' => function () use ($options)
-                    {
-                        $dr = $options['object_manager']->getCurrentRepository('FhmSliderBundle:Slider');
-
-                        return $dr->getFormEnable();
-                    },
-                    'required'      => false,
-                )
-            )
-            ->add(
-                'gallery',
-                TypeManager::getType($options['object_manager']->getDBDriver()),
-                array(
-                    'label'         => $options['translation_route'] . '.admin.update.form.gallery',
-                    'class'         => 'FhmGalleryBundle:Gallery',
-                    'query_builder' => function () use ($options)
-                    {
-                        $dr = $options['object_manager']->getCurrentRepository('FhmGalleryBundle:Gallery');
-
-                        return $dr->getFormEnable();
-                    },
-                    'required'      => false,
-                )
-            )
-            ->add(
-                'background',
-                TypeManager::getType($options['object_manager']->getDBDriver()),
-                array(
-                    'label'         => $options['translation_route'] . '.admin.update.form.background',
-                    'class'         => 'FhmMediaBundle:Media',
-                    'query_builder' => function () use ($options)
-                    {
-                        $dr = $options['object_manager']->getCurrentRepository('FhmMediaBundle:Media');
-
-                        return $dr->getFormEnable();
-                    },
-                    'required'      => false,
-                )
-            )
-            ->add(
-                'logo',
-                TypeManager::getType($options['object_manager']->getDBDriver()),
-                array(
-                    'label'         => $options['translation_route'] . '.admin.update.form.logo',
-                    'class'         => 'FhmMediaBundle:Media',
-                    'query_builder' => function () use ($options)
-                    {
-                        $dr = $options['object_manager']->getCurrentRepository('FhmMediaBundle:Media');
-
-                        return $dr->getFormEnable();
-                    },
-                    'required'      => false,
-                )
-            )
-            ->add(
-                'contact',
-                TypeManager::getType($options['object_manager']->getDBDriver()),
-                array(
-                    'label'         => $options['translation_route'] . '.admin.update.form.contact',
-                    'class'         => 'FhmContactBundle:Contact',
-                    'query_builder' => function () use ($options)
-                    {
-                        $dr = $options['object_manager']->getCurrentRepository('FhmContactBundle:Contact');
 
                         return $dr->getFormEnable();
                     },

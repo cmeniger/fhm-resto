@@ -59,8 +59,8 @@ class FrontController extends FhmController
      */
     public function createAction(Request $request)
     {
-        $document = new self::$class;
-        $form = $this->createForm(self::$form->createType, $document);
+        $object = new self::$class;
+        $form = $this->createForm(self::$form->createType, $object);
         $handler = new self::$form->createHandler($form, $request);
         $process = $handler->process();
         if ($process) {
@@ -79,7 +79,7 @@ class FrontController extends FhmController
                     );
                 }
                 $this->get('fhm_tools')->dmPersist($tag);
-                $document->addTag($tag);
+                $object->addTag($tag);
             }
             $fileData = array(
                 'tmp_name' => isset($_FILES['file']) ? $_FILES['file']['tmp_name'] : $_FILES[$form->getName(
@@ -91,15 +91,15 @@ class FrontController extends FhmController
             $tab = explode('.', $fileData['name']);
             $name = $data['name'] ? $this->get('fhm_tools')->getUnique(null, $data['name'], true) : $tab[0];
             // Persist
-            $document->setName($name);
-            $document->setFile($file);
-            $document->setUserCreate($this->getUser());
-            $document->setAlias($this->fhm_tools->getAlias($document->getId(), $document->getName()));
-            $document->setWatermark((array)$request->get('watermark'));
-            $document->setActive(true);
-            $this->get('fhm_tools')->dmPersist($document);
-            $this->get($this->get('fhm_tools')->getParameters('service', 'fhm_media'))->setDocument(
-                $document
+            $object->setName($name);
+            $object->setFile($file);
+            $object->setUserCreate($this->getUser());
+            $object->setAlias($this->fhm_tools->getAlias($object->getId(), $object->getName()));
+            $object->setWatermark((array)$request->get('watermark'));
+            $object->setActive(true);
+            $this->get('fhm_tools')->dmPersist($object);
+            $this->get($this->get('fhm_tools')->getParameters('service', 'fhm_media'))->setModel(
+                $object
             )->setWatermark(
                 $request->get('watermark')
             )->execute();

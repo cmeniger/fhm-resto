@@ -24,4 +24,18 @@
             </ul>
         </nav>
     </div>
+{% else %}
+    <div class="menu-side-overlay"></div>
+    <div class="menu-side-content">
+        <a href="#" class="close-menu"><i class="fa fa-times" aria-hidden="true"></i></a>
+        <nav class="nav-left">
+            <ul>
+                {% for branch in tree.branchs %}
+                    <li>
+                        <a href="{{ branch.getRoute() }}">{{ branch.getName() }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </nav>
+    </div>
 {% endif %}

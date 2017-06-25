@@ -38,6 +38,14 @@
             </div>
         </fieldset>
         <fieldset>
+            <legend>{{ (instance.translation ~ '.admin.update.form.fieldset.schedules')|trans }}</legend>
+            <div class="row">
+                {{ form_label(form.schedules) }}
+                {{ form_errors(form.schedules) }}
+                {{ form_widget(form.schedules) }}
+            </div>
+        </fieldset>
+        <fieldset>
             <legend>{{ (instance.translation ~ '.admin.update.form.fieldset.social')|trans }}</legend>
             <div class="form-social">
                 <div class="row collapse">

@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\Response;
 class S3
 {
     protected $fhm_tools;
-    protected $document;
+    protected $model;
     private $files;
     private $file;
     private $path;
@@ -57,19 +57,19 @@ class S3
      */
     public function getDocument()
     {
-        return $this->document;
+        return $this->model;
     }
 
     /**
-     * @param $document
+     * @param $model
      *
      * @return $this
      */
-    public function setDocument($document)
+    public function setModel($model)
     {
-        $this->document = $document;
-        $this->file = $document->getFile();
-        $this->path->files = $document->getId().'/';
+        $this->model = $model;
+        $this->file = $model->getFile();
+        $this->path->files = $model->getId().'/';
         $this->path->fullWeb = $this->path->root.$this->path->media.$this->path->files;
         $this->path->fullLocal = $this->path->local.$this->path->files;
         $this->path->fullLocalOrigin = $this->path->localRoot.$this->path->origin;
@@ -134,12 +134,12 @@ class S3
             $default = file_exists('../web/images/default.jpg') ? '/images/default.jpg' : $default;
             $default = file_exists('../web/images/default.png') ? '/images/default.png' : $default;
         }
-        if ($this->document->getType() == 'image') {
-            $file = $this->path->fullWeb.$format.'.'.$this->document->getExtension();
+        if ($this->model->getType() == 'image') {
+            $file = $this->path->fullWeb.$format.'.'.$this->model->getExtension();
 
             return ($file && $this->_awsExist($file)) ? $this->_awsPath($file) : $default;
         } else {
-            $file = $this->path->fullWeb.$this->document->getAlias().'.'.$this->document->getExtension();
+            $file = $this->path->fullWeb.$this->model->getAlias().'.'.$this->model->getExtension();
 
             return ($file && $this->_awsExist($file)) ? $this->_awsPath($file) : '#';
         }
@@ -155,15 +155,15 @@ class S3
         $object = $this->aws_client->getObject(
             [
                 'Bucket' => $this->aws_bucket,
-                'Key' => $this->aws_environment.$this->path->fullOrigin.$this->document->getId(),
+                'Key' => $this->aws_environment.$this->path->fullOrigin.$this->model->getId(),
             ]
         );
         $response = new Response();
         $response->setStatusCode(200);
-        $response->headers->set('Content-Type', $this->document->getMimeType());
+        $response->headers->set('Content-Type', $this->model->getMimeType());
         $response->headers->set(
             'Content-Disposition',
-            'attachment; filename="'.($filename ? $filename : $this->document->getName()).'"'
+            'attachment; filename="'.($filename ? $filename : $this->model->getName()).'"'
         );
         $response->setContent($object['body']);
 
@@ -255,7 +255,7 @@ class S3
     public function remove()
     {
         $this->_awsClearFolder($this->path->fullWeb);
-        $this->_awsClearObject($this->aws_environment.$this->path->fullOrigin.$this->document->getId());
+        $this->_awsClearObject($this->aws_environment.$this->path->fullOrigin.$this->model->getId());
 
         return $this;
     }
@@ -322,15 +322,15 @@ class S3
             }
         }
         // Media
-        if ($this->_awsExist($this->path->fullOrigin.$this->document->getId())) {
+        if ($this->_awsExist($this->path->fullOrigin.$this->model->getId())) {
             if (!is_dir($this->path->fullLocalOrigin)) {
                 @mkdir($this->path->fullLocalOrigin, 0777, true);
             }
             $this->aws_client->getObject(
                 [
                     'Bucket' => $this->aws_bucket,
-                    'Key' => $this->aws_environment.$this->path->fullOrigin.$this->document->getId(),
-                    'SaveAs' => $this->path->fullLocalOrigin.$this->document->getId(),
+                    'Key' => $this->aws_environment.$this->path->fullOrigin.$this->model->getId(),
+                    'SaveAs' => $this->path->fullLocalOrigin.$this->model->getId(),
                 ]
             );
         }
@@ -355,7 +355,7 @@ class S3
             }
         }
         // Image
-        if ($this->document->getType() == 'image') {
+        if ($this->model->getType() == 'image') {
             $this->_uploadImage();
             $this->_generateImage();
         } // Other
@@ -370,8 +370,8 @@ class S3
      */
     private function _uploadImage()
     {
-        if ($this->file && $this->document->getType() == 'image') {
-            $this->file->move($this->path->fullLocal.$this->path->origin, $this->document->getId());
+        if ($this->file && $this->model->getType() == 'image') {
+            $this->file->move($this->path->fullLocal.$this->path->origin, $this->model->getId());
         }
     }
 
@@ -380,10 +380,10 @@ class S3
      */
     private function _uploadFile()
     {
-        if ($this->file && $this->document->getType() != 'image') {
+        if ($this->file && $this->model->getType() != 'image') {
             $this->file->move(
                 $this->path->fullLocal.$this->path->media,
-                $this->document->getAlias().'.'.$this->document->getExtension()
+                $this->model->getAlias().'.'.$this->model->getExtension()
             );
         }
     }
@@ -393,20 +393,20 @@ class S3
      */
     private function _generateImage()
     {
-        if ($this->document->getType() == 'image') {
+        if ($this->model->getType() == 'image') {
             // Copy image
-            $source1 = $this->path->fullLocal.$this->path->media.'tmp1.'.$this->document->getExtension();
-            $source2 = $this->path->fullLocal.$this->path->media.'tmp2.'.$this->document->getExtension();
-            $originalFileName = $this->path->fullLocal.$this->path->media.$this->document->getAlias(
-                ).'.'.$this->document->getExtension();
-            copy($this->path->fullLocal.$this->path->origin.$this->document->getId(), $originalFileName);
-            copy($this->path->fullLocal.$this->path->origin.$this->document->getId(), $source1);
-            copy($this->path->fullLocal.$this->path->origin.$this->document->getId(), $source2);
+            $source1 = $this->path->fullLocal.$this->path->media.'tmp1.'.$this->model->getExtension();
+            $source2 = $this->path->fullLocal.$this->path->media.'tmp2.'.$this->model->getExtension();
+            $originalFileName = $this->path->fullLocal.$this->path->media.$this->model->getAlias(
+                ).'.'.$this->model->getExtension();
+            copy($this->path->fullLocal.$this->path->origin.$this->model->getId(), $originalFileName);
+            copy($this->path->fullLocal.$this->path->origin.$this->model->getId(), $source1);
+            copy($this->path->fullLocal.$this->path->origin.$this->model->getId(), $source2);
             // Initialization
             $sizeSource = getimagesize($source1);
             $sizeWatermark = getimagesize($this->path->fullWatermark);
-            $function1 = $this->_getImagecreatefrom($this->document->getExtension());
-            $function2 = $this->_getImage($this->document->getExtension());
+            $function1 = $this->_getImagecreatefrom($this->model->getExtension());
+            $function2 = $this->_getImage($this->model->getExtension());
             // Resize watermarker
             $watermarkPercent = $sizeWatermark[0] > $sizeWatermark[1] ? $sizeWatermark[0] * 100 / ($sizeSource[0] - 40) : $sizeWatermark[1] * 100 / ($sizeSource[1] - 40);
             $watermarkWidth = 100 * $sizeWatermark[0] / $watermarkPercent;
@@ -442,7 +442,7 @@ class S3
                 // Copy image
                 copy(
                     $file['watermark'] ? $source2 : $source1,
-                    $this->path->fullLocal.$this->path->media.$file['name'].'.'.$this->document->getExtension()
+                    $this->path->fullLocal.$this->path->media.$file['name'].'.'.$this->model->getExtension()
                 );
                 // Square
                 if ($file['width'] > 0 && $file['height'] === null) {
@@ -480,7 +480,7 @@ class S3
                         $object,
                         call_user_func(
                             $function1,
-                            $this->path->fullLocal.$this->path->media.$file['name'].'.'.$this->document->getExtension()
+                            $this->path->fullLocal.$this->path->media.$file['name'].'.'.$this->model->getExtension()
                         ),
                         $offsetX,
                         $offsetY,
@@ -494,7 +494,7 @@ class S3
                     call_user_func(
                         $function2,
                         $object,
-                        $this->path->fullLocal.$this->path->media.$file['name'].'.'.$this->document->getExtension()
+                        $this->path->fullLocal.$this->path->media.$file['name'].'.'.$this->model->getExtension()
                     );
                     imagedestroy($object);
                 }
@@ -518,7 +518,7 @@ class S3
      */
     private function _generateFile()
     {
-        if ($this->document->getType() != 'image') {
+        if ($this->model->getType() != 'image') {
             // Copy
             $this->copy($this->path->fullLocal.$this->path->media, $this->path->fullWeb);
             // Delete temporary folder
@@ -533,28 +533,28 @@ class S3
      */
     private function _tag()
     {
-        $tagType = $this->fhm_tools->dmRepository('FhmMediaBundle:MediaTag')->getByAlias($this->document->getType());
+        $tagType = $this->fhm_tools->dmRepository('FhmMediaBundle:MediaTag')->getByAlias($this->model->getType());
         $tagExtension = $this->fhm_tools->dmRepository('FhmMediaBundle:MediaTag')->getByAlias(
-            $this->document->getExtension()
+            $this->model->getExtension()
         );
         if (!$tagType) {
             $tagType = new \Fhm\MediaBundle\Document\MediaTag();
-            $tagType->setName($this->document->getType());
-            $tagType->setAlias($this->document->getType());
+            $tagType->setName($this->model->getType());
+            $tagType->setAlias($this->model->getType());
             $tagType->setActive(true);
             $this->fhm_tools->dmPersist($tagType);
         }
         if (!$tagExtension) {
             $tagExtension = new \Fhm\MediaBundle\Document\MediaTag();
-            $tagExtension->setName($this->document->getExtension());
-            $tagExtension->setAlias($this->document->getExtension());
+            $tagExtension->setName($this->model->getExtension());
+            $tagExtension->setAlias($this->model->getExtension());
             $tagExtension->setParent($tagType);
             $tagExtension->setActive(true);
             $this->fhm_tools->dmPersist($tagExtension);
         }
-        $this->document->addTag($tagType);
-        $this->document->addTag($tagExtension);
-        $this->fhm_tools->dmPersist($this->document);
+        $this->model->addTag($tagType);
+        $this->model->addTag($tagExtension);
+        $this->fhm_tools->dmPersist($this->model);
 
         return $this;
     }
@@ -567,7 +567,7 @@ class S3
     private function _clearFolder($folder)
     {
         $this->_awsClearFolder($folder);
-        if ($this->_awsExist($this->path->fullOrigin.$this->document->getId())) {
+        if ($this->_awsExist($this->path->fullOrigin.$this->model->getId())) {
             if (!is_dir($this->path->fullLocal.$this->path->origin)) {
                 @mkdir($this->path->fullLocal, 0777, true);
                 @mkdir($this->path->fullLocal.$this->path->origin, 0777, true);
@@ -576,8 +576,8 @@ class S3
             $this->aws_client->getObject(
                 [
                     'Bucket' => $this->aws_bucket,
-                    'Key' => $this->aws_environment.$this->path->fullOrigin.$this->document->getId(),
-                    'SaveAs' => $this->path->fullLocal.$this->path->origin.$this->document->getId(),
+                    'Key' => $this->aws_environment.$this->path->fullOrigin.$this->model->getId(),
+                    'SaveAs' => $this->path->fullLocal.$this->path->origin.$this->model->getId(),
                 ]
             );
         }

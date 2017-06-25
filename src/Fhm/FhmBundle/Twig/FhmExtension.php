@@ -1,4 +1,5 @@
 <?php
+
 namespace Fhm\FhmBundle\Twig;
 
 use Fhm\FhmBundle\Services\Schedules;
@@ -8,24 +9,27 @@ use Symfony\Component\Intl\Intl;
 
 /**
  * Class FhmExtension
+ *
  * @package Fhm\FhmBundle\Twig
  */
 class FhmExtension extends \Twig_Extension
 {
     protected $session;
     protected $translator;
+    protected $schedules;
 
     /**
      * FhmExtension constructor.
-     * @param Session $session
+     *
+     * @param Session    $session
      * @param Translator $translator
-     * @param Schedules $schedules
+     * @param Schedules  $schedules
      */
-    public function __construct(Session $session, Translator $translator)
+    public function __construct(Schedules $schedules, Session $session, Translator $translator)
     {
-        $this->session = $session;
+        $this->session    = $session;
         $this->translator = $translator;
-//        $this->fhmSchedule= $schedules;
+        $this->schedules  = $schedules;
     }
 
     /**
@@ -49,20 +53,21 @@ class FhmExtension extends \Twig_Extension
     }
 
     /**
-     * @param $code
+     * @param      $code
      * @param null $height
+     *
      * @return string
      */
     public function getFlag($code, $height = null)
     {
-        $code = strtolower($code);
+        $code  = strtolower($code);
         $trans = $this->getCountry($code);
-        $html = "<img 
-                    src='".$this->getFlagUrl($code)."'
-                    alt='".$trans."' 
-                    title='".$trans."' 
+        $html  = "<img 
+                    src='" . $this->getFlagUrl($code) . "'
+                    alt='" . $trans . "' 
+                    title='" . $trans . "' 
                     class='flag' 
-                    style='".($height ? "height:".$height."px" : "")."'
+                    style='" . ($height ? "height:" . $height . "px" : "") . "'
                  />";
 
         return $html;
@@ -77,8 +82,8 @@ class FhmExtension extends \Twig_Extension
     {
         $code = $code ? strtolower($code) : 'all';
         $file = file_exists(
-            '../web/images/flags/'.$code.'.png'
-        ) ? '/images/flags/'.$code.'.png' : '/images/flags/default.png';
+            '../web/images/flags/' . $code . '.png'
+        ) ? '/images/flags/' . $code . '.png' : '/images/flags/default.png';
 
         return $file;
     }
@@ -109,14 +114,9 @@ class FhmExtension extends \Twig_Extension
      */
     public function getSchedules($data, $key = '')
     {
-        return $data ? $this->fhmSchedule->setData($data)->getValue(
-            $key
-        ) : "<span class='schedules nodata'>".$this->translator->trans(
-            'fhm.schedules.nodata',
-            array(),
-            'FhmFhmBundle'
-        )
-            ."</span>";
+        return $data
+            ? $this->schedules->setData($data)->getValue($key)
+            : "<span class='schedules nodata'>" . $this->translator->trans('fhm.schedules.nodata', array(), 'FhmFhmBundle') . "</span>";
     }
 
     /**
@@ -136,15 +136,16 @@ class FhmExtension extends \Twig_Extension
      */
     public function getSchedulesState($data)
     {
-        return $this->fhmSchedule->setData($data)->getState();
+        return $this->schedules->setData($data)->getState();
     }
 
     /**
      * @param \Twig_Environment $env
-     * @param $data
-     * @param bool $class
-     * @param bool $text
-     * @param bool $indicator
+     * @param                   $data
+     * @param bool              $class
+     * @param bool              $text
+     * @param bool              $indicator
+     *
      * @return mixed|string
      */
     public function getSchedulesStateHtml(
@@ -157,10 +158,10 @@ class FhmExtension extends \Twig_Extension
         return $env->render(
             '::FhmFhm/Template/schedules.state.html.twig',
             array(
-                'show_class' => $class,
-                'show_text' => $text,
+                'show_class'     => $class,
+                'show_text'      => $text,
                 'show_indicator' => $indicator,
-                'state' => $this->getSchedulesState($data),
+                'state'          => $this->getSchedulesState($data),
             )
         );
     }

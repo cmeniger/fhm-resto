@@ -1,4 +1,5 @@
 <?php
+
 namespace Fhm\MediaBundle\Document\Repository;
 
 use Fhm\FhmBundle\Document\Repository\FhmRepository;
@@ -19,15 +20,16 @@ class MediaRepository extends FhmRepository
 
     /**
      * MediaRepository constructor.
+     *
      * @param DocumentManager $dm
-     * @param UnitOfWork $uow
-     * @param ClassMetadata $class
+     * @param UnitOfWork      $uow
+     * @param ClassMetadata   $class
      */
     public function __construct(DocumentManager $dm, UnitOfWork $uow, ClassMetadata $class)
     {
         parent::__construct($dm, $uow, $class);
-        $this->tag = "";
-        $this->filter = "";
+        $this->tag     = "";
+        $this->filter  = "";
         $this->private = true;
     }
 
@@ -50,9 +52,10 @@ class MediaRepository extends FhmRepository
      */
     public function setFilter($filter)
     {
-        if ($filter !== '') {
-            $filter = str_replace('/*', '', $filter);
-            $filter = str_replace('.', '', $filter);
+        if($filter !== '')
+        {
+            $filter       = str_replace('/*', '', $filter);
+            $filter       = str_replace('.', '', $filter);
             $this->filter = explode(',', $filter);
         }
 
@@ -73,26 +76,31 @@ class MediaRepository extends FhmRepository
 
     /**
      * @param string $search
-     * @param bool $roleSuperAdmin
+     * @param bool   $roleSuperAdmin
+     *
      * @return \Doctrine\ODM\MongoDB\Query\Query
      */
     public function getAdminIndex($search = "", $roleSuperAdmin = false)
     {
         $builder = ($search) ? $this->search($search) : $this->createQueryBuilder();
         // Parent
-        if ($this->parent) {
+        if($this->parent)
+        {
             $builder->field('parent')->in(array('0', null));
         }
         // Tag
-        if ($this->tag) {
+        if($this->tag)
+        {
             $builder->field('tags.id')->equals($this->tag);
         }
         // Private
-        if (!$this->private) {
+        if(!$this->private)
+        {
             $builder->field('private')->equals(false);
         }
         // RoleSuperAdmin
-        if (!$roleSuperAdmin) {
+        if(!$roleSuperAdmin)
+        {
             $builder->field('delete')->equals(false);
         }
         // Common
@@ -104,7 +112,7 @@ class MediaRepository extends FhmRepository
 
     /**
      * @param string $search
-     * @param bool $roleSuperAdmin
+     * @param bool   $roleSuperAdmin
      *
      * @return int
      * @throws \Doctrine\ODM\MongoDB\MongoDBException
@@ -113,19 +121,23 @@ class MediaRepository extends FhmRepository
     {
         $builder = ($search) ? $this->search($search) : $this->createQueryBuilder();
         // Parent
-        if ($this->parent) {
+        if($this->parent)
+        {
             $builder->field('parent')->in(array('0', null));
         }
         // Tag
-        if ($this->tag) {
+        if($this->tag)
+        {
             $builder->field('tags.id')->equals($this->tag);
         }
         // Private
-        if (!$this->private) {
+        if(!$this->private)
+        {
             $builder->field('private')->equals(false);
         }
         // RoleSuperAdmin
-        if (!$roleSuperAdmin) {
+        if(!$roleSuperAdmin)
+        {
             $builder->field('delete')->equals(false);
         }
 
@@ -142,26 +154,29 @@ class MediaRepository extends FhmRepository
     {
         $builder = ($search) ? $this->search($search) : $this->createQueryBuilder();
         // Parent
-        if ($this->parent) {
+        if($this->parent)
+        {
             $builder->field('parent')->in(array('0', null));
         }
         // Tag
-        if ($this->tag) {
+        if($this->tag)
+        {
             $builder->field('tags.id')->equals($this->tag);
         }
         // Private
-        if (!$this->private) {
+        if(!$this->private)
+        {
             $builder->field('private')->equals(false);
         }
         // Filter
-        if ($this->filter) {
+        if($this->filter)
+        {
             $builder->addAnd(
                 $builder->expr()->addOr($builder->expr()->field('type')->in($this->filter))->addOr(
-                        $builder->expr()->field('extension')->in($this->filter)
-                    )->addOr($builder->expr()->field('mimeType')->in($this->filter))
+                    $builder->expr()->field('extension')->in($this->filter)
+                )->addOr($builder->expr()->field('mimeType')->in($this->filter))
             );
         }
-
         // Common
         $builder->field('active')->equals(true);
         $builder->field('delete')->equals(false);
@@ -180,26 +195,29 @@ class MediaRepository extends FhmRepository
     {
         $builder = ($search) ? $this->search($search) : $this->createQueryBuilder();
         // Parent
-        if ($this->parent) {
+        if($this->parent)
+        {
             $builder->field('parent')->in(array('0', null));
         }
         // Tag
-        if ($this->tag) {
+        if($this->tag)
+        {
             $builder->field('tags.id')->equals($this->tag);
         }
         // Private
-        if (!$this->private) {
+        if(!$this->private)
+        {
             $builder->field('private')->equals(false);
         }
         // Filter
-        if ($this->filter) {
+        if($this->filter)
+        {
             $builder->addAnd(
                 $builder->expr()->addOr($builder->expr()->field('type')->in($this->filter))->addOr(
-                        $builder->expr()->field('extension')->in($this->filter)
-                    )->addOr($builder->expr()->field('mimeType')->in($this->filter))
+                    $builder->expr()->field('extension')->in($this->filter)
+                )->addOr($builder->expr()->field('mimeType')->in($this->filter))
             );
         }
-
         // Common
         $builder->field('active')->equals(true);
         $builder->field('delete')->equals(false);
@@ -216,7 +234,8 @@ class MediaRepository extends FhmRepository
     {
         $builder = $this->createQueryBuilder();
         // Private
-        if (!$this->private) {
+        if(!$this->private)
+        {
             $builder->field('private')->equals(false);
         }
         // Common

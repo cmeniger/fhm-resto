@@ -1,4 +1,5 @@
 <?php
+
 namespace Fhm\FhmBundle\EventListener;
 
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -7,6 +8,7 @@ use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 
 /**
  * Class FhmEventListener
+ *
  * @package Fhm\FhmBundle\EventListener
  */
 class FhmEventListener implements EventSubscriberInterface
@@ -26,6 +28,7 @@ class FhmEventListener implements EventSubscriberInterface
 
     /**
      * FhmEventListener constructor.
+     *
      * @param $templating
      * @param $securityToken
      * @param $securityAuthorization
@@ -33,10 +36,10 @@ class FhmEventListener implements EventSubscriberInterface
      */
     public function __construct($templating, $securityToken, $securityAuthorization, $project)
     {
-        $this->template = $templating;
+        $this->template              = $templating;
         $this->securityAuthorization = $securityAuthorization;
-        $this->securityToken = $securityToken;
-        $this->parameters = $project;
+        $this->securityToken         = $securityToken;
+        $this->parameters            = $project;
     }
 
     /**
@@ -46,21 +49,22 @@ class FhmEventListener implements EventSubscriberInterface
      */
     public function onKernelRequest(GetResponseEvent $event)
     {
-        $date = new \DateTime($this->parameters['date']);
-        $route = $event->getRequest()->attributes->get('_route');
+        $date       = new \DateTime($this->parameters['date']);
+        $route      = $event->getRequest()->attributes->get('_route');
         $authorized = false;
         $authorized = in_array($route, $this->parameters['firewall']) ? true : $authorized;
-        if ($this->securityToken->getToken()) {
+        if($this->securityToken->getToken())
+        {
             $authorized = $this->securityAuthorization->isGranted(
                 'ROLE_ADMIN'
             ) ? true : $authorized;
         }
-
         $authorized = in_array(
             getenv('SYMFONY_ENV'),
             array('test', 'dev')
         ) ? true : $authorized;
-        if ($this->parameters['construct'] && !$authorized) {
+        if($this->parameters['construct'] && !$authorized)
+        {
             $event->setResponse(
                 new Response(
                     $this->template->render(
@@ -71,7 +75,9 @@ class FhmEventListener implements EventSubscriberInterface
                 )
             );
             $event->stopPropagation();
-        } elseif ($this->parameters['maintenance'] && !$authorized) {
+        }
+        elseif($this->parameters['maintenance'] && !$authorized)
+        {
             $event->setResponse(
                 new Response(
                     $this->template->render(

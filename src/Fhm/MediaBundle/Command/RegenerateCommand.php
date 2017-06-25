@@ -41,7 +41,7 @@ EOT
                 if(is_dir($urlWeb . $media->getId()))
                 {
                     $output->writeln($media->getId() . ' | ' . $media->getType() . ' | ' . $media->getExtension());
-                    $this->getcontainer()->get($this->getcontainer()->getParameter('fhm_media')['service'])->setDocument($media)->generateImage();
+                    $this->getcontainer()->get($this->getcontainer()->getParameter('fhm_media')['service'])->setModel($media)->generateImage();
                 }
                 else
                 {

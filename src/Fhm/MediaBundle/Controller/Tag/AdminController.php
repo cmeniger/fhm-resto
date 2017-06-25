@@ -229,11 +229,11 @@ class AdminController extends FhmController
      */
     private function _tagUndelete($id)
     {
-        $documents = $this->get('fhm_tools')->dmRepository(self::$repository)->getSons($id);
-        foreach ($documents as $document) {
-            $this->_tagUndelete($document->getId());
-            $document->setDelete(false);
-            $this->get('fhm_tools')->dmPersist($document);
+        $objects = $this->get('fhm_tools')->dmRepository(self::$repository)->getSons($id);
+        foreach ($objects as $object) {
+            $this->_tagUndelete($object->getId());
+            $object->setDelete(false);
+            $this->get('fhm_tools')->dmPersist($object);
         }
 
         return $this;
@@ -249,11 +249,11 @@ class AdminController extends FhmController
      */
     private function _tagActive($id, $active)
     {
-        $documents = $this->get('fhm_tools')->dmRepository(self::$repository)->getSons($id);
-        foreach ($documents as $document) {
-            $this->_tagActive($document->getId(), $active);
-            $document->setActive($active);
-            $this->get('fhm_tools')->dmPersist($document);
+        $objects = $this->get('fhm_tools')->dmRepository(self::$repository)->getSons($id);
+        foreach ($objects as $object) {
+            $this->_tagActive($object->getId(), $active);
+            $object->setActive($active);
+            $this->get('fhm_tools')->dmPersist($object);
         }
 
         return $this;

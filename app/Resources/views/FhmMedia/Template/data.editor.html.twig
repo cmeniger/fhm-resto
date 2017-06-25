@@ -32,10 +32,10 @@
                     {% endfor %}
                 </div>
             {% endif %}
-            {% if documents %}
+            {% if objects %}
                 <div class="medias">
-                    {% for document in documents %}
-                        {{ document|blocEditor(instance)|raw }}
+                    {% for object in objects %}
+                        {{ object|blocEditor(instance)|raw }}
                     {% endfor %}
                 </div>
             {% else %}
@@ -46,7 +46,7 @@
         </div>
     </div>
     <div class="pagination">
-        {% if documents %}
+        {% if objects %}
             {{ macroPagination.print(pagination, true) }}
         {% endif %}
     </div>

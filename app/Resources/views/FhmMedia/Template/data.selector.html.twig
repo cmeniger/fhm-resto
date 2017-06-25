@@ -43,11 +43,11 @@
                 {% endfor %}
             </div>
         {% endif %}
-        {% if documents %}
+        {% if objects %}
             <div class="row bloc medias">
-                {% for document in documents %}
+                {% for object in objects %}
                     <div class="large-3 medium-4 small-6 columns end">
-                        {{ document|blocSelector(instance, selected)|raw }}
+                        {{ object|blocSelector(instance, selected)|raw }}
                     </div>
                 {% endfor %}
             </div>

@@ -26,10 +26,56 @@
                 {{ form_errors(form.subtitle) }}
                 {{ form_widget(form.subtitle) }}
             </div>
+        </fieldset>
+        <fieldset>
+            <legend>{{ (instance.translation ~ '.admin.update.form.fieldset.menu')|trans }}</legend>
             <div class="row">
                 {{ form_label(form.menu) }}
                 {{ form_errors(form.menu) }}
                 {{ form_widget(form.menu) }}
+            </div>
+            <div class="row">
+                {{ form_label(form.menu_home_left) }}
+                {{ form_errors(form.menu_home_left) }}
+                {{ form_widget(form.menu_home_left) }}
+            </div>
+            <div class="row">
+                {{ form_label(form.menu_home_right) }}
+                {{ form_errors(form.menu_home_right) }}
+                {{ form_widget(form.menu_home_right) }}
+            </div>
+            <div class="row">
+                {{ form_label(form.menu_home_side) }}
+                {{ form_errors(form.menu_home_side) }}
+                {{ form_widget(form.menu_home_side) }}
+            </div>
+            <div class="row">
+                {{ form_label(form.menu_footer) }}
+                {{ form_errors(form.menu_footer) }}
+                {{ form_widget(form.menu_footer) }}
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend>{{ (instance.translation ~ '.admin.update.form.fieldset.media')|trans }}</legend>
+            <div class="row">
+                {{ form_label(form.slider) }}
+                {{ form_errors(form.slider) }}
+                {{ form_widget(form.slider) }}
+            </div>
+            <div class="row">
+                {{ form_label(form.gallery_top) }}
+                {{ form_errors(form.gallery_top) }}
+                {{ form_widget(form.gallery_top) }}
+            </div>
+            <div class="row">
+                {{ form_label(form.gallery_bottom) }}
+                {{ form_errors(form.gallery_bottom) }}
+                {{ form_widget(form.gallery_bottom) }}
+            </div>
+            <div class="row">
+                {{ form_label(form.contact) }}
+                {{ form_errors(form.contact) }}
+                {{ form_widget(form.contact) }}
             </div>
             <div class="row">
                 {{ form_label(form.news) }}
@@ -41,10 +87,30 @@
                 {{ form_errors(form.partner) }}
                 {{ form_widget(form.partner) }}
             </div>
+        </fieldset>
+    </div>
+    <div class="large-6 medium-6 small-12 columns">
+        <fieldset>
+            <legend>{{ (instance.translation ~ '.admin.update.form.fieldset.image')|trans }}</legend>
             <div class="row">
-                {{ form_label(form.contact) }}
-                {{ form_errors(form.contact) }}
-                {{ form_widget(form.contact) }}
+                {{ form_label(form.logo) }}
+                {{ form_errors(form.logo) }}
+                {{ form_widget(form.logo) }}
+            </div>
+            <div class="row">
+                {{ form_label(form.background_top) }}
+                {{ form_errors(form.background_top) }}
+                {{ form_widget(form.background_top) }}
+            </div>
+            <div class="row">
+                {{ form_label(form.background_card) }}
+                {{ form_errors(form.background_card) }}
+                {{ form_widget(form.background_card) }}
+            </div>
+            <div class="row">
+                {{ form_label(form.background_testimony) }}
+                {{ form_errors(form.background_testimony) }}
+                {{ form_widget(form.background_testimony) }}
             </div>
         </fieldset>
         <fieldset>
@@ -119,40 +185,96 @@
             </div>
         </fieldset>
     </div>
-    <div class="large-6 medium-6 small-12 columns">
-        <fieldset>
-            <legend>{{ (instance.translation ~ '.admin.update.form.fieldset.media')|trans }}</legend>
-            <div class="row">
-                {{ form_label(form.background) }}
-                {{ form_errors(form.background) }}
-                {{ form_widget(form.background) }}
-            </div>
-            <div class="row">
-                {{ form_label(form.logo) }}
-                {{ form_errors(form.logo) }}
-                {{ form_widget(form.logo) }}
-            </div>
-            <div class="row">
-                {{ form_label(form.slider) }}
-                {{ form_errors(form.slider) }}
-                {{ form_widget(form.slider) }}
-            </div>
-            <div class="row">
-                {{ form_label(form.gallery) }}
-                {{ form_errors(form.gallery) }}
-                {{ form_widget(form.gallery) }}
-            </div>
-        </fieldset>
-    </div>
+{% endblock %}
 
-    <div class="large-6 medium-6 small-12 columns">
-        <fieldset>
-            <legend>{{ (instance.translation ~ '.admin.update.form.fieldset.notice')|trans }}</legend>
-            <div class="row">
-                {{ form_label(form.legal_notice) }}
-                {{ form_errors(form.legal_notice) }}
-                {{ form_widget(form.legal_notice) }}
-            </div>
-        </fieldset>
+{% block content_data_fields %}
+    {{ parent() }}
+    <div class="form-bloc form-fields row">
+        <div class="large-3 medium-6 small-12 columns">
+            <fieldset>
+                <legend>{{ (instance.translation ~ '.admin.update.form.fieldset.card_slider')|trans }}</legend>
+                <div class="row">
+                    {{ form_label(form.title_card_slider) }}
+                    {{ form_errors(form.title_card_slider) }}
+                    {{ form_widget(form.title_card_slider) }}
+                </div>
+                <div class="row">
+                    {{ form_label(form.subtitle_card_slider) }}
+                    {{ form_errors(form.subtitle_card_slider) }}
+                    {{ form_widget(form.subtitle_card_slider) }}
+                </div>
+                <div class="row">
+                    {{ form_label(form.card_slider) }}
+                    {{ form_errors(form.card_slider) }}
+                    {{ form_widget(form.card_slider) }}
+                </div>
+            </fieldset>
+        </div>
+        <div class="large-3 medium-6 small-12 columns">
+            <fieldset>
+                <legend>{{ (instance.translation ~ '.admin.update.form.fieldset.card_main')|trans }}</legend>
+                <div class="row">
+                    {{ form_label(form.title_card_main) }}
+                    {{ form_errors(form.title_card_main) }}
+                    {{ form_widget(form.title_card_main) }}
+                </div>
+                <div class="row">
+                    {{ form_label(form.subtitle_card_main) }}
+                    {{ form_errors(form.subtitle_card_main) }}
+                    {{ form_widget(form.subtitle_card_main) }}
+                </div>
+                <div class="row">
+                    {{ form_label(form.card_main) }}
+                    {{ form_errors(form.card_main) }}
+                    {{ form_widget(form.card_main) }}
+                </div>
+            </fieldset>
+        </div>
+        <div class="large-3 medium-6 small-12 columns">
+            <fieldset>
+                <legend>{{ (instance.translation ~ '.admin.update.form.fieldset.card_forward')|trans }}</legend>
+                <div class="row">
+                    {{ form_label(form.title_card_forward) }}
+                    {{ form_errors(form.title_card_forward) }}
+                    {{ form_widget(form.title_card_forward) }}
+                </div>
+                <div class="row">
+                    {{ form_label(form.subtitle_card_forward) }}
+                    {{ form_errors(form.subtitle_card_forward) }}
+                    {{ form_widget(form.subtitle_card_forward) }}
+                </div>
+                <div class="row">
+                    {{ form_label(form.card_forward) }}
+                    {{ form_errors(form.card_forward) }}
+                    {{ form_widget(form.card_forward) }}
+                </div>
+            </fieldset>
+        </div>
+        <div class="large-3 medium-6 small-12 columns">
+            <fieldset>
+                <legend>{{ (instance.translation ~ '.admin.update.form.fieldset.testimony')|trans }}</legend>
+                <div class="row">
+                    {{ form_label(form.title_testimony) }}
+                    {{ form_errors(form.title_testimony) }}
+                    {{ form_widget(form.title_testimony) }}
+                </div>
+                <div class="row">
+                    {{ form_label(form.subtitle_testimony) }}
+                    {{ form_errors(form.subtitle_testimony) }}
+                    {{ form_widget(form.subtitle_testimony) }}
+                </div>
+            </fieldset>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content_data_options_data_add %}
+    <div class="large-2 columns end">
+        {{ form_errors(form.demo) }}
+        {{ form_label(form.demo) }}
+        <div class="switch">
+            {{ form_widget(form.demo) }}
+            <label for="{{ form.demo.vars.id }}"></label>
+        </div>
     </div>
 {% endblock %}

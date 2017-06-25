@@ -1,4 +1,5 @@
 <?php
+
 namespace Fhm\ContactBundle\Document;
 
 use Fhm\GeolocationBundle\Document\Geolocation as FhmGeolocation;
@@ -26,6 +27,11 @@ class Contact extends FhmGeolocation
      * @MongoDB\Field(type="string")
      */
     protected $fax = '';
+
+    /**
+     * @MongoDB\Field(type="hash")
+     */
+    protected $schedules;
 
     /**
      * @MongoDB\Field(type="boolean")
@@ -108,8 +114,9 @@ class Contact extends FhmGeolocation
     public function __construct()
     {
         parent::__construct();
-        $this->form = false;
-        $this->messages = new ArrayCollection();
+        $this->form         = false;
+        $this->messages     = new ArrayCollection();
+        $this->schedules    = array();
         $this->sort_message = 0;
         $this->sort_address = null;
     }
@@ -184,6 +191,30 @@ class Contact extends FhmGeolocation
     public function getFax()
     {
         return $this->fax;
+    }
+
+    /**
+     * Get schedules
+     *
+     * @return mixed
+     */
+    public function getSchedules()
+    {
+        return $this->schedules;
+    }
+
+    /**
+     * Set schedules
+     *
+     * @param mixed $schedules
+     *
+     * @return self
+     */
+    public function setSchedules($schedules)
+    {
+        $this->schedules = $schedules;
+
+        return $this;
     }
 
     /**
@@ -494,7 +525,8 @@ class Contact extends FhmGeolocation
     public function setMessages(ArrayCollection $messages)
     {
         $this->resetMessages();
-        foreach ($messages as $message) {
+        foreach($messages as $message)
+        {
             $message->setContact($this);
         }
         $this->messages = $messages;
@@ -511,7 +543,8 @@ class Contact extends FhmGeolocation
      */
     public function addMessage(\Fhm\ContactBundle\Document\ContactMessage $message)
     {
-        if (!$this->messages->contains($message)) {
+        if(!$this->messages->contains($message))
+        {
             $this->messages->add($message);
             $message->setContact($this);
         }
@@ -528,7 +561,8 @@ class Contact extends FhmGeolocation
      */
     public function removeMessage(\Fhm\ContactBundle\Document\ContactMessage $message)
     {
-        if ($this->messages->contains($message)) {
+        if($this->messages->contains($message))
+        {
             $this->messages->removeElement($message);
             $message->removeContact();
         }
@@ -543,7 +577,8 @@ class Contact extends FhmGeolocation
      */
     public function resetMessages()
     {
-        foreach ($this->messages as $message) {
+        foreach($this->messages as $message)
+        {
             $message->removeContact();
         }
         $this->messages = new ArrayCollection();

@@ -54,19 +54,19 @@
 {% else %}
     <div class="testimony home">
         <div class="testimony-text">
-            {% for document in documents %}
+            {% for object in objects %}
                 <div class="testimony-item">
                     <p>
-                        <i class="fa fa-quote-left"></i>{{ document.getDescription() }}<i class="fa fa-quote-right"></i>
+                        <i class="fa fa-quote-left"></i>{{ object.getDescription() }}<i class="fa fa-quote-right"></i>
                     </p>
                 </div>
             {% endfor %}
         </div>
         <div class="testimony-avatar">
-            {% for document in documents %}
+            {% for object in objects %}
                 <div class="testimony-item">
-                    <div class="avatar" style="background: url({{ document.getImage()|media('s', asset('/images/default-avatar.jpg')) }})"></div>
-                    <div class="name">{{ document.getName() }}</div>
+                    <div class="avatar" style="background: url({{ object.getImage()|media('s', asset('/images/default-avatar.jpg')) }})"></div>
+                    <div class="name">{{ object.getName() }}</div>
                 </div>
             {% endfor %}
         </div>

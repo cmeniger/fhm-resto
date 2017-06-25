@@ -1,8 +1,9 @@
 <?php
+
 namespace Fhm\FhmBundle\Form\DataTransformer;
 
+use Fhm\FhmBundle\Services\Schedules;
 use Symfony\Component\Form\DataTransformerInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Class Schedules
@@ -11,16 +12,16 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  */
 class SchedulesTransformer implements DataTransformerInterface
 {
-    protected $container;
     protected $service;
 
     /**
      * SchedulesTransformer constructor.
+     *
+     * @param Schedules $schedules
      */
-    public function __construct(ContainerInterface $container)
+    public function __construct(\Fhm\FhmBundle\Services\Schedules $schedules)
     {
-        $this->container = $container;
-        $this->service   = $container->get('fhm_schedules');
+        $this->service = $schedules;
     }
 
     /**
@@ -28,7 +29,8 @@ class SchedulesTransformer implements DataTransformerInterface
      */
     public function transform($value)
     {
-        if ($value === null) {
+        if($value === null)
+        {
             return array();
         }
 
@@ -40,7 +42,8 @@ class SchedulesTransformer implements DataTransformerInterface
      */
     public function reverseTransform($value)
     {
-        if ($value === null) {
+        if($value === null)
+        {
             return array();
         }
 

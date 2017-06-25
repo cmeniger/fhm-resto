@@ -1,4 +1,5 @@
 <?php
+
 namespace Fhm\MediaBundle\Twig;
 
 use Fhm\MediaBundle\Document\Media;
@@ -14,6 +15,7 @@ class MediaExtension extends \Twig_Extension
 
     /**
      * MediaExtension constructor.
+     *
      * @param $service
      */
     public function __construct($service)
@@ -55,13 +57,14 @@ class MediaExtension extends \Twig_Extension
 
     /**
      * @param \Twig_Environment $env
-     * @param $media
+     * @param                   $media
+     *
      * @return mixed|string
      */
     public function getBlocAdmin(\Twig_Environment $env, Media $media)
     {
         return $env->render(
-            '::FhmMedia/Template/Bloc/admin.'.($media->getType() == 'image' ? 'image' : 'file').'.html.twig',
+            '::FhmMedia/Template/Bloc/admin.' . ($media->getType() == 'image' ? 'image' : 'file') . '.html.twig',
             array(
                 'object' => $media
             )
@@ -70,13 +73,14 @@ class MediaExtension extends \Twig_Extension
 
     /**
      * @param \Twig_Environment $env
-     * @param $media
+     * @param                   $media
+     *
      * @return mixed|string
      */
     public function getBlocFront(\Twig_Environment $env, $media)
     {
         return $env->render(
-            '::FhmMedia/Template/Bloc/front.'.($media->getType() == 'image' ? 'image' : 'file').'.html.twig',
+            '::FhmMedia/Template/Bloc/front.' . ($media->getType() == 'image' ? 'image' : 'file') . '.html.twig',
             array(
                 'object' => $media
             )
@@ -85,31 +89,33 @@ class MediaExtension extends \Twig_Extension
 
     /**
      * @param \Twig_Environment $env
-     * @param $media
-     * @param string $selected
+     * @param                   $media
+     * @param string            $selected
+     *
      * @return mixed|string
      */
     public function getBlocSelector(\Twig_Environment $env, $media, $selected = '')
     {
         return $env->render(
-            '::FhmMedia/Template/Bloc/selector.'.($media->getType() == 'image' ? 'image' : 'file').'.html.twig',
+            '::FhmMedia/Template/Bloc/selector.' . ($media->getType() == 'image' ? 'image' : 'file') . '.html.twig',
             array(
                 'selected' => $selected,
-                'document' => $media,
+                'object' => $media,
             )
         );
     }
 
     /**
      * @param \Twig_Environment $env
-     * @param $media
-     * @param $instance
+     * @param                   $media
+     * @param                   $instance
+     *
      * @return mixed|string
      */
     public function getBlocEditor(\Twig_Environment $env, $media)
     {
         return $env->render(
-            '::FhmMedia/Template/Bloc/editor.'.($media->getType() == 'image' ? 'image' : 'file').'.html.twig',
+            '::FhmMedia/Template/Bloc/editor.' . ($media->getType() == 'image' ? 'image' : 'file') . '.html.twig',
             array(
                 'object' => $media
             )
@@ -118,8 +124,9 @@ class MediaExtension extends \Twig_Extension
 
     /**
      * @param \Twig_Environment $env
-     * @param $media
-     * @param string $format
+     * @param                   $media
+     * @param string            $format
+     *
      * @return mixed|string
      */
     public function getBlocDownload(\Twig_Environment $env, $media, $format = 'origin')
@@ -135,18 +142,19 @@ class MediaExtension extends \Twig_Extension
 
     /**
      * @param \Twig_Environment $env
-     * @param $media
-     * @param $url
-     * @param string $title
+     * @param                   $media
+     * @param                   $url
+     * @param string            $title
+     *
      * @return mixed|string
      */
     public function getBlocSecure(\Twig_Environment $env, $media, $url, $title = '')
     {
         return $env->render(
-            '::FhmMedia/Template/Bloc/secure.'.($media->getType() == 'image' ? 'image' : 'file').'.html.twig',
+            '::FhmMedia/Template/Bloc/secure.' . ($media->getType() == 'image' ? 'image' : 'file') . '.html.twig',
             array(
-                'url' => $url,
-                'title' => $title ? $title : $media->getName(),
+                'url'    => $url,
+                'title'  => $title ? $title : $media->getName(),
                 'object' => $media
             )
         );
@@ -155,18 +163,18 @@ class MediaExtension extends \Twig_Extension
     /**
      * @param        $media
      * @param string $format
-     * @param null $height
+     * @param null   $height
      * @param string $default
      *
      * @return string
      */
     public function getImage($media, $format = 'origin', $height = null, $default = 'default')
     {
-        return "<img src='".$this->getMedia(
-            $media,
-            $format,
-            $default
-        )."' ".($height ? "style='height:".$height."px'" : "")." alt='".($media ? $media->getName() : "")."'>";
+        return "<img src='" . $this->getMedia(
+                $media,
+                $format,
+                $default
+            ) . "' " . ($height ? "style='height:" . $height . "px'" : "") . " alt='" . ($media ? $media->getName() : "") . "'>";
     }
 
     /**
@@ -179,25 +187,29 @@ class MediaExtension extends \Twig_Extension
     public function getVideo($url, $width = 560, $height = 315)
     {
         return "<iframe 
-                    width='".$width."'
-                    height='".$height."'
-                    src='".$url."'
+                    width='" . $width . "'
+                    height='" . $height . "'
+                    src='" . $url . "'
                     frameborder='0'
                     allowfullscreen
                 ></iframe>";
     }
 
     /**
-     * @param $media
+     * @param        $media
      * @param string $format
      * @param string $default
+     *
      * @return string
      */
     public function getMedia($media, $format = 'origin', $default = 'default')
     {
-        if ($media) {
-            return $this->service->setDocument($media)->getPathFile($format, $default);
-        } elseif ($default == "default") {
+        if($media)
+        {
+            return $this->service->setModel($media)->getPathFile($format, $default);
+        }
+        elseif($default == "default")
+        {
             $default = file_exists('../web/images/default.jpg') ? '/images/default.jpg' : $default;
             $default = file_exists('../web/images/default.png') ? '/images/default.png' : $default;
         }
@@ -216,28 +228,33 @@ class MediaExtension extends \Twig_Extension
     }
 
     /**
-     * @param \Fhm\MediaBundle\Document\Media $media
+     * @param        $media
+     * @param string $axe
+     * @param string $ratio
      *
      * @return string
      */
     public function getDimension($media, $axe = '', $ratio = '')
     {
-        $path = $this->service->setDocument($media)->getPath();
-        if (!file_exists($path->fullWeb.'origin.'.$media->getExtension())) {
+        $path = $this->service->setModel($media)->getPath();
+        if(!file_exists($path->fullWeb . 'origin.' . $media->getExtension()))
+        {
             return '';
         }
-        $size = getimagesize($path->fullWeb.'origin.'.$media->getExtension());
-        $width = $size[0];
+        $size   = getimagesize($path->fullWeb . 'origin.' . $media->getExtension());
+        $width  = $size[0];
         $height = $size[1];
-        if ($ratio > 0) {
-            $width = $width > $height ? $ratio : $ratio * $width / $height;
+        if($ratio > 0)
+        {
+            $width  = $width > $height ? $ratio : $ratio * $width / $height;
             $height = $height > $width ? $ratio : $ratio * $height / $width;
         }
-        if ($axe) {
+        if($axe)
+        {
             $axe = strtolower(trim($axe));
             $axe = ($axe != 'width' && $axe != 'height') ? 'width' : $axe;
         }
 
-        return $axe ? $axe : $width.' x '.$height;
+        return $axe ? $axe : $width . ' x ' . $height;
     }
 }

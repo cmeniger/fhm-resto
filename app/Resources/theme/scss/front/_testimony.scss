@@ -2,7 +2,6 @@
     &.home{
         .testimony-text{
             .testimony-item{
-                @include css3-prefix(box-shadow, 0 30px 120px 0 rgba($black, 0.25));
                 @include border-radius(3px);
                 background: $white;
                 padding:    1rem;

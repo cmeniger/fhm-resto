@@ -1,15 +1,15 @@
 {% trans_default_domain instance.domain %}
 <div class="data">
-    <div class='item image' title='{{ document.getName() }}' style="background:url('{{ document|media('s') }}') no-repeat center center;">
+    <div class='item image' title='{{ object.getName() }}' style="background:url('{{ object|media('s') }}') no-repeat center center;">
         <div class="name">
-            {{ document.getName() }}
+            {{ object.getName() }}
         </div>
         <div class="extension right">
-            <span class="radius label secondary" title="{{ document|dimension }}">{{ document.getExtension() }} <small>{{ document|dimension }}</small></span>
+            <span class="radius label secondary" title="{{ object|dimension }}">{{ object.getExtension() }} <small>{{ object|dimension }}</small></span>
         </div>
         <div class="actions">
-            <a href="#" data-type="link" data-url="{{ document|link }}" data-title="{{ document.getName() }}" data-text="{{ document.getName() }}" title="{{ ('media.bloc.insert.link')|trans({},'FhmMediaBundle') }}"><i class="fa fa-link"></i></a>
-            <a href="#" data-type="image" data-url="{{ document|link }}" data-title="{{ document.getName() }}" data-width="{{ document|dimension('width', 300) }}" title="{{ ('media.bloc.insert.image')|trans({},'FhmMediaBundle') }}"><i class="fa fa-image"></i></a>
+            <a href="#" data-type="link" data-url="{{ object|link }}" data-title="{{ object.getName() }}" data-text="{{ object.getName() }}" title="{{ ('media.bloc.insert.link')|trans({},'FhmMediaBundle') }}"><i class="fa fa-link"></i></a>
+            <a href="#" data-type="image" data-url="{{ object|link }}" data-title="{{ object.getName() }}" data-width="{{ object|dimension('width', 300) }}" title="{{ ('media.bloc.insert.image')|trans({},'FhmMediaBundle') }}"><i class="fa fa-image"></i></a>
         </div>
     </div>
 </div>

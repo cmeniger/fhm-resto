@@ -1,14 +1,14 @@
 {% trans_default_domain instance.domain %}
 
-<div class='data image' media-id='{{ document.getId() }}' media-name='{{ document.getName() }}' media-extension='{{ document.getExtension() }}' media-type='image' title='{{ document.getName() }}' style="background:url('{{ document|media('s') }}') no-repeat center center;">
+<div class='data image' media-id='{{ object.getId() }}' media-name='{{ object.getName() }}' media-extension='{{ object.getExtension() }}' media-type='image' title='{{ object.getName() }}' style="background:url('{{ object|media('s') }}') no-repeat center center;">
     <div class="name">
-        {{ document.getName() }}
+        {{ object.getName() }}
     </div>
     <div class="extension right">
-        <span class="radius label secondary">{{ document.getExtension() }}</span>
+        <span class="radius label secondary">{{ object.getExtension() }}</span>
     </div>
     <div class="actions view">
-        <a href="{{ document|media }}" target="_blank" title="{{ ('media.bloc.download')|trans({},'FhmMediaBundle') }}" download="{{ document.getAlias() ~ '.' ~ document.getExtension() }}"><i class="fa fa-download"></i></a>
-        <a href="#" title="{{ ('media.bloc.detail')|trans({},'FhmMediaBundle') }}" data-reveal-id="modal-media-zoom" media-id="{{ document.getId() }}" media-zoom><i class="fa fa-search-plus"></i></a>
+        <a href="{{ object|media }}" target="_blank" title="{{ ('media.bloc.download')|trans({},'FhmMediaBundle') }}" download="{{ object.getAlias() ~ '.' ~ object.getExtension() }}"><i class="fa fa-download"></i></a>
+        <a href="#" title="{{ ('media.bloc.detail')|trans({},'FhmMediaBundle') }}" data-reveal-id="modal-media-zoom" media-id="{{ object.getId() }}" media-zoom><i class="fa fa-search-plus"></i></a>
     </div>
 </div>

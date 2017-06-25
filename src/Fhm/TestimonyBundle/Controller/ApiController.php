@@ -50,7 +50,7 @@ class ApiController extends FhmController
      *      path="/detail/{template}/{id}",
      *      name="fhm_api_testimony_detail",
      *      requirements={"id"=".+"},
-     *      defaults={"template"="default"}
+     *      defaults={"template"="default", "id"=null}
      * )
      */
     public function detailAction($template, $id)
@@ -68,7 +68,7 @@ class ApiController extends FhmController
                 )
             );
         }
-        if($id != '')
+        if($id != null)
         {
             $object = $this->get('fhm_tools')->dmRepository(self::$repository)->getById($id);
             $object = ($object) ?: $this->get('fhm_tools')->dmRepository(self::$repository)->getByAlias($id);

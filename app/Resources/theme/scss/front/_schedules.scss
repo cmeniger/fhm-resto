@@ -1,5 +1,9 @@
 .schedules{
     padding: 1rem;
+    &.nodata{
+        display:    block;
+        text-align: center;
+    }
     .closed{
         .text{
             color:          $alert-color;

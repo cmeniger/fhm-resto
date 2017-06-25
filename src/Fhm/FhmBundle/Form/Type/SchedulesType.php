@@ -1,7 +1,9 @@
 <?php
+
 namespace Fhm\FhmBundle\Form\Type;
 
 use Fhm\FhmBundle\Form\DataTransformer\SchedulesTransformer;
+use Fhm\FhmBundle\Services\Schedules;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -17,18 +19,21 @@ use Symfony\Component\PropertyAccess\PropertyAccess;
 
 /**
  * Class SchedulesType
+ *
  * @package Fhm\FhmBundle\Form\Type
  */
 class SchedulesType extends AbstractType
 {
-    protected $container;
+    protected $schedules;
 
     /**
-     * @param ContainerInterface $container
+     * SchedulesType constructor.
+     *
+     * @param Schedules $schedules
      */
-    public function __construct(ContainerInterface $container)
+    public function __construct(\Fhm\FhmBundle\Services\Schedules $schedules)
     {
-        $this->container = $container;
+        $this->schedules = $schedules;
     }
 
     /**
@@ -37,16 +42,15 @@ class SchedulesType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setRequired(['subscriber']);
-
         $resolver->setDefaults(
             array(
                 'translation_domain' => 'FhmFhmBundle',
                 'cascade_validation' => true,
-                'by_reference' => false,
-                'label' => 'fhm.schedules.title',
-                'step' => 15,
-                'editor' => false,
-                'subscriber' => null,
+                'by_reference'       => false,
+                'label'              => 'fhm.schedules.title',
+                'step'               => 15,
+                'editor'             => false,
+                'subscriber'         => null,
             )
         );
     }
@@ -56,51 +60,53 @@ class SchedulesType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $accessor = PropertyAccess::createPropertyAccessor();
+        $accessor   = PropertyAccess::createPropertyAccessor();
         $subscriber = $options['subscriber'];
-        if ($accessor->isReadable($subscriber['data'], $builder->getName())) {
-            $options['data'] = $accessor->getValue($subscriber['data'], $builder->getName());
+        if($accessor->isReadable($subscriber['data'], $builder->getName()))
+        {
+            $options['data']       = $accessor->getValue($subscriber['data'], $builder->getName());
             $options['data_class'] = $subscriber['data_class'];
         }
-        for ($i = 1; $i < 8; $i++) {
+        for($i = 1; $i < 8; $i++)
+        {
             $builder
                 ->add(
-                    'days_'.$i.'_0',
+                    'days_' . $i . '_0',
                     ChoiceType::class,
                     array(
-                        'label' => 'fhm.schedules.day.start',
-                        'choices' => $this->__listTime($options['step']),
-                        'attr' => array('class' => 'am'),
+                        'label'    => 'fhm.schedules.day.start',
+                        'choices'  => $this->__listTime($options['step']),
+                        'attr'     => array('class' => 'am'),
                         'required' => false,
                     )
                 )
                 ->add(
-                    'days_'.$i.'_1',
+                    'days_' . $i . '_1',
                     ChoiceType::class,
                     array(
-                        'label' => 'fhm.schedules.day.end',
-                        'choices' => $this->__listTime($options['step']),
-                        'attr' => array('class' => 'am'),
+                        'label'    => 'fhm.schedules.day.end',
+                        'choices'  => $this->__listTime($options['step']),
+                        'attr'     => array('class' => 'am'),
                         'required' => false,
                     )
                 )
                 ->add(
-                    'days_'.$i.'_2',
+                    'days_' . $i . '_2',
                     ChoiceType::class,
                     array(
-                        'label' => 'fhm.schedules.day.start',
-                        'choices' => $this->__listTime($options['step']),
-                        'attr' => array('class' => 'pm'),
+                        'label'    => 'fhm.schedules.day.start',
+                        'choices'  => $this->__listTime($options['step']),
+                        'attr'     => array('class' => 'pm'),
                         'required' => false,
                     )
                 )
                 ->add(
-                    'days_'.$i.'_3',
+                    'days_' . $i . '_3',
                     ChoiceType::class,
                     array(
-                        'label' => 'fhm.schedules.day.end',
-                        'choices' => $this->__listTime($options['step']),
-                        'attr' => array('class' => 'pm'),
+                        'label'    => 'fhm.schedules.day.end',
+                        'choices'  => $this->__listTime($options['step']),
+                        'attr'     => array('class' => 'pm'),
                         'required' => false,
                     )
                 );
@@ -115,30 +121,30 @@ class SchedulesType extends AbstractType
                 'close_reason',
                 TextareaType::class,
                 array(
-                    'label' => 'fhm.schedules.close.reason',
+                    'label'    => 'fhm.schedules.close.reason',
                     'required' => false,
-                    'attr' => array('class' => $options['editor'] ? 'editor' : ''),
+                    'attr'     => array('class' => $options['editor'] ? 'editor' : ''),
                 )
             )
             ->add(
                 'close_date',
                 DateTimeType::class,
                 array(
-                    'label' => 'fhm.schedules.close.date',
-                    'widget' => 'single_text',
-                    'input' => 'datetime',
-                    'format' => 'dd/MM/yyyy HH:mm',
-                    'attr' => array('class' => 'datetimepicker', 'step' => $options['step']),
+                    'label'    => 'fhm.schedules.close.date',
+                    'widget'   => 'single_text',
+                    'input'    => 'datetime',
+                    'format'   => 'dd/MM/yyyy HH:mm',
+                    'attr'     => array('class' => 'datetimepicker', 'step' => $options['step']),
                     'required' => false,
                 )
             )
-            ->addModelTransformer(new SchedulesTransformer($this->container));
+            ->addModelTransformer(new SchedulesTransformer($this->schedules));
     }
 
     /**
-     * @param \Symfony\Component\Form\FormView $view
+     * @param \Symfony\Component\Form\FormView      $view
      * @param \Symfony\Component\Form\FormInterface $form
-     * @param array $options
+     * @param array                                 $options
      */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
@@ -154,23 +160,26 @@ class SchedulesType extends AbstractType
     }
 
     /**
-     * @param int $step
+     * @param int    $step
      * @param string $type
      *
      * @return array
      */
     private function __listTime($step = 1, $type = '')
     {
-        $list = array(
+        $list  = array(
             'close' => 'fhm.schedules.day.close',
         );
         $start = $type == 'pm' ? 13 : 0;
-        $end = $type == 'am' ? 13 : 24;
-        for ($i = $start; $i <= $end; $i++) {
-            for ($j = 0; $j < 60; $j = $j + $step) {
-                $key = str_pad($i, 2, '0', STR_PAD_LEFT).':'.str_pad($j, 2, '0', STR_PAD_LEFT);
+        $end   = $type == 'am' ? 13 : 24;
+        for($i = $start; $i <= $end; $i++)
+        {
+            for($j = 0; $j < 60; $j = $j + $step)
+            {
+                $key        = str_pad($i, 2, '0', STR_PAD_LEFT) . ':' . str_pad($j, 2, '0', STR_PAD_LEFT);
                 $list[$key] = $key;
-                if ($i == $end) {
+                if($i == $end)
+                {
                     break;
                 }
             }
