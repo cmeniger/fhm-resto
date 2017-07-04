@@ -266,28 +266,6 @@ li{
 }
 
 //
-// Pagination
-//
-
-.pagination{
-    text-align: center;
-    ul{
-        margin: 1rem 0;
-        li{
-            float:   none;
-            display: inline-block;
-        }
-    }
-    .counter{
-        color:     $pagination-link-font-color;
-        font-size: 0.8em;
-        span{
-            color: $primary-color;
-        }
-    }
-}
-
-//
 // Actions
 //
 

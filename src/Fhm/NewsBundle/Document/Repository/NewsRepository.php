@@ -1,4 +1,5 @@
 <?php
+
 namespace Fhm\NewsBundle\Document\Repository;
 
 use Fhm\FhmBundle\Document\Repository\FhmRepository;
@@ -15,9 +16,10 @@ class NewsRepository extends FhmRepository
 {
     /**
      * NewsRepository constructor.
+     *
      * @param DocumentManager $dm
-     * @param UnitOfWork $uow
-     * @param ClassMetadata $class
+     * @param UnitOfWork      $uow
+     * @param ClassMetadata   $class
      */
     public function __construct(DocumentManager $dm, UnitOfWork $uow, ClassMetadata $class)
     {
@@ -26,8 +28,8 @@ class NewsRepository extends FhmRepository
 
     /**
      * @param string $search
-     * @param int $page
-     * @param int $count
+     * @param int    $page
+     * @param int    $count
      * @param string $grouping
      *
      * @return mixed
@@ -90,9 +92,9 @@ class NewsRepository extends FhmRepository
 
     /**
      * @param \Fhm\NewsBundle\Document\NewsGroup $newsgroup
-     * @param string $search
-     * @param int $page
-     * @param int $count
+     * @param string                             $search
+     * @param int                                $page
+     * @param int                                $count
      *
      * @return mixed
      * @throws \Doctrine\ODM\MongoDB\MongoDBException
@@ -105,13 +107,16 @@ class NewsRepository extends FhmRepository
     ) {
         $builder = ($search) ? $this->search($search) : $this->createQueryBuilder();
         // Global
-        if ($newsgroup->getAddGlobal()) {
+        if($newsgroup->getAddGlobal())
+        {
             $builder->addAnd(
                 $builder->expr()->addOr($builder->expr()->field('newsgroups.id')->equals($newsgroup->getId()))->addOr(
                     $builder->expr()->field('global')->equals(true)
                 )
             );
-        } else {
+        }
+        else
+        {
             $builder->field('newsgroups.id')->equals($newsgroup->getId());
         }
         // Dates
@@ -125,6 +130,12 @@ class NewsRepository extends FhmRepository
                 $builder->expr()->field('date_end')->gt(new \DateTime())
             )
         );
+        // Pagination
+        if($page > 0 && $count > 0)
+        {
+            $builder->limit($count);
+            $builder->skip(($page - 1) * $count);
+        }
         // Common
         $builder->field('active')->equals(true);
         $builder->field('delete')->equals(false);
@@ -135,7 +146,7 @@ class NewsRepository extends FhmRepository
 
     /**
      * @param \Fhm\NewsBundle\Document\NewsGroup $newsgroup
-     * @param string $search
+     * @param string                             $search
      *
      * @return mixed
      */
@@ -143,13 +154,16 @@ class NewsRepository extends FhmRepository
     {
         $builder = ($search) ? $this->search($search) : $this->createQueryBuilder();
         // Global
-        if ($newsgroup->getAddGlobal()) {
+        if($newsgroup->getAddGlobal())
+        {
             $builder->addAnd(
                 $builder->expr()->addOr($builder->expr()->field('newsgroups.id')->equals($newsgroup->getId()))->addOr(
                     $builder->expr()->field('global')->equals(true)
                 )
             );
-        } else {
+        }
+        else
+        {
             $builder->field('newsgroups.id')->equals($newsgroup->getId());
         }
         // Dates
@@ -180,13 +194,16 @@ class NewsRepository extends FhmRepository
     {
         $builder = $this->createQueryBuilder();
         // Global
-        if ($newsgroup->getAddGlobal()) {
+        if($newsgroup->getAddGlobal())
+        {
             $builder->addAnd(
                 $builder->expr()->addOr($builder->expr()->field('newsgroups.id')->equals($newsgroup->getId()))->addOr(
                     $builder->expr()->field('global')->equals(true)
                 )
             );
-        } else {
+        }
+        else
+        {
             $builder->field('newsgroups.id')->equals($newsgroup->getId());
         }
         // Dates
@@ -210,7 +227,6 @@ class NewsRepository extends FhmRepository
 
     public function findAllParent()
     {
-        return $this->createQueryBuilder()->field('parent')->in(array('0', null))->sort('name')->getQuery()->execute(
-        )->toArray();
+        return $this->createQueryBuilder()->field('parent')->in(array('0', null))->sort('name')->getQuery()->execute()->toArray();
     }
 }

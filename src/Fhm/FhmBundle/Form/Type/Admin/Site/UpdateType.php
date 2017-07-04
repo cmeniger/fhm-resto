@@ -51,6 +51,16 @@ class UpdateType extends FhmType
                 array('label' => $options['translation_route'] . '.admin.update.form.title', 'required' => false)
             )
             ->add(
+                'title_news',
+                TextType::class,
+                array('label' => $options['translation_route'] . '.admin.update.form.title', 'required' => false)
+            )
+            ->add(
+                'title_partner',
+                TextType::class,
+                array('label' => $options['translation_route'] . '.admin.update.form.title', 'required' => false)
+            )
+            ->add(
                 'subtitle',
                 TextType::class,
                 array('label' => $options['translation_route'] . '.admin.update.form.subtitle', 'required' => false)
@@ -76,9 +86,70 @@ class UpdateType extends FhmType
                 array('label' => $options['translation_route'] . '.admin.update.form.subtitle', 'required' => false)
             )
             ->add(
+                'subtitle_news',
+                TextType::class,
+                array('label' => $options['translation_route'] . '.admin.update.form.subtitle', 'required' => false)
+            )
+            ->add(
+                'subtitle_partner',
+                TextType::class,
+                array('label' => $options['translation_route'] . '.admin.update.form.subtitle', 'required' => false)
+            )
+            ->add(
                 'demo',
                 CheckboxType::class,
                 array('label' => $options['translation_route'].'.admin.update.form.demo', 'required' => false)
+            )
+
+            ->add(
+                'show_slider',
+                CheckboxType::class,
+                array('label' => $options['translation_route'].'.admin.update.form.show', 'required' => false)
+            )
+            ->add(
+                'show_gallery_top',
+                CheckboxType::class,
+                array('label' => $options['translation_route'].'.admin.update.form.show', 'required' => false)
+            )
+            ->add(
+                'show_gallery_bottom',
+                CheckboxType::class,
+                array('label' => $options['translation_route'].'.admin.update.form.show', 'required' => false)
+            )
+            ->add(
+                'show_card_slider',
+                CheckboxType::class,
+                array('label' => $options['translation_route'].'.admin.update.form.show', 'required' => false)
+            )
+            ->add(
+                'show_card_main',
+                CheckboxType::class,
+                array('label' => $options['translation_route'].'.admin.update.form.show', 'required' => false)
+            )
+            ->add(
+                'show_card_forward',
+                CheckboxType::class,
+                array('label' => $options['translation_route'].'.admin.update.form.show', 'required' => false)
+            )
+            ->add(
+                'show_testimony',
+                CheckboxType::class,
+                array('label' => $options['translation_route'].'.admin.update.form.show', 'required' => false)
+            )
+            ->add(
+                'show_contact',
+                CheckboxType::class,
+                array('label' => $options['translation_route'].'.admin.update.form.show', 'required' => false)
+            )
+            ->add(
+                'show_news',
+                CheckboxType::class,
+                array('label' => $options['translation_route'].'.admin.update.form.show', 'required' => false)
+            )
+            ->add(
+                'show_partner',
+                CheckboxType::class,
+                array('label' => $options['translation_route'].'.admin.update.form.show', 'required' => false)
             )
             ->add(
                 'menu',

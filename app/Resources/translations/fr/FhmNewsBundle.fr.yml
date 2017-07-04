@@ -8,18 +8,6 @@ breadcrumb:
     news_group_update:                          Modifier
     news_group_detail:                          '%name%'
 
-project:
-    breadcrump:                                 Accueil
-    admin:
-        breadcrump:                             Admin
-        news:
-            breadcrump:                         Actualité
-            create:
-                breadcrumb:                     Ajouter une actualité
-            update:
-                breadcrumb:                     Modifier
-            detail:
-                breadcrumb:                     Détails
 news:
     admin:
         index:
@@ -213,6 +201,7 @@ news:
             form:
                 search:                         Rechercher
                 more:                           En savoir +
+                all:                            Voir toutes les actualités
                 update:                         Mise à jour le %date%
             table:
                 header:

@@ -17,6 +17,35 @@
     font-family: $font;
 }
 
+//
+// Logos
+//
+@mixin logo($color: 'white', $icon: true, $wave: true) {
+    $file: '';
+    $width: '';
+    @if $icon == true and $wave == true{
+        $file: 'logo-icon-wave-' + $color;
+        $width: 150px;
+    } @else if $icon == true{
+        $file: 'logo-icon-' + $color;
+        $width: 25px;
+    } @else if $wave == true{
+        $file: 'logo-wave-' + $color;
+        $width: 66px;
+    } @else{
+        $file: 'logo-icon-wave-' + $color;
+        $width: 150px;
+    }
+    &:after{
+        content:    "";
+        display:    block;
+        background: url('/images/' + $file + '.png') no-repeat 0 0;
+        width:      $width;
+        height:     25px;
+        margin:     10px auto 0;
+    }
+}
+
 /* -------------------------------------------------------------
   Sass CSS3 Mixins! The Cross-Browser CSS3 Sass Library
   By: Matthieu Aussaguel, http://www.mynameismatthieu.com, @matthieu_tweets
@@ -69,11 +98,11 @@
 /* ADDS A BROWSER PREFIX TO THE PROPERTY */
 @mixin css3-prefix($property, $value) {
     -webkit-#{$property}: #{$value};
-    -khtml-#{$property}: #{$value};
-    -moz-#{$property}: #{$value};
-    -ms-#{$property}: #{$value};
-    -o-#{$property}: #{$value};
-    #{$property}: #{$value};
+    -khtml-#{$property}:  #{$value};
+    -moz-#{$property}:    #{$value};
+    -ms-#{$property}:     #{$value};
+    -o-#{$property}:      #{$value};
+    #{$property}:         #{$value};
 }
 
 //
@@ -82,70 +111,70 @@
 @mixin outline-out($outerBorderWidth, $innerBorderWidth, $primaryColor) {
     $outerBorderWidth: 4px;
     $innerBorderWidth: 4px;
-    $primaryColor:red;
+    $primaryColor: red;
 
     //@include hacks();
     position: relative;
 
-    &:before {
-        content: '';
+    &:before{
+        content:  '';
         position: absolute;
-        border: $primaryColor solid $outerBorderWidth;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        left: 0;
+        border:   $primaryColor solid $outerBorderWidth;
+        top:      0;
+        right:    0;
+        bottom:   0;
+        left:     0;
     }
 
     &:hover:before,
     &:focus:before,
-    &:active:before {
-        top: -($outerBorderWidth + $innerBorderWidth);
-        right: -($outerBorderWidth + $innerBorderWidth);
+    &:active:before{
+        top:    -($outerBorderWidth + $innerBorderWidth);
+        right:  -($outerBorderWidth + $innerBorderWidth);
         bottom: -($outerBorderWidth + $innerBorderWidth);
-        left: -($outerBorderWidth + $innerBorderWidth);
+        left:   -($outerBorderWidth + $innerBorderWidth);
     }
 }
 
 /* BACKGROUND GRADIENT */
-@mixin background-gradient($startColor: #3C3C3C, $endColor: #999999) {
+@mixin background-gradient($startColor: #3C3C3C, $endColor: #999) {
     background-color: $startColor;
     background-image: -webkit-gradient(linear, left top, left bottom, from($startColor), to($endColor));
     background-image: -webkit-linear-gradient(top, $startColor, $endColor);
-    background-image:    -moz-linear-gradient(top, $startColor, $endColor);
-    background-image:     -ms-linear-gradient(top, $startColor, $endColor);
-    background-image:      -o-linear-gradient(top, $startColor, $endColor);
-    background-image:         linear-gradient(top, $startColor, $endColor);
-    filter:            progid:DXImageTransform.Microsoft.gradient(startColorStr='#{$startColor}', endColorStr='#{$endColor}');
+    background-image: -moz-linear-gradient(top, $startColor, $endColor);
+    background-image: -ms-linear-gradient(top, $startColor, $endColor);
+    background-image: -o-linear-gradient(top, $startColor, $endColor);
+    background-image: linear-gradient(top, $startColor, $endColor);
+    filter:           progid:DXImageTransform.Microsoft.gradient(startColorStr='#{$startColor}', endColorStr='#{$endColor}');
 }
 
 /* BACKGROUND HORIZONTAL */
-@mixin background-horizontal($startColor: #3C3C3C, $endColor: #999999) {
+@mixin background-horizontal($startColor: #3C3C3C, $endColor: #999) {
     background-color: $startColor;
     background-image: -webkit-gradient(linear, left top, right top, from($startColor), to($endColor));
     background-image: -webkit-linear-gradient(left, $startColor, $endColor);
-    background-image:    -moz-linear-gradient(left, $startColor, $endColor);
-    background-image:     -ms-linear-gradient(left, $startColor, $endColor);
-    background-image:      -o-linear-gradient(left, $startColor, $endColor);
-    background-image:         linear-gradient(left, $startColor, $endColor);
-    filter:            progid:DXImageTransform.Microsoft.gradient(startColorStr='#{$startColor}', endColorStr='#{$endColor}', gradientType='1');
+    background-image: -moz-linear-gradient(left, $startColor, $endColor);
+    background-image: -ms-linear-gradient(left, $startColor, $endColor);
+    background-image: -o-linear-gradient(left, $startColor, $endColor);
+    background-image: linear-gradient(left, $startColor, $endColor);
+    filter:           progid:DXImageTransform.Microsoft.gradient(startColorStr='#{$startColor}', endColorStr='#{$endColor}', gradientType='1');
 }
 
 /* BACKGROUND RADIAL */
-@mixin background-radial($startColor: #FFFFFF, $startPos: 0%, $endColor: #000000, $endPos:100%) {
+@mixin background-radial($startColor: #FFF, $startPos: 0%, $endColor: #000, $endPos:100%) {
     background: -moz-radial-gradient(center, ellipse cover, $startColor $startPos, $endColor $endPos);
-    background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop($startPos,$startColor), color-stop($endPos,$endColor));
-    background: -webkit-radial-gradient(center, ellipse cover, $startColor $startPos,$endColor $endPos);
-    background: -o-radial-gradient(center, ellipse cover, $startColor $startPos,$endColor $endPos);
-    background: -ms-radial-gradient(center, ellipse cover, $startColor $startPos,$endColor $endPos);
-    background: radial-gradient(ellipse at center, $startColor $startPos,$endColor $endPos);
+    background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop($startPos, $startColor), color-stop($endPos, $endColor));
+    background: -webkit-radial-gradient(center, ellipse cover, $startColor $startPos, $endColor $endPos);
+    background: -o-radial-gradient(center, ellipse cover, $startColor $startPos, $endColor $endPos);
+    background: -ms-radial-gradient(center, ellipse cover, $startColor $startPos, $endColor $endPos);
+    background: radial-gradient(ellipse at center, $startColor $startPos, $endColor $endPos);
 }
 
 /* BACKGROUND SIZE */
 @mixin background-size($width: 100%, $height: $width) {
-    @if type-of($width) == 'number' and $height != null {
+    @if type-of($width) == 'number' and $height != null{
         @include css3-prefix('background-size', $width $height);
-    } @else {
+    } @else{
         @include css3-prefix('background-size', $width);
     }
 }
@@ -167,15 +196,15 @@
     -webkit-border-bottom-right-radius: $bottomRightRadius;
     -webkit-border-bottom-left-radius:  $bottomLeftRadius;
 
-    -moz-border-radius-topleft:     $topLeftRadius;
-    -moz-border-radius-topright:    $topRightRadius;
-    -moz-border-radius-bottomright: $bottomRightRadius;
-    -moz-border-radius-bottomleft:  $bottomLeftRadius;
+    -moz-border-radius-topleft:         $topLeftRadius;
+    -moz-border-radius-topright:        $topRightRadius;
+    -moz-border-radius-bottomright:     $bottomRightRadius;
+    -moz-border-radius-bottomleft:      $bottomLeftRadius;
 
-    border-top-left-radius:     $topLeftRadius;
-    border-top-right-radius:    $topRightRadius;
-    border-bottom-right-radius: $bottomRightRadius;
-    border-bottom-left-radius:  $bottomLeftRadius;
+    border-top-left-radius:             $topLeftRadius;
+    border-top-right-radius:            $topRightRadius;
+    border-bottom-right-radius:         $bottomRightRadius;
+    border-bottom-left-radius:          $bottomLeftRadius;
 }
 
 /* BOX */
@@ -193,16 +222,15 @@
 @mixin box-rgba($r: 60, $g: 3, $b: 12, $opacity: 0.23, $color: #3C3C3C) {
     background-color: transparent;
     background-color: rgba($r, $g, $b, $opacity);
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#{$color}',endColorstr='#{$color}');
-    zoom:   1;
+    filter:           progid:DXImageTransform.Microsoft.gradient(startColorstr='#{$color}', endColorstr='#{$color}');
+    zoom:             1;
 }
-
 
 /* BOX SHADOW */
 @mixin box-shadow($x: 2px, $y: 2px, $blur: 5px, $color: rgba(0,0,0,.4), $inset: "") {
-    @if ($inset != "") {
+    @if ($inset != ""){
         @include css3-prefix('box-shadow', $inset $x $y $blur $color);
-    } @else {
+    } @else{
         @include css3-prefix('box-shadow', $x $y $blur $color);
     }
 }
@@ -219,12 +247,12 @@
 }
 
 /* DOUBLE BORDERS */
-@mixin double-borders($colorOne: #3C3C3C, $colorTwo: #999999, $radius: 0) {
+@mixin double-borders($colorOne: #3C3C3C, $colorTwo: #999, $radius: 0) {
     border: 1px solid $colorOne;
 
     @include css3-prefix('box-shadow', 0 0 0 1px $colorTwo);
 
-    @include border-radius( $radius );
+    @include border-radius($radius);
 }
 
 /* FLEX */
@@ -235,16 +263,16 @@
 /* FLIP */
 @mixin flip($scaleX: -1) {
     @include css3-prefix('transform', scaleX($scaleX));
-    filter:            FlipH;
-    -ms-filter:        "FlipH";
+    filter:     FlipH;
+    -ms-filter: "FlipH";
 }
 
 /* FONT FACE */
 @mixin font-face($fontFamily: myFont, $eotFileSrc: 'myFont.eot', $woffFileSrc: 'myFont.woff', $ttfFileSrc: 'myFont.ttf', $svgFileSrc: 'myFont.svg', $svgFontID: '#myFont') {
     font-family: $fontFamily;
-    src: url($eotFileSrc)  format('eot'),
+    src:         url($eotFileSrc) format('eot'),
                  url($woffFileSrc) format('woff'),
-                 url($ttfFileSrc)  format('truetype'),
+                 url($ttfFileSrc) format('truetype'),
                  url($svgFileSrc + $svgFontID) format('svg');
 }
 
@@ -252,11 +280,10 @@
 @mixin opacity($opacity: 0.5) {
     $opacityMultiplied: ($opacity * 100);
 
-    filter:         alpha(opacity=$opacityMultiplied);
-    -ms-filter:     "progid:DXImageTransform.Microsoft.Alpha(Opacity=" + $opacityMultiplied + ")";
+    filter:     alpha(opacity=$opacityMultiplied);
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=" + $opacityMultiplied + ")";
     @include css3-prefix('opacity', $opacity);
 }
-
 
 /* OUTLINE RADIUS */
 @mixin outline-radius($radius: 5px) {
@@ -273,7 +300,7 @@
     @include css3-prefix('transform', rotate($deg + deg));
     filter: progid:DXImageTransform.Microsoft.Matrix(
                             M11=#{$m11}, M12=#{$m12}, M21=#{$m21}, M22=#{$m22}, sizingMethod='auto expand');
-    zoom: 1;
+    zoom:   1;
 }
 
 /* TEXT SHADOW */
@@ -294,17 +321,15 @@
 /* TRANSITION */
 @mixin transition($properties...) {
 
-    @if length($properties) >= 1 {
+    @if length($properties) >= 1{
         @include css3-prefix('transition', $properties);
-    }
-
-    @else {
+    } @else{
         @include css3-prefix('transition', $what: all, $length: 1s, $easing: ease-in-out);
     }
 }
 
 /* TRIPLE BORDERS */
-@mixin triple-borders($colorOne: #3C3C3C, $colorTwo: #999999, $colorThree: #000000, $radius: 0) {
+@mixin triple-borders($colorOne: #3C3C3C, $colorTwo: #999, $colorThree: #000, $radius: 0) {
     border: 1px solid $colorOne;
 
     @include border-radius($radius);

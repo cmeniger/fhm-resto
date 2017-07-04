@@ -31,18 +31,32 @@
                 <h1 class="animated bounceInUp">{{ (site.getTitle() and not site.getDemo() ? site.getTitle() : 'project.home.default.title'|trans)|raw }}</h1>
             </div>
         </section>
-        {% if site.getSlider() or site.getDemo() %}
+        {% if site.isShow('slider') %}
             <section class="section-slider margin">
-                {{ render(path('fhm_api_slider_detail',{template:'home','id':site.getDemo() ? 'demo' : site.getSlider().getId()})) }}
+                {{ render(path('fhm_api_slider_detail',{template:'home','id':site.getSlider() == '' or site.getDemo() ? 'demo' : site.getSlider().getId()})) }}
             </section>
         {% endif %}
-        {% if site.getGalleryTop() or site.getDemo() %}
-            <section class="section-gallery-top {{ site.getSlider() == '' and not site.getDemo() ? 'margin' : '' }}">
+        {% if site.isShow('gallery_top') %}
+            <section class="section-gallery-top {{ not site.isShow('slider') ? 'margin' : '' }}">
                 <a id="anchor-about" class="anchor"></a>
-                {{ render(path('fhm_api_gallery_detail',{template:'home-top','id':site.getDemo() ? 'demo' : site.galleryTop().getId()})) }}
+                {{ render(path('fhm_api_gallery_detail',{template:'home-top','id':site.galleryTop() == '' or site.getDemo() ? 'demo' : site.galleryTop().getId()})) }}
             </section>
         {% endif %}
-        {% if site.getCardSlider() or site.getDemo() %}
+        {% if site.isShow('news') %}
+            <section class="section-news {{ not site.isShow('slider') and not site.isShow('gallery_top') ? 'margin' : '' }}">
+                <a id="anchor-news" class="anchor"></a>
+                <header>
+                    {% if site.getSubtitleNews() or site.getDemo() %}
+                        <h3 class="subtitle">{{ site.getDemo() ? 'project.home.default.subtitle'|trans : site.getSubtitleNews()|raw }}</h3>
+                    {% endif %}
+                    {% if site.getTitleNews() or site.getDemo() %}
+                        <h2>{{ site.getDemo() ? 'project.home.default.title'|trans : site.getTitleNews()|raw }}</h2>
+                    {% endif %}
+                </header>
+                {{ render(path('fhm_api_news_detail',{template:'home', rows:4, 'id':site.getNews() == '' or site.getDemo() ? 'demo' : site.getNews().getId()})) }}
+            </section>
+        {% endif %}
+        {% if site.isShow('card_slider') %}
             <section class="section-card-slider">
                 <a id="anchor-card" class="anchor"></a>
                 <div class="parallax-image-card" data-parallax="scroll" data-image-src="{{ site.getDemo() ? asset('images/default.jpg') : site.getBackgroundCard()|media }}"></div>
@@ -55,12 +69,12 @@
                     {% endif %}
                 </header>
                 <div class="row">
-                    {{ render(path('fhm_api_card_embed', {id:site.getDemo() ? 'demo' : site.getCardSlider().getId(), template:'M001'})) }}
+                    {{ render(path('fhm_api_card_embed', {template:'M001',id:site.getCardSlider() == '' or site.getDemo() ? 'demo' : site.getCardSlider().getId()})) }}
                 </div>
             </section>
         {% endif %}
-        {% if site.getCardMain() or site.getDemo() %}
-            <section class="section-card-main row {{ site.getCardSlider() and not site.getDemo() ? 'margin' : '' }}">
+        {% if site.isShow('card_main') %}
+            <section class="section-card-main row {{ site.isShow('card_slider') ? 'margin' : '' }}">
                 <header>
                     {% if site.getSubtitleCardMain() or site.getDemo() %}
                         <h3 class="subtitle">{{ site.getDemo() ? 'project.home.default.subtitle'|trans : site.getSubtitleCardMain()|raw }}</h3>
@@ -69,10 +83,10 @@
                         <h2>{{ site.getDemo() ? 'project.home.default.title'|trans : site.getTitleCardMain()|raw }}</h2>
                     {% endif %}
                 </header>
-                {{ render(path('fhm_api_card_embed', {id:site.getDemo() ? 'demo' : site.getCardMain().getId(), template:'M002'})) }}
+                {{ render(path('fhm_api_card_embed', {template:'M002',id:site.getCardMain() == '' or site.getDemo() ? 'demo' : site.getCardMain().getId()})) }}
             </section>
         {% endif %}
-        {% if site.getCardForward() or site.getDemo() %}
+        {% if site.isShow('card_forward') %}
             <section class="section-card-forward">
                 <header>
                     {% if site.getSubtitleCardForward() or site.getDemo() %}
@@ -82,34 +96,36 @@
                         <h2>{{ site.getDemo() ? 'project.home.default.title'|trans : site.getTitleCardForward()|raw }}</h2>
                     {% endif %}
                 </header>
-                {{ render(path('fhm_api_card_embed', {id:site.getDemo() ? 'demo' : site.getCardForward().getId(), template:'M003'})) }}
+                {{ render(path('fhm_api_card_embed', {template:'M003',id:site.getCardForward() == '' or site.getDemo() ? 'demo' : site.getCardForward().getId()})) }}
             </section>
         {% endif %}
-        <section class="section-testimony">
-            <a id="anchor-testimony" class="anchor"></a>
-            <div class="parallax-image-testimony" data-parallax="scroll" data-image-src="{{ site.getBackgroundTestimony()|media }}"></div>
-            <header>
-                {% if site.getSubtitleTestimony() or site.getDemo() %}
-                    <h3 class="subtitle">{{ site.getDemo() ? 'project.home.default.subtitle'|trans : site.getSubtitleTestimony()|raw }}</h3>
-                {% endif %}
-                {% if site.getTitleTestimony() or site.getDemo() %}
-                    <h2>{{ site.getDemo() ? 'project.home.default.title'|trans : site.getTitleTestimony()|raw }}</h2>
-                {% endif %}
-            </header>
-            <div class="row">
-                {{ render(path('fhm_api_testimony_detail', {template:'home', id:site.getDemo() ? 'demo' : ''})) }}
-            </div>
-        </section>
-        {% if site.getContact() or site.getDemo() %}
-            <section class="section-contact margin">
+        {% if site.isShow('testimony') %}
+            <section class="section-testimony">
+                <a id="anchor-testimony" class="anchor"></a>
+                <div class="parallax-image-testimony" data-parallax="scroll" data-image-src="{{ site.getBackgroundTestimony()|media }}"></div>
+                <header>
+                    {% if site.getSubtitleTestimony() or site.getDemo() %}
+                        <h3 class="subtitle">{{ site.getDemo() ? 'project.home.default.subtitle'|trans : site.getSubtitleTestimony()|raw }}</h3>
+                    {% endif %}
+                    {% if site.getTitleTestimony() or site.getDemo() %}
+                        <h2>{{ site.getDemo() ? 'project.home.default.title'|trans : site.getTitleTestimony()|raw }}</h2>
+                    {% endif %}
+                </header>
+                <div class="row">
+                    {{ render(path('fhm_api_testimony_detail', {template:'home', id:site.getDemo() ? 'demo' : ''})) }}
+                </div>
+            </section>
+        {% endif %}
+        {% if site.isShow('contact') %}
+            <section class="section-contact {{ site.isShow('testimony') ? 'margin' : 'gutter-margin-top' }} {{ site.isShow('gallery_bottom') ? '' : 'gutter-margin-bottom' }}">
                 <a id="anchor-contact" class="anchor"></a>
-                {{ render(path('fhm_api_contact_detail', {id:site.getDemo() ? 'demo' : site.getContact().getId(), template:'home'})) }}
+                {{ render(path('fhm_api_contact_detail', {template:'home',id:site.getContact() == '' or site.getDemo() ? 'demo' : site.getContact().getId()})) }}
             </section>
         {% endif %}
-        {% if site.getGalleryBottom() or site.getDemo() %}
+        {% if site.isShow('gallery_bottom') %}
             <section class="section-gallery-bottom">
                 <a id="anchor-about" class="anchor"></a>
-                {{ render(path('fhm_api_gallery_detail',{template:'home-bottom','id':site.getDemo() ? 'demo' : site.getGalleryBottom().getId()})) }}
+                {{ render(path('fhm_api_gallery_detail',{template:'home-bottom','id':site.getGalleryBottom() == '' or site.getDemo() ? 'demo' : site.getGalleryBottom().getId()})) }}
             </section>
         {% endif %}
     </section>

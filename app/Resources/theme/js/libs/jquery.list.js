@@ -72,11 +72,6 @@
                                 parent.refresh();
                             });
                         },
-        initExternal:   function ()
-                        {
-                            var parent = this;
-                            $(document).historic();
-                        },
         refresh:        function ()
                         {
                             var parent = this;
@@ -103,14 +98,22 @@
                                              {
                                                  $(parent.current.data).html(parent.getHtml(data, parent.current.data)).fadeToggle(400, "linear");
                                                  $(parent.current.pagination).html(parent.getHtml(data, parent.current.pagination));
+                                                 parent.refreshScript(data);
                                                  parent.initCurrent();
                                                  parent.initSearch();
                                                  parent.initPagination();
                                                  parent.initSort();
-                                                 parent.initExternal();
                                                  $(window).scrollTop(0);
                                              });
                                          }
+                            });
+                        },
+        refreshScript:  function (data)
+                        {
+                            var parent = this;
+                            $('<div>' + data + '</div>').find('script').each(function ()
+                            {
+                                eval(this.innerHTML);
                             });
                         },
         getHtml:        function (data, selector)

@@ -44,6 +44,16 @@ class Site extends FhmFhm
     /**
      * @MongoDB\Field(type="string")
      */
+    protected $title_news;
+
+    /**
+     * @MongoDB\Field(type="string")
+     */
+    protected $title_partner;
+
+    /**
+     * @MongoDB\Field(type="string")
+     */
     protected $subtitle;
 
     /**
@@ -65,6 +75,16 @@ class Site extends FhmFhm
      * @MongoDB\Field(type="string")
      */
     protected $subtitle_testimony;
+
+    /**
+     * @MongoDB\Field(type="string")
+     */
+    protected $subtitle_news;
+
+    /**
+     * @MongoDB\Field(type="string")
+     */
+    protected $subtitle_partner;
 
     /**
      * @MongoDB\ReferenceOne(targetDocument="Fhm\FhmBundle\Document\Menu", nullable=true)
@@ -204,6 +224,56 @@ class Site extends FhmFhm
     /**
      * @MongoDB\Field(type="boolean")
      */
+    protected $show_slider;
+
+    /**
+     * @MongoDB\Field(type="boolean")
+     */
+    protected $show_gallery_top;
+
+    /**
+     * @MongoDB\Field(type="boolean")
+     */
+    protected $show_gallery_bottom;
+
+    /**
+     * @MongoDB\Field(type="boolean")
+     */
+    protected $show_card_slider;
+
+    /**
+     * @MongoDB\Field(type="boolean")
+     */
+    protected $show_card_main;
+
+    /**
+     * @MongoDB\Field(type="boolean")
+     */
+    protected $show_card_forward;
+
+    /**
+     * @MongoDB\Field(type="boolean")
+     */
+    protected $show_testimony;
+
+    /**
+     * @MongoDB\Field(type="boolean")
+     */
+    protected $show_contact;
+
+    /**
+     * @MongoDB\Field(type="boolean")
+     */
+    protected $show_news;
+
+    /**
+     * @MongoDB\Field(type="boolean")
+     */
+    protected $show_partner;
+
+    /**
+     * @MongoDB\Field(type="boolean")
+     */
     protected $demo;
 
     /**
@@ -217,8 +287,18 @@ class Site extends FhmFhm
     public function __construct()
     {
         parent::__construct();
-        $this->demo    = false;
-        $this->default = false;
+        $this->demo                = false;
+        $this->default             = false;
+        $this->show_slider         = false;
+        $this->show_gallery_top    = false;
+        $this->show_gallery_bottom = false;
+        $this->show_card_slider    = false;
+        $this->show_card_main      = false;
+        $this->show_card_forward   = false;
+        $this->show_testimony      = false;
+        $this->show_contact        = false;
+        $this->show_news           = false;
+        $this->show_partner        = false;
     }
 
     /**
@@ -324,9 +404,61 @@ class Site extends FhmFhm
     /**
      * @return mixed
      */
+    public function getTitleNews()
+    {
+        return $this->title_news;
+    }
+
+    /**
+     * @param $title_news
+     *
+     * @return $this
+     */
+    public function setTitleNews($title_news)
+    {
+        $this->title_news = $title_news;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTitlePartner()
+    {
+        return $this->title_partner;
+    }
+
+    /**
+     * @param $title_partner
+     *
+     * @return $this
+     */
+    public function setTitlePartner($title_partner)
+    {
+        $this->title_partner = $title_partner;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
     public function getSubtitle()
     {
         return $this->subtitle;
+    }
+
+    /**
+     * @param $subtitle
+     *
+     * @return $this
+     */
+    public function setSubtitle($subtitle)
+    {
+        $this->subtitle = $subtitle;
+
+        return $this;
     }
 
     /**
@@ -410,13 +542,41 @@ class Site extends FhmFhm
     }
 
     /**
-     * @param $subtitle
+     * @return mixed
+     */
+    public function getSubtitleNews()
+    {
+        return $this->subtitle_news;
+    }
+
+    /**
+     * @param $subtitle_news
      *
      * @return $this
      */
-    public function setSubtitle($subtitle)
+    public function setSubtitleNews($subtitle_news)
     {
-        $this->subtitle = $subtitle;
+        $this->subtitle_news = $subtitle_news;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSubtitlePartner()
+    {
+        return $this->subtitle_partner;
+    }
+
+    /**
+     * @param $subtitle_partner
+     *
+     * @return $this
+     */
+    public function setSubtitlePartner($subtitle_partner)
+    {
+        $this->subtitle_partner = $subtitle_partner;
 
         return $this;
     }
@@ -999,5 +1159,228 @@ class Site extends FhmFhm
         $this->default = $default;
 
         return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getShowSlider()
+    {
+        return $this->show_slider;
+    }
+
+    /**
+     * @param $show_slider
+     *
+     * @return $this
+     */
+    public function setShowSlider($show_slider)
+    {
+        $this->show_slider = $show_slider;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getShowGalleryTop()
+    {
+        return $this->show_gallery_top;
+    }
+
+    /**
+     * @param $show_gallery_top
+     *
+     * @return $this
+     */
+    public function setShowGalleryTop($show_gallery_top)
+    {
+        $this->show_gallery_top = $show_gallery_top;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getShowGalleryBottom()
+    {
+        return $this->show_gallery_bottom;
+    }
+
+    /**
+     * @param $show_gallery_bottom
+     *
+     * @return $this
+     */
+    public function setShowGalleryBottom($show_gallery_bottom)
+    {
+        $this->show_gallery_bottom = $show_gallery_bottom;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getShowCardSlider()
+    {
+        return $this->show_card_slider;
+    }
+
+    /**
+     * @param $show_card_slider
+     *
+     * @return $this
+     */
+    public function setShowCardSlider($show_card_slider)
+    {
+        $this->show_card_slider = $show_card_slider;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getShowCardMain()
+    {
+        return $this->show_card_main;
+    }
+
+    /**
+     * @param $show_card_main
+     *
+     * @return $this
+     */
+    public function setShowCardMain($show_card_main)
+    {
+        $this->show_card_main = $show_card_main;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getShowCardForward()
+    {
+        return $this->show_card_forward;
+    }
+
+    /**
+     * @param $show_card_forward
+     *
+     * @return $this
+     */
+    public function setShowCardForward($show_card_forward)
+    {
+        $this->show_card_forward = $show_card_forward;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getShowTestimony()
+    {
+        return $this->show_testimony;
+    }
+
+    /**
+     * @param $show_testimony
+     *
+     * @return $this
+     */
+    public function setShowTestimony($show_testimony)
+    {
+        $this->show_testimony = $show_testimony;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getShowContact()
+    {
+        return $this->show_contact;
+    }
+
+    /**
+     * @param $show_contact
+     *
+     * @return $this
+     */
+    public function setShowContact($show_contact)
+    {
+        $this->show_contact = $show_contact;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getShowNews()
+    {
+        return $this->show_news;
+    }
+
+    /**
+     * @param $show_news
+     *
+     * @return $this
+     */
+    public function setShowNews($show_news)
+    {
+        $this->show_news = $show_news;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getShowPartner()
+    {
+        return $this->show_partner;
+    }
+
+    /**
+     * @param $show_partner
+     *
+     * @return $this
+     */
+    public function setShowPartner($show_partner)
+    {
+        $this->show_partner = $show_partner;
+
+        return $this;
+    }
+
+    /**
+     * @param $bloc
+     *
+     * @return bool
+     */
+    public function isShow($bloc)
+    {
+        if($this->demo)
+        {
+            return true;
+        }
+        $vars = get_object_vars($this);
+        foreach($vars as $key => $value)
+        {
+            if($key === 'show_' . $bloc)
+            {
+                return $value;
+            }
+        }
+
+        return false;
     }
 }

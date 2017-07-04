@@ -66,6 +66,7 @@ site:
                 name:                           Nom
                 description:                    Description
                 demo:                           Mode démo
+                show:                           Afficher
                 active:                         Activer
                 social:
                     placeholder:
@@ -94,10 +95,16 @@ site:
                     menu:                       Menus
                     image:                      Images
                     media:                      Médias
+                    slider:                     Slider
+                    gallery_top:                Galerie haut
+                    gallery_bottom:             Galerie bas
                     card_slider:                Carte slider
                     card_main:                  Carte principale
                     card_forward:               Carte en avant
-                    testimony:                  Témoignage
+                    testimony:                  Témoignages
+                    news:                       Actualités
+                    partner:                    Partenaires
+                    contact:                    Contact
                     social:                     Réseaux sociaux
                     options:                    Options
 
@@ -130,6 +137,7 @@ site:
                 name:                           Nom
                 description:                    Description
                 demo:                           Mode démo
+                show:                           Afficher
                 active:                         Activer
                 social:
                     placeholder:
@@ -158,10 +166,16 @@ site:
                     menu:                       Menus
                     image:                      Images
                     media:                      Médias
+                    slider:                     Slider
+                    gallery_top:                Galerie haut
+                    gallery_bottom:             Galerie bas
                     card_slider:                Carte slider
                     card_main:                  Carte principale
                     card_forward:               Carte en avant
-                    testimony:                  Témoignage
+                    testimony:                  Témoignages
+                    news:                       Actualités
+                    partner:                    Partenaires
+                    contact:                    Contact
                     social:                     Réseaux sociaux
                     options:                    Options
 

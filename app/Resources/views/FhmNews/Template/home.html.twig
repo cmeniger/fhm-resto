@@ -1,0 +1,134 @@
+{% trans_default_domain instance.domain %}
+{% import "::Macros/pagination.html.twig" as macroPagination %}
+
+{% if demo is defined %}
+    <div id="content_data" class="news home row">
+        <ul class="small-block-grid-1 medium-block-grid-2 large-block-grid-4">
+            <li>
+                <div class="item">
+                    <div class="front" style="background:url('{{ asset('images/demo/news/news-item1.jpg') }}') center center no-repeat">
+                        <div class="caption">
+                            <h2>Phasellus leo dolor</h2>
+                            <h3>Suspendisse pulvinar</h3>
+                            <span>{{ 'now'|localizeddate('short', 'none', app.request.locale) }}</span>
+                        </div>
+                    </div>
+                    <div class="back">
+                        <h2>Phasellus leo dolor</h2>
+                        <p>Nulla sit amet est.. Phasellus leo dolor, tempus non, auctor et, hendrerit quis, nisi.
+                            Suspendisse pulvinar, augue ac venenatis condimentum, sem libero volutpat nibh, nec
+                            pellentesque velit pede quis nunc. Praesent venenatis metus at tortor pulvinar varius.</p>
+                        <a class="more button tiny radius hvr-grow" href="#">{{ ('news.front.index.form.more')|trans({},'FhmNewsBundle') }}</a>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="item">
+                    <div class="front" style="background:url('{{ asset('images/demo/news/news-item2.jpg') }}') center center no-repeat">
+                        <div class="caption">
+                            <h2>Praesent venenatis metus at tortor pulvinar varius</h2>
+                            <span>{{ 'now'|localizeddate('short', 'none', app.request.locale) }}</span>
+                        </div>
+                    </div>
+                    <div class="back">
+                        <h2>Praesent venenatis metus at tortor pulvinar varius</h2>
+                        <p>Nulla sit amet est.. Phasellus leo dolor, tempus non, auctor et, hendrerit quis, nisi.
+                            Suspendisse pulvinar, augue ac venenatis condimentum, sem libero volutpat nibh, nec
+                            pellentesque velit pede quis nunc. Praesent venenatis metus at tortor pulvinar varius.</p>
+                        <a class="more button tiny radius hvr-grow" href="#">{{ ('news.front.index.form.more')|trans({},'FhmNewsBundle') }}</a>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="item">
+                    <div class="front" style="background:url('{{ asset('images/demo/news/news-item3.jpg') }}') center center no-repeat">
+                        <div class="caption">
+                            <h2>Nulla sit amet est</h2>
+                            <h3>Saugue ac venenatis</h3>
+                            <span>{{ 'now'|localizeddate('short', 'none', app.request.locale) }}</span>
+                        </div>
+                    </div>
+                    <div class="back">
+                        <h2>Nulla sit amet est</h2>
+                        <p>Nulla sit amet est.. Phasellus leo dolor, tempus non, auctor et, hendrerit quis, nisi.
+                            Suspendisse pulvinar, augue ac venenatis condimentum, sem libero volutpat nibh, nec
+                            pellentesque velit pede quis nunc. Praesent venenatis metus at tortor pulvinar varius.</p>
+                        <a class="more button tiny radius hvr-grow" href="#">{{ ('news.front.index.form.more')|trans({},'FhmNewsBundle') }}</a>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="item">
+                    <div class="front" style="background:url('{{ asset('images/default-news.jpg') }}') center center no-repeat">
+                        <div class="caption">
+                            <h2>Psem libero volutpat nibh</h2>
+                            <span>{{ 'now'|localizeddate('short', 'none', app.request.locale) }}</span>
+                        </div>
+                    </div>
+                    <div class="back">
+                        <h2>Psem libero volutpat nibh</h2>
+                        <p>Nulla sit amet est.. Phasellus leo dolor, tempus non, auctor et, hendrerit quis, nisi.
+                            Suspendisse pulvinar, augue ac venenatis condimentum, sem libero volutpat nibh, nec
+                            pellentesque velit pede quis nunc. Praesent venenatis metus at tortor pulvinar varius.</p>
+                        <a class="more button tiny radius hvr-grow" href="#">{{ ('news.front.index.form.more')|trans({},'FhmNewsBundle') }}</a>
+                    </div>
+                </div>
+            </li>
+        </ul>
+        <div class="all text-center">
+            <a class="button tiny radius hvr-grow" href="{{ path('fhm_news') }}">{{ ('news.front.index.form.all')|trans({},'FhmNewsBundle') }}</a>
+        </div>
+    </div>
+{% else %}
+    <div id="content_data" class="news home row">
+        {% if objects|length > 0 %}
+            <ul class="small-block-grid-1 medium-block-grid-2 large-block-grid-4">
+                {% for object in objects %}
+                    <li>
+                        <div class="item">
+                            <div class="front" style="background:url('{{ object.getImage()|media('l', asset('images/default-news.jpg')) }}') center center no-repeat">
+                                <div class="caption">
+                                    <h2>{{ object.getTitle() }}</h2>
+                                    {% if object.getSubtitle() %}
+                                        <h3>{{ object.getSubtitle() }}</h3>
+                                    {% endif %}
+                                    <span>{{ object.getDateStart() ? object.getDateStart()|localizeddate('short', 'none', app.request.locale) : object.getDateCreate()|localizeddate('short', 'none', app.request.locale) }}</span>
+                                </div>
+                            </div>
+                            <div class="back">
+                                <h2>{{ object.getTitle() }}</h2>
+                                {{ object.getResume()|raw }}
+                                <a class="more button tiny radius hvr-grow" href="{{ path('fhm_news_lite', {id: object.getAlias()}) }}">{{ ('news.front.index.form.more')|trans({},'FhmNewsBundle') }}</a>
+                            </div>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+            <div class="all text-center">
+                <a class="button tiny radius hvr-grow" href="{{ path('fhm_news') }}">{{ ('news.front.index.form.all')|trans({},'FhmNewsBundle') }}</a>
+            </div>
+        {% else %}
+            <div class="nodata">
+                {{ (instance.translation ~ '.front.index.nodata')|trans }}
+            </div>
+        {% endif %}
+    </div>
+{% endif %}
+<script>
+    $(document).ready(function ()
+    {
+        $(".news.home .item:even")
+            .on("inViewBegin", function ()
+            {
+                $(this).addClass("animated").addClass("bounceInUp");
+            });
+        $(".news.home .item:odd")
+            .on("inViewBegin", function ()
+            {
+                $(this).addClass("animated").addClass("bounceInDown");
+            });
+        $(".news.home .item").flip({
+            trigger: 'hover'
+        });
+    });
+</script>

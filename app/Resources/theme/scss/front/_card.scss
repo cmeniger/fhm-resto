@@ -123,17 +123,10 @@
                     text-align:       center;
                     .title{
                         @include font-title();
+                        @include logo();
                         display:       block;
                         font-size:     17px;
                         margin-bottom: 1rem;
-                        &:after{
-                            content:    "";
-                            display:    block;
-                            background: url(/images/logo-icon-wave-white.png) no-repeat 0 0;
-                            width:      150px;
-                            height:     25px;
-                            margin:     10px auto 0;
-                        }
                     }
                     .ingredient{
                         text-align: center;
@@ -179,20 +172,13 @@
         margin: auto;
         .category-title{
             @include card-title();
+            @include logo('brown', false);
             span{
                 font-size: 1.2em;
                 color:     $secondary-color;
             }
             &:before{
                 border-bottom: 1px solid $secondary-color;
-            }
-            &:after{
-                content:    "";
-                display:    block;
-                background: url(/images/logo-wave-brown.png) no-repeat 0 0;
-                width:      66px;
-                height:     25px;
-                margin:     auto;
             }
         }
         .category-description{
@@ -207,6 +193,7 @@
                 padding:  1rem;
                 overflow: auto;
                 .bloc-title{
+                    @include logo('brown', false);
                     position:   relative;
                     margin:     1rem auto;
                     padding:    1rem 0;
@@ -234,14 +221,6 @@
                             font-weight: 100;
                             color:       $medium-grey;
                         }
-                    }
-                    &:after{
-                        content:    "";
-                        display:    block;
-                        background: url(/images/logo-wave-brown.png) no-repeat 0 0;
-                        width:      66px;
-                        height:     25px;
-                        margin:     auto;
                     }
                 }
                 .title{
@@ -621,17 +600,10 @@
                     text-align:       center;
                     .title{
                         @include font-title();
+                        @include logo();
                         display:       block;
                         font-size:     1.2em;
                         margin-bottom: 1rem;
-                        &:after{
-                            content:    "";
-                            display:    block;
-                            background: url(/images/logo-icon-wave-white.png) no-repeat 0 0;
-                            width:      150px;
-                            height:     25px;
-                            margin:     10px auto 0;
-                        }
                     }
                 }
                 @media #{$medium} {
@@ -900,18 +872,11 @@
                         text-align: center;
                         .name{
                             @include font-title();
+                            @include logo('brown');
                             color:         $dark-grey;
                             font-size:     30px;
                             line-height:   1em;
                             margin-bottom: 30px;
-                            &:after{
-                                content:    "";
-                                display:    block;
-                                background: url(/images/logo-icon-wave-brown.png) no-repeat 0 0;
-                                width:      150px;
-                                height:     25px;
-                                margin:     12px auto 0;
-                            }
                         }
                         .description{
                             display: block;

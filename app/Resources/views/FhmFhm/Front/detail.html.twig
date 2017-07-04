@@ -9,19 +9,6 @@
 
 {% block content %}
 
-    {# Links #}
-    {% block content_link %}
-        <div class="row">
-            <ul class="button-group">
-                {% block content_link_data %}
-                    <li>
-                        <a href="#" onclick="window.history.go(-1); return false;" class="button secondary tiny"><i class="fa fa-reply"> {{ ('project.home.return')|trans({},'ProjectDefaultBundle') }}</i></a>
-                    </li>
-                {% endblock %}
-            </ul>
-        </div>
-    {% endblock %}
-
     {# Document #}
     {% block content_data %}
         <div id="content_data" class="row">

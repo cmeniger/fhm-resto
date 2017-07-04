@@ -1,15 +1,6 @@
 {% extends app.request.isxmlhttprequest ? "::ajax.html.twig" : "::layout.html.twig" %}
 {% import "::Macros/breadcrumbs.html.twig" as macroBreadcrumbs %}
 
-{% block stylesheets %}
-    {{ parent() }}
-    <link href="https://fonts.googleapis.com/css?family=Merriweather:400,400i,700i" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Stalemate" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
-    <meta name="format-detection" content="telephone=no">
-{% endblock %}
-
 {% block css_main %}
     {{ asset('css/front.css') }}
 {% endblock %}
@@ -54,7 +45,7 @@
 {% endblock %}
 
 {% block body_content %}
-    <div id="container">
+    <div id="container" class="gutter-margin-top gutter-margin-bottom">
         {% block left %}{% endblock %}
         {% block content %}{% endblock %}
         {% block right %}{% endblock %}

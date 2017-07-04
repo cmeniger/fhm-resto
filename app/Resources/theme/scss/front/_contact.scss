@@ -7,20 +7,13 @@
             margin-bottom: 0.5rem;
             h4{
                 @include css3-prefix(transition, all 2s ease);
+                @include logo('white', false);
                 color:          $white;
                 font-size:      1.2em;
                 font-weight:    700;
                 text-transform: none;
                 letter-spacing: -1.5px;
                 margin:         0;
-                &:after{
-                    content:    "";
-                    display:    block;
-                    background: url(/images/logo-wave-white.png) no-repeat 0 0;
-                    width:      66px;
-                    height:     25px;
-                    margin:     0 auto;
-                }
             }
         }
         .contact-left{
@@ -71,10 +64,7 @@
                 color:      $white;
                 text-align: center;
                 h4{
-                    &:after{
-                        background: url(/images/logo-icon-wave-white.png) no-repeat 0 0;
-                        width:      150px;
-                    }
+                    @include logo();
                 }
                 p{
                     margin-top:    0.5rem;

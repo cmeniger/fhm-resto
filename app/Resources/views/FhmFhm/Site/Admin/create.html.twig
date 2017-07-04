@@ -55,39 +55,6 @@
                 {{ form_widget(form.menu_footer) }}
             </div>
         </fieldset>
-        <fieldset>
-            <legend>{{ (instance.translation ~ '.admin.create.form.fieldset.media')|trans }}</legend>
-            <div class="row">
-                {{ form_label(form.slider) }}
-                {{ form_errors(form.slider) }}
-                {{ form_widget(form.slider) }}
-            </div>
-            <div class="row">
-                {{ form_label(form.gallery_top) }}
-                {{ form_errors(form.gallery_top) }}
-                {{ form_widget(form.gallery_top) }}
-            </div>
-            <div class="row">
-                {{ form_label(form.gallery_bottom) }}
-                {{ form_errors(form.gallery_bottom) }}
-                {{ form_widget(form.gallery_bottom) }}
-            </div>
-            <div class="row">
-                {{ form_label(form.contact) }}
-                {{ form_errors(form.contact) }}
-                {{ form_widget(form.contact) }}
-            </div>
-            <div class="row">
-                {{ form_label(form.news) }}
-                {{ form_errors(form.news) }}
-                {{ form_widget(form.news) }}
-            </div>
-            <div class="row">
-                {{ form_label(form.partner) }}
-                {{ form_errors(form.partner) }}
-                {{ form_widget(form.partner) }}
-            </div>
-        </fieldset>
     </div>
     <div class="large-6 medium-6 small-12 columns">
         <fieldset>
@@ -190,7 +157,61 @@
 {% block content_data_fields %}
     {{ parent() }}
     <div class="form-bloc form-fields row">
-        <div class="large-3 medium-6 small-12 columns">
+        <div class="large-4 medium-6 small-12 columns">
+            <fieldset>
+                <legend>{{ (instance.translation ~ '.admin.create.form.fieldset.slider')|trans }}</legend>
+                <div class="row">
+                    {{ form_label(form.slider) }}
+                    {{ form_errors(form.slider) }}
+                    {{ form_widget(form.slider) }}
+                </div>
+                <div class="row">
+                    {{ form_errors(form.show_slider) }}
+                    {{ form_label(form.show_slider) }}
+                    <div class="switch">
+                        {{ form_widget(form.show_slider) }}
+                        <label for="{{ form.show_slider.vars.id }}"></label>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+        <div class="large-4 medium-6 small-12 columns">
+            <fieldset>
+                <legend>{{ (instance.translation ~ '.admin.create.form.fieldset.gallery_top')|trans }}</legend>
+                <div class="row">
+                    {{ form_label(form.gallery_top) }}
+                    {{ form_errors(form.gallery_top) }}
+                    {{ form_widget(form.gallery_top) }}
+                </div>
+                <div class="row">
+                    {{ form_errors(form.show_gallery_top) }}
+                    {{ form_label(form.show_gallery_top) }}
+                    <div class="switch">
+                        {{ form_widget(form.show_gallery_top) }}
+                        <label for="{{ form.show_gallery_top.vars.id }}"></label>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+        <div class="large-4 medium-6 small-12 columns">
+            <fieldset>
+                <legend>{{ (instance.translation ~ '.admin.create.form.fieldset.gallery_bottom')|trans }}</legend>
+                <div class="row">
+                    {{ form_label(form.gallery_bottom) }}
+                    {{ form_errors(form.gallery_bottom) }}
+                    {{ form_widget(form.gallery_bottom) }}
+                </div>
+                <div class="row">
+                    {{ form_errors(form.show_gallery_bottom) }}
+                    {{ form_label(form.show_gallery_bottom) }}
+                    <div class="switch">
+                        {{ form_widget(form.show_gallery_bottom) }}
+                        <label for="{{ form.show_gallery_bottom.vars.id }}"></label>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+        <div class="large-4 medium-6 small-12 columns">
             <fieldset>
                 <legend>{{ (instance.translation ~ '.admin.create.form.fieldset.card_slider')|trans }}</legend>
                 <div class="row">
@@ -208,9 +229,17 @@
                     {{ form_errors(form.card_slider) }}
                     {{ form_widget(form.card_slider) }}
                 </div>
+                <div class="row">
+                    {{ form_errors(form.show_card_slider) }}
+                    {{ form_label(form.show_card_slider) }}
+                    <div class="switch">
+                        {{ form_widget(form.show_card_slider) }}
+                        <label for="{{ form.show_card_slider.vars.id }}"></label>
+                    </div>
+                </div>
             </fieldset>
         </div>
-        <div class="large-3 medium-6 small-12 columns">
+        <div class="large-4 medium-6 small-12 columns">
             <fieldset>
                 <legend>{{ (instance.translation ~ '.admin.create.form.fieldset.card_main')|trans }}</legend>
                 <div class="row">
@@ -228,9 +257,17 @@
                     {{ form_errors(form.card_main) }}
                     {{ form_widget(form.card_main) }}
                 </div>
+                <div class="row">
+                    {{ form_errors(form.show_card_main) }}
+                    {{ form_label(form.show_card_main) }}
+                    <div class="switch">
+                        {{ form_widget(form.show_card_main) }}
+                        <label for="{{ form.show_card_main.vars.id }}"></label>
+                    </div>
+                </div>
             </fieldset>
         </div>
-        <div class="large-3 medium-6 small-12 columns">
+        <div class="large-4 medium-6 small-12 columns">
             <fieldset>
                 <legend>{{ (instance.translation ~ '.admin.create.form.fieldset.card_forward')|trans }}</legend>
                 <div class="row">
@@ -248,9 +285,73 @@
                     {{ form_errors(form.card_forward) }}
                     {{ form_widget(form.card_forward) }}
                 </div>
+                <div class="row">
+                    {{ form_errors(form.show_card_forward) }}
+                    {{ form_label(form.show_card_forward) }}
+                    <div class="switch">
+                        {{ form_widget(form.show_card_forward) }}
+                        <label for="{{ form.show_card_forward.vars.id }}"></label>
+                    </div>
+                </div>
             </fieldset>
         </div>
-        <div class="large-3 medium-6 small-12 columns">
+        <div class="large-4 medium-6 small-12 columns">
+            <fieldset>
+                <legend>{{ (instance.translation ~ '.admin.create.form.fieldset.news')|trans }}</legend>
+                <div class="row">
+                    {{ form_label(form.title_news) }}
+                    {{ form_errors(form.title_news) }}
+                    {{ form_widget(form.title_news) }}
+                </div>
+                <div class="row">
+                    {{ form_label(form.subtitle_news) }}
+                    {{ form_errors(form.subtitle_news) }}
+                    {{ form_widget(form.subtitle_news) }}
+                </div>
+                <div class="row">
+                    {{ form_label(form.news) }}
+                    {{ form_errors(form.news) }}
+                    {{ form_widget(form.news) }}
+                </div>
+                <div class="row">
+                    {{ form_errors(form.show_news) }}
+                    {{ form_label(form.show_news) }}
+                    <div class="switch">
+                        {{ form_widget(form.show_news) }}
+                        <label for="{{ form.show_news.vars.id }}"></label>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+        <div class="large-4 medium-6 small-12 columns">
+            <fieldset>
+                <legend>{{ (instance.translation ~ '.admin.create.form.fieldset.partner')|trans }}</legend>
+                <div class="row">
+                    {{ form_label(form.title_partner) }}
+                    {{ form_errors(form.title_partner) }}
+                    {{ form_widget(form.title_partner) }}
+                </div>
+                <div class="row">
+                    {{ form_label(form.subtitle_partner) }}
+                    {{ form_errors(form.subtitle_partner) }}
+                    {{ form_widget(form.subtitle_partner) }}
+                </div>
+                <div class="row">
+                    {{ form_label(form.partner) }}
+                    {{ form_errors(form.partner) }}
+                    {{ form_widget(form.partner) }}
+                </div>
+                <div class="row">
+                    {{ form_errors(form.show_partner) }}
+                    {{ form_label(form.show_partner) }}
+                    <div class="switch">
+                        {{ form_widget(form.show_partner) }}
+                        <label for="{{ form.show_partner.vars.id }}"></label>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+        <div class="large-4 medium-6 small-12 columns">
             <fieldset>
                 <legend>{{ (instance.translation ~ '.admin.create.form.fieldset.testimony')|trans }}</legend>
                 <div class="row">
@@ -262,6 +363,32 @@
                     {{ form_label(form.subtitle_testimony) }}
                     {{ form_errors(form.subtitle_testimony) }}
                     {{ form_widget(form.subtitle_testimony) }}
+                </div>
+                <div class="row">
+                    {{ form_errors(form.show_testimony) }}
+                    {{ form_label(form.show_testimony) }}
+                    <div class="switch">
+                        {{ form_widget(form.show_testimony) }}
+                        <label for="{{ form.show_testimony.vars.id }}"></label>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+        <div class="large-4 medium-6 small-12 columns end">
+            <fieldset>
+                <legend>{{ (instance.translation ~ '.admin.create.form.fieldset.contact')|trans }}</legend>
+                <div class="row">
+                    {{ form_label(form.contact) }}
+                    {{ form_errors(form.contact) }}
+                    {{ form_widget(form.contact) }}
+                </div>
+                <div class="row">
+                    {{ form_errors(form.show_contact) }}
+                    {{ form_label(form.show_contact) }}
+                    <div class="switch">
+                        {{ form_widget(form.show_contact) }}
+                        <label for="{{ form.show_contact.vars.id }}"></label>
+                    </div>
                 </div>
             </fieldset>
         </div>

@@ -71,23 +71,36 @@ class ApiController extends FhmController
      */
     public function detailAction($template, $id, $rows, $pagination)
     {
-        $document = "";
+        if($id == 'demo')
+        {
+            return new Response(
+                $this->renderView(
+                    "::FhmNews/Template/" . $template . ".html.twig",
+                    array(
+                        'object'  => null,
+                        'objects' => null,
+                        'demo'    => true
+                    )
+                )
+            );
+        }
+        $object = "";
         // News
         if($id && $template == 'full')
         {
-            $document  = $this->get('fhm_tools')->dmRepository(self::$repository)->getById($id);
-            $document  = ($document) ? $document : $this->get('fhm_tools')->dmRepository(self::$repository)->getByAlias($id);
-            $document  = ($document) ? $document : $this->get('fhm_tools')->dmRepository(self::$repository)->getByName($id);
-            $documents = '';
-            $form      = '';
+            $object  = $this->get('fhm_tools')->dmRepository(self::$repository)->getById($id);
+            $object  = ($object) ? $object : $this->get('fhm_tools')->dmRepository(self::$repository)->getByAlias($id);
+            $object  = ($object) ? $object : $this->get('fhm_tools')->dmRepository(self::$repository)->getByName($id);
+            $objects = '';
+            $form    = '';
             // ERROR - unknown
-            if($document == "")
+            if($object == "")
             {
                 throw $this->createNotFoundException(
                     $this->trans('news.group.error.unknown', array(), 'FhmNewsBundle')
                 );
             } // ERROR - Forbidden
-            elseif(!$this->get('security.authorization_checker')->isGranted('ROLE_ADMIN') && ($document->getDelete() || !$document->getActive())
+            elseif(!$this->get('security.authorization_checker')->isGranted('ROLE_ADMIN') && ($object->getDelete() || !$object->getActive())
             )
             {
                 throw new HttpException(
@@ -100,18 +113,18 @@ class ApiController extends FhmController
             // Group
             if($id)
             {
-                $document = $this->get('fhm_tools')->dmRepository("FhmNewsBundle:NewsGroup")->getById($id);
-                $document = ($document) ? $document : $this->get('fhm_tools')->dmRepository("FhmNewsBundle:NewsGroup")->getByAlias($id);
-                $document = ($document) ? $document : $this->get('fhm_tools')->dmRepository("FhmNewsBundle:NewsGroup")->getByName($id);
+                $object = $this->get('fhm_tools')->dmRepository("FhmNewsBundle:NewsGroup")->getById($id);
+                $object = ($object) ? $object : $this->get('fhm_tools')->dmRepository("FhmNewsBundle:NewsGroup")->getByAlias($id);
+                $object = ($object) ? $object : $this->get('fhm_tools')->dmRepository("FhmNewsBundle:NewsGroup")->getByName($id);
                 // ERROR - unknown
-                if($document == "")
+                if($object == "")
                 {
                     throw $this->createNotFoundException(
                         $this->trans('news.group.error.unknown', array(), 'FhmNewsBundle')
                     );
                 }
                 // ERROR - Forbidden
-                elseif(!$this->get('security.authorization_checker')->isGranted('ROLE_SUPER_ADMIN') && ($document->getDelete() || !$document->getActive()))
+                elseif(!$this->get('security.authorization_checker')->isGranted('ROLE_SUPER_ADMIN') && ($object->getDelete() || !$object->getActive()))
                 {
                     throw new HttpException(
                         403, $this->trans('news.group.error.forbidden', array(), 'FhmNewsBundle')
@@ -122,16 +135,16 @@ class ApiController extends FhmController
             $form = $this->createForm(SearchType::class);
             $form->setData($this->get('request_stack')->getCurrentRequest()->get($form->getName()));
             $dataSearch = $form->getData();
-            $documents  = $this->get('fhm_tools')->dmRepository(self::$repository)->getNewsByGroupIndex($document, $dataSearch['search']);
+            $objects    = $this->get('fhm_tools')->dmRepository(self::$repository)->getNewsByGroupIndex($object, $dataSearch['search'], 1, $rows);
         }
 
         return new Response(
             $this->renderView(
                 "::FhmNews/Template/" . $template . ".html.twig",
                 array(
-                    'document'  => $document,
-                    'documents' => $documents,
-                    'form'      => $form ? $form->createView() : $form,
+                    'object'  => $object,
+                    'objects' => $objects,
+                    'form'    => $form ? $form->createView() : $form,
                 )
             )
         );

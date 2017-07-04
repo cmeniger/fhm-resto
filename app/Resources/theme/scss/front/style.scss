@@ -497,21 +497,14 @@
             text-align: center;
             padding:    50px 0;
             h2{
+                @include css3-prefix(transition, all 2s ease);
+                @include logo('brown');
                 color:          $button-color;
                 font-size:      38px;
                 font-weight:    700;
                 text-transform: none;
                 letter-spacing: -1.5px;
                 margin:         0;
-                @include css3-prefix(transition, all 2s ease);
-                &:after{
-                    content:    "";
-                    display:    block;
-                    background: url(/images/logo-icon-wave-brown.png) no-repeat 0 0;
-                    width:      150px;
-                    height:     25px;
-                    margin:     10px auto 0;
-                }
             }
             h3{
                 color:       $button-color;
@@ -531,25 +524,15 @@
     margin:     0;
     text-align: center;
     h2{
+        @include logo('white', false);
         color:          $white;
         font-size:      1.2em;
         font-weight:    700;
         text-transform: none;
         letter-spacing: -1.5px;
         padding-top:    1rem;
-        &:after{
-            content:    "";
-            display:    block;
-            background: url(/images/logo-wave-white.png) no-repeat 0 0;
-            width:      66px;
-            height:     25px;
-            margin:     auto;
-        }
         &.icon{
-            &:after{
-                background: url(/images/logo-icon-wave-white.png) no-repeat 0 0;
-                width:      150px;
-            }
+            @include logo('white');
         }
     }
     img{

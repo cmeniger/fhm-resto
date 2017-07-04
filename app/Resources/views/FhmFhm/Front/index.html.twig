@@ -19,7 +19,7 @@
     {% if not app.request.isxmlhttprequest %}
         {# Search #}
         {% block content_search %}
-            <form action="{% block content_search_url %}{{ path(instance.source ~ '_' ~ instance.route) }}{% endblock %}" method="POST"  {% block content_search_parameter %}{% endblock %} data-required="false">
+            <form action="{% block content_search_url %}{{ path(instance.source ~ '_' ~ instance.route) }}{% endblock %}" method="POST" {% block content_search_parameter %}{% endblock %} data-required="false">
                 <div class="column medium-6 medium-centered">
                     <div class="row collapse">
                         <div class="small-10 medium-11 columns">
@@ -66,10 +66,6 @@
                         {% endfor %}
                     </tbody>
                 </table>
-                <div class="pagination">
-                    {{ knp_pagination_render(pagination) }}
-                    <div class="counter">{{ ('fhm.pagination.counter')|trans({}, 'FhmFhmBundle') }} : <span>{{ pagination.getTotalItemCount }}</span></div>
-                </div>
             {% else %}
                 {% block content_nodata %}
                     <div class="nodata">
@@ -77,6 +73,13 @@
                     </div>
                 {% endblock %}
             {% endif %}
+            {% block content_pagination %}
+                <div class="pagination">
+                    {{ knp_pagination_render(pagination) }}
+                    <div class="counter">{{ ('fhm.pagination.counter')|trans({}, 'FhmFhmBundle') }} :
+                        <span>{{ pagination.getTotalItemCount }}</span></div>
+                </div>
+            {% endblock %}
         </div>
     {% endblock %}
 {% endblock %}

@@ -1,13 +1,13 @@
 {% trans_default_domain instance.domain %}
 
-<div id="content_data" class="news">
-    <div class="row news-full">
-        <h1>{{ object.getTitle() }}</h1>
-        <h2>{{ object.getSubTitle() }}</h2>
-        <div class="news-image" style="background: url('{{ asset(object.getImage()|media("xxl","/images/common/news-cover-default.jpg")) }}') center center no-repeat;"></div>
-        <div class="news-date">{{ object.getDateStart()|localizeddate('full', 'none', app.request.locale) }} - {{ object.getDateEnd()|localizeddate('full', 'none', app.request.locale) }}</div>
-        <div class="news-resume">{{ object.getResume()|raw }}</div>
-        <div class="news-content">{{ object.getContent()|raw }}</div>
-        <div class="news-author">{{ object.getAuthor().getUsername() is defined ? object.getAuthor().getUsername() : 'admin' }}</div>
-    </div>
+<div id="content_data" class="news full row">
+    <header>
+        <div class="date">{{ object.getDateStart() ? object.getDateStart()|localizeddate('short', 'none', app.request.locale) : object.getDateCreate()|localizeddate('short', 'none', app.request.locale) }}</div>
+        <h2>{{ object.getTitle() }}</h2>
+        <h3>{{ object.getSubTitle() }}</h3>
+        <div class="share"><div class="addthis_sharing_toolbox"></div></div>
+    </header>
+    <img src="{{ object.getImage()|media("xxl",asset('images/default-news.jpg')) }}" alt="">
+    <div class="resume">{{ object.getResume()|raw }}</div>
+    <div class="content">{{ object.getContent()|raw }}</div>
 </div>

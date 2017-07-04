@@ -1,0 +1,125 @@
+.news{
+    ul{
+        li{
+            height:  250px;
+            padding: 5px;
+            margin:  0;
+            .item{
+                height: 100%;
+                .front{
+                    background-size:     cover !important;
+                    background-position: center center !important;
+                    background-repeat:   no-repeat !important;
+                    background-color:    $white !important;
+                    height:              100%;
+                    .caption{
+                        position:   absolute;
+                        bottom:     0;
+                        left:       0;
+                        right:      0;
+                        background: rgba($black, 0.5);
+                        padding:    20px;
+                        text-align: center;
+                        h2{
+                            display:     block;
+                            color:       $white;
+                            font-size:   1em;
+                            font-weight: bold;
+                        }
+                        h3{
+                            @include font-subtitle();
+                            display:   block;
+                            color:     $white;
+                            font-size: 1.6em;
+                        }
+                        span{
+                            @include font-subtitle();
+                            position:    absolute;
+                            top:         0;
+                            left:        0;
+                            right:       0;
+                            text-align:  center;
+                            font-size:   1em;
+                            font-weight: bold;
+                            color:       $white;
+                        }
+                    }
+                }
+                .back{
+                    height:           100%;
+                    background-color: $button-color;
+                    color:            $white;
+                    padding:          1rem;
+                    text-align:       center;
+                    h2{
+                        @include font-title();
+                        display:       block;
+                        color:         $white;
+                        font-size:     1em;
+                        margin-bottom: 1rem;
+                    }
+                    p{
+                        text-align: justify;
+                        font-size:  0.8em;
+                        height:     90px;
+                        overflow:   hidden;
+                    }
+                    .more{
+                        margin:     0;
+                        background: $white;
+                        color:      $button-color;
+                    }
+                }
+            }
+        }
+    }
+    &.home{
+        margin-bottom: 150px;
+        .all{
+            margin-top: 50px;
+            .button{
+                background: $button-color;
+                color:      $white;
+            }
+        }
+    }
+    &.full{
+        header{
+            @include logo('brown');
+            h2{
+                color: $button-color;
+            }
+            h3{
+                @include font-subtitle();
+                color: $button-color;
+            }
+            .date{
+                @include font-subtitle();
+            }
+            .share{
+                text-align: right;
+            }
+        }
+        img{
+            margin: 1rem 0;
+        }
+        .resume{
+            @include logo('brown', false);
+            padding:    1rem 0;
+            text-align: justify;
+        }
+        .content{
+            @include logo('brown', false);
+            padding:    1rem 0;
+            text-align: justify;
+        }
+    }
+    .nodata{
+        text-align: center;
+        margin:     1rem 0;
+    }
+    @media #{$medium}{
+    }
+    @media #{$large}{
+    }
+}
