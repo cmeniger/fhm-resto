@@ -456,6 +456,8 @@
         }
         &.section-gallery-top{
         }
+        &.section-news{
+        }
         &.section-card-slider{
             overflow: hidden;
             height:   900px;
@@ -488,6 +490,9 @@
             }
         }
         &.section-contact{
+        }
+        &.section-partner{
+            background: $white;
         }
         &.section-gallery-bottom{
             padding-top: 150px;

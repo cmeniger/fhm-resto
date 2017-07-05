@@ -1,0 +1,79 @@
+{% trans_default_domain instance.domain %}
+
+{% if demo is defined %}
+    <div id="content_data" class="partner home">
+        <div class="content">
+            <a class="item" href="#" style="background:url('{{ asset('images/demo/partner/partner-item1.png') }}') center center no-repeat"></a>
+            <a class="item" href="#" style="background:url('{{ asset('images/demo/partner/partner-item2.png') }}') center center no-repeat"></a>
+            <a class="item" href="#" style="background:url('{{ asset('images/demo/partner/partner-item3.png') }}') center center no-repeat"></a>
+            <a class="item" href="#" style="background:url('{{ asset('images/demo/partner/partner-item4.png') }}') center center no-repeat"></a>
+            <div class="item" style="background:url('{{ asset('images/demo/partner/partner-item2.png') }}') center center no-repeat"></div>
+            <div class="item" style="background:url('{{ asset('images/default-partner.jpg') }}') center center no-repeat"></div>
+            <a class="item" href="#" style="background:url('{{ asset('images/demo/partner/partner-item2.png') }}') center center no-repeat"></a>
+            <a class="item" href="#" style="background:url('{{ asset('images/demo/partner/partner-item3.png') }}') center center no-repeat"></a>
+        </div>
+        <div class="all text-center">
+            <a class="button tiny radius hvr-grow" href="#">{{ ('partner.front.index.form.all')|trans({},'FhmPartnerBundle') }}</a>
+        </div>
+    </div>
+{% else %}
+    <div id="content_data" class="partner home">
+        {% if objects|length > 0 %}
+            <div class="content">
+                {% for object in objects %}
+                    {% if object.getLink() %}
+                        <a class="item" href="{{ object.getLink() }}" target="_blank" style="background:url('{{ object.getImage()|media('m', asset('images/default-partner.jpg')) }}') center center no-repeat" title="{{ object.getName() }}"></a>
+                    {% else %}
+                        <div class="item" style="background:url('{{ object.getImage()|media('m', asset('images/default-partner.jpg')) }}') center center no-repeat" title="{{ object.getName() }}"></div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+            <div class="all text-center">
+                <a class="button tiny radius hvr-grow" href="{{ path('fhm_partner') }}">{{ ('partner.front.index.form.all')|trans({},'FhmPartnerBundle') }}</a>
+            </div>
+        {% else %}
+            <div class="nodata">
+                {{ (instance.translation ~ '.front.index.nodata')|trans }}
+            </div>
+        {% endif %}
+    </div>
+{% endif %}
+<script>
+    $(document).ready(function ()
+    {
+        $('.partner .content').slick({
+            autoplay:       true,
+            dots:           false,
+            infinite:       true,
+            speed:          300,
+            slidesToShow:   4,
+            slidesToScroll: 1,
+            responsive:     [
+                {
+                    breakpoint: 1024,
+                    settings:   {
+                        slidesToShow:   3,
+                        slidesToScroll: 1
+                    }
+                },
+                {
+                    breakpoint: 768,
+                    settings:   {
+                        slidesToShow:   2,
+                        slidesToScroll: 1
+                    }
+                }
+            ]
+        });
+        $(".partner .content .item:even")
+            .on("inViewBegin", function ()
+            {
+                $(this).addClass("animated").addClass("bounceInUp");
+            });
+        $(".partner .content .item:odd")
+            .on("inViewBegin", function ()
+            {
+                $(this).addClass("animated").addClass("bounceInDown");
+            });
+    });
+</script>

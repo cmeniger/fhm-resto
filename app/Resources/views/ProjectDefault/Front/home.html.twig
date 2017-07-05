@@ -53,7 +53,9 @@
                         <h2>{{ site.getDemo() ? 'project.home.default.title'|trans : site.getTitleNews()|raw }}</h2>
                     {% endif %}
                 </header>
-                {{ render(path('fhm_api_news_detail',{template:'home', rows:4, 'id':site.getNews() == '' or site.getDemo() ? 'demo' : site.getNews().getId()})) }}
+                <div class="row">
+                    {{ render(path('fhm_api_news_detail',{template:'home', rows:4, 'id':site.getNews() == '' or site.getDemo() ? 'demo' : site.getNews().getId()})) }}
+                </div>
             </section>
         {% endif %}
         {% if site.isShow('card_slider') %}
@@ -117,9 +119,24 @@
             </section>
         {% endif %}
         {% if site.isShow('contact') %}
-            <section class="section-contact {{ site.isShow('testimony') ? 'margin' : 'gutter-margin-top' }} {{ site.isShow('gallery_bottom') ? '' : 'gutter-margin-bottom' }}">
+            <a id="anchor-contact" class="anchor"></a>
+            <section class="section-contact {{ site.isShow('testimony') ? 'margin' : 'gutter-margin-top' }} {{ site.isShow('gallery_bottom') or site.isShow('partner') ? '' : 'gutter-margin-bottom' }}">
                 <a id="anchor-contact" class="anchor"></a>
                 {{ render(path('fhm_api_contact_detail', {template:'home',id:site.getContact() == '' or site.getDemo() ? 'demo' : site.getContact().getId()})) }}
+            </section>
+        {% endif %}
+        {% if site.isShow('partner') %}
+            <section class="section-partner row {{ site.isShow('testimony') and not site.isShow('contact') ? 'margin' : '' }} {{ site.isShow('gallery_bottom') ? '' : 'gutter-margin-bottom' }}">
+                <a id="anchor-partner" class="anchor"></a>
+                <header>
+                    {% if site.getSubtitlePartner() or site.getDemo() %}
+                        <h3 class="subtitle">{{ site.getDemo() ? 'project.home.default.subtitle'|trans : site.getSubtitlePartner()|raw }}</h3>
+                    {% endif %}
+                    {% if site.getTitlePartner() or site.getDemo() %}
+                        <h2>{{ site.getDemo() ? 'project.home.default.title'|trans : site.getTitlePartner()|raw }}</h2>
+                    {% endif %}
+                </header>
+                {{ render(path('fhm_api_partner_detail', {template:'home', id:site.getDemo() ? 'demo' : (site.getPartner() ? site.getPartner().getId() : '')})) }}
             </section>
         {% endif %}
         {% if site.isShow('gallery_bottom') %}

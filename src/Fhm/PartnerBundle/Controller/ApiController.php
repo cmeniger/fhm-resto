@@ -1,4 +1,5 @@
 <?php
+
 namespace Fhm\PartnerBundle\Controller;
 
 use Fhm\FhmBundle\Controller\RefApiController as FhmController;
@@ -14,6 +15,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
  * @Route("/api/partner")
  * -------------------------------------
  * Class ApiController
+ *
  * @package Fhm\PartnerBundle\Controller
  */
 class ApiController extends FhmController
@@ -23,12 +25,12 @@ class ApiController extends FhmController
      */
     public function __construct()
     {
-        self::$repository = "FhmPartnerBundle:Partner";
-        self::$source = "fhm";
-        self::$domain = "FhmPartnerBundle";
+        self::$repository  = "FhmPartnerBundle:Partner";
+        self::$source      = "fhm";
+        self::$domain      = "FhmPartnerBundle";
         self::$translation = "partner";
-        self::$class = Partner::class;
-        self::$route = "partner";
+        self::$class       = Partner::class;
+        self::$route       = "partner";
     }
 
     /**
@@ -69,49 +71,61 @@ class ApiController extends FhmController
      */
     public function detailAction($template, $id, $rows, $pagination)
     {
-        $document = "";
+        if($id == 'demo')
+        {
+            return new Response(
+                $this->renderView(
+                    "::FhmPartner/Template/" . $template . ".html.twig",
+                    array(
+                        'object'  => null,
+                        'objects' => null,
+                        'demo'    => true
+                    )
+                )
+            );
+        }
+        $object = "";
         // Partner
-        if ($id && $template == 'full') {
-            $document = $this->get('fhm_tools')->dmRepository(self::$repository)->getById($id);
-            $document = ($document) ? $document : $this->get('fhm_tools')->dmRepository(self::$repository)->getByAlias(
-                $id
-            );
-            $document = ($document) ? $document : $this->get('fhm_tools')->dmRepository(self::$repository)->getByName(
-                $id
-            );
-            $documents = '';
-            $form = '';
+        if($id && $template == 'full')
+        {
+            $object  = $this->get('fhm_tools')->dmRepository(self::$repository)->getById($id);
+            $object  = ($object) ? $object : $this->get('fhm_tools')->dmRepository(self::$repository)->getByAlias($id);
+            $object  = ($object) ? $object : $this->get('fhm_tools')->dmRepository(self::$repository)->getByName($id);
+            $objects = '';
+            $form    = '';
             // ERROR - unknown
-            if ($document == "") {
+            if($object == "")
+            {
                 throw $this->createNotFoundException(
                     $this->trans('partner.group.error.unknown', array(), 'FhmPartnerBundle')
                 );
-            } // ERROR - Forbidden
-            elseif (!$this->getUser()->hasRole('ROLE_ADMIN') && ($document->getDelete() || !$document->getActive())) {
+            }
+            // ERROR - Forbidden
+            elseif(!$this->getUser()->hasRole('ROLE_ADMIN') && ($object->getDelete() || !$object->getActive()))
+            {
                 throw new HttpException(
                     403, $this->trans('partner.group.error.forbidden', array(), 'FhmPartnerBundle')
                 );
             }
-
-        } else {
+        }
+        else
+        {
             // Group
-            if ($id) {
-                $document = $this->get('fhm_tools')->dmRepository("FhmPartnerBundle:PartnerGroup")->getById($id);
-                $document = ($document) ? $document : $this->get('fhm_tools')->dmRepository(
-                    "FhmPartnerBundle:PartnerGroup"
-                )->getByAlias($id);
-                $document = ($document) ? $document : $this->get('fhm_tools')->dmRepository(
-                    "FhmPartnerBundle:PartnerGroup"
-                )->getByName($id);
+            if($id)
+            {
+                $object = $this->get('fhm_tools')->dmRepository("FhmPartnerBundle:PartnerGroup")->getById($id);
+                $object = ($object) ? $object : $this->get('fhm_tools')->dmRepository()->getByAlias($id);
+                $object = ($object) ? $object : $this->get('fhm_tools')->dmRepository()->getByName($id);
                 // ERROR - unknown
-                if ($document == "") {
+                if($object == "")
+                {
                     throw $this->createNotFoundException(
                         $this->trans('partner.group.error.unknown', array(), 'FhmPartnerBundle')
                     );
                 } // ERROR - Forbidden
-                elseif (!$this->getUser()->hasRole('ROLE_ADMIN') && ($document->getDelete() || !$document->getActive(
-                        ))
-                ) {
+                elseif(!$this->getUser()->hasRole('ROLE_ADMIN') && ($object->getDelete() || !$object->getActive())
+                )
+                {
                     throw new HttpException(
                         403, $this->trans('partner.group.error.forbidden', array(), 'FhmPartnerBundle')
                     );
@@ -121,20 +135,19 @@ class ApiController extends FhmController
             $form = $this->createForm(SearchType::class, null);
             $form->setData($this->get('request_stack')->getCurrentRequest()->get($form->getName()));
             $dataSearch = $form->getData();
-            $documents = $document ? $this->get('fhm_tools')->dmRepository(self::$repository)->getPartnerByGroupIndex(
-                $document,
+            $objects    = $object ? $this->get('fhm_tools')->dmRepository(self::$repository)->getPartnerByGroupIndex(
+                $object,
                 $dataSearch['search']
             ) : $this->get('fhm_tools')->dmRepository(self::$repository)->getFrontIndex($dataSearch['search']);
-
         }
 
         return new Response(
             $this->renderView(
-                "::FhmPartner/Template/".$template.".html.twig",
+                "::FhmPartner/Template/" . $template . ".html.twig",
                 array(
-                    'document' => $document,
-                    'documents' => $documents,
-                    'form' => $form ? $form->createView() : $form,
+                    'object'  => $object,
+                    'objects' => $objects,
+                    'form'    => $form ? $form->createView() : $form,
                 )
             )
         );

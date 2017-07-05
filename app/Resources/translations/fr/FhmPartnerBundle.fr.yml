@@ -190,6 +190,7 @@ partner:
             nodata:                             Aucune donnée
             form:
                 search:                         Rechercher
+                all:                            Voir tous les partenaires
                 more:                           En savoir +
                 update:                         Mise à jour le %date%
             table:

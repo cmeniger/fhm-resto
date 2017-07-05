@@ -1,8 +1,16 @@
 {% trans_default_domain instance.domain %}
-
-<div id="content_data" class="partner">
-    <div class="row partner-full">
-        <h1>{{ object.getName() }}</h1>
-        <div class="partner-image" style="background: url('{{ asset(object.getImage()|media("xxl")) }}') center center no-repeat;"></div>
-    </div>
+<div id="content_data" class="partner full row">
+    <header>
+        <h2>{{ object.getName() }}</h2>
+        <div class="share">
+            <div class="addthis_sharing_toolbox"></div>
+        </div>
+    </header>
+    {% if object.getLink() %}
+        <a class="image hvr-grow" href="{{ object.getLink() }}" target="_blank" style="background:url('{{ object.getImage()|media('m', asset('images/default-partner.jpg')) }}') center center no-repeat"></a>
+    {% else %}
+        <div class="image" style="background:url('{{ object.getImage()|media('m', asset('images/default-partner.jpg')) }}') center center no-repeat"></div>
+    {% endif %}
+    <div class="separator"></div>
+    <div class="content">{{ object.getContent()|raw }}</div>
 </div>

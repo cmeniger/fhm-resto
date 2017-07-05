@@ -7,7 +7,7 @@
         <h3>{{ object.getSubTitle() }}</h3>
         <div class="share"><div class="addthis_sharing_toolbox"></div></div>
     </header>
-    <img src="{{ object.getImage()|media("xxl",asset('images/default-news.jpg')) }}" alt="">
+    <img class="image" src="{{ object.getImage()|media("xxl",asset('images/default-news.jpg')) }}" alt="">
     <div class="resume">{{ object.getResume()|raw }}</div>
     <div class="content">{{ object.getContent()|raw }}</div>
 </div>

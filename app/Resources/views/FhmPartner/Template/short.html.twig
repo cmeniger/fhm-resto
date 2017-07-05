@@ -1,22 +1,22 @@
 {% trans_default_domain instance.domain %}
-{% import "::Macros/pagination.html.twig" as macroPagination %}
 
-<div id="content_data" class="partner">
-    {% if documents %}
-        <div class="row">
-            {% for partner in documents %}
-                <div class="column medium-4 partner-short end">
-                    <a href="{{ partner.getLink() }}" class="partner-image">
-                        {{ partner.getImage()|image('s',150)|raw }}
-                    </a>
-                </div>
+<div id="content_data" class="row partner short">
+    {% if pagination %}
+        <ul class="small-block-grid-1 medium-block-grid-2 large-block-grid-4">
+            {% for object in pagination %}
+                <li>
+                    <a class="item hvr-grow" href="{{ path('fhm_partner_lite', {id: object.getAlias()}) }}" style="background:url('{{ object.getImage()|media('m', asset('images/default-partner.jpg')) }}') center center no-repeat" title="{{ object.getName() }}"></a>
+                </li>
             {% endfor %}
-        </div>
+        </ul>
     {% else %}
-        <div class="panel nodata row">
-            <p>{{ (instance.translation ~ '.front.index.nodata')|trans }}</p>
+        <div class="nodata">
+            {{ (instance.translation ~ '.front.index.nodata')|trans }}
         </div>
     {% endif %}
+    <div class="pagination">
+        {{ knp_pagination_render(pagination) }}
+        <div class="counter">{{ ('fhm.pagination.counter')|trans({}, 'FhmFhmBundle') }} :
+            <span>{{ pagination.getTotalItemCount }}</span></div>
+    </div>
 </div>
-{# Pagination #}
-{#{{ macroPagination.print(pagination) }}#}

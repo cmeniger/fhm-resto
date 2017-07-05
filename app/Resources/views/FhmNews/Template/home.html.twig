@@ -2,7 +2,7 @@
 {% import "::Macros/pagination.html.twig" as macroPagination %}
 
 {% if demo is defined %}
-    <div id="content_data" class="news home row">
+    <div id="content_data" class="news home">
         <ul class="small-block-grid-1 medium-block-grid-2 large-block-grid-4">
             <li>
                 <div class="item">
@@ -76,11 +76,11 @@
             </li>
         </ul>
         <div class="all text-center">
-            <a class="button tiny radius hvr-grow" href="{{ path('fhm_news') }}">{{ ('news.front.index.form.all')|trans({},'FhmNewsBundle') }}</a>
+            <a class="button tiny radius hvr-grow" href="#">{{ ('news.front.index.form.all')|trans({},'FhmNewsBundle') }}</a>
         </div>
     </div>
 {% else %}
-    <div id="content_data" class="news home row">
+    <div id="content_data" class="news home">
         {% if objects|length > 0 %}
             <ul class="small-block-grid-1 medium-block-grid-2 large-block-grid-4">
                 {% for object in objects %}

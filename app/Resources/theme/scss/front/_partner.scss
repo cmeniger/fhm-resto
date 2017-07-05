@@ -1,0 +1,85 @@
+.partner{
+    &.home{
+        .content{
+            .item{
+                display:          inline-block;
+                height:           200px;
+                width:            100%;
+                background-color: $white !important;
+                background-size:  contain !important;
+                margin:           0 1rem;
+            }
+        }
+        .all{
+            margin-top: 50px;
+            .button{
+                background: $button-color;
+                color:      $white;
+            }
+        }
+        .slick-prev{
+            left: -45px;
+            &:before{
+                color:     $button-color;
+                font-size: 50px;
+            }
+        }
+        .slick-next{
+            right: -45px;
+            &:before{
+                color:     $button-color;
+                font-size: 50px;
+            }
+        }
+    }
+    &.short{
+        ul{
+            li{
+                padding: 5px;
+                margin:  0;
+                .item{
+                    display:          inline-block;
+                    height:           200px;
+                    width:            100%;
+                    background-color: $white !important;
+                    background-size:  contain !important;
+                }
+            }
+        }
+    }
+    &.full{
+        header{
+            @include logo('brown');
+            h2{
+                color: $button-color;
+            }
+            .share{
+                text-align: right;
+            }
+        }
+        .image{
+            display:          block;
+            margin:           1rem auto 3rem;
+            height:           200px;
+            width:            400px;
+            background-color: $white !important;
+            background-size:  contain !important;
+        }
+        .content{
+            @include logo('brown', false);
+            padding:    1rem 0;
+            text-align: justify;
+        }
+        .separator{
+            @include logo('brown', false);
+        }
+    }
+    .nodata{
+        text-align: center;
+        margin:     1rem 0;
+    }
+    @media #{$medium}{
+    }
+    @media #{$large}{
+    }
+}

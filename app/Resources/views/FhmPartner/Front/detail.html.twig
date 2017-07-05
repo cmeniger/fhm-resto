@@ -3,6 +3,11 @@
 
 {% block tagline %}{% endblock %}
 
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-567035a40426c814" async="async"></script>
+{% endblock %}
+
 {% block content_data %}
     {% include "::FhmPartner/Template/full.html.twig" %}
 {% endblock %}
