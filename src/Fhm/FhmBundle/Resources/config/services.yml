@@ -16,7 +16,7 @@ services:
 
     fhm.event.listener:
         class: Fhm\FhmBundle\EventListener\FhmEventListener
-        arguments: ["@templating", "@security.token_storage", "@security.authorization_checker", "%project%"]
+        arguments: ["@templating", "@security.token_storage", "@security.authorization_checker", "@project_twig_global","%project%"]
         tags:
             - { name: kernel.event_subscriber, event: kernel.request, method: onKernelRequest }
 

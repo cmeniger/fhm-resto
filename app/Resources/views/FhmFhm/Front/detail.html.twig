@@ -1,10 +1,12 @@
 {% extends layout_extend is defined ? layout_extend : "::layout.front.html.twig" %}
 {% trans_default_domain instance.domain %}
 
-{% block tagline %}
-    <div class="row text-center">
-        <h1>{% block tagline_data %}{{ (instance.translation ~ '.front.detail.title')|trans({'%name%': object.getName()}) }}{% endblock %}</h1>
-    </div>
+{% block title %}
+    {{ parent() }} | {{ object.getName() }}
+{% endblock %}
+
+{% block tagline_title %}
+    <h1>{% block tagline_data %}{{ (instance.translation ~ '.front.detail.title')|trans({'%name%': object.getName()}) }}{% endblock %}</h1>
 {% endblock %}
 
 {% block content %}

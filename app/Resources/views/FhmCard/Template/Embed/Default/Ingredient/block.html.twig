@@ -1,0 +1,7 @@
+{% trans_default_domain instance.domain %}
+
+<span class="ingredient block">
+    {% for ingredient in ingredients %}
+        {{ ingredient.getName() }}<br>
+    {% endfor %}
+</span>

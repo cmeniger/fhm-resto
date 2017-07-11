@@ -1,16 +1,72 @@
 {% extends "::ajax.html.twig" %}
 {% trans_default_domain instance.domain %}
-{% import "::Macros/dd.tree.html.twig" as macroTree %}
 
 {% block content %}
-    {{ macroTree.html(tree, instance) }}
-{% endblock %}
-
-{% block javascript %}
-    {{ parent() }}
-    $(document).notification({
-        project: {
-        construct:{{ project.construct ? 1 : 0 }},
-        maintenance:{{ project.maintenance ? 1 : 0 }}}
-    });
+    {{ render(path('fhm_api_menu_detail',{template:'side','id':site.getDemo() ? 'demo' : object.getId()})) }}
+    <div class="menu-icon">
+        <a href="#"> <span></span> <span></span> <span></span> </a>
+    </div>
+    <div class="menu-logo">
+        <a href="{{ path('project_home') }}" class="logo"><img src="{{ site.getDemo() ? asset('images/logo.png') : site.getLogo()|media('s', asset('images/logo.png')) }}" alt=""></a>
+    </div>
+    {#<nav>#}
+        {#<ul>#}
+            {#<li>#}
+                {#<a href="#">lien 1</a>#}
+            {#</li>#}
+            {#<li>#}
+                {#<a href="#">lien 2</a>#}
+                {#<ul>#}
+                    {#<li>#}
+                        {#<a href="#">lien 2.1</a>#}
+                    {#</li>#}
+                    {#<li>#}
+                        {#<a href="#">lien 2.2</a>#}
+                        {#<ul>#}
+                            {#<li>#}
+                                {#<a href="#">lien 2.2.1</a>#}
+                            {#</li>#}
+                            {#<li>#}
+                                {#<a href="#">lien 2.2.2</a>#}
+                            {#</li>#}
+                            {#<li>#}
+                                {#<a href="#">lien 2.2.3</a>#}
+                            {#</li>#}
+                            {#<li>#}
+                                {#<a href="#">lien 2.2.4</a>#}
+                            {#</li>#}
+                        {#</ul>#}
+                    {#</li>#}
+                    {#<li>#}
+                        {#<a href="#">lien 2.3</a>#}
+                    {#</li>#}
+                    {#<li>#}
+                        {#<a href="#">lien 2.4</a>#}
+                    {#</li>#}
+                {#</ul>#}
+            {#</li>#}
+            {#<li>#}
+                {#<a href="#">lien 3</a>#}
+            {#</li>#}
+            {#<li>#}
+                {#<a href="#">lien 4</a>#}
+            {#</li>#}
+        {#</ul>#}
+    {#</nav>#}
+    <nav class="nav-main">
+        <ul>
+            <li>
+                <a href="#">lien 1</a>
+            </li>
+            <li>
+                <a href="#">lien 2</a>
+            </li>
+            <li>
+                <a href="#">lien 3</a>
+            </li>
+            <li>
+                <a href="#">lien 4</a>
+            </li>
+        </ul>
+    </nav>
 {% endblock %}

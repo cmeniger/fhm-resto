@@ -11,49 +11,47 @@
 {% endblock %}
 
 {% block body_header %}
-    <div id="header">
-        {# Menu #}
+    <header id="header">
         {% block menu %}
             {{ render_hinclude(url('fhm_api_menu_detail', {'template':'front'})) }}
         {% endblock %}
-
-        {# Tagline #}
-        {% block tagline %}
-        {% endblock %}
-
-        {# Breadcrumbs #}
-        {% block breadcrumbs %}
-            <div class="row">
-                {{ breadcrumbs is defined ? macroBreadcrumbs.print(breadcrumbs) : '' }}
-            </div>
-        {% endblock %}
-
-        {# Flash #}
-        {% block flash %}
-            {% for flashMessage in app.session.flashbag.get('notice') %}
-                <div data-alert class="alert-box">
-                    {{ flashMessage }}
-                    <a href="#" class="close"><i class="fa fa-times"></i></a>
-                </div>
-            {% endfor %}
-        {% endblock %}
-
-        {# Header #}
-        {% block header %}
-        {% endblock %}
-    </div>
+    </header>
 {% endblock %}
 
 {% block body_content %}
-    <div id="container" class="gutter-margin-top gutter-margin-bottom">
-        {% block left %}{% endblock %}
-        {% block content %}{% endblock %}
-        {% block right %}{% endblock %}
+    <div id="container">
+        <section id="main-content">
+            {% block tagline %}
+                <section class="section-tagline">
+                    <div class="parallax-image-tagline" data-parallax="scroll" data-image-src="{{ site.getDemo() ? asset('images/default.jpg') : site.getBackgroundTop()|media }}"></div>
+                    <div class="title">{% block tagline_title %}{% endblock %}</div>
+                </section>
+            {% endblock %}
+
+            {% block breadcrumbs %}
+                <section class="section-breadcrumbs">
+                    {{ breadcrumbs is defined ? macroBreadcrumbs.print(breadcrumbs) : '' }}
+                </section>
+            {% endblock %}
+
+            {% block flash %}
+                {% for flashMessage in app.session.flashbag.get('notice') %}
+                    <div data-alert class="alert-box">
+                        {{ flashMessage }}
+                        <a href="#" class="close"><i class="fa fa-times"></i></a>
+                    </div>
+                {% endfor %}
+            {% endblock %}
+
+            <section class="gutter-margin-bottom gutter-margin-top">
+                {% block content %}{% endblock %}
+            </section>
+        </section>
     </div>
 {% endblock %}
 
 {% block footer %}
-    <div class="clearfix">
+    <footer class="clearfix">
         <div class="hidden-for-large-up text-center">
             <img src="{{ site is defined and site.getLogo() and not site.getDemo() ? site.getLogo()|media('s', asset('images/logo.png')) : asset('images/logo.png') }}" alt=""/>
             <h2 class="icon">{{ site is defined and site.getTitle() and not site.getDemo() ? site.getTitle()|raw : 'project.home.default.title'|trans({},'ProjectDefaultBundle') }}</h2>
@@ -108,6 +106,6 @@
                 </ul>
             </div>
         </div>
-    </div>
+    </footer>
     {{ parent() }}
 {% endblock %}

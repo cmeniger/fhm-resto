@@ -10,6 +10,7 @@
                            this.inView();
                            this.parallaxImage();
                            this.bannerHeight();
+                           this.recaptcha();
                        },
         menuSticky:    function ()
                        {
@@ -82,6 +83,14 @@
                        },
         parallaxImage: function ()
                        {
+                           if($('.parallax-image-tagline').length)
+                           {
+                               $('.parallax-image-tagline').parallax(
+                                   {
+                                       imageSrc: $('.parallax-image-tagline').data('image-src'),
+                                       speed:    0.6
+                                   });
+                           }
                            if($('.parallax-image-top').length)
                            {
                                $('.parallax-image-top').parallax(
@@ -111,6 +120,28 @@
                            var windowHeight = $(window).height();
                            $('.banner-wrap').css('height', windowHeight);
                            $('.parallax-image-banner').css('min-height', windowHeight);
+                       },
+        recaptcha:     function ()
+                       {
+                           function recaptchaResize()
+                           {
+                               $('[data-recaptcha-resize=true]').each(function ()
+                               {
+                                   var $recaptcha = $(this).find(".g-recaptcha");
+                                   var scale = $(this).width() / 304;
+                                   $recaptcha.css('transform', 'scale(' + (scale > 1 ? 1 : scale) + ')');
+                                   $recaptcha.css('transform-origin', '0 0');
+                               });
+                           }
+
+                           $(window).resize(function ()
+                           {
+                               recaptchaResize()
+                           });
+                           $(document).ready(function ()
+                           {
+                               recaptchaResize()
+                           });
                        }
     };
     $(document).ready(function ()

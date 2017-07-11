@@ -124,13 +124,14 @@ ivory_google_map:
         api_key: AIzaSyAF_6nXrBELMKyL9jFeElmg7DT6plv9afQ
         language: "%locale%"
 
-# EWZ Recaptcha
-ewz_recaptcha:
-    public_key:  "%recaptcha_public_key%"
-    private_key: "%recaptcha_private_key%"
-    locale_key:  "%locale%"
-    enabled:     true
+# Recaptcha
+anysrv_recaptcha:
+    enabled:           true
+    sitekey:           "%recaptcha_key%"
+    secret:            "%recaptcha_secret%"
+    overwrite_locale:  "%locale%"
 
+# KNP Paginator
 knp_paginator:
     page_range: 5                      # default page range used in pagination control
     default_options:

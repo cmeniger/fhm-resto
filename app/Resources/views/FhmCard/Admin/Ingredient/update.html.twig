@@ -45,6 +45,14 @@
 {% endblock %}
 
 {% block content_data_options_data_add %}
+    <div class="large-2 columns">
+        {{ form_errors(form.forward) }}
+        {{ form_label(form.forward) }}
+        <div class="switch">
+            {{ form_widget(form.forward) }}
+            <label for="{{ form.forward.vars.id }}"></label>
+        </div>
+    </div>
     <div class="large-2 columns end">
         {{ form_errors(form.default) }}
         {{ form_label(form.default) }}

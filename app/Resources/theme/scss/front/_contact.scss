@@ -1,7 +1,92 @@
 .contact{
-    &.home{
+    .separator{
+        @include logo('brown');
+        margin: 3rem 0;
+    }
+    .profile-list{
+        text-align: center;
+        margin:     0;
+        > li{
+            display: inline-block;
+            margin:  1rem;
+            padding: 0;
+            float:   none;
+            .item{
+                width:  250px;
+                height: auto;
+                .left{
+                    display:          block;
+                    position:         relative;
+                    background-size:  contain !important;
+                    background-color: $primary-color !important;
+                    width:            100%;
+                    height:           100px;
+                }
+                .right{
+                    display:    block;
+                    width:      100%;
+                    background: $dark-grey;
+                    padding:    1rem 0;
+                    h3{
+                        @include logo('white', false);
+                        color:         $white;
+                        font-size:     1.2em;
+                        margin-bottom: 10px;
+                        span{
+                            @include font-body();
+                            display:        block;
+                            font-size:      0.6em;
+                            color:          $light-grey;
+                            text-transform: uppercase;
+                        }
+                    }
+                    a[href^="mailto:"], a[href^="tel:"]{
+                        color: $white;
+                        &:hover{
+                            color: $primary-color;
+                        }
+                    }
+                    a[href^="tel:"]{
+                        @include font-title();
+                    }
+                    .social-bar{
+                        margin-top: 10px;
+                        ul{
+                            li{
+                                a{
+                                    width:       25px;
+                                    height:      25px;
+                                    line-height: 25px;
+                                    font-size:   1em;
+                                }
+                            }
+                        }
+                    }
+                }
+                @media #{$medium} {
+                    width:  400px;
+                    height: 250px;
+                    .left{
+                        display: inline-block;
+                        width:   40%;
+                        height:  100%;
+                    }
+                    .right{
+                        display: inline-block;
+                        width:   60%;
+                        height:  100%;
+                    }
+                }
+                @media #{$large} {
+                }
+            }
+        }
+    }
+    .map-container{
+        height:     auto;
+        clear:      both;
         background: $dark-grey;
-        height:     650px;
+        overflow:   auto;
         header{
             padding:       0 !important;
             margin-bottom: 0.5rem;
@@ -28,16 +113,13 @@
                         font-size:     0.8em;
                         line-height:   1em;
                         border-bottom: 1px solid lighten($dark-grey, 5%);
-                        .text{
-                            color: $primary-color;
-                        }
                     }
                 }
                 a[href^="mailto:"], a[href^="tel:"]{
                     font-size: 1em;
                     color:     $white;
                     &:hover{
-                        color: $button-color;
+                        color: $primary-color;
                     }
                 }
                 a[href^="tel:"]{
@@ -64,12 +146,27 @@
                 color:      $white;
                 text-align: center;
                 h4{
-                    @include logo();
+                    @include logo('white', false);
                 }
                 p{
                     margin-top:    0.5rem;
                     margin-bottom: 0;
                 }
+            }
+        }
+        .contact-form{
+            display: inline-block;
+            clear:   both;
+            padding: 2rem;
+            width:   100%;
+            .recaptcha{
+                display: inline-block;
+            }
+            label{
+                color: $light-grey;
+            }
+            textarea{
+                height: 200px;
             }
         }
         @media #{$medium} {
@@ -82,5 +179,10 @@
             }
         }
     }
-
+    &.home{
+        .map-container{
+            height:   650px;
+            overflow: hidden;
+        }
+    }
 }

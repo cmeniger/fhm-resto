@@ -6,195 +6,199 @@
     <script src="{{ asset('js/jquery.addresspicker.js') }}"></script>
     <div class="contact home row">
         {% if demo is defined %}
-            <div class="column large-4 contact-left">
-                <section>
+            <div class="map-container">
+                <div class="column large-4 contact-left">
+                    <section>
+                        <header>
+                            <h4>{{ 'contact.front.home.schedules'|trans }}</h4>
+                        </header>
+                        <div class="schedules">
+                            <div class="day">
+                                <div class="text">
+                                    Lundi
+                                </div>
+                                <div class="all ">
+                                    10:00 à 18:00
+                                </div>
+                            </div>
+                            <div class="day">
+                                <div class="text">
+                                    Mardi
+                                </div>
+                                <div class="all ">
+                                    10:00 à 18:00
+                                </div>
+                            </div>
+                            <div class="day">
+                                <div class="text">
+                                    Mercredi
+                                </div>
+                                <div class="all ">
+                                    10:00 à 18:00
+                                </div>
+                            </div>
+                            <div class="day">
+                                <div class="text">
+                                    Jeudi
+                                </div>
+                                <div class="all ">
+                                    10:00 à 18:00
+                                </div>
+                            </div>
+                            <div class="day">
+                                <div class="text">
+                                    Vendredi
+                                </div>
+                                <div class="all ">
+                                    10:00 à 18:00
+                                </div>
+                            </div>
+                            <div class="day">
+                                <div class="text">
+                                    Samedi
+                                </div>
+                                <div class="all closed">
+                                    fermé
+                                </div>
+                            </div>
+                            <div class="day">
+                                <div class="text">
+                                    Dimanche
+                                </div>
+                                <div class="all closed">
+                                    fermé
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <section>
+                        <header>
+                            <h4>{{ 'contact.front.home.contact'|trans }}</h4>
+                        </header>
+                        <div class="text-center phone">
+                            <i class="fa fa-fw fa-phone"></i> <a href="tel:+33 1 42 42 42 42">+33 1 42 42 42 42</a>
+                        </div>
+                        <div class="text-center phone">
+                            <i class="fa fa-fw fa-fax"></i> <a href="tel:+33 1 42 42 42 43">+33 1 42 42 42 43</a>
+                        </div>
+                        <div class="text-center">
+                            <a href="mailto:support@fhmsolutions.com">support@fhmsolutions.com</a>
+                        </div>
+                    </section>
+                    <section>
+                        <header>
+                            <h4>{{ 'contact.front.home.social'|trans }}</h4>
+                        </header>
+                        <div class="social-bar">
+                            <ul>
+                                <li>
+                                    <a href='#' class="facebook" title="Facebook" target="_blank"><i class='fa fa-facebook'></i></a>
+                                </li>
+                                <li>
+                                    <a href='#' class="twitter" title="Twitter" target="_blank"><i class='fa fa-twitter'></i></a>
+                                </li>
+                                <li>
+                                    <a href='#' class="google" title="Google" target="_blank"><i class='fa fa-google'></i></a>
+                                </li>
+                                <li>
+                                    <a href='#' class="instagram" title="Instagram" target="_blank"><i class='fa fa-instagram'></i></a>
+                                </li>
+                                <li>
+                                    <a href='#' class="youtube" title="Youtube" target="_blank"><i class='fa fa-youtube'></i></a>
+                                </li>
+                                <li>
+                                    <a href='#' class="flux" title="Flux RSS" target="_blank"><i class='fa fa-rss'></i></a>
+                                </li>
+                            </ul>
+                        </div>
+                    </section>
+                </div>
+                <div class="column large-8 contact-right">
+                    <div id="map-demo" class="map"></div>
                     <header>
-                        <h4>{{ 'contact.front.home.schedules'|trans }}</h4>
+                        <h4>FHM Restos</h4>
+                        <p>2 Rue du Nouveau Bercy<br>94220 Charenton-le-Pont<br>France</p>
                     </header>
-                    <div class="schedules">
-                        <div class="day">
-                            <div class="text">
-                                Lundi
-                            </div>
-                            <div class="all ">
-                                10:00 à 18:00
-                            </div>
-                        </div>
-                        <div class="day">
-                            <div class="text">
-                                Mardi
-                            </div>
-                            <div class="all ">
-                                10:00 à 18:00
-                            </div>
-                        </div>
-                        <div class="day">
-                            <div class="text">
-                                Mercredi
-                            </div>
-                            <div class="all ">
-                                10:00 à 18:00
-                            </div>
-                        </div>
-                        <div class="day">
-                            <div class="text">
-                                Jeudi
-                            </div>
-                            <div class="all ">
-                                10:00 à 18:00
-                            </div>
-                        </div>
-                        <div class="day">
-                            <div class="text">
-                                Vendredi
-                            </div>
-                            <div class="all ">
-                                10:00 à 18:00
-                            </div>
-                        </div>
-                        <div class="day">
-                            <div class="text">
-                                Samedi
-                            </div>
-                            <div class="all closed">
-                                fermé
-                            </div>
-                        </div>
-                        <div class="day">
-                            <div class="text">
-                                Dimanche
-                            </div>
-                            <div class="all closed">
-                                fermé
-                            </div>
-                        </div>
-                    </div>
-                </section>
-                <section>
-                    <header>
-                        <h4>{{ 'contact.front.home.contact'|trans }}</h4>
-                    </header>
-                    <div class="text-center phone">
-                        <i class="fa fa-fw fa-phone"></i> <a href="tel:+33 1 42 42 42 42">+33 1 42 42 42 42</a>
-                    </div>
-                    <div class="text-center phone">
-                        <i class="fa fa-fw fa-fax"></i> <a href="tel:+33 1 42 42 42 43">+33 1 42 42 42 43</a>
-                    </div>
-                    <div class="text-center">
-                        <a href="mailto:support@fhmsolutions.com">support@fhmsolutions.com</a>
-                    </div>
-                </section>
-                <section>
-                    <header>
-                        <h4>{{ 'contact.front.home.social'|trans }}</h4>
-                    </header>
-                    <div class="social-bar">
-                        <ul>
-                            <li>
-                                <a href='#' class="facebook" title="Facebook" target="_blank"><i class='fa fa-facebook'></i></a>
-                            </li>
-                            <li>
-                                <a href='#' class="twitter" title="Twitter" target="_blank"><i class='fa fa-twitter'></i></a>
-                            </li>
-                            <li>
-                                <a href='#' class="google" title="Google" target="_blank"><i class='fa fa-google'></i></a>
-                            </li>
-                            <li>
-                                <a href='#' class="instagram" title="Instagram" target="_blank"><i class='fa fa-instagram'></i></a>
-                            </li>
-                            <li>
-                                <a href='#' class="youtube" title="Youtube" target="_blank"><i class='fa fa-youtube'></i></a>
-                            </li>
-                            <li>
-                                <a href='#' class="flux" title="Flux RSS" target="_blank"><i class='fa fa-rss'></i></a>
-                            </li>
-                        </ul>
-                    </div>
-                </section>
-            </div>
-            <div class="column large-8 contact-right">
-                <div id="map-demo" class="map"></div>
-                <header>
-                    <h4>FHM Restos</h4>
-                    <p>2 Rue du Nouveau Bercy<br>94220 Charenton-le-Pont<br>France</p>
-                </header>
+                </div>
             </div>
         {% else %}
-            <div class="column large-4 contact-left">
-                <section>
-                    <header>
-                        <h4>{{ 'contact.front.home.schedules'|trans }}</h4>
-                    </header>
-                    {{ object.getSchedules()|schedules|raw }}
-                </section>
-                <section>
-                    <header>
-                        <h4>{{ 'contact.front.home.contact'|trans }}</h4>
-                    </header>
-                    {% if object.getPhone() %}
-                        <div class="text-center">
-                            <i class="fa fa-fw fa-phone"></i>
-                            <a href="tel:{{ object.getPhone() }}">{{ object.getPhone() }}</a>
+            <div class="map-container">
+                <div class="column large-4 contact-left">
+                    <section>
+                        <header>
+                            <h4>{{ 'contact.front.home.schedules'|trans }}</h4>
+                        </header>
+                        {{ object.getSchedules()|schedules|raw }}
+                    </section>
+                    <section>
+                        <header>
+                            <h4>{{ 'contact.front.home.contact'|trans }}</h4>
+                        </header>
+                        {% if object.getPhone() %}
+                            <div class="text-center">
+                                <i class="fa fa-fw fa-phone"></i>
+                                <a href="tel:{{ object.getPhone() }}">{{ object.getPhone() }}</a>
+                            </div>
+                        {% endif %}
+                        {% if object.getFax() %}
+                            <div class="text-center">
+                                <i class="fa fa-fw fa-fax"></i>
+                                <a href="tel:{{ object.getFax() }}">{{ object.getFax() }}</a>
+                            </div>
+                        {% endif %}
+                        {% if object.getEmail() %}
+                            <div class="text-center">
+                                <a href="mailto:{{ object.getEmail() }}">{{ object.getEmail() }}</a>
+                            </div>
+                        {% endif %}
+                    </section>
+                    <section>
+                        <header>
+                            <h4>{{ 'contact.front.home.social'|trans }}</h4>
+                        </header>
+                        <div class="social-bar">
+                            <ul>
+                                {% if object.getSocialFacebook() %}
+                                    <li>
+                                        <a href='{{ object.getSocialFacebook() }}' class="facebook" title="Facebook" target="_blank"><i class='fa fa-facebook'></i></a>
+                                    </li>
+                                {% endif %}
+                                {% if object.getSocialTwitter() %}
+                                    <li>
+                                        <a href='{{ object.getSocialTwitter() }}' class="twitter" title="Twitter" target="_blank"><i class='fa fa-twitter'></i></a>
+                                    </li>
+                                {% endif %}
+                                {% if object.getSocialGoogle() %}
+                                    <li>
+                                        <a href='{{ object.getSocialGoogle() }}' class="google" title="Google" target="_blank"><i class='fa fa-google'></i></a>
+                                    </li>
+                                {% endif %}
+                                {% if object.getSocialInstagram() %}
+                                    <li>
+                                        <a href='{{ object.getSocialInstagram() }}' class="instagram" title="Instagram" target="_blank"><i class='fa fa-instagram'></i></a>
+                                    </li>
+                                {% endif %}
+                                {% if object.getSocialYoutube() %}
+                                    <li>
+                                        <a href='{{ object.getSocialYoutube() }}' class="youtube" title="Youtube" target="_blank"><i class='fa fa-youtube'></i></a>
+                                    </li>
+                                {% endif %}
+                                {% if object.getSocialFlux() %}
+                                    <li>
+                                        <a href='{{ object.getSocialFlux() }}' class="flux" title="Flux RSS" target="_blank"><i class='fa fa-rss'></i></a>
+                                    </li>
+                                {% endif %}
+                            </ul>
                         </div>
-                    {% endif %}
-                    {% if object.getFax() %}
-                        <div class="text-center">
-                            <i class="fa fa-fw fa-fax"></i>
-                            <a href="tel:{{ object.getFax() }}">{{ object.getFax() }}</a>
-                        </div>
-                    {% endif %}
-                    {% if object.getEmail() %}
-                        <div class="text-center">
-                            <a href="mailto:{{ object.getEmail() }}">{{ object.getEmail() }}</a>
-                        </div>
-                    {% endif %}
-                </section>
-                <section>
+                    </section>
+                </div>
+                <div class="column large-8 contact-right">
+                    <div id="map-{{ object.getId() }}" class="map"></div>
                     <header>
-                        <h4>{{ 'contact.front.home.social'|trans }}</h4>
+                        <h4>{{ object.getName() }}</h4>
+                        <p>{{ object|addressHtml|raw }}</p>
                     </header>
-                    <div class="social-bar">
-                        <ul>
-                            {% if object.getSocialFacebook() %}
-                                <li>
-                                    <a href='{{ object.getSocialFacebook() }}' class="facebook" title="Facebook" target="_blank"><i class='fa fa-facebook'></i></a>
-                                </li>
-                            {% endif %}
-                            {% if object.getSocialTwitter() %}
-                                <li>
-                                    <a href='{{ object.getSocialTwitter() }}' class="twitter" title="Twitter" target="_blank"><i class='fa fa-twitter'></i></a>
-                                </li>
-                            {% endif %}
-                            {% if object.getSocialGoogle() %}
-                                <li>
-                                    <a href='{{ object.getSocialGoogle() }}' class="google" title="Google" target="_blank"><i class='fa fa-google'></i></a>
-                                </li>
-                            {% endif %}
-                            {% if object.getSocialInstagram() %}
-                                <li>
-                                    <a href='{{ object.getSocialInstagram() }}' class="instagram" title="Instagram" target="_blank"><i class='fa fa-instagram'></i></a>
-                                </li>
-                            {% endif %}
-                            {% if object.getSocialYoutube() %}
-                                <li>
-                                    <a href='{{ object.getSocialYoutube() }}' class="youtube" title="Youtube" target="_blank"><i class='fa fa-youtube'></i></a>
-                                </li>
-                            {% endif %}
-                            {% if object.getSocialFlux() %}
-                                <li>
-                                    <a href='{{ object.getSocialFlux() }}' class="flux" title="Flux RSS" target="_blank"><i class='fa fa-rss'></i></a>
-                                </li>
-                            {% endif %}
-                        </ul>
-                    </div>
-                </section>
-            </div>
-            <div class="column large-8 contact-right">
-                <div id="map-{{ object.getId() }}" class="map"></div>
-                <header>
-                    <h4>{{ object.getName() }}</h4>
-                    <p>{{ object|addressHtml|raw }}</p>
-                </header>
+                </div>
             </div>
         {% endif %}
     </div>

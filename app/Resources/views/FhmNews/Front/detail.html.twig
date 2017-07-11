@@ -1,7 +1,10 @@
 {% trans_default_domain instance.domain %}
 {% extends "::FhmFhm/Front/detail.html.twig" %}
 
-{% block tagline %}{% endblock %}
+{% block tagline_title %}
+    <h2>{{ object.getSubTitle() }}</h2>
+    {{ parent() }}
+{% endblock %}
 
 {% block javascripts %}
     {{ parent() }}

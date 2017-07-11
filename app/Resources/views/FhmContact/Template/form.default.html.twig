@@ -1,55 +1,73 @@
 {% trans_default_domain instance.domain %}
-{% for flashMessage in app.session.flashbag.get('contact-' ~ document.getId()) %}
+{% for flashMessage in app.session.flashbag.get('contact-' ~ object.getId()) %}
     <div data-alert class="alert-box">
         {{ flashMessage }}
         <a href="#" class="close"><i class="fa fa-times"></i></a>
     </div>
 {% endfor %}
-<form action="{{ path('fhm_api_contact_form',{id:document.getId()}) }}" id="{{ document.getId() }}" method="POST" {{ form_start(form) }}>
-    <div class="row">
-        <div class="large-6 columns">
-            {{ form_label(form.firstname) }}
-            {{ form_errors(form.firstname) }}
-            {{ form_widget(form.firstname) }}
-        </div>
-        <div class="large-6 columns">
-            {{ form_label(form.lastname) }}
-            {{ form_errors(form.lastname) }}
-            {{ form_widget(form.lastname) }}
-        </div>
-        <div class="large-6 columns">
-            {{ form_label(form.email) }}
-            {{ form_errors(form.email) }}
-            {{ form_widget(form.email) }}
-        </div>
-        <div class="large-6 columns">
-            {{ form_label(form.phone) }}
-            {{ form_errors(form.phone) }}
-            {{ form_widget(form.phone) }}
-        </div>
-        <div class="columns">
-            {{ form_label(form.content) }}
-            {{ form_errors(form.content) }}
-            {{ form_widget(form.content) }}
-        </div>
-        <div class="columns gutter-margin-bottom">
-            {{ form_label(form.recaptcha) }}
-            {{ form_errors(form.recaptcha) }}
-            {% do form.recaptcha.setRendered %}
-            <div id="recaptcha-container"></div>
-            <script type="text/javascript">
-                $(document).ready(function() {
-                    $.getScript("{{ constant('\\EWZ\\Bundle\\RecaptchaBundle\\Form\\Type\\RecaptchaType::RECAPTCHA_API_JS_SERVER') }}", function() {
-                        Recaptcha.create("{{ form.recaptcha.vars.public_key }}", "recaptcha-container", {
-                            theme: "{{ form.recaptcha.vars.attr.options.theme }}"
-                        });
-                    });
-                });
-            </script>
-        </div>
-        <div class="columns">
-            {{ form_widget(form.submit, {'attr': {'data-load': "<i class='fa fa-spin fa-refresh'></i> " ~ 'contact.front.form.load'|trans}}) }}
-        </div>
+<header>
+    <h4>{{ 'contact.front.home.form'|trans }}</h4>
+</header>
+{% if form.vars.errors|length > 0 %}
+    <div class="form-bloc form-error">
+        {% block content_data_errors_data %}
+            <div class="row">
+                {{ form_errors(form) }}
+            </div>
+        {% endblock %}
     </div>
-    {{ form_rest(form) }}
+{% endif %}
+<form action="{{ path('fhm_api_contact_form',{id:object.getId()}) }}" id="{{ object.getId() }}" method="POST" data-type="ajax" data-content="#form-{{ object.getId() }}">
+    <div id="form-{{ object.getId() }}">
+        <div class="row">
+            <div class="columns medium-6">
+                <div class="row">
+                    <div class="columns medium-6">
+                        {{ form_label(form.firstname) }}
+                        {{ form_errors(form.firstname) }}
+                        {{ form_widget(form.firstname) }}
+                    </div>
+                    <div class="columns medium-6">
+                        {{ form_label(form.lastname) }}
+                        {{ form_errors(form.lastname) }}
+                        {{ form_widget(form.lastname) }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="columns medium-6">
+                        {{ form_label(form.email) }}
+                        {{ form_errors(form.email) }}
+                        {{ form_widget(form.email) }}
+                    </div>
+                    <div class="columns medium-6">
+                        {{ form_label(form.phone) }}
+                        {{ form_errors(form.phone) }}
+                        {{ form_widget(form.phone) }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="columns" data-recaptcha-resize="true">
+                        {{ form_label(form.recaptcha) }}
+                        {{ form_errors(form.recaptcha) }}
+                        {{ form_widget(form.recaptcha) }}
+                    </div>
+                </div>
+            </div>
+            <div class="columns medium-6">
+                <div class="row">
+                    <div class="columns">
+                        {{ form_label(form.content) }}
+                        {{ form_errors(form.content) }}
+                        {{ form_widget(form.content) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="columns text-center">
+                {{ form_widget(form.submit, {'attr': {'data-load': "<i class='fa fa-spin fa-refresh'></i> " ~ 'contact.front.form.load'|trans}}) }}
+            </div>
+        </div>
+        {{ form_rest(form) }}
+    </div>
 </form>

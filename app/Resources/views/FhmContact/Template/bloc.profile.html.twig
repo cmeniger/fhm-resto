@@ -1,21 +1,60 @@
 {% trans_default_domain instance.domain %}
-<div class="contact-profile">
-    <div class="top-content">
-        <div class="image-box">
-            <a href="{{ document.getSocialSite() }}" style="background: url('{{ asset(document.getProfileImage()|media('s')) }}');"></a>
+<li>
+    <div class="item">
+        <div class="left" style="background:url('{{ asset(object.getProfileImage()|media('m', asset('images/default-avatar.jpg'))) }}') center center no-repeat"></div>
+        <div class="right">
+            <h3>{{ object.getName() }}<span>{{ object.getDescription() }}</span></h3>
+            {% if object.getPhone() %}
+                <div class="text-center">
+                    <i class="fa fa-fw fa-phone"></i>
+                    <a href="tel:{{ object.getPhone() }}">{{ object.getPhone() }}</a>
+                </div>
+            {% endif %}
+            {% if object.getFax() %}
+                <div class="text-center">
+                    <i class="fa fa-fw fa-fax"></i>
+                    <a href="tel:{{ object.getFax() }}">{{ object.getFax() }}</a>
+                </div>
+            {% endif %}
+            {% if object.getEmail() %}
+                <div class="text-center">
+                    <a href="mailto:{{ object.getEmail() }}">{{ object.getEmail() }}</a>
+                </div>
+            {% endif %}
+            <div class="social-bar">
+                <ul>
+                    {% if object.getSocialFacebook() %}
+                        <li>
+                            <a href='{{ object.getSocialFacebook() }}' class="facebook" title="Facebook" target="_blank"><i class='fa fa-facebook'></i></a>
+                        </li>
+                    {% endif %}
+                    {% if object.getSocialTwitter() %}
+                        <li>
+                            <a href='{{ object.getSocialTwitter() }}' class="twitter" title="Twitter" target="_blank"><i class='fa fa-twitter'></i></a>
+                        </li>
+                    {% endif %}
+                    {% if object.getSocialGoogle() %}
+                        <li>
+                            <a href='{{ object.getSocialGoogle() }}' class="google" title="Google" target="_blank"><i class='fa fa-google'></i></a>
+                        </li>
+                    {% endif %}
+                    {% if object.getSocialInstagram() %}
+                        <li>
+                            <a href='{{ object.getSocialInstagram() }}' class="instagram" title="Instagram" target="_blank"><i class='fa fa-instagram'></i></a>
+                        </li>
+                    {% endif %}
+                    {% if object.getSocialYoutube() %}
+                        <li>
+                            <a href='{{ object.getSocialYoutube() }}' class="youtube" title="Youtube" target="_blank"><i class='fa fa-youtube'></i></a>
+                        </li>
+                    {% endif %}
+                    {% if object.getSocialFlux() %}
+                        <li>
+                            <a href='{{ object.getSocialFlux() }}' class="flux" title="Flux RSS" target="_blank"><i class='fa fa-rss'></i></a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
         </div>
     </div>
-    <div class="bottom-content">
-        <div class="name">{{ document.getName() ? document.getName() : (instance.translation ~ '.front.index.nodata')|trans }}</div>
-        <ul class="inline-list">
-            {{ document.getSocialFacebook() ? ("<li><a href='" ~ document.getSocialFacebook() ~ "' target='_blank'><i class='fa fa-facebook-square'></i></a></li>")|raw : "" }}
-            {{ document.getSocialTwitter() ? ("<li><a href='" ~ document.getSocialTwitter() ~ "' target='_blank'><i class='fa fa-twitter-square'></i></a></li>")|raw : "" }}
-            {{ document.getSocialGoogle() ? ("<li><a href='" ~ document.getSocialGoogle() ~ "' target='_blank'><i class='fa fa-google-plus-square'></i></a></li>")|raw : "" }}
-            {{ document.getSocialInstagram() ? ("<li><a href='" ~ document.getSocialInstagram() ~ "' target='_blank'><i class='fa fa-instagram social'></i></a></li>")|raw : "" }}
-            {{ document.getSocialFlux() ? ("<li><a href='" ~ document.getSocialFlux() ~ "' target='_blank'><i class='fa fa-rss social'></i></a></li>")|raw : "" }}
-            <li>
-                <a href="{{ path('fhm_contact') }}"><i class="fa fa-envelope"></i></a>
-            </li>
-        </ul>
-    </div>
-</div>
+</li>

@@ -3,66 +3,67 @@
 
 {% block javascripts %}
     {{ parent() }}
-    <script src="http://maps.google.com/maps/api/js?libraries=places&sensor=false"></script>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key={{ google_map_api_key }}&libraries=places"></script>
 {% endblock %}
 
 {% block content %}
-    <div id="content_data" class="row contact">
-        {% if pagination %}
-            {% set order = null %}
-            {% set profile = null %}
-            {% for document in pagination %}
-                {% if loop.index == 1 %}
-                    {% set order = document.getOrder() %}
-                {% endif %}
-                {% if document.getProfile() %}
-                    {% if profile == null %}
-                        <div class="row contact-profile-header">
-                            <div class="column small-10 medium-6 small-centered text-center">
-                                <h2>{{ (instance.translation ~ '.front.index.team')|trans }}</h2>
-                            </div>
-                        </div>
-                        <div class="row"><div class="column contact-profile-row">
-                        {% set profile = true %}
-                    {% endif %}
-                    {% if profile != null and order != document.getOrder() %}
-                        </div></div>
-                        <div class="row"><div class="column contact-profile-row">
-                    {% endif %}
-                    {% include ['::FhmContact/Template/bloc.profile.' ~ document.getProfileTemplate() ~ '.html.twig', '::FhmContact/Template/bloc.profile.html.twig'] %}
-                {% else %}
-                    {% if profile != null %}
-                        </div></div>
-                        {% set profile = null %}
-                    {% endif %}
-                    {% include('::FhmContact/Template/bloc.form.html.twig') %}
-                {% endif %}
-                {% set order = document.getOrder() %}
-            {% endfor %}
-            {% if profile != null %}
-                </div></div>
+    <div id="content_data" class="contact row">
+    {% if pagination %}
+        {% set order = null %}
+        {% set profile = null %}
+        {% for object in pagination %}
+            {% if loop.index == 1 %}
+                {% set order = object.getOrder() %}
             {% endif %}
-        {% else %}
-            <div class="panel nodata">
-                {{ (instance.translation ~ '.front.index.nodata')|trans }}
+            {% if object.getProfile() %}
+                {% if profile == null %}
+                    {% if loop.index > 1 %}
+                        <div class="separator"></div>
+                    {% endif %}
+                    <ul class="profile-list">
+                    {% set profile = true %}
+                {% endif %}
+                {% if profile != null and order != object.getOrder() %}
+                    </ul>
+                    <ul class="profile-list">
+                {% endif %}
+                {% include ['::FhmContact/Template/bloc.profile.' ~ object.getProfileTemplate() ~ '.html.twig', '::FhmContact/Template/bloc.profile.html.twig'] %}
+            {% else %}
+                {% if profile != null %}
+                    </ul>
+                    {% if loop.index > 1 %}
+                        <div class="separator"></div>
+                    {% endif %}
+                    {% set profile = null %}
+                {% endif %}
+                {% include('::FhmContact/Template/bloc.form.html.twig') %}
+            {% endif %}
+            {% set order = object.getOrder() %}
+        {% endfor %}
+        {% if profile != null %}
             </div>
         {% endif %}
+    {% else %}
+        <div class="nodata">
+            {{ (instance.translation ~ '.front.index.nodata')|trans }}
+        </div>
+    {% endif %}
     </div>
 {% endblock %}
 
 {% block body_javascripts %}
     {{ parent() }}
     <script>
-        {% for document in pagination %}
-            {% if not document.getProfile() and document.getLatitude() %}
-                $(document).addresspicker({
-                    view: {
-                        map: 'map-{{ document.getId() }}',
-                        lat: {{ document.getLatitude() }},
-                        lng: {{ document.getLongitude() }}
-                    }
-                });
-            {% endif %}
+        {% for object in pagination %}
+        {% if not object.getProfile() and object.getLatitude() %}
+        $(document).addresspicker({
+            view: {
+                map: 'map-{{ object.getId() }}',
+                lat: {{ object.getLatitude() }},
+                lng: {{ object.getLongitude() }}
+            }
+        });
+        {% endif %}
         {% endfor %}
     </script>
 {% endblock %}

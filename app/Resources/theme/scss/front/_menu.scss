@@ -1,0 +1,381 @@
+.menu-side-overlay{
+    display:    none;
+    position:   fixed;
+    background: rgba($black, 0.4);
+    top:        0;
+    left:       0;
+    width:      100%;
+    height:     100%;
+    z-index:    8;
+}
+
+.menu-side-content{
+    @include css3-prefix(transition, all 0.2s ease);
+    position:    fixed;
+    top:         0;
+    left:        -260px;
+    width:       260px;
+    height:      100%;
+    padding-top: 2rem;
+    overflow-x:  hidden;
+    overflow-y:  auto;
+    background:  $black;
+    color:       $white;
+    z-index:     9;
+    &.expand{
+        left: 0;
+    }
+    .close-menu{
+        font-size: 0;
+        position:  absolute;
+        top:       10px;
+        right:     10px;
+        width:     10px;
+        height:    10px;
+        .fa{
+            font-size: 12px;
+            color:     $white;
+        }
+    }
+    ul{
+        margin:  0;
+        padding: 0;
+        li{
+            display:        block;
+            margin:         0;
+            padding:        0;
+            border-bottom:  1px solid $dark-grey;
+            width:          100%;
+            font-size:      14px;
+            font-weight:    400;
+            text-transform: none;
+            line-height:    28px;
+            letter-spacing: 0;
+            a{
+                display:        block;
+                font-size:      10px;
+                font-style:     normal;
+                font-weight:    700;
+                text-transform: uppercase;
+                line-height:    10px;
+                letter-spacing: .8px;
+                color:          $white;
+                padding:        15px 25px;
+                position:       relative;
+            }
+            &:hover{
+                background: $primary-color;
+            }
+        }
+    }
+}
+
+#header{
+    @include transition(all, 0.2s, linear);
+    width:      100%;
+    height:     $menu-small-height;
+    position:   absolute;
+    top:        0;
+    left:       0;
+    text-align: center;
+    z-index:    4;
+    background: $white;
+    color:      $black;
+    padding:    0 20px;
+    .menu-logo{
+        float:  left;
+        height: $menu-small-height;
+        img{
+            height: 100%;
+            width:  auto;
+        }
+    }
+    .menu-icon{
+        @include css3-prefix(transition, all 0.2s ease);
+        display:      block;
+        float:        right;
+        border-left:  1px solid $light-grey;
+        padding-left: 20px;
+        height:       $menu-small-height;
+        position:     relative;
+        width:        56px;
+        a{
+            @include css3-prefix(transform, translateY(-50%));
+            overflow: hidden;
+            position: absolute;
+            top:      50%;
+            right:    0;
+            display:  block;
+            width:    30px;
+            height:   auto;
+            &:hover{
+                span{
+                    &:nth-child(1){
+                        @include css3-prefix(animation, animationFrames1 linear 1s);
+                        @include css3-prefix(animation-iteration-count, infinite);
+                        @include css3-prefix(transform-origin, 50% 50%);
+                    }
+                    &:nth-child(2){
+                        @include css3-prefix(animation, animationFrames2 linear 0.8s);
+                        @include css3-prefix(animation-iteration-count, infinite);
+                        @include css3-prefix(transform-origin, 50% 50%);
+                    }
+                    &:nth-child(3){
+                        @include css3-prefix(animation, animationFrames3 linear 1.2s);
+                        @include css3-prefix(animation-iteration-count, infinite);
+                        @include css3-prefix(transform-origin, 50% 50%);
+                    }
+                }
+            }
+        }
+        @include keyframes(animationFrames1){
+            0%{
+                width: 24px;
+            }
+            50%{
+                width: 20px;
+            }
+            80%{
+                width: 26px;
+            }
+            100%{
+                width: 26px;
+            }
+        }
+        @include keyframes(animationFrames2){
+            0%{
+                width: 20px;
+            }
+            50%{
+                width: 16px;
+            }
+            80%{
+                width: 22px;
+            }
+            100%{
+                width: 22px;
+            }
+        }
+        @include keyframes(animationFrames3){
+            0%{
+                width: 24px;
+            }
+            50%{
+                width: 22px;
+            }
+            80%{
+                width: 26px;
+            }
+            100%{
+                width: 26px;
+            }
+        }
+        span{
+            width:      24px;
+            height:     2px;
+            background: $black;
+            display:    block;
+            margin:     1px 0;
+            float:      right;
+            @include css3-prefix(transition, all 2s ease);
+            &:nth-child(2){
+                width: 20px;
+            }
+        }
+    }
+    .nav-main{
+        display: none;
+    }
+    &.home{
+        .nav-left{
+            display: none;
+        }
+        .nav-right{
+            display: none;
+        }
+    }
+    &.sticky{
+        position:   fixed;
+        background: rgba($black, 0.7);
+        .menu-icon{
+            border-left: none;
+            span{
+                background: $white;
+            }
+        }
+    }
+    @media #{$large} {
+        background: none;
+        .menu-icon{
+            display: none;
+        }
+        nav{
+            vertical-align: middle;
+            ul{
+                margin:  0;
+                padding: 0;
+            }
+            li{
+                margin:   0;
+                padding:  0 10px;
+                display:  inline-block;
+                position: relative;
+                > a{
+                    @include css3-prefix(transition, all 0.2s linear);
+                }
+                &:hover{
+                    > .sub-menu{
+                        display: block;
+                    }
+                }
+                &.has-submenu{
+                    &:after{
+                        content:   "+";
+                        position:  absolute;
+                        font-size: 12px;
+                        right:     20px;
+                        top:       50%;
+                        @include css3-prefix(transform, translateY(-50%));
+                    }
+                }
+            }
+            a{
+                @include font-title();
+                color:       $primary-color;
+                font-size:   1em;
+                font-weight: bold;
+                opacity:     1;
+                line-height: $menu-small-height;
+                &:hover{
+                    opacity:         0.5;
+                    text-decoration: none;
+                }
+            }
+            .sub-menu{
+                display:       none;
+                background:    $white;
+                padding:       20px 0;
+                position:      absolute;
+                top:           100%;
+                left:          0;
+                z-index:       3;
+                border-radius: 6px;
+                li{
+                    position:    relative;
+                    white-space: nowrap;
+                    text-align:  left;
+                    padding:     6px 60px 6px 25px;
+                }
+                a{
+                    font-size:      13px;
+                    font-style:     normal;
+                    font-weight:    400;
+                    text-transform: none;
+                    letter-spacing: -.2px;
+                    color:          $medium-grey;
+                    line-height:    initial;
+                }
+            }
+            .nest-menu-depth{
+                left:        100%;
+                top:         -20px;
+                margin-left: 10px;
+                &:before{
+                    content:    "";
+                    width:      14px;
+                    height:     100%;
+                    top:        0;
+                    background: transparent;
+                    position:   absolute;
+                    right:      100%;
+                }
+                li{
+                    display: block;
+                    &:first-child{
+                        &:before{
+                            content:       "";
+                            position:      absolute;
+                            left:          -5px;
+                            top:           50%;
+                            width:         0;
+                            height:        0;
+                            border-top:    5px solid transparent;
+                            border-bottom: 5px solid transparent;
+                            border-right:  5px solid $white;
+                            @include css3-prefix(transform, translateY(-50%));
+                        }
+                    }
+                }
+            }
+
+        }
+        .nav-main{
+            @include css3-prefix(transition, all 0.2s linear);
+            display: inline-block;
+        }
+        &.home{
+            height: $menu-large-height;
+            nav{
+                a{
+                    line-height: $menu-large-height;
+                }
+            }
+            .nav-left{
+                @include css3-prefix(transition, all 0.2s linear);
+                display:       inline-block;
+                float:         left;
+                width:         50%;
+                padding-right: 100px;
+                text-align:    right;
+            }
+            .nav-right{
+                @include css3-prefix(transition, all 0.2s linear);
+                display:      inline-block;
+                float:        right;
+                width:        50%;
+                padding-left: 100px;
+                text-align:   left;
+            }
+            .menu-logo{
+                @include css3-prefix(transition, all 0.2s linear);
+                position:    absolute;
+                left:        50%;
+                width:       $menu-large-height;
+                margin-left: -75px;
+                img{
+                    margin: 0;
+                    width:  100%;
+                    height: auto;
+                }
+            }
+        }
+        &.sticky{
+            background: rgba($black, 0.7);
+            height:     $menu-sticky-height;
+            .menu-logo{
+                left:        10px;
+                margin-left: 0;
+                height:      $menu-sticky-height;
+                width:       auto;
+                img{
+                    height: $menu-sticky-height;
+                    width:  auto;
+                }
+            }
+            nav{
+                a{
+                    line-height: 60px;
+                    color:       $white;
+                }
+            }
+            &.home{
+                .nav-left{
+                    padding-right: 0;
+                }
+                .nav-right{
+                    padding-left: 0;
+                }
+            }
+        }
+    }
+}

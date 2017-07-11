@@ -1,24 +1,23 @@
 {% trans_default_domain instance.domain %}
 
-<div id="content_data" class="row news short">
+<div id="content_data" class="row article short">
     {% if pagination %}
-        <ul class="news-list small-block-grid-1 medium-block-grid-2 large-block-grid-4">
+        <ul class="article-list small-block-grid-1 medium-block-grid-2 large-block-grid-4">
             {% for object in pagination %}
                 <li>
                     <div class="item">
-                        <div class="front" style="background:url('{{ object.getImage()|media('l', asset('images/default-news.jpg')) }}') center center no-repeat">
+                        <div class="front" style="background:url('{{ object.getImage()|media('l', asset('images/default-article.jpg')) }}') center center no-repeat">
                             <div class="caption">
                                 <h2>{{ object.getTitle() }}</h2>
                                 {% if object.getSubtitle() %}
                                     <h3>{{ object.getSubtitle() }}</h3>
                                 {% endif %}
-                                <span>{{ object.getDateStart() ? object.getDateStart()|localizeddate('short', 'none', app.request.locale) : object.getDateCreate()|localizeddate('short', 'none', app.request.locale) }}</span>
                             </div>
                         </div>
                         <div class="back">
                             <h2>{{ object.getTitle() }}</h2>
                             {{ object.getResume()|raw }}
-                            <a class="more button tiny radius hvr-grow" href="{{ path('fhm_news_lite', {id: object.getAlias()}) }}">{{ ('news.front.index.form.more')|trans({},'FhmNewsBundle') }}</a>
+                            <a class="more button tiny radius hvr-grow" href="{{ path('fhm_article_lite', {id: object.getAlias()}) }}">{{ ('article.front.index.form.more')|trans({},'FhmArticleBundle') }}</a>
                         </div>
                     </div>
                 </li>
@@ -38,7 +37,7 @@
 <script>
     $(document).ready(function ()
     {
-        $(".news .item").flip({
+        $(".article .item").flip({
             trigger: 'hover'
         });
     });

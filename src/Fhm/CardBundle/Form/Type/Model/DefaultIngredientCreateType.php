@@ -32,6 +32,14 @@ class DefaultIngredientCreateType extends AbstractType
                     'required' => false
                 ))
             ->add(
+                'forward',
+                CheckboxType::class,
+                array(
+                    'label'    => $options['translation_route'] . '.api.create.form.forward',
+                    'required' => false,
+                )
+            )
+            ->add(
                 'order',
                 IntegerType::class,
                 array(

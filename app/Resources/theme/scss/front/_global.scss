@@ -62,7 +62,7 @@ img{
 
 .default-button{
     border:         none;
-    background:     $button-color;
+    background:     $primary-color;
     border-radius:  43px;
     color:          $white;
     display:        inline-block;
@@ -286,7 +286,7 @@ select{
                     background-color: $color-social-flux;
                 }
                 &:hover{
-                    background: $button-color;
+                    background: $primary-color;
                     color:      $white;
                 }
             }

@@ -1,0 +1,7 @@
+{% trans_default_domain instance.domain %}
+
+<ul class="ingredient list text-left">
+    {% for ingredient in ingredients %}
+        <li>{{ ingredient.getName() }}</li>
+    {% endfor %}
+</ul>

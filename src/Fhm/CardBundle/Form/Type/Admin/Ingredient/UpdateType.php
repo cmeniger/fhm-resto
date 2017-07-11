@@ -34,6 +34,14 @@ class UpdateType extends FhmType
                 )
             )
             ->add(
+                'forward',
+                CheckboxType::class,
+                array(
+                    'label'    => $options['translation_route'] . '.admin.update.form.forward',
+                    'required' => false,
+                )
+            )
+            ->add(
                 'default',
                 CheckboxType::class,
                 array(

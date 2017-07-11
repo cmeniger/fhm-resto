@@ -1,12 +1,10 @@
 {% trans_default_domain instance.domain %}
 
 <div id="content_data" class="news full row">
-    <header>
+    <div class="header">
         <div class="date">{{ object.getDateStart() ? object.getDateStart()|localizeddate('short', 'none', app.request.locale) : object.getDateCreate()|localizeddate('short', 'none', app.request.locale) }}</div>
-        <h2>{{ object.getTitle() }}</h2>
-        <h3>{{ object.getSubTitle() }}</h3>
         <div class="share"><div class="addthis_sharing_toolbox"></div></div>
-    </header>
+    </div>
     <img class="image" src="{{ object.getImage()|media("xxl",asset('images/default-news.jpg')) }}" alt="">
     <div class="resume">{{ object.getResume()|raw }}</div>
     <div class="content">{{ object.getContent()|raw }}</div>

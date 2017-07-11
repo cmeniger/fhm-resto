@@ -1,5 +1,5 @@
 breadcrumb:
-    article:                                    Actualités
+    article:                                    Articles
     article_create:                             Ajouter
     article_update:                             Modifier
     article_detail:                             '%name%'
@@ -172,9 +172,90 @@ article:
     front:
         index:
             title:                              Articles
+            link:                               Articles
+            breadcrumb:                         Articles
+            nodata:                             Aucune donnée
+            form:
+                search:                         Rechercher
+                more:                           En savoir +
+                all:                            Voir tous les articles
+                update:                         Mise à jour le %date%
             table:
                 header:
+                    name:                       Nom
+                    start:                      Début publication
+                    end:                        Fin publication
                     action:                     Actions
-                    name:                       Articles
                 action:
-                    detail:                         Détail
+                    detail:                     Détail
+                    delete:                     Supprimer
+                confirm:
+                    delete:                     Confirmer la suppression de l'article ?
+
+        create:
+            title:                              Ajouter
+            link:                               Ajouter
+            breadcrumb:                         Ajouter un article
+            flash:
+                ok:                             L'article a bien été créé.
+                ko:                             L'article n'a pas été créé.
+            form:
+                name:                           Nom
+                description:                    Description
+                submit:
+                    save:                       Sauvegarder
+                    new:                        Sauvegarder et ajouter
+                    duplicate:                  Sauvegarder et dupliquer
+                    quit:                       Sauvegarder et quitter
+                    cancel:                     Annuler
+                alert:
+                    title:                      Information
+                    text:                       L'ajout d'un article nécessite la validation d'un modérateur pour être affiché.
+
+        update:
+            title:                              Modifier
+            link:                               Modifier
+            breadcrumb:                         Modifier
+            flash:
+                ok:                             L'article a bien été modifié.
+                ko:                             L'article n'a pas été modifié.
+            form:
+                name:                           Nom
+                description:                    Description
+                submit:
+                    save:                       Sauvegarder
+                    new:                        Sauvegarder et ajouter
+                    duplicate:                  Sauvegarder et dupliquer
+                    quit:                       Sauvegarder et quitter
+                    cancel:                     Annuler
+                alert:
+                    title:                      Information
+                    text:                       La modification d'un article nécessite la validation d'un modérateur pour être affiché.
+
+        detail:
+            title:                              '%name%'
+            link:                               Détail
+            breadcrumb:                         '%name%'
+            data:
+                title:                          Informations
+                create:                         Création
+                update:                         Modification
+                name:                           Nom
+                alias:                          Alias
+                description:                    Description
+
+        delete:
+            flash:
+                ok:                             L'article a bien été supprimé.
+
+    api:
+        index:
+            title:                              Articles
+
+    pagination:
+        counter:                                "Nombre d'articles: %count% / %all%"
+
+    error:
+        unknown:                                L'article n'existe pas.
+        delete:                                 L'article n'existe pas.
+        forbidden:                              Droits insuffisants.

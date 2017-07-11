@@ -22,6 +22,7 @@ class FhmEventListener implements EventSubscriberInterface
     private $template;
     private $securityToken;
     private $securityAuthorization;
+    private $projectTwig;
 
     /** @parameters must be configured in parameter file and it is compulsory */
     private $parameters;
@@ -32,13 +33,15 @@ class FhmEventListener implements EventSubscriberInterface
      * @param $templating
      * @param $securityToken
      * @param $securityAuthorization
+     * @param $projectTwig
      * @param $project
      */
-    public function __construct($templating, $securityToken, $securityAuthorization, $project)
+    public function __construct($templating, $securityToken, $securityAuthorization, $projectTwig, $project)
     {
         $this->template              = $templating;
         $this->securityAuthorization = $securityAuthorization;
         $this->securityToken         = $securityToken;
+        $this->projectTwig           = $projectTwig;
         $this->parameters            = $project;
     }
 
@@ -53,6 +56,7 @@ class FhmEventListener implements EventSubscriberInterface
         $route      = $event->getRequest()->attributes->get('_route');
         $authorized = false;
         $authorized = in_array($route, $this->parameters['firewall']) ? true : $authorized;
+        $this->projectTwig->load();
         if($this->securityToken->getToken())
         {
             $authorized = $this->securityAuthorization->isGranted(

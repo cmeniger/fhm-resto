@@ -206,6 +206,7 @@ card:
             nodata:                             Aucune donnée
             form:
                 search:                         Rechercher
+                more:                           En savoir +
             table:
                 header:
                     name:                       Nom
@@ -687,6 +688,7 @@ card:
                     card:                       Carte
                     forward:                    En avant
                     default:                    Par défaut
+                    caption:                    Légende
                     active:                     Activer
                     share:                      Partager
                     global:                     Globale
@@ -723,6 +725,7 @@ card:
                     image:                      Image
                     card:                       Carte
                     forward:                    En avant
+                    caption:                    Légende
                     default:                    Par défaut
                     active:                     Activer
                     share:                      Partager
@@ -991,6 +994,7 @@ card:
                     image:                      Image
                     card:                       Carte
                     products:                   Produits
+                    forward:                    En avant
                     default:                    Par défaut
                     active:                     Activer
                     share:                      Partager
@@ -1023,6 +1027,7 @@ card:
                     image:                      Image
                     card:                       Carte
                     products:                   Produits
+                    forward:                    En avant
                     default:                    Par défaut
                     active:                     Activer
                     share:                      Partager

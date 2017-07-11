@@ -30,7 +30,7 @@ class AppKernel extends Kernel
             new Ivory\GoogleMapBundle\IvoryGoogleMapBundle(),
             new Ivory\SerializerBundle\IvorySerializerBundle(),
             new HWI\Bundle\OAuthBundle\HWIOAuthBundle(),
-            new EWZ\Bundle\RecaptchaBundle\EWZRecaptchaBundle(),
+            new Anysrv\RecaptchaBundle\AnysrvRecaptchaBundle(),
             new Project\DefaultBundle\ProjectDefaultBundle(),
             new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
             new Http\HttplugBundle\HttplugBundle(),

@@ -1,27 +1,32 @@
 <?php
+
 namespace Project\DefaultBundle\Services;
 
-use Fhm\FhmBundle\Controller\FhmController;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\HttpFoundation\Session\Session;
+use Fhm\FhmBundle\Services\Tools;
 
 /**
  * Class TwigGlobal
  *
  * @package Project\DefaultBundle\Services
  */
-class TwigGlobal extends Controller
+class TwigGlobal
 {
     private $session;
+    private $tools;
+    private $twig;
 
     /**
-     * @param ContainerInterface $container
+     * TwigGlobal constructor.
+     *
+     * @param Tools                                             $tools
+     * @param \Symfony\Component\HttpFoundation\Session\Session $session
+     * @param \Twig_Environment                                 $twig
      */
-    public function __construct(ContainerInterface $container)
+    public function __construct(Tools $tools, \Symfony\Component\HttpFoundation\Session\Session $session, \Twig_Environment $twig)
     {
-        $this->container = $container;
-        $this->session   = $this->container->get('session');
+        $this->tools   = $tools;
+        $this->session = $session;
+        $this->twig    = $twig;
     }
 
     /**
@@ -29,6 +34,8 @@ class TwigGlobal extends Controller
      */
     public function load()
     {
+        $this->twig->addGlobal('site', $this->tools->dmRepository('FhmFhmBundle:Site')->getDefault());
+
         return $this;
     }
 }

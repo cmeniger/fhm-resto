@@ -1,0 +1,8 @@
+{% trans_default_domain instance.domain %}
+
+<div id="content_data" class="news full row">
+    <div class="header">
+        <div class="share"><div class="addthis_sharing_toolbox"></div></div>
+    </div>
+    <div class="content">{{ object.getContent()|raw }}</div>
+</div>

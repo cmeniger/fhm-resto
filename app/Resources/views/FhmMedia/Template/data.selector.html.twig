@@ -51,7 +51,7 @@
                     </div>
                 {% endfor %}
             </div>
-            {{ macroPagination.print(pagination, true) }}
+            {# TODO PAGINATION {{ macroPagination.print(pagination, true) }}#}
         {% else %}
             <div class="panel nodata bloc">
                 <p>{{ (instance.translation ~ '.admin.index.nodata')|trans }}</p>

@@ -403,7 +403,7 @@ $color-social-flux: #F47E24;
 // $include-html-nav-classes: $include-html-classes;
 
 // We use this to set the background color for the breadcrumb container.
-// $crumb-bg: scale-color($secondary-color, $lightness: 55%);
+$crumb-bg: transparent;
 
 // We use these to set the padding around the breadcrumbs.
 // $crumb-padding: rem-calc(9 14 9);
@@ -418,14 +418,14 @@ $color-social-flux: #F47E24;
 
 // We use these to set various text styles for breadcrumbs.
 // $crumb-font-size: rem-calc(11);
-// $crumb-font-color: $primary-color;
-// $crumb-font-color-current: $oil;
+$crumb-font-color: $body-font-color;
+$crumb-font-color-current: $primary-color;
 // $crumb-font-color-unavailable: $aluminum;
 // $crumb-font-transform: uppercase;
 // $crumb-link-decor: underline;
 
 // We use these to control the slash between breadcrumbs
-// $crumb-slash-color: $base;
+$crumb-slash-color: $light-grey;
 // $crumb-slash: "/";
 
 // 05. Buttons

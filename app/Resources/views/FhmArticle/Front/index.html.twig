@@ -1,2 +1,6 @@
 {% trans_default_domain instance.domain %}
 {% extends "::FhmFhm/Front/index.html.twig" %}
+
+{% block content_data %}
+    {% include "::FhmArticle/Template/short.html.twig" %}
+{% endblock %}

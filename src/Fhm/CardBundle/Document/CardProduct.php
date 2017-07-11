@@ -30,6 +30,11 @@ class CardProduct extends FhmFhm
     /**
      * @MongoDB\Field(type="boolean")
      */
+    protected $caption;
+
+    /**
+     * @MongoDB\Field(type="boolean")
+     */
     protected $default;
 
     /**
@@ -77,6 +82,7 @@ class CardProduct extends FhmFhm
         $this->ingredients     = new ArrayCollection();
         $this->currency        = "€";
         $this->forward         = false;
+        $this->caption         = true;
         $this->sort_card       = "";
         $this->sort_category   = 0;
         $this->sort_ingredient = 0;
@@ -150,6 +156,30 @@ class CardProduct extends FhmFhm
     public function setForward($forward)
     {
         $this->forward = $forward;
+
+        return $this;
+    }
+
+    /**
+     * Get caption
+     *
+     * @return bool
+     */
+    public function getCaption()
+    {
+        return $this->caption;
+    }
+
+    /**
+     * Set caption
+     *
+     * @param $caption
+     *
+     * @return $this
+     */
+    public function setCaption($caption)
+    {
+        $this->caption = $caption;
 
         return $this;
     }

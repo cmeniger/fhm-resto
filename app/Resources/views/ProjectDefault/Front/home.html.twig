@@ -5,7 +5,7 @@
 
 {% block body_content %}
     {% if site.getMenuHomeSide() %}
-        {{ render(path('fhm_api_menu_detail',{template:'home-side','id':site.getDemo() ? 'demo' : site.getMenuHomeSide().getId()})) }}
+        {{ render(path('fhm_api_menu_detail',{template:'side','id':site.getDemo() ? 'demo' : site.getMenuHomeSide().getId()})) }}
     {% endif %}
     <header id="header" class="home">
         <div class="menu-icon">

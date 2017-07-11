@@ -119,22 +119,16 @@ class ApiController extends FhmController
         if($object == "")
         {
             throw $this->createNotFoundException($this->trans(self::$translation . '.error.unknown'));
-        } // ERROR - Forbidden
+        }
+        // ERROR - Forbidden
         elseif(!$this->getUser()->hasRole('ROLE_ADMIN') && ($object->getDelete() || !$object->getActive()))
         {
             throw new HttpException(403, $this->trans(self::$translation . '.error.forbidden'));
         }
-        $template     = $this->get('templating')->exists(
-            "::FhmContact/Template/form." . $object->getFormTemplate() . ".html.twig"
-        ) ? $object->getFormTemplate() : "default";
+        $template     = $this->get('templating')->exists("::FhmContact/Template/form." . $object->getFormTemplate() . ".html.twig") ? $object->getFormTemplate() : "default";
         $classType    = "\\Fhm\\ContactBundle\\Form\\Type\\Template\\" . ucfirst($template) . "Type";
-        $classHandler = "\\Fhm\\ContactBundle\\Form\\Handler\\Api\\FormHandler";
-        $form         = $this->createForm(
-            $classType,
-            null
-            ,
-            ['data_class' => $this->get('fhm.object.manager')->getCurrentModelName(self::$repository)]
-        );
+        $classHandler = "\\Fhm\\FhmBundle\\Form\\Handler\\Api\\CreateHandler";
+        $form         = $this->createForm($classType, null, ['data_class' => $this->get('fhm.object.manager')->getCurrentModelName(self::$repository)]);
         $handler      = new $classHandler($form, $request);
         $process      = $handler->process();
         if($process)

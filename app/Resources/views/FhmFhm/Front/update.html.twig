@@ -1,17 +1,15 @@
 {% extends layout_extend is defined ? layout_extend : "::layout.front.html.twig" %}
 {% trans_default_domain instance.domain %}
 
-{% block tagline %}
-    <div class="row text-center">
-        <h1>{% block tagline_data %}{{ (instance.translation ~ '.front.update.title')|trans({'%name%': document.getName()}) }}{% endblock %}</h1>
-    </div>
+{% block tagline_title %}
+    <h1>{% block tagline_data %}{{ (instance.translation ~ '.front.update.title')|trans({'%name%': document.getName()}) }}{% endblock %}</h1>
 {% endblock %}
 
 {% block content %}
     {% block content_data %}
         <div class="form form-update">
             {% block content_data_form %}
-            <form action="{% block content_data_form_action %}{{ path(instance.source ~ '_' ~ instance.route ~ '_update', {'id':document.getId()}) }}{% endblock %}" {% block content_data_form_attribut %}{% endblock %} method="POST"  >
+            <form action="{% block content_data_form_action %}{{ path(instance.source ~ '_' ~ instance.route ~ '_update', {'id':document.getId()}) }}{% endblock %}" {% block content_data_form_attribut %}{% endblock %} method="POST">
                 {% endblock %}
                 {% block content_data_alert %}
                     <div class="row panel callout radius form-alert">
@@ -20,7 +18,6 @@
                         </div>
                         <div class="large-10 columns form-alert-text">
                             <h5>{{ (instance.translation ~ '.front.update.form.alert.title')|trans }}</h5>
-
                             <p>{{ (instance.translation ~ '.front.update.form.alert.text')|trans }}</p>
                         </div>
                     </div>

@@ -60,6 +60,13 @@ class DefaultProductUpdateType extends AbstractType
                     'required' => false
                 ))
             ->add(
+                'caption',
+                CheckboxType::class,
+                array(
+                    'label'    => $options['translation_route'] . '.api.update.form.caption',
+                    'required' => false
+                ))
+            ->add(
                 'image',
                 MediaType::class,
                 array(

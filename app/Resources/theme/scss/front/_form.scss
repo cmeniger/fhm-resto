@@ -184,6 +184,15 @@ form{
     }
     .form-rest{
     }
+    .form-required{
+        text-align: right;
+        font-size:  0.6em;
+        &:before{
+            content: '*';
+            color:   $alert-color;
+            padding: 0 5px;
+        }
+    }
     &.form-update{
     }
     &.form-import{
@@ -197,6 +206,15 @@ form{
             margin:     0;
             padding:    0.2em 0.5em;
             font-size:  0.8em;
+        }
+    }
+    label{
+        &.required{
+            &:after{
+                content: '*';
+                color:   $alert-color;
+                padding: 0 5px;
+            }
         }
     }
 }

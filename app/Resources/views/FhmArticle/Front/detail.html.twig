@@ -1,17 +1,16 @@
 {% trans_default_domain instance.domain %}
 {% extends "::FhmFhm/Front/detail.html.twig" %}
 
-{% block tagline %}{% endblock %}
+{% block tagline_title %}
+    <h2>{{ object.getSubTitle() }}</h2>
+    {{ parent() }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-567035a40426c814" async="async"></script>
+{% endblock %}
 
 {% block content_data %}
-    <div id="content_data" class="article-container">
-        <div class="row article-full">
-            <h1>{{ object.getTitle() }}</h1>
-            <h2>{{ object.getSubTitle() }}</h2>
-            <div class="article-date">{{ object.getDateCreate()|localizeddate('full', 'short', app.request.locale) }}</div>
-            <div class="article-resume">{{ object.getResume()|raw }}</div>
-            <div class="article-content">{{ object.getContent()|raw }}</div>
-            <div class="article-author">{{ object.getAuthor().getUsername() is defined ? object.getAuthor().getUsername() : 'admin' }}</div>
-        </div>
-    </div>
+    {% include "::FhmArticle/Template/full.html.twig" %}
 {% endblock %}

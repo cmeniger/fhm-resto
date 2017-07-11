@@ -44,7 +44,7 @@
                 .name{
                     text-align:  center;
                     line-height: 2rem;
-                    color:       $button-color;
+                    color:       $primary-color;
                 }
                 &.slick-center{
                     .avatar{
@@ -73,14 +73,14 @@
         .slick-prev{
             left: -45px;
             &:before{
-                color:     $button-color;
+                color:     $primary-color;
                 font-size: 50px;
             }
         }
         .slick-next{
             right: -45px;
             &:before{
-                color:     $button-color;
+                color:     $primary-color;
                 font-size: 50px;
             }
         }

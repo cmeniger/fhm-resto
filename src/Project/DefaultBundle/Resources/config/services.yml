@@ -1,7 +1,7 @@
 services:
     project_twig_global:
         class: Project\DefaultBundle\Services\TwigGlobal
-        arguments: ['@service_container']
+        arguments: ['@fhm_tools', '@session', '@twig']
 
     fhm_cache:
         class: Project\DefaultBundle\Services\Cache

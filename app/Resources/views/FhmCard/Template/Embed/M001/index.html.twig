@@ -56,10 +56,19 @@
         {% for product in products %}
             <div class="item">
                 <div class="front" style="background:url('{{ product.getImage()|media('s', 'images/default-card.jpg') }}') center center no-repeat">
-                    <span class="title">{{ product.getName() }}</span> <span class="price">{{ product.getPrice() }}<span>{{ product.getCurrency() }}</span></span>
+                    {% if product.getCaption() %}
+                        <span class="title">{{ product.getName() }}</span>
+                        {% if product.getPrice() %}
+                            <span class="price">{{ product.getPrice() }}<span>{{ product.getCurrency() }}</span></span>
+                        {% endif %}
+                    {% endif %}
                 </div>
                 <div class="back">
-                    <span class="title">{{ product.getName() }}</span> <span class="description">{{ product.getDescription() }}</span>
+                    <span class="title">{{ product.getName() }}</span>
+                    <span class="description">{{ product.getDescription()|raw }}</span>
+                    {% if product.getIngredients().count() > 0 %}
+                        {{ render(path('fhm_api_card_ingredient_embed', {idCard:card.getId(), idProduct:product.getId(), template:'inline'})) }}
+                    {% endif %}
                 </div>
             </div>
         {% endfor %}

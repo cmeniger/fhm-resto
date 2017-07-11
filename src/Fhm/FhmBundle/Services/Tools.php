@@ -399,24 +399,27 @@ class Tools
         $breadcrumbs = [];
         $route       = $options['_route'];
         $steps       = explode('_', $route);
+        $count       = count($steps);
         $trans       = '';
-        $current     = '';
+        $path        = '';
         // Home
         $breadcrumbs[] = array(
             'link' => $this->getUrl('project_home'),
             'text' => $this->trans('project.home.breadcrumb', [], 'ProjectDefaultBundle', '')
         );
         // Path
-        foreach($steps as $step)
+        foreach($steps as $key => $step)
         {
-            $current .= $current == '' ? $step : '_' . $step;
-            if($this->routeExists($current))
+            $path    .= $path == '' ? $step : '_' . $step;
+            $current = 0 === --$count ? true : false;
+            if($this->routeExists($path))
             {
                 if($step == 'admin' || $step == 'api')
                 {
                     $breadcrumbs[] = array(
-                        'link' => $this->getUrl($current),
-                        'text' => $this->trans('project.' . $step . '.breadcrumb', [], 'ProjectDefaultBundle', '')
+                        'link'    => $this->getUrl($path),
+                        'text'    => $this->trans('project.' . $step . '.breadcrumb', [], 'ProjectDefaultBundle', ''),
+                        'current' => $current
                     );
                 }
                 else
@@ -425,44 +428,51 @@ class Tools
                     if($step == 'update' && $steps[1] == 'admin')
                     {
                         $breadcrumbs[] = array(
-                            'link' => $this->getUrl(str_replace('update', 'detail', $current), array('id' => $element->getId())),
-                            'text' => $this->trans('breadcrumb.' . str_replace('update', 'detail', $trans), ['%name%' => $element->getAlias()], $options['domain'], '')
+                            'link'    => $this->getUrl(str_replace('update', 'detail', $path), array('id' => $element->getId())),
+                            'text'    => $this->trans('breadcrumb.' . str_replace('update', 'detail', $trans), ['%name%' => $element->getAlias()], $options['domain'], ''),
+                            'current' => $current
                         );
                         $breadcrumbs[] = array(
-                            'link' => $this->getUrl($current, array('id' => $element->getId())),
-                            'text' => $this->trans('breadcrumb.' . $trans, [], $options['domain'], '')
+                            'link'    => $this->getUrl($path, array('id' => $element->getId())),
+                            'text'    => $this->trans('breadcrumb.' . $trans, [], $options['domain'], ''),
+                            'current' => $current
                         );
                     }
                     elseif($step == 'update')
                     {
                         $breadcrumbs[] = array(
-                            'link' => $this->getUrl(str_replace('update', 'lite', $current), array('id' => $element->getAlias())),
-                            'text' => $this->trans('breadcrumb.' . str_replace('update', 'detail', $trans), ['%name%' => $element->getAlias()], $options['domain'], '')
+                            'link'    => $this->getUrl(str_replace('update', 'lite', $path), array('id' => $element->getAlias())),
+                            'text'    => $this->trans('breadcrumb.' . str_replace('update', 'detail', $trans), ['%name%' => $element->getAlias()], $options['domain'], ''),
+                            'current' => $current
                         );
                         $breadcrumbs[] = array(
-                            'link' => $this->getUrl($current, array('id' => $element->getId())),
-                            'text' => $this->trans('breadcrumb.' . $trans, [], $options['domain'], '')
+                            'link'    => $this->getUrl($path, array('id' => $element->getId())),
+                            'text'    => $this->trans('breadcrumb.' . $trans, [], $options['domain'], ''),
+                            'current' => $current
                         );
                     }
                     elseif(($step == 'detail' || $step == 'tree') && $steps[1] == 'admin')
                     {
                         $breadcrumbs[] = array(
-                            'link' => $this->getUrl($current, array('id' => $element->getId())),
-                            'text' => $this->trans('breadcrumb.' . str_replace('tree', 'detail', $trans), ['%name%' => $element->getAlias()], $options['domain'], '')
+                            'link'    => $this->getUrl($path, array('id' => $element->getId())),
+                            'text'    => $this->trans('breadcrumb.' . str_replace('tree', 'detail', $trans), ['%name%' => $element->getAlias()], $options['domain'], ''),
+                            'current' => $current
                         );
                     }
                     elseif($step == 'detail' || $step == 'lite')
                     {
                         $breadcrumbs[] = array(
-                            'link' => $this->getUrl($current, array('id' => $element->getAlias())),
-                            'text' => $this->trans('breadcrumb.' . str_replace('lite', 'detail', $trans), ['%name%' => $element->getAlias()], $options['domain'], '')
+                            'link'    => $this->getUrl($path, array('id' => $element->getAlias())),
+                            'text'    => $this->trans('breadcrumb.' . str_replace('lite', 'detail', $trans), ['%name%' => $element->getAlias()], $options['domain'], ''),
+                            'current' => $current
                         );
                     }
                     else
                     {
                         $breadcrumbs[] = array(
-                            'link' => $this->getUrl($current),
-                            'text' => $this->trans('breadcrumb.' . $trans, [], $options['domain'], '')
+                            'link'    => $this->getUrl($path),
+                            'text'    => $this->trans('breadcrumb.' . $trans, [], $options['domain'], ''),
+                            'current' => $current
                         );
                     }
                 }

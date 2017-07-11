@@ -89,7 +89,7 @@ class FrontController extends FhmController
             );
             $file = new UploadedFile($fileData['tmp_name'], $fileData['name'], $fileData['type']);
             $tab = explode('.', $fileData['name']);
-            $name = $data['name'] ? $this->get('fhm_tools')->getUnique(null, $data['name'], true) : $tab[0];
+            $name = $data['name'] ? $this->get('fhm_tools')->getUnique(null, $data['name'], true, self::$repository) : $tab[0];
             // Persist
             $object->setName($name);
             $object->setFile($file);

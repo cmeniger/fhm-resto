@@ -60,6 +60,13 @@ class DefaultProductCreateType extends AbstractType
                     'required' => false
                 ))
             ->add(
+                'caption',
+                CheckboxType::class,
+                array(
+                    'label'    => $options['translation_route'] . '.api.create.form.caption',
+                    'required' => false
+                ))
+            ->add(
                 'image',
                 MediaType::class,
                 array(

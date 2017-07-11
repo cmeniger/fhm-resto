@@ -3,7 +3,7 @@
 
 {% if demo is defined %}
     <div id="content_data" class="news home">
-        <ul class="small-block-grid-1 medium-block-grid-2 large-block-grid-4">
+        <ul class="news-list small-block-grid-1 medium-block-grid-2 large-block-grid-4">
             <li>
                 <div class="item">
                     <div class="front" style="background:url('{{ asset('images/demo/news/news-item1.jpg') }}') center center no-repeat">
@@ -82,7 +82,7 @@
 {% else %}
     <div id="content_data" class="news home">
         {% if objects|length > 0 %}
-            <ul class="small-block-grid-1 medium-block-grid-2 large-block-grid-4">
+            <ul class="news-list small-block-grid-1 medium-block-grid-2 large-block-grid-4">
                 {% for object in objects %}
                     <li>
                         <div class="item">

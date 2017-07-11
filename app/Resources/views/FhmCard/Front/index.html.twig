@@ -1,2 +1,44 @@
 {% trans_default_domain instance.domain %}
 {% extends "::FhmFhm/Front/index.html.twig" %}
+
+{% block content_data %}
+    <div id="content_data" class="row card short">
+        {% if pagination %}
+            <ul class="card-list small-block-grid-1 medium-block-grid-2 large-block-grid-4">
+                {% for object in pagination %}
+                    <li>
+                        <div class="item">
+                            <div class="front" style="background:url('{{ object.getImage()|media('l', asset('images/default-card.jpg')) }}') center center no-repeat">
+                                <div class="caption">
+                                    <h2>{{ object.getName() }}</h2>
+                                </div>
+                            </div>
+                            <div class="back">
+                                <h2>{{ object.getName() }}</h2>
+                                {{ object.getDescription()|raw }}
+                                <a class="more button tiny radius hvr-grow" href="{{ path('fhm_card_lite', {id: object.getAlias()}) }}">{{ ('card.front.index.form.more')|trans({},'FhmCardBundle') }}</a>
+                            </div>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <div class="nodata">
+                {{ (instance.translation ~ '.front.index.nodata')|trans }}
+            </div>
+        {% endif %}
+        <div class="pagination">
+            {{ knp_pagination_render(pagination) }}
+            <div class="counter">{{ ('fhm.pagination.counter')|trans({}, 'FhmFhmBundle') }} :
+                <span>{{ pagination.getTotalItemCount }}</span></div>
+        </div>
+    </div>
+    <script>
+        $(document).ready(function ()
+        {
+            $(".card .item").flip({
+                trigger: 'hover'
+            });
+        });
+    </script>
+{% endblock %}

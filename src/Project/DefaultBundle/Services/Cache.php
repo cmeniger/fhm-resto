@@ -16,7 +16,9 @@ class Cache
 
     /**
      * Cache constructor.
-     * @param $tools
+     *
+     * @param Tools $tools
+     * @param       $session
      */
     public function __construct(Tools $tools, $session)
     {

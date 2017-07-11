@@ -1,4 +1,5 @@
 <?php
+
 namespace Fhm\CardBundle\Form\Type\Admin\Product;
 
 use Fhm\FhmBundle\Form\Type\Admin\UpdateType as FhmType;
@@ -20,100 +21,124 @@ class UpdateType extends FhmType
 {
     /**
      * @param FormBuilderInterface $builder
-     * @param array $options
+     * @param array                $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         parent::buildForm($builder, $options);
-        $builder->add(
-            'price',
-            MoneyType::class,
-            array(
-                'label' => $options['translation_route'].'.admin.update.form.price',
-                'currency' => '',
-                'required' => false,
+        $builder
+            ->add(
+                'price',
+                MoneyType::class,
+                array(
+                    'label'    => $options['translation_route'] . '.admin.update.form.price',
+                    'currency' => '',
+                    'required' => false,
+                )
             )
-        )->add(
-            'currency',
-            TextType::class,
-            array(
-                'label' => $options['translation_route'].'.admin.update.form.currency',
-                'required' => false,
+            ->add(
+                'currency',
+                TextType::class,
+                array(
+                    'label'    => $options['translation_route'] . '.admin.update.form.currency',
+                    'required' => false,
+                )
             )
-        )->add(
-            'order',
-            IntegerType::class,
-            array(
-                'label' => $options['translation_route'].'.admin.update.form.order',
-                'required' => false,
+            ->add(
+                'order',
+                IntegerType::class,
+                array(
+                    'label'    => $options['translation_route'] . '.admin.update.form.order',
+                    'required' => false,
+                )
             )
-        )->add(
-            'forward',
-            CheckboxType::class,
-            array(
-                'label' => $options['translation_route'].'.admin.update.form.forward',
-                'required' => false,
+            ->add(
+                'forward',
+                CheckboxType::class,
+                array(
+                    'label'    => $options['translation_route'] . '.admin.update.form.forward',
+                    'required' => false,
+                )
             )
-        )->add(
-            'default',
-            CheckboxType::class,
-            array(
-                'label' => $options['translation_route'].'.admin.update.form.default',
-                'required' => false,
+            ->add(
+                'caption',
+                CheckboxType::class,
+                array(
+                    'label'    => $options['translation_route'] . '.admin.update.form.caption',
+                    'required' => false,
+                )
             )
-        )->add(
-            'image',
-            MediaType::class,
-            array(
-                'label' => $options['translation_route'].'.admin.update.form.image',
-                'filter' => 'image/*',
-                'required' => false,
+            ->add(
+                'default',
+                CheckboxType::class,
+                array(
+                    'label'    => $options['translation_route'] . '.admin.update.form.default',
+                    'required' => false,
+                )
             )
-        )->add(
-            'card',
-            TypeManager::getType($options['object_manager']->getDBDriver()),
-            array(
-                'label' => $options['translation_route'].'.admin.update.form.card',
-                'class' => 'FhmCardBundle:Card',
-                'choice_label' => 'name',
-                'query_builder' => function () use ($options) {
-                    $dr = $options['object_manager']->getCurrentRepository('FhmCardBundle:Card');
-                    return $dr->getFormEnable();
-                },
-                'required' => false,
+            ->add(
+                'image',
+                MediaType::class,
+                array(
+                    'label'    => $options['translation_route'] . '.admin.update.form.image',
+                    'filter'   => 'image/*',
+                    'required' => false,
+                )
             )
-        )->add(
-            'categories',
-            TypeManager::getType($options['object_manager']->getDBDriver()),
-            array(
-                'label' => $options['translation_route'].'.admin.update.form.categories',
-                'class' => 'FhmCardBundle:CardCategory',
-                'choice_label' => 'name',
-                'query_builder' => function () use ($options) {
-                    $dr = $options['object_manager']->getCurrentRepository('FhmCardBundle:CardCategory');
-                    return $dr->getFormEnable();
-                },
-                'multiple' => true,
-                'required' => false,
-                'by_reference' => false,
+            ->add(
+                'card',
+                TypeManager::getType($options['object_manager']->getDBDriver()),
+                array(
+                    'label'         => $options['translation_route'] . '.admin.update.form.card',
+                    'class'         => 'FhmCardBundle:Card',
+                    'choice_label'  => 'name',
+                    'query_builder' => function () use ($options)
+                    {
+                        $dr = $options['object_manager']->getCurrentRepository('FhmCardBundle:Card');
+
+                        return $dr->getFormEnable();
+                    },
+                    'required'      => false,
+                )
             )
-        )->add(
-            'ingredients',
-            TypeManager::getType($options['object_manager']->getDBDriver()),
-            array(
-                'label' => $options['translation_route'].'.admin.update.form.ingredients',
-                'class' => 'FhmCardBundle:CardIngredient',
-                'choice_label' => 'name',
-                'query_builder' => function () use ($options) {
-                    $dr = $options['object_manager']->getCurrentRepository('FhmCardBundle:CardIngredient');
-                    return $dr->getFormEnable();
-                },
-                'multiple' => true,
-                'required' => false,
-                'by_reference' => false,
+            ->add(
+                'categories',
+                TypeManager::getType($options['object_manager']->getDBDriver()),
+                array(
+                    'label'         => $options['translation_route'] . '.admin.update.form.categories',
+                    'class'         => 'FhmCardBundle:CardCategory',
+                    'choice_label'  => 'name',
+                    'query_builder' => function () use ($options)
+                    {
+                        $dr = $options['object_manager']->getCurrentRepository('FhmCardBundle:CardCategory');
+
+                        return $dr->getFormEnable();
+                    },
+                    'multiple'      => true,
+                    'required'      => false,
+                    'by_reference'  => false,
+                )
             )
-        );
+            ->add(
+                'ingredients',
+                TypeManager::getType($options['object_manager']->getDBDriver()),
+                array(
+                    'label'         => $options['translation_route'] . '.admin.update.form.ingredients',
+                    'class'         => 'FhmCardBundle:CardIngredient',
+                    'choice_label'  => 'name',
+                    'query_builder' => function () use ($options)
+                    {
+                        $dr = $options['object_manager']->getCurrentRepository('FhmCardBundle:CardIngredient');
+
+                        return $dr->getFormEnable();
+                    },
+                    'multiple'      => true,
+                    'required'      => false,
+                    'by_reference'  => false,
+                )
+            );
     }
+
     /**
      * @param OptionsResolver $resolver
      */
@@ -121,13 +146,14 @@ class UpdateType extends FhmType
     {
         $resolver->setDefaults(
             array(
-                'data_class' => '',
+                'data_class'         => '',
                 'translation_domain' => 'FhmCardBundle',
                 'cascade_validation' => true,
-                'translation_route' => 'card.product',
-                'user_admin' => '',
-                'object_manager'=>''
+                'translation_route'  => 'card.product',
+                'user_admin'         => '',
+                'object_manager'     => ''
             )
         );
     }
+
 }

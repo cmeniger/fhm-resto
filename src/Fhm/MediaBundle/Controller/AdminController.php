@@ -103,12 +103,7 @@ class AdminController extends FhmController
             $file = $request->files->get('file');
             $object->setFile($file);
             $tab  = explode('.', $file->getClientOriginalName());
-            $name = $data['name'] ? $this->get('fhm_tools')->getUnique(
-                $object->getId(),
-                $data['name'],
-                true,
-                self::$repository
-            ) : $tab[0];
+            $name = $data['name'] ? $this->get('fhm_tools')->getUnique($object->getId(), $data['name'], true, self::$repository) : $tab[0];
             $object->setAlias($object->getName());
             // Persist
             $object->setName($name);

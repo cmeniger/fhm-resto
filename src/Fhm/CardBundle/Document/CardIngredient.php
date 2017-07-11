@@ -1,4 +1,5 @@
 <?php
+
 namespace Fhm\CardBundle\Document;
 
 use Fhm\FhmBundle\Document\Fhm as FhmFhm;
@@ -13,6 +14,11 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class CardIngredient extends FhmFhm
 {
+    /**
+     * @MongoDB\Field(type="boolean")
+     */
+    protected $forward;
+
     /**
      * @MongoDB\Field(type="boolean")
      */
@@ -50,8 +56,33 @@ class CardIngredient extends FhmFhm
     {
         parent::__construct();
         $this->products     = new ArrayCollection();
+        $this->forward      = false;
         $this->sort_card    = "";
         $this->sort_product = 0;
+    }
+
+    /**
+     * Get forward
+     *
+     * @return bool
+     */
+    public function getForward()
+    {
+        return $this->forward;
+    }
+
+    /**
+     * Set forward
+     *
+     * @param $forward
+     *
+     * @return $this
+     */
+    public function setForward($forward)
+    {
+        $this->forward = $forward;
+
+        return $this;
     }
 
     /**

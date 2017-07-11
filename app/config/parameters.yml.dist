@@ -38,8 +38,8 @@ parameters:
     oauth.google.id: 'null'
     oauth.google.secret: 'null'
     #RECAPTCHA
-    recaptcha_public_key: 6LfZ9SQTAAAAAKHbN5Sp8eaEZrX7OIA5m8S_vvGR
-    recaptcha_private_key: 6LfZ9SQTAAAAAEIP0FVscmWH3U3VUE5wmrJnmtJy
+    recaptcha_key: 6LfNQigUAAAAABSMThQ1zM6p_j0IUW9jHUGz36JJ
+    recaptcha_secret: 6LfNQigUAAAAABvfYZDc8fW3ImoKN4FnkiYuXx1r
     #AWS
     aws:
         sdk:
@@ -51,6 +51,9 @@ parameters:
             host: 'http://s3-eu-west-1.amazonaws.com/'
             bucket: fhm-restos
             environment: test
+    #GOOGLE MAPS
+    google_map_api_key: AIzaSyDkhmAat4obYnOhel3Ldo0oC10mRaY5yzc
+    #PROJECT
     project:
         construct: false
         maintenance: false
@@ -61,9 +64,6 @@ parameters:
         analytics:
             active: true
             id: UA-60572981-4
-    #GOOGLE MAPS
-    google_map_api_key: 'null'
-    #PROJECT
     fhm_mailer:
         enable: true
         project: FHM-Restos

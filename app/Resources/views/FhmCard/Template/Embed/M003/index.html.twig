@@ -44,11 +44,13 @@
                     <div class="image" style="background:url({{ product.getImage()|media('s', 'images/default-card.jpg') }})"></div>
                     <div class="caption">
                         <span class="name">{{ product.getName() }}</span>
-                        <span class="description">{{ product.getDescription() }}</span>
+                        <span class="description">{{ product.getDescription()|raw }}</span>
                         {% if product.getIngredients().count() > 0 %}
-                            {{ render(path('fhm_api_card_ingredient_embed', {idCard:card.getId(), idProduct:product.getId(), template:'inline'})) }}
+                            {{ render(path('fhm_api_card_ingredient_embed', {idCard:card.getId(), idProduct:product.getId(), template:'list-icon'})) }}
                         {% endif %}
-                        <span class="price">{{ product.getPrice() }}<span>{{ product.getCurrency() }}</span></span>
+                        {% if product.getPrice() %}
+                            <span class="price">{{ product.getPrice() }}<span>{{ product.getCurrency() }}</span></span>
+                        {% endif %}
                     </div>
                 </li>
             {% endfor %}

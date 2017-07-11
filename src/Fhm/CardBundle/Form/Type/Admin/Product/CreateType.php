@@ -61,6 +61,14 @@ class CreateType extends FhmType
                 )
             )
             ->add(
+                'caption',
+                CheckboxType::class,
+                array(
+                    'label'    => $options['translation_route'] . '.admin.create.form.caption',
+                    'required' => false,
+                )
+            )
+            ->add(
                 'default',
                 CheckboxType::class,
                 array(

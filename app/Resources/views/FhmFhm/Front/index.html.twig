@@ -2,15 +2,17 @@
 {% trans_default_domain instance.domain %}
 {% import "::Macros/pagination.html.twig" as macroPagination %}
 
-{% block tagline %}
+{% block title %}
+    {{ parent() }} | {{ (instance.translation ~ '.front.index.title')|trans }}
+{% endblock %}
+
+{% block tagline_title %}
     {% if not app.request.isxmlhttprequest %}
-        <div class="row text-center">
-            <h1>
-                {% block tagline_data %}
-                    {{ (instance.translation ~ '.front.index.title')|trans }}
-                {% endblock %}
-            </h1>
-        </div>
+        <h1>
+            {% block tagline_data %}
+                {{ (instance.translation ~ '.front.index.title')|trans }}
+            {% endblock %}
+        </h1>
     {% endif %}
 {% endblock %}
 
