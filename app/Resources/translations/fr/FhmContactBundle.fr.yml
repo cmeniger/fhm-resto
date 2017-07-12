@@ -248,6 +248,7 @@ contact:
             schedules:                          Nos horaires
             contact:                            Contactez-nous
             social:                             Retrouvez-nous
+            form:                               Ecrivez-nous
 
     api:
         index:

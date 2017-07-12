@@ -2,6 +2,6 @@
 
 <ul class="ingredient list-icon text-left">
     {% for ingredient in ingredients %}
-        <li><i class="fa fa-fw fa-check"></i>{{ ingredient.getName() }}</li>
+        <li class="{{ ingredient.getForward() ? 'ingredient-forward' : '' }}"><i class="fa fa-fw fa-check"></i>{{ ingredient.getName() }}</li>
     {% endfor %}
 </ul>
