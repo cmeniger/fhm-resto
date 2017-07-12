@@ -2,8 +2,8 @@
 {% extends "::FhmFhm/Front/detail.html.twig" %}
 
 {% block tagline_title %}
-    <h2>{{ object.getSubTitle() }}</h2>
     {{ parent() }}
+    <h2>{{ object.getSubTitle() }}</h2>
 {% endblock %}
 
 {% block javascripts %}

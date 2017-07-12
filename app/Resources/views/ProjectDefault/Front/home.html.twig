@@ -25,10 +25,10 @@
         <section class="section-top">
             <div class="parallax-image-top" data-parallax="scroll" data-image-src="{{ site.getDemo() ? asset('images/default.jpg') : site.getBackgroundTop()|media }}"></div>
             <div class="introduction">
+                <h1 class="animated bounceInUp">{{ (site.getTitle() and not site.getDemo() ? site.getTitle() : 'project.home.default.title'|trans)|raw }}</h1>
                 <div class="content">
                     <h2 class="title title-centered subtitle" data-bg-color="">{{ (site.getSubtitle() and not site.getDemo() ? site.getSubtitle() : 'project.home.default.subtitle'|trans)|raw }}</h2>
                 </div>
-                <h1 class="animated bounceInUp">{{ (site.getTitle() and not site.getDemo() ? site.getTitle() : 'project.home.default.title'|trans)|raw }}</h1>
             </div>
         </section>
         {% if site.isShow('slider') %}
@@ -46,11 +46,11 @@
             <section class="section-news {{ not site.isShow('slider') and not site.isShow('gallery_top') ? 'margin' : '' }}">
                 <a id="anchor-news" class="anchor"></a>
                 <header>
-                    {% if site.getSubtitleNews() or site.getDemo() %}
-                        <h3 class="subtitle">{{ site.getDemo() ? 'project.home.default.subtitle'|trans : site.getSubtitleNews()|raw }}</h3>
-                    {% endif %}
                     {% if site.getTitleNews() or site.getDemo() %}
                         <h2>{{ site.getDemo() ? 'project.home.default.title'|trans : site.getTitleNews()|raw }}</h2>
+                    {% endif %}
+                    {% if site.getSubtitleNews() or site.getDemo() %}
+                        <h3 class="subtitle">{{ site.getDemo() ? 'project.home.default.subtitle'|trans : site.getSubtitleNews()|raw }}</h3>
                     {% endif %}
                 </header>
                 <div class="row">
@@ -63,11 +63,11 @@
                 <a id="anchor-card" class="anchor"></a>
                 <div class="parallax-image-card" data-parallax="scroll" data-image-src="{{ site.getDemo() ? asset('images/default.jpg') : site.getBackgroundCard()|media }}"></div>
                 <header>
-                    {% if site.getSubtitleCardSlider() or site.getDemo() %}
-                        <h3 class="subtitle">{{ site.getDemo() ? 'project.home.default.subtitle'|trans : site.getSubtitleCardSlider()|raw }}</h3>
-                    {% endif %}
                     {% if site.getTitleCardSlider() or site.getDemo() %}
                         <h2>{{ site.getDemo() ? 'project.home.default.title'|trans : site.getTitleCardSlider()|raw }}</h2>
+                    {% endif %}
+                    {% if site.getSubtitleCardSlider() or site.getDemo() %}
+                        <h3 class="subtitle">{{ site.getDemo() ? 'project.home.default.subtitle'|trans : site.getSubtitleCardSlider()|raw }}</h3>
                     {% endif %}
                 </header>
                 <div class="row">
@@ -78,11 +78,11 @@
         {% if site.isShow('card_main') %}
             <section class="section-card-main row {{ site.isShow('card_slider') ? 'margin' : '' }}">
                 <header>
-                    {% if site.getSubtitleCardMain() or site.getDemo() %}
-                        <h3 class="subtitle">{{ site.getDemo() ? 'project.home.default.subtitle'|trans : site.getSubtitleCardMain()|raw }}</h3>
-                    {% endif %}
                     {% if site.getTitleCardMain() or site.getDemo() %}
                         <h2>{{ site.getDemo() ? 'project.home.default.title'|trans : site.getTitleCardMain()|raw }}</h2>
+                    {% endif %}
+                    {% if site.getSubtitleCardMain() or site.getDemo() %}
+                        <h3 class="subtitle">{{ site.getDemo() ? 'project.home.default.subtitle'|trans : site.getSubtitleCardMain()|raw }}</h3>
                     {% endif %}
                 </header>
                 {{ render(path('fhm_api_card_embed', {template:'M002',id:site.getCardMain() == '' or site.getDemo() ? 'demo' : site.getCardMain().getId()})) }}
@@ -91,11 +91,11 @@
         {% if site.isShow('card_forward') %}
             <section class="section-card-forward">
                 <header>
-                    {% if site.getSubtitleCardForward() or site.getDemo() %}
-                        <h3 class="subtitle">{{ site.getDemo() ? 'project.home.default.subtitle'|trans : site.getSubtitleCardForward()|raw }}</h3>
-                    {% endif %}
                     {% if site.getTitleCardForward() or site.getDemo() %}
                         <h2>{{ site.getDemo() ? 'project.home.default.title'|trans : site.getTitleCardForward()|raw }}</h2>
+                    {% endif %}
+                    {% if site.getSubtitleCardForward() or site.getDemo() %}
+                        <h3 class="subtitle">{{ site.getDemo() ? 'project.home.default.subtitle'|trans : site.getSubtitleCardForward()|raw }}</h3>
                     {% endif %}
                 </header>
                 {{ render(path('fhm_api_card_embed', {template:'M003',id:site.getCardForward() == '' or site.getDemo() ? 'demo' : site.getCardForward().getId()})) }}
@@ -106,11 +106,11 @@
                 <a id="anchor-testimony" class="anchor"></a>
                 <div class="parallax-image-testimony" data-parallax="scroll" data-image-src="{{ site.getBackgroundTestimony()|media }}"></div>
                 <header>
-                    {% if site.getSubtitleTestimony() or site.getDemo() %}
-                        <h3 class="subtitle">{{ site.getDemo() ? 'project.home.default.subtitle'|trans : site.getSubtitleTestimony()|raw }}</h3>
-                    {% endif %}
                     {% if site.getTitleTestimony() or site.getDemo() %}
                         <h2>{{ site.getDemo() ? 'project.home.default.title'|trans : site.getTitleTestimony()|raw }}</h2>
+                    {% endif %}
+                    {% if site.getSubtitleTestimony() or site.getDemo() %}
+                        <h3 class="subtitle">{{ site.getDemo() ? 'project.home.default.subtitle'|trans : site.getSubtitleTestimony()|raw }}</h3>
                     {% endif %}
                 </header>
                 <div class="row">
@@ -129,11 +129,11 @@
             <section class="section-partner row {{ site.isShow('testimony') and not site.isShow('contact') ? 'margin' : '' }} {{ site.isShow('gallery_bottom') ? '' : 'gutter-margin-bottom' }}">
                 <a id="anchor-partner" class="anchor"></a>
                 <header>
-                    {% if site.getSubtitlePartner() or site.getDemo() %}
-                        <h3 class="subtitle">{{ site.getDemo() ? 'project.home.default.subtitle'|trans : site.getSubtitlePartner()|raw }}</h3>
-                    {% endif %}
                     {% if site.getTitlePartner() or site.getDemo() %}
                         <h2>{{ site.getDemo() ? 'project.home.default.title'|trans : site.getTitlePartner()|raw }}</h2>
+                    {% endif %}
+                    {% if site.getSubtitlePartner() or site.getDemo() %}
+                        <h3 class="subtitle">{{ site.getDemo() ? 'project.home.default.subtitle'|trans : site.getSubtitlePartner()|raw }}</h3>
                     {% endif %}
                 </header>
                 {{ render(path('fhm_api_partner_detail', {template:'home', id:site.getDemo() ? 'demo' : (site.getPartner() ? site.getPartner().getId() : '')})) }}

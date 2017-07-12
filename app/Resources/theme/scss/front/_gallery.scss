@@ -24,13 +24,13 @@
                 padding:    20px;
                 text-align: center;
                 h2{
-                    @include logo('brown');
                     color:         $dark-grey;
                     font-size:     30px;
                     line-height:   1em;
                     margin-bottom: 30px;
                 }
                 h3{
+                    @include logo('brown');
                     color:       $dark-grey;
                     font-size:   32px;
                     font-weight: normal;
