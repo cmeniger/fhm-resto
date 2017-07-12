@@ -70,10 +70,15 @@
                            {
                                eval(this.innerHTML);
                            });
-                           if(typeof grecaptcha !== "undefined")
+                           $('.g-recaptcha').each(function ()
                            {
-                               grecaptcha.reset();
-                           }
+                               if(typeof grecaptcha !== "undefined")
+                               {
+                                   grecaptcha.render(this, {
+                                       'sitekey': $(this).attr("data-sitekey")
+                                   });
+                               }
+                           });
                        },
         getHtml:       function (data, selector)
                        {
