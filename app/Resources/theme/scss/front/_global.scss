@@ -21,8 +21,8 @@ body{
     font-family: $body-font-family;
     font-weight: $body-font-weight;
     font-style:  $body-font-style;
-    font-size:   14px;
-    line-height: 28px;
+    font-size:   $font-size-body;
+    line-height: 150%;
     position:    relative;
     cursor:      $cursor-auto-value;
 }
