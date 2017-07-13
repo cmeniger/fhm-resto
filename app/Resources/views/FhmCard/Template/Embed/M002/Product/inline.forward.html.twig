@@ -3,7 +3,12 @@
 <li>
     <div class="item">
         <div class="front" style="background:url('{{ product.getImage()|media('s', asset('images/default-card.jpg')) }}') center center no-repeat">
-            <span class="title">{{ product.getName() }}</span> <span class="price">{{ product.getPrice() }}<span>{{ product.getCurrency() }}</span></span>
+            {% if product.getCaption() %}
+                <span class="title">{{ product.getName() }}</span>
+                {% if product.getPrice() %}
+                    <span class="price">{{ product.getPrice() }}<span>{{ product.getCurrency() }}</span></span>
+                {% endif %}
+            {% endif %}
         </div>
         <div class="back">
             <span class="title">{{ product.getName() }}</span>

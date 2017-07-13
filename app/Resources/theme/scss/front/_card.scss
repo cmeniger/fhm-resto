@@ -182,7 +182,7 @@
                         @include font-title();
                         @include logo();
                         display:       block;
-                        font-size:     17px;
+                        font-size:     $font-size-list-title;
                         margin-bottom: 1rem;
                     }
                     .ingredient{
