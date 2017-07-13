@@ -3,12 +3,20 @@
 //
 $font-title: "BodegaSerifLight", sans-serif;
 $font-subtitle: "Stalemate", cursive, sans-serif;
-$font-body: "Open Sans", sans-serif;
+$font-body: "BodegaSerifLight", sans-serif;
+
+//
+// Font size
+//
+$font-size-menu: 1em;
+$font-size-list-title: 1.5em;
+$font-size-list-subtitle: 1.6em;
+$font-size-list-date: 1em;
 
 //
 // Letter Spacing
 //
-$letter-spacing-title: 0;
+$letter-spacing-title: 1px;
 $letter-spacing-subtitle: 0;
 $letter-spacing-body: 0;
 

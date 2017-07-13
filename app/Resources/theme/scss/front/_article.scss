@@ -23,14 +23,14 @@
                         h2{
                             display:     block;
                             color:       $white;
-                            font-size:   1em;
+                            font-size:   $font-size-list-title;
                             font-weight: bold;
                         }
                         h3{
                             @include font-subtitle();
                             display:   block;
                             color:     $white;
-                            font-size: 1.6em;
+                            font-size: $font-size-list-subtitle;
                         }
                     }
                 }
@@ -44,7 +44,7 @@
                         @include font-title();
                         display:       block;
                         color:         $white;
-                        font-size:     1em;
+                        font-size:     $font-size-list-title;
                         margin-bottom: 1rem;
                     }
                     p{

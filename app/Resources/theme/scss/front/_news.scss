@@ -23,23 +23,23 @@
                         h2{
                             display:     block;
                             color:       $white;
-                            font-size:   1em;
+                            font-size:   $font-size-list-title;
                             font-weight: bold;
                         }
                         h3{
                             @include font-subtitle();
                             display:   block;
                             color:     $white;
-                            font-size: 1.6em;
+                            font-size: $font-size-list-subtitle;
                         }
-                        span{
+                        .date{
                             @include font-subtitle();
                             position:    absolute;
                             top:         0;
                             left:        0;
                             right:       0;
                             text-align:  center;
-                            font-size:   1em;
+                            font-size:   $font-size-list-date;
                             font-weight: bold;
                             color:       $white;
                         }
@@ -55,7 +55,7 @@
                         @include font-title();
                         display:       block;
                         color:         $white;
-                        font-size:     1em;
+                        font-size:     $font-size-list-title;
                         margin-bottom: 1rem;
                     }
                     p{

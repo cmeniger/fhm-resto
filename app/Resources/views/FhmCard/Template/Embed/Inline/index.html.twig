@@ -107,3 +107,12 @@
         {% endfor %}
     </div>
 {% endif %}
+<script>
+    $(document).ready(function ()
+    {
+        console.log('here');
+        $(".product-forward .item").flip({
+            trigger: 'hover'
+        });
+    });
+</script>

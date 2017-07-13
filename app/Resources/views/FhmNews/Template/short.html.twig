@@ -12,7 +12,7 @@
                                 {% if object.getSubtitle() %}
                                     <h3>{{ object.getSubtitle() }}</h3>
                                 {% endif %}
-                                <span>{{ object.getDateStart() ? object.getDateStart()|localizeddate('short', 'none', app.request.locale) : object.getDateCreate()|localizeddate('short', 'none', app.request.locale) }}</span>
+                                <span class="date">{{ object.getDateStart() ? object.getDateStart()|localizeddate('short', 'none', app.request.locale) : object.getDateCreate()|localizeddate('short', 'none', app.request.locale) }}</span>
                             </div>
                         </div>
                         <div class="back">

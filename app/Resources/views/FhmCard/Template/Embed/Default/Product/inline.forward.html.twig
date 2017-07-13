@@ -2,7 +2,7 @@
 
 <li>
     <div class="item">
-        <div class="front" style="background:url('{{ product.getImage()|media('s', 'images/default-card.jpg') }}') center center no-repeat">
+        <div class="front" style="background:url('{{ product.getImage()|media('s', asset('images/default-card.jpg')) }}') center center no-repeat">
             <span class="title">{{ product.getName() }}</span> <span class="price">{{ product.getPrice() }}<span>{{ product.getCurrency() }}</span></span>
         </div>
         <div class="back">
