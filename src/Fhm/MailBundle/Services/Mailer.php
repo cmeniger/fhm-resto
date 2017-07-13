@@ -1,23 +1,37 @@
 <?php
+
 namespace Fhm\MailBundle\Services;
 
 use Symfony\Component\Templating\EngineInterface;
 
 /**
  * Class Mailer
+ *
  * @package Fhm\MailBundle\Services
  */
 class Mailer
 {
-    protected $fhm_tools;
+    protected $tools;
+    protected $manager;
+    protected $email_admin;
+    protected $email_noreply;
+    protected $email_contact;
+    protected $email_sign;
 
     /**
      * Mailer constructor.
-     * @param \Fhm\FhmBundle\Services\Tools $tools
+     *
+     * @param \Fhm\FhmBundle\Services\Tools           $tools
+     * @param \Fhm\FhmBundle\Manager\FhmObjectManager $manager
      */
-    public function __construct(\Fhm\FhmBundle\Services\Tools $tools)
+    public function __construct(\Fhm\FhmBundle\Services\Tools $tools, \Fhm\FhmBundle\Manager\FhmObjectManager $manager)
     {
-        $this->fhm_tools = $tools;
+        $this->tools         = $tools;
+        $this->manager       = $manager;
+        $this->email_admin   = $this->tools->getParameters('admin', 'fhm_mailer');
+        $this->email_noreply = $this->tools->getParameters('noreply', 'fhm_mailer');
+        $this->email_contact = $this->tools->getParameters('contact', 'fhm_mailer');
+        $this->email_sign    = $this->tools->getParameters('sign', 'fhm_mailer');
     }
 
     /**
@@ -29,29 +43,30 @@ class Mailer
      */
     public function sendMail($fromEmail, $toEmail, $subject, $body, $model)
     {
-        if ($this->fhm_tools->getParameters('enable', 'fhm_mailer')) {
-            $transport = \Swift_SmtpTransport::newInstance(
-                $this->fhm_tools->getParameters(null, 'mailer_host'),
-                $this->fhm_tools->getParameters(null, 'mailer_port')
-            )->setUsername($this->fhm_tools->getParameters(null, 'mailer_user'))->setPassword(
-                $this->fhm_tools->getParameters(null, 'mailer_password')
-            )->setEncryption($this->fhm_tools->getParameters(null, 'mailer_encryption'));
-            $mailer = \Swift_Mailer::newInstance($transport);
-            $message = \Swift_Message::newInstance()->setSubject($subject)->setFrom($fromEmail)->setTo(
-                $toEmail
-            )->setBody($body)->setContentType('text/html');
+        if($this->tools->getParameters('enable', 'fhm_mailer'))
+        {
+            $transport = \Swift_SmtpTransport::newInstance($this->tools->getParameters(null, 'mailer_host'), $this->tools->getParameters(null, 'mailer_port'))
+                ->setUsername($this->tools->getParameters(null, 'mailer_user'))
+                ->setPassword($this->tools->getParameters(null, 'mailer_password'))
+                ->setEncryption($this->tools->getParameters(null, 'mailer_encryption'));
+            $mailer    = \Swift_Mailer::newInstance($transport);
+            $message   = \Swift_Message::newInstance()->setSubject($subject)->setFrom($fromEmail)->setTo($toEmail)->setBody($body)->setContentType('text/html');
             $mailer->send($message);
             // Save mail
-            $mailClass = $this->fhm_tools->getContainer()->get('fhm.object.manager')->getCurrentModelName(
-                'FhmMailBundle:Mail'
-            );
-            $object = new $mailClass;
-            $object->setType('mail')->setModel($model)->setFrom(array_keys($fromEmail)[0])->setTo(
-                $toEmail
-            )->setSubject($subject)->setBody($body);
-            $this->fhm_tools->dmPersist($object);
-        } else {
-            $this->fhm_tools->getSession()->getFlashBag()->add(
+            $mailClass = $this->manager->getCurrentModelName('FhmMailBundle:Mail');
+            $object    = new $mailClass;
+            $object
+                ->setType('mail')
+                ->setModel($model)
+                ->setFrom(array_keys($fromEmail)[0])
+                ->setTo($toEmail)
+                ->setSubject($subject)
+                ->setBody($body);
+            $this->tools->dmPersist($object);
+        }
+        else
+        {
+            $this->tools->getSession()->getFlashBag()->add(
                 'notice',
                 'mail.flash.disable',
                 array(),
@@ -61,63 +76,21 @@ class Mailer
     }
 
     /**
-     * @param $fromUser
-     * @param $toUser
-     * @param $subject
-     * @param $body
-     * @param $model
-     */
-    public function sendMessage($fromUser, $toUser, $subject, $body, $model)
-    {
-        $thread = $this->fhm_tools->getContainer()->get('fos_message.composer')->newThread();
-        $thread->addRecipient($toUser)->setSender($fromUser)->setSubject($subject)->setBody($body);
-        $sender = $this->fhm_tools->getContainer()->get('fos_message.sender');
-        $sender->send($thread->getMessage());
-        // Save mail
-        $mailClass = $this->fhm_tools->getContainer()->get('fhm.object.manager')->getCurrentModelName(
-            'FhmMailBundle:Mail'
-        );
-        $object = new $mailClass;
-        $object->setType('message')->setModel($model)->setFrom($fromUser->getEmailCanonical())->setTo(
-            $toUser->getEmailCanonical()
-        )->setSubject($subject)->setBody($body);
-        $this->fhm_tools->dmPersist($object);
-    }
-
-    /**
-     * @param $data
+     * @param        $data
      * @param string $folder
+     *
      * @return mixed
      */
     public function renderMail($data, $folder = '')
     {
-        return $this->fhm_tools->getContainer()->get('templating')->render(
-            '::FhmMail/Template/'.$folder.'/'.$data['template'].'.html.twig',
+        return $this->tools->getContainer()->get('templating')->render(
+            '::FhmMail/Template/' . $folder . '/' . $data['template'] . '.html.twig',
             array_merge(
                 $data,
                 array(
-                    'server_http_host' => $this->fhm_tools->getParameters('host', 'fhm_mailer'),
-                    'version' => 'mail',
-                    'site' => "",
-                )
-            )
-        );
-    }
-
-    /**
-     * @param $data
-     * @param string $folder
-     * @return mixed
-     */
-    public function renderMessage($data, $folder = '')
-    {
-        return $this->fhm_tools->getContainer()->get('templating')->render(
-            '::FhmMail/'.$folder.'/'.$data['template'].'.html.twig',
-            array_merge(
-                $data,
-                array(
-                    'server_http_host' => '',
-                    'version' => 'message',
+                    'server_http_host' => $this->tools->getParameters('host', 'fhm_mailer'),
+                    'version'          => 'mail',
+                    'site'             => "",
                 )
             )
         );
@@ -128,19 +101,14 @@ class Mailer
      */
     public function adminTest()
     {
-        $noreply = $this->fhm_tools->dmRepository("FhmUserBundle:User")->getUserByEmail(
-            $this->fhm_tools->getParameters('noreply', 'fhm_mailer')
-        );
         // Email - Admin
-        if (is_object($noreply)){
-            $this->sendMail(
-                array($noreply->getEmail() => $this->fhm_tools->getParameters('sign', 'fhm_mailer')),
-                $this->fhm_tools->getParameters('admin', 'fhm_mailer'),
-                $this->fhm_tools->getParameters('project', 'fhm_mailer')." email test",
-                $this->renderMail(array('template' => 'test'), 'Admin'),
-                'admin > test'
-            );
-        }
+        $this->sendMail(
+            array($this->email_noreply => $this->email_sign),
+            $this->email_contact,
+            $this->tools->trans('project.email.admin.test.subject', array(), 'ProjectDefaultBundle'),
+            $this->renderMail(array('template' => 'test'), 'Admin'),
+            'admin > test'
+        );
     }
 
     /**
@@ -150,12 +118,7 @@ class Mailer
     {
         $data['template'] = 'message';
         $this->sendMail(
-            array(
-                $this->fhm_tools->getParameters('contact', 'fhm_mailer') => $this->fhm_tools->getParameters(
-                    'sign',
-                    'fhm_mailer'
-                ),
-            ),
+            array($this->email_noreply => $this->email_sign),
             $data['to'],
             $data['object'],
             $this->renderMail($data, 'Admin'),
@@ -165,22 +128,18 @@ class Mailer
 
     /**
      * Utilisateur enregistré
+     *
      * @param $data
      */
     public function userRegister($data)
     {
-        $noreply = $this->fhm_tools->dmRepository("FhmUserBundle:User")->getUserByEmail(
-            $this->fhm_tools->getParameters('noreply', 'fhm_mailer')
-        );
         $data["send_mail"] = (isset($data["send_mail"])) ? $data["send_mail"] : true;
-        if ($data["send_mail"]) {
+        if($data["send_mail"])
+        {
             $this->sendMail(
-                array(
-                    $noreply instanceof User ? $noreply->getEmail(
-                    ) : "no-replay@fhmsolutions.com" => $this->fhm_tools->getParameters('sign', 'fhm_mailer'),
-                ),
+                array($this->email_noreply => $this->email_sign),
                 $data['user']->getEmail(),
-                "Bienvenue sur ".$this->fhm_tools->getParameters('project', 'fhm_mailer'),
+                $this->tools->trans('project.email.user.register.subject', array(), 'ProjectDefaultBundle'),
                 $this->renderMail($data, 'User'),
                 'user > register'
             );
@@ -192,19 +151,14 @@ class Mailer
      */
     public function userReset($data)
     {
-        $noreply = $this->fhm_tools->dmRepository("FhmUserBundle:User")->getUserByEmail(
-            $this->fhm_tools->getParameters('noreply', 'fhm_mailer')
-        );
         $data["send_mail"] = (isset($data["send_mail"])) ? $data["send_mail"] : true;
         // Email - User
-        if ($data["send_mail"]) {
+        if($data["send_mail"])
+        {
             $this->sendMail(
-                array(
-                    $noreply instanceof User ? $noreply->getEmail(
-                    ) : "no-replay@fhmsolutions.com" => $this->fhm_tools->getParameters('sign', 'fhm_mailer'),
-                ),
+                array($this->email_noreply => $this->email_sign),
                 $data['user']->getEmail(),
-                "Réinitialiser mon mot de passe ".$this->fhm_tools->getParameters('project', 'fhm_mailer'),
+                $this->tools->trans('project.email.user.register.subject', array(), 'ProjectDefaultBundle'),
                 $this->renderMail($data, 'User'),
                 'user > reset'
             );
@@ -216,31 +170,22 @@ class Mailer
      */
     public function contact($data)
     {
-        $noreply = $this->fhm_tools->dmRepository("FhmUserBundle:User")->getUserByEmail(
-            $this->fhm_tools->getParameters('noreply', 'fhm_mailer')
-        );
         $data['template'] = isset($data['template']) ? $data['template'] : "default";
         // Email - Contact
         $this->sendMail(
-            array($noreply->getEmail() => $this->fhm_tools->getParameters('sign', 'fhm_mailer')),
-            $this->fhm_tools->getParameters('contact', 'fhm_mailer'),
-            "[CONTACT][".$data['message']->getContact()->getName()."] ".$this->fhm_tools->getParameters(
-                'project',
-                'fhm_mailer'
-            ),
+            array($this->email_noreply => $this->email_sign),
+            $this->email_contact,
+            $this->tools->trans('project.email.contact.admin.subject', array(), 'ProjectDefaultBundle'),
             $this->renderMail($data, 'Contact'),
-            'contact > '.$data['template']
+            'contact > ' . $data['template']
         );
         // Email - User
         $this->sendMail(
-            array(
-                $noreply instanceof User ? $noreply->getEmail(
-                ) : "no-replay@fhmsolutions.com" => $this->fhm_tools->getParameters('sign', 'fhm_mailer'),
-            ),
+            array($this->email_noreply => $this->email_sign),
             $data['message']->getEmail(),
-            $this->fhm_tools->getParameters('project', 'fhm_mailer')." contact",
+            $this->tools->trans('project.email.contact.user.subject', array(), 'ProjectDefaultBundle'),
             $this->renderMail($data, 'Contact'),
-            'contact > '.$data['template']
+            'contact > ' . $data['template']
         );
     }
 }

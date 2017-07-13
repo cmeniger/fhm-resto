@@ -1,4 +1,11 @@
 {% trans_default_domain instance.domain %}
+{#<script type="text/javascript">#}
+    {#var onloadCallback = function ()#}
+    {#{#}
+        {#grecaptcha.render('html_element', {'sitekey': 'your_site_key'});#}
+    {#};#}
+{#</script>#}
+{#<script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit" async defer></script>#}
 {% for flashMessage in app.session.flashbag.get('contact-' ~ object.getId()) %}
     <div data-alert class="alert-box">
         {{ flashMessage }}

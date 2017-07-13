@@ -1,4 +1,5 @@
 <?php
+
 namespace Fhm\MailBundle\Document;
 
 use Fhm\FhmBundle\Document\Fhm as FhmFhm;
@@ -48,6 +49,7 @@ class Mail extends FhmFhm
     public function __construct()
     {
         parent::__construct();
+        $this->active = true;
     }
 
     /**

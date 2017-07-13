@@ -50,7 +50,6 @@
             font-weight:    400;
             text-transform: none;
             line-height:    28px;
-            letter-spacing: 0;
             a{
                 display:        block;
                 font-size:      10px;
@@ -58,7 +57,6 @@
                 font-weight:    700;
                 text-transform: uppercase;
                 line-height:    10px;
-                letter-spacing: .8px;
                 color:          $white;
                 padding:        15px 25px;
                 position:       relative;
@@ -271,7 +269,6 @@
                     font-style:     normal;
                     font-weight:    400;
                     text-transform: none;
-                    letter-spacing: -.2px;
                     color:          $medium-grey;
                     line-height:    initial;
                 }

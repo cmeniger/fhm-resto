@@ -16,30 +16,30 @@
                 {{ macroMail.signature() }}
             {% endblock %}
             {# Footer #}
-            <tr style="background:#FFF;margin:10px 0;">
-                <td style="font-family:Tahoma, sans-serif; font-size:12px; color:#919191; padding:20px; text-align: center;">
-                    {% if site is defined %}
-                        {% if site.getSocialFacebook() %}
-                            <a href="{{ site.getSocialFacebook() }}" target="_blank"><img src="{{ server_http_host ~ asset('images/mail-social-facebook.jpg') }}" alt="facebook"></a>
-                        {% endif %}
-                        {% if site.getSocialTwitter() %}
-                            <a href="{{ site.getSocialTwitter() }}" target="_blank"><img src="{{ server_http_host ~ asset('images/mail-social-twitter.jpg') }}" alt="twitter"></a>
-                        {% endif %}
-                        {% if site.getSocialGoogle() %}
-                            <a href="{{ site.getSocialGoogle() }}" target="_blank"><img src="{{ server_http_host ~ asset('images/mail-social-google.jpg') }}" alt="google"></a>
-                        {% endif %}
-                        {% if site. getSocialInstagram() %}
-                            <a href="{{ site. getSocialInstagram() }}" target="_blank"><img src="{{ server_http_host ~ asset('images/mail-social-instagram.jpg') }}" alt="instagram"></a>
-                        {% endif %}
-                        {% if site and  site. getSocialYoutube() %}
-                            <a href="{{ site. getSocialYoutube() }}" target="_blank"><img src="{{ server_http_host ~ asset('images/mail-social-youtube.jpg') }}" alt="youtube"></a>
-                        {% endif %}
-                        {% if site. getSocialFlux() %}
-                            <a href="{{ site. getSocialFlux() }}" target="_blank"><img src="{{ server_http_host ~ asset('images/mail-social-flux.jpg') }}" alt="flux rss"></a>
-                        {% endif %}
-                    {% endif %}
-                </td>
-            </tr>
+            {#<tr style="background:#FFF;margin:10px 0;">#}
+                {#<td style="font-family:Tahoma, sans-serif; font-size:12px; color:#919191; padding:20px; text-align: center;">#}
+                    {#{% if site is defined %}#}
+                        {#{% if site.getSocialFacebook() %}#}
+                            {#<a href="{{ site.getSocialFacebook() }}" target="_blank"><img src="{{ server_http_host ~ asset('images/mail-social-facebook.jpg') }}" alt="facebook"></a>#}
+                        {#{% endif %}#}
+                        {#{% if site.getSocialTwitter() %}#}
+                            {#<a href="{{ site.getSocialTwitter() }}" target="_blank"><img src="{{ server_http_host ~ asset('images/mail-social-twitter.jpg') }}" alt="twitter"></a>#}
+                        {#{% endif %}#}
+                        {#{% if site.getSocialGoogle() %}#}
+                            {#<a href="{{ site.getSocialGoogle() }}" target="_blank"><img src="{{ server_http_host ~ asset('images/mail-social-google.jpg') }}" alt="google"></a>#}
+                        {#{% endif %}#}
+                        {#{% if site. getSocialInstagram() %}#}
+                            {#<a href="{{ site. getSocialInstagram() }}" target="_blank"><img src="{{ server_http_host ~ asset('images/mail-social-instagram.jpg') }}" alt="instagram"></a>#}
+                        {#{% endif %}#}
+                        {#{% if site and  site. getSocialYoutube() %}#}
+                            {#<a href="{{ site. getSocialYoutube() }}" target="_blank"><img src="{{ server_http_host ~ asset('images/mail-social-youtube.jpg') }}" alt="youtube"></a>#}
+                        {#{% endif %}#}
+                        {#{% if site. getSocialFlux() %}#}
+                            {#<a href="{{ site. getSocialFlux() }}" target="_blank"><img src="{{ server_http_host ~ asset('images/mail-social-flux.jpg') }}" alt="flux rss"></a>#}
+                        {#{% endif %}#}
+                    {#{% endif %}#}
+                {#</td>#}
+            {#</tr>#}
             <tr style="background:#FFF;border-top:1px solid #919191">
                 <td style="font-family:Tahoma, sans-serif; font-size:12px; color:#919191; padding:5px; text-align: center;">{{ mailer.footer }}</td>
             </tr>

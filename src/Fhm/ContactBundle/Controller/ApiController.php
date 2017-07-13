@@ -146,7 +146,7 @@ class ApiController extends FhmController
             $email = (isset($data['email'])) ? $data['email'] : $email;
             $email = ($email == '') ? $this->getUser()->getEmailCanonical() : $email;
             // Message
-            $messageClass = $this->get('fhm.object.manager')->getCurrentModelName('FhmContactBundle:Message');
+            $messageClass = $this->get('fhm.object.manager')->getCurrentModelName('FhmContactBundle:ContactMessage');
             $message      = new $messageClass;
             $message->setName($name);
             $message->setEmail($email);
@@ -196,7 +196,7 @@ class ApiController extends FhmController
         if($object)
         {
             // Message
-            $messageClass = $this->get('fhm.object.manager')->getCurrentModelName('FhmContactBundle:Message');
+            $messageClass = $this->get('fhm.object.manager')->getCurrentModelName('FhmContactBundle:ContactMessage');
             $message      = new $messageClass;
             $message->setFirstname($datas['firstname']);
             $message->setLastname($datas['lastname']);

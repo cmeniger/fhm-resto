@@ -2,19 +2,23 @@
 // Fonts
 //
 @mixin font-title() {
-    font-family: $font-title;
+    font-family:    $font-title;
+    letter-spacing: $letter-spacing-title;
 }
 
 @mixin font-subtitle() {
-    font-family: $font-subtitle;
+    font-family:    $font-subtitle;
+    letter-spacing: $letter-spacing-subtitle;
 }
 
 @mixin font-body() {
-    font-family: $font-body;
+    font-family:    $font-body;
+    letter-spacing: $letter-spacing-body;
 }
 
-@mixin font-custom($font) {
-    font-family: $font;
+@mixin font-custom($font, $spacing: 0) {
+    font-family:    $font;
+    letter-spacing: $spacing;
 }
 
 //

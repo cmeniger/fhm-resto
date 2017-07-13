@@ -57,7 +57,7 @@ class ApiController extends FhmController
                 array("%email%" => $this->getParameters('admin', 'fhm_mailer'))
             )
         );
-        $this->get('fhm_mail')->AdminTest();
+        $this->get('fhm_mail')->adminTest();
 
         return $this->redirect($this->get('fhm_tools')->getLastRoute($this->get('request_stack')->getCurrentRequest()));
     }

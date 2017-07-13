@@ -1,7 +1,7 @@
 services:
     fhm_mail:
         class: Fhm\MailBundle\Services\Mailer
-        arguments: ["@fhm_tools"]
+        arguments: ["@fhm_tools", "@fhm.object.manager"]
 
     listener.mail.user.mail:
         class: Fhm\MailBundle\Listener\MailListener

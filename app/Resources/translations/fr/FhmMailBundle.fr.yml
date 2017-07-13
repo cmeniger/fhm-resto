@@ -3,6 +3,7 @@ breadcrumb:
     mail_create:                                Ajouter
     mail_update:                                Modifier
     mail_detail:                                '%name%'
+    mail_model:                                 Modèles
 
 mail:
     admin:

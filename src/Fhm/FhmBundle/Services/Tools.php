@@ -341,7 +341,7 @@ class Tools
      */
     public function dmPersist(&$obj)
     {
-        if($obj != "")
+        if(is_object($obj))
         {
             $this->dm()->persist($obj);
             $this->dm()->flush();
@@ -357,7 +357,7 @@ class Tools
      */
     public function dmRemove(&$obj)
     {
-        if($obj != "")
+        if(is_object($obj))
         {
             $this->dm()->remove($obj);
             $this->dm()->flush();

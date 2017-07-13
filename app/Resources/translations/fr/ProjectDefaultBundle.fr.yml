@@ -48,4 +48,17 @@ project:
         keywords:                               FHM Restos, word1, word2
 
     email:
+        admin:
+            test:
+                subject:                        "FHM Restos : Email de test"
+        user:
+            register:
+                subject:                        "FHM Restos : Bienvenue"
+            reset:
+                subject:                        "FHM Restos : Réinitialiser mon mot de passe"
+        contact:
+            admin:
+                subject:                        "FHM Restos : Nouveau message"
+            user:
+                subject:                        "FHM Restos : Nous avons bien reçu votre message"
         sign:                                   A bientôt !<br><br><strong>L'équipe FHM Restos</strong>
