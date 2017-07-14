@@ -1,0 +1,48 @@
+{% trans_default_domain instance.domain %}
+{% extends "::FhmFhm/Front/index.html.twig" %}
+
+{% block body_header %}{% endblock %}
+{% block footer_content %}{% endblock %}
+{% block breadcrumbs %}{% endblock %}
+
+{% block tagline_data %}
+    {{ 'project.install.title'|trans }}
+{% endblock %}
+
+{% block content %}
+    <div class="install row" id="install-container">
+        <div id="install-start">
+            <div class="percent c100 p0 center">
+                <span>0%</span>
+                <div class="slice"><div class="bar"></div><div class="fill"></div></div>
+            </div>
+            <div class="text">{{ 'project.install.start'|trans }}</div>
+        </div>
+        <div id="install-end">
+            <div class="text success">{{ 'project.install.end'|trans }}</div>
+            <a href="{{ path('project_home') }}" class="button radius">{{ 'project.home.link'|trans }}</a>
+            <div class="timer text-center" data-time="20" data-url="{{ path('project_home') }}">{{ 'project.install.reload'|trans }}</div>
+        </div>
+        <div id="install-logs">
+        </div>
+        <div id="install-error">
+        </div>
+    </div>
+{% endblock %}
+
+{% block body_javascripts_file %}
+    {{ parent() }}
+    <script src="{{ asset('js/jquery.install.js') }}"></script>
+{% endblock %}
+
+{% block body_javascripts_script %}
+    {{ parent() }}
+    <script>
+        $(document).ready(function ()
+        {
+            $(document).install({
+                process: {{ process|raw }}
+            });
+        });
+    </script>
+{% endblock %}

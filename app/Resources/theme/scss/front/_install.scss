@@ -1,0 +1,75 @@
+.install{
+    #install-start{
+        display:       none;
+        margin-bottom: 2rem;
+        .percent{
+
+        }
+        .text{
+            text-align: center;
+            padding:    1rem 0;
+        }
+    }
+    #install-end{
+        display:       none;
+        margin-bottom: 2rem;
+        text-align:    center;
+        .text{
+            font-size:     2em;
+            margin-bottom: 3rem;
+            &:before{
+                @include border-radius(1000px);
+                display:     block;
+                content:     $fa-var-question;
+                background:  $secondary-color;
+                color:       $white;
+                width:       150px;
+                height:      150px;
+                line-height: 150px;
+                margin:      10px auto;
+                font-family: FontAwesome;
+                font-size:   2em;
+            }
+            &.success{
+                &:before{
+                    content:    $fa-var-check;
+                    background: $success-color;
+                }
+            }
+        }
+        .timer{
+            font-size: 0.8em;
+            span{
+                color:     $primary-color;
+                font-size: 1.2em;
+            }
+        }
+    }
+    #install-logs{
+        @include border-radius(3px);
+        display:    none;
+        padding:    2rem;
+        border:     1px solid $medium-grey;
+        min-height: 600px;
+        .line{
+            padding:       0.5rem 0;
+            border-bottom: 1px solid $light-grey;
+            .time{
+                color:        $medium-grey;
+                margin-right: 1rem;
+            }
+            .text{
+                color: $dark-grey;
+                &.success{
+                    color: $success-color;
+                }
+                &.warning{
+                    color: $warning-color;
+                }
+                &.alert{
+                    color: $alert-color;
+                }
+            }
+        }
+    }
+}

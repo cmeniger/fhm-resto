@@ -1,0 +1,170 @@
+/****************************************************************
+ *
+ * CSS Percentage Circle
+ * Author: Andre Firchow
+ * http://circle.firchow.net/
+ *
+*****************************************************************/
+
+$circle-width: 0.08em;
+$circle-width-hover: 0.04em;
+
+.rect-auto{
+    clip: rect(auto, auto, auto, auto);
+}
+
+.pie{
+    @include border-radius(50%);
+    @include transform(rotate(0deg));
+    position: absolute;
+    border:   $circle-width solid $primary-color;
+    width:    1 - (2 * $circle-width);
+    height:   1 - (2 * $circle-width);
+    clip:     rect(0em, 0.5em, 1em, 0em);
+}
+
+.pie-fill{
+    @include transform(rotate(180deg));
+}
+
+.c100{
+    *, *:before, *:after{
+        -webkit-box-sizing: content-box;
+        -moz-box-sizing:    content-box;
+        box-sizing:         content-box;
+    }
+    @include border-radius(50%);
+    position:         relative;
+    font-size:        120px;
+    width:            1em;
+    height:           1em;
+    background-color: $smoke;
+    overflow:         hidden;
+    margin:           auto;
+    // center circle to its parent
+    &.center{
+        float:  none;
+        margin: 0 auto;
+    }
+    // bigger size
+    &.big{
+        font-size: 240px;
+    }
+    // smaller size
+    &.small{
+        font-size: 80px;
+    }
+    // centered value inside circle
+    > span{
+        @include transition(all, 0.2s, ease-out);
+        position:    absolute;
+        z-index:     1;
+        left:        0;
+        top:         0;
+        width:       5em;
+        line-height: 5em;
+        font-size:   0.2em;
+        color:       $secondary-color;
+        display:     block;
+        text-align:  center;
+        white-space: nowrap;
+        &.no-color{
+            color: $secondary-color !important;
+        }
+        i{
+            font-size: 1.2em;
+        }
+    }
+    // background inside the circle
+    &:after{
+        @include transition(all, 0.2s, ease-out);
+        position:         absolute;
+        top:              $circle-width;
+        left:             $circle-width;
+        display:          block;
+        content:          " ";
+        border-radius:    50%;
+        background-color: $white;
+        width:            1 - (2 * $circle-width);
+        height:           1 - (2 * $circle-width);
+    }
+    // the slice (mask)
+    .slice{
+        position: absolute;
+        width:    1em;
+        height:   1em;
+        clip:     rect(0em, 1em, 1em, 0.5em);
+    }
+    // circle to show the status
+    .bar{
+        @extend .pie;
+    }
+    // loop to create all needed elements automatically
+    @for $j from 51 through 100{
+        &.p#{$j} .slice{
+            @extend .rect-auto;
+        }
+        &.p#{$j} .bar:after{
+            @extend .pie-fill;
+        }
+        &.p#{$j} .fill{
+            @extend .pie;
+            @extend .pie-fill;
+        }
+
+    }
+    // loop to rotate all 100 circles
+    @for $j from 1 through 100{
+        &.p#{$j} .bar{
+            @include transform(rotate((360/100*$j) + deg));
+        }
+    }
+    // hover styles
+    &:hover{
+        cursor: default;
+        > span{
+            width:       3.33em;
+            line-height: 3.33em;
+            font-size:   0.3em;
+            color:       $primary-color;
+        }
+        &:after{
+            top:    $circle-width-hover;
+            left:   $circle-width-hover;
+            width:  1 - (2 * $circle-width-hover);
+            height: 1 - (2 * $circle-width-hover);
+        }
+    }
+    &.secondary{
+        > span{
+            color: $secondary-color;
+        }
+        .bar, .fill{
+            border-color: $secondary-color !important;
+        }
+    }
+    &.success{
+        > span{
+            color: $success-color;
+        }
+        .bar, .fill{
+            border-color: $success-color !important;
+        }
+    }
+    &.warning{
+        > span{
+            color: $warning-color;
+        }
+        .bar, .fill{
+            border-color: $warning-color !important;
+        }
+    }
+    &.alert{
+        > span{
+            color: $alert-color;
+        }
+        .bar, .fill{
+            border-color: $alert-color !important;
+        }
+    }
+}

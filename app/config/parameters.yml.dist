@@ -64,6 +64,24 @@ parameters:
         analytics:
             active: true
             id: UA-60572981-4
+        install:
+            project: fhm-restos
+            user:
+                fhm: technique@fhmsolutions.com
+                admin: admin@fhm-restos.com
+                moderator: moderator@fhm-restos.com
+                noreply: noreply@fhm-restos.com
+            process:
+                - user
+                - site
+                - menu
+                - slider
+                - gallery
+                - card
+                - news
+                - partner
+                - contact
+                - end
     fhm_mailer:
         enable: true
         project: FHM-Restos

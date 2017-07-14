@@ -23,7 +23,7 @@
         <section id="main-content">
             {% block tagline %}
                 <section class="section-tagline">
-                    <div class="parallax-image-tagline" data-parallax="scroll" data-image-src="{{ site.getDemo() ? asset('images/default.jpg') : site.getBackgroundTop()|media }}"></div>
+                    <div class="parallax-image-tagline" data-parallax="scroll" data-image-src="{{ not site or site.getDemo() ? asset('images/default.jpg') : site.getBackgroundTop()|media }}"></div>
                     <div class="title">{% block tagline_title %}{% endblock %}</div>
                 </section>
             {% endblock %}
@@ -42,7 +42,6 @@
                     </div>
                 {% endfor %}
             {% endblock %}
-
             <section class="gutter-margin-bottom gutter-margin-top">
                 {% block content %}{% endblock %}
             </section>
@@ -51,61 +50,65 @@
 {% endblock %}
 
 {% block footer %}
-    <footer class="clearfix">
-        <div class="hidden-for-large-up text-center">
-            <img src="{{ site is defined and site.getLogo() and not site.getDemo() ? site.getLogo()|media('s', asset('images/logo.png')) : asset('images/logo.png') }}" alt=""/>
-            <h2 class="icon">{{ site is defined and site.getTitle() and not site.getDemo() ? site.getTitle()|raw : 'project.home.default.title'|trans({},'ProjectDefaultBundle') }}</h2>
-        </div>
-        <div class="columns large-4">
-            <h2>{{ 'menu.front.index.sitemap'|trans({},'FhmFhmMenuBundle') }}</h2>
-            {% if site is defined and (site.getMenuFooter() or site.getDemo()) %}
-                {{ render(path('fhm_api_menu_detail',{template:'footer','id':site.getDemo() ? 'demo' : site.getMenuFooter().getId()})) }}
-            {% endif %}
-        </div>
-        <div class="columns large-4">
-            <div class="hidden-for-medium-down">
-                <img src="{{ site is defined and site.getLogo() and not site.getDemo() ? site.getLogo()|media('s', asset('images/logo.png')) : asset('images/logo.png') }}" alt=""/>
-                <h2 class="icon">{{ site is defined and site.getTitle() and not site.getDemo() ? site.getTitle()|raw : 'project.home.default.title'|trans({},'ProjectDefaultBundle') }}</h2>
+    {% block footer_content %}
+        <footer class="clearfix">
+            <div class="hidden-for-large-up text-center">
+                <img src="{{ site is defined and site and site.getLogo() and not site.getDemo() ? site.getLogo()|media('s', asset('images/logo.png')) : asset('images/logo.png') }}" alt=""/>
+                <h2 class="icon">{{ site is defined and site and site.getTitle() and not site.getDemo() ? site.getTitle()|raw : 'project.home.default.title'|trans({},'ProjectDefaultBundle') }}</h2>
             </div>
-        </div>
-        <div class="columns large-4">
-            <h2>{{ 'newsletter.front.index.title'|trans({},'FhmNewsletterBundle') }}</h2>
-            {{ render(path('fhm_api_newsletter_embed')) }}
-            <div class="social-bar">
-                <ul>
-                    {% if site is defined and (site.getSocialFacebook() or site.getDemo()) %}
-                        <li>
-                            <a href='{{ site.getDemo() ? '#' : site.getSocialFacebook() }}' class="facebook" title="Facebook" target="_blank"><i class='fa fa-facebook'></i></a>
-                        </li>
-                    {% endif %}
-                    {% if site is defined and (site.getSocialTwitter() or site.getDemo()) %}
-                        <li>
-                            <a href='{{ site.getDemo() ? '#' : site.getSocialTwitter() }}' class="twitter" title="Twitter" target="_blank"><i class='fa fa-twitter'></i></a>
-                        </li>
-                    {% endif %}
-                    {% if site is defined and (site.getSocialGoogle() or site.getDemo()) %}
-                        <li>
-                            <a href='{{ site.getDemo() ? '#' : site.getSocialGoogle() }}' class="google" title="Google" target="_blank"><i class='fa fa-google'></i></a>
-                        </li>
-                    {% endif %}
-                    {% if site is defined and (site.getSocialInstagram() or site.getDemo()) %}
-                        <li>
-                            <a href='{{ site.getDemo() ? '#' : site.getSocialInstagram() }}' class="instagram" title="Instagram" target="_blank"><i class='fa fa-instagram'></i></a>
-                        </li>
-                    {% endif %}
-                    {% if site is defined and (site.getSocialYoutube() or site.getDemo()) %}
-                        <li>
-                            <a href='{{ site.getDemo() ? '#' : site.getSocialYoutube() }}' class="youtube" title="Youtube" target="_blank"><i class='fa fa-youtube'></i></a>
-                        </li>
-                    {% endif %}
-                    {% if site is defined and (site.getSocialFlux() or site.getDemo()) %}
-                        <li>
-                            <a href='{{ site.getDemo() ? '#' : site.getSocialFlux() }}' class="flux" title="Flux RSS" target="_blank"><i class='fa fa-rss'></i></a>
-                        </li>
-                    {% endif %}
-                </ul>
+            <div class="columns large-4">
+                <h2>{{ 'menu.front.index.sitemap'|trans({},'FhmFhmMenuBundle') }}</h2>
+                {% if site is defined and site and (site.getMenuFooter() or site.getDemo()) %}
+                    {{ render(path('fhm_api_menu_detail',{template:'footer','id':site.getDemo() ? 'demo' : site.getMenuFooter().getId()})) }}
+                {% endif %}
             </div>
-        </div>
-    </footer>
+            <div class="columns large-4">
+                <div class="hidden-for-medium-down">
+                    <img src="{{ site is defined and site and site.getLogo() and not site.getDemo() ? site.getLogo()|media('s', asset('images/logo.png')) : asset('images/logo.png') }}" alt=""/>
+                    <h2 class="icon">{{ site is defined and site and site.getTitle() and not site.getDemo() ? site.getTitle()|raw : 'project.home.default.title'|trans({},'ProjectDefaultBundle') }}</h2>
+                </div>
+            </div>
+            <div class="columns large-4">
+                <h2>{{ 'newsletter.front.index.title'|trans({},'FhmNewsletterBundle') }}</h2>
+                {{ render(path('fhm_api_newsletter_embed')) }}
+                <div class="social-bar">
+                    <ul>
+                        {% if site is defined and site %}
+                            {% if site.getSocialFacebook() or site.getDemo() %}
+                                <li>
+                                    <a href='{{ site.getDemo() ? '#' : site.getSocialFacebook() }}' class="facebook" title="Facebook" target="_blank"><i class='fa fa-facebook'></i></a>
+                                </li>
+                            {% endif %}
+                            {% if site.getSocialTwitter() or site.getDemo() %}
+                                <li>
+                                    <a href='{{ site.getDemo() ? '#' : site.getSocialTwitter() }}' class="twitter" title="Twitter" target="_blank"><i class='fa fa-twitter'></i></a>
+                                </li>
+                            {% endif %}
+                            {% if site.getSocialGoogle() or site.getDemo() %}
+                                <li>
+                                    <a href='{{ site.getDemo() ? '#' : site.getSocialGoogle() }}' class="google" title="Google" target="_blank"><i class='fa fa-google'></i></a>
+                                </li>
+                            {% endif %}
+                            {% if site.getSocialInstagram() or site.getDemo() %}
+                                <li>
+                                    <a href='{{ site.getDemo() ? '#' : site.getSocialInstagram() }}' class="instagram" title="Instagram" target="_blank"><i class='fa fa-instagram'></i></a>
+                                </li>
+                            {% endif %}
+                            {% if site.getSocialYoutube() or site.getDemo() %}
+                                <li>
+                                    <a href='{{ site.getDemo() ? '#' : site.getSocialYoutube() }}' class="youtube" title="Youtube" target="_blank"><i class='fa fa-youtube'></i></a>
+                                </li>
+                            {% endif %}
+                            {% if site.getSocialFlux() or site.getDemo() %}
+                                <li>
+                                    <a href='{{ site.getDemo() ? '#' : site.getSocialFlux() }}' class="flux" title="Flux RSS" target="_blank"><i class='fa fa-rss'></i></a>
+                                </li>
+                            {% endif %}
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </footer>
+    {% endblock %}
     {{ parent() }}
 {% endblock %}

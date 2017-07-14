@@ -43,7 +43,7 @@ class FrontController extends RefFrontController
             );
         }
 
-        return $this->redirectToRoute('fhm_admin_site_create');
+        return $this->redirectToRoute('project_install');
     }
 
     /**

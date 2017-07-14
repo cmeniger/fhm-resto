@@ -15,6 +15,29 @@ project:
             title:                              Titre
             subtitle:                           Sous-titre
 
+    install:
+        breadcrumb:                             Installation
+        link:                                   Installation
+        title:                                  Installation
+        start:                                  L'installation est en cours...
+        end:                                    L'installation est terminée.
+        reload:                                 Fermeture de la page dans
+        logs:
+            created:                            "%group% : '%name%' créé avec succès."
+            exist:                              "%group% : '%name%' est déjà existant."
+            empty:                              "%group% : '%name%' est vide."
+            end:                                "Installation terminée."
+        groups:
+            user:                               UTILISATEURS
+            site:                               SITES
+            menu:                               MENUS
+            slider:                             SLIDERS
+            gallery:                            GALERIES
+            card:                               CARTES
+            news:                               ACTUALITES
+            partner:                            PARTENAIRES
+            contact:                            CONTACTS
+
     tree:
         admin:                                  Administration
         connected:                              "%username%"
