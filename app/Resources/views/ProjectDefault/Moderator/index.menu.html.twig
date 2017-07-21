@@ -1,0 +1,46 @@
+{% trans_default_domain 'ProjectDefaultBundle' %}
+
+<ul class="tabs vertical" data-tab>
+    <li class="tab-title {{ current == 'site' or current == null ? 'active' : '' }}">
+        <a href="#panel-site"><i class="fa fa-fw fa-desktop"></i><span>{{ 'project.moderator.menu.site'|trans }}</span></a>
+    </li>
+    <li class="tab-title {{ current == 'menu' ? 'active' : '' }}">
+        <a href="#panel-menu"><i class="fa fa-fw fa-bars"></i><span>{{ 'project.moderator.menu.menu'|trans }}</span></a>
+    </li>
+    <li class="tab-title {{ current == 'slider' ? 'active' : '' }} {{ not site.isShow('slider') ? 'disabled' : '' }}">
+        <a href="#panel-slider"><i class="fa fa-fw fa-arrows-h"></i><span>{{ 'project.moderator.menu.slider'|trans }}</span></a>
+    </li>
+    <li class="tab-title {{ current == 'gallery_top' ? 'active' : '' }} {{ not site.isShow('gallery_top') ? 'disabled' : '' }}">
+        <a href="#panel-gallery-top"><i class="fa fa-fw fa-question"></i><span>{{ 'project.moderator.menu.gallery-top'|trans }}</span></a>
+    </li>
+    <li class="tab-title {{ current == 'news' ? 'active' : '' }} {{ not site.isShow('news') ? 'disabled' : '' }}">
+        <a href="#panel-news"><i class="fa fa-fw fa-newspaper-o"></i><span>{{ 'project.moderator.menu.news'|trans }}</span></a>
+    </li>
+    <li class="tab-title {{ current == 'card_slider' ? 'active' : '' }} {{ not site.isShow('card_slider') ? 'disabled' : '' }}">
+        <a href="#panel-card-slider"><i class="fa fa-fw fa-map-o"><i class="fa fa-fw fa-arrows-h"></i></i><span>{{ 'project.moderator.menu.card-slider'|trans }}</span></a>
+    </li>
+    <li class="tab-title {{ current == 'card_main' ? 'active' : '' }} {{ not site.isShow('card_main') ? 'disabled' : '' }}">
+        <a href="#panel-card-main"><i class="fa fa-fw fa-map-o"><i class="fa fa-fw fa-bars"></i></i><span>{{ 'project.moderator.menu.card-main'|trans }}</span></a>
+    </li>
+    <li class="tab-title {{ current == 'card_forward' ? 'active' : '' }} {{ not site.isShow('card_forward') ? 'disabled' : '' }}">
+        <a href="#panel-card-forward"><i class="fa fa-fw fa-map-o"><i class="fa fa-fw fa-th"></i></i><span>{{ 'project.moderator.menu.card-forward'|trans }}</span></a>
+    </li>
+    <li class="tab-title {{ current == 'testimony' ? 'active' : '' }} {{ not site.isShow('testimony') ? 'disabled' : '' }}">
+        <a href="#panel-testimony"><i class="fa fa-fw fa-quote-right"></i><span>{{ 'project.moderator.menu.testimony'|trans }}</span></a>
+    </li>
+    <li class="tab-title {{ current == 'contact' ? 'active' : '' }} {{ not site.isShow('contact') ? 'disabled' : '' }}">
+        <a href="#panel-contact"><i class="fa fa-fw fa-map-marker"></i><span>{{ 'project.moderator.menu.contact'|trans }}</span></a>
+    </li>
+    <li class="tab-title {{ current == 'partner' ? 'active' : '' }} {{ not site.isShow('partner') ? 'disabled' : '' }}">
+        <a href="#panel-partner"><i class="fa fa-fw fa-share-alt"></i><span>{{ 'project.moderator.menu.partner'|trans }}</span></a>
+    </li>
+    <li class="tab-title {{ current == 'gallery_bottom' ? 'active' : '' }} {{ not site.isShow('gallery_bottom') ? 'disabled' : '' }}">
+        <a href="#panel-gallery-bottom"><i class="fa fa-fw fa-th"></i><span>{{ 'project.moderator.menu.gallery-bottom'|trans }}</span></a>
+    </li>
+    <li class="tab-title {{ current == 'reservation' ? 'active' : '' }} locked">
+        <a href="#panel-reservation"><i class="fa fa-fw fa-lock"></i><span>{{ 'project.moderator.menu.reservation'|trans }}</span></a>
+    </li>
+    <li class="tab-title {{ current == 'shop' ? 'active' : '' }} locked">
+        <a href="#panel-shop"><i class="fa fa-fw fa-lock"></i><span>{{ 'project.moderator.menu.shop'|trans }}</span></a>
+    </li>
+</ul>

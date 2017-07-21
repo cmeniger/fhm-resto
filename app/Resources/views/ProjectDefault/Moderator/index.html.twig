@@ -1,0 +1,98 @@
+{% trans_default_domain 'ProjectDefaultBundle' %}
+{% extends "::FhmFhm/Admin/index.html.twig" %}
+
+{% block menu %}
+    {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+        <nav class="top-bar tree" data-topbar>
+            <ul class="title-area">
+                <li class="name">
+                    <a href="{{ path('project_home') }}"><i class="fa fa-home"></i></a>
+                </li>
+                <li class="toggle-topbar tree-icon"><a href="#"><span></span></a></li>
+            </ul>
+            <section class="top-bar-section">
+                {# Right section #}
+                <ul class="right">
+                    <li class="notification">
+                        <a class="counter" href="#" data-url="" data-modal> <i class="fa fa-envelope"></i>
+                            <span class="count" data-counter>{{ count_message }}</span> </a>
+                    </li>
+                    <li class="divider"></li>
+                    <li class="notification">
+                        {{ render(path('fhm_api_notification_counter')) }}
+                    </li>
+                    <li class="divider"></li>
+                    <li class="has-dropdown">
+                        <a href="#"><i class="fa fa-user"></i> {{ 'project.tree.connected'|trans({'%username%': app.user.username}) }}
+                        </a>
+                        <ul class="dropdown">
+                            <li class="title back js-generated"><h5>
+                                    <a href="javascript:void(0)"><i class="fa fa-angle-double-left"></i> {{ 'project.tree.back'|trans }}
+                                    </a></h5></li>
+                            <li class="title back js-generated divider"></li>
+                            <li>
+                                <a href="{{ path('fos_user_profile_show') }}">{{ 'user.front.detail.link'|trans({}, 'FhmUserBundle') }}</a>
+                            </li>
+                            <li>
+                                <a href="{{ path('fos_user_change_password') }}">{{ 'user.front.password.link'|trans({}, 'FhmUserBundle') }}</a>
+                            </li>
+                            <li>
+                                <a href="{{ path('fos_user_security_logout') }}">{{ 'user.front.logout.link'|trans({}, 'FhmUserBundle') }}</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </section>
+        </nav>
+    {% endif %}
+{% endblock %}
+
+{% block body_content %}
+    <div class="moderator">
+        {% include "::ProjectDefault/Moderator/index.menu.html.twig" %}
+        <div class="tabs-content">
+            <div class="content {{ current == 'site' or current == null ? 'active' : '' }}" id="panel-site">
+                {{ render_hinclude(url('project_moderator_site'), {attributes:{'evaljs':'true'}}) }}
+            </div>
+            <div class="content {{ current == 'menu' ? 'active' : '' }}" id="panel-menu">
+                {{ render_hinclude(url('project_moderator_menu'), {attributes:{'evaljs':'true'}}) }}
+            </div>
+            <div class="content {{ current == 'slider' ? 'active' : '' }}" id="panel-slider">
+                {{ render_hinclude(url('project_moderator_slider'), {attributes:{'evaljs':'true'}}) }}
+            </div>
+            <div class="content {{ current == 'gallery_top' ? 'active' : '' }}" id="panel-gallery-top">
+
+            </div>
+            <div class="content {{ current == 'news' ? 'active' : '' }}" id="panel-gallery-bottom">
+
+            </div>
+            <div class="content {{ current == 'card_slider' ? 'active' : '' }}" id="panel-card-slider">
+
+            </div>
+            <div class="content {{ current == 'card_main' ? 'active' : '' }}" id="panel-card-main">
+
+            </div>
+            <div class="content {{ current == 'card_forward' ? 'active' : '' }}" id="panel-card-forward">
+
+            </div>
+            <div class="content {{ current == 'testimony' ? 'active' : '' }}" id="panel-contact">
+
+            </div>
+            <div class="content {{ current == 'contact' ? 'active' : '' }}" id="panel-news">
+
+            </div>
+            <div class="content {{ current == 'partner' ? 'active' : '' }}" id="panel-testimony">
+
+            </div>
+            <div class="content {{ current == 'gallery_bottom' ? 'active' : '' }}" id="panel-partner">
+
+            </div>
+            <div class="content {{ current == 'reservation' ? 'active' : '' }}" id="panel-reservation">
+
+            </div>
+            <div class="content {{ current == 'shop' ? 'active' : '' }}" id="panel-shop">
+
+            </div>
+        </div>
+    </div>
+{% endblock %}

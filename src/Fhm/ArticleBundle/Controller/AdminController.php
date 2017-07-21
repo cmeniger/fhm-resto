@@ -1,4 +1,5 @@
 <?php
+
 namespace Fhm\ArticleBundle\Controller;
 
 use Fhm\ArticleBundle\Form\Type\Admin\CreateType;
@@ -15,6 +16,7 @@ use Doctrine\Common\Annotations\Annotation;
  * @Route("/admin/article")
  * --------------------------------------
  * Class AdminController
+ *
  * @package Fhm\ArticleBundle\Controller
  */
 class AdminController extends FhmController
@@ -29,9 +31,7 @@ class AdminController extends FhmController
         self::$translation = "article";
         self::$route       = "article";
         self::$source      = "fhm";
-
-        self::$form  = new \stdClass();
-
+        self::$form = new \stdClass();
         self::$form->createType    = CreateType::class;
         self::$form->updateType    = UpdateType::class;
         self::$form->createHandler = CreateHandler::class;

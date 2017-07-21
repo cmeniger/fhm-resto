@@ -85,3 +85,95 @@ project:
             user:
                 subject:                        "FHM Restos : Nous avons bien reçu votre message"
         sign:                                   A bientôt !<br><br><strong>L'équipe FHM Restos</strong>
+
+    moderator:
+        breadcrumb:                             Modération
+        menu:
+            site:                               Général
+            menu:                               Menus
+            slider:                             Slider
+            gallery-top:                        A propos
+            gallery-bottom:                     Galerie
+            card-slider:                        Carte promotions
+            card-main:                          Carte principale
+            card-forward:                       Carte spécialités
+            contact:                            Contact
+            news:                               Actualités
+            testimony:                          Témoignages
+            partner:                            Partenaires
+            reservation:                        Réservations
+            shop:                               Commandes
+        form:
+            help:
+                title:                          Aide
+            message:
+                success:                        Les données ont bien été modifiées.
+                error:                          Les données n'ont pas été modifiées.
+                create:                         Les données ont bien été ajoutées.
+                nodata:                         Aucune donnée.
+            button:
+                create:                         Sauvegarder
+                update:                         Modifier
+                cancel:                         Annuler
+            fieldset:
+                data:                           Informations
+                image-back:                     Images de fond
+                social:                         Réseaux sociaux
+                menu_main:                      Interne
+                menu_footer:                    Pied de page
+                menu_home_side:                 Accueil latéral
+                menu_home_left:                 Accueil gauche
+                menu_home_right:                Accueil droite
+            site:
+                demo:                           Mode démo
+                title:                          Titre
+                subtitle:                       Sous-titre
+                logo:                           Logo
+                background_top:                 Haut (1900 x 1200 px)
+                background_card:                Carte promotions (1900 x 1200 px)
+                background_testimony:           Témoignages (1900 x 1200 px)
+                social:
+                    placeholder:                http://
+                    facebook:                   Facebook
+                    twitter:                    Twitter
+                    google:                     Google
+                    instagram:                  Instagram
+                    youtube:                    Youtube
+                    flux:                       Flux RSS
+            menu:
+                name:                           Nom
+                route:                          Lien
+                external:                       Lien externe
+            slider:
+                show:                           Afficher le slider
+                caption:                        Afficher la légende
+                title:                          Titre
+                subtitle:                       Sous-titre
+                link:                           Lien
+                content:                        Contenu
+                image:                          Image
+        help:
+            site:
+                demo:
+                    title:                      "Mode démo"
+                    content:                    "Ce mode permet d'afficher des données de démonstration, toutes les sections sont activées."
+                position:
+                    title:                      "Positions"
+                    f_title:                    "Titre du site"
+                    f_subtitle:                 "Sous-titre du site, ajouter le code '<br>' pour revenir à la ligne (ex: ligne 1<br>ligne 2<br>ligne 3)."
+                    f_logo:                     "Logo du site"
+                    f_back_1:                   "Image de fond du haut"
+                    f_back_2:                   "Image de fond de la carte, apparaît uniquement si la section 'carte promotions' est activée"
+                    f_back_3:                   "Image de fond des témoignages, apparaît uniquement si la section 'témoignages' est activée"
+                    f_social:                   "Les liens vers les réseaux sociaux"
+            menu:
+                anchor:
+                    title:                      "Ancres"
+                    content:                    "Pour déplacer la barre de défilement sur une des sections de la page principale, il faut saisir les liens suivants :"
+                position:
+                    title:                      "Positions"
+                    f_main:                     "Menu des pages internes"
+                    f_footer:                   "Menu en pied de page"
+                    f_side:                     "Menu latéral de la page principale"
+                    f_left:                     "Menu de gauche de la page principale"
+                    f_right:                    "Menu de droite de la page principale"

@@ -52,16 +52,72 @@
                                    data:    $current.serialize(),
                                    success: function (data)
                                             {
-                                                $(selector).fadeToggle(400, "linear", function ()
+                                                if(typeof $current.attr(parent.settings.ajax.animation) !== 'undefined' && $current.attr(parent.settings.ajax.animation) === true)
                                                 {
-                                                    $(selector).html(parent.getHtml(data, selector)).fadeToggle(400, "linear");
+                                                    $(selector).fadeToggle(400, "linear", function ()
+                                                    {
+                                                        $(selector).html(parent.getHtml(data, selector)).fadeToggle(400, "linear");
+                                                        $submit.html($submit.attr('data-text')).prop('disabled', false);
+                                                        parent.refreshScript(data);
+                                                        parent.initAjax();
+                                                        parent.initAlert($current);
+                                                    });
+                                                }
+                                                else
+                                                {
+                                                    $(selector).html(parent.getHtml(data, selector));
                                                     $submit.html($submit.attr('data-text')).prop('disabled', false);
                                                     parent.refreshScript(data);
                                                     parent.initAjax();
+                                                    parent.initAlert($current);
+                                                }
+                                            }
+                               });
+                           });
+                           $(parent.settings.ajax.form).each(function ()
+                           {
+                               var $current = $(this);
+                               if(typeof $current.attr(parent.settings.ajax.live) !== 'undefined')
+                               {
+                                   $current.find(":input").each(function ()
+                                   {
+                                       $(this).unbind('change').change(function ()
+                                       {
+                                           $current.trigger('submit');
+                                       });
+                                   });
+                               }
+                           });
+                           $(parent.settings.ajax.link).unbind('click').click(function (e)
+                           {
+                               var $current = $(this);
+                               var selector = $current.attr(parent.settings.ajax.content);
+                               e.preventDefault();
+                               $.ajax
+                               ({
+                                   type:    'POST',
+                                   url:     $current.attr('href'),
+                                   data:    {},
+                                   success: function (data)
+                                            {
+                                                $(selector).fadeToggle(400, "linear", function ()
+                                                {
+                                                    $(selector).html(parent.getHtml(data, selector)).fadeToggle(400, "linear");
+                                                    parent.refreshScript(data);
+                                                    parent.initAjax();
+                                                    parent.initAlert($current);
                                                 });
                                             }
                                });
                            });
+                       },
+        initAlert:     function ($current)
+                       {
+                           var parent = this;
+                           setTimeout(function ()
+                           {
+                               $current.find(parent.settings.ajax.alert).fadeOut();
+                           }, 5000);
                        },
         refreshScript: function (data)
                        {
@@ -99,9 +155,13 @@
                 }
             },
             ajax:     {
-                form:    'form[data-type=ajax]',
-                content: 'data-content',
-                load:    '<i class="fa fa-circle-o-notch fa-spin"></i>'
+                form:      'form[data-type=ajax]',
+                link:      'a[data-type=ajax]',
+                content:   'data-content',
+                live:      'data-live',
+                animation: 'data-animation',
+                alert:     '.alert-box',
+                load:      '<i class="fa fa-circle-o-notch fa-spin"></i>'
             }
         }, options);
         new Plugin(settings);

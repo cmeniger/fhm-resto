@@ -12,8 +12,8 @@
 
     <fieldset>
         <legend>{{ (basetrans ~ '.title')|trans }}</legend>
-        <div class="dd-sort">
-            <div class="dd-sort-master" data-id="{{ document.getId() }}" data-url="{{ path('fhm_admin_page_sort') }}">
+        <div class="dd-sort" data-id="{{ document.getId() }}" data-url="{{ path('fhm_admin_page_sort') }}">
+            <div class="dd-sort-master">
                 <a href="#" data-reveal-id="addData" title="{{ (basetrans ~ '.add.title')|trans }}">
                     <div class="icon add"><i class="fa fa-plus"></i></div>
                 </a>

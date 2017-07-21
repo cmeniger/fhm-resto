@@ -13,6 +13,42 @@ form{
             margin-bottom: 1rem;
         }
     }
+    .form-social{
+        text-align: center;
+        .social-icons{
+            display:     inline-block;
+            height:      37px;
+            width:       37px;
+            line-height: 37px;
+            text-align:  center;
+            color:       $white;
+            font-size:   16px;
+            &.prefix{
+                width: 100%;
+            }
+            i{
+                color: $white;
+            }
+            &.facebook{
+                background-color: $color-social-facebook;
+            }
+            &.twitter{
+                background-color: $color-social-twitter;
+            }
+            &.google{
+                background-color: $color-social-google;
+            }
+            &.instagram{
+                background-color: $color-social-instagram;
+            }
+            &.youtube{
+                background-color: $color-social-youtube;
+            }
+            &.flux{
+                background-color: $color-social-flux;
+            }
+        }
+    }
     .form-alert{
         .form-alert-icon{
             color:     $primary-color;
@@ -35,42 +71,6 @@ form{
     .form-fields{
         select[multiple]{
             height: 300px;
-        }
-        .form-social{
-            text-align: center;
-            .social-icons{
-                display:     inline-block;
-                height:      37px;
-                width:       37px;
-                line-height: 37px;
-                text-align:  center;
-                color:       $white;
-                font-size:   16px;
-                &.prefix{
-                    width: 100%;
-                }
-                i{
-                    color: $white;
-                }
-                &.facebook{
-                    background-color: $color-social-facebook;
-                }
-                &.twitter{
-                    background-color: $color-social-twitter;
-                }
-                &.google{
-                    background-color: $color-social-google;
-                }
-                &.instagram{
-                    background-color: $color-social-instagram;
-                }
-                &.youtube{
-                    background-color: $color-social-youtube;
-                }
-                &.flux{
-                    background-color: $color-social-flux;
-                }
-            }
         }
     }
     .form-submit{
