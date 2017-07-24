@@ -144,23 +144,23 @@
                         left:        0;
                         right:       0;
                         bottom:      0;
-                        height:      50px;
+                        height:      35px;
                         background:  rgba($dark-grey, 0.6);
                         color:       $white;
-                        font-size:   $font-size-list-title;
-                        line-height: 25px;
+                        font-size:   1rem;
+                        line-height: 35px;
                         z-index:     1;
 
                     }
                     .price{
                         @include font-title();
                         position:    absolute;
-                        bottom:      50px;
+                        bottom:      35px;
                         left:        0;
                         right:       0;
                         background:  rgba($dark-grey, 0.6);
                         color:       $white;
-                        font-size:   $font-size-list-title;
+                        font-size:   1.5rem;
                         font-weight: bold;
                         line-height: 50px;
                         z-index:     0;
@@ -182,7 +182,7 @@
                         @include font-title();
                         @include logo();
                         display:       block;
-                        font-size:     $font-size-list-title;
+                        font-size:     1rem;
                         margin-bottom: 1rem;
                     }
                     .ingredient{
@@ -623,7 +623,7 @@
             background: none;
             padding:    0;
             .item{
-                height: 515px;
+                height: 350px;
                 margin: 0 10px;
                 .front{
                     position:         relative;
@@ -988,19 +988,19 @@
                         .image{
                             width:  50%;
                             float:  left;
-                            height: 500px;
+                            height: 400px;
                         }
                         .caption{
                             width:    50%;
                             float:    right;
-                            height:   500px;
+                            height:   400px;
                             overflow: hidden;
-                            padding:  50px 10px;
+                            padding:  10px;
                             .price{
                                 position:  absolute;
                                 left:      0;
                                 right:     0;
-                                bottom:    50px;
+                                bottom:    10px;
                                 font-size: 3em;
                             }
                         }

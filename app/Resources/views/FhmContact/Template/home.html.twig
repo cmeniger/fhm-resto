@@ -209,13 +209,4 @@
     $(document).addresspicker({ view: { map: 'map-{{ demo is defined ? 'demo' : object.getId() }}',
     lat: {{ demo is defined ? '46' : object.getLatitude() }}, lng: {{ demo is defined ? '5' : object.getLongitude() }}
     } });
-    $(".contact.home .contact-right header")
-    .on("inViewBegin", function ()
-    {
-    $(this).addClass("animated").addClass("zoomIn");
-    })
-    .on("inViewEnd", function ()
-    {
-    $(this).removeClass("animated").removeClass("zoomIn");
-    });
 {% endblock %}

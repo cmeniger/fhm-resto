@@ -2,7 +2,7 @@
 
 {% if demo is defined %}
     <div class="gallery home-bottom">
-        <ul class="small-block-grid-2 medium-block-grid-3 large-block-grid-4">
+        <ul class="small-block-grid-1 medium-block-grid-3 large-block-grid-4">
             <li>
                 <div class="image" style="background:url({{ asset('images/demo/gallery/gallery-item1.jpg') }})"></div>
             </li>
@@ -19,7 +19,7 @@
     </div>
 {% else %}
     <div class="gallery home-bottom">
-        <ul class="small-block-grid-2 medium-block-grid-3 large-block-grid-4">
+        <ul class="small-block-grid-1 medium-block-grid-3 large-block-grid-4">
             {% if items|length > 0 %}
                 {% for item in items %}
                     <li>
@@ -40,14 +40,15 @@
 <script>
     $(document).ready(function ()
     {
-        $(".gallery.home-bottom li")
+        $(".gallery.home-bottom li:even")
             .on("inViewBegin", function ()
             {
-                $(this).addClass("animated").addClass("zoomIn");
-            })
-            .on("inViewEnd", function ()
+                $(this).addClass("animated").addClass("bounceInUp");
+            });
+        $(".gallery.home-bottom li:odd")
+            .on("inViewBegin", function ()
             {
-                $(this).removeClass("animated").removeClass("zoomIn");
+                $(this).addClass("animated").addClass("bounceInDown");
             });
     });
 </script>

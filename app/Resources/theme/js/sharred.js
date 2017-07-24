@@ -75,10 +75,6 @@
                                .on("inViewBegin", function ()
                                {
                                    $(this).addClass("animated").addClass("zoomIn");
-                               })
-                               .on("inViewEnd", function ()
-                               {
-                                   $(this).removeClass("animated").removeClass("zoomIn");
                                });
                        },
         parallaxImage: function ()
@@ -119,7 +115,7 @@
                        {
                            var windowHeight = $(window).height();
                            $('.banner-wrap').css('height', windowHeight);
-                           $('.parallax-image-banner').css('min-height', windowHeight);
+                           $('.parallax-image-top').css('min-height', windowHeight);
                        },
         recaptcha:     function ()
                        {

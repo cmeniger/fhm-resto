@@ -57,17 +57,3 @@
         </ul>
     </div>
 {% endif %}
-<script>
-    $(document).ready(function ()
-    {
-        $(".card-embed-m003 .caption")
-            .on("inViewBegin", function ()
-            {
-                $(this).addClass("animated").addClass("zoomIn");
-            })
-            .on("inViewEnd", function ()
-            {
-                $(this).removeClass("animated").removeClass("zoomIn");
-            });
-    });
-</script>

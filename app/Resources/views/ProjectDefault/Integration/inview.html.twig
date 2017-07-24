@@ -39,10 +39,6 @@
                 {
                     console.log($(this).html());
                     $(this).css('color', $(this).attr('data-color'));
-                })
-                .on("inViewEnd", function ()
-                {
-                    $(this).css('color', '#000');
                 });
         })();
     </script>
