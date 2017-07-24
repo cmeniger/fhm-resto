@@ -179,6 +179,7 @@
         }
     }
     &.home{
+        @include css3-prefix(box-shadow, 0 30px 120px 0 rgba($black, 0.25));
         .map-container{
             height:   650px;
             overflow: hidden;

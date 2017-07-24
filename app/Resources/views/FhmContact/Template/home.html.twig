@@ -206,7 +206,10 @@
 
 {% block javascript %}
     {{ parent() }}
-    $(document).addresspicker({ view: { map: 'map-{{ demo is defined ? 'demo' : object.getId() }}',
-    lat: {{ demo is defined ? '46' : object.getLatitude() }}, lng: {{ demo is defined ? '5' : object.getLongitude() }}
+    $(document).addresspicker({
+    view: { map: 'map-{{ demo is defined ? 'demo' : object.getId() }}',
+    lat: {{ demo is defined ? '46' : object.getLatitude() }},
+    lng: {{ demo is defined ? '5' : object.getLongitude() }},
+    scrollwheel: false
     } });
 {% endblock %}
