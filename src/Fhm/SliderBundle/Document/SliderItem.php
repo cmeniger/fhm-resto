@@ -29,14 +29,19 @@ class SliderItem extends FhmFhm
     protected $content;
 
     /**
-     * @MongoDB\ReferenceOne(targetDocument="Fhm\MediaBundle\Document\Media", nullable=true)
-     */
-    protected $image;
-
-    /**
      * @MongoDB\Field(type="string")
      */
     protected $link;
+
+    /**
+     * @MongoDB\Field(type="boolean")
+     */
+    protected $caption;
+
+    /**
+     * @MongoDB\ReferenceOne(targetDocument="Fhm\MediaBundle\Document\Media", nullable=true)
+     */
+    protected $image;
 
     /**
      * @MongoDB\ReferenceMany(targetDocument="Fhm\SliderBundle\Document\Slider", nullable=true, cascade={"persist"})
@@ -55,6 +60,7 @@ class SliderItem extends FhmFhm
     {
         parent::__construct();
         $this->sliders     = new ArrayCollection();
+        $this->caption         = true;
         $this->sort_slider = 0;
     }
 
@@ -129,6 +135,30 @@ class SliderItem extends FhmFhm
     public function getContent()
     {
         return $this->content;
+    }
+
+    /**
+     * Get caption
+     *
+     * @return bool
+     */
+    public function getCaption()
+    {
+        return $this->caption;
+    }
+
+    /**
+     * Set caption
+     *
+     * @param $caption
+     *
+     * @return $this
+     */
+    public function setCaption($caption)
+    {
+        $this->caption = $caption;
+
+        return $this;
     }
 
     /**

@@ -3,6 +3,10 @@ services:
         class: Project\DefaultBundle\Services\TwigGlobal
         arguments: ['@fhm_tools', '@session', '@twig']
 
+    project_moderator:
+        class: Project\DefaultBundle\Services\Moderator
+        arguments: ['@fhm_tools']
+
     fhm_cache:
         class: Project\DefaultBundle\Services\Cache
         arguments: ['@fhm_tools', '@session']

@@ -1,0 +1,149 @@
+{% extends "::ajax.html.twig" %}
+{% trans_default_domain 'ProjectDefaultBundle' %}
+
+{% block content %}
+    <div class="header active">
+        <div class="help">
+            <a href="#" data-reveal-id="modalHelpMenu" title="{{ (instance.translation ~ '.moderator.form.help.title')|trans }}"><i class="fa fa-question"></i></a>
+            <div id="modalHelpMenu" class="moderator-modal-help reveal-modal" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
+                <h3 id="modalTitle">{{ (instance.translation ~ '.moderator.form.help.title')|trans }}</h3>
+                <fieldset>
+                    <legend>{{ (instance.translation ~ '.moderator.help.menu.anchor.title')|trans }}</legend>
+                    <p>{{ (instance.translation ~ '.moderator.help.menu.anchor.content')|trans }}</p>
+                    <div class="row">
+                        <div class="columns medium-6 large-4">
+                            <div class="gutter-margin-bottom text-center">
+                                <h5>{{ (instance.translation ~ '.moderator.menu.gallery-top')|trans }}</h5>
+                                <p>/#anchor-about</p>
+                            </div>
+                            <div class="gutter-margin-bottom text-center">
+                                <h5>{{ (instance.translation ~ '.moderator.menu.news')|trans }}</h5>
+                                <p>/#anchor-news</p>
+                            </div>
+                            <div class="gutter-margin-bottom text-center">
+                                <h5>{{ (instance.translation ~ '.moderator.menu.gallery-bottom')|trans }}</h5>
+                                <p>/#anchor-gallery</p>
+                            </div>
+                        </div>
+                        <div class="columns medium-6 large-4">
+                            <div class="gutter-margin-bottom text-center">
+                                <h5>{{ (instance.translation ~ '.moderator.menu.card-slider')|trans }}</h5>
+                                <p>/#anchor-card-slider</p>
+                            </div>
+                            <div class="gutter-margin-bottom text-center">
+                                <h5>{{ (instance.translation ~ '.moderator.menu.card-main')|trans }}</h5>
+                                <p>/#anchor-card-main</p>
+                            </div>
+                            <div class="gutter-margin-bottom text-center">
+                                <h5>{{ (instance.translation ~ '.moderator.menu.card-forward')|trans }}</h5>
+                                <p>/#anchor-card-forward</p>
+                            </div>
+                        </div>
+                        <div class="columns medium-6 large-4 end">
+                            <div class="gutter-margin-bottom text-center">
+                                <h5>{{ (instance.translation ~ '.moderator.menu.testimony')|trans }}</h5>
+                                <p>/#anchor-testimony</p>
+                            </div>
+                            <div class="gutter-margin-bottom text-center">
+                                <h5>{{ (instance.translation ~ '.moderator.menu.contact')|trans }}</h5>
+                                <p>/#anchor-contact</p>
+                            </div>
+                            <div class="gutter-margin-bottom text-center">
+                                <h5>{{ (instance.translation ~ '.moderator.menu.partner')|trans }}</h5>
+                                <p>/#anchor-partner</p>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <legend>{{ (instance.translation ~ '.moderator.help.menu.position.title')|trans }}</legend>
+                    <div class="row gutter-margin-bottom">
+                        <div class="columns large-6 gutter-margin-bottom">
+                            <img src="{{ asset('images/help/moderator-menu.jpg') }}" alt="menu-position">
+                        </div>
+                        <div class="columns large-6 gutter-margin-bottom">
+                            <div class="row gutter-margin-bottom gutter-margin-bottom">
+                                <div class="columns small-2 medium-1 large-1">
+                                    <span class="index">1</span>
+                                </div>
+                                <div class="columns small-10 medium-11 large-11">
+                                    {{ (instance.translation ~ '.moderator.help.menu.position.f_main')|trans }}
+                                </div>
+                            </div>
+                            <div class="row gutter-margin-bottom gutter-margin-bottom">
+                                <div class="columns small-2 medium-1 large-1">
+                                    <span class="index">2</span>
+                                </div>
+                                <div class="columns small-10 medium-11 large-11">
+                                    {{ (instance.translation ~ '.moderator.help.menu.position.f_footer')|trans }}
+                                </div>
+                            </div>
+                            <div class="row gutter-margin-bottom gutter-margin-bottom">
+                                <div class="columns small-2 medium-1 large-1">
+                                    <span class="index">3</span>
+                                </div>
+                                <div class="columns small-10 medium-11 large-11">
+                                    {{ (instance.translation ~ '.moderator.help.menu.position.f_side')|trans }}
+                                </div>
+                            </div>
+                            <div class="row gutter-margin-bottom gutter-margin-bottom">
+                                <div class="columns small-2 medium-1 large-1">
+                                    <span class="index">4</span>
+                                </div>
+                                <div class="columns small-10 medium-11 large-11">
+                                    {{ (instance.translation ~ '.moderator.help.menu.position.f_left')|trans }}
+                                </div>
+                            </div>
+                            <div class="row gutter-margin-bottom gutter-margin-bottom">
+                                <div class="columns small-2 medium-1 large-1">
+                                    <span class="index">5</span>
+                                </div>
+                                <div class="columns small-10 medium-11 large-11">
+                                    {{ (instance.translation ~ '.moderator.help.menu.position.f_right')|trans }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+                <a class="close-reveal-modal" aria-label="Close">&#215;</a>
+            </div>
+        </div>
+    </div>
+    <ul class="accordion gutter-margin-top" data-accordion>
+        <li class="accordion-navigation active">
+            <a href="#menu-main"><i class="fa fa-bars icon"></i>{{ (instance.translation ~ '.moderator.form.fieldset.menu_main')|trans }}
+            </a>
+            <div id="menu-main" class="content active">
+                {{ render(path('project_moderator_menu_main')) }}
+            </div>
+        </li>
+        <li class="accordion-navigation">
+            <a href="#menu-footer"><i class="fa fa-bars icon"></i>{{ (instance.translation ~ '.moderator.form.fieldset.menu_footer')|trans }}
+            </a>
+            <div id="menu-footer" class="content">
+                {{ render(path('project_moderator_menu_footer')) }}
+            </div>
+        </li>
+        <li class="accordion-navigation">
+            <a href="#menu-home-side"><i class="fa fa-bars icon"></i>{{ (instance.translation ~ '.moderator.form.fieldset.menu_home_side')|trans }}
+            </a>
+            <div id="menu-home-side" class="content">
+                {{ render(path('project_moderator_menu_home_side')) }}
+            </div>
+        </li>
+        <li class="accordion-navigation">
+            <a href="#menu-home-left"><i class="fa fa-bars icon"></i>{{ (instance.translation ~ '.moderator.form.fieldset.menu_home_left')|trans }}
+            </a>
+            <div id="menu-home-left" class="content">
+                {{ render(path('project_moderator_menu_home_left')) }}
+            </div>
+        </li>
+        <li class="accordion-navigation">
+            <a href="#menu-home-right"><i class="fa fa-bars icon"></i>{{ (instance.translation ~ '.moderator.form.fieldset.menu_home_right')|trans }}
+            </a>
+            <div id="menu-home-right" class="content">
+                {{ render(path('project_moderator_menu_home_right')) }}
+            </div>
+        </li>
+    </ul>
+{% endblock %}

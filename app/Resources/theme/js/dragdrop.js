@@ -21,7 +21,7 @@ function ddSort()
         maxDepth:        1
     }).on('change', function (e)
     {
-        if(typeof $(this).attr('data-url') != 'undefined')
+        if(typeof $(this).attr('data-url') !== 'undefined')
         {
             var list = e.length ? e : $(e.target);
             $.ajax
@@ -80,10 +80,10 @@ function ddTree()
             emptyClass:      'dd-tree-empty',
             expandBtnHTML:   '',
             collapseBtnHTML: '',
-            maxDepth:        $(this).attr('data-depth') == "undefined" ? 99 : $(this).attr('data-depth')
+            maxDepth:        $(this).attr('data-depth') === "undefined" ? 99 : $(this).attr('data-depth')
         }).on('change', function (e)
         {
-            if(typeof $(this).attr('data-url') != 'undefined')
+            if(typeof $(this).attr('data-url') !== 'undefined')
             {
                 var list = e.length ? e : $(e.target);
                 $.ajax
@@ -110,27 +110,27 @@ function ddList()
     $('.dd-list').each(function ()
     {
         var list = $(this);
-        var group = (typeof list.attr('data-group') == 'undefined') ? 1 : list.attr('data-group');
+        var group = (typeof list.attr('data-group') === 'undefined') ? 1 : list.attr('data-group');
         list.nestable
-            ({
-                listNodeName:    'ol',
-                itemNodeName:    'li',
-                rootClass:       'dd-list',
-                listClass:       'dd-list-list',
-                itemClass:       'dd-list-item',
-                dragClass:       'dd-list-drag',
-                handleClass:     'dd-list-handle',
-                collapsedClass:  'dd-list-collapsed',
-                placeClass:      'dd-list-placeholder',
-                noDragClass:     'dd-list-nodrag',
-                emptyClass:      'dd-list-empty',
-                expandBtnHTML:   '',
-                collapseBtnHTML: '',
-                group:           group
-            })
+        ({
+            listNodeName:    'ol',
+            itemNodeName:    'li',
+            rootClass:       'dd-list',
+            listClass:       'dd-list-list',
+            itemClass:       'dd-list-item',
+            dragClass:       'dd-list-drag',
+            handleClass:     'dd-list-handle',
+            collapsedClass:  'dd-list-collapsed',
+            placeClass:      'dd-list-placeholder',
+            noDragClass:     'dd-list-nodrag',
+            emptyClass:      'dd-list-empty',
+            expandBtnHTML:   '',
+            collapseBtnHTML: '',
+            group:           group
+        })
             .on('change', function (e)
             {
-                if(typeof $(this).attr('data-url') != 'undefined')
+                if(typeof $(this).attr('data-url') !== 'undefined')
                 {
                     var data = e.length ? e : $(e.target);
                     $.ajax

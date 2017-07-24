@@ -1,0 +1,110 @@
+{% extends "::ajax.html.twig" %}
+{% trans_default_domain 'ProjectDefaultBundle' %}
+{% import _self as this %}
+
+{% macro menu() %}
+    {% import _self as this %}
+    <div class="dd-tree row" data-id="{{ site.getMenu().getId() }}" data-url="{{ path('project_moderator_menu_sort') }}">
+        <div class="dd-tree-master">
+            <div class="dd-tree-handle"><i class="fa fa-chevron-down"></i></div>
+            <div class="dd-tree-content">
+                <div class="pull-left">{{ ('project.moderator.form.fieldset.menu_main')|trans }}</div>
+            </div>
+        </div>
+        {% if site.getMenu().getChilds()|length > 0 %}
+            {{ this.branchs(site.getMenu().getChilds()) }}
+        {% endif %}
+    </div>
+{% endmacro %}
+
+{# Ajouter des branches #}
+{# @var tree     array #}
+{% macro branchs(tree) %}
+    {% import _self as this %}
+    {% if tree|length > 0 %}
+        <ol class="dd-tree-list">
+            {% for branch in tree %}
+                {% if branch.getActive() and not branch.getDelete() %}
+                    <li class="dd-tree-item" data-id="{{ branch.getId() }}">
+                        <div class="dd-tree-handle"><i class="fa fa-arrows"></i></div>
+                        <div class="dd-tree-content">
+                            <div class="pull-left">{{ branch.getName() }}</div>
+                            <div class="pull-right">{{ this.actions(branch) }}</div>
+                        </div>
+                        {% if branch.getChilds()|length > 0 %}
+                            {{ this.branchs(branch.getChilds()) }}
+                        {% endif %}
+                    </li>
+                {% endif %}
+            {% endfor %}
+        </ol>
+    {% endif %}
+{% endmacro %}
+
+{# Actions #}
+{# @var object object #}
+{% macro actions(object) %}
+    {% import _self as this %}
+    <div class="dd-tree-page">
+        {{ object.getRoute() }}
+    </div>
+    <div class="dd-tree-actions">
+        <a href="{{ path('project_moderator_menu_main', {id:object.getId()}) }}" title="" data-type="ajax" data-content="#form-menu-main"><i class="fa fa-pencil"></i></a>
+        <a href="{{ path('project_moderator_menu_delete', {id:object.getId(), menu:'main'}) }}" title="" class="alert" data-type="ajax" data-content="#form-menu-main"><i class="fa fa-times"></i></a>
+    </div>
+{% endmacro %}
+
+{% block content %}
+    <div id="form-menu-main">
+        <div class="row">
+            <div class="columns large-4">
+                <form action="{{ path('project_moderator_menu_main', {id:id}) }}" method="POST" data-type="ajax" data-content="#form-menu-main">
+                    {% if not message[0] == '' %}
+                        <div data-alert class="alert-box radius {{ message[0] }}">
+                            {{ message[1] }}
+                            <a href="#" class="close">&times;</a>
+                        </div>
+                    {% endif %}
+                    <div>
+                        {{ form_label(form.name) }}
+                        {{ form_errors(form.name) }}
+                        {{ form_widget(form.name) }}
+                    </div>
+                    <div>
+                        {{ form_label(form.route) }}
+                        {{ form_errors(form.route) }}
+                        {{ form_widget(form.route) }}
+                    </div>
+                    <div>
+                        {{ form_errors(form.external) }}
+                        {{ form_label(form.external) }}
+                        <div class="switch">
+                            {{ form_widget(form.external) }}
+                            <label for="{{ form.external.vars.id }}"></label>
+                        </div>
+                    </div>
+                    <div>
+                        <ul class="button-group">
+                            <li>
+                                <button type="submit" class="tiny">{{ ('project.moderator.form.button.' ~ (id ? 'update' : 'create'))|trans }}</button>
+                            </li>
+                            <li>
+                                <a href="{{ path('project_moderator_menu_main') }}" class="button tiny secondary" data-type="ajax" data-content="#form-menu-main"><i class="fa fa-times"></i></a>
+                            </li>
+                        </ul>
+                    </div>
+                    {{ form_rest(form) }}
+                </form>
+            </div>
+            <div class="columns large-8">
+                {{ this.menu() }}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascript %}
+    {{ parent() }}
+    $(document).form({required: '{{ 'fhm.form.required'|trans({},'FhmFhmBundle') }}'});
+    ddTree();
+{% endblock %}

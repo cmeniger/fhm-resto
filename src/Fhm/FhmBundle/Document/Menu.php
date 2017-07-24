@@ -1,4 +1,5 @@
 <?php
+
 namespace Fhm\FhmBundle\Document;
 
 use Fhm\FhmBundle\Document\Fhm as FhmFhm;
@@ -38,6 +39,11 @@ class Menu extends FhmFhm
      * @MongoDB\Field(type="hash")
      */
     protected $module = array();
+
+    /**
+     * @MongoDB\Field(type="boolean")
+     */
+    protected $external = false;
 
     /**
      * @MongoDB\Field(type="int")
@@ -207,7 +213,8 @@ class Menu extends FhmFhm
      */
     public function addChild(\Fhm\FhmBundle\Document\Menu $menu)
     {
-        if (!$this->childs->contains($menu)) {
+        if(!$this->childs->contains($menu))
+        {
             $this->childs->add($menu);
         }
 
@@ -223,9 +230,30 @@ class Menu extends FhmFhm
      */
     public function removeChild(\Fhm\FhmBundle\Document\Menu $menu)
     {
-        if ($this->childs->contains($menu)) {
+        if($this->childs->contains($menu))
+        {
             $this->childs->removeElement($menu);
         }
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getExternal()
+    {
+        return $this->external;
+    }
+
+    /**
+     * @param $external
+     *
+     * @return $this
+     */
+    public function setExternal($external)
+    {
+        $this->external = $external;
 
         return $this;
     }

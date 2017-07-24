@@ -1,0 +1,285 @@
+.moderator{
+    position: relative;
+    .tabs{
+        position: absolute;
+        left:     0;
+        width:    50px;
+        margin:   0 !important;
+        .tab-title{
+            position:      relative;
+            border-bottom: 1px solid $white;
+            > a{
+                padding:    0;
+                background: $light-grey;
+                &:focus{
+                    outline: none;
+                }
+                span{
+                    display: none;
+                }
+                > i{
+                    position:    relative;
+                    width:       50px;
+                    height:      50px;
+                    line-height: 50px;
+                    font-size:   1.2em;
+                    color:       $success-color;
+                    > i{
+                        @include border-radius(1000px);
+                        position:    absolute;
+                        left:        45%;
+                        top:         45%;
+                        width:       15px;
+                        height:      15px;
+                        line-height: 15px;
+                        font-size:   0.5em;
+                        background:  $success-color;
+                        color:       $white;
+                    }
+                }
+            }
+            &.active{
+                > a{
+                    background: $white;
+                }
+            }
+            &.disabled{
+                > a{
+                    > i{
+                        color: $warning-color;
+                        > i{
+                            background: $warning-color;
+                        }
+                    }
+                }
+            }
+            &.locked{
+                > a{
+                    > i{
+                        color: $medium-grey;
+                        > i{
+                            background: $medium-grey;
+                        }
+                    }
+                }
+            }
+        }
+        @media #{$medium} {
+        }
+        @media #{$large} {
+            width: 15%;
+            .tab-title{
+                > a{
+                    padding: 5px 0;
+                    span{
+                        display: inline-block;
+                        padding: 0 1rem 0 0;
+                    }
+                }
+            }
+        }
+    }
+    .tabs-content{
+        padding-left: 50px;
+        margin:       0 !important;
+        .content{
+            padding: 1rem;
+            .alert-box{
+                position: fixed;
+                top:      50px;
+                left:     5%;
+                width:    90%;
+                z-index:  9999;
+                @media #{$medium} {
+                    left:  20%;
+                    width: 60%;
+                }
+                @media #{$large} {
+                    left:  25%;
+                    width: 50%;
+                }
+            }
+            .header{
+                @include border-radius(3px);
+                box-sizing: content-box;
+                padding:    1rem;
+                height:     30px;
+                label{
+                    float:        left;
+                    margin-right: 1rem;
+                }
+                .switch{
+                    float: left;
+                }
+                .help{
+                    float: right;
+                    a{
+                        @include border-radius(1000px);
+                        display:     block;
+                        width:       30px;
+                        height:      30px;
+                        line-height: 30px;
+                        text-align:  center;
+                        background:  $white;
+                        color:       $warning-color;
+                    }
+                }
+                &.active{
+                    @include background-horizontal($white, $success-color);
+                }
+                &.disabled{
+                    @include background-horizontal($white, $warning-color);
+                }
+                &.locked{
+                    @include background-horizontal($white, $medium-grey);
+                }
+            }
+            fieldset{
+                @include border-radius(3px);
+                border-color: $warning-color;
+                margin:       2rem 0;
+                legend{
+                    color: $warning-color;
+                }
+            }
+            .dd-tree{
+                .dd-tree-content{
+                    .dd-tree-page{
+                        display:       none;
+                        font-size:     1em;
+                        padding-right: 1rem;
+                        border-right:  1px solid $light-grey;
+                        height:        30px;
+                        @media #{$medium} {
+                            display: block;
+                        }
+                        @media #{$large} {
+                        }
+                    }
+                    .dd-tree-actions{
+                        width:        auto;
+                        margin-right: 0;
+                        a{
+                            &.alert{
+                                color: $alert-color;
+                            }
+                        }
+                    }
+                }
+            }
+            .accordion{
+                .accordion-navigation{
+                    position:      relative;
+                    border-bottom: 1px solid $white;
+                    > a{
+                        background: $light-grey;
+                    }
+                    .icon{
+                        text-align:   center;
+                        width:        30px;
+                        height:       30px;
+                        line-height:  30px;
+                        margin-right: 10px;
+                        color:        $warning-color;
+                    }
+                    &:after{
+                        position:    absolute;
+                        display:     block;
+                        padding:     1rem;
+                        right:       1rem;
+                        top:         0;
+                        width:       30px;
+                        height:      30px;
+                        line-height: 30px;
+                        content:     $fa-var-caret-down;
+                        font-family: "fontawesome";
+                        color:       $warning-color;
+                    }
+                    &.active{
+                        &:after{
+                            content: $fa-var-caret-up;
+                        }
+                    }
+                }
+            }
+            .items{
+                @include border-radius(3px);
+                padding: 1rem;
+                border:  1px solid $light-grey;
+                .item{
+                    position: relative;
+                    .image{
+                        height:          200px;
+                        background-size: cover !important;
+                    }
+                    .title{
+                        text-align: center;
+                        font-size:  0.8em;
+                        color:      $medium-grey;
+                        overflow:   hidden;
+                    }
+                    .overlay{
+                        @include border-radius(3px);
+                        position:   absolute;
+                        right:      15px;
+                        top:        5px;
+                        padding:    1rem;
+                        background: rgba($black, 0.4);
+                        text-align: center;
+                        a{
+                            color:     $white;
+                            font-size: 1.2em;
+                            &.alert{
+                                color: $alert-color;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        @media #{$medium} {
+        }
+        @media #{$large} {
+            padding-left: 15%;
+        }
+    }
+}
+
+.moderator-modal-help{
+    fieldset{
+        @include border-radius(3px);
+        border-color: $warning-color;
+        margin:       2rem 0;
+        legend{
+            color: $warning-color;
+        }
+    }
+    img{
+        width: 100%;
+    }
+    .index{
+        @include border-radius(1000px);
+        display:     block;
+        width:       20px;
+        height:      20px;
+        line-height: 20px;
+        text-align:  center;
+        background:  $medium-grey;
+        color:       $white;
+        @media #{$medium} {
+            width:       25px;
+            height:      25px;
+            line-height: 25px;
+        }
+        @media #{$large} {
+            width:       30px;
+            height:      30px;
+            line-height: 30px;
+        }
+    }
+    h5{
+        font-size:   0.8em;
+        font-weight: bold;
+        color:       $medium-grey;
+    }
+}

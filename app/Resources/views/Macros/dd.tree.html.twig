@@ -8,7 +8,7 @@
 
     {% trans_default_domain instance.domain %}
     {% import _self as this %}
-    <div class="dd-tree">
+    <div class="dd-tree" data-id="{{ object.getId() }}" data-url="{{ path('fhm_admin_' ~ instance.route ~ '_sort') }}">
         {% if treemap|length > 1 %}
             <div class="dd-tree-map">
                 <ul class="breadcrumbs">
@@ -24,7 +24,7 @@
                 </ul>
             </div>
         {% endif %}
-        <div class="dd-tree-master" data-id="{{ object.getId() }}" data-url="{{ path('fhm_admin_' ~ instance.route ~ '_sort') }}">
+        <div class="dd-tree-master">
             <div class="dd-tree-handle"><i class="fa fa-chevron-down"></i></div>
             <div class="dd-tree-content {{ object.getActive() ? "" : "deactive" }} {{ object.getDelete() ? "delete" : "" }}">
                 <div class="pull-left">{{ object.getName() }}</div>

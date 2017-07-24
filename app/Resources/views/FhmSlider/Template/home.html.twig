@@ -10,16 +10,6 @@
             </div>
         </div>
         <div class="slider-item" style="background: url({{ asset('images/demo/slider/slider-item2.jpg') }})">
-            <div class="caption">
-                <h2>Donec pede justo</h2>
-                <p>Quisque id mi. Suspendisse eu ligula. Curabitur at lacus ac velit ornare lobortis. Aenean leo ligula,
-                    porttitor eu, consequat vitae, eleifend ac, enim. Cum sociis natoque penatibus et magnis dis
-                    parturient montes, nascetur ridiculus mus. Vestibulum eu odio. Nulla facilisi. Praesent venenatis
-                    metus at tortor pulvinar varius. In dui magna, posuere eget, vestibulum et, tempor auctor, justo.
-                    Pellentesque egestas, neque sit amet convallis pulvinar, justo nulla eleifend augue, ac auctor orci
-                    leo non est.</p>
-                <a href="#" target="_blank">{{ (instance.translation ~ '.api.more')|trans }}</a>
-            </div>
         </div>
         <div class="slider-item" style="background: url({{ asset('images/demo/slider/slider-item3.jpg') }})">
             <div class="caption">
@@ -34,13 +24,15 @@
     <div class="slider home row">
         {% for item in items %}
             <div class="slider-item" style="background: url({{ item.getImage()|media }})">
-                <div class="caption">
-                    <h2>{{ item.getTitle() }}</h2>
-                    <p>{{ item.getContent()|raw }}</p>
-                    {% if item.getLink() %}
-                        <a href="{{ item.getLink() }}" target="_blank">{{ (instance.translation ~ '.api.more')|trans }}</a>
-                    {% endif %}
-                </div>
+                {% if item.getCaption() %}
+                    <div class="caption">
+                        <h2>{{ item.getTitle() }}</h2>
+                        <p>{{ item.getContent()|raw }}</p>
+                        {% if item.getLink() %}
+                            <a href="{{ item.getLink() }}" target="_blank">{{ (instance.translation ~ '.api.more')|trans }}</a>
+                        {% endif %}
+                    </div>
+                {% endif %}
             </div>
         {% endfor %}
     </div>
