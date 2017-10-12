@@ -124,6 +124,8 @@ project:
                 menu_home_side:                 Accueil latéral
                 menu_home_left:                 Accueil gauche
                 menu_home_right:                Accueil droite
+                gallery_item:                   Images
+                gallery_video:                  Vidéos
             site:
                 demo:                           Mode démo
                 title:                          Titre
@@ -152,6 +154,20 @@ project:
                 link:                           Lien
                 content:                        Contenu
                 image:                          Image
+            gallery:
+                show_top:                       Afficher la section "A propos"
+                show_bottom:                    Afficher la galerie
+                title:                          Titre
+                subtitle:                       Sous-titre
+                content:                        Contenu
+                image:                          Image
+                video:                          Lien youtube
+            partner:
+                show:                           Afficher les partenaires
+                name:                           Nom
+                link:                           Lien
+                content:                        Contenu
+                image:                          Image
         help:
             site:
                 demo:
@@ -177,3 +193,22 @@ project:
                     f_side:                     "Menu latéral de la page principale"
                     f_left:                     "Menu de gauche de la page principale"
                     f_right:                    "Menu de droite de la page principale"
+            gallery_top_item:
+                position:
+                    title:                      "Positions des images"
+                    f_title:                    "Titre"
+                    f_subtitle:                 "Sous-titre"
+                    f_content:                  "Contenu"
+                    f_image:                    "Image"
+            gallery_top_video:
+                position:
+                    title:                      "Positions des vidéos"
+                    f_video:                    "Vidéo"
+            gallery_bottom_item:
+                position:
+                    title:                      "Positions des images"
+                    f_image:                    "Image"
+            gallery_bottom_video:
+                position:
+                    title:                      "Positions des vidéos"
+                    f_video:                    "Vidéo"

@@ -1,1 +1,148 @@
-!function($,window,document){function Plugin(t){this.settings=t,this.search="",this.pagination=1,this.sort={field:"",order:""},this.current={},this.init()}Plugin.prototype={init:function(){this.initCurrent(),this.initSearch(),this.initPagination(),this.initSort()},initCurrent:function(){var t=this;t.current={path:this.settings.url,data:this.settings.container.data,pagination:this.settings.container.pagination,post:{}}},initSearch:function(){var t=this;$(t.settings.search.container).closest("form").unbind("submit").submit(function(i){i.preventDefault(),t.search=$(t.settings.search.container).val(),t.pagination=1,t.refresh()})},initPagination:function(){var t=this;$(t.settings.pagination.container).unbind("click").click(function(i){return 0!=$(this).attr("data-active")&&($("li.pagination-loader").show("fast"),t.current={path:$(this).attr("data-path"),data:"#"+$(this).attr("data-id-data"),pagination:"#"+$(this).attr("data-id-pagination"),post:JSON.parse($(this).attr("data-post"))},t.pagination=$(this).attr("data-pagination"),void t.refresh())})},initSort:function(){var t=this;$(t.settings.sort.container).unbind("click").click(function(i){i.preventDefault(),t.sort.field=$(this).attr("data-field"),t.sort.order=$(this).attr("data-order"),t.pagination=1,t.refresh()})},refresh:function(){var t=this,i={FhmSearch:{search:t.search},FhmPagination:{pagination:t.pagination},FhmSort:{field:t.sort.field,order:t.sort.order}};$.ajax({type:"POST",url:t.current.path,data:$.extend({},i,t.current.post),success:function(i){$(t.current.data).fadeToggle(400,"linear",function(){$(t.current.data).html(t.getHtml(i,t.current.data)).fadeToggle(400,"linear"),$(t.current.pagination).html(t.getHtml(i,t.current.pagination)),t.refreshScript(i),t.initCurrent(),t.initSearch(),t.initPagination(),t.initSort(),$(window).scrollTop(0)})}})},refreshScript:function(data){var parent=this;$("<div>"+data+"</div>").find("script").each(function(){eval(this.innerHTML)})},getHtml:function(t,i){var n=$($.parseHTML(t));return n.filter(i).add(n.find(i)).html()}},$.fn.list=function(t){var i=$.extend({url:$("#FhmSearch_search").closest("form").attr("action"),container:{data:"#content_data",pagination:"#content_pagination"},search:{container:"input[data-type=list]"},pagination:{container:"a[data-pagination]"},sort:{container:"a[data-sort]"}},t);new Plugin(i)}}(jQuery,window,window.document);
+(function ($, window, document)
+{
+    function Plugin(settings)
+    {
+        this.settings = settings;
+        this.search = '';
+        this.pagination = 1;
+        this.sort = {field: '', order: ''};
+        this.current = {};
+        this.init();
+    }
+
+    Plugin.prototype = {
+        init:           function ()
+                        {
+                            var parent = this;
+                            this.initCurrent();
+                            this.initSearch();
+                            this.initPagination();
+                            this.initSort();
+                        },
+        initCurrent:    function ()
+                        {
+                            var parent = this;
+                            parent.current = {
+                                path:       this.settings.url,
+                                data:       this.settings.container.data,
+                                pagination: this.settings.container.pagination,
+                                post:       {}
+                            };
+                        },
+        initSearch:     function ()
+                        {
+                            var parent = this;
+                            $(parent.settings.search.container).closest('form').unbind('submit').submit(function (e)
+                            {
+                                e.preventDefault();
+                                parent.search = $(parent.settings.search.container).val();
+                                parent.pagination = 1;
+                                parent.refresh();
+                            });
+                        },
+        initPagination: function ()
+                        {
+                            var parent = this;
+                            $(parent.settings.pagination.container).unbind('click').click(function (e)
+                            {
+                                if($(this).attr("data-active") == 0)
+                                {
+                                    return false;
+                                }
+                                $("li.pagination-loader").show("fast");
+                                parent.current = {
+                                    path:       $(this).attr('data-path'),
+                                    data:       '#' + $(this).attr('data-id-data'),
+                                    pagination: '#' + $(this).attr('data-id-pagination'),
+                                    post:       JSON.parse($(this).attr('data-post'))
+                                };
+                                parent.pagination = $(this).attr('data-pagination');
+                                parent.refresh();
+                            });
+                        },
+        initSort:       function ()
+                        {
+                            var parent = this;
+                            $(parent.settings.sort.container).unbind('click').click(function (e)
+                            {
+                                e.preventDefault();
+                                parent.sort.field = $(this).attr("data-field");
+                                parent.sort.order = $(this).attr("data-order");
+                                parent.pagination = 1;
+                                parent.refresh();
+                            });
+                        },
+        refresh:        function ()
+                        {
+                            var parent = this;
+                            var defaults = {
+                                FhmSearch:     {
+                                    search: parent.search
+                                },
+                                FhmPagination: {
+                                    pagination: parent.pagination
+                                },
+                                FhmSort:       {
+                                    field: parent.sort.field,
+                                    order: parent.sort.order
+                                }
+                            };
+                            $.ajax
+                            ({
+                                type:    'POST',
+                                url:     parent.current.path,
+                                data:    $.extend({}, defaults, parent.current.post),
+                                success: function (data)
+                                         {
+                                             $(parent.current.data).fadeToggle(400, "linear", function ()
+                                             {
+                                                 $(parent.current.data).html(parent.getHtml(data, parent.current.data)).fadeToggle(400, "linear");
+                                                 $(parent.current.pagination).html(parent.getHtml(data, parent.current.pagination));
+                                                 parent.refreshScript(data);
+                                                 parent.initCurrent();
+                                                 parent.initSearch();
+                                                 parent.initPagination();
+                                                 parent.initSort();
+                                                 $(window).scrollTop(0);
+                                             });
+                                         }
+                            });
+                        },
+        refreshScript:  function (data)
+                        {
+                            var parent = this;
+                            $('<div>' + data + '</div>').find('script').each(function ()
+                            {
+                                eval(this.innerHTML);
+                            });
+                        },
+        getHtml:        function (data, selector)
+                        {
+                            var parent = this;
+                            var $data = $($.parseHTML(data));
+                            return $data.filter(selector).add($data.find(selector)).html();
+                        }
+    };
+    $.fn.list = function (options)
+    {
+        var settings = $.extend
+        ({
+            url:        $('#FhmSearch_search').closest('form').attr('action'),
+            container:  {
+                data:       '#content_data',
+                pagination: '#content_pagination'
+            },
+            search:     {
+                container: 'input[data-type=list]'
+            },
+            pagination: {
+                container: 'a[data-pagination]',
+            },
+            sort:       {
+                container: 'a[data-sort]'
+            }
+        }, options);
+        new Plugin(settings);
+    };
+}
+(jQuery, window, window.document));

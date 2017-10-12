@@ -1,0 +1,34 @@
+{% extends "::ajax.html.twig" %}
+{% trans_default_domain 'ProjectDefaultBundle' %}
+
+{% block content %}
+    <div id="form-title-{{ section }}" class="row">
+        {% if not message[0] == '' %}
+            <div data-alert class="alert-box radius {{ message[0] }}">
+                {{ message[1] }}
+                <a href="#" class="close">&times;</a>
+            </div>
+        {% endif %}
+        <form action="{{ path('project_moderator_title',{section:section}) }}" method="POST" data-type="ajax" data-content="#form-title-{{ section }}" data-animation="false" data-required="false" data-live>
+            <fieldset>
+                <legend>Titre de la section</legend>
+                <div class="columns large-6">
+                    {{ form_label(form.section_title) }}
+                    {{ form_errors(form.section_title) }}
+                    {{ form_widget(form.section_title,{'value':title}) }}
+                </div>
+                <div class="columns large-6">
+                    {{ form_label(form.section_subtitle) }}
+                    {{ form_errors(form.section_subtitle) }}
+                    {{ form_widget(form.section_subtitle,{'value':subtitle}) }}
+                </div>
+                {{ form_rest(form) }}
+            </fieldset>
+        </form>
+    </div>
+{% endblock %}
+
+{% block javascript %}
+    {{ parent() }}
+    $(document).form({required: '{{ 'fhm.form.required'|trans({},'FhmFhmBundle') }}'});
+{% endblock %}

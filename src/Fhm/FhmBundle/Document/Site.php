@@ -1363,6 +1363,20 @@ class Site extends FhmFhm
 
     /**
      * @param $bloc
+     * @param $value
+     *
+     * @return $this
+     */
+    public function setShow($bloc, $value)
+    {
+        $bloc        = 'show_' . $bloc;
+        $this->$bloc = $value;
+
+        return $this;
+    }
+
+    /**
+     * @param $bloc
      *
      * @return bool
      */

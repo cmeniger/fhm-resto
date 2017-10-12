@@ -12,11 +12,11 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Class SliderType
+ * Class GalleryVideoType
  *
  * @package Project\DefaultBundle\Form\Type\Moderator
  */
-class SliderType extends AbstractType
+class GalleryVideoType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -26,51 +26,17 @@ class SliderType extends AbstractType
     {
         $builder
             ->add(
-                'caption',
-                CheckboxType::class,
-                array(
-                    'label'    => $options['translation_route'] . '.moderator.form.slider.caption',
-                    'required' => false
-                )
-            )
-            ->add(
                 'title',
                 TextType::class,
                 array(
-                    'label' => $options['translation_route'] . '.moderator.form.slider.title'
+                    'label' => $options['translation_route'] . '.moderator.form.gallery.title'
                 )
             )
             ->add(
-                'subtitle',
+                'video',
                 TextType::class,
                 array(
-                    'label'    => $options['translation_route'] . '.moderator.form.slider.subtitle',
-                    'required' => false
-                )
-            )
-            ->add(
-                'link',
-                TextType::class,
-                array(
-                    'label'    => $options['translation_route'] . '.moderator.form.slider.link',
-                    'required' => false
-                )
-            )
-            ->add(
-                'content',
-                TextareaType::class,
-                array(
-                    'label'    => $options['translation_route'] . '.moderator.form.slider.content',
-                    'required' => false,
-                )
-            )
-            ->add(
-                'image',
-                MediaType::class,
-                array(
-                    'label'    => $options['translation_route'] . '.moderator.form.slider.image',
-                    'filter'   => 'image/*',
-                    'required' => false,
+                    'label' => $options['translation_route'] . '.moderator.form.gallery.video'
                 )
             );
     }
@@ -80,7 +46,7 @@ class SliderType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'ModeratorSlider';
+        return 'ModeratorGalleryVideo';
     }
 
     /**

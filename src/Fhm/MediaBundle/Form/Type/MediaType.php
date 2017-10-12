@@ -1,4 +1,5 @@
 <?php
+
 namespace Fhm\MediaBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
@@ -20,26 +21,27 @@ class MediaType extends AbstractType
     {
         $resolver->setDefaults(
             array(
-                'class' => 'FhmMediaBundle:Media',
-                'choice_label' => 'name',
+                'class'              => 'FhmMediaBundle:Media',
+                'choice_label'       => 'name',
                 'cascade_validation' => true,
-                'filter' => '',
-                'root' => '',
-                'private' => true,
+                'filter'             => '',
+                'root'               => '',
+                'private'            => true,
             )
         );
     }
 
     /**
-     * @param \Symfony\Component\Form\FormView $view
+     * @param \Symfony\Component\Form\FormView      $view
      * @param \Symfony\Component\Form\FormInterface $form
-     * @param array $options
+     * @param array                                 $options
      */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
-        if (array_key_exists('filter', $options)) {
-            $view->vars['filter'] = $options['filter'];
-            $view->vars['root'] = $options['root'];
+        if(array_key_exists('filter', $options))
+        {
+            $view->vars['filter']  = $options['filter'];
+            $view->vars['root']    = $options['root'];
             $view->vars['private'] = $options['private'];
         }
     }

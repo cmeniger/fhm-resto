@@ -1,1 +1,148 @@
-!function(t,n,i){function s(t){this.settings=t,this.process=this.settings.process,this.post="",this.init()}s.prototype={init:function(){this.initProcess()},initProcess:function(){var t=this;0===t.process.length?t.initEnd():(t.initStart(),t.initLogs())},initStart:function(){var n=this;t(n.settings.container_end).fadeOut(400,"linear",function(){t(n.settings.container_start).fadeIn(400,"linear",function(){n.next(0,!0)})})},initEnd:function(){var n=this;t(n.settings.container_start).fadeOut(400,"linear",function(){t(n.settings.container_end).fadeIn(400,"linear",function(){n.initTimer(t(n.settings.container_end+" .timer"))})})},initLogs:function(){var n=this;t(n.settings.container_logs).fadeIn(400,"linear",function(){})},initTimer:function(i){var s=i.attr("data-time"),e="timer-"+Math.floor(1e3*Math.random());i.append(" <span id='"+e+"'>"+s+"</span> s.");var a=setInterval(function(){s<=0?(clearInterval(a),n.location.href=i.attr("data-url")):t("#"+e).html(--s)},1e3)},initAjax:function(n,i){var s=this;t.ajax({type:"POST",url:s.settings.route+"/"+s.process[n],data:s.post,success:function(t){var n=!0;200!==t.status&&(n=!1),s.post=t.post,s.addLogs(t.logs),i(n)}})},next:function(t,n){var i=this;n&&"undefined"!=typeof i.process[t]?i.initAjax(t,function(n){i.percent(t),i.next(t+1,n)}):n&&i.initEnd()},addLogs:function(n){for(var i=this,s=0;s<n.length;s++)t(i.settings.container_logs).append("<div class='line'><span class='time'>"+n[s][0]+"</span><span class='text "+n[s][1]+"'>"+n[s][2]+"</span></div>")},percent:function(n){var i=this,s=Math.floor(100*n/i.process.length);t(i.settings.container_start+" .percent").addClass("p"+s),t(i.settings.container_start+" .percent span").html(s+"%")}},t.fn.install=function(n){var i=t.extend({container:"#install-container",container_start:"#install-start",container_end:"#install-end",container_logs:"#install-logs",route:"/app_dev.php/install",process:[]},n);new s(i)}}(jQuery,window,window.document);
+(function ($, window, document)
+{
+    function Plugin(settings)
+    {
+        this.settings = settings;
+        this.process = this.settings.process;
+        this.post = '';
+        this.init();
+    }
+
+    Plugin.prototype = {
+        init:        function ()
+                     {
+                         var parent = this;
+                         this.initProcess();
+                     },
+        initProcess: function ()
+                     {
+                         var parent = this;
+                         if(parent.process.length === 0)
+                         {
+                             parent.initEnd();
+                         }
+                         else
+                         {
+                             parent.initStart();
+                             parent.initLogs();
+                         }
+                     },
+        initStart:   function ()
+                     {
+                         var parent = this;
+                         $(parent.settings.container_end).fadeOut(400, "linear", function ()
+                         {
+                             $(parent.settings.container_start).fadeIn(400, "linear", function ()
+                             {
+                                 parent.next(0, true);
+                             });
+                         });
+                     },
+        initEnd:     function ()
+                     {
+                         var parent = this;
+                         $(parent.settings.container_start).fadeOut(400, "linear", function ()
+                         {
+                             $(parent.settings.container_end).fadeIn(400, "linear", function ()
+                             {
+                                 parent.initTimer($(parent.settings.container_end + ' .timer'));
+                             });
+                         });
+                     },
+        initLogs:    function ()
+                     {
+                         var parent = this;
+                         $(parent.settings.container_logs).fadeIn(400, "linear", function ()
+                         {
+                         });
+                     },
+        initTimer:   function ($element)
+                     {
+                         var parent = this;
+                         var timer = $element.attr('data-time');
+                         var id = 'timer-' + Math.floor(Math.random() * 1000);
+                         $element.append(" <span id='" + id + "'>" + timer + "</span> s.");
+                         var interval = setInterval(function ()
+                         {
+                             if(timer <= 0)
+                             {
+                                 clearInterval(interval);
+                                 window.location.href = $element.attr('data-url');
+                             }
+                             else
+                             {
+                                 $('#' + id).html(--timer);
+                             }
+                         }, 1000);
+                     },
+        initAjax:    function (index, cb)
+                     {
+                         var parent = this;
+                         $.ajax
+                         ({
+                             type:    'POST',
+                             url:     parent.settings.route + '/' + parent.process[index],
+                             data:    parent.post,
+                             success: function (data)
+                                      {
+                                          var next = true;
+                                          if(data.status !== 200)
+                                          {
+                                              next = false;
+                                          }
+                                          parent.post = data.post;
+                                          parent.addLogs(data.logs);
+                                          cb(next);
+                                      }
+                         });
+                     },
+        next:        function (index, next)
+                     {
+                         var parent = this;
+                         if(next && typeof parent.process[index] !== 'undefined')
+                         {
+                             parent.initAjax(index, function (next)
+                             {
+                                 parent.percent(index);
+                                 parent.next(index + 1, next);
+                             });
+                         }
+                         else
+                         {
+                             if(next)
+                             {
+                                 parent.initEnd();
+                             }
+                         }
+                     },
+        addLogs:     function (logs)
+                     {
+                         var parent = this;
+                         for(var i = 0; i < logs.length; i++)
+                         {
+                             $(parent.settings.container_logs).append("<div class='line'><span class='time'>" + logs[i][0] + "</span><span class='text " + logs[i][1] + "'>" + logs[i][2] + "</span></div>");
+                         }
+                     },
+        percent:     function (index)
+                     {
+                         var parent = this;
+                         var percent = Math.floor(index * 100 / parent.process.length);
+                         $(parent.settings.container_start + ' .percent').addClass('p' + percent);
+                         $(parent.settings.container_start + ' .percent span').html(percent + '%');
+                     }
+    };
+    $.fn.install = function (options)
+    {
+        var settings = $.extend
+        ({
+            container:       '#install-container',
+            container_start: "#install-start",
+            container_end:   "#install-end",
+            container_logs:  "#install-logs",
+            route:           '/app_dev.php/install',
+            process:         []
+        }, options);
+        new Plugin(settings);
+    };
+}
+(jQuery, window, window.document));

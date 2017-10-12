@@ -1,0 +1,66 @@
+{% extends "::ajax.html.twig" %}
+{% trans_default_domain 'ProjectDefaultBundle' %}
+
+{% block content %}
+    <div id="form-gallery-bottom-item" class="row gutter-margin-bottom">
+        <div class="columns large-4">
+            <form action="{{ path('project_moderator_gallery_bottom_item', {id:id}) }}" method="POST" data-type="ajax" data-content="#form-gallery-bottom-item">
+                {% if not message[0] == '' %}
+                    <div data-alert class="alert-box radius {{ message[0] }}">
+                        {{ message[1] }}
+                        <a href="#" class="close">&times;</a>
+                    </div>
+                {% endif %}
+                <div class="row">
+                    {{ form_label(form.title) }}
+                    {{ form_errors(form.title) }}
+                    {{ form_widget(form.title) }}
+                </div>
+                <div class="row">
+                    {{ form_label(form.image) }}
+                    {{ form_errors(form.image) }}
+                    {{ form_widget(form.image) }}
+                </div>
+                {{ form_rest(form) }}
+                <div class="row">
+                    <ul class="button-group">
+                        <li>
+                            <button type="submit" class="tiny">{{ ('project.moderator.form.button.' ~ (id ? 'update' : 'create'))|trans }}</button>
+                        </li>
+                        <li>
+                            <a href="{{ path('project_moderator_gallery_bottom_item') }}" class="button tiny secondary" data-type="ajax" data-content="#form-gallery-bottom-item"><i class="fa fa-times"></i></a>
+                        </li>
+                    </ul>
+                </div>
+            </form>
+        </div>
+        <div class="columns large-8">
+            <div class="items">
+                {% if site.getGalleryBottom().getItems()|length > 0 %}
+                    <ul class="small-block-grid-1 medium-block-grid-2 large-block-grid-4">
+                        {% for item in site.getGalleryBottom().getItems() %}
+                            {% if item.getActive() and not item.getDelete() %}
+                                <li class="item">
+                                    <div class="overlay">
+                                        <a href="{{ path('project_moderator_gallery_bottom_item', {id:item.getId()}) }}" title="" data-type="ajax" data-content="#form-gallery-bottom-item"><i class="fa fa-pencil"></i></a>
+                                        <a href="{{ path('project_moderator_gallery_delete', {id:item.getId(), gallery:'bottom_item'}) }}" title="" class="alert" data-type="ajax" data-content="#form-gallery-bottom-item"><i class="fa fa-times"></i></a>
+                                    </div>
+                                    <div class="image" style="background:url({{ item.getImage()|media('m') }}) center center no-repeat"></div>
+                                    <div class="title">{{ item.getTitle() }}</div>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <span class="nodata">{{ (instance.translation ~ '.moderator.form.message.nodata')|trans }}</span>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascript %}
+    {{ parent() }}
+    $(document).media();
+    $(document).form({required: '{{ 'fhm.form.required'|trans({},'FhmFhmBundle') }}'});
+{% endblock %}

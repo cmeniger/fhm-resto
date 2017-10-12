@@ -2,24 +2,24 @@
 {% trans_default_domain 'ProjectDefaultBundle' %}
 
 {% block content %}
-    <div id="form-show-slider" class="row">
-        <form action="{{ path('project_moderator_show') }}" method="POST" data-type="ajax" data-content="#form-show-slider" data-animation="false" data-required="false" data-live>
-            <input type="hidden" name="show[route]" value="slider">
+    <div id="form-show-partner" class="row">
+        <form action="{{ path('project_moderator_show') }}" method="POST" data-type="ajax" data-content="#form-show-partner" data-animation="false" data-required="false" data-live>
+            <input type="hidden" name="show[route]" value="partner">
             {% if not message[0] == '' %}
                 <div data-alert class="alert-box radius {{ message[0] }}">
                     {{ message[1] }}
                     <a href="#" class="close">&times;</a>
                 </div>
             {% endif %}
-            <div class="header {{ site.getShowSlider() ? 'active' : 'disabled' }}">
-                <label for="ModeratorSlider_show">{{ (instance.translation ~ '.moderator.form.slider.show')|trans }}</label>
+            <div class="header {{ site.getShowPartner() ? 'active' : 'disabled' }}">
+                <label for="ModeratorPartner_show">{{ (instance.translation ~ '.moderator.form.partner.show')|trans }}</label>
                 <div class="switch tiny">
-                    <input type="checkbox" id="ModeratorSlider_show" name="show[check]" value="1" {{ site.getShowSlider() ? 'checked="checked"' : '' }}>
-                    <label for="ModeratorSlider_show"></label>
+                    <input type="checkbox" id="ModeratorPartner_show" name="show[check]" value="1" {{ site.getShowPartner() ? 'checked="checked"' : '' }}>
+                    <label for="ModeratorPartner_show"></label>
                 </div>
                 <div class="help">
-                    <a href="#" data-reveal-id="modalHelpSlider" title="{{ (instance.translation ~ '.moderator.form.help.title')|trans }}"><i class="fa fa-question"></i></a>
-                    <div id="modalHelpSlider" class="moderator-modal-help reveal-modal" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
+                    <a href="#" data-reveal-id="modalHelpPartner" title="{{ (instance.translation ~ '.moderator.form.help.title')|trans }}"><i class="fa fa-question"></i></a>
+                    <div id="modalHelpPartner" class="moderator-modal-help reveal-modal" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
                         <h3 id="modalTitle">{{ (instance.translation ~ '.moderator.form.help.title')|trans }}</h3>
                         <a class="close-reveal-modal" aria-label="Close">&#215;</a>
                     </div>
@@ -27,9 +27,10 @@
             </div>
         </form>
     </div>
-    <div id="form-slider" class="row gutter-margin-top">
+    {{ render(path('project_moderator_title', {section:'partner'})) }}
+    <div id="form-partner" class="row gutter-margin-top">
         <div class="columns large-4">
-            <form action="{{ path('project_moderator_slider', {id:id}) }}" method="POST" data-type="ajax" data-content="#form-slider">
+            <form action="{{ path('project_moderator_partner', {id:id}) }}" method="POST" data-type="ajax" data-content="#form-partner">
                 {% if not message[0] == '' %}
                     <div data-alert class="alert-box radius {{ message[0] }}">
                         {{ message[1] }}
@@ -37,14 +38,9 @@
                     </div>
                 {% endif %}
                 <div class="row">
-                    {{ form_label(form.title) }}
-                    {{ form_errors(form.title) }}
-                    {{ form_widget(form.title) }}
-                </div>
-                <div class="row">
-                    {{ form_label(form.subtitle) }}
-                    {{ form_errors(form.subtitle) }}
-                    {{ form_widget(form.subtitle) }}
+                    {{ form_label(form.name) }}
+                    {{ form_errors(form.name) }}
+                    {{ form_widget(form.name) }}
                 </div>
                 <div class="row">
                     {{ form_label(form.link) }}
@@ -61,14 +57,6 @@
                     {{ form_errors(form.image) }}
                     {{ form_widget(form.image) }}
                 </div>
-                <div class="row">
-                    {{ form_errors(form.caption) }}
-                    {{ form_label(form.caption) }}
-                    <div class="switch tiny">
-                        {{ form_widget(form.caption) }}
-                        <label for="{{ form.caption.vars.id }}"></label>
-                    </div>
-                </div>
                 {{ form_rest(form) }}
                 <div class="row">
                     <ul class="button-group">
@@ -76,7 +64,7 @@
                             <button type="submit" class="tiny">{{ ('project.moderator.form.button.' ~ (id ? 'update' : 'create'))|trans }}</button>
                         </li>
                         <li>
-                            <a href="{{ path('project_moderator_slider') }}" class="button tiny secondary" data-type="ajax" data-content="#form-slider"><i class="fa fa-times"></i></a>
+                            <a href="{{ path('project_moderator_partner') }}" class="button tiny secondary" data-type="ajax" data-content="#form-partner"><i class="fa fa-times"></i></a>
                         </li>
                     </ul>
                 </div>
@@ -84,17 +72,17 @@
         </div>
         <div class="columns large-8">
             <div class="items">
-                {% if site.getSlider().getItems()|length > 0 %}
+                {% if site.getPartner().getPartners()|length > 0 %}
                     <ul class="small-block-grid-1 medium-block-grid-2 large-block-grid-4">
-                        {% for item in site.getSlider().getItems() %}
+                        {% for item in site.getPartner().getPartners() %}
                             {% if item.getActive() and not item.getDelete() %}
                                 <li class="item">
                                     <div class="overlay">
-                                        <a href="{{ path('project_moderator_slider', {id:item.getId()}) }}" title="" data-type="ajax" data-content="#form-slider"><i class="fa fa-pencil"></i></a>
-                                        <a href="{{ path('project_moderator_slider_delete', {id:item.getId()}) }}" title="" class="alert" data-type="ajax" data-content="#form-slider"><i class="fa fa-times"></i></a>
+                                        <a href="{{ path('project_moderator_partner', {id:item.getId()}) }}" title="" data-type="ajax" data-content="#form-partner"><i class="fa fa-pencil"></i></a>
+                                        <a href="{{ path('project_moderator_partner_delete', {id:item.getId()}) }}" title="" class="alert" data-type="ajax" data-content="#form-partner"><i class="fa fa-times"></i></a>
                                     </div>
                                     <div class="image" style="background:url({{ item.getImage()|media('m') }}) center center no-repeat"></div>
-                                    <div class="title">{{ item.getTitle() }}</div>
+                                    <div class="title">{{ item.getName() }}</div>
                                 </li>
                             {% endif %}
                         {% endfor %}
@@ -111,9 +99,9 @@
     {{ parent() }}
     $(document).media();
     $(document).form({required: '{{ 'fhm.form.required'|trans({},'FhmFhmBundle') }}'});
-    tinymce.remove('#ModeratorSlider_content');
+    tinymce.remove('#ModeratorPartner_content');
     tinymce.init({
-    selector:    '#ModeratorSlider_content',
+    selector:    '#ModeratorPartner_content',
     height:      100,
     language:    '{{ app.request.locale }}',
     plugins:     ['visualblocks visualchars charmap table contextmenu','textcolor fullscreen code codemirror'],

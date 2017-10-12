@@ -12,11 +12,11 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Class SliderType
+ * Class GalleryItemType
  *
  * @package Project\DefaultBundle\Form\Type\Moderator
  */
-class SliderType extends AbstractType
+class GalleryItemType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -26,33 +26,17 @@ class SliderType extends AbstractType
     {
         $builder
             ->add(
-                'caption',
-                CheckboxType::class,
-                array(
-                    'label'    => $options['translation_route'] . '.moderator.form.slider.caption',
-                    'required' => false
-                )
-            )
-            ->add(
                 'title',
                 TextType::class,
                 array(
-                    'label' => $options['translation_route'] . '.moderator.form.slider.title'
+                    'label' => $options['translation_route'] . '.moderator.form.gallery.title'
                 )
             )
             ->add(
                 'subtitle',
                 TextType::class,
                 array(
-                    'label'    => $options['translation_route'] . '.moderator.form.slider.subtitle',
-                    'required' => false
-                )
-            )
-            ->add(
-                'link',
-                TextType::class,
-                array(
-                    'label'    => $options['translation_route'] . '.moderator.form.slider.link',
+                    'label'    => $options['translation_route'] . '.moderator.form.gallery.subtitle',
                     'required' => false
                 )
             )
@@ -60,7 +44,7 @@ class SliderType extends AbstractType
                 'content',
                 TextareaType::class,
                 array(
-                    'label'    => $options['translation_route'] . '.moderator.form.slider.content',
+                    'label'    => $options['translation_route'] . '.moderator.form.gallery.content',
                     'required' => false,
                 )
             )
@@ -68,7 +52,7 @@ class SliderType extends AbstractType
                 'image',
                 MediaType::class,
                 array(
-                    'label'    => $options['translation_route'] . '.moderator.form.slider.image',
+                    'label'    => $options['translation_route'] . '.moderator.form.gallery.image',
                     'filter'   => 'image/*',
                     'required' => false,
                 )
@@ -80,7 +64,7 @@ class SliderType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'ModeratorSlider';
+        return 'ModeratorGalleryItem';
     }
 
     /**

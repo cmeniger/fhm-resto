@@ -79,6 +79,47 @@ class Moderator
     }
 
     /**
+     * @param $id
+     */
+    public function galleryDelete($id)
+    {
+        $object = $this->tools->dmRepository('FhmGalleryBundle:GalleryItem')->find($id);
+        $object = $object ? $object : $this->tools->dmRepository('FhmGalleryBundle:GalleryVideo')->find($id);
+        if($object)
+        {
+            if($object->getDelete())
+            {
+                $this->tools->dmRemove($object);
+            }
+            else
+            {
+                $object->setDelete(true);
+                $this->tools->dmPersist($object);
+            }
+        }
+    }
+
+    /**
+     * @param $id
+     */
+    public function partnerDelete($id)
+    {
+        $object = $this->tools->dmRepository('FhmPartnerBundle:Partner')->find($id);
+        if($object)
+        {
+            if($object->getDelete())
+            {
+                $this->tools->dmRemove($object);
+            }
+            else
+            {
+                $object->setDelete(true);
+                $this->tools->dmPersist($object);
+            }
+        }
+    }
+
+    /**
      * @param $parent
      * @param $list
      *

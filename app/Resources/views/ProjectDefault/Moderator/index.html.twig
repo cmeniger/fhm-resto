@@ -61,9 +61,9 @@
                 {{ render_hinclude(url('project_moderator_slider'), {attributes:{'evaljs':'true'}}) }}
             </div>
             <div class="content {{ current == 'gallery_top' ? 'active' : '' }}" id="panel-gallery-top">
-
+                {{ render_hinclude(url('project_moderator_gallery_top'), {attributes:{'evaljs':'true'}}) }}
             </div>
-            <div class="content {{ current == 'news' ? 'active' : '' }}" id="panel-gallery-bottom">
+            <div class="content {{ current == 'news' ? 'active' : '' }}" id="panel-news">
 
             </div>
             <div class="content {{ current == 'card_slider' ? 'active' : '' }}" id="panel-card-slider">
@@ -75,17 +75,17 @@
             <div class="content {{ current == 'card_forward' ? 'active' : '' }}" id="panel-card-forward">
 
             </div>
-            <div class="content {{ current == 'testimony' ? 'active' : '' }}" id="panel-contact">
+            <div class="content {{ current == 'testimony' ? 'active' : '' }}" id="panel-testimony">
 
             </div>
-            <div class="content {{ current == 'contact' ? 'active' : '' }}" id="panel-news">
+            <div class="content {{ current == 'contact' ? 'active' : '' }}" id="panel-contact">
 
             </div>
-            <div class="content {{ current == 'partner' ? 'active' : '' }}" id="panel-testimony">
-
+            <div class="content {{ current == 'partner' ? 'active' : '' }}" id="panel-partner">
+                {{ render_hinclude(url('project_moderator_partner'), {attributes:{'evaljs':'true'}}) }}
             </div>
-            <div class="content {{ current == 'gallery_bottom' ? 'active' : '' }}" id="panel-partner">
-
+            <div class="content {{ current == 'gallery_bottom' ? 'active' : '' }}" id="panel-gallery-bottom">
+                {{ render_hinclude(url('project_moderator_gallery_bottom'), {attributes:{'evaljs':'true'}}) }}
             </div>
             <div class="content {{ current == 'reservation' ? 'active' : '' }}" id="panel-reservation">
 

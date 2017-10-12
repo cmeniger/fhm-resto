@@ -68,10 +68,8 @@
                                      id:      $(this).attr('data-id'),
                                      private: $(this).attr('data-private'),
                                      root:    $(this).attr('data-root'),
-                                     filter:  $(this).attr('data-filter'),
-                                     index:   index
+                                     filter:  $(this).attr('data-filter')
                                  };
-                                 $(this).removeAttr('data-private').removeAttr('data-root').removeAttr('data-filter');
                                  // Disabled
                                  if($(this).hasClass('disabled'))
                                  {

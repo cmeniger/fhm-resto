@@ -1,0 +1,106 @@
+{% extends "::ajax.html.twig" %}
+{% trans_default_domain 'ProjectDefaultBundle' %}
+
+{% block content %}
+    <div id="form-show-gallery-top" class="row">
+        <form action="{{ path('project_moderator_show') }}" method="POST" data-type="ajax" data-content="#form-show-gallery-top" data-animation="false" data-required="false" data-live>
+            <input type="hidden" name="show[route]" value="gallery_top">
+            {% if not message[0] == '' %}
+                <div data-alert class="alert-box radius {{ message[0] }}">
+                    {{ message[1] }}
+                    <a href="#" class="close">&times;</a>
+                </div>
+            {% endif %}
+            <div class="header {{ site.getShowGalleryTop() ? 'active' : 'disabled' }}">
+                <label for="ModeratorGalleryTop_show">{{ (instance.translation ~ '.moderator.form.gallery.show_top')|trans }}</label>
+                <div class="switch tiny">
+                    <input type="checkbox" id="ModeratorGalleryTop_show" name="show[check]" value="1" {{ site.getShowGalleryTop() ? 'checked="checked"' : '' }}>
+                    <label for="ModeratorGalleryTop_show"></label>
+                </div>
+                <div class="help">
+                    <a href="#" data-reveal-id="modalHelpGalleryTop" title="{{ (instance.translation ~ '.moderator.form.help.title')|trans }}"><i class="fa fa-question"></i></a>
+                    <div id="modalHelpGalleryTop" class="moderator-modal-help reveal-modal" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
+                        <h3 id="modalTitle">{{ (instance.translation ~ '.moderator.form.help.title')|trans }}</h3>
+                        <fieldset>
+                            <legend>{{ (instance.translation ~ '.moderator.help.gallery_top_item.position.title')|trans }}</legend>
+                            <div class="row gutter-margin-bottom">
+                                <div class="columns large-6 gutter-margin-bottom">
+                                    <img src="{{ asset('images/help/moderator-gallery-top-item.jpg') }}" alt="gallery-top-item-position">
+                                </div>
+                                <div class="columns large-6 gutter-margin-bottom">
+                                    <div class="row gutter-margin-bottom gutter-margin-bottom">
+                                        <div class="columns small-2 medium-1 large-1">
+                                            <span class="index">1</span>
+                                        </div>
+                                        <div class="columns small-10 medium-11 large-11">
+                                            {{ (instance.translation ~ '.moderator.help.gallery_top_item.position.f_title')|trans }}
+                                        </div>
+                                    </div>
+                                    <div class="row gutter-margin-bottom gutter-margin-bottom">
+                                        <div class="columns small-2 medium-1 large-1">
+                                            <span class="index">2</span>
+                                        </div>
+                                        <div class="columns small-10 medium-11 large-11">
+                                            {{ (instance.translation ~ '.moderator.help.gallery_top_item.position.f_subtitle')|trans }}
+                                        </div>
+                                    </div>
+                                    <div class="row gutter-margin-bottom gutter-margin-bottom">
+                                        <div class="columns small-2 medium-1 large-1">
+                                            <span class="index">3</span>
+                                        </div>
+                                        <div class="columns small-10 medium-11 large-11">
+                                            {{ (instance.translation ~ '.moderator.help.gallery_top_item.position.f_content')|trans }}
+                                        </div>
+                                    </div>
+                                    <div class="row gutter-margin-bottom gutter-margin-bottom">
+                                        <div class="columns small-2 medium-1 large-1">
+                                            <span class="index">4</span>
+                                        </div>
+                                        <div class="columns small-10 medium-11 large-11">
+                                            {{ (instance.translation ~ '.moderator.help.gallery_top_item.position.f_image')|trans }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <fieldset>
+                            <legend>{{ (instance.translation ~ '.moderator.help.gallery_top_video.position.title')|trans }}</legend>
+                            <div class="row gutter-margin-bottom">
+                                <div class="columns large-6 gutter-margin-bottom">
+                                    <img src="{{ asset('images/help/moderator-gallery-top-video.jpg') }}" alt="gallery-top-video-position">
+                                </div>
+                                <div class="columns large-6 gutter-margin-bottom">
+                                    <div class="row gutter-margin-bottom gutter-margin-bottom">
+                                        <div class="columns small-2 medium-1 large-1">
+                                            <span class="index">1</span>
+                                        </div>
+                                        <div class="columns small-10 medium-11 large-11">
+                                            {{ (instance.translation ~ '.moderator.help.gallery_top_video.position.f_video')|trans }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <a class="close-reveal-modal" aria-label="Close">&#215;</a>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <ul class="accordion gutter-margin-top" data-accordion>
+        <li class="accordion-navigation active">
+            <a href="#menu-main"><i class="fa fa-image icon"></i>{{ (instance.translation ~ '.moderator.form.fieldset.gallery_item')|trans }}
+            </a>
+            <div id="menu-main" class="content active">
+                {{ render(path('project_moderator_gallery_top_item')) }}
+            </div>
+        </li>
+        <li class="accordion-navigation">
+            <a href="#menu-footer"><i class="fa fa-video-camera icon"></i>{{ (instance.translation ~ '.moderator.form.fieldset.gallery_video')|trans }}
+            </a>
+            <div id="menu-footer" class="content">
+                {{ render(path('project_moderator_gallery_top_video')) }}
+            </div>
+        </li>
+    </ul>
+{% endblock %}
